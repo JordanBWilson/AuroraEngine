@@ -2,18 +2,18 @@
 (function() {
   if (!Game.canvas) {
     console.log('No game stage detected.');
-    console.log('To add a game stage, create a canvas tag on your html file.');
-    console.log('Then assign it to the game like this:');
-    console.log('_________________________________________');
-    console.log('Game.canvas = document.getElementById("Stage");');
-    console.log('_________________________________________');
+    // console.log('To add a game stage, create a canvas tag on your html file.');
+    // console.log('Then assign it to the game like this:');
+    // console.log('_________________________________________');
+    // console.log('Game.canvas = document.getElementById("Stage");');
+    // console.log('_________________________________________');
   } else {
     // get this party train moving
     // let method = {method: function() {console.log('test');}}
     // Game.methodsToRun.push(testMethod);
+    Main.stage = Game.canvas.getContext('2d');
     window.addEventListener('resize', resizeStage, false);
     resizeStage();
-    Main.stage = Game.canvas.getContext('2d');
 
     console.log(Game);
     mainLoop();
@@ -25,18 +25,18 @@ function mainLoop() {
     if (Game.methodsToRun.length > 0) {
       // run the game
       for (let i = 0; i < Game.methodsToRun.length; i++) {
-        Game.methodsToRun[i].method(); // run through all the methods the user sent us
-        Global.intervalAnimateId = requestAnimationFrame(function() {mainLoop});
+        Game.methodsToRun[i].method(i); // run through all the methods the user sent us
+        Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop});
       }
     } else {
       // stop the game
       console.log('The game has stopped. No more methods to listen to.');
-      console.log('Assign new methods to the game like this:');
-      console.log('_________________________________________');
-      console.log('let method = {method: function() {console.log("test");}};');
-      console.log('Game.methodsToRun.push(method);');
-      console.log('_________________________________________');
-      console.log('Now you will see the the word test being ran indefinetly in the console.');
+      // console.log('Assign new methods to the game like this:');
+      // console.log('_________________________________________');
+      // console.log('let method = {method: function() {console.log("test");}};');
+      // console.log('Game.methodsToRun.push(method);');
+      // console.log('_________________________________________');
+      // console.log('Now you will see the the word test being ran indefinetly in the console.');
       clearInterval(Main.interval);
       cancelAnimationFrame(Main.intervalAnimateId);
     }
