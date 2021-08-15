@@ -2,19 +2,14 @@
 (function() {
   if (!Game.canvas) {
     console.log('No game stage detected.');
-    // console.log('To add a game stage, create a canvas tag on your html file.');
-    // console.log('Then assign it to the game like this:');
-    // console.log('_________________________________________');
-    // console.log('Game.canvas = document.getElementById("Stage");');
-    // console.log('_________________________________________');
   } else {
     // get this party train moving
-    // let method = {method: function() {console.log('test');}}
-    // Game.methodsToRun.push(testMethod);
     Main.stage = Game.canvas.getContext('2d');
     window.addEventListener('resize', resizeStage, false);
+    Game.canvas.addEventListener('click', function(event) {
+      screenTapped(event);
+    }, false);
     resizeStage();
-
     console.log(Game);
     mainLoop();
   }
@@ -27,16 +22,21 @@ function mainLoop() {
       for (let i = 0; i < Game.methodsToRun.length; i++) {
         Game.methodsToRun[i].method(i); // run through all the methods the user sent us
         Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop});
+        if (Main.isStageTapped) { // when the stage is tapped
+          if (Main.methodParams[i].isBtn) { // look to see if the user tapped on a button
+            isButtonTapped(Main.methodParams[i]);
+            if (i == Game.methodsToRun.length - 1) {
+              Main.isStageTapped = false;
+              Main.tappedX = 0;
+              Main.tappedY = 0;
+            }
+          }
+
+        }
       }
     } else {
       // stop the game
       console.log('The game has stopped. No more methods to listen to.');
-      // console.log('Assign new methods to the game like this:');
-      // console.log('_________________________________________');
-      // console.log('let method = {method: function() {console.log("test");}};');
-      // console.log('Game.methodsToRun.push(method);');
-      // console.log('_________________________________________');
-      // console.log('Now you will see the the word test being ran indefinetly in the console.');
       clearInterval(Main.interval);
       cancelAnimationFrame(Main.intervalAnimateId);
     }
@@ -46,8 +46,6 @@ function mainLoop() {
 function resizeStage() {
   // don't want to grab the new width and height too many times..
   clearTimeout(Main.resizeWindow);
-  // Main.resizeWindow = undefined;
-
   Main.resizeWindow = setTimeout(function() {
     // resize the game stage and set new base values
     Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
@@ -60,6 +58,22 @@ function resizeStage() {
       clearTimeout(doneResizing);
     }, 50);
   }, Main.resizeWindowTime);
+}
 
+function screenTapped(event) {
+  Main.isStageTapped = event ? true : false;
+  Main.tappedX = event.clientX;
+  Main.tappedY = event.clientY;
+  Main.intervalPos = 0;
+}
 
+function isButtonTapped(btnParams) {
+  if (Main.tappedX >= btnParams.posX && Main.tappedX <= btnParams.posX + btnParams.width) {
+    if (Main.tappedY >= btnParams.posY && Main.tappedY <= btnParams.posY + btnParams.height) {
+      btnParams.action.method();
+      Main.isStageTapped = false;
+      Main.tappedX = 0;
+      Main.tappedY = 0;
+    }
+  }
 }
