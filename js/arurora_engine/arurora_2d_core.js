@@ -42,6 +42,8 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, methodI
     Main.methodParams[methodId].posY !== posY ||
     Main.methodParams[methodId].width !== width ||
     Main.methodParams[methodId].height !== height ||
+    Main.methodParams[methodId].lineWidth !== lineWidth ||
+    Main.methodParams[methodId].color !== color ||
     Main.methodParams[methodId].isFilled !== isFilled
   ) {
     Main.stage.beginPath();
@@ -59,7 +61,6 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, methodI
       Main.stage.stroke();
     }
   }
-
   if (!Main.methodParams[methodId]) {
     let params = {
       posX: posX,
@@ -76,6 +77,58 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, methodI
     Main.methodParams[methodId].posY = posY;
     Main.methodParams[methodId].width = width;
     Main.methodParams[methodId].height = height;
+    Main.methodParams[methodId].lineWidth = lineWidth;
+    Main.methodParams[methodId].color = color;
+    Main.methodParams[methodId].isFilled = isFilled;
+  }
+}
+
+// this will draw a circle to the screen
+// ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
+function drawArc(posX, posY, radius, aglStrt, aglEnd, lineWidth, color, isFilled, methodId) {
+  if (!Main.methodParams[methodId] || Main.isResizing ||
+    Main.methodParams[methodId].posX !== posX ||
+    Main.methodParams[methodId].posY !== posY ||
+    Main.methodParams[methodId].radius !== radius ||
+    Main.methodParams[methodId].aglStrt !== aglStrt ||
+    Main.methodParams[methodId].aglEnd !== aglEnd ||
+    Main.methodParams[methodId].lineWidth !== lineWidth ||
+    Main.methodParams[methodId].color !== color ||
+    Main.methodParams[methodId].isFilled !== isFilled
+  ) {
+    Main.stage.beginPath();
+    if (!lineWidth) {
+      Main.stage.lineWidth = '1';
+    } else {
+      Main.stage.lineWidth = lineWidth;
+    }
+    Main.stage.arc(posX, posY, radius, aglStrt, aglEnd);
+    if (isFilled) {
+      Main.stage.fillStyle = color;
+      Main.stage.fill();
+    } else {
+      Main.stage.strokeStyle = color;
+      Main.stage.stroke();
+    }
+  }
+  if (!Main.methodParams[methodId]) {
+    let params = {
+      posX: posX,
+      posY: posY,
+      radius: radius,
+      aglStrt: aglStrt,
+      aglEnd: aglEnd,
+      lineWidth: lineWidth,
+      color: color,
+      isFilled: isFilled,
+    }
+    Main.methodParams.push(params);
+  } else {
+    Main.methodParams[methodId].posX = posX;
+    Main.methodParams[methodId].posY = posY;
+    Main.methodParams[methodId].radius = radius;
+    Main.methodParams[methodId].aglStrt = aglStrt;
+    Main.methodParams[methodId].aglEnd = aglEnd;
     Main.methodParams[methodId].lineWidth = lineWidth;
     Main.methodParams[methodId].color = color;
     Main.methodParams[methodId].isFilled = isFilled;
