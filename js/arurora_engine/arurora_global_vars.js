@@ -11,7 +11,8 @@ let Main = { // global variables to keep the game running nicely
   interval: undefined, // the main loop running
   intervalAnimateId: undefined, // the main loop's animation id
   stage: undefined, // the 2D game stage
-  resizeWindow: undefined, // when the browser window gets resized
+  resizeWindow: undefined, // when the browser window gets resized in the timeout
+  isResizing: false,
   resizeWindowTime: 250, // how long to wait for the browser to resize
   entitySize: 0, // this is a base standard for how big an object will be drawn to the screen
   entityWidth: 0, // this is the base standard for the width of an entity

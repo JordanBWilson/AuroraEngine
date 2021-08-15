@@ -46,11 +46,20 @@ function mainLoop() {
 function resizeStage() {
   // don't want to grab the new width and height too many times..
   clearTimeout(Main.resizeWindow);
+  // Main.resizeWindow = undefined;
+
   Main.resizeWindow = setTimeout(function() {
     // resize the game stage and set new base values
     Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
     Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
     Main.entitySize = (Game.canvas.height * 0.01);
     Main.entityWidth = (Game.canvas.width * 0.01);
+    Main.isResizing = true;
+    const doneResizing = setTimeout(function() {
+      Main.isResizing = false;
+      clearTimeout(doneResizing);
+    }, 50);
   }, Main.resizeWindowTime);
+
+
 }
