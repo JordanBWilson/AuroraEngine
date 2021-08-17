@@ -10,7 +10,7 @@
       screenTapped(event);
     }, false);
     resizeStage();
-    console.log(Game);
+    console.log(Main);
     mainLoop();
   }
 })();
@@ -23,8 +23,8 @@ function mainLoop() {
         Game.methodsToRun[i].method(i); // run through all the methods the user sent us
         Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop});
         if (Main.isStageTapped) { // when the stage is tapped
-          if (Main.methodParams[i].isBtn) { // look to see if the user tapped on a button
-            isButtonTapped(Main.methodParams[i]);
+          if (Game.methodParams[i].isBtn) { // look to see if the user tapped on a button
+            isButtonTapped(Game.methodParams[i]);
             if (i == Game.methodsToRun.length - 1) {
               Main.isStageTapped = false;
               Main.tappedX = 0;
