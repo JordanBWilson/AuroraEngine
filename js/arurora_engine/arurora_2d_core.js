@@ -90,11 +90,11 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
 }
 // this will draw a circle to the screen
 // ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
-function drawArc(posX, posY, radius, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, methodId) {
+function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, methodId) {
   if (!Game.methodParams[methodId] || Main.isResizing ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
-    Game.methodParams[methodId].radius !== radius ||
+    Game.methodParams[methodId].width !== width ||
     Game.methodParams[methodId].aglStrt !== aglStrt ||
     Game.methodParams[methodId].aglEnd !== aglEnd ||
     Game.methodParams[methodId].lineWidth !== lineWidth ||
@@ -109,7 +109,7 @@ function drawArc(posX, posY, radius, aglStrt, aglEnd, lineWidth, color, isFilled
     } else {
       Main.stage.lineWidth = lineWidth;
     }
-    Main.stage.arc(posX, posY, radius, aglStrt, aglEnd);
+    Main.stage.arc(posX, posY, width, aglStrt, aglEnd);
     if (isFilled) {
       Main.stage.fillStyle = color;
       Main.stage.fill();
@@ -122,7 +122,7 @@ function drawArc(posX, posY, radius, aglStrt, aglEnd, lineWidth, color, isFilled
     let params = {
       posX: posX,
       posY: posY,
-      radius: radius,
+      width: width,
       aglStrt: aglStrt,
       aglEnd: aglEnd,
       lineWidth: lineWidth,
@@ -135,7 +135,7 @@ function drawArc(posX, posY, radius, aglStrt, aglEnd, lineWidth, color, isFilled
   } else {
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
-    Game.methodParams[methodId].radius = radius;
+    Game.methodParams[methodId].width = width;
     Game.methodParams[methodId].aglStrt = aglStrt;
     Game.methodParams[methodId].aglEnd = aglEnd;
     Game.methodParams[methodId].lineWidth = lineWidth;

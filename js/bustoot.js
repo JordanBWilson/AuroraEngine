@@ -16,7 +16,7 @@ function drawMainMenu() { // draw the main menu
   Game.clearStage();
   const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, id);} };
   Game.methodsToRun.push(backgroundColor);
-  const majorTitle = { method: function(id) {drawText('3em serif', 'Breakout', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', id);} };
+  const majorTitle = { method: function(id) {drawText('3em serif', 'Bustoot', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', id);} };
   const minorTitle = { method: function(id) {drawText('16px serif', 'An Arurora Engine Demo', (Game.canvas.width * 0.5), (Game.canvas.height * 0.14), 'green', 'center', id);} };
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);

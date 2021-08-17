@@ -9,7 +9,8 @@ let Game = { // the user will want to play with this object
   clearStage: function() { // clear the game stage
     Game.methodsToRun = [];
     Game.methodParams = [];
-  }
+  },
+  collisions: [],
 };
 
 let Main = { // global variables to keep the game running nicely
