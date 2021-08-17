@@ -48,7 +48,14 @@ function mainLoop() {
             for (let j = 0; j < primaryMethods.length; j++) {
               for (let k = 0; k < targetMethods.length; k++) {
                 if (primaryMethods[j].posX >= targetMethods[k].posX && primaryMethods[j].posX <= targetMethods[k].posX + targetMethods[k].width) {
-                  if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + targetMethods[k].height) {
+                  let widthOrHeight = 0;
+                  // because we are dealing with arcs as well, you can't be too careful
+                  if (!targetMethods[k].height) {
+                    widthOrHeight = targetMethods[k].width;
+                  } else {
+                    widthOrHeight = targetMethods[k].height;
+                  }
+                  if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
                     Game.collisions[i].method();
                   }
                 }
