@@ -11,6 +11,10 @@ let Game = { // the user will want to play with this object
     Game.methodParams = [];
   },
   collisions: [],
+  deleteEntity: function(id) {
+    Game.methodsToRun.splice(id, 1);
+    Game.methodParams.splice(id, 1);
+  }
 };
 
 let Main = { // global variables to keep the game running nicely

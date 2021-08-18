@@ -5,11 +5,52 @@
   drawMainMenu();
 })();
 
+let ball = {}; // initialize the game ball
+let background = {};
+
 function playGame() { // draw the game
   console.log('Play');
+  ball = {
+    posX: (Game.canvas.width * 0.5),
+    posY: (Game.canvas.height * 0.5),
+    width: (Main.entitySize * 2),
+    aglStrt: 0,
+    aglEnd: 2 * Math.PI,
+    lineWidth: 2,
+    color: 'green',
+    isFilled: true,
+    id: 'ball',
+    isSolid: true,
+    methodId: undefined,
+  }
+  background = {
+    posX: 0,
+    posY: 0,
+    width: Game.canvas.width,
+    height: Game.canvas.height,
+    lineWidth: 1,
+    color: 'black',
+    isFilled: true,
+    id: 'background',
+    isSolid: false,
+    methodId: undefined,
+  }
   Game.clearStage();
-  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, id);} };
+  const backgroundColor = { method: function(id) {background.methodId = id;drawRect(background.posX, background.posY, background.width, background.height, background.lineWidth, background.color, background.isFilled, background.id, background.isSolid, id);} };
   Game.methodsToRun.push(backgroundColor);
+  const gameBall = { method: function(id) {ball.methodId = id;drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.methodId);} };
+  Game.methodsToRun.push(gameBall);
+  const playGameBall = { method: function(id) { moveGameBall(); }};
+  Game.methodsToRun.push(playGameBall);
+}
+
+function moveGameBall() {
+  Main.stage.clearRect(ball.posX - (Game.canvas.width * 0.05), ball.posY - (Game.canvas.height * 0.02), ball.width * 2, ball.width * 2);
+  ball.posX += (Game.canvas.width * 0.01);
+
+  // Game.deleteEntity(ball.methodId);
+
+  // console.log(ball.methodId);
 }
 
 function drawMainMenu() { // draw the main menu
