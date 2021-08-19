@@ -1,8 +1,8 @@
 
 // draws text to the stage and only redraws it if the stage has been resized
 // ex: '48px serif', 'Hello', 10, 50, 'black', 'start'
-function drawText(font, msg, posX, posY, color, align, methodId) {
-  if (!Game.methodParams[methodId] || Main.isResizing ||
+function drawText(font, msg, posX, posY, color, align, isAnim, methodId) {
+  if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].font !== font ||
     Game.methodParams[methodId].msg !== msg ||
     Game.methodParams[methodId].posX !== posX ||
@@ -25,6 +25,7 @@ function drawText(font, msg, posX, posY, color, align, methodId) {
       posY: posY,
       color: color,
       align: align,
+      isAnim: isAnim,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -35,13 +36,14 @@ function drawText(font, msg, posX, posY, color, align, methodId) {
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].color = color;
     Game.methodParams[methodId].align = align;
+    Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].methodId = methodId;
   }
 }
 // this will draw a rectangle to the screen
 // ex: 9, 51, 100, 100, 1, 'green', false
-function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, methodId) {
-  if (!Game.methodParams[methodId] || Main.isResizing ||
+function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, methodId) {
+  if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
     Game.methodParams[methodId].width !== width ||
@@ -78,6 +80,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       isFilled: isFilled,
       id: id,
       isSolid: isSolid,
+      isAnim: isAnim,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -91,14 +94,16 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[methodId].isFilled = isFilled;
     Game.methodParams[methodId].id = id;
     Game.methodParams[methodId].isSolid = isSolid;
+    Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].methodId = methodId;
+    
   }
 }
 // this will draw a circle to the screen
 // ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
-function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, methodId) {
+function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, isAnim, methodId) {
 
-  if (!Game.methodParams[methodId] || Main.isResizing ||
+  if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
     Game.methodParams[methodId].width !== width ||
@@ -143,6 +148,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isFilled: isFilled,
       id: id,
       isSolid: isSolid,
+      isAnim: isAnim,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -157,14 +163,15 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[methodId].isFilled = isFilled;
     Game.methodParams[methodId].id = id;
     Game.methodParams[methodId].isSolid = isSolid;
+    Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].methodId = methodId;
   }
   // if (Game.methodParams[methodId]) {
   //   Main.stage.clearRect(Game.methodParams[methodId].posX, Game.methodParams[methodId].posY, Game.methodParams[methodId].width * 2, Game.methodParams[methodId].width * 2);
   // }
 }
-function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, methodId) {
-  if (!Game.methodParams[methodId] || Main.isResizing ||
+function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, methodId) {
+  if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
     Game.methodParams[methodId].width !== width ||
@@ -213,6 +220,7 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       isFilled: isFilled,
       action: action,
       isBtn: true,
+      isAnim: isAnim,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -228,6 +236,7 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
     Game.methodParams[methodId].msg = msg;
     Game.methodParams[methodId].isFilled = isFilled;
     Game.methodParams[methodId].action = action;
+    Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].methodId = methodId;
   }
 }
