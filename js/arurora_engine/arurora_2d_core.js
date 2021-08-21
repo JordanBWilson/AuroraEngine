@@ -42,7 +42,7 @@ function drawText(font, msg, posX, posY, color, align, isAnim, methodId) {
 }
 // this will draw a rectangle to the screen
 // ex: 9, 51, 100, 100, 1, 'green', false
-function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, methodId) {
+function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, methodId) {
   if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
@@ -81,6 +81,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       id: id,
       isSolid: isSolid,
       isAnim: isAnim,
+      isBackground: isBackground,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -95,6 +96,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[methodId].id = id;
     Game.methodParams[methodId].isSolid = isSolid;
     Game.methodParams[methodId].isAnim = isAnim;
+    Game.methodParams[methodId].isBackground = isBackground;
     Game.methodParams[methodId].methodId = methodId;
     
   }
