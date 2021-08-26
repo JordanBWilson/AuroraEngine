@@ -2,7 +2,7 @@
 // draws text to the stage and only redraws it if the stage has been resized
 // ex: '48px serif', 'Hello', 10, 50, 'black', 'start'
 function drawText(font, msg, posX, posY, color, align, isAnim, methodId) {
-  if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
+  if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
     Game.methodParams[methodId].font !== font ||
     Game.methodParams[methodId].msg !== msg ||
     Game.methodParams[methodId].posX !== posX ||
@@ -98,14 +98,16 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].isBackground = isBackground;
     Game.methodParams[methodId].methodId = methodId;
-    
+
   }
 }
 // this will draw a circle to the screen
 // ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
 function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, isAnim, methodId) {
-
-  if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
+  if (Game.methodParams[methodId] && Game.methodParams[methodId].posX !== posX) {
+    isAnim = true;
+  }
+  if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
     Game.methodParams[methodId].width !== width ||
@@ -173,7 +175,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
   // }
 }
 function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, methodId) {
-  if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
+  if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
     Game.methodParams[methodId].width !== width ||

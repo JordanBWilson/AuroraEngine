@@ -33,37 +33,7 @@ function mainLoop() {
           }
         }
       }
-      // this will check for any collisions in game
-      if (Game.collisions.length > 0) {
-        // find all the methods that are accepting collision events
-        let solidMethods = Game.methodParams.find(x => x.isSolid);
-        if (solidMethods.length > 0) {
-          // go through all the collisions
-          for (let i = 0; i < Game.collisions.length; i++) {
-            let primary = Game.collisions[i].primary;
-            let target = Game.collisions[i].target;
-            let primaryMethods = Game.methodParams.find(x => x.id === primary);
-            let targetMethods = Game.methodParams.find(x => x.id === target);
-
-            for (let j = 0; j < primaryMethods.length; j++) {
-              for (let k = 0; k < targetMethods.length; k++) {
-                if (primaryMethods[j].posX >= targetMethods[k].posX && primaryMethods[j].posX <= targetMethods[k].posX + targetMethods[k].width) {
-                  let widthOrHeight = 0;
-                  // because we are dealing with arcs as well, you can't be too careful
-                  if (!targetMethods[k].height) {
-                    widthOrHeight = targetMethods[k].width;
-                  } else {
-                    widthOrHeight = targetMethods[k].height;
-                  }
-                  if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
-                    Game.collisions[i].method();
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+      collisionCheck();
     } else {
       // stop the game
       console.log('The game has stopped. No more methods to listen to.');
@@ -104,6 +74,40 @@ function isButtonTapped(btnParams) {
       Main.isStageTapped = false;
       Main.tappedX = 0;
       Main.tappedY = 0;
+    }
+  }
+}
+
+function collisionCheck() {
+  // this will check for any collisions in game
+  if (Game.collisions.length > 0) {
+    // find all the methods that are accepting collision events
+    let solidMethods = Game.methodParams.find(x => x.isSolid);
+    if (solidMethods.length > 0) {
+      // go through all the collisions
+      for (let i = 0; i < Game.collisions.length; i++) {
+        let primary = Game.collisions[i].primary;
+        let target = Game.collisions[i].target;
+        let primaryMethods = Game.methodParams.find(x => x.id === primary);
+        let targetMethods = Game.methodParams.find(x => x.id === target);
+
+        for (let j = 0; j < primaryMethods.length; j++) {
+          for (let k = 0; k < targetMethods.length; k++) {
+            if (primaryMethods[j].posX >= targetMethods[k].posX && primaryMethods[j].posX <= targetMethods[k].posX + targetMethods[k].width) {
+              let widthOrHeight = 0;
+              // because we are dealing with arcs as well, you can't be too careful
+              if (!targetMethods[k].height) {
+                widthOrHeight = targetMethods[k].width;
+              } else {
+                widthOrHeight = targetMethods[k].height;
+              }
+              if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
+                Game.collisions[i].method();
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
