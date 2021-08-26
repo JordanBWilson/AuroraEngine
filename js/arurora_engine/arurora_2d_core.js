@@ -43,6 +43,28 @@ function drawText(font, msg, posX, posY, color, align, isAnim, methodId) {
 // this will draw a rectangle to the screen
 // ex: 9, 51, 100, 100, 1, 'green', false
 function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, methodId) {
+  if (Game.methodParams[methodId] && Game.methodParams[methodId].isBackground) {
+    let animated = Game.methodParams.find(x => x.isAnim === true);
+    // console.log(animated);
+    if (animated) {
+      for (let i = 0; i < animated.length; i++) {
+        if (animated[i].posX >= Game.methodParams[methodId].posX && animated[i].posX <= Game.methodParams[methodId].posX + Game.methodParams[methodId].width) {
+          let widthOrHeight = 0;
+          // because we are dealing with arcs as well, you can't be too careful
+          if (!Game.methodParams[methodId].height) {
+            widthOrHeight = Game.methodParams[methodId].width;
+          } else {
+            widthOrHeight = Game.methodParams[methodId].height;
+          }
+          if (animated[i].posY >= targetMethods[k].posY && animated[i].posY <= Game.methodParams[methodId].posY + widthOrHeight) {
+            // Game.collisions[i].method();
+            isAnim = true;
+            console.log(isAnim);
+          }
+      }
+    }
+  }
+}
   if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
@@ -86,6 +108,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     }
     Game.methodParams.push(params);
   } else {
+    isAnim = false;
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].width = width;
@@ -98,7 +121,6 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].isBackground = isBackground;
     Game.methodParams[methodId].methodId = methodId;
-
   }
 }
 // this will draw a circle to the screen

@@ -35,7 +35,7 @@ function playGame() { // draw the game
     id: 'background',
     isSolid: false,
     isAnim: false,
-    isBackground: false,
+    isBackground: true,
     methodId: undefined,
   }
   Game.clearStage();
