@@ -1,8 +1,8 @@
 
 // draws text to the stage and only redraws it if the stage has been resized
 // ex: '48px serif', 'Hello', 10, 50, 'black', 'start'
-function drawText(font, msg, posX, posY, color, align, isAnim, methodId) {
-  if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
+function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) {
+  if (!Game.methodParams[methodId] || Main.isResizing ||
     Game.methodParams[methodId].font !== font ||
     Game.methodParams[methodId].msg !== msg ||
     Game.methodParams[methodId].posX !== posX ||
@@ -26,6 +26,7 @@ function drawText(font, msg, posX, posY, color, align, isAnim, methodId) {
       color: color,
       align: align,
       isAnim: isAnim,
+      props: props,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -37,34 +38,29 @@ function drawText(font, msg, posX, posY, color, align, isAnim, methodId) {
     Game.methodParams[methodId].color = color;
     Game.methodParams[methodId].align = align;
     Game.methodParams[methodId].isAnim = isAnim;
+    Game.methodParams[methodId].props = props;
     Game.methodParams[methodId].methodId = methodId;
   }
 }
 // this will draw a rectangle to the screen
 // ex: 9, 51, 100, 100, 1, 'green', false
-function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, methodId) {
-  if (Game.methodParams[methodId] && Game.methodParams[methodId].isBackground) {
-    let animated = Game.methodParams.find(x => x.isAnim === true);
-    // console.log(animated);
-    if (animated) {
-      for (let i = 0; i < animated.length; i++) {
-        if (animated[i].posX >= Game.methodParams[methodId].posX && animated[i].posX <= Game.methodParams[methodId].posX + Game.methodParams[methodId].width) {
-          let widthOrHeight = 0;
-          // because we are dealing with arcs as well, you can't be too careful
-          if (!Game.methodParams[methodId].height) {
-            widthOrHeight = Game.methodParams[methodId].width;
-          } else {
-            widthOrHeight = Game.methodParams[methodId].height;
-          }
-          if (animated[i].posY >= targetMethods[k].posY && animated[i].posY <= Game.methodParams[methodId].posY + widthOrHeight) {
-            // Game.collisions[i].method();
+function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, props, methodId) {
+  // check to see if there is animations going on.
+  if (Game.methodParams[methodId] && Game.methodParams[methodId].isBackground) { // is this rect a backgound..
+    for (let i = 0; i < Game.methodParams.length; i++) { // find any method param that in colliding with this background
+      if (Game.methodParams[i].isAnim) {
+        if (Game.methodParams[i].posX >= Game.methodParams[methodId].posX - Game.methodParams[i].width &&
+           Game.methodParams[i].posX <= Game.methodParams[methodId].posX + Game.methodParams[methodId].width + Game.methodParams[i].width) {
+          if (Game.methodParams[i].posY >= Game.methodParams[methodId].posY - Game.methodParams[i].width  &&
+             Game.methodParams[i].posY <= Game.methodParams[methodId].posY + Game.methodParams[methodId].height + Game.methodParams[i].width) {
+
             isAnim = true;
-            console.log(isAnim);
+            Game.methodParams[i].isAnim = false;
           }
+        }
       }
     }
   }
-}
   if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
@@ -104,6 +100,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       isSolid: isSolid,
       isAnim: isAnim,
       isBackground: isBackground,
+      props: props,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -120,13 +117,14 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[methodId].isSolid = isSolid;
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].isBackground = isBackground;
+    Game.methodParams[methodId].props = props;
     Game.methodParams[methodId].methodId = methodId;
   }
 }
 // this will draw a circle to the screen
 // ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
-function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, isAnim, methodId) {
-  if (Game.methodParams[methodId] && Game.methodParams[methodId].posX !== posX) {
+function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, isAnim, props, methodId) {
+  if (Game.methodParams[methodId] && (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY)) {
     isAnim = true;
   }
   if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
@@ -175,6 +173,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       id: id,
       isSolid: isSolid,
       isAnim: isAnim,
+      props: props,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -190,13 +189,14 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[methodId].id = id;
     Game.methodParams[methodId].isSolid = isSolid;
     Game.methodParams[methodId].isAnim = isAnim;
+    Game.methodParams[methodId].props = props;
     Game.methodParams[methodId].methodId = methodId;
   }
   // if (Game.methodParams[methodId]) {
   //   Main.stage.clearRect(Game.methodParams[methodId].posX, Game.methodParams[methodId].posY, Game.methodParams[methodId].width * 2, Game.methodParams[methodId].width * 2);
   // }
 }
-function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, methodId) {
+function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, props, methodId) {
   if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
@@ -247,6 +247,7 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       action: action,
       isBtn: true,
       isAnim: isAnim,
+      props: props,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -263,6 +264,7 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
     Game.methodParams[methodId].isFilled = isFilled;
     Game.methodParams[methodId].action = action;
     Game.methodParams[methodId].isAnim = isAnim;
+    Game.methodParams[methodId].props = props;
     Game.methodParams[methodId].methodId = methodId;
   }
 }
