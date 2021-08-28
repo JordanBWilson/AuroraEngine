@@ -46,7 +46,7 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
 // ex: 9, 51, 100, 100, 1, 'green', false
 function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, props, methodId) {
   // check to see if there is animations going on.
-  if (Game.methodParams[methodId] && Game.methodParams[methodId].isBackground) { // is this rect a backgound..
+  if (!Main.isResizing && Game.methodParams[methodId] && Game.methodParams[methodId].isBackground) { // is this rect a backgound..
     for (let i = 0; i < Game.methodParams.length; i++) { // find any method param that in colliding with this background
       if (Game.methodParams[i].isAnim) {
         if (Game.methodParams[i].posX >= Game.methodParams[methodId].posX - Game.methodParams[i].width &&
@@ -56,11 +56,32 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
 
             isAnim = true;
             Game.methodParams[i].isAnim = false;
+            
+            
           }
         }
       }
     }
+    //for (let j = 0; j < Game.methodParams.length; j++) {
+              //if (Game.methodParams[j].posX >= Game.methodParams[methodId].posX - Game.methodParams[j].width &&
+                  //Game.methodParams[j].posX <= Game.methodParams[methodId].posX + Game.methodParams[methodId].width + Game.methodParams[j].width) {
+                    
+              //let widthOrHeight = 0;
+              // because we are dealing with arcs as well, you can't be too careful
+              //if (!targetMethods[j].height) {
+                //widthOrHeight = targetMethods[j].width;
+              //} else {
+                //widthOrHeight = targetMethods[j].height;
+              //}
+              //if (Game.methodParams[j].posY >= Game.methodParams[methodId].posY - Game.methodParams[j].width  &&
+                   //Game.methodParams[j].posY <= Game.methodParams[methodId].posY + Game.methodParams[methodId].height + widthOrHeight) {
+                     
+                     // Game.methodParams[j].isAnim = true;
+                  //}
+                //}
+              //}
   }
+  
   if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
