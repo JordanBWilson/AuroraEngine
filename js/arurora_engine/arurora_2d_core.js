@@ -56,32 +56,34 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
 
             isAnim = true;
             Game.methodParams[i].isAnim = false;
-            
-            
+
+            for (let j = 0; j < Game.methodParams.length; j++) {
+              if (Game.methodParams[j].posX >= Game.methodParams[methodId].posX - Game.methodParams[j].width &&
+                  Game.methodParams[j].posX <= Game.methodParams[methodId].posX + Game.methodParams[methodId].width + Game.methodParams[j].width) {
+
+                let widthOrHeight = 0;
+                // because we are dealing with arcs as well, you can't be too careful
+                if (!Game.methodParams[j].height) {
+                  widthOrHeight = Game.methodParams[j].width;
+                } else {
+                  widthOrHeight = Game.methodParams[j].height;
+                }
+                if (Game.methodParams[j].posY >= Game.methodParams[methodId].posY - Game.methodParams[j].width  &&
+                     Game.methodParams[j].posY <= Game.methodParams[methodId].posY + Game.methodParams[methodId].height + widthOrHeight) {
+
+                       // Game.methodParams[j].isAnim = true;
+                       // console.log(Game.methodParams[j]);
+                       // future Jordan, do a check where j is not i or the method id so that we can only see the brick
+                }
+              }
+            }
           }
         }
       }
     }
-    //for (let j = 0; j < Game.methodParams.length; j++) {
-              //if (Game.methodParams[j].posX >= Game.methodParams[methodId].posX - Game.methodParams[j].width &&
-                  //Game.methodParams[j].posX <= Game.methodParams[methodId].posX + Game.methodParams[methodId].width + Game.methodParams[j].width) {
-                    
-              //let widthOrHeight = 0;
-              // because we are dealing with arcs as well, you can't be too careful
-              //if (!targetMethods[j].height) {
-                //widthOrHeight = targetMethods[j].width;
-              //} else {
-                //widthOrHeight = targetMethods[j].height;
-              //}
-              //if (Game.methodParams[j].posY >= Game.methodParams[methodId].posY - Game.methodParams[j].width  &&
-                   //Game.methodParams[j].posY <= Game.methodParams[methodId].posY + Game.methodParams[methodId].height + widthOrHeight) {
-                     
-                     // Game.methodParams[j].isAnim = true;
-                  //}
-                //}
-              //}
+
   }
-  
+
   if (!Game.methodParams[methodId] || Main.isResizing || isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
