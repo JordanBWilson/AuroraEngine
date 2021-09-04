@@ -7,6 +7,7 @@
 
 let ball = {}; // initialize the game ball
 let brick = {};
+let bricks = [];
 let background = {};
 let collision = {};
 
@@ -29,38 +30,6 @@ function playGame() { // draw the game
     },
     methodId: undefined,
   }
-  brick = {
-    posX: Game.canvas.width * 0.50,
-    posY: Game.canvas.height * 0.10,
-    width: Game.canvas.width * 0.10,
-    height: Game.canvas.height * 0.05,
-    lineWidth: 1,
-    color: 'green',
-    isFilled: true,
-    id: 'brick',
-    isSolid: true,
-    isAnim: false,
-    isBackground: false,
-    props: {
-      hp: 2
-    },
-    methodId: undefined,
-  }
-  // brick1 = {
-  //   posX: Game.canvas.width * 0.10,
-  //   posY: Game.canvas.height * 0.10,
-  //   width: Game.canvas.width * 0.10,
-  //   height: Game.canvas.height * 0.05,
-  //   lineWidth: 1,
-  //   color: 'green',
-  //   isFilled: true,
-  //   id: 'brick',
-  //   isSolid: false,
-  //   isAnim: false,
-  //   isBackground: false,
-  //   props: {},
-  //   methodId: undefined,
-  // }
   backgroundTop = {
     posX: 0,
     posY: 0,
@@ -97,15 +66,32 @@ function playGame() { // draw the game
     method: function(id) {brickCollision(ball, brick)}
   }
   Game.clearStage();
-  const backgroundColorTop = { method: function(id) {backgroundTop.methodId = id;drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, id);} };
-  const backgroundColorBot = { method: function(id) {backgroundBot.methodId = id;drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, id);} };
+  const backgroundColorTop = { method: function(id) {backgroundTop.methodId = id; drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, id);} };
+  const backgroundColorBot = { method: function(id) {backgroundBot.methodId = id; drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, id);} };
   Game.methodsToRun.push(backgroundColorTop);
   Game.methodsToRun.push(backgroundColorBot);
-  const gameBrick = { method: function(id) {brick.methodId = id;drawRect(brick.posX, brick.posY, brick.width, brick.height, brick.lineWidth, brick.color, brick.isFilled, brick.id, brick.isSolid, brick.isAnim, brick.isBackground, brick.props, id);} };
-  // const gameBrick1 = { method: function(id) {brick1.methodId = id;drawRect(brick1.posX, brick1.posY, brick1.width, brick1.height, brick1.lineWidth, brick1.color, brick1.isFilled, brick1.id, brick1.isSolid, brick1.isAnim, brick1.isBackground, brick1.props, id);} };
+  // drawGameBricks();
+  brick = {
+    posX: Game.canvas.width * 0.5,
+    posY: Game.canvas.height * 0.10,
+    width: Game.canvas.width * 0.10,
+    height: Game.canvas.height * 0.05,
+    lineWidth: 1,
+    color: 'green',
+    isFilled: true,
+    id: 'brick',
+    isSolid: true,
+    isAnim: false,
+    isBackground: false,
+    props: {
+      hp: 2
+    },
+    methodId: undefined,
+  }
+
+  let gameBrick = { method: function(id) {brick.methodId = id; drawRect(brick.posX, brick.posY, brick.width, brick.height, brick.lineWidth, brick.color, brick.isFilled, brick.id, brick.isSolid, brick.isAnim, brick.isBackground, brick.props, id);} };
   Game.methodsToRun.push(gameBrick);
-  // Game.methodsToRun.push(gameBrick1);
-  const gameBall = { method: function(id) {ball.methodId = id;drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
+  const gameBall = { method: function(id) {ball.methodId = id; drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
   Game.methodsToRun.push(gameBall);
   const playGameBall = { method: function(id) { moveGameBall(); }};
   Game.methodsToRun.push(playGameBall);
@@ -143,12 +129,40 @@ function brickCollision(ball, brick) {
   }
 }
 
+function drawGameBricks() {
+
+  // for (let i = 1; i < 10; i++) {
+  //   brick = {
+  //     posX: Game.canvas.width * 0.5,
+  //     posY: Game.canvas.height * 0.10,
+  //     width: Game.canvas.width * 0.10,
+  //     height: Game.canvas.height * 0.05,
+  //     lineWidth: 1,
+  //     color: 'green',
+  //     isFilled: true,
+  //     id: 'brick',
+  //     isSolid: true,
+  //     isAnim: false,
+  //     isBackground: false,
+  //     props: {
+  //       hp: 2
+  //     },
+  //     methodId: undefined,
+  //   }
+  //
+  //   let gameBrick = { method: function(id) {brick.methodId = id; drawRect(brick.posX, brick.posY, brick.width, brick.height, brick.lineWidth, brick.color, brick.isFilled, brick.id, brick.isSolid, brick.isAnim, brick.isBackground, brick.props, id);} };
+  //   Game.methodsToRun.push(gameBrick);
+  //   console.log(brick.posX);
+  // }
+
+}
+
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
   const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
   Game.methodsToRun.push(backgroundColor);
   const majorTitle = { method: function(id) {drawText('3em serif', 'Bustoot', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', false, {}, id);} };
-  const minorTitle = { method: function(id) {drawText('16px serif', 'An Arurora Engine Demo', (Game.canvas.width * 0.5), (Game.canvas.height * 0.14), 'green', 'center', false, id);} };
+  const minorTitle = { method: function(id) {drawText('16px serif', 'An Arurora Engine Demo', (Game.canvas.width * 0.5), (Game.canvas.height * 0.14), 'green', 'center', false, {}, id);} };
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
   const brick1 = { method: function(id) {drawRect((Game.canvas.width * 0.01), (Game.canvas.height * 0.17), (Game.canvas.width * 0.15), (Main.entitySize * 6), 1, 'green', true, 'prop', false, false, false, {}, id);} };

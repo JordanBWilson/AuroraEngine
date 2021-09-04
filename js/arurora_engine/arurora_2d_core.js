@@ -2,6 +2,9 @@
 // draws text to the stage and only redraws it if the stage has been resized
 // ex: '48px serif', 'Hello', 10, 50, 'black', 'start'
 function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) {
+  if (Game.methodParams[methodId] && (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY)) {
+    isAnim = true;
+  }
   if (!Game.methodParams[methodId] || Main.isResizing ||
     Game.methodParams[methodId].font !== font ||
     Game.methodParams[methodId].msg !== msg ||
@@ -47,7 +50,9 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
 function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, props, methodId) {
   // check to see if there is animations going on.
   backgroundAnimationCheck(methodId);
-
+  if (Game.methodParams[methodId] && (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY)) {
+    isAnim = true;
+  }
   if (!Game.methodParams[methodId] || Main.isResizing || Game.methodParams[methodId].isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
@@ -118,7 +123,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
   if (Game.methodParams[methodId] && (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY)) {
     isAnim = true;
   }
-  if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
+  if (!Game.methodParams[methodId] || Main.isResizing ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
     Game.methodParams[methodId].width !== width ||
@@ -131,9 +136,6 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[methodId].isSolid !== isSolid
   ) {
     if (Game.methodParams[methodId]) {
-      // Main.stage.clearRect(Game.methodParams[methodId].posX, Game.methodParams[methodId].posY, Game.methodParams[methodId].width, Game.methodParams[methodId].width);
-      // Main.stage.clearRect(0, 0, Game.canvas.width, Game.canvas.width);
-      // console.log(Game.methodParams[methodId]);
       Main.stage.beginPath();
       if (!lineWidth) {
         Main.stage.lineWidth = '1';
@@ -148,7 +150,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
         Main.stage.strokeStyle = color;
         Main.stage.stroke();
       }
-      
+
       Game.methodParams[methodId].isAnim = false;
     }
 
@@ -185,12 +187,9 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[methodId].props = props;
     Game.methodParams[methodId].methodId = methodId;
   }
-  // if (Game.methodParams[methodId]) {
-  //   Main.stage.clearRect(Game.methodParams[methodId].posX, Game.methodParams[methodId].posY, Game.methodParams[methodId].width * 2, Game.methodParams[methodId].width * 2);
-  // }
 }
 function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, props, methodId) {
-  if (!Game.methodParams[methodId] || Main.isResizing || // isAnim ||
+  if (!Game.methodParams[methodId] || Main.isResizing ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
     Game.methodParams[methodId].width !== width ||
