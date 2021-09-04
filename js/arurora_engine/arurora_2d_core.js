@@ -73,6 +73,10 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       Main.stage.strokeStyle = color;
       Main.stage.stroke();
     }
+    if (Game.methodParams[methodId]) {
+      Game.methodParams[methodId].isAnim = false;
+    }
+
   }
   if (!Game.methodParams[methodId]) {
     let params = {
@@ -144,6 +148,8 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
         Main.stage.strokeStyle = color;
         Main.stage.stroke();
       }
+      
+      Game.methodParams[methodId].isAnim = false;
     }
 
   }

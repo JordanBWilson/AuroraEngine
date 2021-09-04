@@ -117,10 +117,19 @@ function backgroundAnimationCheck(methodId) {
   if (!Main.isResizing && Game.methodParams[methodId] && Game.methodParams[methodId].isBackground) { // is this rect a backgound..
     for (let i = 0; i < Game.methodParams.length; i++) { // find any method param that in colliding with this background
       if (Game.methodParams[i].isAnim) { // is this thing animated? Find if it is colliding with this background
+
+            let widthOrHeight = 0;
+            // because we are dealing with arcs as well, there might not be a height. you can't be too careful
+            if (!Game.methodParams[i].height) {
+              widthOrHeight = Game.methodParams[i].width;
+            } else {
+              widthOrHeight = Game.methodParams[i].height;
+            }
+
         if (Game.methodParams[i].posX >= Game.methodParams[methodId].posX - Game.methodParams[i].width &&
            Game.methodParams[i].posX <= Game.methodParams[methodId].posX + Game.methodParams[methodId].width + Game.methodParams[i].width) {
-          if (Game.methodParams[i].posY >= Game.methodParams[methodId].posY - Game.methodParams[i].width  &&
-             Game.methodParams[i].posY <= Game.methodParams[methodId].posY + Game.methodParams[methodId].height + Game.methodParams[i].width) {
+          if (Game.methodParams[i].posY >= Game.methodParams[methodId].posY - widthOrHeight  &&
+             Game.methodParams[i].posY <= Game.methodParams[methodId].posY + Game.methodParams[methodId].height + widthOrHeight) {
 
             for (let j = 0; j < Game.methodParams.length; j++) { // look and see if there is anything not animated that needs to be redrawn..
               if (Game.methodParams[j].posX >= Game.methodParams[methodId].posX - Game.methodParams[j].width &&
@@ -136,7 +145,7 @@ function backgroundAnimationCheck(methodId) {
                 if (Game.methodParams[j].posY >= Game.methodParams[methodId].posY - Game.methodParams[j].width  &&
                      Game.methodParams[j].posY <= Game.methodParams[methodId].posY + Game.methodParams[methodId].height + widthOrHeight) {
 
-                       if (!Game.methodParams[j].isAnim && j !== methodId) { // find out what shape this is and redraw it
+                       if (!Game.methodParams[j].isAnim && !Game.methodParams[j].isBackground && j !== methodId) { // find out what shape this is and redraw it
                          // this will need to be split up as the shapes and graphics grow
                          if (Game.methodParams[j].height) { // check for a rect shape
                            Game.methodParams[j].isAnim = true;
@@ -147,11 +156,9 @@ function backgroundAnimationCheck(methodId) {
               }
             }
             Game.methodParams[methodId].isAnim = true; // animate the background
-            Game.methodParams[i].isAnim = false;
           }
         }
       }
     }
-
   }
 }
