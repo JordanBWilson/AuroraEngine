@@ -6,7 +6,7 @@
 })();
 
 let ball = {}; // initialize the game ball
-let brick = {};
+// let brick = {};
 let bricks = [];
 let background = {};
 let collision = {};
@@ -63,34 +63,15 @@ function playGame() { // draw the game
   collision = {
     primary: 'ball',
     target: 'brick',
-    method: function(id) {brickCollision(ball, brick)}
+    method: function(id) {brickCollision(ball, bricks, this.methodId)},
+    methodId: undefined,
   }
   Game.clearStage();
   const backgroundColorTop = { method: function(id) {backgroundTop.methodId = id; drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, id);} };
   const backgroundColorBot = { method: function(id) {backgroundBot.methodId = id; drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, id);} };
   Game.methodsToRun.push(backgroundColorTop);
   Game.methodsToRun.push(backgroundColorBot);
-  // drawGameBricks();
-  brick = {
-    posX: Game.canvas.width * 0.5,
-    posY: Game.canvas.height * 0.10,
-    width: Game.canvas.width * 0.10,
-    height: Game.canvas.height * 0.05,
-    lineWidth: 1,
-    color: 'green',
-    isFilled: true,
-    id: 'brick',
-    isSolid: true,
-    isAnim: false,
-    isBackground: false,
-    props: {
-      hp: 2
-    },
-    methodId: undefined,
-  }
-
-  let gameBrick = { method: function(id) {brick.methodId = id; drawRect(brick.posX, brick.posY, brick.width, brick.height, brick.lineWidth, brick.color, brick.isFilled, brick.id, brick.isSolid, brick.isAnim, brick.isBackground, brick.props, id);} };
-  Game.methodsToRun.push(gameBrick);
+  drawGameBricks();
   const gameBall = { method: function(id) {ball.methodId = id; drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
   Game.methodsToRun.push(gameBall);
   const playGameBall = { method: function(id) { moveGameBall(); }};
@@ -119,41 +100,72 @@ function moveGameBall() {
   // console.log(ball.methodId);
 }
 
-function brickCollision(ball, brick) {
-  if (ball.props.direction === 'top') {
-    ball.props.direction = 'bot';
-    brick.props.hp--;
-  }
-  if (brick.props.hp === 0) {
-    Game.deleteEntity(brick.methodId);
-  }
+function brickCollision(ball, bricks, methodId) {
+  for (let i = 0; i < bricks.length; i++) {
+
+    if (bricks[i].methodId === methodId) {
+      if (ball.props.direction === 'top') {
+        ball.props.direction = 'bot';
+        bricks[i].props.hp--;
+        // console.log(brick.props.hp);
+      }
+
+      if (bricks[i].props.hp < 1) {
+        // console.log(bricks[i].props.hp);
+        // for (let i = 0; i < bricks.length; i++) {
+          // if (bricks[i].methodId === methodId) {
+            // console.log(Game.methodsToRun);
+
+            bricks.splice(i, 1);
+            // *************************
+            // figure out how to make real unique IDs
+            // *************************
+            // Game.deleteEntity(methodId);
+            break;
+          // }
+        }
+      }
+    }
+      // console.log(brick.methodId);
+
+
+
 }
 
 function drawGameBricks() {
 
-  // for (let i = 1; i < 10; i++) {
-  //   brick = {
-  //     posX: Game.canvas.width * 0.5,
-  //     posY: Game.canvas.height * 0.10,
-  //     width: Game.canvas.width * 0.10,
-  //     height: Game.canvas.height * 0.05,
-  //     lineWidth: 1,
-  //     color: 'green',
-  //     isFilled: true,
-  //     id: 'brick',
-  //     isSolid: true,
-  //     isAnim: false,
-  //     isBackground: false,
-  //     props: {
-  //       hp: 2
-  //     },
-  //     methodId: undefined,
-  //   }
-  //
-  //   let gameBrick = { method: function(id) {brick.methodId = id; drawRect(brick.posX, brick.posY, brick.width, brick.height, brick.lineWidth, brick.color, brick.isFilled, brick.id, brick.isSolid, brick.isAnim, brick.isBackground, brick.props, id);} };
+  for (let i = 0; i < 2; i++) {
+    let brick = {
+      posX: Game.canvas.width * ((i + 1) * 0.1),
+      posY: Game.canvas.height * 0.10,
+      width: Game.canvas.width * 0.50,
+      height: Game.canvas.height * 0.05,
+      lineWidth: 1,
+      color: 'green',
+      isFilled: true,
+      id: 'brick',
+      isSolid: true,
+      isAnim: false,
+      isBackground: false,
+      props: {
+        hp: 2
+      },
+      methodId: undefined,
+    }
+    bricks.push(brick); // if (ball.methodId === undefined){ball.methodId = id;}
+    let gameBrick = { method: function(id) {if (bricks[i]){bricks[i].methodId = id; drawRect(bricks[i].posX, bricks[i].posY, bricks[i].width, bricks[i].height, bricks[i].lineWidth, bricks[i].color, bricks[i].isFilled, bricks[i].id, bricks[i].isSolid, bricks[i].isAnim, bricks[i].isBackground, bricks[i].props, id);}} };
+    // console.log(bricks[i].methodId);
+    Game.methodsToRun.push(gameBrick);
+    // console.log(bricks[i]);
+    // console.log(bricks[0]);
+  }
+  // for (let i = 0; i < bricks.length; i++) {
+  //   let gameBrick = { method: function(id) {if (bricks[i]){bricks[i].methodId = id; drawRect(bricks[i].posX, bricks[i].posY, bricks[i].width, bricks[i].height, bricks[i].lineWidth, bricks[i].color, bricks[i].isFilled, bricks[i].id, bricks[i].isSolid, bricks[i].isAnim, bricks[i].isBackground, bricks[i].props, id);}} };
+  //   console.log(bricks[i].methodId);
   //   Game.methodsToRun.push(gameBrick);
-  //   console.log(brick.posX);
   // }
+  // console.log(Game.methodsToRun);
+  // console.log(bricks);
 
 }
 

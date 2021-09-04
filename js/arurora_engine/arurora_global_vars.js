@@ -14,7 +14,9 @@ let Game = { // the user will want to play with this object
   deleteEntity: function(id) {
     Game.methodsToRun.splice(id, 1);
     Game.methodParams.splice(id, 1);
-  }
+  },
+  break: false,
+  idList: []
 };
 
 let Main = { // global variables to keep the game running nicely

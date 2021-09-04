@@ -33,7 +33,7 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
       methodId: methodId,
     }
     Game.methodParams.push(params);
-  } else {
+  } else if (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
     Game.methodParams[methodId].font = font;
     Game.methodParams[methodId].msg = msg;
     Game.methodParams[methodId].posX = posX;
@@ -42,7 +42,7 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
     Game.methodParams[methodId].align = align;
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].props = props;
-    Game.methodParams[methodId].methodId = methodId;
+    // Game.methodParams[methodId].methodId = methodId;
   }
 }
 // this will draw a rectangle to the screen
@@ -50,9 +50,9 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
 function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, props, methodId) {
   // check to see if there is animations going on.
   backgroundAnimationCheck(methodId);
-  if (Game.methodParams[methodId] && (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY)) {
-    isAnim = true;
-  }
+  // if (Game.methodParams[methodId] && (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY)) {
+  //   isAnim = true;
+  // }
   if (!Game.methodParams[methodId] || Main.isResizing || Game.methodParams[methodId].isAnim ||
     Game.methodParams[methodId].posX !== posX ||
     Game.methodParams[methodId].posY !== posY ||
@@ -102,6 +102,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams.push(params);
   } else {
     isAnim = false;
+    // console.log(Game.methodParams[methodId]);
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].width = width;
@@ -114,7 +115,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].isBackground = isBackground;
     Game.methodParams[methodId].props = props;
-    Game.methodParams[methodId].methodId = methodId;
+    // Game.methodParams[methodId].methodId = methodId;
   }
 }
 // this will draw a circle to the screen
@@ -156,6 +157,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
 
   }
   if (!Game.methodParams[methodId]) {
+
     let params = {
       posX: posX,
       posY: posY,
@@ -172,7 +174,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       methodId: methodId,
     }
     Game.methodParams.push(params);
-  } else {
+  } else if (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].width = width;
@@ -185,7 +187,9 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[methodId].isSolid = isSolid;
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].props = props;
-    Game.methodParams[methodId].methodId = methodId;
+    // console.log(methodId);
+    // Game.methodParams[methodId].methodId = methodId;
+    // console.log(Game.methodParams[methodId].methodId);
   }
 }
 function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, props, methodId) {
@@ -243,7 +247,7 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       methodId: methodId,
     }
     Game.methodParams.push(params);
-  } else {
+  } else if (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].width = width;
@@ -257,6 +261,6 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
     Game.methodParams[methodId].action = action;
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].props = props;
-    Game.methodParams[methodId].methodId = methodId;
+    // Game.methodParams[methodId].methodId = methodId;
   }
 }

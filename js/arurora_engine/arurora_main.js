@@ -103,7 +103,12 @@ function collisionCheck() {
                 widthOrHeight = targetMethods[k].height;
               }
               if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
+                Game.collisions[i].methodId = targetMethods[k].methodId;
+                // console.log(targetMethods[k].methodId);
                 Game.collisions[i].method();
+                break;
+                //
+                // console.log(targetMethods[k]);
               }
             }
           }
