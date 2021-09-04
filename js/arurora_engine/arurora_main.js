@@ -82,15 +82,16 @@ function collisionCheck() {
   // this will check for any collisions in game
   if (Game.collisions.length > 0) {
     // find all the methods that are accepting collision events
-    let solidMethods = Game.methodParams.find(x => x.isSolid);
-    if (solidMethods.length > 0) {
+    let solidMethods = Game.methodParams.filter(x => x.isSolid === true);
+    if (solidMethods && solidMethods.length > 0) {
       // go through all the collisions
       for (let i = 0; i < Game.collisions.length; i++) {
         let primary = Game.collisions[i].primary;
         let target = Game.collisions[i].target;
-        let primaryMethods = Game.methodParams.find(x => x.id === primary);
-        let targetMethods = Game.methodParams.find(x => x.id === target);
+        let primaryMethods = Game.methodParams.filter(x => x.id === primary);
+        let targetMethods = Game.methodParams.filter(x => x.id === target);
 
+        // find out if a collision is happening
         for (let j = 0; j < primaryMethods.length; j++) {
           for (let k = 0; k < targetMethods.length; k++) {
             if (primaryMethods[j].posX >= targetMethods[k].posX && primaryMethods[j].posX <= targetMethods[k].posX + targetMethods[k].width) {
