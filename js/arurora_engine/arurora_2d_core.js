@@ -30,6 +30,7 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
       align: align,
       isAnim: isAnim,
       props: props,
+      isDeleted: false,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -97,6 +98,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       isAnim: isAnim,
       isBackground: isBackground,
       props: props,
+      isDeleted: false,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -171,6 +173,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isSolid: isSolid,
       isAnim: isAnim,
       props: props,
+      isDeleted: false,
       methodId: methodId,
     }
     Game.methodParams.push(params);
@@ -244,6 +247,7 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       isBtn: true,
       isAnim: isAnim,
       props: props,
+      isDeleted: false,
       methodId: methodId,
     }
     Game.methodParams.push(params);
