@@ -176,6 +176,8 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isDeleted: false,
       methodId: methodId,
     }
+    // the reason Game.method params repopulates, is because when we delete a
+    // brick, it checks if the image exists and when it doesn't, it fills in the ball
     Game.methodParams.push(params);
   } else if (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
     Game.methodParams[methodId].posX = posX;

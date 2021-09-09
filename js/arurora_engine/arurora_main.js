@@ -80,17 +80,18 @@ function mainLoop() {
 
           for (let k = 0; k < Game.methodsToRun.length; k++) {
             if (Game.methodParams[j].methodId === Game.methodsToRun[k].methodId) {
-              console.log(Game.methodParams[j]);
+              // console.log(Game.methodParams[j]);
               // this.methodParams[i].isDeleted = true;
               Game.methodParams.splice(j, 1);
               Game.methodsToRun.splice(k, 1);
-
-              Game.break = true;
+              // console.log(Game.methodsToRun, Game.methodParams);
+              // Game.break = true;
             }
           }
+
         }
       }
-
+      // console.log(Game.methodsToRun, Game.methodParams);
       // collisionCheck();
       // Game.break = false;
       // Game.break = false;
