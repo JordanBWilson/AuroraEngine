@@ -19,19 +19,7 @@ function mainLoop() {
   Main.interval = setInterval(function() {
     if (Game.methodsToRun.length > 0) {
       // run the game
-      // console.log(Game.methodParams);
       for (let i = 0; i < Game.methodsToRun.length; i++) {
-
-        // if (Game.methodParams[i]?.isDeleted === true) {
-        //   console.log(i);
-        //   // Game.clearStage();
-        //   Game.methodsToRun.splice(i, 1);
-        //   Game.methodParams.splice(i, 1);
-        //   i = 0;
-        //   // break
-        // }
-
-
 
         Game.methodsToRun[i].method(i); // run through all the methods the user sent us
         if (Game.methodsToRun[i].methodId === undefined) {
@@ -50,77 +38,11 @@ function mainLoop() {
             }
           }
         }
-        // console.log(Game.methodParams[i]);
-
-        // if (Game.methodParams.length > 0) {
-        //   if (Game.methodParams[i]?.isDeleted === true) {
-        //
-        //
-        //     // Game.methodsToRun.splice(i, 1);
-        //     // Game.methodParams.splice(i, 1);
-        //
-        //     // console.log(Game.methodParams);
-        //     // i = 0;
-        //     //break
-        //   }
-        // }
       }
-      // if (!Game.break) {
-      //   collisionCheck();
-      // }
 
+      collisionCheck();
 
-
-      // if (!Game.break) {
-        collisionCheck();
-      // }
-
-      for (let j = 0; j < Game.methodParams.length; j++) {
-        if (Game.methodParams[j]?.isDeleted === true) {
-
-          for (let k = 0; k < Game.methodsToRun.length; k++) {
-            if (Game.methodParams[j].methodId === Game.methodsToRun[k].methodId) {
-              // console.log(Game.methodParams[j]);
-              // this.methodParams[i].isDeleted = true;
-              Game.methodParams.splice(j, 1);
-              Game.methodsToRun.splice(k, 1);
-              // console.log(Game.methodsToRun, Game.methodParams);
-              // Game.break = true;
-            }
-          }
-
-        }
-      }
-      // console.log(Game.methodsToRun, Game.methodParams);
-      // collisionCheck();
-      // Game.break = false;
-      // Game.break = false;
-      // for (let i = 0; i < Game.methodParams.length; i++) {
-      //   // console.log(Game.methodParams[i].isDeleted);
-      //   if (Game.methodParams[i]?.isDeleted === true) {
-      //     console.log(i);
-      //     // Game.clearStage();
-      //     Game.methodsToRun.splice(i, 1);
-      //     Game.methodParams.splice(i, 1);
-      //     i = 0;
-      //     // break
-      //   }
-      // }
-      // for (let i = 0; i < Game.methodParams.length; i++) {
-      //   if (Game.methodParams[i]?.isDeleted === true) {
-      //
-      //     for (let k = 0; k < Game.methodsToRun.length; k++) {
-      //       if (Game.methodParams[i].methodId === Game.methodsToRun[k].methodId) {
-      //         // console.log(Game.methodParams[i]);
-      //         // this.methodParams[i].isDeleted = true;
-      //         Game.methodParams.splice(i, 1);
-      //         Game.methodsToRun.splice(k, 1);
-      //
-      //       }
-      //     }
-      //   }
-      // }
-      // deletedCheck();
+      deletedCheck();
     } else {
       // stop the game
       console.log('The game has stopped. No more methods to listen to.');
@@ -180,7 +102,6 @@ function collisionCheck() {
 
         // find out if a collision is happening
         for (let j = 0; j < primaryMethods.length; j++) {
-          // console.log(j);
           for (let k = 0; k < targetMethods.length; k++) {
             if (primaryMethods[j].posX >= targetMethods[k].posX && primaryMethods[j].posX <= targetMethods[k].posX + targetMethods[k].width) {
               let widthOrHeight = 0;
@@ -192,11 +113,7 @@ function collisionCheck() {
               }
               if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
                 Game.collisions[i].methodId = targetMethods[k].methodId;
-                // console.log(primaryMethods[j], targetMethods[k]);
-                console.log(targetMethods[k].methodId);
                 Game.collisions[i].method();
-                // Game.collisions[i].method();
-                // console.log(targetMethods[k]);
               }
             }
             break;
@@ -258,14 +175,16 @@ function backgroundAnimationCheck(methodId) {
 }
 
 function deletedCheck() {
-  // console.log('check');
-  for (let i = 0; i < Game.methodParams.length; i++) {
-    // console.log(Game.methodParams[i].isDeleted);
-    if (Game.methodParams[i].isDeleted === true) {
-      console.log('deleted');
-      Game.methodsToRun.splice(i, 1);
-      Game.methodParams.splice(i, 1);
-      // break
+  for (let j = 0; j < Game.methodParams.length; j++) {
+    if (Game.methodParams[j]?.isDeleted === true) {
+
+      for (let k = 0; k < Game.methodsToRun.length; k++) {
+        if (Game.methodParams[j].methodId === Game.methodsToRun[k].methodId) {
+          Game.methodParams.splice(j, 1);
+          Game.methodsToRun.splice(k, 1);
+        }
+      }
+
     }
   }
 }

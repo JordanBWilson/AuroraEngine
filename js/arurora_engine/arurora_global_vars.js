@@ -12,33 +12,12 @@ let Game = { // the user will want to play with this object
   },
   collisions: [],
   deleteEntity: function(id) {
-    console.log(id);
-    
     for (let i = 0; i < this.methodParams.length; i++) {
       if (this.methodParams[i].methodId === id) {
         this.methodParams[i].isDeleted = true;
-        // for (let k = 0; k < Game.methodsToRun.length; k++) {
-        //   if (Game.methodParams[i].methodId === Game.methodsToRun[k].methodId) {
-        //     console.log(i, k);
-        //
-        //     // Game.methodParams.splice(i, 1);
-        //     // Game.methodsToRun.splice(k, 1);
-        //
-        //   }
-        // }
-
-        // this.methodParams[i].isDeleted = true;
-        // console.log(this.methodParams[i]);
-        // this.methodsToRun.splice(i, 1);
-        // this.methodParams.splice(i, 1);
-
       }
     }
-
-
   },
-  break: false,
-  idList: [],
 };
 
 let Main = { // global variables to keep the game running nicely

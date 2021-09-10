@@ -34,7 +34,7 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
       methodId: methodId,
     }
     Game.methodParams.push(params);
-  } else if (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
+  } else if (Game.methodParams[methodId] && Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
     Game.methodParams[methodId].font = font;
     Game.methodParams[methodId].msg = msg;
     Game.methodParams[methodId].posX = posX;
@@ -43,7 +43,6 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
     Game.methodParams[methodId].align = align;
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].props = props;
-    // Game.methodParams[methodId].methodId = methodId;
   }
 }
 // this will draw a rectangle to the screen
@@ -104,7 +103,6 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams.push(params);
   } else {
     isAnim = false;
-    // console.log(Game.methodParams[methodId]);
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].width = width;
@@ -117,7 +115,6 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].isBackground = isBackground;
     Game.methodParams[methodId].props = props;
-    // Game.methodParams[methodId].methodId = methodId;
   }
 }
 // this will draw a circle to the screen
@@ -159,7 +156,6 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
 
   }
   if (!Game.methodParams[methodId]) {
-
     let params = {
       posX: posX,
       posY: posY,
@@ -176,10 +172,8 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isDeleted: false,
       methodId: methodId,
     }
-    // the reason Game.method params repopulates, is because when we delete a
-    // brick, it checks if the image exists and when it doesn't, it fills in the ball
     Game.methodParams.push(params);
-  } else if (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
+  } else if (Game.methodParams[methodId] && Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].width = width;
@@ -192,9 +186,6 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[methodId].isSolid = isSolid;
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].props = props;
-    // console.log(methodId);
-    // Game.methodParams[methodId].methodId = methodId;
-    // console.log(Game.methodParams[methodId].methodId);
   }
 }
 function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, props, methodId) {
@@ -253,7 +244,7 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       methodId: methodId,
     }
     Game.methodParams.push(params);
-  } else if (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
+  } else if (Game.methodParams[methodId] && Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
     Game.methodParams[methodId].posX = posX;
     Game.methodParams[methodId].posY = posY;
     Game.methodParams[methodId].width = width;
@@ -267,6 +258,5 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
     Game.methodParams[methodId].action = action;
     Game.methodParams[methodId].isAnim = isAnim;
     Game.methodParams[methodId].props = props;
-    // Game.methodParams[methodId].methodId = methodId;
   }
 }
