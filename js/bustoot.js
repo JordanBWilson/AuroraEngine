@@ -105,7 +105,6 @@ function brickCollision(ball, bricks, methodId) {
       }
 
       if (bricks[i].props.hp < 1) {
-            console.log(methodId);
             Game.deleteEntity(methodId);
         }
       }

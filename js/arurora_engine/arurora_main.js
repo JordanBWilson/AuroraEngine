@@ -188,3 +188,11 @@ function deletedCheck() {
     }
   }
 }
+
+function doesMethodParamExist(methodId) {
+  return Game.methodParams.find(x => x.methodId === methodId) ? true : false;
+}
+
+function findMethodParamIndex(methodId) {
+  return Game.methodParams.findIndex(x => x.methodId === methodId);
+}

@@ -120,22 +120,27 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
 // this will draw a circle to the screen
 // ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
 function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, isAnim, props, methodId) {
-  if (Game.methodParams[methodId] && (Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY)) {
+  let doesExist = doesMethodParamExist(methodId);
+  let index = -1;
+  if (doesExist) {
+    index = findMethodParamIndex(methodId);
+  }
+  if (doesExist && Game.methodParams[index] && (Game.methodParams[index].posX !== posX || Game.methodParams[index].posY !== posY)) {
     isAnim = true;
   }
-  if (!Game.methodParams[methodId] || Main.isResizing ||
-    Game.methodParams[methodId].posX !== posX ||
-    Game.methodParams[methodId].posY !== posY ||
-    Game.methodParams[methodId].width !== width ||
-    Game.methodParams[methodId].aglStrt !== aglStrt ||
-    Game.methodParams[methodId].aglEnd !== aglEnd ||
-    Game.methodParams[methodId].lineWidth !== lineWidth ||
-    Game.methodParams[methodId].color !== color ||
-    Game.methodParams[methodId].isFilled !== isFilled ||
-    Game.methodParams[methodId].id !== id ||
-    Game.methodParams[methodId].isSolid !== isSolid
+  if (!doesExist && !Game.methodParams[index] || Main.isResizing ||
+    Game.methodParams[index].posX !== posX ||
+    Game.methodParams[index].posY !== posY ||
+    Game.methodParams[index].width !== width ||
+    Game.methodParams[index].aglStrt !== aglStrt ||
+    Game.methodParams[index].aglEnd !== aglEnd ||
+    Game.methodParams[index].lineWidth !== lineWidth ||
+    Game.methodParams[index].color !== color ||
+    Game.methodParams[index].isFilled !== isFilled ||
+    Game.methodParams[index].id !== id ||
+    Game.methodParams[index].isSolid !== isSolid
   ) {
-    if (Game.methodParams[methodId]) {
+    if (Game.methodParams[index]) {
       Main.stage.beginPath();
       if (!lineWidth) {
         Main.stage.lineWidth = '1';
@@ -151,11 +156,11 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
         Main.stage.stroke();
       }
 
-      Game.methodParams[methodId].isAnim = false;
+      Game.methodParams[index].isAnim = false;
     }
 
   }
-  if (!Game.methodParams[methodId]) {
+  if (!doesExist && !Game.methodParams[index]) {
     let params = {
       posX: posX,
       posY: posY,
@@ -173,19 +178,20 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       methodId: methodId,
     }
     Game.methodParams.push(params);
-  } else if (Game.methodParams[methodId] && Game.methodParams[methodId].posX !== posX || Game.methodParams[methodId].posY !== posY) {
-    Game.methodParams[methodId].posX = posX;
-    Game.methodParams[methodId].posY = posY;
-    Game.methodParams[methodId].width = width;
-    Game.methodParams[methodId].aglStrt = aglStrt;
-    Game.methodParams[methodId].aglEnd = aglEnd;
-    Game.methodParams[methodId].lineWidth = lineWidth;
-    Game.methodParams[methodId].color = color;
-    Game.methodParams[methodId].isFilled = isFilled;
-    Game.methodParams[methodId].id = id;
-    Game.methodParams[methodId].isSolid = isSolid;
-    Game.methodParams[methodId].isAnim = isAnim;
-    Game.methodParams[methodId].props = props;
+  } else if (Game.methodParams[index] && Game.methodParams[index].posX !== posX || Game.methodParams[index].posY !== posY) {
+    // console.log(true);
+    Game.methodParams[index].posX = posX;
+    Game.methodParams[index].posY = posY;
+    Game.methodParams[index].width = width;
+    Game.methodParams[index].aglStrt = aglStrt;
+    Game.methodParams[index].aglEnd = aglEnd;
+    Game.methodParams[index].lineWidth = lineWidth;
+    Game.methodParams[index].color = color;
+    Game.methodParams[index].isFilled = isFilled;
+    Game.methodParams[index].id = id;
+    Game.methodParams[index].isSolid = isSolid;
+    Game.methodParams[index].isAnim = isAnim;
+    Game.methodParams[index].props = props;
   }
 }
 function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, props, methodId) {
