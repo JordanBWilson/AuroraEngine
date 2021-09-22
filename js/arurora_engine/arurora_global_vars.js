@@ -7,22 +7,24 @@ let Game = { // the user will want to play with this object
   stageWidthPrct: .98, // how much of the screen width will it take up
   stageHeightPrct: .97, // how much of the screen height will it take up
   clearStage: function() { // clear the game stage
-    Game.methodsToRun = [];
-    Game.methodParams = [];
+    this.methodsToRun = [];
+    this.methodParams = [];
+    this.id = 0;
   },
   collisions: [],
   deleteEntity: function(id) {
     for (let i = 0; i < this.methodParams.length; i++) {
       if (this.methodParams[i].methodId === id) {
-        for (let j = 0; j < Game.methodsToRun.length; j++) {
-          if (Game.methodParams[i].methodId === Game.methodsToRun[j].methodId) {
-            Game.methodParams.splice(i, 1);
-            Game.methodsToRun.splice(j, 1);
+        for (let j = 0; j < this.methodsToRun.length; j++) {
+          if (this.methodParams[i].methodId === this.methodsToRun[j].methodId) {
+            this.methodParams.splice(i, 1);
+            this.methodsToRun.splice(j, 1);
           }
         }
       }
     }
   },
+  id: 0,
 };
 
 let Main = { // global variables to keep the game running nicely

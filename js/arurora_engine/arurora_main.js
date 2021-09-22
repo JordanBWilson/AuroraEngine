@@ -19,13 +19,12 @@ function mainLoop() {
     if (Game.methodsToRun.length > 0) {
       // run the game
       for (let i = 0; i < Game.methodsToRun.length; i++) {
-        // create a random method id future Jordan
-        // let newId = Math.floor((Math.random() * 9999)) + '-' + Math.floor((Math.random() * 9999)) + '-' + Math.floor((Math.random() * 9999));
-        // console.log(newId);
-        Game.methodsToRun[i].method(i); // run through all the methods the user sent us
-        if (Game.methodsToRun[i].methodId === undefined) {
-          Game.methodsToRun[i].methodId = i;
+
+        if (Game.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
+          Game.id++;
+          Game.methodsToRun[i].methodId = Game.id;
         }
+        Game.methodsToRun[i].method(Game.id); // run through all the methods the user sent us
 
         Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop});
 
