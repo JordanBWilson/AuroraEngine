@@ -14,7 +14,12 @@ let Game = { // the user will want to play with this object
   deleteEntity: function(id) {
     for (let i = 0; i < this.methodParams.length; i++) {
       if (this.methodParams[i].methodId === id) {
-        this.methodParams[i].isDeleted = true;
+        for (let j = 0; j < Game.methodsToRun.length; j++) {
+          if (Game.methodParams[i].methodId === Game.methodsToRun[j].methodId) {
+            Game.methodParams.splice(i, 1);
+            Game.methodsToRun.splice(j, 1);
+          }
+        }
       }
     }
   },
