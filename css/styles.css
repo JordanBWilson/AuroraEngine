@@ -1,0 +1,39 @@
+body{
+
+    margin: 0px;
+    touch-action: manipulation;
+    background-color: #282828;
+    color: #fff;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    // ios corrections
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+#Stage {
+    display: block;
+    margin: 0 auto;
+}
+
+.outer-content {
+  display: table;
+  position: inherit;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle-content {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}

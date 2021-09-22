@@ -62,7 +62,7 @@ function resizeStage() {
     const doneResizing = setTimeout(function() {
       Main.isResizing = false;
       clearTimeout(doneResizing);
-    }, 50);
+    }, 500);
   }, Main.resizeWindowTime);
 }
 
