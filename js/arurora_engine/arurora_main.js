@@ -21,6 +21,7 @@ function mainLoop() {
       for (let i = 0; i < Game.methodsToRun.length; i++) {
         // create a random method id future Jordan
         // let newId = Math.floor((Math.random() * 9999)) + '-' + Math.floor((Math.random() * 9999)) + '-' + Math.floor((Math.random() * 9999));
+        // console.log(newId);
         Game.methodsToRun[i].method(i); // run through all the methods the user sent us
         if (Game.methodsToRun[i].methodId === undefined) {
           Game.methodsToRun[i].methodId = i;

@@ -66,12 +66,12 @@ function playGame() { // draw the game
     methodId: undefined,
   }
   Game.clearStage();
-  const backgroundColorTop = { method: function(id) {backgroundTop.methodId = id; drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, backgroundTop.methodId);} };
-  const backgroundColorBot = { method: function(id) {backgroundBot.methodId = id; drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, backgroundBot.methodId);} };
+  const backgroundColorTop = { method: function(id) {if (backgroundTop.methodId === undefined){backgroundTop.methodId = id;} drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, backgroundTop.methodId);} };
+  const backgroundColorBot = { method: function(id) {if (backgroundBot.methodId === undefined){backgroundBot.methodId = id;} drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, backgroundBot.methodId);} };
   Game.methodsToRun.push(backgroundColorTop);
   Game.methodsToRun.push(backgroundColorBot);
   drawGameBricks();
-  const gameBall = { method: function(id) {drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
+  const gameBall = { method: function(id) {if (ball.methodId === undefined){ball.methodId = id;} drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
   Game.methodsToRun.push(gameBall);
   const playGameBall = { method: function(id) { moveGameBall(); }};
   Game.methodsToRun.push(playGameBall);
