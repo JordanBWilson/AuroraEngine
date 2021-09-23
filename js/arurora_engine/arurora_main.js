@@ -26,8 +26,6 @@ function mainLoop() {
         }
         Game.methodsToRun[i].method(Game.id); // run through all the methods the user sent us
 
-        Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop});
-
         if (Main.isStageTapped) { // when the stage is tapped
           if (Game.methodParams[i].isBtn) { // look to see if the user tapped on a button
             isButtonTapped(Game.methodParams[i]);
@@ -44,7 +42,6 @@ function mainLoop() {
       // stop the game
       console.log('The game has stopped. No more methods to listen to.');
       clearInterval(Main.interval);
-      cancelAnimationFrame(Main.intervalAnimateId);
     }
   }, Game.frameRate);
 }
@@ -62,7 +59,7 @@ function resizeStage() {
     const doneResizing = setTimeout(function() {
       Main.isResizing = false;
       clearTimeout(doneResizing);
-    }, 500);
+    }, 100);
   }, Main.resizeWindowTime);
 }
 
@@ -111,9 +108,9 @@ function collisionCheck() {
               if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
                 Game.collisions[i].methodId = targetMethods[k].methodId;
                 Game.collisions[i].method();
+                break;
               }
             }
-            break;
           }
         }
       }

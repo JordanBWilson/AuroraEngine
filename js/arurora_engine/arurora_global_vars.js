@@ -29,7 +29,6 @@ let Game = { // the user will want to play with this object
 
 let Main = { // global variables to keep the game running nicely
   interval: undefined, // the main loop running
-  intervalAnimateId: undefined, // the main loop's animation id
   stage: undefined, // the 2D game stage
   resizeWindow: undefined, // when the browser window gets resized in the timeout
   isResizing: false,

@@ -33,7 +33,7 @@ function playGame() { // draw the game
     posX: 0,
     posY: 0,
     width: Game.canvas.width,
-    height: (Game.canvas.height * 0.5),
+    height: (Game.canvas.height * 0.6),
     lineWidth: 1,
     color: 'black',
     isFilled: true,
@@ -46,7 +46,7 @@ function playGame() { // draw the game
   }
   backgroundBot = {
     posX: 0,
-    posY: (Game.canvas.height * 0.5),
+    posY: (Game.canvas.height * 0.6),
     width: Game.canvas.width,
     height: (Game.canvas.height * 0.5),
     lineWidth: 1,
@@ -111,12 +111,29 @@ function brickCollision(ball, bricks, methodId) {
 }
 
 function drawGameBricks() {
-
-  for (let i = 0; i < 2; i++) {
+  let rows = 0; // keeps track of the rows being drawn
+  let brickNum = 0; // the current brick number in each row
+  for (let i = 0; i < 63; i++) {
+    let yPos = 0;
+    if (i < 9) { // this is the first row
+      yPos = Game.canvas.height * 0.01;
+    } else if (i > 8 && i < 18) {
+      yPos = Game.canvas.height * 0.08;
+    } else if (i > 17 && i < 27) {
+      yPos = Game.canvas.height * 0.15;
+    } else if (i > 26 && i < 36) {
+      yPos = Game.canvas.height * 0.22;
+    } else if (i > 35 && i < 45) {
+      yPos = Game.canvas.height * 0.29;
+    } else if (i > 44 && i < 54) {
+      yPos = Game.canvas.height * 0.36;
+    }  else if (i > 53 && i < 63) {
+      yPos = Game.canvas.height * 0.43;
+    }
     let brick = {
-      posX: Game.canvas.width * ((i + 1) * 0.1),
-      posY: Game.canvas.height * 0.10,
-      width: Game.canvas.width * 0.50,
+      posX: Game.canvas.width * (0.01) + (Game.canvas.width * (brickNum * 0.11)),
+      posY: yPos,
+      width: Game.canvas.width * 0.10,
       height: Game.canvas.height * 0.05,
       lineWidth: 1,
       color: 'green',
@@ -131,10 +148,15 @@ function drawGameBricks() {
       methodId: undefined,
     }
     bricks.push(brick);
+    brickNum++;
     let gameBrick = { method: function(id) {if (bricks[i].methodId === undefined){bricks[i].methodId = id;} drawRect(bricks[i].posX, bricks[i].posY, bricks[i].width, bricks[i].height, bricks[i].lineWidth, bricks[i].color, bricks[i].isFilled, bricks[i].id, bricks[i].isSolid, bricks[i].isAnim, bricks[i].isBackground, bricks[i].props, bricks[i].methodId);}};
     Game.methodsToRun.push(gameBrick);
+    // when we hit the end of the row, move down to the next row
+    if (i === 8 || i === 17 || i === 26 || i === 35 || i === 44 || i === 53) {
+      rows++;
+      brickNum = 0;
+    }
   }
-
 }
 
 function drawMainMenu() { // draw the main menu
