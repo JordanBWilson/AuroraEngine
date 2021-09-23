@@ -27,13 +27,15 @@ function mainLoop() {
         Game.methodsToRun[i].method(Game.id); // run through all the methods the user sent us
 
         if (Main.isStageTapped) { // when the stage is tapped
-          if (Game.methodParams[i].isBtn) { // look to see if the user tapped on a button
+          if (Game.methodParams[i]?.isBtn) { // look to see if the user tapped on a button
             isButtonTapped(Game.methodParams[i]);
             if (i == Game.methodsToRun.length - 1) {
               Main.isStageTapped = false;
               Main.tappedX = 0;
               Main.tappedY = 0;
             }
+          } else if (i === (Game.methodsToRun.length - 1)) {
+            Main.isStageTapped = false;
           }
         }
       }
@@ -67,7 +69,6 @@ function screenTapped(event) {
   Main.isStageTapped = event ? true : false;
   Main.tappedX = event.clientX;
   Main.tappedY = event.clientY;
-  Main.intervalPos = 0;
 }
 
 function isButtonTapped(btnParams) {

@@ -114,7 +114,6 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     }
     Game.methodParams.push(params);
   } else if (doesExist) {
-    isAnim = false;
     Game.methodParams[index].posX = posX;
     Game.methodParams[index].posY = posY;
     Game.methodParams[index].width = width;

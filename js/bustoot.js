@@ -8,10 +8,15 @@
 let ball = {}; // initialize the game ball
 let bricks = [];
 let background = {};
-let collision = {};
+let ballBrickCollision = {};
+let ballPaddleCollision = {};
+let paddle = {};
 
 function playGame() { // draw the game
   console.log('Play');
+  Game.canvas.addEventListener('mousedown', function(event) {
+    movePaddle(event);
+  }, false);
   ball = {
     posX: (Game.canvas.width * 0.5),
     posY: (Game.canvas.height * 0.5),
@@ -33,7 +38,7 @@ function playGame() { // draw the game
     posX: 0,
     posY: 0,
     width: Game.canvas.width,
-    height: (Game.canvas.height * 0.6),
+    height: (Game.canvas.height * 0.65),
     lineWidth: 1,
     color: 'black',
     isFilled: true,
@@ -46,9 +51,9 @@ function playGame() { // draw the game
   }
   backgroundBot = {
     posX: 0,
-    posY: (Game.canvas.height * 0.6),
+    posY: (Game.canvas.height * 0.65),
     width: Game.canvas.width,
-    height: (Game.canvas.height * 0.5),
+    height: (Game.canvas.height * 0.35),
     lineWidth: 1,
     color: 'black',
     isFilled: true,
@@ -59,10 +64,31 @@ function playGame() { // draw the game
     props: {},
     methodId: undefined,
   }
-  collision = {
+  paddle = {
+    posX: Game.canvas.width * (0.45),
+    posY: (Game.canvas.height * 0.93),
+    width: Game.canvas.width * (0.2),
+    height: (Game.canvas.height * 0.04),
+    lineWidth: 1,
+    color: 'green',
+    isFilled: true,
+    id: 'paddle',
+    isSolid: true,
+    isAnim: false,
+    isBackground: false,
+    props: {},
+    methodId: undefined,
+  }
+  ballBrickCollision = {
     primary: 'ball',
     target: 'brick',
     method: function(id) {brickCollision(ball, bricks, this.methodId)},
+    methodId: undefined,
+  }
+  ballPaddleCollision = {
+    primary: 'ball',
+    target: 'paddle',
+    method: function(id) {paddleCollision(ball)},
     methodId: undefined,
   }
   Game.clearStage();
@@ -70,12 +96,16 @@ function playGame() { // draw the game
   const backgroundColorBot = { method: function(id) {if (backgroundBot.methodId === undefined){backgroundBot.methodId = id;} drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, backgroundBot.methodId);} };
   Game.methodsToRun.push(backgroundColorTop);
   Game.methodsToRun.push(backgroundColorBot);
+  const gamePaddle = { method: function(id) {if (paddle.methodId === undefined){paddle.methodId = id;} drawRect(paddle.posX, paddle.posY, paddle.width, paddle.height, paddle.lineWidth, paddle.color, paddle.isFilled, paddle.id, paddle.isSolid, paddle.isAnim, paddle.isBackground, paddle.props, paddle.methodId);} };
+  Game.methodsToRun.push(gamePaddle);
   drawGameBricks();
   const gameBall = { method: function(id) {if (ball.methodId === undefined){ball.methodId = id;} drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
   Game.methodsToRun.push(gameBall);
+
   const playGameBall = { method: function(id) { moveGameBall(); }};
   Game.methodsToRun.push(playGameBall);
-  Game.collisions.push(collision);
+  Game.collisions.push(ballBrickCollision);
+  Game.collisions.push(ballPaddleCollision);
 }
 
 function moveGameBall() {
@@ -108,6 +138,21 @@ function brickCollision(ball, bricks, methodId) {
         }
       }
     }
+}
+
+function paddleCollision() {
+  if (ball.props.direction === 'bot') {
+    ball.props.direction = 'top';
+  }
+}
+
+function movePaddle(event) {
+  if (paddle.posX <= event.clientX) {
+    paddle.posX += Game.canvas.width * (0.01);
+
+  } else if (paddle.posX >= event.clientX) {
+    paddle.posX -= Game.canvas.width * (0.01);
+  }
 }
 
 function drawGameBricks() {
@@ -205,7 +250,7 @@ function drawMainMenu() { // draw the main menu
   const playBtn = {
      method: function(id) {
        drawButton(
-         (Game.canvas.width * 0.25),
+         (Game.canvas.width * 0.3),
          (Game.canvas.height * 0.6),
          (Game.canvas.width * 0.4),
          (Main.entitySize * 7),
