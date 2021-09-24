@@ -11,11 +11,22 @@ let background = {};
 let ballBrickCollision = {};
 let ballPaddleCollision = {};
 let paddle = {};
+let movePaddleInterval;
+let isPaddleMoving = false;
+let gamePoints = 0;
 
 function playGame() { // draw the game
   console.log('Play');
   Game.canvas.addEventListener('mousedown', function(event) {
-    movePaddle(event);
+    readyPaddle(event);
+  }, false);
+  Game.canvas.addEventListener('mouseup', function(event) {
+    stopPaddle(event);
+  }, false);
+  Game.canvas.addEventListener('mousemove', function(event) {
+    if (isPaddleMoving) {
+      movePaddle(event);
+    }
   }, false);
   ball = {
     posX: (Game.canvas.width * 0.5),
@@ -76,7 +87,9 @@ function playGame() { // draw the game
     isSolid: true,
     isAnim: false,
     isBackground: false,
-    props: {},
+    props: {
+      direction: 'non'
+    },
     methodId: undefined,
   }
   ballBrickCollision = {
@@ -113,13 +126,46 @@ function moveGameBall() {
     ball.posY -= (Game.canvas.height * 0.01);
   } else if (ball.props.direction === 'bot') {
     ball.posY += (Game.canvas.height * 0.01);
+  } else if (ball.props.direction === 'toprt') {
+    ball.posY -= (Game.canvas.height * 0.01);
+    ball.posX += (Game.canvas.width * 0.01);
+  } else if (ball.props.direction === 'toplt') {
+    ball.posY -= (Game.canvas.height * 0.01);
+    ball.posX -= (Game.canvas.width * 0.01);
+  } else if (ball.props.direction === 'botrt') {
+    ball.posY += (Game.canvas.height * 0.01);
+    ball.posX += (Game.canvas.width * 0.01);
+  } else if (ball.props.direction === 'botlt') {
+    ball.posY += (Game.canvas.height * 0.01);
+    ball.posX -= (Game.canvas.width * 0.01);
   }
 
+  if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
+    ball.props.direction = 'botlt';
+  }
+  if (ball.props.direction === 'toprt' && ball.posX <= 0) {
+    ball.props.direction = 'toplt';
+  }
+  if (ball.props.direction === 'toplt' && ball.posX >= (Game.canvas.width - ball.width)) {
+    ball.props.direction = 'toprt';
+  }
+  if (ball.props.direction === 'toplt' && ball.posY <= 0) {
+    ball.props.direction = 'botrt';
+  }
+  if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
+    ball.props.direction = 'toplt';
+  }
+  if (ball.props.direction === 'botlt' && ball.posY >= (Game.canvas.height - ball.width)) {
+    ball.props.direction = 'toprt';
+  }
+  if (ball.props.direction === 'botlt' && ball.posY <= 0) {
+    ball.props.direction = 'toprt';
+  }
+  if (ball.props.direction === 'bot' && ball.posY >= (Game.canvas.height - ball.width)) {
+    ball.props.direction = 'top';
+  }
   if (ball.props.direction === 'top' && ball.posY <= 0) {
     ball.props.direction = 'bot';
-  }
-  if (ball.props.direction === 'bot' && ball.posY > (Game.canvas.height - ball.width)) {
-    ball.props.direction = 'top';
   }
 
 }
@@ -146,13 +192,26 @@ function paddleCollision() {
   }
 }
 
-function movePaddle(event) {
-  if (paddle.posX <= event.clientX) {
-    paddle.posX += Game.canvas.width * (0.01);
+function readyPaddle(event) {
+  isPaddleMoving = true;
+}
 
-  } else if (paddle.posX >= event.clientX) {
-    paddle.posX -= Game.canvas.width * (0.01);
+function movePaddle(event) {
+  paddle.props.direction = 'non';
+  if (paddle.posX < event.clientX) {
+    paddle.posX += Game.canvas.width * (0.016);
+    paddle.props.direction = 'rt';
   }
+  if (paddle.posX > event.clientX) {
+    paddle.posX -= Game.canvas.width * (0.016);
+    paddle.props.direction = 'lt';
+  }
+}
+
+function stopPaddle(event) {
+  isPaddleMoving = false;
+  paddle.props.direction = 'non';
+  clearInterval(movePaddleInterval);
 }
 
 function drawGameBricks() {
