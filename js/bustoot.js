@@ -11,7 +11,6 @@ let background = {};
 let ballBrickCollision = {};
 let ballPaddleCollision = {};
 let paddle = {};
-let movePaddleInterval;
 let isPaddleMoving = false;
 let gamePoints = 0;
 
@@ -211,7 +210,6 @@ function movePaddle(event) {
 function stopPaddle(event) {
   isPaddleMoving = false;
   paddle.props.direction = 'non';
-  clearInterval(movePaddleInterval);
 }
 
 function drawGameBricks() {
