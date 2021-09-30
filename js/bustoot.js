@@ -40,7 +40,8 @@ function playGame() { // draw the game
     isSolid: true,
     isAnim: false,
     props: {
-      direction: 'top'
+      direction: 'top',
+      collision: false
     },
     methodId: undefined,
   }
@@ -140,25 +141,28 @@ function moveGameBall() {
   }
 
   if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
-    ball.props.direction = 'botlt';
-  }
-  if (ball.props.direction === 'toprt' && ball.posX <= 0) {
     ball.props.direction = 'toplt';
   }
-  if (ball.props.direction === 'toplt' && ball.posX >= (Game.canvas.width - ball.width)) {
-    ball.props.direction = 'toprt';
-  }
   if (ball.props.direction === 'toplt' && ball.posY <= 0) {
+    ball.props.direction = 'botlt';
+  }
+  if (ball.props.direction === 'botlt' && ball.posX <= 0) {
     ball.props.direction = 'botrt';
   }
   if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
-    ball.props.direction = 'toplt';
+    ball.props.direction = 'toprt';
+  }
+  if (ball.props.direction === 'toplt' && ball.posX <= 0) {
+    ball.props.direction = 'toprt';
+  }
+  if (ball.props.direction === 'toprt' && ball.posY <= 0) {
+    ball.props.direction = 'botrt';
+  }
+  if (ball.props.direction === 'botrt' && ball.posX >= (Game.canvas.width - ball.width)) {
+    ball.props.direction = 'botlt';
   }
   if (ball.props.direction === 'botlt' && ball.posY >= (Game.canvas.height - ball.width)) {
-    ball.props.direction = 'toprt';
-  }
-  if (ball.props.direction === 'botlt' && ball.posY <= 0) {
-    ball.props.direction = 'toprt';
+    ball.props.direction = 'toplt';
   }
   if (ball.props.direction === 'bot' && ball.posY >= (Game.canvas.height - ball.width)) {
     ball.props.direction = 'top';
@@ -173,21 +177,73 @@ function brickCollision(ball, bricks, methodId) {
   for (let i = 0; i < bricks.length; i++) {
 
     if (bricks[i].methodId === methodId) {
-      if (ball.props.direction === 'top') {
+      if (ball.props.direction === 'top' && !ball.props.collision) {
         ball.props.direction = 'bot';
+        ball.props.collision = true;
         bricks[i].props.hp--;
       }
-
+      if (ball.props.direction === 'bot' && !ball.props.collision) {
+        ball.props.direction = 'top';
+        ball.props.collision = true;
+        bricks[i].props.hp--;
+      }
+      if (ball.props.direction === 'toprt' && !ball.props.collision) {
+        ball.props.direction = 'botrt';
+        ball.props.collision = true;
+        bricks[i].props.hp--;
+      }
+      if (ball.props.direction === 'botrt' && !ball.props.collision) {
+        ball.props.direction = 'toprt';
+        ball.props.collision = true;
+        bricks[i].props.hp--;
+      }
+      if (ball.props.direction === 'toplt' && !ball.props.collision) {
+        ball.props.direction = 'botlt';
+        ball.props.collision = true;
+        bricks[i].props.hp--;
+      }
+      if (ball.props.direction === 'botlt' && !ball.props.collision) {
+        ball.props.direction = 'toplt';
+        ball.props.collision = true;
+        bricks[i].props.hp--;
+      }
       if (bricks[i].props.hp < 1) {
         Game.deleteEntity(methodId);
-        }
       }
     }
+  }
+  setTimeout(function() {
+    ball.props.collision = false;
+  }, 30);
 }
 
 function paddleCollision() {
-  if (ball.props.direction === 'bot') {
+  if (ball.props.direction === 'bot' && paddle.props.direction === 'non') {
     ball.props.direction = 'top';
+  }
+  if (ball.props.direction === 'botrt' && paddle.props.direction === 'non') {
+    ball.props.direction = 'top';
+  }
+  if (ball.props.direction === 'botlt' && paddle.props.direction === 'non') {
+    ball.props.direction = 'top';
+  }
+  if (ball.props.direction === 'bot' && paddle.props.direction === 'rt') {
+    ball.props.direction = 'toplt';
+  }
+  if (ball.props.direction === 'botrt' && paddle.props.direction === 'rt') {
+    ball.props.direction = 'toplt';
+  }
+  if (ball.props.direction === 'botlt' && paddle.props.direction === 'rt') {
+    ball.props.direction = 'toplt';
+  }
+  if (ball.props.direction === 'bot' && paddle.props.direction === 'lt') {
+    ball.props.direction = 'toprt';
+  }
+  if (ball.props.direction === 'botlt' && paddle.props.direction === 'lt') {
+    ball.props.direction = 'toprt';
+  }
+  if (ball.props.direction === 'botrt' && paddle.props.direction === 'lt') {
+    ball.props.direction = 'toplt';
   }
 }
 

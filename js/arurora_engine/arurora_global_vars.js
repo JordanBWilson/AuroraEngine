@@ -16,7 +16,7 @@ let Game = { // the user will want to play with this object
     for (let i = 0; i < this.methodParams.length; i++) {
       if (this.methodParams[i].methodId === id) {
         for (let j = 0; j < this.methodsToRun.length; j++) {
-          if (this.methodParams[i].methodId === this.methodsToRun[j].methodId) {
+          if (this.methodParams[i]?.methodId === this.methodsToRun[j]?.methodId) {
             this.methodParams.splice(i, 1);
             this.methodsToRun.splice(j, 1);
           }
