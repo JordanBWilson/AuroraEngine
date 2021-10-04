@@ -10,6 +10,7 @@ let Game = { // the user will want to play with this object
     this.methodsToRun = [];
     this.methodParams = [];
     this.id = 0;
+    Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
   collisions: [],
   deleteEntity: function(id) {

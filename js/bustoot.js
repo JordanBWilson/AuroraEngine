@@ -36,7 +36,7 @@ function playGame() { // draw the game
     width: (Main.entitySize * 2),
     aglStrt: 0,
     aglEnd: 2 * Math.PI,
-    lineWidth: 2,
+    lineWidth: 1,
     color: 'green',
     isFilled: true,
     id: 'ball',
@@ -210,12 +210,12 @@ function brickCollision(ball, bricks, methodId) {
         bricks[i].props.hp--;
       }
       if (ball.props.direction === 'botrt' && !ball.props.collision) {
-        ball.props.direction = 'toprt';
+        ball.props.direction = 'botlt'; // use this for a power up -> toprt
         ball.props.collision = true;
         bricks[i].props.hp--;
       }
       if (ball.props.direction === 'toplt' && !ball.props.collision) {
-        ball.props.direction = 'botlt';
+        ball.props.direction = 'botrt'; // use this for a power up -> botlt
         ball.props.collision = true;
         bricks[i].props.hp--;
       }
@@ -248,19 +248,19 @@ function paddleCollision() {
     ball.props.direction = 'toplt';
   }
   if (ball.props.direction === 'botrt' && paddle.props.direction === 'rt') {
-    ball.props.direction = 'toplt';
+    ball.props.direction = 'toprt';
   }
   if (ball.props.direction === 'botlt' && paddle.props.direction === 'rt') {
     ball.props.direction = 'toprt';
   }
   if (ball.props.direction === 'bot' && paddle.props.direction === 'lt') {
-    ball.props.direction = 'toprt';
+    ball.props.direction = 'toplt';
   }
   if (ball.props.direction === 'botlt' && paddle.props.direction === 'lt') {
-    ball.props.direction = 'toprt';
+    ball.props.direction = 'toplt';
   }
   if (ball.props.direction === 'botrt' && paddle.props.direction === 'lt') {
-    ball.props.direction = 'toplt';
+    ball.props.direction = 'toprt';
   }
 }
 
