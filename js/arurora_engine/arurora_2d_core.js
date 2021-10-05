@@ -73,7 +73,6 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[index].lineWidth !== lineWidth ||
     Game.methodParams[index].color !== color ||
     Game.methodParams[index].isFilled !== isFilled ||
-    Game.methodParams[index].id !== id ||
     Game.methodParams[index].isSolid !== isSolid
   ) {
     Main.stage.beginPath();
@@ -121,7 +120,6 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodParams[index].lineWidth = lineWidth;
     Game.methodParams[index].color = color;
     Game.methodParams[index].isFilled = isFilled;
-    Game.methodParams[index].id = id;
     Game.methodParams[index].isSolid = isSolid;
     Game.methodParams[index].isAnim = isAnim;
     Game.methodParams[index].isBackground = isBackground;
@@ -148,7 +146,6 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[index].lineWidth !== lineWidth ||
     Game.methodParams[index].color !== color ||
     Game.methodParams[index].isFilled !== isFilled ||
-    Game.methodParams[index].id !== id ||
     Game.methodParams[index].isSolid !== isSolid
   ) {
     if (Game.methodParams[index]) {
@@ -198,7 +195,6 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodParams[index].lineWidth = lineWidth;
     Game.methodParams[index].color = color;
     Game.methodParams[index].isFilled = isFilled;
-    Game.methodParams[index].id = id;
     Game.methodParams[index].isSolid = isSolid;
     Game.methodParams[index].isAnim = isAnim;
     Game.methodParams[index].props = props;

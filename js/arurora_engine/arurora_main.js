@@ -94,7 +94,6 @@ function collisionCheck() {
         let target = Game.collisions[i].target;
         let primaryMethods = Game.methodParams.filter(x => x.id === primary);
         let targetMethods = Game.methodParams.filter(x => x.id === target);
-
         // find out if a collision is happening
         for (let j = 0; j < primaryMethods.length; j++) {
           for (let k = 0; k < targetMethods.length; k++) {

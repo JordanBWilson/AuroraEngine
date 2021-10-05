@@ -12,9 +12,14 @@ let ballBrickCollision = {};
 let ballPaddleCollision = {};
 let paddle = {};
 let readyText = {};
+let tapText = {};
 let isPaddleMoving = false;
 let gamePoints = 0;
 let gameStart = false;
+let brickCount = 63; // lvl1- 27, lvl2- 45, lvl3- 63
+let isPoweredUp = false;
+let gameLevel = 0;
+let gameLives = 3;
 
 function playGame() { // draw the game
   console.log('Play');
@@ -51,6 +56,11 @@ function playGame() { // draw the game
   readyText = {
     posX: (Game.canvas.width * 0.5),
     posY: (Game.canvas.height * 0.6),
+    methodId: undefined,
+  }
+  tapText = {
+    posX: (Game.canvas.width * 0.5),
+    posY: (Game.canvas.height * 0.64),
     methodId: undefined,
   }
   backgroundTop = {
@@ -109,7 +119,7 @@ function playGame() { // draw the game
   ballPaddleCollision = {
     primary: 'ball',
     target: 'paddle',
-    method: function(id) {paddleCollision(ball)},
+    method: function(id) {paddleCollision()},
     methodId: undefined,
   }
   Game.clearStage();
@@ -126,15 +136,15 @@ function playGame() { // draw the game
   Game.methodsToRun.push(playGameBall);
   Game.collisions.push(ballBrickCollision);
   Game.collisions.push(ballPaddleCollision);
-
-  // this text doesn't behave as expected...
-  const majorTitle = { method: function(id) {if (readyText.methodId === undefined){readyText.methodId = id;}drawText('3em serif', 'Ready?', readyText.posX, readyText.posY, 'green', 'center', false, {}, readyText.methodId);} };
-  const minorTitle = { method: function(id) {if (readyText.methodId === undefined){readyText.methodId = id;}drawText('16px serif', 'Tap to Continue', (Game.canvas.width * 0.5), (Game.canvas.height * 0.64), 'green', 'center', false, {}, readyText.methodId);} };
-  Game.methodsToRun.push(majorTitle);
-  Game.methodsToRun.push(minorTitle);
+  nextGameLevel();
 }
 
 function moveGameBall() {
+  if (isPoweredUp) {
+    ball.color = 'blue';
+  } else {
+    ball.color = 'green';
+  }
   if (gameStart === false) {
     // dirty hack for now...
     ball.posY -= (Game.canvas.height * 0.0000001);
@@ -168,6 +178,9 @@ function moveGameBall() {
     }
     if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
       ball.props.direction = 'toprt';
+      if (!isPoweredUp) {
+        gameLives--;
+      }
     }
     if (ball.props.direction === 'toplt' && ball.posX <= 0) {
       ball.props.direction = 'toprt';
@@ -180,58 +193,103 @@ function moveGameBall() {
     }
     if (ball.props.direction === 'botlt' && ball.posY >= (Game.canvas.height - ball.width)) {
       ball.props.direction = 'toplt';
+      if (!isPoweredUp) {
+        gameLives--;
+      }
     }
     if (ball.props.direction === 'bot' && ball.posY >= (Game.canvas.height - ball.width)) {
       ball.props.direction = 'top';
+      if (!isPoweredUp) {
+        gameLives--;
+      }
     }
     if (ball.props.direction === 'top' && ball.posY <= 0) {
       ball.props.direction = 'bot';
+    }
+    if (gameLives === 0) {
+      console.log('You Lose!');
+      gameLives = -1;
     }
   }
 }
 
 function brickCollision(ball, bricks, methodId) {
   for (let i = 0; i < bricks.length; i++) {
-
     if (bricks[i].methodId === methodId) {
       if (ball.props.direction === 'top' && !ball.props.collision) {
         ball.props.direction = 'bot';
         ball.props.collision = true;
         bricks[i].props.hp--;
+        gamePoints++;
+        brickPowerReveal(i);
       }
       if (ball.props.direction === 'bot' && !ball.props.collision) {
         ball.props.direction = 'top';
         ball.props.collision = true;
         bricks[i].props.hp--;
+        gamePoints++;
+        brickPowerReveal(i);
       }
       if (ball.props.direction === 'toprt' && !ball.props.collision) {
         ball.props.direction = 'botrt';
         ball.props.collision = true;
         bricks[i].props.hp--;
+        brickPowerReveal(i);
       }
       if (ball.props.direction === 'botrt' && !ball.props.collision) {
-        ball.props.direction = 'botlt'; // use this for a power up -> toprt
+        if (isPoweredUp) {
+          ball.props.direction = 'toprt';
+        } else {
+          ball.props.direction = 'botlt';
+        }
         ball.props.collision = true;
         bricks[i].props.hp--;
+        gamePoints++;
+        brickPowerReveal(i);
       }
       if (ball.props.direction === 'toplt' && !ball.props.collision) {
-        ball.props.direction = 'botrt'; // use this for a power up -> botlt
+        if (isPoweredUp) {
+          ball.props.direction = 'botlt';
+        } else {
+          ball.props.direction = 'botrt';
+        }
         ball.props.collision = true;
         bricks[i].props.hp--;
+        gamePoints++;
+        brickPowerReveal(i);
       }
       if (ball.props.direction === 'botlt' && !ball.props.collision) {
         ball.props.direction = 'toplt';
         ball.props.collision = true;
         bricks[i].props.hp--;
+        gamePoints++;
+        brickPowerReveal(i);
+      }
+      if (bricks[i].props.hp < 1 && bricks[i].props.powerUp) {
+        gamePowerUp();
       }
       if (bricks[i].props.hp < 1) {
         Game.deleteEntity(methodId);
       }
+
     }
   }
   setTimeout(function() {
     ball.props.collision = false;
+    // game levels need work
+    if (Game.methodParams.filter(x => x.id==='brick').length === 0) {
+      // nextGameLevel();
+      console.log('You Win!');
+    }
   }, 30);
+}
+
+function brickPowerReveal(index) {
+  const random = Math.floor(Math.random() * 10) + 1;
+  if (random <= 3) {
+    bricks[index].props.powerUp = true;
+    bricks[index].color = 'blue';
+  }
 }
 
 function paddleCollision() {
@@ -264,10 +322,20 @@ function paddleCollision() {
   }
 }
 
+function gamePowerUp() {
+  isPoweredUp = true;
+  let powerTime = setTimeout(function() {
+    isPoweredUp = false;
+    clearTimeout(powerTime);
+  }, 6000);
+}
+
 function readyPaddle(event) {
   if (!gameStart) {
     gameStart = true;
     Game.deleteEntity(readyText.methodId);
+    readyText.methodId = undefined;
+    tapText.methodId = undefined;
   }
   isPaddleMoving = true;
 }
@@ -275,11 +343,11 @@ function readyPaddle(event) {
 function movePaddle(event) {
   paddle.props.direction = 'non';
   if (paddle.posX < event.clientX) {
-    paddle.posX += Game.canvas.width * (0.019);
+    paddle.posX += Game.canvas.width * (0.026);
     paddle.props.direction = 'rt';
   }
   if (paddle.posX > event.clientX) {
-    paddle.posX -= Game.canvas.width * (0.019);
+    paddle.posX -= Game.canvas.width * (0.026);
     paddle.props.direction = 'lt';
   }
 }
@@ -289,10 +357,29 @@ function stopPaddle(event) {
   paddle.props.direction = 'non';
 }
 
+function nextGameLevel() {
+  console.log('next level');
+  gameStart = false;
+  ball.posX = (Game.canvas.width * 0.5);
+  ball.posY = (Game.canvas.height * 0.54);
+  // this text doesn't behave as expected...
+  const majorTitle = { method: function(id) {if (readyText.methodId === undefined){readyText.methodId = id;}drawText('3em serif', 'Ready?', readyText.posX, readyText.posY, 'green', 'center', false, {}, readyText.methodId);} };
+  const minorTitle = { method: function(id) {if (tapText.methodId === undefined){tapText.methodId = id;}drawText('16px serif', 'Tap to Continue', tapText.posX, tapText.posY, 'green', 'center', false, {}, readyText.methodId);} };
+  Game.methodsToRun.push(majorTitle);
+  Game.methodsToRun.push(minorTitle);
+  Game.deleteEntity(readyText.methodId);
+  Game.deleteEntity(tapText.methodId);
+  gameLevel++;
+  if (gameLevel === 2) {
+    brickCount = 45;
+    drawGameBricks();
+  }
+}
+
 function drawGameBricks() {
   let rows = 0; // keeps track of the rows being drawn
   let brickNum = 0; // the current brick number in each row
-  for (let i = 0; i < 63; i++) {
+  for (let i = 0; i < brickCount; i++) {
     let yPos = 0;
     if (i < 9) { // this is the first row
       yPos = Game.canvas.height * 0.01;
@@ -322,7 +409,8 @@ function drawGameBricks() {
       isAnim: false,
       isBackground: false,
       props: {
-        hp: 2
+        hp: 2,
+        powerUp: false,
       },
       methodId: undefined,
     }
