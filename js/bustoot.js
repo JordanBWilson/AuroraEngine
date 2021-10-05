@@ -21,20 +21,26 @@ let isPoweredUp = false;
 let gameLevel = 0;
 let gameLives = 3;
 
-function playGame() { // draw the game
-  console.log('Play');
-  Game.canvas.addEventListener('mousedown', function(event) {
-    readyPaddle(event);
-  }, false);
-  Game.canvas.addEventListener('mouseup', function(event) {
-    stopPaddle(event);
-  }, false);
-  Game.canvas.addEventListener('mousemove', function(event) {
-    if (isPaddleMoving) {
-      movePaddle(event);
-    }
-  }, false);
+Game.canvas.addEventListener('mousedown', function(event) {
+  readyPaddle(event);
+}, false);
+Game.canvas.addEventListener('mouseup', function(event) {
+  stopPaddle(event);
+}, false);
+Game.canvas.addEventListener('mousemove', function(event) {
+  if (isPaddleMoving) {
+    movePaddle(event);
+  }
+}, false);
 
+
+function playGame() { // draw the game
+  gamePoints = 0;
+  gameLevel = 0;
+  gameLives = 3;
+  isPoweredUp = false;
+  bricks = [];
+  gameStart = false;
   ball = {
     posX: (Game.canvas.width * 0.5),
     posY: (Game.canvas.height * 0.54),
@@ -207,7 +213,7 @@ function moveGameBall() {
       ball.props.direction = 'bot';
     }
     if (gameLives === 0) {
-      console.log('You Lose!');
+      drawLoseMenu();
       gameLives = -1;
     }
   }
@@ -279,7 +285,7 @@ function brickCollision(ball, bricks, methodId) {
     // game levels need work
     if (Game.methodParams.filter(x => x.id==='brick').length === 0) {
       // nextGameLevel();
-      console.log('You Win!');
+      drawWinMenu();
     }
   }, 30);
 }
@@ -354,11 +360,13 @@ function movePaddle(event) {
 
 function stopPaddle(event) {
   isPaddleMoving = false;
-  paddle.props.direction = 'non';
+  if (paddle && paddle.props) {
+    paddle.props.direction = 'non';
+  }
+
 }
 
 function nextGameLevel() {
-  console.log('next level');
   gameStart = false;
   ball.posX = (Game.canvas.width * 0.5);
   ball.posY = (Game.canvas.height * 0.54);
@@ -424,6 +432,68 @@ function drawGameBricks() {
       brickNum = 0;
     }
   }
+}
+
+function drawLoseMenu() {
+  Game.clearStage();
+  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
+  Game.methodsToRun.push(backgroundColor);
+  const majorTitle = { method: function(id) {drawText('3em serif', 'You Lose!', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', false, {}, id);} };
+  const minorTitle = { method: function(id) {drawText('2em serif', gamePoints.toString() + ' Points', (Game.canvas.width * 0.5), (Game.canvas.height * 0.14), 'green', 'center', false, {}, id);} };
+  Game.methodsToRun.push(majorTitle);
+  Game.methodsToRun.push(minorTitle);
+  const playGameMethod = { method: function(id) { playGame(); }}
+  const playBtn = {
+     method: function(id) {
+       drawButton(
+         (Game.canvas.width * 0.3),
+         (Game.canvas.height * 0.6),
+         (Game.canvas.width * 0.4),
+         (Main.entitySize * 7),
+         1,
+         'green',
+         'white',
+         '2em serif',
+         'Restart',
+          true,
+          playGameMethod,
+          false,
+          {},
+          id);
+        }
+     };
+  Game.methodsToRun.push(playBtn);
+}
+
+function drawWinMenu() {
+  Game.clearStage();
+  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
+  Game.methodsToRun.push(backgroundColor);
+  const majorTitle = { method: function(id) {drawText('3em serif', 'You Win!', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', false, {}, id);} };
+  const minorTitle = { method: function(id) {drawText('2em serif', gamePoints.toString() + ' Points', (Game.canvas.width * 0.5), (Game.canvas.height * 0.14), 'green', 'center', false, {}, id);} };
+  Game.methodsToRun.push(majorTitle);
+  Game.methodsToRun.push(minorTitle);
+  const mainMenuMethod = { method: function(id) { drawMainMenu(); }}
+  const menuBtn = {
+     method: function(id) {
+       drawButton(
+         (Game.canvas.width * 0.3),
+         (Game.canvas.height * 0.6),
+         (Game.canvas.width * 0.4),
+         (Main.entitySize * 7),
+         1,
+         'green',
+         'white',
+         '2em serif',
+         'Main Menu',
+          true,
+          mainMenuMethod,
+          false,
+          {},
+          id);
+        }
+     };
+  Game.methodsToRun.push(menuBtn);
 }
 
 function drawMainMenu() { // draw the main menu
