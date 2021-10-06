@@ -287,7 +287,7 @@ function brickCollision(ball, bricks, methodId) {
       // nextGameLevel();
       drawWinMenu();
     }
-  }, 30);
+  }, 33);
 }
 
 function brickPowerReveal(index) {
