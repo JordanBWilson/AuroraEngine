@@ -175,42 +175,52 @@ function moveGameBall() {
 
     if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
       ball.props.direction = 'toplt';
+      ball.props.collision = false;
     }
     if (ball.props.direction === 'toplt' && ball.posY <= 0) {
       ball.props.direction = 'botlt';
+      ball.props.collision = false;
     }
     if (ball.props.direction === 'botlt' && ball.posX <= 0) {
       ball.props.direction = 'botrt';
+      ball.props.collision = false;
     }
     if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
       ball.props.direction = 'toprt';
+      ball.props.collision = false;
       if (!isPoweredUp) {
         gameLives--;
       }
     }
     if (ball.props.direction === 'toplt' && ball.posX <= 0) {
       ball.props.direction = 'toprt';
+      ball.props.collision = false;
     }
     if (ball.props.direction === 'toprt' && ball.posY <= 0) {
       ball.props.direction = 'botrt';
+      ball.props.collision = false;
     }
     if (ball.props.direction === 'botrt' && ball.posX >= (Game.canvas.width - ball.width)) {
       ball.props.direction = 'botlt';
+      ball.props.collision = false;
     }
     if (ball.props.direction === 'botlt' && ball.posY >= (Game.canvas.height - ball.width)) {
       ball.props.direction = 'toplt';
+      ball.props.collision = false;
       if (!isPoweredUp) {
         gameLives--;
       }
     }
     if (ball.props.direction === 'bot' && ball.posY >= (Game.canvas.height - ball.width)) {
       ball.props.direction = 'top';
+      ball.props.collision = false;
       if (!isPoweredUp) {
         gameLives--;
       }
     }
     if (ball.props.direction === 'top' && ball.posY <= 0) {
       ball.props.direction = 'bot';
+      ball.props.collision = false;
     }
     if (gameLives === 0) {
       drawLoseMenu();
@@ -281,7 +291,7 @@ function brickCollision(ball, bricks, methodId) {
     }
   }
   setTimeout(function() {
-    ball.props.collision = false;
+    // ball.props.collision = false;
     // game levels need work
     if (Game.methodParams.filter(x => x.id==='brick').length === 0) {
       // nextGameLevel();
@@ -326,6 +336,7 @@ function paddleCollision() {
   if (ball.props.direction === 'botrt' && paddle.props.direction === 'lt') {
     ball.props.direction = 'toprt';
   }
+  ball.props.collision = false;
 }
 
 function gamePowerUp() {
