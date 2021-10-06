@@ -358,7 +358,9 @@ function readyPaddle(event) {
 }
 
 function movePaddle(event) {
-  paddle.props.direction = 'non';
+  if (paddle && paddle.props) {
+    paddle.props.direction = 'non';
+  }
   if (paddle.posX < event.clientX) {
     paddle.posX += Game.canvas.width * (0.026);
     paddle.props.direction = 'rt';
