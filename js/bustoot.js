@@ -41,24 +41,24 @@ function playGame() { // draw the game
   isPoweredUp = false;
   bricks = [];
   gameStart = false;
-  ball = {
-    posX: (Game.canvas.width * 0.5),
-    posY: (Game.canvas.height * 0.54),
-    width: (Main.entitySize * 2),
-    aglStrt: 0,
-    aglEnd: 2 * Math.PI,
-    lineWidth: 1,
-    color: 'green',
-    isFilled: true,
-    id: 'ball',
-    isSolid: true,
-    isAnim: false,
-    props: {
-      direction: 'top',
-      collision: false
-    },
-    methodId: undefined,
-  }
+  // ball = {
+    // posX: (Game.canvas.width * 0.5),
+    // posY: (Game.canvas.height * 0.54),
+    // width: (Main.entitySize * 2),
+    // aglStrt: 0,
+    // aglEnd: 2 * Math.PI,
+    // lineWidth: 1,
+    // color: 'green',
+    // isFilled: true,
+    // id: 'ball',
+    // isSolid: true,
+    // isAnim: false,
+    // props: {
+      // direction: 'top',
+      // collision: false
+    // },
+    // methodId: undefined,
+  // }
   readyText = {
     posX: (Game.canvas.width * 0.5),
     posY: (Game.canvas.height * 0.6),
@@ -135,88 +135,116 @@ function playGame() { // draw the game
   Game.methodsToRun.push(backgroundColorBot);
   const gamePaddle = { method: function(id) {if (paddle.methodId === undefined){paddle.methodId = id;} drawRect(paddle.posX, paddle.posY, paddle.width, paddle.height, paddle.lineWidth, paddle.color, paddle.isFilled, paddle.id, paddle.isSolid, paddle.isAnim, paddle.isBackground, paddle.props, paddle.methodId);} };
   Game.methodsToRun.push(gamePaddle);
-  drawGameBricks();
-  const gameBall = { method: function(id) {if (ball.methodId === undefined){ball.methodId = id;} drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
+  // drawGameBricks();
+  // const gameBall = { method: function(id) {if (ball.methodId === undefined){ball.methodId = id;} drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
+  // trying out the new 'shadow param'
+  const gameBall = { 
+    method: function(id) {
+      drawArc(
+        (Game.canvas.width * 0.5), 
+        (Game.canvas.height * 0.54), 
+        (Main.entitySize * 2),
+        0, 
+        2 * Math.PI, 
+        1, 
+        'green', 
+        true, 
+        'ball', 
+        true, 
+        false, 
+        {
+          direction: 'top',
+          collision: false
+        }, 
+        undefined
+      );
+    } 
+  };
   Game.methodsToRun.push(gameBall);
   const playGameBall = { method: function(id) { moveGameBall(); }};
   Game.methodsToRun.push(playGameBall);
-  Game.collisions.push(ballBrickCollision);
-  Game.collisions.push(ballPaddleCollision);
+  // Game.collisions.push(ballBrickCollision);
+  // Game.collisions.push(ballPaddleCollision);
   nextGameLevel();
 }
 
 function moveGameBall() {
-  if (isPoweredUp) {
-    ball.color = 'blue';
-  } else {
-    ball.color = 'green';
-  }
-  if (gameStart === false) {
-    // dirty hack for now...
-    ball.posY -= (Game.canvas.height * 0.0000001);
-  } else {
-    if (ball.props.direction === 'top') {
-      ball.posY -= (Game.canvas.height * 0.01);
-    } else if (ball.props.direction === 'bot') {
-      ball.posY += (Game.canvas.height * 0.01);
-    } else if (ball.props.direction === 'toprt') {
-      ball.posY -= (Game.canvas.height * 0.01);
-      ball.posX += (Game.canvas.width * 0.01);
-    } else if (ball.props.direction === 'toplt') {
-      ball.posY -= (Game.canvas.height * 0.01);
-      ball.posX -= (Game.canvas.width * 0.01);
-    } else if (ball.props.direction === 'botrt') {
-      ball.posY += (Game.canvas.height * 0.01);
-      ball.posX += (Game.canvas.width * 0.01);
-    } else if (ball.props.direction === 'botlt') {
-      ball.posY += (Game.canvas.height * 0.01);
-      ball.posX -= (Game.canvas.width * 0.01);
+  // const gameBall = Game.methodParams.find(x => x.id === 'ball');
+  Game.methodParams.forEach(e => {if (e.id === 'ball') {ball = e;}});
+  if (ball?.methodId) {
+    if (isPoweredUp) {
+      ball.color = 'blue';
+    } else {
+      ball.color = 'green';
     }
+    if (gameStart === false) {
+      // dirty hack for now...
+      ball.posY -= (Game.canvas.height * 0.0000001);
+    } else {
+      if (ball.props.direction === 'top') {
+        ball.posY -= (Game.canvas.height * 0.01);
+      } else if (ball.props.direction === 'bot') {
+        ball.posY += (Game.canvas.height * 0.01);
+      } else if (ball.props.direction === 'toprt') {
+        ball.posY -= (Game.canvas.height * 0.01);
+        ball.posX += (Game.canvas.width * 0.01);
+      } else if (ball.props.direction === 'toplt') {
+        ball.posY -= (Game.canvas.height * 0.01);
+        ball.posX -= (Game.canvas.width * 0.01);
+      } else if (ball.props.direction === 'botrt') {
+        ball.posY += (Game.canvas.height * 0.01);
+        ball.posX += (Game.canvas.width * 0.01);
+      } else if (ball.props.direction === 'botlt') {
+        ball.posY += (Game.canvas.height * 0.01);
+        ball.posX -= (Game.canvas.width * 0.01);
+      }
 
-    if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
-      ball.props.direction = 'toplt';
-    }
-    if (ball.props.direction === 'toplt' && ball.posY <= 0) {
-      ball.props.direction = 'botlt';
-    }
-    if (ball.props.direction === 'botlt' && ball.posX <= 0) {
-      ball.props.direction = 'botrt';
-    }
-    if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
-      ball.props.direction = 'toprt';
-      if (!isPoweredUp) {
-        gameLives--;
+      if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
+        ball.props.direction = 'toplt';
       }
-    }
-    if (ball.props.direction === 'toplt' && ball.posX <= 0) {
-      ball.props.direction = 'toprt';
-    }
-    if (ball.props.direction === 'toprt' && ball.posY <= 0) {
-      ball.props.direction = 'botrt';
-    }
-    if (ball.props.direction === 'botrt' && ball.posX >= (Game.canvas.width - ball.width)) {
-      ball.props.direction = 'botlt';
-    }
-    if (ball.props.direction === 'botlt' && ball.posY >= (Game.canvas.height - ball.width)) {
-      ball.props.direction = 'toplt';
-      if (!isPoweredUp) {
-        gameLives--;
+      if (ball.props.direction === 'toplt' && ball.posY <= 0) {
+        ball.props.direction = 'botlt';
       }
-    }
-    if (ball.props.direction === 'bot' && ball.posY >= (Game.canvas.height - ball.width)) {
-      ball.props.direction = 'top';
-      if (!isPoweredUp) {
-        gameLives--;
+      if (ball.props.direction === 'botlt' && ball.posX <= 0) {
+        ball.props.direction = 'botrt';
       }
-    }
-    if (ball.props.direction === 'top' && ball.posY <= 0) {
-      ball.props.direction = 'bot';
-    }
-    if (gameLives === 0) {
-      drawLoseMenu();
-      gameLives = -1;
+      if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
+        ball.props.direction = 'toprt';
+        if (!isPoweredUp) {
+          gameLives--;
+        }
+      }
+      if (ball.props.direction === 'toplt' && ball.posX <= 0) {
+        ball.props.direction = 'toprt';
+      }
+      if (ball.props.direction === 'toprt' && ball.posY <= 0) {
+        ball.props.direction = 'botrt';
+      }
+      if (ball.props.direction === 'botrt' && ball.posX >= (Game.canvas.width - ball.width)) {
+        ball.props.direction = 'botlt';
+      }
+      if (ball.props.direction === 'botlt' && ball.posY >= (Game.canvas.height - ball.width)) {
+        ball.props.direction = 'toplt';
+        if (!isPoweredUp) {
+          gameLives--;
+        }
+      }
+      if (ball.props.direction === 'bot' && ball.posY >= (Game.canvas.height - ball.width)) {
+        ball.props.direction = 'top';
+        if (!isPoweredUp) {
+          gameLives--;
+        }
+      }
+      if (ball.props.direction === 'top' && ball.posY <= 0) {
+        ball.props.direction = 'bot';
+      }
+      if (gameLives === 0) {
+        drawLoseMenu();
+        gameLives = -1;
+      }
     }
   }
+  
 }
 
 function brickCollision(ball, bricks, methodId) {
@@ -370,6 +398,7 @@ function stopPaddle(event) {
 
 function nextGameLevel() {
   gameStart = false;
+  
   ball.posX = (Game.canvas.width * 0.5);
   ball.posY = (Game.canvas.height * 0.54);
   // this text doesn't behave as expected...
@@ -561,4 +590,5 @@ function drawMainMenu() { // draw the main menu
         }
      };
   Game.methodsToRun.push(playBtn);
+  console.log(Game.methodParams);
 }

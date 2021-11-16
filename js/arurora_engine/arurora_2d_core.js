@@ -183,7 +183,7 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isAnim: isAnim,
       props: props,
       isDeleted: false,
-      methodId: methodId,
+      methodId: Game.id,
     }
     Game.methodParams.push(params);
   } else if (doesExist && Game.methodParams[index].posX !== posX || Game.methodParams[index].posY !== posY) {

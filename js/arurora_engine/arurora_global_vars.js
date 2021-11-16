@@ -2,8 +2,9 @@
 let Game = { // the user will want to play with this object
   frameRate: 1000 / 60, // 60 frames a second
   methodsToRun: [], // all the methods to make the game run
-  methodParams: [], // this will detect if any values change
-  canvas: undefined, // need the game stage
+  methodParams: [], // this holds all the current param values
+  methodParamShadow: [], // this is all the param values recorded previously
+  canvas: undefined, // the game stage
   stageWidthPrct: .98, // how much of the screen width will it take up
   stageHeightPrct: .97, // how much of the screen height will it take up
   clearStage: function() { // clear the game stage
