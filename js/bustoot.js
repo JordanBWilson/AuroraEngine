@@ -129,10 +129,17 @@ function playGame() { // draw the game
     methodId: undefined,
   }
   Game.clearStage();
+  
+  const playGameBall = { method: function(id) { moveGameBall(); }};
+  Game.methodsToRun.push(playGameBall);
+  
   // const backgroundColorTop = { method: function(id) {if (backgroundTop.methodId === undefined){backgroundTop.methodId = id;} drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, backgroundTop.methodId);} };
   // const backgroundColorBot = { method: function(id) {if (backgroundBot.methodId === undefined){backgroundBot.methodId = id;} drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, backgroundBot.methodId);} };
   const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
   Game.methodsToRun.push(backgroundColor);
+  
+  
+  
   // Game.methodsToRun.push(backgroundColorTop);
   // Game.methodsToRun.push(backgroundColorBot);
   // const gamePaddle = { method: function(id) {if (paddle.methodId === undefined){paddle.methodId = id;} drawRect(paddle.posX, paddle.posY, paddle.width, paddle.height, paddle.lineWidth, paddle.color, paddle.isFilled, paddle.id, paddle.isSolid, paddle.isAnim, paddle.isBackground, paddle.props, paddle.methodId);} };
@@ -140,41 +147,52 @@ function playGame() { // draw the game
   // drawGameBricks();
   // const gameBall = { method: function(id) {if (ball.methodId === undefined){ball.methodId = id;} drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.isAnim, ball.props, ball.methodId);} };
   // trying out the new 'shadow param'
-  const gameBall = { method: function(id) {drawArc((Game.canvas.width * 0.32), (Game.canvas.height * 0.52), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', true, 'prop', false, false, {}, id);} };
-  // const gameBall = { 
-    // method: function(id) {
-      // drawArc(
-        // (Game.canvas.width * 0.5), 
-        // (Game.canvas.height * 0.54), 
-        // (Main.entitySize * 2),
-        // 0, 
-        // 2 * Math.PI, 
-        // 1, 
-        // 'green', 
-        // true, 
-        // 'ball', 
-        // true, 
-        // false, 
-        // {
-          // direction: 'top',
-          // collision: false
-        // }, 
-        // id
-      // );
-    // } 
-  // };
+  // const gameBall = { method: function(id) {drawArc((Game.canvas.width * 0.32), (Game.canvas.height * 0.52), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', true, 'ball', false, false, {}, id);} };
+  const gameBall = { 
+    method: function(id) {
+      drawArc(
+        (Game.canvas.width * 0.5), 
+        (Game.canvas.height * 0.54), 
+        (Main.entitySize * 2),
+        0, 
+        (2 * Math.PI), 
+        1, 
+        'green', 
+        true, 
+        'ball', 
+        true, 
+        false, 
+        {
+          direction: 'top',
+          collision: false
+        }, 
+        id
+      );
+    } 
+  };
   Game.methodsToRun.push(gameBall);
-  // const playGameBall = { method: function(id) { moveGameBall(); }};
-  // Game.methodsToRun.push(playGameBall);
-  console.log(Game.methodParams);
+  
   // Game.collisions.push(ballBrickCollision);
   // Game.collisions.push(ballPaddleCollision);
   // nextGameLevel();
+  console.log(Game.methodParams, ball, Game.methodsToRun);
 }
 
 function moveGameBall() {
+  // when the game starts up, look for the ball
+  if (!ball?.methodId) {
+    
+    for (let i = 0; i < Game.methodParams.length; i++) {
+      if (Game.methodParams[i].id === 'ball') {
+        ball = Game.methodParams[i];
+        // console.log(Game.methodParams.find(x => x.id === 'ball'));
+      }
+    }
+  }
   // const gameBall = Game.methodParams.find(x => x.id === 'ball');
-  Game.methodParams.forEach(e => {if (e.id === 'ball') {ball = e;}});
+  // Game.methodParams.forEach(e => {if (e.id === 'ball') {ball = e;}});
+  
+  // when we have the ball, let's play the game
   if (ball?.methodId) {
     if (isPoweredUp) {
       ball.color = 'blue';
@@ -183,7 +201,8 @@ function moveGameBall() {
     }
     if (gameStart === false) {
       // dirty hack for now...
-      ball.posY -= (Game.canvas.height * 0.0000001);
+      // ball.posY -= (Game.canvas.height * 0.0000001);
+      // console.log(ball.posY);
     } else {
       if (ball.props.direction === 'top') {
         ball.posY -= (Game.canvas.height * 0.01);
@@ -573,7 +592,7 @@ function drawMainMenu() { // draw the main menu
   Game.methodsToRun.push(ballShadow9);
   Game.methodsToRun.push(ballShadow10);
   Game.methodsToRun.push(ball);
-  const playGameMethod = { method: function(id) { playGame(); }}
+  const playGameMethod = { method: function(id) { playGame(); }} // testGame() // playGame()
   const playBtn = {
      method: function(id) {
        drawButton(
@@ -594,4 +613,49 @@ function drawMainMenu() { // draw the main menu
         }
      };
   Game.methodsToRun.push(playBtn);
+}
+ // trying out a clean slate
+function testGame() {
+  Game.clearStage();
+  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
+  Game.methodsToRun.push(backgroundColor);
+  const majorTitle = { method: function(id) {drawText('3em serif', 'Bustoot', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', false, {}, id);} };
+  const minorTitle = { method: function(id) {drawText('16px serif', 'An Arurora Engine Demo', (Game.canvas.width * 0.5), (Game.canvas.height * 0.14), 'green', 'center', false, {}, id);} };
+  Game.methodsToRun.push(majorTitle);
+  Game.methodsToRun.push(minorTitle);
+  const brick1 = { method: function(id) {drawRect((Game.canvas.width * 0.01), (Game.canvas.height * 0.17), (Game.canvas.width * 0.15), (Main.entitySize * 6), 1, 'green', true, 'prop', false, false, false, {}, id);} };
+  const brick2 = { method: function(id) {drawRect((Game.canvas.width * 0.17), (Game.canvas.height * 0.17), (Game.canvas.width * 0.15), (Main.entitySize * 6), 1, 'green', true, 'prop', false, false, false, {}, id);} };
+  const brick3 = { method: function(id) {drawRect((Game.canvas.width * 0.33), (Game.canvas.height * 0.17), (Game.canvas.width * 0.17), (Main.entitySize * 6), 1, 'green', true, 'prop', false, false, false, {}, id);} };
+  const brick4 = { method: function(id) {drawRect((Game.canvas.width * 0.51), (Game.canvas.height * 0.17), (Game.canvas.width * 0.16), (Main.entitySize * 6), 1, 'green', true, 'prop', false, false, false, {}, id);} };
+  const brick5 = { method: function(id) {drawRect((Game.canvas.width * 0.68), (Game.canvas.height * 0.17), (Game.canvas.width * 0.15), (Main.entitySize * 6), 1, 'green', true, 'prop', false, false, false, {}, id);} };
+  const brick6 = { method: function(id) {drawRect((Game.canvas.width * 0.84), (Game.canvas.height * 0.17), (Game.canvas.width * 0.15), (Main.entitySize * 6), 1, 'green', true, 'prop', false, false, false, {}, id);} };
+  Game.methodsToRun.push(brick1);
+  Game.methodsToRun.push(brick2);
+  Game.methodsToRun.push(brick3);
+  Game.methodsToRun.push(brick4);
+  Game.methodsToRun.push(brick5);
+  Game.methodsToRun.push(brick6);
+  const ballShadow1 = { method: function(id) {drawArc((Game.canvas.width * 0.1), (Game.canvas.height * 0.3), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow2 = { method: function(id) {drawArc((Game.canvas.width * 0.12), (Game.canvas.height * 0.32), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow3 = { method: function(id) {drawArc((Game.canvas.width * 0.14), (Game.canvas.height * 0.34), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow4 = { method: function(id) {drawArc((Game.canvas.width * 0.16), (Game.canvas.height * 0.36), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow5 = { method: function(id) {drawArc((Game.canvas.width * 0.18), (Game.canvas.height * 0.38), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow6 = { method: function(id) {drawArc((Game.canvas.width * 0.20), (Game.canvas.height * 0.40), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow7 = { method: function(id) {drawArc((Game.canvas.width * 0.22), (Game.canvas.height * 0.42), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow8 = { method: function(id) {drawArc((Game.canvas.width * 0.24), (Game.canvas.height * 0.44), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow9 = { method: function(id) {drawArc((Game.canvas.width * 0.26), (Game.canvas.height * 0.46), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ballShadow10 = { method: function(id) {drawArc((Game.canvas.width * 0.28), (Game.canvas.height * 0.48), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', false, 'prop', false, false, {}, id);} };
+  const ball = { method: function(id) {drawArc((Game.canvas.width * 0.32), (Game.canvas.height * 0.52), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', true, 'ball', false, false, {}, id);} };
+  Game.methodsToRun.push(ballShadow1);
+  Game.methodsToRun.push(ballShadow2);
+  Game.methodsToRun.push(ballShadow3);
+  Game.methodsToRun.push(ballShadow4);
+  Game.methodsToRun.push(ballShadow5);
+  Game.methodsToRun.push(ballShadow6);
+  Game.methodsToRun.push(ballShadow7);
+  Game.methodsToRun.push(ballShadow8);
+  Game.methodsToRun.push(ballShadow9);
+  Game.methodsToRun.push(ballShadow10);
+  Game.methodsToRun.push(ball);
+  console.log(Game.methodParams);
 }

@@ -25,7 +25,6 @@ function mainLoop() {
           Game.methodsToRun[i].methodId = Game.id;
         }
         Game.methodsToRun[i].method(Game.id); // run through all the methods the user sent us
-
         if (Main.isStageTapped) { // when the stage is tapped
           if (Game.methodParams[i]?.isBtn) { // look to see if the user tapped on a button
             isButtonTapped(Game.methodParams[i]);

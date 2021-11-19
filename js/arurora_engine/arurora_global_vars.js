@@ -1,6 +1,6 @@
 
 let Game = { // the user will want to play with this object
-  frameRate: 1000 / 60, // 60 frames a second
+  frameRate: 1000 / 15, // 60 frames a second
   methodsToRun: [], // all the methods to make the game run
   methodParams: [], // this holds all the current param values
   methodParamShadow: [], // this is all the param values recorded previously
