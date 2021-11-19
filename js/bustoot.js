@@ -129,7 +129,7 @@ function playGame() { // draw the game
     methodId: undefined,
   }
   Game.clearStage();
-  
+  // all methods that help 'play the game' should be at the top
   const playGameBall = { method: function(id) { moveGameBall(); }};
   Game.methodsToRun.push(playGameBall);
   
