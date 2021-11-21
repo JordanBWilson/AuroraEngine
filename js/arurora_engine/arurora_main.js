@@ -21,13 +21,13 @@ function mainLoop() {
       for (let i = 0; i < Game.methodsToRun.length; i++) {
 
         if (Game.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
-          Game.id++;
-          Game.methodsToRun[i].methodId = Game.id;
+          Main.globalId++;
+          Game.methodsToRun[i].methodId = Main.globalId;
         }
-        Game.methodsToRun[i].method(Game.id); // run through all the methods the user sent us
+        Game.methodsToRun[i].method(Main.globalId); // run through all the methods the user sent us
         if (Main.isStageTapped) { // when the stage is tapped
-          if (Game.methodParams[i]?.isBtn) { // look to see if the user tapped on a button
-            isButtonTapped(Game.methodParams[i]);
+          if (Game.methodObjects[i]?.isBtn) { // look to see if the user tapped on a button
+            isButtonTapped(Game.methodObjects[i]);
             if (i == Game.methodsToRun.length - 1) {
               Main.isStageTapped = false;
               Main.tappedX = 0;
@@ -85,14 +85,14 @@ function collisionCheck() {
   // this will check for any collisions in game
   if (Game.collisions.length > 0) {
     // find all the methods that are accepting collision events
-    let solidMethods = Game.methodParams.filter(x => x.isSolid === true);
+    let solidMethods = Game.methodObjects.filter(x => x.isSolid === true);
     if (solidMethods && solidMethods.length > 0) {
       // go through all the collisions
       for (let i = 0; i < Game.collisions.length; i++) {
         let primary = Game.collisions[i].primary;
         let target = Game.collisions[i].target;
-        let primaryMethods = Game.methodParams.filter(x => x.id === primary);
-        let targetMethods = Game.methodParams.filter(x => x.id === target);
+        let primaryMethods = Game.methodObjects.filter(x => x.id === primary);
+        let targetMethods = Game.methodObjects.filter(x => x.id === target);
         // find out if a collision is happening
         for (let j = 0; j < primaryMethods.length; j++) {
           for (let k = 0; k < targetMethods.length; k++) {
@@ -118,48 +118,48 @@ function collisionCheck() {
 }
 
 function backgroundAnimationCheck(index) {
-  if (!Main.isResizing && Game.methodParams[index] && Game.methodParams[index].isBackground) { // is this rect a backgound..
-    for (let i = 0; i < Game.methodParams.length; i++) { // find any method param that in colliding with this background
-      if (Game.methodParams[i].isAnim) { // is this thing animated? Find if it is colliding with this background
+  if (!Main.isResizing && Game.methodObjects[index] && Game.methodObjects[index].isBackground) { // is this rect a backgound..
+    for (let i = 0; i < Game.methodObjects.length; i++) { // find any method param that in colliding with this background
+      if (Game.methodObjects[i].isAnim) { // is this thing animated? Find if it is colliding with this background
 
             let widthOrHeight = 0;
             // because we are dealing with arcs as well, there might not be a height. you can't be too careful
-            if (!Game.methodParams[i].height) {
-              widthOrHeight = Game.methodParams[i].width;
+            if (!Game.methodObjects[i].height) {
+              widthOrHeight = Game.methodObjects[i].width;
             } else {
-              widthOrHeight = Game.methodParams[i].height;
+              widthOrHeight = Game.methodObjects[i].height;
             }
 
-        if (Game.methodParams[i].posX >= Game.methodParams[index].posX - Game.methodParams[i].width &&
-           Game.methodParams[i].posX <= Game.methodParams[index].posX + Game.methodParams[index].width + Game.methodParams[i].width) {
-          if (Game.methodParams[i].posY >= Game.methodParams[index].posY - widthOrHeight  &&
-             Game.methodParams[i].posY <= Game.methodParams[index].posY + Game.methodParams[index].height + widthOrHeight) {
+        if (Game.methodObjects[i].posX >= Game.methodObjects[index].posX - Game.methodObjects[i].width &&
+           Game.methodObjects[i].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[i].width) {
+          if (Game.methodObjects[i].posY >= Game.methodObjects[index].posY - widthOrHeight  &&
+             Game.methodObjects[i].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight) {
 
-            for (let j = 0; j < Game.methodParams.length; j++) { // look and see if there is anything not animated that needs to be redrawn..
-              if (Game.methodParams[j].posX >= Game.methodParams[index].posX - Game.methodParams[j].width &&
-                  Game.methodParams[j].posX <= Game.methodParams[index].posX + Game.methodParams[index].width + Game.methodParams[j].width) {
+            for (let j = 0; j < Game.methodObjects.length; j++) { // look and see if there is anything not animated that needs to be redrawn..
+              if (Game.methodObjects[j].posX >= Game.methodObjects[index].posX - Game.methodObjects[j].width &&
+                  Game.methodObjects[j].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[j].width) {
 
                 let widthOrHeight = 0;
                 // because we are dealing with arcs as well, there might not be a height. you can't be too careful
-                if (!Game.methodParams[j].height) {
-                  widthOrHeight = Game.methodParams[j].width;
+                if (!Game.methodObjects[j].height) {
+                  widthOrHeight = Game.methodObjects[j].width;
                 } else {
-                  widthOrHeight = Game.methodParams[j].height;
+                  widthOrHeight = Game.methodObjects[j].height;
                 }
-                if (Game.methodParams[j].posY >= Game.methodParams[index].posY - Game.methodParams[j].width  &&
-                     Game.methodParams[j].posY <= Game.methodParams[index].posY + Game.methodParams[index].height + widthOrHeight) {
+                if (Game.methodObjects[j].posY >= Game.methodObjects[index].posY - Game.methodObjects[j].width  &&
+                     Game.methodObjects[j].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight) {
 
-                       if (!Game.methodParams[j].isAnim && !Game.methodParams[j].isBackground && j !== index) { // find out what shape this is and redraw it
+                       if (!Game.methodObjects[j].isAnim && !Game.methodObjects[j].isBackground && j !== index) { // find out what shape this is and redraw it
                          // this will need to be split up as the shapes and graphics grow
-                         if (Game.methodParams[j].height) { // check for a rect shape
-                           Game.methodParams[j].isAnim = true;
+                         if (Game.methodObjects[j].height) { // check for a rect shape
+                           Game.methodObjects[j].isAnim = true;
                          }
 
                        }
                 }
               }
             }
-            Game.methodParams[index].isAnim = true; // animate the background
+            Game.methodObjects[index].isAnim = true; // animate the background
           }
         }
       }
@@ -168,9 +168,9 @@ function backgroundAnimationCheck(index) {
 }
 
 function doesMethodParamExist(methodId) {
-  return Game.methodParams.find(x => x.methodId === methodId) ? true : false;
+  return Game.methodObjects.find(x => x.methodId === methodId) ? true : false;
 }
 
 function findMethodParamIndex(methodId) {
-  return Game.methodParams.findIndex(x => x.methodId === methodId);
+  return Game.methodObjects.findIndex(x => x.methodId === methodId);
 }

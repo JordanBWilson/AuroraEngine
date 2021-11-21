@@ -2,31 +2,32 @@
 let Game = { // the user will want to play with this object
   frameRate: 1000 / 15, // 60 frames a second
   methodsToRun: [], // all the methods to make the game run
-  methodParams: [], // this holds all the current param values
-  methodParamShadow: [], // this is all the param values recorded previously
+  methodObjects: [], // this holds all the current param values
+  methodObjectShadows: [], // this is all the param values recorded previously
   canvas: undefined, // the game stage
   stageWidthPrct: .98, // how much of the screen width will it take up
   stageHeightPrct: .97, // how much of the screen height will it take up
   clearStage: function() { // clear the game stage
     this.methodsToRun = [];
-    this.methodParams = [];
-    this.id = 0;
+    this.methodObjects = [];
+    this.methodObjectShadows = [];
+    Main.globalId = 0;
     Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
   collisions: [],
   deleteEntity: function(id) {
-    for (let i = 0; i < this.methodParams.length; i++) {
-      if (this.methodParams[i].methodId === id) {
+    for (let i = 0; i < this.methodObjects.length; i++) {
+      if (this.methodObjects[i].methodId === id) {
         for (let j = 0; j < this.methodsToRun.length; j++) {
-          if (this.methodParams[i]?.methodId === this.methodsToRun[j]?.methodId) {
-            this.methodParams.splice(i, 1);
+          if (this.methodObjects[i]?.methodId === this.methodsToRun[j]?.methodId) {
+            this.methodObjects.splice(i, 1);
+            this.methodObjectShadows.splice(i, 1);
             this.methodsToRun.splice(j, 1);
           }
         }
       }
     }
   },
-  id: 0,
 };
 
 let Main = { // global variables to keep the game running nicely
@@ -40,4 +41,5 @@ let Main = { // global variables to keep the game running nicely
   isStageTapped: false, // is the stage tapped
   tappedX: 0, // where the user tapped on the stage last on the X axis
   tappedY: 0, // where the user tapped on the stage last on the Y axis
+  globalId: 0, // makes all the objects easier to find
 };

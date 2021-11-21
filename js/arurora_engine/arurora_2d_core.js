@@ -8,14 +8,11 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
     index = findMethodParamIndex(methodId);
   }
 
-  if (doesExist && Game.methodParams[index] && (Game.methodParams[index].posX !== posX || Game.methodParams[index].posY !== posY)) {
-    isAnim = true;
-  }
+  // if (doesExist && Game.methodObjects[index] && (Game.methodObjects[index].posX !== posX || Game.methodObjects[index].posY !== posY)) {
+    // isAnim = true;
+  // }
   if (!doesExist || Main.isResizing) {
-    Main.stage.fillStyle = color;
-    Main.stage.font = font;
-    Main.stage.textAlign = align;
-    Main.stage.fillText(msg, posX, posY);
+    
   }
   if (!doesExist) {
     let params = {
@@ -30,17 +27,24 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
       isDeleted: false,
       methodId: methodId,
     }
-    Game.methodParams.push(params);
+    Game.methodObjects.push(params);
+    Game.methodObjectShadows.push(params);
   } else if (doesExist && Main.isResizing) {
-    Game.methodParams[index].font = font;
-    Game.methodParams[index].msg = msg;
-    Game.methodParams[index].posX = posX;
-    Game.methodParams[index].posY = posY;
-    Game.methodParams[index].color = color;
-    Game.methodParams[index].align = align;
-    Game.methodParams[index].isAnim = isAnim;
-    Game.methodParams[index].props = props;
+    Game.methodObjects[index].font = font;
+    Game.methodObjects[index].msg = msg;
+    Game.methodObjects[index].posX = posX;
+    Game.methodObjects[index].posY = posY;
+    Game.methodObjects[index].color = color;
+    Game.methodObjects[index].align = align;
+    Game.methodObjects[index].isAnim = isAnim;
+    Game.methodObjects[index].props = props;
   }
+}
+function redrawText(font, msg, posX, posY, color, align, isAnim, props, methodId) {
+  Main.stage.fillStyle = color;
+  Main.stage.font = font;
+  Main.stage.textAlign = align;
+  Main.stage.fillText(msg, posX, posY);
 }
 // this will draw a rectangle to the screen
 // ex: 9, 51, 100, 100, 1, 'green', false
@@ -53,29 +57,9 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     backgroundAnimationCheck(index);
   }
 
-  if (doesExist && Game.methodParams[index] && (Game.methodParams[index].posX !== posX || Game.methodParams[index].posY !== posY)) {
-    isAnim = true;
-  }
-  if (!doesExist || Main.isResizing) {
-    Main.stage.beginPath();
-    if (!lineWidth) {
-      Main.stage.lineWidth = '1';
-    } else {
-      Main.stage.lineWidth = lineWidth;
-    }
-    Main.stage.rect(posX, posY, width, height);
-    if (isFilled) {
-      Main.stage.fillStyle = color;
-      Main.stage.fill();
-    } else {
-      Main.stage.strokeStyle = color;
-      Main.stage.stroke();
-    }
-    if (Game.methodParams[index]) {
-      Game.methodParams[index].isAnim = false;
-    }
-
-  }
+  // if (doesExist && Game.methodObjects[index] && (Game.methodObjects[index].posX !== posX || Game.methodObjects[index].posY !== posY)) {
+    // isAnim = true;
+  // }
   if (!doesExist) {
     let params = {
       posX: posX,
@@ -93,19 +77,40 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       isDeleted: false,
       methodId: methodId,
     }
-    Game.methodParams.push(params);
-  } else if (doesExist && Main.isResizing) {
-    Game.methodParams[index].posX = posX;
-    Game.methodParams[index].posY = posY;
-    Game.methodParams[index].width = width;
-    Game.methodParams[index].height = height;
-    Game.methodParams[index].lineWidth = lineWidth;
-    Game.methodParams[index].color = color;
-    Game.methodParams[index].isFilled = isFilled;
-    Game.methodParams[index].isSolid = isSolid;
-    Game.methodParams[index].isAnim = isAnim;
-    Game.methodParams[index].isBackground = isBackground;
-    Game.methodParams[index].props = props;
+    Game.methodObjects.push(params);
+    Game.methodObjectShadows.push(params);
+  }
+    if (!doesExist || Main.isResizing) {
+    redrawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, props, methodId);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = posX;
+    Game.methodObjects[index].posY = posY;
+    Game.methodObjects[index].width = width;
+    Game.methodObjects[index].height = height;
+    Game.methodObjects[index].lineWidth = lineWidth;
+    Game.methodObjects[index].color = color;
+    Game.methodObjects[index].isFilled = isFilled;
+    Game.methodObjects[index].isSolid = isSolid;
+    Game.methodObjects[index].isAnim = isAnim;
+    Game.methodObjects[index].isBackground = isBackground;
+    Game.methodObjects[index].props = props;
+  }
+}
+function redrawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isAnim, isBackground, props, methodId) {
+  Main.stage.beginPath();
+  if (!lineWidth) {
+    Main.stage.lineWidth = '1';
+  } else {
+    Main.stage.lineWidth = lineWidth;
+  }
+  Main.stage.rect(posX, posY, width, height);
+  if (isFilled) {
+    Main.stage.fillStyle = color;
+    Main.stage.fill();
+  } else {
+    Main.stage.strokeStyle = color;
+    Main.stage.stroke();
   }
 }
 // this will draw a circle to the screen
@@ -116,25 +121,9 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
   if (doesExist) {
     index = findMethodParamIndex(methodId);
   }
-  if (doesExist && Game.methodParams[index] && (Game.methodParams[index].posX !== posX || Game.methodParams[index].posY !== posY)) {
-    isAnim = true;
-  }
-  if (!doesExist || Main.isResizing) {
-    Main.stage.beginPath();
-    if (!lineWidth) {
-      Main.stage.lineWidth = '1';
-    } else {
-      Main.stage.lineWidth = lineWidth;
-    }
-    Main.stage.arc(posX, posY, width, aglStrt, aglEnd);
-    if (isFilled) {
-      Main.stage.fillStyle = color;
-      Main.stage.fill();
-    } else {
-      Main.stage.strokeStyle = color;
-      Main.stage.stroke();
-    }
-  }
+  // if (doesExist && Game.methodObjects[index] && (Game.methodObjects[index].posX !== posX || Game.methodObjects[index].posY !== posY)) {
+    // isAnim = true;
+  // }
   if (!doesExist) {
     let params = {
       posX: posX,
@@ -150,21 +139,42 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isAnim: isAnim,
       props: props,
       isDeleted: false,
-      methodId: Game.id,
+      methodId: methodId,
     }
-    Game.methodParams.push(params);
-  } else if (doesExist && Main.isResizing) {
-    Game.methodParams[index].posX = posX;
-    Game.methodParams[index].posY = posY;
-    Game.methodParams[index].width = width;
-    Game.methodParams[index].aglStrt = aglStrt;
-    Game.methodParams[index].aglEnd = aglEnd;
-    Game.methodParams[index].lineWidth = lineWidth;
-    Game.methodParams[index].color = color;
-    Game.methodParams[index].isFilled = isFilled;
-    Game.methodParams[index].isSolid = isSolid;
-    Game.methodParams[index].isAnim = isAnim;
-    Game.methodParams[index].props = props;
+    Game.methodObjects.push(params);
+    Game.methodObjectShadows.push(params);
+  }
+  if (!doesExist || Main.isResizing) {
+    redrawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, isAnim, props, methodId);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = posX;
+    Game.methodObjects[index].posY = posY;
+    Game.methodObjects[index].width = width;
+    Game.methodObjects[index].aglStrt = aglStrt;
+    Game.methodObjects[index].aglEnd = aglEnd;
+    Game.methodObjects[index].lineWidth = lineWidth;
+    Game.methodObjects[index].color = color;
+    Game.methodObjects[index].isFilled = isFilled;
+    Game.methodObjects[index].isSolid = isSolid;
+    Game.methodObjects[index].isAnim = isAnim;
+    Game.methodObjects[index].props = props;
+  }
+}
+function redrawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, isAnim, props, methodId) {
+  Main.stage.beginPath();
+  if (!lineWidth) {
+    Main.stage.lineWidth = '1';
+  } else {
+    Main.stage.lineWidth = lineWidth;
+  }
+  Main.stage.arc(posX, posY, width, aglStrt, aglEnd);
+  if (isFilled) {
+    Main.stage.fillStyle = color;
+    Main.stage.fill();
+  } else {
+    Main.stage.strokeStyle = color;
+    Main.stage.stroke();
   }
 }
 function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, isAnim, props, methodId) {
@@ -213,20 +223,20 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       isDeleted: false,
       methodId: methodId,
     }
-    Game.methodParams.push(params);
+    Game.methodObjects.push(params);
   } else if (doesExist && Main.isResizing) {
-    Game.methodParams[index].posX = posX;
-    Game.methodParams[index].posY = posY;
-    Game.methodParams[index].width = width;
-    Game.methodParams[index].height = height;
-    Game.methodParams[index].lineWidth = lineWidth;
-    Game.methodParams[index].btnColor = btnColor;
-    Game.methodParams[index].txtColor = txtColor;
-    Game.methodParams[index].font = font;
-    Game.methodParams[index].msg = msg;
-    Game.methodParams[index].isFilled = isFilled;
-    Game.methodParams[index].action = action;
-    Game.methodParams[index].isAnim = isAnim;
-    Game.methodParams[index].props = props;
+    Game.methodObjects[index].posX = posX;
+    Game.methodObjects[index].posY = posY;
+    Game.methodObjects[index].width = width;
+    Game.methodObjects[index].height = height;
+    Game.methodObjects[index].lineWidth = lineWidth;
+    Game.methodObjects[index].btnColor = btnColor;
+    Game.methodObjects[index].txtColor = txtColor;
+    Game.methodObjects[index].font = font;
+    Game.methodObjects[index].msg = msg;
+    Game.methodObjects[index].isFilled = isFilled;
+    Game.methodObjects[index].action = action;
+    Game.methodObjects[index].isAnim = isAnim;
+    Game.methodObjects[index].props = props;
   }
 }
