@@ -54,8 +54,10 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
   let index = -1;
   if (doesExist) {
     index = findMethodParamIndex(methodId);
+    // console.log(index);
+    // Game.methodObjects[index].isAnim = false;
     // check to see if there is animations going on.
-    backgroundAnimationCheck(index);
+    // backgroundAnimationCheck(index);
   }
 
   // if (doesExist && Game.methodObjects[index] && (Game.methodObjects[index].posX !== posX || Game.methodObjects[index].posY !== posY)) {
@@ -97,6 +99,10 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     Game.methodObjects[index].isBackground = isBackground;
     Game.methodObjects[index].props = props;
   }
+  if (doesExist && Game.methodObjects[index].isAnim) {
+    // console.log(Game.methodObjects);
+    redrawRect(posX, posY, width, height, lineWidth, color, isFilled);
+  }
 }
 function redrawRect(posX, posY, width, height, lineWidth, color, isFilled) {
   Main.stage.beginPath();
@@ -121,12 +127,13 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
   let index = -1;
   if (doesExist) {
     index = findMethodParamIndex(methodId);
+    Game.methodObjects[index].isAnim = false;
   }
   // if (doesExist && Game.methodObjects[index] && (Game.methodObjects[index].posX !== posX || Game.methodObjects[index].posY !== posY)) {
     // isAnim = true;
   // }
   if (!doesExist) {
-    let params = {
+    const arc = {
       posX: posX,
       posY: posY,
       width: width,
@@ -142,8 +149,9 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isDeleted: false,
       methodId: methodId,
     }
-    Game.methodObjects.push(params);
-    Main.methodObjectShadows.push(params);
+    const shadowArc = Object.assign({}, arc);
+    Game.methodObjects.push(arc);
+    Main.methodObjectShadows.push(shadowArc);
   }
   if (!doesExist || Main.isResizing) {
     redrawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled);
@@ -161,6 +169,27 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     Game.methodObjects[index].isAnim = isAnim;
     Game.methodObjects[index].props = props;
   }
+  // checking for animations
+  if (doesExist && 
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX)
+   ) {
+     // console.log(Game.methodObjects[index].posY, Main.methodObjectShadows[index].posY);
+     redrawArc(
+      Game.methodObjects[index].posX,
+      Game.methodObjects[index].posY,
+      Game.methodObjects[index].width,
+      Game.methodObjects[index].aglStrt,
+      Game.methodObjects[index].aglEnd,
+      Game.methodObjects[index].lineWidth,
+      Game.methodObjects[index].color,
+      Game.methodObjects[index].isFilled,
+      );
+      const shadowArc = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowArc;
+      Game.methodObjects[index].isAnim = true;
+      // console.log(Game.methodObjects[index]);
+   }
 }
 function redrawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled) {
   Main.stage.beginPath();

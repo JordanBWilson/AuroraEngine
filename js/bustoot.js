@@ -135,7 +135,7 @@ function playGame() { // draw the game
   
   // const backgroundColorTop = { method: function(id) {if (backgroundTop.methodId === undefined){backgroundTop.methodId = id;} drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, backgroundTop.methodId);} };
   // const backgroundColorBot = { method: function(id) {if (backgroundBot.methodId === undefined){backgroundBot.methodId = id;} drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, backgroundBot.methodId);} };
-  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
+  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, true, {}, id);} };
   Game.methodsToRun.push(backgroundColor);
   
   
@@ -195,7 +195,7 @@ function moveGameBall() {
     }
     if (gameStart === false) {
       // dirty hack for now...
-      // ball.posY -= (Game.canvas.height * 0.0000001);
+      ball.posY -= (Game.canvas.height * 0.001);
       // console.log(ball.posY, Game.methodObjects.find(x => x.id === 'ball').posY);
     } else {
       if (ball.props.direction === 'top') {
