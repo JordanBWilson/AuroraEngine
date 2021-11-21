@@ -1,6 +1,6 @@
 
-let Game = { // the user will want to play with this object
-  frameRate: 1000 / 15, // 60 frames a second
+let Game = { // the user will want to use this object
+  frameRate: 1000 / 60, // how fast the game is running
   methodsToRun: [], // all the methods to make the game run
   methodObjects: [], // this holds all the current param values
   canvas: undefined, // the game stage
@@ -13,8 +13,8 @@ let Game = { // the user will want to play with this object
     Main.globalId = 0;
     Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
-  collisions: [],
-  deleteEntity: function(id) {
+  collisions: [], // all the collisions in the game to look for
+  deleteEntity: function(id) { // delete an object in the MethodObjects
     for (let i = 0; i < this.methodObjects.length; i++) {
       if (this.methodObjects[i].methodId === id) {
         for (let j = 0; j < this.methodsToRun.length; j++) {
@@ -26,6 +26,16 @@ let Game = { // the user will want to play with this object
         }
       }
     }
+  },
+  // these settings will make the game run faster or slower
+  setSettingsLow: function() {
+    this.frameRate = 1000 / 15; // 15 frames a second
+  },
+  setSettingsMed: function() {
+    this.frameRate = 1000 / 30; // 30 frames a second
+  },
+  setSettingsHigh: function() {
+    this.frameRate = 1000 / 60; // 60 frames a second
   },
 };
 

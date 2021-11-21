@@ -546,6 +546,7 @@ function drawWinMenu() {
 
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
+  Game.setSettingsLow();
   const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
   Game.methodsToRun.push(backgroundColor);
   const majorTitle = { method: function(id) {drawText('3rem serif', 'Bustoot', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', false, {}, id);} };
