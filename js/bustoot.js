@@ -135,7 +135,7 @@ function playGame() { // draw the game
   
   // const backgroundColorTop = { method: function(id) {if (backgroundTop.methodId === undefined){backgroundTop.methodId = id;} drawRect(backgroundTop.posX, backgroundTop.posY, backgroundTop.width, backgroundTop.height, backgroundTop.lineWidth, backgroundTop.color, backgroundTop.isFilled, backgroundTop.id, backgroundTop.isSolid, backgroundTop.isAnim, backgroundTop.isBackground, backgroundTop.props, backgroundTop.methodId);} };
   // const backgroundColorBot = { method: function(id) {if (backgroundBot.methodId === undefined){backgroundBot.methodId = id;} drawRect(backgroundBot.posX, backgroundBot.posY, backgroundBot.width, backgroundBot.height, backgroundBot.lineWidth, backgroundBot.color, backgroundBot.isFilled, backgroundBot.id, backgroundBot.isSolid, backgroundBot.isAnim, backgroundBot.isBackground, backgroundBot.props, backgroundBot.methodId);} };
-  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, true, {}, id);} };
+  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, true, {}, id); console.log('backgroundId ', id);} };
   Game.methodsToRun.push(backgroundColor);
   
   
@@ -168,6 +168,7 @@ function playGame() { // draw the game
         }, 
         id
       );
+      console.log('ballId ', id);
     } 
   };
   Game.methodsToRun.push(gameBall);
@@ -652,5 +653,5 @@ function testGame() {
   Game.methodsToRun.push(ballShadow9);
   Game.methodsToRun.push(ballShadow10);
   Game.methodsToRun.push(ball);
-  console.log(Game.methodObjects);
+  // console.log(Game.methodObjects);
 }

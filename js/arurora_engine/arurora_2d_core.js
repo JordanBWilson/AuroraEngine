@@ -21,7 +21,6 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
       align: align,
       isAnim: isAnim,
       props: props,
-      isDeleted: false,
       methodId: methodId,
     }
     const shadowText = Object.assign({}, text);
@@ -41,16 +40,16 @@ function drawText(font, msg, posX, posY, color, align, isAnim, props, methodId) 
       Main.methodObjectShadows[index].props = props;
     }
   }
-  // if (doesExist && Main.isResizing) {
-    // Game.methodObjects[index].font = font;
-    // Game.methodObjects[index].msg = msg;
-    // Game.methodObjects[index].posX = posX;
-    // Game.methodObjects[index].posY = posY;
-    // Game.methodObjects[index].color = color;
-    // Game.methodObjects[index].align = align;
-    // Game.methodObjects[index].isAnim = isAnim;
-    // Game.methodObjects[index].props = props;
-  // }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].font = font;
+    Game.methodObjects[index].msg = msg;
+    Game.methodObjects[index].posX = posX;
+    Game.methodObjects[index].posY = posY;
+    Game.methodObjects[index].color = color;
+    Game.methodObjects[index].align = align;
+    Game.methodObjects[index].isAnim = isAnim;
+    Game.methodObjects[index].props = props;
+  }
 }
 function redrawText(font, msg, posX, posY, color, align) {
   Main.stage.fillStyle = color;
@@ -64,21 +63,10 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
   let doesExist = doesMethodParamExist(methodId);
   let index = -1;
   if (doesExist) {
-    
-    // ToDo: there is something going on below
-    if (id === 'background') {
-      console.log('here', methodId);
-    }
-    
-    // ToDo: future Jordan, I don't think this is bringing back the correct index
-    // findMethodParamIndex seems to bring back the 'index' and not where it is in the array
-    
     index = findMethodParamIndex(methodId);
-    // console.log(methodId, Game.methodObjects[index]);
     // check to see if there is animations going on.
     backgroundAnimationCheck(index);
   }
-
   // if (doesExist && Game.methodObjects[index] && (Game.methodObjects[index].posX !== posX || Game.methodObjects[index].posY !== posY)) {
     // isAnim = true;
   // }
@@ -96,15 +84,11 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       isAnim: isAnim,
       isBackground: isBackground,
       props: props,
-      isDeleted: false,
       methodId: methodId,
     }
     const shadowRect = Object.assign({}, rect);
     Game.methodObjects.push(rect);
     Main.methodObjectShadows.push(shadowRect);
-    if (id === 'background') {
-      console.log('here', methodId);
-    }
   }
     if (!doesExist || Main.isResizing) {
     redrawRect(posX, posY, width, height, lineWidth, color, isFilled);
@@ -122,20 +106,20 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       Main.methodObjectShadows[index].props = props;
     }
   }
-  // if (doesExist && Main.isResizing) {
-    // Game.methodObjects[index].posX = posX;
-    // Game.methodObjects[index].posY = posY;
-    // Game.methodObjects[index].width = width;
-    // Game.methodObjects[index].height = height;
-    // Game.methodObjects[index].lineWidth = lineWidth;
-    // Game.methodObjects[index].color = color;
-    // Game.methodObjects[index].isFilled = isFilled;
-    // Game.methodObjects[index].isSolid = isSolid;
-    // Game.methodObjects[index].isAnim = isAnim;
-    // Game.methodObjects[index].isBackground = isBackground;
-    // Game.methodObjects[index].props = props;
-  // }
-  if (doesExist && Game.methodObjects[index].isAnim) {
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = posX;
+    Game.methodObjects[index].posY = posY;
+    Game.methodObjects[index].width = width;
+    Game.methodObjects[index].height = height;
+    Game.methodObjects[index].lineWidth = lineWidth;
+    Game.methodObjects[index].color = color;
+    Game.methodObjects[index].isFilled = isFilled;
+    Game.methodObjects[index].isSolid = isSolid;
+    Game.methodObjects[index].isAnim = isAnim;
+    Game.methodObjects[index].isBackground = isBackground;
+    Game.methodObjects[index].props = props;
+  }
+  if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
     redrawRect(posX, posY, width, height, lineWidth, color, isFilled);
     Game.methodObjects[index].isAnim = false;
   }
@@ -182,7 +166,6 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       isSolid: isSolid,
       isAnim: isAnim,
       props: props,
-      isDeleted: false,
       methodId: methodId,
     }
     const shadowArc = Object.assign({}, arc);
@@ -206,19 +189,19 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
     }
     
   }
-  // if (doesExist && Main.isResizing) {
-    // Game.methodObjects[index].posX = posX;
-    // Game.methodObjects[index].posY = posY;
-    // Game.methodObjects[index].width = width;
-    // Game.methodObjects[index].aglStrt = aglStrt;
-    // Game.methodObjects[index].aglEnd = aglEnd;
-    // Game.methodObjects[index].lineWidth = lineWidth;
-    // Game.methodObjects[index].color = color;
-    // Game.methodObjects[index].isFilled = isFilled;
-    // Game.methodObjects[index].isSolid = isSolid;
-    // Game.methodObjects[index].isAnim = isAnim;
-    // Game.methodObjects[index].props = props;
-  // }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = posX;
+    Game.methodObjects[index].posY = posY;
+    Game.methodObjects[index].width = width;
+    Game.methodObjects[index].aglStrt = aglStrt;
+    Game.methodObjects[index].aglEnd = aglEnd;
+    Game.methodObjects[index].lineWidth = lineWidth;
+    Game.methodObjects[index].color = color;
+    Game.methodObjects[index].isFilled = isFilled;
+    Game.methodObjects[index].isSolid = isSolid;
+    Game.methodObjects[index].isAnim = isAnim;
+    Game.methodObjects[index].props = props;
+  }
   // checking for animations
   if (doesExist && 
    (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
@@ -277,7 +260,6 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       isBtn: true,
       isAnim: isAnim,
       props: props,
-      isDeleted: false,
       methodId: methodId,
     }
     const shadowButton = Object.assign({}, button);
@@ -304,7 +286,6 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
     
   }
   if (doesExist && Main.isResizing) {
-    // console.log(Game.methodObjects[index]);
     Game.methodObjects[index].posX = posX;
     Game.methodObjects[index].posY = posY;
     Game.methodObjects[index].width = width;
