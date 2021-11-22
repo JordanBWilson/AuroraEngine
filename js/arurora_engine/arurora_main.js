@@ -153,7 +153,6 @@ function backgroundAnimationCheck(index) {
                          // this will need to be split up as the shapes and graphics grow
                          if (Game.methodObjects[j].height) { // check for a rect shape
                            Game.methodObjects[j].isAnim = true;
-                           console.log('redraw');
                          }
 
                        }
@@ -173,8 +172,5 @@ function doesMethodParamExist(methodId) {
 }
 
 function findMethodParamIndex(methodId) {
-  if (methodId === 1) {
-    // console.log(Game.methodObjects.findIndex(x => x.methodId === methodId), Game.methodObjects);
-  }
   return Game.methodObjects.findIndex(x => x.methodId === methodId);
 }

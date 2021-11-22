@@ -196,7 +196,7 @@ function moveGameBall() {
     if (gameStart === false) {
       // dirty hack for now...
       ball.posY -= (Game.canvas.height * 0.001);
-      // console.log(ball.posY, Game.methodObjects.find(x => x.id === 'ball').posY);
+      // console.log(ball.posY, Main.methodObjectShadows.find(x => x.id === 'ball').posY);
     } else {
       if (ball.props.direction === 'top') {
         ball.posY -= (Game.canvas.height * 0.01);
@@ -547,7 +547,7 @@ function drawWinMenu() {
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
   Game.setSettingsLow();
-  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
+  const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'menu-background', false, false, false, {}, id);} };
   Game.methodsToRun.push(backgroundColor);
   const majorTitle = { method: function(id) {drawText('3rem serif', 'Bustoot', (Game.canvas.width * 0.5), (Game.canvas.height * 0.1), 'green', 'center', false, {}, id);} };
   const minorTitle = { method: function(id) {drawText('1rem serif', 'An Arurora Engine Demo', (Game.canvas.width * 0.5), (Game.canvas.height * 0.14), 'green', 'center', false, {}, id);} };
