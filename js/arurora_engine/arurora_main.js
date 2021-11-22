@@ -172,5 +172,11 @@ function doesMethodParamExist(methodId) {
 }
 
 function findMethodParamIndex(methodId) {
+  // for (let i = 0; i < Game.methodObjects.length; i++) {
+    // if (Game.methodObjects[i].methodId === methodId) {
+      // return i;
+    // }
+  // }
+  
   return Game.methodObjects.findIndex(x => x.methodId === methodId);
 }
