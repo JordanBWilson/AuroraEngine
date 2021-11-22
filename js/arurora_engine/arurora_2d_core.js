@@ -275,13 +275,13 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
       Main.methodObjectShadows[index].height = height;
       Main.methodObjectShadows[index].lineWidth = lineWidth;
       Main.methodObjectShadows[index].btnColor = btnColor;
-      Main.methodObjectShadows.txtColor = txtColor;
-      Main.methodObjectShadows.font = font;
-      Main.methodObjectShadows.msg = msg;
-      Main.methodObjectShadows.isFilled = isFilled;
-      Main.methodObjectShadows.action = action;
-      Main.methodObjectShadows.isAnim = isAnim;
-      Main.methodObjectShadows.props = props;
+      Main.methodObjectShadows[index].txtColor = txtColor;
+      Main.methodObjectShadows[index].font = font;
+      Main.methodObjectShadows[index].msg = msg;
+      Main.methodObjectShadows[index].isFilled = isFilled;
+      Main.methodObjectShadows[index].action = action;
+      Main.methodObjectShadows[index].isAnim = isAnim;
+      Main.methodObjectShadows[index].props = props;
     }
     
   }
