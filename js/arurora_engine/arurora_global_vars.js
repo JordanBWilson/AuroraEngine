@@ -30,31 +30,49 @@ let Game = { // the user will want to use this object
   },
   // these settings will make the game run faster or slower
   setSettingsLow: function() {
-    Main.selectedSetting = this.enumSettings.low;
+    Main.selectedSetting = Main.enumSettings.low;
     this.frameRate = 1000 / 15; // 15 frames a second
   },
   setSettingsMed: function() {
-    Main.selectedSetting = this.enumSettings.med;
+    Main.selectedSetting = Main.enumSettings.med;
     this.frameRate = 1000 / 30; // 30 frames a second
   },
   setSettingsHigh: function() {
-    Main.selectedSetting = this.enumSettings.high;
+    Main.selectedSetting = Main.enumSettings.high;
     this.frameRate = 1000 / 60; // 60 frames a second
   },
-  moveEntity: function(speed, direction) {
-    // this will make all the things move based on game settings
-  },
   enumDirections: {
-    top: 0,
-    down: 1,
-    left: 2,
-    right: 3
+    topDown: 0,
+    leftRight: 1
   },
-  enumSettings: {
-    high: 0,
-    med: 1,
-    low: 2,
-  }
+  // this will make all the method objects move based on game settings
+  moveEntity: function(speed, direction) { 
+    const speedPerc = speed * 0.01;
+    if (direction === this.enumDirections.topDown) {
+      if (Main.selectedSetting === Main.enumSettings.high) {
+        return (Game.canvas.height * speedPerc);
+      }
+      if (Main.selectedSetting === Main.enumSettings.med) {
+        return (Game.canvas.height * speedPerc) * 2;
+      }
+      if (Main.selectedSetting === Main.enumSettings.low) {
+        return (Game.canvas.height * speedPerc) * 4;
+      }
+      
+    }
+    if (direction === this.enumDirections.leftRight) {
+      if (Main.selectedSetting === Main.enumSettings.high) {
+        return (Game.canvas.width * speedPerc);
+      }
+      if (Main.selectedSetting === Main.enumSettings.med) {
+        return (Game.canvas.width * speedPerc) * 2;
+      }
+      if (Main.selectedSetting === Main.enumSettings.low) {
+        return (Game.canvas.width * speedPerc) * 4;
+      }
+    }
+    
+  },
 };
 
 let Main = { // global variables to keep the game running nicely
@@ -72,4 +90,9 @@ let Main = { // global variables to keep the game running nicely
   methodObjectShadows: [], // this is all the param values recorded previously
   clearStage: false,
   selectedSetting: undefined,
+  enumSettings: {
+    high: 0,
+    med: 1,
+    low: 2,
+  },
 };

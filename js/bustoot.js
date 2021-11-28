@@ -201,30 +201,30 @@ function moveGameBall() {
       // console.log(ball.posY, Main.methodObjectShadows.find(x => x.id === 'ball').posY);
     } else {
       if (ball.props.direction === 'top') {
-        ball.posY -= (Game.canvas.height * 0.01);
+        ball.posY -= Game.moveEntity(1, Game.enumDirections.topDown);
       } else if (ball.props.direction === 'bot') {
-        ball.posY += (Game.canvas.height * 0.01);
+        ball.posY += Game.moveEntity(1, Game.enumDirections.topDown);
       } else if (ball.props.direction === 'toprt') {
-        ball.posY -= (Game.canvas.height * 0.01);
-        ball.posX += (Game.canvas.width * 0.01);
+        ball.posY -= Game.moveEntity(1, Game.enumDirections.topDown);
+        ball.posX += Game.moveEntity(1, Game.enumDirections.leftRight);
       } else if (ball.props.direction === 'toplt') {
-        ball.posY -= (Game.canvas.height * 0.01);
-        ball.posX -= (Game.canvas.width * 0.01);
+        ball.posY -= Game.moveEntity(1, Game.enumDirections.topDown);
+        ball.posX -= Game.moveEntity(1, Game.enumDirections.leftRight);
       } else if (ball.props.direction === 'botrt') {
-        ball.posY += (Game.canvas.height * 0.01);
-        ball.posX += (Game.canvas.width * 0.01);
+        ball.posY += Game.moveEntity(1, Game.enumDirections.topDown);
+        ball.posX += Game.moveEntity(1, Game.enumDirections.leftRight);
       } else if (ball.props.direction === 'botlt') {
-        ball.posY += (Game.canvas.height * 0.01);
-        ball.posX -= (Game.canvas.width * 0.01);
+        ball.posY += Game.moveEntity(1, Game.enumDirections.topDown);
+        ball.posX -= Game.moveEntity(1, Game.enumDirections.leftRight);
       }
 
       if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
         ball.props.direction = 'toplt';
       }
-      if (ball.props.direction === 'toplt' && ball.posY <= 0) {
+      if (ball.props.direction === 'toplt' && ball.posY <= ball.width) {
         ball.props.direction = 'botlt';
       }
-      if (ball.props.direction === 'botlt' && ball.posX <= 0) {
+      if (ball.props.direction === 'botlt' && ball.posX <= ball.width) {
         ball.props.direction = 'botrt';
       }
       if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
@@ -233,10 +233,10 @@ function moveGameBall() {
           gameLives--;
         }
       }
-      if (ball.props.direction === 'toplt' && ball.posX <= 0) {
+      if (ball.props.direction === 'toplt' && ball.posX <= ball.width) {
         ball.props.direction = 'toprt';
       }
-      if (ball.props.direction === 'toprt' && ball.posY <= 0) {
+      if (ball.props.direction === 'toprt' && ball.posY <= ball.width) {
         ball.props.direction = 'botrt';
       }
       if (ball.props.direction === 'botrt' && ball.posX >= (Game.canvas.width - ball.width)) {
@@ -254,7 +254,7 @@ function moveGameBall() {
           gameLives--;
         }
       }
-      if (ball.props.direction === 'top' && ball.posY <= 0) {
+      if (ball.props.direction === 'top' && ball.posY <= (ball.width)) {
         ball.props.direction = 'bot';
       }
       if (gameLives === 0) {
@@ -398,12 +398,13 @@ function movePaddle(event) {
   if (paddle && paddle.props) {
     paddle.props.direction = 'non';
   }
-  if (paddle.posX < event.clientX) {
-    paddle.posX += Game.canvas.width * (0.026);
+  if (paddle.posX < event.clientX) { 
+    // 
+    paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
     paddle.props.direction = 'rt';
   }
   if (paddle.posX > event.clientX) {
-    paddle.posX -= Game.canvas.width * (0.026);
+    paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
     paddle.props.direction = 'lt';
   }
 }
