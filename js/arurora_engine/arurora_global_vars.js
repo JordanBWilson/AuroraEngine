@@ -30,14 +30,31 @@ let Game = { // the user will want to use this object
   },
   // these settings will make the game run faster or slower
   setSettingsLow: function() {
+    Main.selectedSetting = this.enumSettings.low;
     this.frameRate = 1000 / 15; // 15 frames a second
   },
   setSettingsMed: function() {
+    Main.selectedSetting = this.enumSettings.med;
     this.frameRate = 1000 / 30; // 30 frames a second
   },
   setSettingsHigh: function() {
+    Main.selectedSetting = this.enumSettings.high;
     this.frameRate = 1000 / 60; // 60 frames a second
   },
+  moveEntity: function(speed, direction) {
+    // this will make all the things move based on game settings
+  },
+  enumDirections: {
+    top: 0,
+    down: 1,
+    left: 2,
+    right: 3
+  },
+  enumSettings: {
+    high: 0,
+    med: 1,
+    low: 2,
+  }
 };
 
 let Main = { // global variables to keep the game running nicely
@@ -53,5 +70,6 @@ let Main = { // global variables to keep the game running nicely
   tappedY: 0, // where the user tapped on the stage last on the Y axis
   globalId: 0, // makes all the objects easier to find
   methodObjectShadows: [], // this is all the param values recorded previously
-  clearStage: false
+  clearStage: false,
+  selectedSetting: undefined,
 };

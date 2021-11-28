@@ -40,6 +40,7 @@ function playGame() { // draw the game
   gameLives = 3;
   isPoweredUp = false;
   bricks = [];
+  ball = {};
   gameStart = false;
   // ball = {
     // posX: (Game.canvas.width * 0.5),
@@ -176,7 +177,6 @@ function playGame() { // draw the game
   // Game.collisions.push(ballBrickCollision);
   // Game.collisions.push(ballPaddleCollision);
   // nextGameLevel();
-  console.log(Game.methodObjects, ball, Game.methodsToRun);
   // drawLoseMenu();
 }
 
@@ -258,12 +258,8 @@ function moveGameBall() {
         ball.props.direction = 'bot';
       }
       if (gameLives === 0) {
-        // setTimeout(function() {
-        console.log('lose');
-        ball = {};
-          drawLoseMenu();
-          gameLives = -1;
-        // },100);
+        drawLoseMenu();
+        gameLives = -1;
         
       }
     }
@@ -490,7 +486,6 @@ function drawGameBricks() {
 }
 
 function drawLoseMenu() {
-  console.log(Game.methodsToRun, Game.methodObjects);
   Game.clearStage();
   const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
   Game.methodsToRun.push(backgroundColor);
@@ -519,7 +514,6 @@ function drawLoseMenu() {
         }
      };
   Game.methodsToRun.push(playBtn);
-  console.log(Game.methodObjects);
 }
 
 function drawWinMenu() {
