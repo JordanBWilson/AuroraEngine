@@ -7,6 +7,7 @@ let Game = { // the user will want to use this object
   stageWidthPrct: .98, // how much of the screen width will it take up
   stageHeightPrct: .97, // how much of the screen height will it take up
   clearStage: function() { // clear the game stage
+    Main.clearStage = true;
     Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.methodsToRun = [];
     this.methodObjects = [];
@@ -52,4 +53,5 @@ let Main = { // global variables to keep the game running nicely
   tappedY: 0, // where the user tapped on the stage last on the Y axis
   globalId: 0, // makes all the objects easier to find
   methodObjectShadows: [], // this is all the param values recorded previously
+  clearStage: false
 };

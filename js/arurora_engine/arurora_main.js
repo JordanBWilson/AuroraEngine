@@ -19,7 +19,10 @@ function mainLoop() {
     if (Game.methodsToRun.length > 0) {
       // run the game
       for (let i = 0; i < Game.methodsToRun.length; i++) {
-
+        if (Main.clearStage === true) {
+          Main.clearStage = false;
+          break;
+        }
         if (Game.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
           Main.globalId++;
           Game.methodsToRun[i].methodId = Main.globalId;

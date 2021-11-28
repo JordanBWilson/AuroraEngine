@@ -259,6 +259,8 @@ function moveGameBall() {
       }
       if (gameLives === 0) {
         // setTimeout(function() {
+        console.log('lose');
+        ball = {};
           drawLoseMenu();
           gameLives = -1;
         // },100);
