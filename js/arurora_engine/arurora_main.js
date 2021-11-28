@@ -21,7 +21,6 @@ function mainLoop() {
       for (let i = 0; i < Game.methodsToRun.length; i++) {
 
         if (Game.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
-          // console.log('undefined');
           Main.globalId++;
           Game.methodsToRun[i].methodId = Main.globalId;
         }

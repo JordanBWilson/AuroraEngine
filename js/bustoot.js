@@ -176,6 +176,7 @@ function playGame() { // draw the game
   // Game.collisions.push(ballPaddleCollision);
   // nextGameLevel();
   console.log(Game.methodObjects, ball, Game.methodsToRun);
+  // drawLoseMenu();
 }
 
 function moveGameBall() {
@@ -195,7 +196,7 @@ function moveGameBall() {
     }
     if (gameStart === false) {
       // dirty hack for now...
-      ball.posY -= (Game.canvas.height * 0.001);
+      // ball.posY -= (Game.canvas.height * 0.001);
       // console.log(ball.posY, Main.methodObjectShadows.find(x => x.id === 'ball').posY);
     } else {
       if (ball.props.direction === 'top') {
@@ -256,8 +257,11 @@ function moveGameBall() {
         ball.props.direction = 'bot';
       }
       if (gameLives === 0) {
-        drawLoseMenu();
-        gameLives = -1;
+        setTimeout(function() {
+          drawLoseMenu();
+          gameLives = -1;
+        },100);
+        
       }
     }
   }
@@ -483,6 +487,7 @@ function drawGameBricks() {
 }
 
 function drawLoseMenu() {
+  console.log(Game.methodsToRun, Game.methodObjects);
   Game.clearStage();
   const backgroundColor = { method: function(id) {drawRect(0, 0, Game.canvas.width, Game.canvas.height, 1, 'black', true, 'background', false, false, false, {}, id);} };
   Game.methodsToRun.push(backgroundColor);

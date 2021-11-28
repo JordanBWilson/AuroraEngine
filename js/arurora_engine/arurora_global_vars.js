@@ -7,11 +7,11 @@ let Game = { // the user will want to use this object
   stageWidthPrct: .98, // how much of the screen width will it take up
   stageHeightPrct: .97, // how much of the screen height will it take up
   clearStage: function() { // clear the game stage
+    Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.methodsToRun = [];
     this.methodObjects = [];
     Main.methodObjectShadows = [];
     Main.globalId = 0;
-    Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
   collisions: [], // all the collisions in the game to look for
   deleteEntity: function(id) { // delete an object in the MethodObjects
