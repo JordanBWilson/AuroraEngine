@@ -30,17 +30,18 @@ let Game = { // the user will want to use this object
   },
   // these settings will make the game run faster or slower
   setSettingsLow: function() {
-    Main.selectedSetting = Main.enumSettings.low;
+    this.selectedSetting = Main.enumSettings.low;
     this.frameRate = 1000 / 15; // 15 frames a second
   },
   setSettingsMed: function() {
-    Main.selectedSetting = Main.enumSettings.med;
+    this.selectedSetting = Main.enumSettings.med;
     this.frameRate = 1000 / 30; // 30 frames a second
   },
   setSettingsHigh: function() {
-    Main.selectedSetting = Main.enumSettings.high;
+    this.selectedSetting = Main.enumSettings.high;
     this.frameRate = 1000 / 60; // 60 frames a second
   },
+  selectedSetting: undefined,
   enumDirections: {
     topDown: 0,
     leftRight: 1
@@ -49,25 +50,25 @@ let Game = { // the user will want to use this object
   moveEntity: function(speed, direction) { 
     const speedPerc = speed * 0.01;
     if (direction === this.enumDirections.topDown) {
-      if (Main.selectedSetting === Main.enumSettings.high) {
+      if (this.selectedSetting === Main.enumSettings.high) {
         return (Game.canvas.height * speedPerc);
       }
-      if (Main.selectedSetting === Main.enumSettings.med) {
+      if (this.selectedSetting === Main.enumSettings.med) {
         return (Game.canvas.height * speedPerc) * 2;
       }
-      if (Main.selectedSetting === Main.enumSettings.low) {
+      if (this.selectedSetting === Main.enumSettings.low) {
         return (Game.canvas.height * speedPerc) * 4;
       }
       
     }
     if (direction === this.enumDirections.leftRight) {
-      if (Main.selectedSetting === Main.enumSettings.high) {
+      if (this.selectedSetting === Main.enumSettings.high) {
         return (Game.canvas.width * speedPerc);
       }
-      if (Main.selectedSetting === Main.enumSettings.med) {
+      if (this.selectedSetting === Main.enumSettings.med) {
         return (Game.canvas.width * speedPerc) * 2;
       }
-      if (Main.selectedSetting === Main.enumSettings.low) {
+      if (this.selectedSetting === Main.enumSettings.low) {
         return (Game.canvas.width * speedPerc) * 4;
       }
     }
@@ -89,7 +90,6 @@ let Main = { // global variables to keep the game running nicely
   globalId: 0, // makes all the objects easier to find
   methodObjectShadows: [], // this is all the param values recorded previously
   clearStage: false,
-  selectedSetting: undefined,
   enumSettings: {
     high: 0,
     med: 1,
