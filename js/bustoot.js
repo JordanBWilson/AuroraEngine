@@ -53,23 +53,23 @@ function playGame() { // draw the game
     posY: (Game.canvas.height * 0.64),
     methodId: undefined,
   }
-  paddle = {
-    posX: (Game.canvas.width * 0.40),
-    posY: (Game.canvas.height * 0.93),
-    width: (Game.canvas.width * 0.2),
-    height: (Game.canvas.height * 0.04),
-    lineWidth: 1,
-    color: 'green',
-    isFilled: true,
-    id: 'paddle',
-    isSolid: true,
-    isAnim: false,
-    isBackground: false,
-    props: {
-      direction: 'non'
-    },
-    methodId: undefined,
-  }
+  // paddle = {
+    // posX: (Game.canvas.width * 0.40),
+    // posY: (Game.canvas.height * 0.93),
+    // width: (Game.canvas.width * 0.2),
+    // height: (Game.canvas.height * 0.04),
+    // lineWidth: 1,
+    // color: 'green',
+    // isFilled: true,
+    // id: 'paddle',
+    // isSolid: true,
+    // isAnim: false,
+    // isBackground: false,
+    // props: {
+      // direction: 'non'
+    // },
+    // methodId: undefined,
+  // }
   ballBrickCollision = {
     primary: 'ball',
     target: 'brick',
@@ -129,13 +129,15 @@ function playGame() { // draw the game
 }
 
 function moveGameBall() {
-  // when the game starts up, look for the ball and paddle
+  // when the game starts up, look for the ball, paddle and bricks
   if (!ball?.methodId) {
     ball = Game.methodObjects.find(x => x.id === 'ball');
   }
   if (!paddle?.methodId) {
     paddle = Game.methodObjects.find(x => x.id === 'paddle');
   }
+  // get the bricks future Jordan
+  
   // const gameBall = Game.methodObjects.find(x => x.id === 'ball');
   // Game.methodObjects.forEach(e => {if (e.id === 'ball') {ball = e;}});
   
