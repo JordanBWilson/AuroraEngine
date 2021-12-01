@@ -188,57 +188,57 @@ function redrawRect(incomingRect) {
 }
 // this will draw a circle to the screen
 // ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
-function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled, id, isSolid, props, methodId) {
-  let doesExist = doesMethodParamExist(methodId);
+function drawArc(incomingArc) {
+  let doesExist = doesMethodParamExist(incomingArc.methodId);
   let index = -1;
   if (doesExist) {
-    index = findMethodParamIndex(methodId);
+    index = findMethodParamIndex(incomingArc.methodId);
   }
   if (!doesExist) {
     const arc = {
-      posX: posX,
-      posY: posY,
-      width: width,
-      aglStrt: aglStrt,
-      aglEnd: aglEnd,
-      lineWidth: lineWidth,
-      color: color,
-      isFilled: isFilled,
-      id: id,
-      isSolid: isSolid,
+      posX: incomingArc.posX,
+      posY: incomingArc.posY,
+      width: incomingArc.width,
+      aglStrt: incomingArc.aglStrt,
+      aglEnd: incomingArc.aglEnd,
+      lineWidth: incomingArc.lineWidth,
+      color: incomingArc.color,
+      isFilled: incomingArc.isFilled,
+      id: incomingArc.id,
+      isSolid: incomingArc.isSolid,
       isAnim: false,
-      props: props,
-      methodId: methodId,
+      props: incomingArc.props,
+      methodId: incomingArc.methodId,
     }
     Game.methodObjects.push(arc);
-    redrawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled);
+    redrawArc(incomingArc);
     const shadowArc = Object.assign({}, arc);
     Main.methodObjectShadows.push(shadowArc);
   }
   if (doesExist && Main.isResizing) {
-    Game.methodObjects[index].posX = posX;
-    Game.methodObjects[index].posY = posY;
-    Game.methodObjects[index].width = width;
-    Game.methodObjects[index].aglStrt = aglStrt;
-    Game.methodObjects[index].aglEnd = aglEnd;
-    Game.methodObjects[index].lineWidth = lineWidth;
-    Game.methodObjects[index].color = color;
-    Game.methodObjects[index].isFilled = isFilled;
-    Game.methodObjects[index].isSolid = isSolid;
+    Game.methodObjects[index].posX = incomingArc.posX;
+    Game.methodObjects[index].posY = incomingArc.posY;
+    Game.methodObjects[index].width = incomingArc.width;
+    Game.methodObjects[index].aglStrt = incomingArc.aglStrt;
+    Game.methodObjects[index].aglEnd = incomingArc.aglEnd;
+    Game.methodObjects[index].lineWidth = incomingArc.lineWidth;
+    Game.methodObjects[index].color = incomingArc.color;
+    Game.methodObjects[index].isFilled = incomingArc.isFilled;
+    Game.methodObjects[index].isSolid = incomingArc.isSolid;
     Game.methodObjects[index].isAnim = false;
-    Game.methodObjects[index].props = props;
-    Main.methodObjectShadows[index].posX = posX;
-    Main.methodObjectShadows[index].posY = posY;
-    Main.methodObjectShadows[index].width = width;
-    Main.methodObjectShadows[index].aglStrt = aglStrt;
-    Main.methodObjectShadows[index].aglEnd = aglEnd;
-    Main.methodObjectShadows[index].lineWidth = lineWidth;
-    Main.methodObjectShadows[index].color = color;
-    Main.methodObjectShadows[index].isFilled = isFilled;
-    Main.methodObjectShadows[index].isSolid = isSolid;
+    Game.methodObjects[index].props = incomingArc.props;
+    Main.methodObjectShadows[index].posX = incomingArc.posX;
+    Main.methodObjectShadows[index].posY = incomingArc.posY;
+    Main.methodObjectShadows[index].width = incomingArc.width;
+    Main.methodObjectShadows[index].aglStrt = incomingArc.aglStrt;
+    Main.methodObjectShadows[index].aglEnd = incomingArc.aglEnd;
+    Main.methodObjectShadows[index].lineWidth = incomingArc.lineWidth;
+    Main.methodObjectShadows[index].color = incomingArc.color;
+    Main.methodObjectShadows[index].isFilled = incomingArc.isFilled;
+    Main.methodObjectShadows[index].isSolid = incomingArc.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
-    Main.methodObjectShadows[index].props = props;
-    redrawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled);
+    Main.methodObjectShadows[index].props = incomingArc.props;
+    redrawArc(incomingArc);
   }
   // checking for animations
   if (doesExist && 
@@ -246,28 +246,14 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
    Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX)
    ) {
      redrawArc(
-      Game.methodObjects[index].posX,
-      Game.methodObjects[index].posY,
-      Game.methodObjects[index].width,
-      Game.methodObjects[index].aglStrt,
-      Game.methodObjects[index].aglEnd,
-      Game.methodObjects[index].lineWidth,
-      Game.methodObjects[index].color,
-      Game.methodObjects[index].isFilled,
+      Game.methodObjects[index]
       );
       const shadowArc = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowArc;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
      redrawArc(
-      Game.methodObjects[index].posX,
-      Game.methodObjects[index].posY,
-      Game.methodObjects[index].width,
-      Game.methodObjects[index].aglStrt,
-      Game.methodObjects[index].aglEnd,
-      Game.methodObjects[index].lineWidth,
-      Game.methodObjects[index].color,
-      Game.methodObjects[index].isFilled,
+      Game.methodObjects[index]
       );
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
@@ -275,19 +261,19 @@ function drawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled,
       Game.methodObjects[index].isAnim = false;
    }
 }
-function redrawArc(posX, posY, width, aglStrt, aglEnd, lineWidth, color, isFilled) {
+function redrawArc(incomingArc) {
   Main.stage.beginPath();
-  if (!lineWidth) {
+  if (!incomingArc.lineWidth) {
     Main.stage.lineWidth = '1';
   } else {
-    Main.stage.lineWidth = lineWidth;
+    Main.stage.lineWidth = incomingArc.lineWidth;
   }
-  Main.stage.arc(posX, posY, width, aglStrt, aglEnd);
-  if (isFilled) {
-    Main.stage.fillStyle = color;
+  Main.stage.arc(incomingArc.posX, incomingArc.posY, incomingArc.width, incomingArc.aglStrt, incomingArc.aglEnd);
+  if (incomingArc.isFilled) {
+    Main.stage.fillStyle = incomingArc.color;
     Main.stage.fill();
   } else {
-    Main.stage.strokeStyle = color;
+    Main.stage.strokeStyle = incomingArc.color;
     Main.stage.stroke();
   }
 }
