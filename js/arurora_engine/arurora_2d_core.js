@@ -1,50 +1,46 @@
 
 // draws text to the stage and only redraws it if the stage has been resized
-// ex: '48px serif', 'Hello', 10, 50, 'black', 'start'
-function drawText(font, msg, posX, posY, color, align, props, methodId) {
-  let doesExist = doesMethodParamExist(methodId);
+function drawText(incomingText) {
+  let doesExist = doesMethodParamExist(incomingText.methodId);
   let index = -1;
   if (doesExist) {
-    index = findMethodParamIndex(methodId);
+    index = findMethodParamIndex(incomingText.methodId);
   }
-  // if (doesExist && Game.methodObjects[index] && (Game.methodObjects[index].posX !== posX || Game.methodObjects[index].posY !== posY)) {
-    // isAnim = true;
-  // }
   if (!doesExist) {
     let text = {
-      font: font,
-      msg: msg,
-      posX: posX,
-      posY: posY,
-      color: color,
-      align: align,
+      font: incomingText.font,
+      msg: incomingText.msg,
+      posX: incomingText.posX,
+      posY: incomingText.posY,
+      color: incomingText.color,
+      align: incomingText.align,
       isAnim: false,
-      props: props,
-      methodId: methodId,
+      props: incomingText.props,
+      methodId: incomingText.methodId,
     }
     Game.methodObjects.push(text);
-    redrawText(font, msg, posX, posY, color, align);
+    redrawText(incomingText);
     const shadowText = Object.assign({}, text);
     Main.methodObjectShadows.push(shadowText);
   }
   if (doesExist && Main.isResizing) {
-    Game.methodObjects[index].font = font;
-    Game.methodObjects[index].msg = msg;
-    Game.methodObjects[index].posX = posX;
-    Game.methodObjects[index].posY = posY;
-    Game.methodObjects[index].color = color;
-    Game.methodObjects[index].align = align;
+    Game.methodObjects[index].font = incomingText.font;
+    Game.methodObjects[index].msg = incomingText.msg;
+    Game.methodObjects[index].posX = incomingText.posX;
+    Game.methodObjects[index].posY = incomingText.posY;
+    Game.methodObjects[index].color = incomingText.color;
+    Game.methodObjects[index].align = incomingText.align;
     Game.methodObjects[index].isAnim = false;
-    Game.methodObjects[index].props = props;
-    Main.methodObjectShadows[index].font = font;
-    Main.methodObjectShadows[index].msg = msg;
-    Main.methodObjectShadows[index].posX = posX;
-    Main.methodObjectShadows[index].posY = posY;
-    Main.methodObjectShadows[index].color = color;
-    Main.methodObjectShadows[index].align = align;
+    Game.methodObjects[index].props = incomingText.props;
+    Main.methodObjectShadows[index].font = incomingText.font;
+    Main.methodObjectShadows[index].msg = incomingText.msg;
+    Main.methodObjectShadows[index].posX = incomingText.posX;
+    Main.methodObjectShadows[index].posY = incomingText.posY;
+    Main.methodObjectShadows[index].color = incomingText.color;
+    Main.methodObjectShadows[index].align = incomingText.align;
     Main.methodObjectShadows[index].isAnim = false;
-    Main.methodObjectShadows[index].props = props;
-    redrawText(font, msg, posX, posY, color, align);
+    Main.methodObjectShadows[index].props = incomingText.props;
+    redrawText(incomingText);
   }
   // checking for animations
   if (doesExist && 
@@ -52,24 +48,14 @@ function drawText(font, msg, posX, posY, color, align, props, methodId) {
    Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX)
    ) {
      redrawText(
-      Game.methodObjects[index].font,
-      Game.methodObjects[index].msg,
-      Game.methodObjects[index].posX,
-      Game.methodObjects[index].posY,
-      Game.methodObjects[index].color,
-      Game.methodObjects[index].align,
+      Game.methodObjects[index]
       );
       const shadowText = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowText;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
      redrawText(
-      Game.methodObjects[index].font,
-      Game.methodObjects[index].msg,
-      Game.methodObjects[index].posX,
-      Game.methodObjects[index].posY,
-      Game.methodObjects[index].color,
-      Game.methodObjects[index].align,
+      Game.methodObjects[index]
       );
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
@@ -77,14 +63,13 @@ function drawText(font, msg, posX, posY, color, align, props, methodId) {
       Game.methodObjects[index].isAnim = false;
    }
 }
-function redrawText(font, msg, posX, posY, color, align) {
-  Main.stage.fillStyle = color;
-  Main.stage.font = font;
-  Main.stage.textAlign = align;
-  Main.stage.fillText(msg, posX, posY);
+function redrawText(incomingText) {
+  Main.stage.fillStyle = incomingText.color;
+  Main.stage.font = incomingText.font;
+  Main.stage.textAlign = incomingText.align;
+  Main.stage.fillText(incomingText.msg, incomingText.posX, incomingText.posY);
 }
 // this will draw a rectangle to the screen
-// ex: 9, 51, 100, 100, 1, 'green', false
 function drawRect(incomingRect) {
   let doesExist = doesMethodParamExist(incomingRect.methodId);
   let index = -1;
@@ -187,7 +172,6 @@ function redrawRect(incomingRect) {
   }
 }
 // this will draw a circle to the screen
-// ex: 9, 51, 100, 0, 2 * Math.PI, 1, 'green', false
 function drawArc(incomingArc) {
   let doesExist = doesMethodParamExist(incomingArc.methodId);
   let index = -1;
