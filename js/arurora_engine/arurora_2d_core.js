@@ -85,11 +85,11 @@ function redrawText(font, msg, posX, posY, color, align) {
 }
 // this will draw a rectangle to the screen
 // ex: 9, 51, 100, 100, 1, 'green', false
-function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isSolid, isBackground, props, methodId) {
-  let doesExist = doesMethodParamExist(methodId);
+function drawRect(incomingRect) {
+  let doesExist = doesMethodParamExist(incomingRect.methodId);
   let index = -1;
   if (doesExist) {
-    index = findMethodParamIndex(methodId);
+    index = findMethodParamIndex(incomingRect.methodId);
     // check to see if there is animations going on.
     if (Game.methodObjects[index].isBackground) {
       backgroundAnimationCheck(index);
@@ -98,52 +98,52 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
   }
   if (!doesExist) {
     let rect = {
-      posX: posX,
-      posY: posY,
-      width: width,
-      height: height,
-      lineWidth: lineWidth,
-      color: color,
-      isFilled: isFilled,
-      id: id,
-      isSolid: isSolid,
+      posX: incomingRect.posX,
+      posY: incomingRect.posY,
+      width: incomingRect.width,
+      height: incomingRect.height,
+      lineWidth: incomingRect.lineWidth,
+      color: incomingRect.color,
+      isFilled: incomingRect.isFilled,
+      id: incomingRect.id,
+      isSolid: incomingRect.isSolid,
       isAnim: false,
-      isBackground: isBackground,
-      props: props,
-      methodId: methodId,
+      isBackground: incomingRect.isBackground,
+      props: incomingRect.props,
+      methodId: incomingRect.methodId,
     }
     Game.methodObjects.push(rect);
-    redrawRect(posX, posY, width, height, lineWidth, color, isFilled);
+    redrawRect(incomingRect);
     const shadowRect = Object.assign({}, rect);
     Main.methodObjectShadows.push(shadowRect);
   }
   if (doesExist && Main.isResizing) {
-    Game.methodObjects[index].posX = posX;
-    Game.methodObjects[index].posY = posY;
-    Game.methodObjects[index].width = width;
-    Game.methodObjects[index].height = height;
-    Game.methodObjects[index].lineWidth = lineWidth;
-    Game.methodObjects[index].color = color;
-    Game.methodObjects[index].isFilled = isFilled;
-    Game.methodObjects[index].isSolid = isSolid;
+    Game.methodObjects[index].posX = incomingRect.posX;
+    Game.methodObjects[index].posY = incomingRect.posY;
+    Game.methodObjects[index].width = incomingRect.width;
+    Game.methodObjects[index].height = incomingRect.height;
+    Game.methodObjects[index].lineWidth = incomingRect.lineWidth;
+    Game.methodObjects[index].color = incomingRect.color;
+    Game.methodObjects[index].isFilled = incomingRect.isFilled;
+    Game.methodObjects[index].isSolid = incomingRect.isSolid;
     Game.methodObjects[index].isAnim = false;
-    Game.methodObjects[index].isBackground = isBackground;
-    Game.methodObjects[index].props = props;
-    Main.methodObjectShadows[index].posX = posX;
-    Main.methodObjectShadows[index].posY = posY;
-    Main.methodObjectShadows[index].width = width;
-    Main.methodObjectShadows[index].height = height;
-    Main.methodObjectShadows[index].lineWidth = lineWidth;
-    Main.methodObjectShadows[index].color = color;
-    Main.methodObjectShadows[index].isFilled = isFilled;
-    Main.methodObjectShadows[index].isSolid = isSolid;
+    Game.methodObjects[index].isBackground = incomingRect.isBackground;
+    Game.methodObjects[index].props = incomingRect.props;
+    Main.methodObjectShadows[index].posX = incomingRect.posX;
+    Main.methodObjectShadows[index].posY = incomingRect.posY;
+    Main.methodObjectShadows[index].width = incomingRect.width;
+    Main.methodObjectShadows[index].height = incomingRect.height;
+    Main.methodObjectShadows[index].lineWidth = incomingRect.lineWidth;
+    Main.methodObjectShadows[index].color = incomingRect.color;
+    Main.methodObjectShadows[index].isFilled = incomingRect.isFilled;
+    Main.methodObjectShadows[index].isSolid = incomingRect.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
-    Main.methodObjectShadows[index].isBackground = isBackground;
-    Main.methodObjectShadows[index].props = props;
-    redrawRect(posX, posY, width, height, lineWidth, color, isFilled);
+    Main.methodObjectShadows[index].isBackground = incomingRect.isBackground;
+    Main.methodObjectShadows[index].props = incomingRect.props;
+    redrawRect(incomingRect);
   }
   if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
-    redrawRect(posX, posY, width, height, lineWidth, color, isFilled);
+    redrawRect(incomingRect);
     Game.methodObjects[index].isAnim = false;
   }
   // checking for animations that isn't a background
@@ -152,13 +152,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
    Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX)
    ) {
      redrawRect(
-      Game.methodObjects[index].posX,
-      Game.methodObjects[index].posY,
-      Game.methodObjects[index].width,
-      Game.methodObjects[index].height,
-      Game.methodObjects[index].lineWidth,
-      Game.methodObjects[index].color,
-      Game.methodObjects[index].isFilled,
+      Game.methodObjects[index]
       );
       const shadowRect = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowRect;
@@ -167,13 +161,7 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
     !Game.methodObjects[index].isBackground && 
     Game.methodObjects[index].isAnim) {
       redrawRect(
-        Game.methodObjects[index].posX,
-        Game.methodObjects[index].posY,
-        Game.methodObjects[index].width,
-        Game.methodObjects[index].height,
-        Game.methodObjects[index].lineWidth,
-        Game.methodObjects[index].color,
-        Game.methodObjects[index].isFilled,
+        Game.methodObjects[index]
       );
    } else if (doesExist && 
     !Game.methodObjects[index].isBackground &&
@@ -182,19 +170,19 @@ function drawRect(posX, posY, width, height, lineWidth, color, isFilled, id, isS
       Game.methodObjects[index].isAnim = false;
    }
 }
-function redrawRect(posX, posY, width, height, lineWidth, color, isFilled) {
+function redrawRect(incomingRect) {
   Main.stage.beginPath();
-  if (!lineWidth) {
+  if (!incomingRect.lineWidth) {
     Main.stage.lineWidth = '1';
   } else {
-    Main.stage.lineWidth = lineWidth;
+    Main.stage.lineWidth = incomingRect.lineWidth;
   }
-  Main.stage.rect(posX, posY, width, height);
-  if (isFilled) {
-    Main.stage.fillStyle = color;
+  Main.stage.rect(incomingRect.posX, incomingRect.posY, incomingRect.width, incomingRect.height);
+  if (incomingRect.isFilled) {
+    Main.stage.fillStyle = incomingRect.color;
     Main.stage.fill();
   } else {
-    Main.stage.strokeStyle = color;
+    Main.stage.strokeStyle = incomingRect.color;
     Main.stage.stroke();
   }
 }
