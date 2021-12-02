@@ -6,7 +6,7 @@
 })();
 
 let ball = {}; // initialize the game ball
-let bricks = []; // this is an array
+let bricks; // this is an array
 let background = {};
 let ballBrickCollision = {};
 let ballPaddleCollision = {};
@@ -39,7 +39,7 @@ function playGame() { // draw the game
   gameLevel = 0;
   gameLives = 3;
   isPoweredUp = false;
-  bricks = [];
+  bricks;
   ball = {};
   paddle = {};
   readyText = {};
@@ -68,7 +68,7 @@ function playGame() { // draw the game
   
   const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.40), posY: (Game.canvas.height * 0.93), width: (Game.canvas.width * 0.2), height: (Game.canvas.height * 0.04), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.methodsToRun.push(gamePaddle);
-  // drawGameBricks();
+  drawGameBricks();
   const gameBall = { 
     method: function(id) {
       drawArc({
@@ -105,9 +105,9 @@ function moveGameBall() {
   if (!paddle?.methodId) {
     paddle = Game.methodObjects.find(x => x.id === 'paddle');
   }
-  if (bricks.length === 0) {
+  if (bricks?.length === 0) {
     bricks = Game.methodObjects.filter(x => x.id==='brick');
-    // console.log(bricks);
+    console.log(bricks);
   }
   // get the bricks future Jordan
   
@@ -360,7 +360,7 @@ function nextGameLevel() {
 function drawGameBricks() {
   let rows = 0; // keeps track of the rows being drawn
   let brickNum = 0; // the current brick number in each row
-  // bricks = [];
+  bricks = [];
   for (let i = 0; i < brickCount; i++) {
     let yPos = 0;
     if (i < 9) { // this is the first row
@@ -396,9 +396,12 @@ function drawGameBricks() {
       // },
       // methodId: id,
     // });}};
-    const gameBrick = { method: function(id) {drawRect({ posX: Game.canvas.width * (0.01) + (Game.canvas.width * (brickNum * 0.11)), posY: yPos, width: (Game.canvas.width * 0.10), height: (Game.canvas.height * 0.05), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
-    // bricks.push(gameBrick);
-    Game.methodsToRun.push(gameBrick);
+    
+    // Ok future Jordan, we need to figure out what's going on with the posX in the brick.
+    // gameBrick doesn't draw but brick1 seems to though
+    const gameBrick = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.01) + (Game.canvas.width * (brickNum * 0.11)), posY: yPos, width: (Game.canvas.width * 0.10), height: (Game.canvas.height * 0.05), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
+    const brick1 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.01), posY: yPos, width: (Game.canvas.width * 0.15), height: (Main.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
+    Game.methodsToRun.push(brick1);
     // when we hit the end of the row, move down to the next row
     if (i === 8 || i === 17 || i === 26 || i === 35 || i === 44 || i === 53) {
       rows++;
