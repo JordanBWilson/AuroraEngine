@@ -6,7 +6,7 @@
 })();
 
 let ball = {}; // initialize the game ball
-let bricks = [];
+let bricks = []; // this is an array
 let background = {};
 let ballBrickCollision = {};
 let ballPaddleCollision = {};
@@ -45,33 +45,6 @@ function playGame() { // draw the game
   readyText = {};
   tapText = {};
   gameStart = false;
-  // readyText = {
-    // posX: (Game.canvas.width * 0.5),
-    // posY: (Game.canvas.height * 0.6),
-    // methodId: undefined,
-  // }
-  // tapText = {
-    // posX: (Game.canvas.width * 0.5),
-    // posY: (Game.canvas.height * 0.64),
-    // methodId: undefined,
-  // }
-  // paddle = {
-    // posX: (Game.canvas.width * 0.40),
-    // posY: (Game.canvas.height * 0.93),
-    // width: (Game.canvas.width * 0.2),
-    // height: (Game.canvas.height * 0.04),
-    // lineWidth: 1,
-    // color: 'green',
-    // isFilled: true,
-    // id: 'paddle',
-    // isSolid: true,
-    // isAnim: false,
-    // isBackground: false,
-    // props: {
-      // direction: 'non'
-    // },
-    // methodId: undefined,
-  // }
   ballBrickCollision = {
     primary: 'ball',
     target: 'brick',
@@ -85,21 +58,17 @@ function playGame() { // draw the game
     methodId: undefined,
   }
   Game.clearStage();
-  // all methods that help 'play the game' should be at the top
   const playGameBall = { method: function(id) { moveGameBall(); }};
   Game.methodsToRun.push(playGameBall);
   
-  const backgroundColorTop = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  const backgroundColorTop = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background-top', isSolid: false, isBackground: true, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColorTop);
-  const backgroundColorBot = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  const backgroundColorBot = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColorBot);
   
   const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.40), posY: (Game.canvas.height * 0.93), width: (Game.canvas.width * 0.2), height: (Game.canvas.height * 0.04), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.methodsToRun.push(gamePaddle);
   // drawGameBricks();
-  // const gameBall = { method: function(id) {if (ball.methodId === undefined){ball.methodId = id;} drawArc(ball.posX, ball.posY, ball.width,ball.aglStrt, ball.aglEnd, ball.lineWidth, ball.color, ball.isFilled, ball.id, ball.isSolid, ball.props, ball.methodId);} };
-  // trying out the new 'shadow param'
-  // const gameBall = { method: function(id) {drawArc((Game.canvas.width * 0.32), (Game.canvas.height * 0.52), (Main.entitySize * 2), 0, 2 * Math.PI, 2, 'green', true, 'ball', false, {}, id);} };
   const gameBall = { 
     method: function(id) {
       drawArc({
@@ -123,10 +92,9 @@ function playGame() { // draw the game
   };
   Game.methodsToRun.push(gameBall);
   
-  // Game.collisions.push(ballBrickCollision);
+  Game.collisions.push(ballBrickCollision);
   Game.collisions.push(ballPaddleCollision);
   nextGameLevel();
-  // drawLoseMenu();
 }
 
 function moveGameBall() {
@@ -136,6 +104,10 @@ function moveGameBall() {
   }
   if (!paddle?.methodId) {
     paddle = Game.methodObjects.find(x => x.id === 'paddle');
+  }
+  if (bricks.length === 0) {
+    bricks = Game.methodObjects.filter(x => x.id==='brick');
+    // console.log(bricks);
   }
   // get the bricks future Jordan
   
@@ -388,6 +360,7 @@ function nextGameLevel() {
 function drawGameBricks() {
   let rows = 0; // keeps track of the rows being drawn
   let brickNum = 0; // the current brick number in each row
+  // bricks = [];
   for (let i = 0; i < brickCount; i++) {
     let yPos = 0;
     if (i < 9) { // this is the first row
@@ -405,27 +378,26 @@ function drawGameBricks() {
     }  else if (i > 53 && i < 63) {
       yPos = Game.canvas.height * 0.43;
     }
-    
-    bricks.push(brick);
     brickNum++;
-    let gameBrick = { method: function(id) {drawRect({
-      posX: Game.canvas.width * (0.01) + (Game.canvas.width * (brickNum * 0.11)),
-      posY: yPos,
-      width: Game.canvas.width * 0.10,
-      height: Game.canvas.height * 0.05,
-      lineWidth: 1,
-      color: 'green',
-      isFilled: true,
-      id: 'brick',
-      isSolid: true,
-      isAnim: false,
-      isBackground: false,
-      props: {
-        hp: 2,
-        powerUp: false,
-      },
-      methodId: id,
-    });}};
+    // let gameBrick = { method: function(id) {drawRect({
+      // posX: Game.canvas.width * (0.01) + (Game.canvas.width * (brickNum * 0.11)),
+      // posY: yPos,
+      // width: Game.canvas.width * 0.10,
+      // height: Game.canvas.height * 0.05,
+      // lineWidth: 1,
+      // color: 'green',
+      // isFilled: true,
+      // id: 'brick',
+      // isSolid: true,
+      // isBackground: false,
+      // props: {
+        // hp: 2,
+        // powerUp: false,
+      // },
+      // methodId: id,
+    // });}};
+    const gameBrick = { method: function(id) {drawRect({ posX: Game.canvas.width * (0.01) + (Game.canvas.width * (brickNum * 0.11)), posY: yPos, width: (Game.canvas.width * 0.10), height: (Game.canvas.height * 0.05), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
+    // bricks.push(gameBrick);
     Game.methodsToRun.push(gameBrick);
     // when we hit the end of the row, move down to the next row
     if (i === 8 || i === 17 || i === 26 || i === 35 || i === 44 || i === 53) {
@@ -444,22 +416,22 @@ function drawLoseMenu() {
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
   const playGameMethod = { method: function(id) { playGame(); }}
-  const playBtn = {
+  const playBtn = { // { posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, props, methodId }
      method: function(id) {
-       drawButton(
-         (Game.canvas.width * 0.3),
-         (Game.canvas.height * 0.6),
-         (Game.canvas.width * 0.4),
-         (Main.entitySize * 7),
-         1,
-         'green',
-         'white',
-         '2rem serif',
-         'Restart',
-          true,
-          playGameMethod,
-          {},
-          id);
+       drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.6),
+        width: (Game.canvas.width * 0.4),
+        height: (Main.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2rem serif',
+        msg: 'Restart',
+        isFilled: true,
+        action: playGameMethod,
+        props: {},
+        methodId: id});
         }
      };
   Game.methodsToRun.push(playBtn);
@@ -476,20 +448,20 @@ function drawWinMenu() {
   const mainMenuMethod = { method: function(id) { drawMainMenu(); }}
   const menuBtn = {
      method: function(id) {
-       drawButton(
-         (Game.canvas.width * 0.3),
-         (Game.canvas.height * 0.6),
-         (Game.canvas.width * 0.4),
-         (Main.entitySize * 7),
-         1,
-         'green',
-         'white',
-         '2rem serif',
-         'Main Menu',
-          true,
-          mainMenuMethod,
-          {},
-          id);
+       drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.6),
+        width: (Game.canvas.width * 0.4),
+        height: (Main.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2rem serif',
+        msg: 'Main Menu',
+        isFilled: true,
+        action: playGameMethod,
+        props: {},
+        methodId: id});
         }
      };
   Game.methodsToRun.push(menuBtn);
@@ -541,20 +513,20 @@ function drawMainMenu() { // draw the main menu
   const playGameMethod = { method: function(id) { playGame(); }}
   const playBtn = {
      method: function(id) {
-       drawButton(
-         (Game.canvas.width * 0.3),
-         (Game.canvas.height * 0.6),
-         (Game.canvas.width * 0.4),
-         (Main.entitySize * 7),
-         1,
-         'green',
-         'white',
-         '2rem serif',
-         'Playyy',
-          true,
-          playGameMethod,
-          {},
-          id);
+       drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.6),
+        width: (Game.canvas.width * 0.4),
+        height: (Main.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2rem serif',
+        msg: 'Playyy',
+        isFilled: true,
+        action: playGameMethod,
+        props: {},
+        methodId: id});
         }
      };
   Game.methodsToRun.push(playBtn);

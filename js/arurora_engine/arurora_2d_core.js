@@ -261,63 +261,63 @@ function redrawArc(incomingArc) {
     Main.stage.stroke();
   }
 }
-function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, props, methodId) {
-  let doesExist = doesMethodParamExist(methodId);
+function drawButton(incomingButton) {
+  let doesExist = doesMethodParamExist(incomingButton.methodId);
   let index = -1;
   if (doesExist) {
-    index = findMethodParamIndex(methodId);
+    index = findMethodParamIndex(incomingButton.methodId);
   }
   if (!doesExist) {
     let button = {
-      posX: posX,
-      posY: posY,
-      width: width,
-      height: height,
-      lineWidth: lineWidth,
-      btnColor: btnColor,
-      txtColor: txtColor,
-      font: font,
-      msg: msg,
-      isFilled: isFilled,
-      action: action,
+      posX: incomingButton.posX,
+      posY: incomingButton.posY,
+      width: incomingButton.width,
+      height: incomingButton.height,
+      lineWidth: incomingButton.lineWidth,
+      btnColor: incomingButton.btnColor,
+      txtColor: incomingButton.txtColor,
+      font: incomingButton.font,
+      msg: incomingButton.msg,
+      isFilled: incomingButton.isFilled,
+      action: incomingButton.action,
       isBtn: true,
       isAnim: false,
-      props: props,
-      methodId: methodId,
+      props: incomingButton.props,
+      methodId: incomingButton.methodId,
     }
     Game.methodObjects.push(button);
-    redrawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled);
+    redrawButton(incomingButton);
     const shadowButton = Object.assign({}, button);
     Main.methodObjectShadows.push(shadowButton);
   }
   if (doesExist && Main.isResizing) {
-    Game.methodObjects[index].posX = posX;
-    Game.methodObjects[index].posY = posY;
-    Game.methodObjects[index].width = width;
-    Game.methodObjects[index].height = height;
-    Game.methodObjects[index].lineWidth = lineWidth;
-    Game.methodObjects[index].btnColor = btnColor;
-    Game.methodObjects[index].txtColor = txtColor;
-    Game.methodObjects[index].font = font;
-    Game.methodObjects[index].msg = msg;
-    Game.methodObjects[index].isFilled = isFilled;
-    Game.methodObjects[index].action = action;
+    Game.methodObjects[index].posX = incomingButton.posX;
+    Game.methodObjects[index].posY = incomingButton.posY;
+    Game.methodObjects[index].width = incomingButton.width;
+    Game.methodObjects[index].height = incomingButton.height;
+    Game.methodObjects[index].lineWidth = incomingButton.lineWidth;
+    Game.methodObjects[index].btnColor = incomingButton.btnColor;
+    Game.methodObjects[index].txtColor = incomingButton.txtColor;
+    Game.methodObjects[index].font = incomingButton.font;
+    Game.methodObjects[index].msg = incomingButton.msg;
+    Game.methodObjects[index].isFilled = incomingButton.isFilled;
+    Game.methodObjects[index].action = incomingButton.action;
     Game.methodObjects[index].isAnim = false;
-    Game.methodObjects[index].props = props;
-    Main.methodObjectShadows[index].posX = posX;
-    Main.methodObjectShadows[index].posY = posY;
-    Main.methodObjectShadows[index].width = width;
-    Main.methodObjectShadows[index].height = height;
-    Main.methodObjectShadows[index].lineWidth = lineWidth;
-    Main.methodObjectShadows[index].btnColor = btnColor;
-    Main.methodObjectShadows[index].txtColor = txtColor;
-    Main.methodObjectShadows[index].font = font;
-    Main.methodObjectShadows[index].msg = msg;
-    Main.methodObjectShadows[index].isFilled = isFilled;
-    Main.methodObjectShadows[index].action = action;
+    Game.methodObjects[index].props = incomingButton.props;
+    Main.methodObjectShadows[index].posX = incomingButton.posX;
+    Main.methodObjectShadows[index].posY = incomingButton.posY;
+    Main.methodObjectShadows[index].width = incomingButton.width;
+    Main.methodObjectShadows[index].height = incomingButton.height;
+    Main.methodObjectShadows[index].lineWidth = incomingButton.lineWidth;
+    Main.methodObjectShadows[index].btnColor = incomingButton.btnColor;
+    Main.methodObjectShadows[index].txtColor = incomingButton.txtColor;
+    Main.methodObjectShadows[index].font = incomingButton.font;
+    Main.methodObjectShadows[index].msg = incomingButton.msg;
+    Main.methodObjectShadows[index].isFilled = incomingButton.isFilled;
+    Main.methodObjectShadows[index].action = incomingButton.action;
     Main.methodObjectShadows[index].isAnim = false;
-    Main.methodObjectShadows[index].props = props;
-    redrawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled);
+    Main.methodObjectShadows[index].props = incomingButton.props;
+    redrawButton(incomingButton);
   }
   // checking for animations
   if (doesExist && 
@@ -325,32 +325,14 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
    Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX)
    ) {
      redrawButton(
-      Game.methodObjects[index].posX,
-      Game.methodObjects[index].posY,
-      Game.methodObjects[index].width,
-      Game.methodObjects[index].height,
-      Game.methodObjects[index].lineWidth,
-      Game.methodObjects[index].btnColor,
-      Game.methodObjects[index].txtColor,
-      Game.methodObjects[index].font,
-      Game.methodObjects[index].msg,
-      Game.methodObjects[index].isFilled,
+      Game.methodObjects[index]
       );
       const shadowButton = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowButton;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
      redrawButton(
-      Game.methodObjects[index].posX,
-      Game.methodObjects[index].posY,
-      Game.methodObjects[index].width,
-      Game.methodObjects[index].height,
-      Game.methodObjects[index].lineWidth,
-      Game.methodObjects[index].btnColor,
-      Game.methodObjects[index].txtColor,
-      Game.methodObjects[index].font,
-      Game.methodObjects[index].msg,
-      Game.methodObjects[index].isFilled,
+      Game.methodObjects[index]
       );
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
@@ -359,23 +341,23 @@ function drawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, fo
    }
 }
 
-function redrawButton(posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled) {
+function redrawButton(incomingButton) {
   Main.stage.beginPath();
-  if (!lineWidth) {
+  if (!incomingButton.lineWidth) {
     Main.stage.lineWidth = '1';
   } else {
-    Main.stage.lineWidth = lineWidth;
+    Main.stage.lineWidth = incomingButton.lineWidth;
   }
-  Main.stage.rect(posX, posY, width, height);
-  if (isFilled) {
-    Main.stage.fillStyle = btnColor;
+  Main.stage.rect(incomingButton.posX, incomingButton.posY, incomingButton.width, incomingButton.height);
+  if (incomingButton.isFilled) {
+    Main.stage.fillStyle = incomingButton.btnColor;
     Main.stage.fill();
   } else {
-    Main.stage.strokeStyle = btnColor;
+    Main.stage.strokeStyle = incomingButton.btnColor;
     Main.stage.stroke();
   }
-  Main.stage.fillStyle = txtColor;
-  Main.stage.font = font;
+  Main.stage.fillStyle = incomingButton.txtColor;
+  Main.stage.font = incomingButton.font;
   Main.stage.textAlign = 'center';
-  Main.stage.fillText(msg, (posX + (width * 0.5)), (posY + (height * 0.65)));
+  Main.stage.fillText(incomingButton.msg, (incomingButton.posX + (incomingButton.width * 0.5)), (incomingButton.posY + (incomingButton.height * 0.65)));
 }
