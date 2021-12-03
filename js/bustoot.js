@@ -109,12 +109,7 @@ function moveGameBall() {
     bricks = Game.methodObjects.filter(x => x.id==='brick');
     console.log(bricks);
   }
-  // get the bricks future Jordan
   
-  // const gameBall = Game.methodObjects.find(x => x.id === 'ball');
-  // Game.methodObjects.forEach(e => {if (e.id === 'ball') {ball = e;}});
-  
-  // when we have the ball, let's play the game
   if (ball?.methodId) {
     if (isPoweredUp) {
       ball.color = 'blue';
@@ -257,7 +252,7 @@ function brickCollision(ball, bricks, methodId) {
       // nextGameLevel();
       drawWinMenu();
     }
-  }, 33);
+  }, 0);
 }
 
 function brickPowerReveal(index) {
@@ -363,6 +358,7 @@ function drawGameBricks() {
   bricks = [];
   for (let i = 0; i < brickCount; i++) {
     let yPos = 0;
+    let xPos = 0;
     if (i < 9) { // this is the first row
       yPos = Game.canvas.height * 0.01;
     } else if (i > 8 && i < 18) {
@@ -378,30 +374,10 @@ function drawGameBricks() {
     }  else if (i > 53 && i < 63) {
       yPos = Game.canvas.height * 0.43;
     }
+    xPos = (Game.canvas.width * 0.01) + (Game.canvas.width * (brickNum * 0.11));
     brickNum++;
-    // let gameBrick = { method: function(id) {drawRect({
-      // posX: Game.canvas.width * (0.01) + (Game.canvas.width * (brickNum * 0.11)),
-      // posY: yPos,
-      // width: Game.canvas.width * 0.10,
-      // height: Game.canvas.height * 0.05,
-      // lineWidth: 1,
-      // color: 'green',
-      // isFilled: true,
-      // id: 'brick',
-      // isSolid: true,
-      // isBackground: false,
-      // props: {
-        // hp: 2,
-        // powerUp: false,
-      // },
-      // methodId: id,
-    // });}};
-    
-    // Ok future Jordan, we need to figure out what's going on with the posX in the brick.
-    // gameBrick doesn't draw but brick1 seems to though
-    const gameBrick = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.01) + (Game.canvas.width * (brickNum * 0.11)), posY: yPos, width: (Game.canvas.width * 0.10), height: (Game.canvas.height * 0.05), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
-    const brick1 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.01), posY: yPos, width: (Game.canvas.width * 0.15), height: (Main.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
-    Game.methodsToRun.push(brick1);
+    const gameBrick = { method: function(id) {drawRect({ posX: xPos, posY: yPos, width: (Game.canvas.width * 0.10), height: (Main.entitySize * 5), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
+    Game.methodsToRun.push(gameBrick);
     // when we hit the end of the row, move down to the next row
     if (i === 8 || i === 17 || i === 26 || i === 35 || i === 44 || i === 53) {
       rows++;
@@ -419,7 +395,7 @@ function drawLoseMenu() {
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
   const playGameMethod = { method: function(id) { playGame(); }}
-  const playBtn = { // { posX, posY, width, height, lineWidth, btnColor, txtColor, font, msg, isFilled, action, props, methodId }
+  const playBtn = {
      method: function(id) {
        drawButton({
         posX: (Game.canvas.width * 0.3),
@@ -472,7 +448,7 @@ function drawWinMenu() {
 
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
-  Game.setSettingsHigh(); // // 
+  Game.setSettingsHigh();
   const backgroundColor = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColor);
   const majorTitle = { method: function(id) {drawText({ font: '3rem serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id });} };
