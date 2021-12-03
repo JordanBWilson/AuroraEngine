@@ -107,7 +107,6 @@ function moveGameBall() {
   }
   if (bricks?.length === 0) {
     bricks = Game.methodObjects.filter(x => x.id==='brick');
-    console.log(bricks);
   }
   
   if (ball?.methodId) {
