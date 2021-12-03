@@ -437,7 +437,7 @@ function drawWinMenu() {
         font: '2rem serif',
         msg: 'Main Menu',
         isFilled: true,
-        action: playGameMethod,
+        action: mainMenuMethod,
         props: {},
         methodId: id});
         }
