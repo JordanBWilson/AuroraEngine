@@ -21,6 +21,19 @@ let isPoweredUp = false;
 let gameLevel = 0;
 let gameLives = 3;
 
+// touch controls
+Game.canvas.addEventListener('touchstart', function(event) {
+  readyPaddle(event);
+}, false);
+Game.canvas.addEventListener('touchend', function(event) {
+  stopPaddle(event);
+}, false);
+Game.canvas.addEventListener('touchmove', function(event) {
+  if (isPaddleMoving) {
+    movePaddle(event);
+  }
+}, false);
+// mouse controls
 Game.canvas.addEventListener('mousedown', function(event) {
   readyPaddle(event);
 }, false);
@@ -301,28 +314,41 @@ function gamePowerUp() {
 }
 
 function readyPaddle(event) {
+  console.log(event);
   if (!gameStart) {
     gameStart = true;
     Game.deleteEntity(readyText.methodId);
-    readyText.methodId = undefined;
-    tapText.methodId = undefined;
   }
   isPaddleMoving = true;
 }
 
 function movePaddle(event) {
-  if (paddle && paddle.props) {
-    paddle.props.direction = 'non';
+  if (!event.changedTouches) {
+    if (paddle && paddle.props) {
+      paddle.props.direction = 'non';
+    }
+    if (paddle.posX < event.clientX) { 
+      paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
+      paddle.props.direction = 'rt';
+    }
+    if (paddle.posX > event.clientX) {
+      paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
+      paddle.props.direction = 'lt';
+    }
+  } else {
+    if (paddle && paddle.props) {
+      paddle.props.direction = 'non';
+    }
+    if (paddle.posX < event.changedTouches[0].clientX) { 
+      paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
+      paddle.props.direction = 'rt';
+    }
+    if (paddle.posX > event.changedTouches[0].clientX) {
+      paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
+      paddle.props.direction = 'lt';
+    }
   }
-  if (paddle.posX < event.clientX) { 
-    // 
-    paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
-    paddle.props.direction = 'rt';
-  }
-  if (paddle.posX > event.clientX) {
-    paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
-    paddle.props.direction = 'lt';
-  }
+  
 }
 
 function stopPaddle(event) {
