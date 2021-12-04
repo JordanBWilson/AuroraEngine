@@ -7,11 +7,14 @@ body{
     overflow: hidden;
     position: fixed;
     width: 100%;
-    font-size: 1em;
     // ios corrections
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
+}
+
+html {
+  font-size: 1em;
 }
 
 #Stage {
