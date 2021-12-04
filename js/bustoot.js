@@ -314,7 +314,6 @@ function gamePowerUp() {
 }
 
 function readyPaddle(event) {
-  console.log(event);
   if (!gameStart) {
     gameStart = true;
     Game.deleteEntity(readyText.methodId);
@@ -364,8 +363,8 @@ function nextGameLevel() {
   ball.posX = (Game.canvas.width * 0.5);
   ball.posY = (Game.canvas.height * 0.54);
   // this text doesn't behave as expected... 
-  const majorTitle = { method: function(id) {drawText({ font: '3rem serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, methodId: id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '1rem serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, methodId: id });} };
+  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, methodId: id });} };
+  const minorTitle = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, methodId: id });} };
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
   Game.deleteEntity(readyText.methodId);
@@ -415,8 +414,8 @@ function drawLoseMenu() {
   Game.clearStage();
   const backgroundColor = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColor); 
-  const majorTitle = { method: function(id) {drawText({ font: '3rem serif', msg: 'You Lose!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '2rem serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
+  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'You Lose!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
+  const minorTitle = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
   const playGameMethod = { method: function(id) { playGame(); }}
@@ -445,8 +444,8 @@ function drawWinMenu() {
   Game.clearStage();
   const backgroundColor = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColor);
-  const majorTitle = { method: function(id) {drawText({ font: '3rem serif', msg: 'You Win!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '2rem serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
+  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'You Win!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
+  const minorTitle = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
   const mainMenuMethod = { method: function(id) { drawMainMenu(); }}
@@ -476,8 +475,8 @@ function drawMainMenu() { // draw the main menu
   Game.setSettingsHigh();
   const backgroundColor = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColor);
-  const majorTitle = { method: function(id) {drawText({ font: '3rem serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '1rem serif', msg: 'An Arurora Engine Demo', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
+  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id });} };
+  const minorTitle = { method: function(id) {drawText({ font: '1em serif', msg: 'An Arurora Engine Demo', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
   const brick1 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.01), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Main.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };

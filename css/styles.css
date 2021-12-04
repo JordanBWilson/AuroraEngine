@@ -13,10 +13,6 @@ body{
     -webkit-touch-callout: none;
 }
 
-html {
-  font-size: 1em;
-}
-
 #Stage {
     display: block;
     margin: 0 auto;
