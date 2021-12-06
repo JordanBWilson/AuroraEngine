@@ -22,30 +22,14 @@ let gameLevel = 0;
 let gameLives = 3;
 
 // touch controls
-Game.canvas.addEventListener('touchstart', function(event) {
-  readyPaddle(event);
-}, false);
-Game.canvas.addEventListener('touchend', function(event) {
-  stopPaddle(event);
-}, false);
-Game.canvas.addEventListener('touchmove', function(event) {
-  if (isPaddleMoving) {
-    movePaddle(event);
-  }
-}, false);
-// mouse controls
-Game.canvas.addEventListener('mousedown', function(event) {
-  readyPaddle(event);
-}, false);
-Game.canvas.addEventListener('mouseup', function(event) {
-  stopPaddle(event);
-}, false);
-Game.canvas.addEventListener('mousemove', function(event) {
-  if (isPaddleMoving) {
-    movePaddle(event);
-  }
-}, false);
+Game.addEvent(Game.enumEvents.touchDown, readyPaddle);
+Game.addEvent(Game.enumEvents.touchUp, stopPaddle);
+Game.addEvent(Game.enumEvents.touchMove, movePaddle);
 
+// mouse controls
+Game.addEvent(Game.enumEvents.mouseDown, readyPaddle);
+Game.addEvent(Game.enumEvents.mouseUp, stopPaddle);
+Game.addEvent(Game.enumEvents.mouseMove, movePaddle);
 
 function playGame() { // draw the game
   gamePoints = 0;
@@ -79,14 +63,14 @@ function playGame() { // draw the game
   const backgroundColorBot = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColorBot);
   
-  const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.40), posY: (Game.canvas.height * 0.93), width: (Game.canvas.width * 0.2), height: (Game.canvas.height * 0.04), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
+  const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.40), posY: (Game.canvas.height * 0.93), width: (Main.entitySize * 28), height: (Main.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.methodsToRun.push(gamePaddle);
   drawGameBricks();
   const gameBall = { 
     method: function(id) {
       drawArc({
         posX: (Game.canvas.width * 0.5), 
-        posY: (Game.canvas.height * 0.54), 
+        posY: (Game.canvas.height * 0.7), 
         width: (Main.entitySize * 2),
         aglStrt: 0, 
         aglEnd: (2 * Math.PI), 
@@ -119,7 +103,7 @@ function moveGameBall() {
     paddle = Game.methodObjects.find(x => x.id === 'paddle');
   }
   if (bricks?.length === 0) {
-    bricks = Game.methodObjects.filter(x => x.id==='brick');
+    bricks = Game.methodObjects.filter(x => x.id === 'brick');
   }
   
   if (ball?.methodId) {
@@ -322,31 +306,34 @@ function readyPaddle(event) {
 }
 
 function movePaddle(event) {
-  if (!event.changedTouches) {
-    if (paddle && paddle.props) {
-      paddle.props.direction = 'non';
-    }
-    if (paddle.posX < event.clientX) { 
-      paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
-      paddle.props.direction = 'rt';
-    }
-    if (paddle.posX > event.clientX) {
-      paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
-      paddle.props.direction = 'lt';
-    }
-  } else {
-    if (paddle && paddle.props) {
-      paddle.props.direction = 'non';
-    }
-    if (paddle.posX < event.changedTouches[0].clientX) { 
-      paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
-      paddle.props.direction = 'rt';
-    }
-    if (paddle.posX > event.changedTouches[0].clientX) {
-      paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
-      paddle.props.direction = 'lt';
+  if (gameStart && isPaddleMoving) {
+    if (!event.changedTouches) {
+      if (paddle && paddle.props) {
+        paddle.props.direction = 'non';
+      }
+      if (paddle.posX < event.clientX) { 
+        paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.props.direction = 'rt';
+      }
+      if (paddle.posX > event.clientX) {
+        paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.props.direction = 'lt';
+      }
+    } else {
+      if (paddle && paddle.props) {
+        paddle.props.direction = 'non';
+      }
+      if (paddle.posX < event.changedTouches[0].clientX) { 
+        paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.props.direction = 'rt';
+      }
+      if (paddle.posX > event.changedTouches[0].clientX) {
+        paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.props.direction = 'lt';
+      }
     }
   }
+  
   
 }
 
@@ -400,7 +387,7 @@ function drawGameBricks() {
     }
     xPos = (Game.canvas.width * 0.01) + (Game.canvas.width * (brickNum * 0.11));
     brickNum++;
-    const gameBrick = { method: function(id) {drawRect({ posX: xPos, posY: yPos, width: (Game.canvas.width * 0.10), height: (Main.entitySize * 5), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
+    const gameBrick = { method: function(id) {drawRect({ posX: xPos, posY: yPos, width: (Main.entitySize * 13.5), height: (Main.entitySize * 6.5), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
     Game.methodsToRun.push(gameBrick);
     // when we hit the end of the row, move down to the next row
     if (i === 8 || i === 17 || i === 26 || i === 35 || i === 44 || i === 53) {

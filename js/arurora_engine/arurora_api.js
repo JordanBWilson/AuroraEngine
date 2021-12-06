@@ -41,12 +41,12 @@ let Game = { // the user will want to use this object
     this.selectedSetting = Main.enumSettings.high;
     this.frameRate = 1000 / 60; // 60 frames a second
   },
-  selectedSetting: undefined,
-  enumDirections: {
+  selectedSetting: undefined, // the selected game setting
+  enumDirections: { // this is the x and y directions
     topDown: 0,
     leftRight: 1
   },
-  // this will make all the method objects move based on game settings
+  // this will calculate the speed based on the direction and settings
   moveEntity: function(speed, direction) { 
     const speedPerc = speed * 0.01;
     if (direction === this.enumDirections.topDown) {
@@ -73,6 +73,19 @@ let Game = { // the user will want to use this object
       }
     }
     
+  },
+  enumEvents: { // ways to interact with the game
+    touchDown: 'touchstart',
+    touchUp: 'touchend',
+    touchMove: 'touchmove',
+    mouseDown: 'mousedown',
+    mouseUp: 'mouseup',
+    mouseMove: 'mousemove',
+  },
+  addEvent: function(enumEvent, method) { // add game events
+    return this.canvas.addEventListener(enumEvent, function(event) {
+      method(event);
+    }, false);
   },
 };
 
