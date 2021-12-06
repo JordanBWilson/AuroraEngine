@@ -16,7 +16,7 @@ let tapText = {};
 let isPaddleMoving = false;
 let gamePoints = 0;
 let gameStart = false;
-let brickCount = 63; // lvl1- 27, lvl2- 45, lvl3- 63
+let brickCount = 27; // lvl1- 27, lvl2- 45, lvl3- 63
 let isPoweredUp = false;
 let gameLevel = 0;
 let gameLives = 3;
@@ -63,7 +63,7 @@ function playGame() { // draw the game
   const backgroundColorBot = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColorBot);
   
-  const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entitySize * 9)), posY: (Game.canvas.height * 0.85), width: (Game.entitySize * 20), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
+  const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.85), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.methodsToRun.push(gamePaddle);
   drawGameBricks();
   const gameBall = { 
@@ -245,8 +245,7 @@ function brickCollision(ball, bricks, methodId) {
     ball.props.collision = false;
     // game levels need work
     if (Game.methodObjects.filter(x => x.id==='brick').length === 0) {
-      // nextGameLevel();
-      drawWinMenu();
+      nextGameLevel();
     }
   }, 0);
 }
@@ -312,11 +311,11 @@ function movePaddle(event) {
         paddle.props.direction = 'non';
       }
       if (paddle.posX < event.clientX) { 
-        paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.posX += Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'rt';
       }
       if (paddle.posX > event.clientX) {
-        paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
     } else {
@@ -324,11 +323,11 @@ function movePaddle(event) {
         paddle.props.direction = 'non';
       }
       if (paddle.posX < event.changedTouches[0].clientX) { 
-        paddle.posX += Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.posX += Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'rt';
       }
       if (paddle.posX > event.changedTouches[0].clientX) {
-        paddle.posX -= Game.moveEntity(2.6, Game.enumDirections.leftRight);
+        paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
     }
@@ -346,21 +345,28 @@ function stopPaddle(event) {
 
 function nextGameLevel() {
   gameStart = false;
-  // currently isn't getting the ball
+  // look into this future Jordan
+  // may want to clear the scene and redraw everything
   ball.posX = (Game.canvas.width * 0.5);
-  ball.posY = (Game.canvas.height * 0.54);
-  // this text doesn't behave as expected... 
+  ball.posY = (Game.canvas.height * 0.7);
+  gameLevel++;
+  if (gameLevel === 2) {
+    gameLives++;
+    brickCount = 45;
+    drawGameBricks();
+  }
+  if (gameLevel === 3) {
+    gameLives++;
+    brickCount = 63;
+    drawGameBricks();
+  }
+  if (gameLevel === 4) {
+    drawWinMenu();
+  }
   const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, methodId: id });} };
   const minorTitle = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, methodId: id });} };
   Game.methodsToRun.push(majorTitle);
   Game.methodsToRun.push(minorTitle);
-  Game.deleteEntity(readyText.methodId);
-  Game.deleteEntity(tapText.methodId);
-  gameLevel++;
-  if (gameLevel === 2) {
-    brickCount = 45;
-    drawGameBricks();
-  }
 }
 
 function drawGameBricks() {
