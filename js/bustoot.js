@@ -63,7 +63,7 @@ function playGame() { // draw the game
   const backgroundColorBot = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
   Game.methodsToRun.push(backgroundColorBot);
   
-  const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.43), posY: (Game.canvas.height * 0.85), width: (Game.entitySize * 20), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
+  const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entitySize * 9)), posY: (Game.canvas.height * 0.85), width: (Game.entitySize * 20), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.methodsToRun.push(gamePaddle);
   drawGameBricks();
   const gameBall = { 
