@@ -57,8 +57,8 @@ function resizeStage() {
     // resize the game stage and set new base values
     Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
     Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
-    Main.entitySize = (Game.canvas.height * 0.01);
-    Main.entityWidth = (Game.canvas.width * 0.01);
+    Game.entitySize = (Game.canvas.height * 0.01);
+    Game.entityWidth = (Game.canvas.width * 0.01);
     Main.isResizing = true;
     const doneResizing = setTimeout(function() {
       Main.isResizing = false;
