@@ -86,14 +86,14 @@ function isButtonTapped(btnParams) {
 
 function collisionCheck() {
   // this will check for any collisions in game
-  if (Game.collisions.length > 0) {
+  if (Main.collisions.length > 0) {
     // find all the methods that are accepting collision events
     let solidMethods = Game.methodObjects.filter(x => x.isSolid === true);
     if (solidMethods && solidMethods.length > 0) {
       // go through all the collisions
-      for (let i = 0; i < Game.collisions.length; i++) {
-        let primary = Game.collisions[i].primary;
-        let target = Game.collisions[i].target;
+      for (let i = 0; i < Main.collisions.length; i++) {
+        let primary = Main.collisions[i].primary;
+        let target = Main.collisions[i].target;
         let primaryMethods = Game.methodObjects.filter(x => x.id === primary);
         let targetMethods = Game.methodObjects.filter(x => x.id === target);
         // find out if a collision is happening
@@ -108,8 +108,8 @@ function collisionCheck() {
                 widthOrHeight = targetMethods[k].height;
               }
               if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
-                Game.collisions[i].methodId = targetMethods[k].methodId;
-                Game.collisions[i].method();
+                Main.collisions[i].methodId = targetMethods[k].methodId;
+                Main.collisions[i].method();
                 break;
               }
             }

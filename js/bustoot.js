@@ -42,18 +42,7 @@ function playGame() { // draw the game
   readyText = {};
   tapText = {};
   gameStart = false;
-  ballBrickCollision = {
-    primary: 'ball',
-    target: 'brick',
-    method: function(id) {brickCollision(ball, bricks, this.methodId)},
-    methodId: undefined,
-  }
-  ballPaddleCollision = {
-    primary: 'ball',
-    target: 'paddle',
-    method: function(id) {paddleCollision()},
-    methodId: undefined,
-  }
+
   Game.clearStage();
   const playGameBall = { method: function(id) { moveGameBall(); }};
   Game.methodsToRun.push(playGameBall);
@@ -89,8 +78,20 @@ function playGame() { // draw the game
   };
   Game.methodsToRun.push(gameBall);
   
-  Game.collisions.push(ballBrickCollision);
-  Game.collisions.push(ballPaddleCollision);
+  Game.collisionSetup = {
+    primary: 'ball',
+    target: 'paddle',
+    method: function(id) {paddleCollision()},
+    methodId: undefined
+  }
+  Game.addCollision(Game.collisionSetup);
+  Game.collisionSetup = {
+    primary: 'ball',
+    target: 'brick',
+    method: function(id) {brickCollision(ball, bricks, this.methodId)},
+    methodId: undefined,
+  }
+  Game.addCollision(Game.collisionSetup);
   nextGameLevel();
 }
 

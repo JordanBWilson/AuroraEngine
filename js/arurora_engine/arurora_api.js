@@ -16,7 +16,21 @@ let Game = { // the user will want to use this object
     Main.methodObjectShadows = [];
     Main.globalId = 0;
   },
-  collisions: [], // all the collisions in the game to look for
+  collisionSetup: { // use this to create collisions
+    primary: '', // the id that's waiting for a collision
+    target: '', // the id that did the colliding
+    method: function(id) {/*put your method here*/},
+    methodId: undefined, // this will return the id of the targetId
+  },
+  addCollision: function(collision) { // pass the collision setup
+    Main.collisions.push(collision);
+    this.collisionSetup = {
+      primaryId: '',
+      targetId: '',
+      method: function(id) {},
+      methodId: undefined,
+    }
+  },
   deleteEntity: function(id) { // delete an object in the MethodObjects
     for (let i = 0; i < this.methodObjects.length; i++) {
       if (this.methodObjects[i].methodId === id) {
@@ -108,4 +122,5 @@ let Main = { // global variables to keep the game running nicely
     med: 1,
     low: 2,
   },
+  collisions: [], // all the collisions in the game to look for
 };
