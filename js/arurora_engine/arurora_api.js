@@ -1,7 +1,6 @@
 
 let Game = { // the user will want to use this object
   frameRate: 1000 / 60, // how fast the game is running
-  methodsToRun: [], // all the methods to make the game run
   methodObjects: [], // this holds all the current param values
   canvas: undefined, // the game stage
   stageWidthPrct: .98, // how much of the screen width will it take up
@@ -11,7 +10,7 @@ let Game = { // the user will want to use this object
   clearStage: function() { // clear the game stage
     Main.clearStage = true;
     Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.methodsToRun = [];
+    Main.methodsToRun = [];
     this.methodObjects = [];
     Main.methodObjectShadows = [];
     Main.globalId = 0;
@@ -31,14 +30,23 @@ let Game = { // the user will want to use this object
       methodId: undefined,
     }
   },
+  methodSetup: {
+    method: function(id) {/*put your method here*/}
+  },
+  addMethod: function(method) {
+    Main.methodsToRun.push(method);
+    this.methodSetup = {
+      method: function(id) {},
+    }
+  },
   deleteEntity: function(id) { // delete an object in the MethodObjects
     for (let i = 0; i < this.methodObjects.length; i++) {
       if (this.methodObjects[i].methodId === id) {
-        for (let j = 0; j < this.methodsToRun.length; j++) {
-          if (this.methodObjects[i]?.methodId === this.methodsToRun[j]?.methodId) {
+        for (let j = 0; j < Main.methodsToRun.length; j++) {
+          if (this.methodObjects[i]?.methodId === Main.methodsToRun[j]?.methodId) {
             this.methodObjects.splice(i, 1);
             Main.methodObjectShadows.splice(i, 1);
-            this.methodsToRun.splice(j, 1);
+            Main.methodsToRun.splice(j, 1);
           }
         }
       }
@@ -123,4 +131,5 @@ let Main = { // global variables to keep the game running nicely
     low: 2,
   },
   collisions: [], // all the collisions in the game to look for
+  methodsToRun: [], // all the methods to make the game run
 };

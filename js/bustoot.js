@@ -44,18 +44,17 @@ function playGame() { // draw the game
   gameStart = false;
 
   Game.clearStage();
-  const playGameBall = { method: function(id) { moveGameBall(); }};
-  Game.methodsToRun.push(playGameBall);
+  Game.methodSetup = { method: function(id) { moveGameBall(); }};
+  Game.addMethod(Game.methodSetup);
   
-  const backgroundColorTop = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background-top', isSolid: false, isBackground: true, props: {}, methodId: id });} };
-  Game.methodsToRun.push(backgroundColorTop);
-  const backgroundColorBot = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
-  Game.methodsToRun.push(backgroundColorBot);
-  
-  const gamePaddle = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.85), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
-  Game.methodsToRun.push(gamePaddle);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background-top', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.82), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
   drawGameBricks();
-  const gameBall = { 
+  Game.methodSetup = {
     method: function(id) {
       drawArc({
         posX: (Game.canvas.width * 0.5), 
@@ -75,8 +74,8 @@ function playGame() { // draw the game
         methodId: id
       });
     } 
-  };
-  Game.methodsToRun.push(gameBall);
+  }
+  Game.addMethod(Game.methodSetup);
   
   Game.collisionSetup = {
     primary: 'ball',
@@ -106,7 +105,6 @@ function moveGameBall() {
   if (bricks?.length === 0) {
     bricks = Game.methodObjects.filter(x => x.id === 'brick');
   }
-  
   if (ball?.methodId) {
     if (isPoweredUp) {
       ball.color = 'blue';
@@ -131,7 +129,6 @@ function moveGameBall() {
         ball.posY += Game.moveEntity(1, Game.enumDirections.topDown);
         ball.posX -= Game.moveEntity(1, Game.enumDirections.leftRight);
       }
-
       if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
         ball.props.direction = 'toplt';
       }
@@ -174,11 +171,9 @@ function moveGameBall() {
       if (gameLives === 0) {
         drawLoseMenu();
         gameLives = -1;
-        
       }
     }
   }
-  
 }
 
 function brickCollision(ball, bricks, methodId) {
@@ -364,10 +359,11 @@ function nextGameLevel() {
   if (gameLevel === 4) {
     drawWinMenu();
   }
-  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, methodId: id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, methodId: id });} };
-  Game.methodsToRun.push(majorTitle);
-  Game.methodsToRun.push(minorTitle);
+
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
 }
 
 function drawGameBricks() {
@@ -394,8 +390,8 @@ function drawGameBricks() {
     }
     xPos = (Game.canvas.width * 0.01) + (Game.canvas.width * (brickNum * 0.11));
     brickNum++;
-    const gameBrick = { method: function(id) {drawRect({ posX: xPos, posY: yPos, width: (Game.entityWidth * 10.5), height: (Game.entitySize * 6.5), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
-    Game.methodsToRun.push(gameBrick);
+    Game.methodSetup = { method: function(id) {drawRect({ posX: xPos, posY: yPos, width: (Game.entityWidth * 10.5), height: (Game.entitySize * 6.5), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
+    Game.addMethod(Game.methodSetup);
     // when we hit the end of the row, move down to the next row
     if (i === 8 || i === 17 || i === 26 || i === 35 || i === 44 || i === 53) {
       rows++;
@@ -405,17 +401,16 @@ function drawGameBricks() {
 }
 
 function drawLoseMenu() {
-  Game.clearStage();
-  const backgroundColor = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  Game.methodsToRun.push(backgroundColor); 
-  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'You Lose!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
-  Game.methodsToRun.push(majorTitle);
-  Game.methodsToRun.push(minorTitle);
-  const playGameMethod = { method: function(id) { playGame(); }}
-  const playBtn = {
-     method: function(id) {
-       drawButton({
+  Game.clearStage(); 
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Lose!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
         posX: (Game.canvas.width * 0.3),
         posY: (Game.canvas.height * 0.6),
         width: (Game.canvas.width * 0.4),
@@ -426,25 +421,25 @@ function drawLoseMenu() {
         font: '2em serif',
         msg: 'Restart',
         isFilled: true,
-        action: playGameMethod,
+        action: { method: function(id) { playGame(); }},
         props: {},
-        methodId: id});
-        }
-     };
-  Game.methodsToRun.push(playBtn);
+        methodId: id
+      });
+    }
+  }
+  Game.addMethod(Game.methodSetup);
 }
 
 function drawWinMenu() {
   Game.clearStage();
-  const backgroundColor = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  Game.methodsToRun.push(backgroundColor);
-  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'You Win!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
-  Game.methodsToRun.push(majorTitle);
-  Game.methodsToRun.push(minorTitle);
-  const mainMenuMethod = { method: function(id) { drawMainMenu(); }}
-  const menuBtn = {
-     method: function(id) {
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Win!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
        drawButton({
         posX: (Game.canvas.width * 0.3),
         posY: (Game.canvas.height * 0.6),
@@ -456,61 +451,61 @@ function drawWinMenu() {
         font: '2em serif',
         msg: 'Main Menu',
         isFilled: true,
-        action: mainMenuMethod,
+        action: { method: function(id) { drawMainMenu(); }},
         props: {},
-        methodId: id});
-        }
-     };
-  Game.methodsToRun.push(menuBtn);
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
 }
 
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
   Game.setSettingsHigh();
-  const backgroundColor = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  Game.methodsToRun.push(backgroundColor);
-  const majorTitle = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id });} };
-  const minorTitle = { method: function(id) {drawText({ font: '1em serif', msg: 'An Arurora Engine Demo', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
-  Game.methodsToRun.push(majorTitle);
-  Game.methodsToRun.push(minorTitle);
-  const brick1 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.01), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  const brick2 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.17), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  const brick3 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.33), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.17), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  const brick4 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.51), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.16), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  const brick5 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.68), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  const brick6 = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.84), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
-  Game.methodsToRun.push(brick1);
-  Game.methodsToRun.push(brick2);
-  Game.methodsToRun.push(brick3);
-  Game.methodsToRun.push(brick4);
-  Game.methodsToRun.push(brick5);
-  Game.methodsToRun.push(brick6); 
-  const ballShadow1 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.1), posY: (Game.canvas.height * 0.3), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow2 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.12), posY: (Game.canvas.height * 0.32), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow3 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.14), posY: (Game.canvas.height * 0.34), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow4 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.16), posY: (Game.canvas.height * 0.36), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow5 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.18), posY: (Game.canvas.height * 0.38), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow6 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.20), posY: (Game.canvas.height * 0.40), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow7 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.22), posY: (Game.canvas.height * 0.42), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow8 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.24), posY: (Game.canvas.height * 0.44), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow9 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.26), posY: (Game.canvas.height * 0.46), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ballShadow10 = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.28), posY: (Game.canvas.height * 0.48), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  const ball = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.32), posY: (Game.canvas.height * 0.52), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: true, id: 'prop', isSolid: false, props: {}, methodId: id });} };
-  Game.methodsToRun.push(ballShadow1);
-  Game.methodsToRun.push(ballShadow2);
-  Game.methodsToRun.push(ballShadow3);
-  Game.methodsToRun.push(ballShadow4);
-  Game.methodsToRun.push(ballShadow5);
-  Game.methodsToRun.push(ballShadow6);
-  Game.methodsToRun.push(ballShadow7);
-  Game.methodsToRun.push(ballShadow8);
-  Game.methodsToRun.push(ballShadow9);
-  Game.methodsToRun.push(ballShadow10);
-  Game.methodsToRun.push(ball);
-  const playGameMethod = { method: function(id) { playGame(); }}
-  const playBtn = {
-     method: function(id) {
-       drawButton({
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'An Arurora Engine Demo', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.01), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.17), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.33), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.17), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.51), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.16), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.68), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.84), posY: (Game.canvas.height * 0.17), width: (Game.canvas.width * 0.15), height: (Game.entitySize * 6), lineWidth: 1, color: 'green', isFilled: true, id: 'prop', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.1), posY: (Game.canvas.height * 0.3), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.12), posY: (Game.canvas.height * 0.32), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.14), posY: (Game.canvas.height * 0.34), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.16), posY: (Game.canvas.height * 0.36), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.18), posY: (Game.canvas.height * 0.38), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.20), posY: (Game.canvas.height * 0.40), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.22), posY: (Game.canvas.height * 0.42), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.24), posY: (Game.canvas.height * 0.44), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.26), posY: (Game.canvas.height * 0.46), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.28), posY: (Game.canvas.height * 0.48), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: false, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawArc({ posX: (Game.canvas.width * 0.32), posY: (Game.canvas.height * 0.52), width: (Game.entitySize * 2), aglStrt: 0, aglEnd: 2 * Math.PI, lineWidth: 2, color: 'green', isFilled: true, id: 'prop', isSolid: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
         posX: (Game.canvas.width * 0.3),
         posY: (Game.canvas.height * 0.6),
         width: (Game.canvas.width * 0.4),
@@ -521,10 +516,11 @@ function drawMainMenu() { // draw the main menu
         font: '2em serif',
         msg: 'Playyy',
         isFilled: true,
-        action: playGameMethod,
+        action: { method: function(id) { playGame(); }},
         props: {},
-        methodId: id});
-        }
-     };
-  Game.methodsToRun.push(playBtn);
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
 }
