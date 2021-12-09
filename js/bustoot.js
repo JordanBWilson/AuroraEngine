@@ -11,12 +11,12 @@ let background = {};
 let ballBrickCollision = {};
 let ballPaddleCollision = {};
 let paddle = {};
-let readyText;
-let tapText;
+let readyText = undefined;
+let tapText = undefined;
 let isPaddleMoving = false;
 let gamePoints = 0;
 let gameStart = false;
-let brickCount = 1; // lvl1- 27, lvl2- 45, lvl3- 63
+let brickCount = 27; // lvl1- 27, lvl2- 45, lvl3- 63
 let isPoweredUp = false;
 let gameLevel = 0;
 let gameLives = 3;
@@ -36,50 +36,14 @@ function playGame() { // draw the game
   gameLevel = 0;
   gameLives = 3;
   isPoweredUp = false;
-  bricks;
+  bricks = {};
   ball = {};
   paddle = {};
-  // readyText;
-  // tapText;
+  readyText = undefined;
+  tapText = undefined;
   gameStart = false;
-
-  // Game.clearStage();
   
-  Game.clearStage();
-  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background-top', isSolid: false, isBackground: true, props: {}, methodId: id });} };
-  Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
-  Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.82), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
-  Game.addMethod(Game.methodSetup);
-  drawGameBricks();
-  Game.methodSetup = {
-    method: function(id) {
-      drawArc({
-        posX: (Game.canvas.width * 0.5), 
-        posY: (Game.canvas.height * 0.7), 
-        width: (Game.entitySize * 2),
-        aglStrt: 0, 
-        aglEnd: (2 * Math.PI), 
-        lineWidth: 1, 
-        color: 'green', 
-        isFilled: true, 
-        id: 'ball', 
-        isSolid: true, 
-        props: {
-          direction: 'top',
-          collision: false
-        }, 
-        methodId: id
-      });
-    } 
-  }
-  Game.addMethod(Game.methodSetup);
   nextGameLevel();
-  Game.methodSetup = { method: function(id) { moveGameBall(); }};
-  Game.addMethod(Game.methodSetup);
-  
-  
   
   Game.collisionSetup = {
     primary: 'ball',
@@ -95,7 +59,6 @@ function playGame() { // draw the game
     methodId: undefined,
   }
   Game.addCollision(Game.collisionSetup);
-  
 }
 
 function moveGameBall() {
@@ -111,7 +74,6 @@ function moveGameBall() {
   }
   if (!readyText?.methodId && !gameStart) {
     readyText = Game.methodObjects.find(x => x.id === 'readyText');
-    console.log(readyText);
   }
   if (!tapText?.methodId && !gameStart) {
     tapText = Game.methodObjects.find(x => x.id === 'tapText');
@@ -250,7 +212,6 @@ function brickCollision(ball, bricks, methodId) {
   }
   setTimeout(function() {
     ball.props.collision = false;
-    // game levels need work
     if (Game.methodObjects.filter(x => x.id==='brick').length === 0) {
       nextGameLevel();
     }
@@ -306,27 +267,9 @@ function gamePowerUp() {
 function readyPaddle(event) {
   if (!gameStart && readyText?.methodId && tapText?.methodId) {
     gameStart = true;
-    
-    console.log(readyText);
-    // if (readyText?.methoId) {
-      readyText.msg = '';
-      tapText.msg = '';
-      // Game.deleteEntity(readyText.methodId);
-      // Game.deleteEntity(tapText.methodId);
-    // }
-    
-    // readyText;
-    // tapText;
-  // } 
-  // else {
-    // readyText = Game.methodObjects.find(x => x.id === 'readyText');
-    // if (readyText) {
-      // readyText.msg = '';
-    // }
-    
-    // console.log(readyText);
+    Game.deleteEntity(readyText.methodId);
+    Game.deleteEntity(tapText.methodId);
   }
-  // console.log(readyText?.methodId);
   isPaddleMoving = true;
 }
 
@@ -369,13 +312,44 @@ function stopPaddle(event) {
   }
 }
 
-function nextGameLevel() {
+function nextGameLevel() { // draw the game
   gameStart = false;
-  // look into this future Jordan
-  // may want to clear the scene and redraw everything
-  
-  ball.posX = (Game.canvas.width * 0.5);
-  ball.posY = (Game.canvas.height * 0.7);
+  ball = undefined;
+  paddle = undefined;
+  readyText = undefined;
+  tapText = undefined;
+  Game.clearStage();
+  Game.methodSetup = { method: function(id) { moveGameBall(); }};
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background-top', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.82), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  drawGameBricks();
+  Game.methodSetup = {
+    method: function(id) {
+      drawArc({
+        posX: (Game.canvas.width * 0.5), 
+        posY: (Game.canvas.height * 0.7), 
+        width: (Game.entitySize * 2),
+        aglStrt: 0, 
+        aglEnd: (2 * Math.PI), 
+        lineWidth: 1, 
+        color: 'green', 
+        isFilled: true, 
+        id: 'ball', 
+        isSolid: true, 
+        props: {
+          direction: 'top',
+          collision: false
+        }, 
+        methodId: id
+      });
+    } 
+  }
+  Game.addMethod(Game.methodSetup);
   gameLevel++;
   if (gameLevel === 2) {
     gameLives++;
@@ -390,30 +364,10 @@ function nextGameLevel() {
   if (gameLevel === 4) {
     drawWinMenu();
   }
-  if (!readyText?.methodId) {
-    Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
-    Game.addMethod(Game.methodSetup);
-  } else { // get everything including the move ball function and try 
-    // to restart this whole game in the next level function future Jordan
-    
-    // Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
-    // Game.addMethod(Game.methodSetup);
-    readyText.msg = 'Ready?';
-  }
-  if (!tapText?.methodId) {
-    Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
-    Game.addMethod(Game.methodSetup);
-  } else {
-    tapText.msg = 'Tap to Continue';
-    // Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
-    // Game.addMethod(Game.methodSetup);
-  }
-  setTimeout(function() {
-    readyText = Game.methodObjects.find(x => x.id === 'readyText');
-    console.log(readyText);
-    tapText = Game.methodObjects.find(x => x.id === 'tapText');
-    },300);
-  
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
 }
 
 function drawGameBricks() {
