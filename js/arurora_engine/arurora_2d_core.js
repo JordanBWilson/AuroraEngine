@@ -16,6 +16,7 @@ function drawText(incomingText) {
       align: incomingText.align,
       isAnim: false,
       props: incomingText.props,
+      id: incomingText.id,
       methodId: incomingText.methodId,
     }
     Game.methodObjects.push(text);
@@ -32,6 +33,7 @@ function drawText(incomingText) {
     Game.methodObjects[index].align = incomingText.align;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingText.props;
+    Game.methodObjects[index].id = incomingText.id;
     Main.methodObjectShadows[index].font = incomingText.font;
     Main.methodObjectShadows[index].msg = incomingText.msg;
     Main.methodObjectShadows[index].posX = incomingText.posX;
@@ -40,6 +42,7 @@ function drawText(incomingText) {
     Main.methodObjectShadows[index].align = incomingText.align;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingText.props;
+    Main.methodObjectShadows[index].id = incomingText.id;
     redrawText(incomingText);
   }
   // checking for animations
@@ -61,6 +64,7 @@ function drawText(incomingText) {
      redrawText(
       Game.methodObjects[index]
       );
+      Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
     Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 

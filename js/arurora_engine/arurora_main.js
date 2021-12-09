@@ -134,19 +134,21 @@ function backgroundAnimationCheck(index) {
 
             for (let j = 0; j < Game.methodObjects.length; j++) { // look and see if there is anything not animated that needs to be redrawn..
               if (Game.methodObjects[j].posX >= Game.methodObjects[index].posX - Game.methodObjects[j].width &&
-                  Game.methodObjects[j].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[j].width) {
-
+                  Game.methodObjects[j].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[j].width || Game.methodObjects[j].align) {
                 let widthOrHeight = findWidthHeightMethodObjects(j);
-
+                
                 if (Game.methodObjects[j].posY >= Game.methodObjects[index].posY - Game.methodObjects[j].width  &&
-                     Game.methodObjects[j].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight) {
-
-                  if (!Game.methodObjects[j].isAnim && !Game.methodObjects[j].isBackground && j !== index) { // find out what shape this is and redraw it
+                     Game.methodObjects[j].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight || Game.methodObjects[j].align) {
+                  // find out what shape this is and redraw it
+                  if (!Game.methodObjects[j].isAnim && !Game.methodObjects[j].isBackground && j !== index) { 
                     // this will need to be split up as the shapes and graphics grow
                     if (Game.methodObjects[j].height) { // check for a rect shape
                       Game.methodObjects[j].isAnim = true;
                     }
-
+                  }
+                  // redraw this text
+                  if(Game.methodObjects[j].align && j !== index && !Game.methodObjects[j].isAnim) {
+                    Game.methodObjects[j].isAnim = true;
                   }
                 }
               }
