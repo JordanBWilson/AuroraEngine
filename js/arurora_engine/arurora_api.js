@@ -10,10 +10,12 @@ let Game = { // the user will want to use this object
   clearStage: function() { // clear the game stage
     Main.clearStage = true;
     Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    Main.collisions = [];
     Main.methodsToRun = [];
     this.methodObjects = [];
     Main.methodObjectShadows = [];
     Main.globalId = 0;
+    
   },
   collisionSetup: { // use this to create collisions
     primary: '', // the id that's waiting for a collision

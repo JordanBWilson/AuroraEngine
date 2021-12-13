@@ -313,6 +313,8 @@ function drawButton(incomingButton) {
       font: incomingButton.font,
       msg: incomingButton.msg,
       isFilled: incomingButton.isFilled,
+      id: incomingButton.id,
+      isSolid: incomingButton.isSolid,
       action: incomingButton.action,
       isBtn: true,
       isAnim: false,
@@ -335,6 +337,7 @@ function drawButton(incomingButton) {
     Game.methodObjects[index].font = incomingButton.font;
     Game.methodObjects[index].msg = incomingButton.msg;
     Game.methodObjects[index].isFilled = incomingButton.isFilled;
+    Game.methodObjects[index].isSolid = incomingButton.isSolid;
     Game.methodObjects[index].action = incomingButton.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingButton.props;
@@ -348,6 +351,7 @@ function drawButton(incomingButton) {
     Main.methodObjectShadows[index].font = incomingButton.font;
     Main.methodObjectShadows[index].msg = incomingButton.msg;
     Main.methodObjectShadows[index].isFilled = incomingButton.isFilled;
+    Game.methodObjectShadows[index].isSolid = incomingButton.isSolid;
     Main.methodObjectShadows[index].action = incomingButton.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButton.props;

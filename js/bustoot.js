@@ -44,21 +44,6 @@ function playGame() { // draw the game
   gameStart = false;
   
   nextGameLevel();
-  
-  Game.collisionSetup = {
-    primary: 'ball',
-    target: 'paddle',
-    method: function(id) {paddleCollision()},
-    methodId: undefined
-  }
-  Game.addCollision(Game.collisionSetup);
-  Game.collisionSetup = {
-    primary: 'ball',
-    target: 'brick',
-    method: function(id) {brickCollision(ball, bricks, this.methodId)},
-    methodId: undefined,
-  }
-  Game.addCollision(Game.collisionSetup);
 }
 
 function moveGameBall() {
@@ -350,6 +335,24 @@ function nextGameLevel() { // draw the game
     } 
   }
   Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.collisionSetup = {
+    primary: 'ball',
+    target: 'paddle',
+    method: function(id) {paddleCollision()},
+    methodId: undefined
+  }
+  Game.addCollision(Game.collisionSetup);
+  Game.collisionSetup = {
+    primary: 'ball',
+    target: 'brick',
+    method: function(id) {brickCollision(ball, bricks, this.methodId)},
+    methodId: undefined,
+  }
+  Game.addCollision(Game.collisionSetup);
   gameLevel++;
   if (gameLevel === 2) {
     gameLives++;
@@ -364,10 +367,7 @@ function nextGameLevel() { // draw the game
   if (gameLevel === 4) {
     drawWinMenu();
   }
-  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
-  Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
-  Game.addMethod(Game.methodSetup);
+  
 }
 
 function drawGameBricks() {
@@ -425,6 +425,8 @@ function drawLoseMenu() {
         font: '2em serif',
         msg: 'Restart',
         isFilled: true,
+        id: id,
+        isSolid: false,
         action: { method: function(id) { playGame(); }},
         props: {},
         methodId: id
@@ -455,6 +457,8 @@ function drawWinMenu() {
         font: '2em serif',
         msg: 'Main Menu',
         isFilled: true,
+        id: id,
+        isSolid: false,
         action: { method: function(id) { drawMainMenu(); }},
         props: {},
         methodId: id
@@ -520,6 +524,8 @@ function drawMainMenu() { // draw the main menu
         font: '2em serif',
         msg: 'Playyy',
         isFilled: true,
+        id: id,
+        isSolid: false,
         action: { method: function(id) { playGame(); }},
         props: {},
         methodId: id
