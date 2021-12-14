@@ -32,9 +32,7 @@ Game.addEvent(Game.enumEvents.mouseUp, stopPaddle);
 Game.addEvent(Game.enumEvents.mouseMove, movePaddle);
 
 function playGame() { // draw the game
-  gamePoints = 0;
-  gameLevel = 0;
-  gameLives = 3;
+  
   isPoweredUp = false;
   bricks = {};
   ball = {};
@@ -202,7 +200,8 @@ function brickCollision(ball, bricks, methodId) {
   setTimeout(function() {
     ball.props.collision = false;
     if (Game.methodObjects.filter(x => x.id==='brick').length === 0) {
-      nextGameLevel();
+      
+      playGame();
     }
   }, 0);
 }
@@ -256,10 +255,8 @@ function gamePowerUp() {
 function readyPaddle(event) {
   if (!gameStart && readyText?.methodId && tapText?.methodId) {
     gameStart = true;
-    readyText.msg = '';
-    tapText.msg = '';
-    // Game.deleteEntity(readyText.methodId);
-    // Game.deleteEntity(tapText.methodId);
+    Game.deleteEntity(readyText.methodId);
+    Game.deleteEntity(tapText.methodId);
   }
   isPaddleMoving = true;
 }
@@ -414,6 +411,8 @@ function drawGameBricks() {
 
 function drawLoseMenu() {
   Game.clearStage(); 
+  // let score = Object.assign([], gamePoints.toString());
+  // score = score[0];
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Lose!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'loseText', methodId: id });} };
@@ -442,10 +441,16 @@ function drawLoseMenu() {
     }
   }
   Game.addMethod(Game.methodSetup);
+  
+  // gamePoints = 0;
+  // gameLevel = 0;
+  // gameLives = 3;
 }
 
 function drawWinMenu() {
   Game.clearStage();
+  // let score = Object.assign([], gamePoints.toString());
+  // score = score[0];
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Win!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'winText', methodId: id });} };
@@ -474,6 +479,9 @@ function drawWinMenu() {
     }
   };
   Game.addMethod(Game.methodSetup);
+  // gamePoints = 0;
+  // gameLevel = 0;
+  // gameLives = 3;
 }
 
 function drawMainMenu() { // draw the main menu
