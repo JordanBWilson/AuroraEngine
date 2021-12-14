@@ -351,7 +351,7 @@ function drawButton(incomingButton) {
     Main.methodObjectShadows[index].font = incomingButton.font;
     Main.methodObjectShadows[index].msg = incomingButton.msg;
     Main.methodObjectShadows[index].isFilled = incomingButton.isFilled;
-    Game.methodObjectShadows[index].isSolid = incomingButton.isSolid;
+    Main.methodObjectShadows[index].isSolid = incomingButton.isSolid;
     Main.methodObjectShadows[index].action = incomingButton.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButton.props;

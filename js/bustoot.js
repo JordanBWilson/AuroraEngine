@@ -46,7 +46,7 @@ function playGame() { // draw the game
   nextGameLevel();
 }
 
-function moveGameBall() {
+function findGameObjects() {
   // when the game starts up, look for the ball, paddle and bricks
   if (!ball?.methodId) {
     ball = Game.methodObjects.find(x => x.id === 'ball');
@@ -63,6 +63,10 @@ function moveGameBall() {
   if (!tapText?.methodId && !gameStart) {
     tapText = Game.methodObjects.find(x => x.id === 'tapText');
   }
+}
+
+function moveGameBall() {
+  
   if (ball?.methodId) {
     if (isPoweredUp) {
       ball.color = 'blue';
@@ -252,8 +256,10 @@ function gamePowerUp() {
 function readyPaddle(event) {
   if (!gameStart && readyText?.methodId && tapText?.methodId) {
     gameStart = true;
-    Game.deleteEntity(readyText.methodId);
-    Game.deleteEntity(tapText.methodId);
+    readyText.msg = '';
+    tapText.msg = '';
+    // Game.deleteEntity(readyText.methodId);
+    // Game.deleteEntity(tapText.methodId);
   }
   isPaddleMoving = true;
 }
@@ -304,6 +310,8 @@ function nextGameLevel() { // draw the game
   readyText = undefined;
   tapText = undefined;
   Game.clearStage();
+  Game.methodSetup = { method: function(id) { findGameObjects(); }};
+  Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) { moveGameBall(); }};
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background-top', isSolid: false, isBackground: true, props: {}, methodId: id });} };
