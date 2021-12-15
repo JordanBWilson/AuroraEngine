@@ -34,11 +34,14 @@ Game.addEvent(Game.enumEvents.mouseMove, movePaddle);
 function playGame() { // draw the game
   
   if (newGame) {
-    console.log('start');
     gamePoints = 0;
     gameLevel = 0;
     gameLives = 3;
     newGame = false;
+  }
+  
+  if (!Game.selectedSetting) {
+    Game.setSettingsHigh();
   }
   
   isPoweredUp = false;
@@ -152,20 +155,27 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
-        brickPowerReveal(i);
+        if (bricks[i].props.hp === 1) {
+          brickPowerReveal(i);
+        }
+        
       }
       if (ball.props.direction === 'bot' && !ball.props.collision) {
         ball.props.direction = 'top';
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
-        brickPowerReveal(i);
+        if (bricks[i].props.hp === 1) {
+          brickPowerReveal(i);
+        }
       }
       if (ball.props.direction === 'toprt' && !ball.props.collision) {
         ball.props.direction = 'botrt';
         ball.props.collision = true;
         bricks[i].props.hp--;
-        brickPowerReveal(i);
+        if (bricks[i].props.hp === 1) {
+          brickPowerReveal(i);
+        }
       }
       if (ball.props.direction === 'botrt' && !ball.props.collision) {
         if (isPoweredUp) {
@@ -176,7 +186,9 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
-        brickPowerReveal(i);
+        if (bricks[i].props.hp === 1) {
+          brickPowerReveal(i);
+        }
       }
       if (ball.props.direction === 'toplt' && !ball.props.collision) {
         if (isPoweredUp) {
@@ -187,14 +199,18 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
-        brickPowerReveal(i);
+        if (bricks[i].props.hp === 1) {
+          brickPowerReveal(i);
+        }
       }
       if (ball.props.direction === 'botlt' && !ball.props.collision) {
         ball.props.direction = 'toplt';
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
-        brickPowerReveal(i);
+        if (bricks[i].props.hp === 1) {
+          brickPowerReveal(i);
+        }
       }
       if (bricks[i].props.hp < 1 && bricks[i].props.powerUp) {
         gamePowerUp();
@@ -252,11 +268,14 @@ function paddleCollision() {
 }
 
 function gamePowerUp() {
-  isPoweredUp = true;
-  let powerTime = setTimeout(function() {
-    isPoweredUp = false;
-    clearTimeout(powerTime);
-  }, 6000);
+  if (!isPoweredUp) {
+    isPoweredUp = true;
+    let powerTime = setTimeout(function() {
+      isPoweredUp = false;
+      clearTimeout(powerTime);
+    }, 6000);
+  }
+  
 }
 
 function readyPaddle(event) {
@@ -424,7 +443,7 @@ function drawLoseMenu() {
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Lose!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'loseText', methodId: id });} };
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, id: 'score', methodId: id });} };
+  Game.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.24), color: 'green', align: 'center', props: {}, id: 'score', methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = {
     method: function(id) {
@@ -457,7 +476,7 @@ function drawWinMenu() {
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Win!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'winText', methodId: id });} };
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.14), color: 'green', align: 'center', props: {}, id: 'score', methodId: id });} };
+  Game.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: gamePoints.toString() + ' Points', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.24), color: 'green', align: 'center', props: {}, id: 'score', methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = {
     method: function(id) {
@@ -485,8 +504,7 @@ function drawWinMenu() {
 
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
-  Game.setSettingsHigh();
-  // newGame = true;
+  newGame = true;
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
@@ -543,6 +561,124 @@ function drawMainMenu() { // draw the main menu
         id: id,
         isSolid: false,
         action: { method: function(id) { playGame(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.75),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2em serif',
+        msg: 'Settings',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { settingsMenu(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+}
+
+function settingsMenu() {
+  Game.clearStage();
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Settings', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.25),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2em serif',
+        msg: 'High',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { Game.setSettingsHigh(); drawMainMenu(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.35),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2em serif',
+        msg: 'Medium',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { Game.setSettingsMed(); drawMainMenu(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.45),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2em serif',
+        msg: 'Low',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { Game.setSettingsLow(); drawMainMenu(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.75),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2em serif',
+        msg: 'Back',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { drawMainMenu(); }},
         props: {},
         methodId: id
       });
