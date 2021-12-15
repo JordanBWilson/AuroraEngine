@@ -1,4 +1,4 @@
-
+let newGame = false;
 (function() {
 
   Game.canvas = document.getElementById('Stage');
@@ -32,6 +32,14 @@ Game.addEvent(Game.enumEvents.mouseUp, stopPaddle);
 Game.addEvent(Game.enumEvents.mouseMove, movePaddle);
 
 function playGame() { // draw the game
+  
+  if (newGame) {
+    console.log('start');
+    gamePoints = 0;
+    gameLevel = 0;
+    gameLives = 3;
+    newGame = false;
+  }
   
   isPoweredUp = false;
   bricks = {};
@@ -200,7 +208,6 @@ function brickCollision(ball, bricks, methodId) {
   setTimeout(function() {
     ball.props.collision = false;
     if (Game.methodObjects.filter(x => x.id==='brick').length === 0) {
-      
       playGame();
     }
   }, 0);
@@ -289,8 +296,6 @@ function movePaddle(event) {
       }
     }
   }
-  
-  
 }
 
 function stopPaddle(event) {
@@ -317,7 +322,6 @@ function nextGameLevel() { // draw the game
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.82), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
-  drawGameBricks();
   Game.methodSetup = {
     method: function(id) {
       drawArc({
@@ -359,6 +363,10 @@ function nextGameLevel() { // draw the game
   }
   Game.addCollision(Game.collisionSetup);
   gameLevel++;
+  if (gameLevel === 1) {
+    brickCount = 27;
+    drawGameBricks();
+  }
   if (gameLevel === 2) {
     gameLives++;
     brickCount = 45;
@@ -411,8 +419,7 @@ function drawGameBricks() {
 
 function drawLoseMenu() {
   Game.clearStage(); 
-  // let score = Object.assign([], gamePoints.toString());
-  // score = score[0];
+  newGame = true;
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Lose!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'loseText', methodId: id });} };
@@ -441,16 +448,11 @@ function drawLoseMenu() {
     }
   }
   Game.addMethod(Game.methodSetup);
-  
-  // gamePoints = 0;
-  // gameLevel = 0;
-  // gameLives = 3;
 }
 
 function drawWinMenu() {
   Game.clearStage();
-  // let score = Object.assign([], gamePoints.toString());
-  // score = score[0];
+  newGame = true;
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Win!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'winText', methodId: id });} };
@@ -479,14 +481,12 @@ function drawWinMenu() {
     }
   };
   Game.addMethod(Game.methodSetup);
-  // gamePoints = 0;
-  // gameLevel = 0;
-  // gameLives = 3;
 }
 
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
   Game.setSettingsHigh();
+  // newGame = true;
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
