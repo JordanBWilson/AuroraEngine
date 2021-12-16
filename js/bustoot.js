@@ -35,7 +35,7 @@ function playGame() { // draw the game
   
   if (newGame) {
     gamePoints = 0;
-    gameLevel = 0;
+    gameLevel = 2;
     gameLives = 3;
     newGame = false;
   }
@@ -103,7 +103,7 @@ function moveGameBall() {
       if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
         ball.props.direction = 'toplt';
       }
-      if (ball.props.direction === 'toplt' && ball.posY <= ball.width) {
+      if (ball.props.direction === 'toplt' && ball.posY <= (Game.entitySize * 8)) {
         ball.props.direction = 'botlt';
       }
       if (ball.props.direction === 'botlt' && ball.posX <= ball.width) {
@@ -118,7 +118,7 @@ function moveGameBall() {
       if (ball.props.direction === 'toplt' && ball.posX <= ball.width) {
         ball.props.direction = 'toprt';
       }
-      if (ball.props.direction === 'toprt' && ball.posY <= ball.width) {
+      if (ball.props.direction === 'toprt' && ball.posY <= (Game.entitySize * 8)) {
         ball.props.direction = 'botrt';
       }
       if (ball.props.direction === 'botrt' && ball.posX >= (Game.canvas.width - ball.width)) {
@@ -136,7 +136,7 @@ function moveGameBall() {
           gameLives--;
         }
       }
-      if (ball.props.direction === 'top' && ball.posY <= (ball.width)) {
+      if (ball.props.direction === 'top' && ball.posY <= (Game.entitySize * 8)) {
         ball.props.direction = 'bot';
       }
       if (gameLives === 0) {
@@ -367,6 +367,7 @@ function nextGameLevel() { // draw the game
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
   Game.addMethod(Game.methodSetup);
+  drawToolbar();
   Game.collisionSetup = {
     primary: 'ball',
     target: 'paddle',
@@ -410,19 +411,19 @@ function drawGameBricks() {
     let yPos = 0;
     let xPos = 0;
     if (i < 9) { // this is the first row
-      yPos = Game.canvas.height * 0.01;
+      yPos = Game.canvas.height * 0.09;
     } else if (i > 8 && i < 18) {
-      yPos = Game.canvas.height * 0.08;
+      yPos = Game.canvas.height * 0.16;
     } else if (i > 17 && i < 27) {
-      yPos = Game.canvas.height * 0.15;
+      yPos = Game.canvas.height * 0.23;
     } else if (i > 26 && i < 36) {
-      yPos = Game.canvas.height * 0.22;
+      yPos = Game.canvas.height * 0.30;
     } else if (i > 35 && i < 45) {
-      yPos = Game.canvas.height * 0.29;
+      yPos = Game.canvas.height * 0.37;
     } else if (i > 44 && i < 54) {
-      yPos = Game.canvas.height * 0.36;
+      yPos = Game.canvas.height * 0.44;
     }  else if (i > 53 && i < 63) {
-      yPos = Game.canvas.height * 0.43;
+      yPos = Game.canvas.height * 0.51;
     }
     xPos = (Game.canvas.width * 0.01) + (Game.canvas.width * (brickNum * 0.11));
     brickNum++;
@@ -684,5 +685,10 @@ function settingsMenu() {
       });
     }
   };
+  Game.addMethod(Game.methodSetup);
+}
+
+function drawToolbar() {
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.entitySize * 8), lineWidth: 1, color: 'green', isFilled: false, id: 'toolbar', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
 }

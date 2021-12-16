@@ -3,8 +3,8 @@ let Game = { // the user will want to use this object
   frameRate: 1000 / 60, // how fast the game is running
   methodObjects: [], // this holds all the current param values
   canvas: undefined, // the game stage
-  stageWidthPrct: .98, // how much of the screen width will it take up
-  stageHeightPrct: .97, // how much of the screen height will it take up
+  stageWidthPrct: 1, // how much of the screen width will it take up. use a percent
+  stageHeightPrct: 1, // how much of the screen height will it take up. use a percent
   entitySize: 0, // this is a base standard for how big an object will be drawn to the screen
   entityWidth: 0, // this is the base standard for the width of an entity
   clearStage: function() { // clear the game stage
