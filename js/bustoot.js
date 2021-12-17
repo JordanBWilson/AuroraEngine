@@ -425,7 +425,7 @@ function drawGameBricks() {
     }  else if (i > 53 && i < 63) {
       yPos = Game.canvas.height * 0.51;
     }
-    xPos = (Game.canvas.width * 0.01) + (Game.canvas.width * (brickNum * 0.11));
+    xPos = (Game.canvas.width * 0.005) + (Game.canvas.width * (brickNum * 0.11));
     brickNum++;
     Game.methodSetup = { method: function(id) {drawRect({ posX: xPos, posY: yPos, width: (Game.entityWidth * 10.5), height: (Game.entitySize * 6.5), lineWidth: 1, color: 'green', isFilled: true, id: 'brick', isSolid: true, isBackground: false, props: {hp: 2,powerUp: false}, methodId: id });} };
     Game.addMethod(Game.methodSetup);
@@ -598,11 +598,13 @@ function settingsMenu() {
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Settings', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
   Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: 'Game Quality', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.2), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
   Game.methodSetup = {
     method: function(id) {
       drawButton({
         posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.25),
+        posY: (Game.canvas.height * 0.27),
         width: (Game.canvas.width * 0.4),
         height: (Game.entitySize * 7),
         lineWidth: 1,
@@ -624,7 +626,7 @@ function settingsMenu() {
     method: function(id) {
       drawButton({
         posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.35),
+        posY: (Game.canvas.height * 0.37),
         width: (Game.canvas.width * 0.4),
         height: (Game.entitySize * 7),
         lineWidth: 1,
@@ -646,7 +648,7 @@ function settingsMenu() {
     method: function(id) {
       drawButton({
         posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.45),
+        posY: (Game.canvas.height * 0.47),
         width: (Game.canvas.width * 0.4),
         height: (Game.entitySize * 7),
         lineWidth: 1,
@@ -689,6 +691,26 @@ function settingsMenu() {
 }
 
 function drawToolbar() {
-  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.entitySize * 8), lineWidth: 1, color: 'green', isFilled: false, id: 'toolbar', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.01),
+        posY: (Game.canvas.height * 0.01),
+        width: (Game.canvas.width * 0.2),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '1em serif',
+        msg: 'Exit',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { drawMainMenu(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
   Game.addMethod(Game.methodSetup);
 }
