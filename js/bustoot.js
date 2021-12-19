@@ -13,6 +13,9 @@ let ballPaddleCollision = {};
 let paddle = {};
 let readyText = undefined;
 let tapText = undefined;
+let swipeTextTop = undefined;
+let swipeTextBot = undefined;
+let scoreBoard = undefined;
 let isPaddleMoving = false;
 let gamePoints = 0;
 let gameStart = false;
@@ -35,7 +38,7 @@ function playGame() { // draw the game
   
   if (newGame) {
     gamePoints = 0;
-    gameLevel = 2;
+    gameLevel = 0;
     gameLives = 3;
     newGame = false;
   }
@@ -50,7 +53,10 @@ function playGame() { // draw the game
   paddle = {};
   readyText = undefined;
   tapText = undefined;
+  swipeTextTop = undefined;
+  swipeTextBot = undefined;
   gameStart = false;
+  scoreBoard = undefined;
   
   nextGameLevel();
 }
@@ -69,8 +75,17 @@ function findGameObjects() {
   if (!readyText?.methodId && !gameStart) {
     readyText = Game.methodObjects.find(x => x.id === 'readyText');
   }
-  if (!tapText?.methodId && !gameStart) {
+  if (!tapText?.methodId && !gameStart) { 
     tapText = Game.methodObjects.find(x => x.id === 'tapText');
+  }
+  if (!swipeTextTop?.methodId && !gameStart) { 
+    swipeTextTop = Game.methodObjects.find(x => x.id === 'swipeTextTop');
+  }
+  if (!swipeTextBot?.methodId && !gameStart) { 
+    swipeTextBot = Game.methodObjects.find(x => x.id === 'swipeTextBot');
+  }
+  if (!scoreBoard?.methodId && !gameStart) {
+    scoreBoard = Game.methodObjects.find(x => x.id === 'score-board');
   }
 }
 
@@ -155,6 +170,7 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
@@ -165,6 +181,7 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
@@ -173,6 +190,8 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.direction = 'botrt';
         ball.props.collision = true;
         bricks[i].props.hp--;
+        gamePoints++;
+        scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
@@ -186,6 +205,7 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
@@ -199,6 +219,7 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
@@ -208,6 +229,7 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
@@ -279,10 +301,14 @@ function gamePowerUp() {
 }
 
 function readyPaddle(event) {
-  if (!gameStart && readyText?.methodId && tapText?.methodId) {
+  if (!gameStart && readyText?.methodId && 
+  tapText?.methodId && swipeTextTop?.methodId && 
+  swipeTextBot?.methodId) { 
     gameStart = true;
     Game.deleteEntity(readyText.methodId);
     Game.deleteEntity(tapText.methodId);
+    Game.deleteEntity(swipeTextTop.methodId);
+    Game.deleteEntity(swipeTextBot.methodId);
   }
   isPaddleMoving = true;
 }
@@ -330,14 +356,18 @@ function nextGameLevel() { // draw the game
   paddle = undefined;
   readyText = undefined;
   tapText = undefined;
+  swipeTextTop = undefined;
+  swipeTextBot = undefined;
+  if (scoreBoard?.methodId) {
+    scoreBoard = undefined;
+  }
+  
   Game.clearStage();
   Game.methodSetup = { method: function(id) { findGameObjects(); }};
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) { moveGameBall(); }};
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: (Game.canvas.height * 0.65), lineWidth: 1, color: 'black', isFilled: true, id: 'background-top', isSolid: false, isBackground: true, props: {}, methodId: id });} };
-  Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: (Game.canvas.height * 0.64), width: Game.canvas.width, height: (Game.canvas.height * 0.36), lineWidth: 1, color: 'black', isFilled: true, id: 'background-bot', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: true, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.82), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
@@ -345,7 +375,7 @@ function nextGameLevel() { // draw the game
     method: function(id) {
       drawArc({
         posX: (Game.canvas.width * 0.5), 
-        posY: (Game.canvas.height * 0.7), 
+        posY: (Game.canvas.height * 0.78), 
         width: (Game.entitySize * 2),
         aglStrt: 0, 
         aglEnd: (2 * Math.PI), 
@@ -363,10 +393,15 @@ function nextGameLevel() { // draw the game
     } 
   }
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.6), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.68), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Continue', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.64), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
+  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Tap to Play', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.74), color: 'green', align: 'center', props: {}, id: 'tapText', methodId: id });} };
   Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'Swipe Left And Right', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.90), color: 'green', align: 'center', props: {}, id: 'swipeTextTop', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'To Move The Paddle', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.95), color: 'green', align: 'center', props: {}, id: 'swipeTextBot', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  
   drawToolbar();
   Game.collisionSetup = {
     primary: 'ball',
@@ -459,7 +494,7 @@ function drawLoseMenu() {
         font: '2em serif',
         msg: 'Restart',
         isFilled: true,
-        id: id,
+        id: 'restart',
         isSolid: false,
         action: { method: function(id) { playGame(); }},
         props: {},
@@ -492,7 +527,7 @@ function drawWinMenu() {
         font: '2em serif',
         msg: 'Main Menu',
         isFilled: true,
-        id: id,
+        id: 'main-menu',
         isSolid: false,
         action: { method: function(id) { drawMainMenu(); }},
         props: {},
@@ -559,7 +594,7 @@ function drawMainMenu() { // draw the main menu
         font: '2em serif',
         msg: 'Playyy',
         isFilled: true,
-        id: id,
+        id: 'play',
         isSolid: false,
         action: { method: function(id) { playGame(); }},
         props: {},
@@ -581,7 +616,7 @@ function drawMainMenu() { // draw the main menu
         font: '2em serif',
         msg: 'Settings',
         isFilled: true,
-        id: id,
+        id: 'settings',
         isSolid: false,
         action: { method: function(id) { settingsMenu(); }},
         props: {},
@@ -613,7 +648,7 @@ function settingsMenu() {
         font: '2em serif',
         msg: 'High',
         isFilled: true,
-        id: id,
+        id: 'high-quality',
         isSolid: false,
         action: { method: function(id) { Game.setSettingsHigh(); drawMainMenu(); }},
         props: {},
@@ -635,7 +670,7 @@ function settingsMenu() {
         font: '2em serif',
         msg: 'Medium',
         isFilled: true,
-        id: id,
+        id: 'med-quality',
         isSolid: false,
         action: { method: function(id) { Game.setSettingsMed(); drawMainMenu(); }},
         props: {},
@@ -657,7 +692,7 @@ function settingsMenu() {
         font: '2em serif',
         msg: 'Low',
         isFilled: true,
-        id: id,
+        id: 'low-quality',
         isSolid: false,
         action: { method: function(id) { Game.setSettingsLow(); drawMainMenu(); }},
         props: {},
@@ -679,7 +714,7 @@ function settingsMenu() {
         font: '2em serif',
         msg: 'Back',
         isFilled: true,
-        id: id,
+        id: 'back',
         isSolid: false,
         action: { method: function(id) { drawMainMenu(); }},
         props: {},
@@ -704,13 +739,29 @@ function drawToolbar() {
         font: '1em serif',
         msg: 'Exit',
         isFilled: true,
-        id: id,
+        id: 'exit',
         isSolid: false,
         action: { method: function(id) { drawMainMenu(); }},
         props: {},
         methodId: id
       });
     }
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { 
+    method: function(id) {
+      drawText({ 
+        font: '1.7em serif', 
+        msg: gamePoints.toString() + ' Points', 
+        posX: (Game.canvas.width * 0.75), 
+        posY: (Game.canvas.height * 0.07), 
+        color: 'green', 
+        align: 'center', 
+        props: {}, 
+        id: 'score-board', 
+        methodId: id 
+      });
+    } 
   };
   Game.addMethod(Game.methodSetup);
 }

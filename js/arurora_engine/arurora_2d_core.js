@@ -54,16 +54,12 @@ function drawText(incomingText) {
    Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
    Game.methodObjects[index].align !== Main.methodObjectShadows[index].align)
    ) {
-     redrawText(
-      Game.methodObjects[index]
-      );
+      redrawText(Game.methodObjects[index]);
       const shadowText = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowText;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
-     redrawText(
-      Game.methodObjects[index]
-      );
+      redrawText(Game.methodObjects[index]);
       Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
@@ -153,18 +149,15 @@ function drawRect(incomingRect) {
    Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
    Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
    ) {
-     redrawRect(
-      Game.methodObjects[index]
-      );
+      redrawRect(Game.methodObjects[index]);
       const shadowRect = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowRect;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && 
     !Game.methodObjects[index].isBackground && 
     Game.methodObjects[index].isAnim) {
-      redrawRect(
-        Game.methodObjects[index]
-      );
+      Game.methodObjects[index].isAnim = true;
+      redrawRect(Game.methodObjects[index]);
    } else if (doesExist && 
     !Game.methodObjects[index].isBackground &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
@@ -257,16 +250,14 @@ function drawArc(incomingArc) {
    Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
    Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
    ) {
-     redrawArc(
-      Game.methodObjects[index]
-      );
+     redrawArc(Game.methodObjects[index]);
       const shadowArc = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowArc;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
-     redrawArc(
-      Game.methodObjects[index]
-      );
+     redrawArc(Game.methodObjects[index]);
+     Game.methodObjects[index].isAnim = false;
+      
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
     Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
@@ -370,16 +361,13 @@ function drawButton(incomingButton) {
    Game.methodObjects[index].msg !== Main.methodObjectShadows[index].font ||
    Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
    ) {
-     redrawButton(
-      Game.methodObjects[index]
-      );
+     redrawButton(Game.methodObjects[index]);
       const shadowButton = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowButton;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
-     redrawButton(
-      Game.methodObjects[index]
-      );
+      redrawButton(Game.methodObjects[index]);
+      Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
     Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 

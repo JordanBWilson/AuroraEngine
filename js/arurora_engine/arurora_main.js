@@ -123,8 +123,8 @@ function collisionCheck() {
 function backgroundAnimationCheck(index) {
   if (!Main.isResizing && Game.methodObjects[index] && Game.methodObjects[index].isBackground) { // is this rect a backgound..
     for (let i = 0; i < Game.methodObjects.length; i++) { // find any method object that in colliding with this background
-      if (Game.methodObjects[i].isAnim) { // is this thing animated? Find if it is colliding with this background
-
+      if (Game.methodObjects[i].isAnim && !Game.methodObjects[i].isBtn) { // is this thing animated? Find if it is colliding with this background
+        // future Jordan. '&& !Game.methodObjects[i].isBtn' check may not be needed there. fixes a bug with the button on an animated screen
         let widthOrHeight = findWidthHeightMethodObjects(i);
 
         if (Game.methodObjects[i].posX >= Game.methodObjects[index].posX - Game.methodObjects[i].width &&
