@@ -24,6 +24,8 @@ let isPoweredUp = false;
 let gameLevel = 0;
 let gameLives = 3;
 
+// future Jordan, it apppears we only need the high score to be saved
+
 // touch controls
 Game.addEvent(Game.enumEvents.touchDown, readyPaddle);
 Game.addEvent(Game.enumEvents.touchUp, stopPaddle);
