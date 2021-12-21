@@ -24,6 +24,7 @@ let isPoweredUp = false;
 let isDoublePoints = false;
 let gameLevel = 0;
 let gameLives = 3;
+let ballSpeed = 1;
 
 // future Jordan, it apppears we only need the high score to be saved
 // also make sure the buttons look similar on different screens. need an offset
@@ -98,29 +99,32 @@ function moveGameBall() {
   
   if (ball?.methodId) {
     if (isPoweredUp && !isDoublePoints) {
+      ballSpeed = 1.15;
       ball.color = 'blue';
     } else if (isPoweredUp && isDoublePoints) {
+      ballSpeed = 1.3;
       ball.color = 'yellow';
     } else {
+      ballSpeed = 1;
       ball.color = 'green';
     }
     if (gameStart) {
       if (ball.props.direction === 'top') {
-        ball.posY -= Game.moveEntity(1, Game.enumDirections.topDown);
+        ball.posY -= Game.moveEntity(ballSpeed, Game.enumDirections.topDown);
       } else if (ball.props.direction === 'bot') {
-        ball.posY += Game.moveEntity(1, Game.enumDirections.topDown);
+        ball.posY += Game.moveEntity(ballSpeed, Game.enumDirections.topDown);
       } else if (ball.props.direction === 'toprt') {
-        ball.posY -= Game.moveEntity(1, Game.enumDirections.topDown);
-        ball.posX += Game.moveEntity(1, Game.enumDirections.leftRight);
+        ball.posY -= Game.moveEntity(ballSpeed, Game.enumDirections.topDown);
+        ball.posX += Game.moveEntity(ballSpeed, Game.enumDirections.leftRight);
       } else if (ball.props.direction === 'toplt') {
-        ball.posY -= Game.moveEntity(1, Game.enumDirections.topDown);
-        ball.posX -= Game.moveEntity(1, Game.enumDirections.leftRight);
+        ball.posY -= Game.moveEntity(ballSpeed, Game.enumDirections.topDown);
+        ball.posX -= Game.moveEntity(ballSpeed, Game.enumDirections.leftRight);
       } else if (ball.props.direction === 'botrt') {
-        ball.posY += Game.moveEntity(1, Game.enumDirections.topDown);
-        ball.posX += Game.moveEntity(1, Game.enumDirections.leftRight);
+        ball.posY += Game.moveEntity(ballSpeed, Game.enumDirections.topDown);
+        ball.posX += Game.moveEntity(ballSpeed, Game.enumDirections.leftRight);
       } else if (ball.props.direction === 'botlt') {
-        ball.posY += Game.moveEntity(1, Game.enumDirections.topDown);
-        ball.posX -= Game.moveEntity(1, Game.enumDirections.leftRight);
+        ball.posY += Game.moveEntity(ballSpeed, Game.enumDirections.topDown);
+        ball.posX -= Game.moveEntity(ballSpeed, Game.enumDirections.leftRight);
       }
       if (ball.props.direction === 'toprt' && ball.posX >= (Game.canvas.width - ball.width)) {
         ball.props.direction = 'toplt';
