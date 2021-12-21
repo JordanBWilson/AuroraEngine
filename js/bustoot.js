@@ -26,6 +26,7 @@ let gameLevel = 0;
 let gameLives = 3;
 
 // future Jordan, it apppears we only need the high score to be saved
+// also make sure the buttons look similar on different screens. need an offset
 
 // touch controls
 Game.addEvent(Game.enumEvents.touchDown, readyPaddle);
