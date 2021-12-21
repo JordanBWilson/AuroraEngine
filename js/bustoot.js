@@ -11,6 +11,7 @@ let background = {};
 let ballBrickCollision = {};
 let ballPaddleCollision = {};
 let paddle = {};
+let dangerMark = {};
 let readyText = undefined;
 let tapText = undefined;
 let swipeTextTop = undefined;
@@ -57,6 +58,7 @@ function playGame() { // draw the game
   bricks = {};
   ball = {};
   paddle = {};
+  dangerMark = {};
   readyText = undefined;
   tapText = undefined;
   swipeTextTop = undefined;
@@ -92,6 +94,9 @@ function findGameObjects() {
   }
   if (!scoreBoard?.methodId && !gameStart) {
     scoreBoard = Game.methodObjects.find(x => x.id === 'score-board');
+  }
+  if (!dangerMark?.methodId && !gameStart) {
+    dangerMark = Game.methodObjects.find(x => x.id === 'danger');
   }
 }
 
@@ -138,6 +143,7 @@ function moveGameBall() {
       if (ball.props.direction === 'botrt' && ball.posY >= (Game.canvas.height - ball.width)) {
         ball.props.direction = 'toprt';
         if (!isPoweredUp) {
+          drawDangerArea();
           gameLives--;
         }
       }
@@ -153,12 +159,14 @@ function moveGameBall() {
       if (ball.props.direction === 'botlt' && ball.posY >= (Game.canvas.height - ball.width)) {
         ball.props.direction = 'toplt';
         if (!isPoweredUp) {
+          drawDangerArea();
           gameLives--;
         }
       }
       if (ball.props.direction === 'bot' && ball.posY >= (Game.canvas.height - ball.width)) {
         ball.props.direction = 'top';
         if (!isPoweredUp) {
+          drawDangerArea();
           gameLives--;
         }
       }
@@ -167,7 +175,6 @@ function moveGameBall() {
       }
       if (gameLives === 0) {
         drawLoseMenu();
-        gameLives = -1;
       }
     }
   }
@@ -401,7 +408,43 @@ function nextGameLevel() { // draw the game
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) { moveGameBall(); }};
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: true, props: {}, methodId: id });} };
+  Game.methodSetup = { 
+    method: function(id) {
+      drawRect({ 
+        posX: 0, 
+        posY: 0, 
+        width: Game.canvas.width, 
+        height: Game.canvas.height, 
+        lineWidth: 1, 
+        color: 'black', 
+        isFilled: true, 
+        id: 'background', 
+        isSolid: false, 
+        isBackground: true, 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { 
+    method: function(id) {
+      drawRect({ 
+        posX: 0, 
+        posY: (Game.canvas.height * 0.90), 
+        width: Game.canvas.width, 
+        height: Game.canvas.height, 
+        lineWidth: 1, 
+        color: 'black', 
+        isFilled: true, 
+        id: 'danger', 
+        isSolid: false, 
+        isBackground: false, 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.82), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
@@ -519,9 +562,9 @@ function drawLoseMenu() {
     method: function(id) {
       drawButton({
         posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.6),
+        posY: (Game.canvas.height * 0.4),
         width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        height: (Game.entitySize * 6),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -531,6 +574,28 @@ function drawLoseMenu() {
         id: 'restart',
         isSolid: false,
         action: { method: function(id) { playGame(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  }
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.55),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2em serif',
+        msg: 'Exit',
+        isFilled: true,
+        id: 'exit',
+        isSolid: false,
+        action: { method: function(id) { drawMainMenu(); }},
         props: {},
         methodId: id
       });
@@ -552,7 +617,7 @@ function drawWinMenu() {
     method: function(id) {
        drawButton({
         posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.6),
+        posY: (Game.canvas.height * 0.4),
         width: (Game.canvas.width * 0.4),
         height: (Game.entitySize * 7),
         lineWidth: 1,
@@ -798,4 +863,12 @@ function drawToolbar() {
     } 
   };
   Game.addMethod(Game.methodSetup);
+}
+
+function drawDangerArea() {
+  dangerMark.color = 'red';
+  let dangerTime = setTimeout(function() {
+    dangerMark.color = 'black';
+    clearTimeout(dangerTime);
+  }, 500);
 }
