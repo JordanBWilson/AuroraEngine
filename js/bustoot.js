@@ -21,6 +21,7 @@ let gamePoints = 0;
 let gameStart = false;
 let brickCount = 27; // lvl1- 27, lvl2- 45, lvl3- 63
 let isPoweredUp = false;
+let isDoublePoints = false;
 let gameLevel = 0;
 let gameLives = 3;
 
@@ -50,6 +51,7 @@ function playGame() { // draw the game
   }
   
   isPoweredUp = false;
+  isDoublePoints = false;
   bricks = {};
   ball = {};
   paddle = {};
@@ -94,8 +96,10 @@ function findGameObjects() {
 function moveGameBall() {
   
   if (ball?.methodId) {
-    if (isPoweredUp) {
+    if (isPoweredUp && !isDoublePoints) {
       ball.color = 'blue';
+    } else if (isPoweredUp && isDoublePoints) {
+      ball.color = 'yellow';
     } else {
       ball.color = 'green';
     }
@@ -172,17 +176,22 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        if (isDoublePoints) {
+          gamePoints++;
+        }
         scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
-        
       }
       if (ball.props.direction === 'bot' && !ball.props.collision) {
         ball.props.direction = 'top';
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        if (isDoublePoints) {
+          gamePoints++;
+        }
         scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
@@ -193,6 +202,9 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        if (isDoublePoints) {
+          gamePoints++;
+        }
         scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
@@ -207,6 +219,9 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        if (isDoublePoints) {
+          gamePoints++;
+        }
         scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
@@ -221,6 +236,9 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        if (isDoublePoints) {
+          gamePoints++;
+        }
         scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
@@ -231,13 +249,20 @@ function brickCollision(ball, bricks, methodId) {
         ball.props.collision = true;
         bricks[i].props.hp--;
         gamePoints++;
+        if (isDoublePoints) {
+          gamePoints++;
+        }
         scoreBoard.msg = gamePoints.toString() + ' Points';
         if (bricks[i].props.hp === 1) {
           brickPowerReveal(i);
         }
       }
       if (bricks[i].props.hp < 1 && bricks[i].props.powerUp) {
-        gamePowerUp();
+        if (bricks[i].props.powerUp && isPoweredUp) {
+          isDoublePoints = true;
+          gamePoints++;
+        }
+        gamePowerUp(); 
       }
       if (bricks[i].props.hp < 1) {
         Game.deleteEntity(methodId);
@@ -259,6 +284,7 @@ function brickPowerReveal(index) {
     bricks[index].props.powerUp = true;
     bricks[index].color = 'blue';
   }
+  
 }
 
 function paddleCollision() {
@@ -296,6 +322,7 @@ function gamePowerUp() {
     isPoweredUp = true;
     let powerTime = setTimeout(function() {
       isPoweredUp = false;
+      isDoublePoints = false;
       clearTimeout(powerTime);
     }, 6000);
   }
