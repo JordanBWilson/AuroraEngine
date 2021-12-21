@@ -114,7 +114,7 @@ let Game = { // the user will want to use this object
     mouseUp: 'mouseup',
     mouseMove: 'mousemove',
   },
-  addEvent: function(enumEvent, method) { // add game events
+  addCanvasEvent: function(enumEvent, method) { // add game stage events
     return this.canvas.addEventListener(enumEvent, function(event) {
       method(event);
     }, false);

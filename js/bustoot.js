@@ -31,14 +31,16 @@ let ballSpeed = 1;
 // also make sure the buttons look similar on different screens. need an offset
 
 // touch controls
-Game.addEvent(Game.enumEvents.touchDown, readyPaddle);
-Game.addEvent(Game.enumEvents.touchUp, stopPaddle);
-Game.addEvent(Game.enumEvents.touchMove, movePaddle);
+Game.addCanvasEvent(Game.enumEvents.touchDown, readyPaddle);
+Game.addCanvasEvent(Game.enumEvents.touchUp, stopPaddle);
+Game.addCanvasEvent(Game.enumEvents.touchMove, movePaddle);
 
 // mouse controls
-Game.addEvent(Game.enumEvents.mouseDown, readyPaddle);
-Game.addEvent(Game.enumEvents.mouseUp, stopPaddle);
-Game.addEvent(Game.enumEvents.mouseMove, movePaddle);
+Game.addCanvasEvent(Game.enumEvents.mouseDown, readyPaddle);
+Game.addCanvasEvent(Game.enumEvents.mouseUp, stopPaddle);
+Game.addCanvasEvent(Game.enumEvents.mouseMove, movePaddle);
+
+
 
 function playGame() { // draw the game
   
