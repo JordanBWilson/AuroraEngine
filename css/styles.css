@@ -44,3 +44,12 @@ body{
   margin-right: auto;
   width: 100%;
 }
+
+.highscore {
+  position: fixed;
+  top: 10%;
+  text-align: center;
+  width: 100%;
+  background-color: grey;
+  display: none;
+}

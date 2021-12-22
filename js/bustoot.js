@@ -40,11 +40,14 @@ Game.addCanvasEvent(Game.enumEvents.mouseUp, stopPaddle);
 Game.addCanvasEvent(Game.enumEvents.mouseMove, movePaddle);
 
 window.addEventListener('resize', function() {
-  setTimeout(function() {
-    Game.clearStage();
-    gameLevel--;
-    playGame();
-  }, 300); 
+  if (!newGame) {
+    setTimeout(function() {
+      Game.clearStage();
+      gameLevel--;
+      gamePoints = 0;
+      playGame();
+    }, 300);
+  }
 }, false);
 
 function playGame() { // draw the game
