@@ -1,8 +1,15 @@
 let newGame = false;
+let highscoreList; // this is an array
+let highscoreItem = { name: '', score: 0 };
+let highscoreListParsed;
 (function() {
 
   Game.canvas = document.getElementById('Stage');
   drawMainMenu();
+  highscoreList = localStorage.getItem('highscores');
+  if (highscoreList) {
+    highscoreListParsed = JSON.parse(highscoreList);
+  }
 })();
 
 let ball = {}; // initialize the game ball
@@ -879,4 +886,19 @@ function drawDangerArea() {
     dangerMark.color = 'black';
     clearTimeout(dangerTime);
   }, 500);
+}
+
+function submitHighScore() {
+  // get the name
+  const highscoreName = document.querySelector('#highscoreName').value;
+  highscoreItem.name = highscoreName;
+  highscoreItem.score = gamePoints;
+  console.log(highscoreName);
+  if (!highscoreList) {
+    highscoreList = [];
+  }
+  highscoreList.push(highscoreItem);
+  // localStorage.setItem('highscores', JSON.stringify(highscoreList));
+  highscoreItem = { name: '', score: 0 };
+  document.querySelector('#highscoreName').value = '';
 }
