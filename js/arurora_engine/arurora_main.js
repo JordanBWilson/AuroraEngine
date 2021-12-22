@@ -99,7 +99,7 @@ function collisionCheck() {
         // find out if a collision is happening
         for (let j = 0; j < primaryMethods.length; j++) {
           for (let k = 0; k < targetMethods.length; k++) {
-            if (primaryMethods[j].posX >= targetMethods[k].posX && primaryMethods[j].posX <= targetMethods[k].posX + targetMethods[k].width) {
+            if (primaryMethods[j].posX >= (targetMethods[k].posX + Game.entitySize * 1.9) && primaryMethods[j].posX <= targetMethods[k].posX + targetMethods[k].width) {
               let widthOrHeight = 0;
               // because we are dealing with arcs as well, you can't be too careful
               if (!targetMethods[k].height) {
@@ -107,7 +107,7 @@ function collisionCheck() {
               } else {
                 widthOrHeight = targetMethods[k].height;
               }
-              if (primaryMethods[j].posY >= targetMethods[k].posY && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
+              if (primaryMethods[j].posY >= (targetMethods[k].posY - Game.entitySize * 1.9) && primaryMethods[j].posY <= targetMethods[k].posY + widthOrHeight) {
                 Main.collisions[i].methodId = targetMethods[k].methodId;
                 Main.collisions[i].method();
                 break;
