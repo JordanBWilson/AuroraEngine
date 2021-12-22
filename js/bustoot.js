@@ -28,7 +28,6 @@ let gameLives = 3;
 let ballSpeed = 1;
 
 // future Jordan, it apppears we only need the high score to be saved
-// also make sure the buttons look similar on different screens. need an offset
 
 // touch controls
 Game.addCanvasEvent(Game.enumEvents.touchDown, readyPaddle);
@@ -40,7 +39,13 @@ Game.addCanvasEvent(Game.enumEvents.mouseDown, readyPaddle);
 Game.addCanvasEvent(Game.enumEvents.mouseUp, stopPaddle);
 Game.addCanvasEvent(Game.enumEvents.mouseMove, movePaddle);
 
-
+window.addEventListener('resize', function() {
+  setTimeout(function() {
+    Game.clearStage();
+    gameLevel--;
+    playGame();
+  }, 300); 
+}, false);
 
 function playGame() { // draw the game
   
@@ -502,12 +507,10 @@ function nextGameLevel() { // draw the game
     drawGameBricks();
   }
   if (gameLevel === 2) {
-    gameLives++;
     brickCount = 45;
     drawGameBricks();
   }
   if (gameLevel === 3) {
-    gameLives++;
     brickCount = 63;
     drawGameBricks();
   }
@@ -563,14 +566,14 @@ function drawLoseMenu() {
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
+        posX: (Game.canvas.width * 0.27),
         posY: (Game.canvas.height * 0.4),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 6),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
-        font: '2em serif',
+        font: '1.5em serif',
         msg: 'Restart',
         isFilled: true,
         id: 'restart',
@@ -585,15 +588,15 @@ function drawLoseMenu() {
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
+        posX: (Game.canvas.width * 0.27),
         posY: (Game.canvas.height * 0.55),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
-        font: '2em serif',
-        msg: 'Exit',
+        font: '1.5em serif',
+        msg: 'Main Menu',
         isFilled: true,
         id: 'exit',
         isSolid: false,
@@ -618,14 +621,14 @@ function drawWinMenu() {
   Game.methodSetup = {
     method: function(id) {
        drawButton({
-        posX: (Game.canvas.width * 0.3),
+        posX: (Game.canvas.width * 0.27),
         posY: (Game.canvas.height * 0.4),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
-        font: '2em serif',
+        font: '1.5em serif',
         msg: 'Main Menu',
         isFilled: true,
         id: 'main-menu',
@@ -685,10 +688,10 @@ function drawMainMenu() { // draw the main menu
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
+        posX: (Game.canvas.width * 0.25),
         posY: (Game.canvas.height * 0.6),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -707,10 +710,10 @@ function drawMainMenu() { // draw the main menu
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
+        posX: (Game.canvas.width * 0.25),
         posY: (Game.canvas.height * 0.75),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -739,10 +742,10 @@ function settingsMenu() {
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.27),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        posX: (Game.canvas.width * 0.25),
+        posY: (Game.canvas.height * 0.25),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -761,10 +764,10 @@ function settingsMenu() {
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.37),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        posX: (Game.canvas.width * 0.25),
+        posY: (Game.canvas.height * 0.40),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -783,10 +786,10 @@ function settingsMenu() {
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
-        posY: (Game.canvas.height * 0.47),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        posX: (Game.canvas.width * 0.25),
+        posY: (Game.canvas.height * 0.55),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -805,10 +808,10 @@ function settingsMenu() {
   Game.methodSetup = {
     method: function(id) {
       drawButton({
-        posX: (Game.canvas.width * 0.3),
+        posX: (Game.canvas.width * 0.25),
         posY: (Game.canvas.height * 0.75),
-        width: (Game.canvas.width * 0.4),
-        height: (Game.entitySize * 7),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
