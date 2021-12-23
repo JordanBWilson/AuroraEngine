@@ -33,8 +33,6 @@ let gameLevel = 0;
 let gameLives = 3;
 let ballSpeed = 1;
 
-// future Jordan, it apppears we only need the high score to be saved
-
 // touch controls
 Game.addCanvasEvent(Game.enumEvents.touchDown, readyPaddle);
 Game.addCanvasEvent(Game.enumEvents.touchUp, stopPaddle);
@@ -72,6 +70,7 @@ function playGame() { // draw the game
     gameLives = 3;
     newGame = false;
   }
+  
   
   isPoweredUp = false;
   isDoublePoints = false;
@@ -376,15 +375,12 @@ function readyPaddle(event) {
 
 function movePaddle(event) {
   if (gameStart && isPaddleMoving) {
+    paddle.posX = event.clientX * 0.8;
     if (!event.changedTouches) {
       if (paddle && paddle.props) {
         paddle.props.direction = 'non';
       }
-      if (paddle.posX < event.clientX) { 
-        paddle.posX += Game.moveEntity(4.5, Game.enumDirections.leftRight);
-        paddle.props.direction = 'rt';
-      }
-      if (paddle.posX > event.clientX) {
+      if (paddle.posX < event.clientX) {
         paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
@@ -392,11 +388,7 @@ function movePaddle(event) {
       if (paddle && paddle.props) {
         paddle.props.direction = 'non';
       }
-      if (paddle.posX < event.changedTouches[0].clientX) { 
-        paddle.posX += Game.moveEntity(4.5, Game.enumDirections.leftRight);
-        paddle.props.direction = 'rt';
-      }
-      if (paddle.posX > event.changedTouches[0].clientX) {
+      if (paddle.posX < event.changedTouches[0].clientX) {
         paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
@@ -531,11 +523,12 @@ function nextGameLevel() { // draw the game
     if (highscoreList && highscoreList.length < 5) {
       document.querySelector('#highscore-wrapper').style = 'display: block';
     }
-    if (highscoreList && highscoreList.length > 5) {
+    if (highscoreList && highscoreList.length > 4) {
       
       for (let i = 0; i < highscoreList.length; i++) {
         if (gamePoints >= highscoreList[i].score) {
           document.querySelector('#highscore-wrapper').style = 'display: block';
+          highscoreList.splice(highscoreList.length - 1, 1);
           break;
         }
       }
@@ -670,10 +663,10 @@ function drawWinMenu() {
 
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
-  newGame = true;
   if (!Game.selectedSetting) {
     Game.setSettingsHigh();
   }
+  newGame = true;
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
@@ -980,6 +973,7 @@ function submitHighScore() {
   }
   highscoreList.push(highscoreItem);
   sortHighScoreList();
+  
   console.log(highscoreList);
   localStorage.setItem('highscores', JSON.stringify(highscoreList));
   highscoreItem = { name: '', score: 0 };
