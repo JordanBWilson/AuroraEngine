@@ -528,7 +528,6 @@ function nextGameLevel() { // draw the game
       for (let i = 0; i < highscoreList.length; i++) {
         if (gamePoints >= highscoreList[i].score) {
           document.querySelector('#highscore-wrapper').style = 'display: block';
-          highscoreList.splice(highscoreList.length - 1, 1);
           break;
         }
       }
@@ -973,7 +972,9 @@ function submitHighScore() {
   }
   highscoreList.push(highscoreItem);
   sortHighScoreList();
-  
+  if (highscoreList.length > 5) {
+    highscoreList.splice(highscoreList.length - 1, 1);
+  }
   console.log(highscoreList);
   localStorage.setItem('highscores', JSON.stringify(highscoreList));
   highscoreItem = { name: '', score: 0 };
