@@ -1,15 +1,12 @@
 let newGame = false;
 let highscoreList; // this is an array
 let highscoreItem = { name: '', score: 0 };
-let highscoreListParsed;
 (function() {
 
   Game.canvas = document.getElementById('Stage');
   drawMainMenu();
-  highscoreList = localStorage.getItem('highscores');
-  if (highscoreList) {
-    highscoreListParsed = JSON.parse(highscoreList);
-  }
+  highscoreList = JSON.parse(localStorage.getItem('highscores'));
+  console.log(highscoreList);
 })();
 
 let ball = {}; // initialize the game ball
@@ -64,10 +61,6 @@ function playGame() { // draw the game
     gameLevel = 0;
     gameLives = 3;
     newGame = false;
-  }
-  
-  if (!Game.selectedSetting) {
-    Game.setSettingsHigh();
   }
   
   isPoweredUp = false;
@@ -525,6 +518,9 @@ function nextGameLevel() { // draw the game
     drawGameBricks();
   }
   if (gameLevel === 4) {
+    if (highscoreList && highscoreList.length < 5) {
+      document.querySelector('#highscore-wrapper').style = 'display: block';
+    }
     drawWinMenu();
   }
   
@@ -655,6 +651,9 @@ function drawWinMenu() {
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
   newGame = true;
+  if (!Game.selectedSetting) {
+    Game.setSettingsHigh();
+  }
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
@@ -699,13 +698,13 @@ function drawMainMenu() { // draw the main menu
     method: function(id) {
       drawButton({
         posX: (Game.canvas.width * 0.25),
-        posY: (Game.canvas.height * 0.6),
+        posY: (Game.canvas.height * 0.56),
         width: (Game.canvas.width * 0.5),
-        height: (Game.entitySize * 11),
+        height: (Game.entitySize * 9),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
-        font: '2em serif',
+        font: '1.5em serif',
         msg: 'Playyy',
         isFilled: true,
         id: 'play',
@@ -721,13 +720,35 @@ function drawMainMenu() { // draw the main menu
     method: function(id) {
       drawButton({
         posX: (Game.canvas.width * 0.25),
-        posY: (Game.canvas.height * 0.75),
+        posY: (Game.canvas.height * 0.68),
         width: (Game.canvas.width * 0.5),
-        height: (Game.entitySize * 11),
+        height: (Game.entitySize * 9),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
-        font: '2em serif',
+        font: '1.5em serif',
+        msg: 'High Scores',
+        isFilled: true,
+        id: 'highscores',
+        isSolid: false,
+        action: { method: function(id) { console.log('open high score page'); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.25),
+        posY: (Game.canvas.height * 0.80),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 9),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '1.5em serif',
         msg: 'Settings',
         isFilled: true,
         id: 'settings',
@@ -757,7 +778,7 @@ function settingsMenu() {
         width: (Game.canvas.width * 0.5),
         height: (Game.entitySize * 11),
         lineWidth: 1,
-        btnColor: 'green',
+        btnColor: Game.selectedSetting === Main.enumSettings.high ? 'blue' : 'green',
         txtColor: 'white',
         font: '2em serif',
         msg: 'High',
@@ -779,7 +800,7 @@ function settingsMenu() {
         width: (Game.canvas.width * 0.5),
         height: (Game.entitySize * 11),
         lineWidth: 1,
-        btnColor: 'green',
+        btnColor: Game.selectedSetting === Main.enumSettings.med ? 'blue' : 'green',
         txtColor: 'white',
         font: '2em serif',
         msg: 'Medium',
@@ -801,7 +822,7 @@ function settingsMenu() {
         width: (Game.canvas.width * 0.5),
         height: (Game.entitySize * 11),
         lineWidth: 1,
-        btnColor: 'green',
+        btnColor: Game.selectedSetting === Main.enumSettings.low ? 'blue' : 'green',
         txtColor: 'white',
         font: '2em serif',
         msg: 'Low',
@@ -898,7 +919,9 @@ function submitHighScore() {
     highscoreList = [];
   }
   highscoreList.push(highscoreItem);
-  // localStorage.setItem('highscores', JSON.stringify(highscoreList));
+  console.log(highscoreList);
+  localStorage.setItem('highscores', JSON.stringify(highscoreList));
   highscoreItem = { name: '', score: 0 };
   document.querySelector('#highscoreName').value = '';
+  document.querySelector('#highscore-wrapper').style = 'display: none';
 }

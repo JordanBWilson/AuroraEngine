@@ -59,19 +59,26 @@ let Game = { // the user will want to use this object
     this.selectedSetting = Main.enumSettings.low;
     this.frameRate = 1000 / 15; // 15 frames a second
     clearInterval(Main.interval);
-    mainLoop();
+    setTimeout(function() {
+      mainLoop();
+    },0);
   },
   setSettingsMed: function() {
     this.selectedSetting = Main.enumSettings.med;
     this.frameRate = 1000 / 30; // 30 frames a second
     clearInterval(Main.interval);
-    mainLoop();
+    setTimeout(function() {
+      mainLoop();
+    },0);
   },
   setSettingsHigh: function() {
     this.selectedSetting = Main.enumSettings.high;
     this.frameRate = 1000 / 60; // 60 frames a second
     clearInterval(Main.interval);
-    mainLoop();
+    setTimeout(function() {
+      mainLoop();
+    },0);
+    
   },
   selectedSetting: undefined, // the selected game setting
   enumDirections: { // this is the x and y directions
