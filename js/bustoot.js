@@ -6,6 +6,8 @@ let highscoreItem = { name: '', score: 0 };
   Game.canvas = document.getElementById('Stage');
   drawMainMenu();
   highscoreList = JSON.parse(localStorage.getItem('highscores'));
+  sortHighScoreList();
+  
   console.log(highscoreList);
 })();
 
@@ -53,6 +55,14 @@ window.addEventListener('resize', function() {
     }, 300);
   }
 }, false);
+
+function sortHighScoreList() {
+  if (highscoreList && highscoreList.length > 0) {
+    highscoreList.sort(function(a, b) {
+      return b - a;// a - b;
+    });
+  }
+}
 
 function playGame() { // draw the game
   
@@ -521,6 +531,16 @@ function nextGameLevel() { // draw the game
     if (highscoreList && highscoreList.length < 5) {
       document.querySelector('#highscore-wrapper').style = 'display: block';
     }
+    if (highscoreList && highscoreList.length > 5) {
+      
+      for (let i = 0; i < highscoreList.length; i++) {
+        if (gamePoints >= highscoreList[i].score) {
+          document.querySelector('#highscore-wrapper').style = 'display: block';
+          break;
+        }
+      }
+      
+    }
     drawWinMenu();
   }
   
@@ -731,7 +751,7 @@ function drawMainMenu() { // draw the main menu
         isFilled: true,
         id: 'highscores',
         isSolid: false,
-        action: { method: function(id) { console.log('open high score page'); }},
+        action: { method: function(id) { highscoreMenu(); }},
         props: {},
         methodId: id
       });
@@ -860,6 +880,46 @@ function settingsMenu() {
   Game.addMethod(Game.methodSetup);
 }
 
+function highscoreMenu() {
+  Game.clearStage();
+  Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'High Scores', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
+  Game.addMethod(Game.methodSetup);
+  if (highscoreList && highscoreList.length > 0) {
+    for (let i = 0; i < highscoreList.length; i++) {
+      Game.methodSetup = { method: function(id) {drawText({ font: '1.5em serif', msg: highscoreList[i].name + ': ' + highscoreList[i].score, posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.2) + (Game.canvas.height * (i * 0.11)), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
+      Game.addMethod(Game.methodSetup);
+    }
+  } else {
+    Game.methodSetup = { method: function(id) {drawText({ font: '1.5em serif', msg: 'No High Scores Yet!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.2), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
+    Game.addMethod(Game.methodSetup);
+  }
+  
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.25),
+        posY: (Game.canvas.height * 0.75),
+        width: (Game.canvas.width * 0.5),
+        height: (Game.entitySize * 11),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '2em serif',
+        msg: 'Back',
+        isFilled: true,
+        id: 'back',
+        isSolid: false,
+        action: { method: function(id) { drawMainMenu(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+}
+
 function drawToolbar() {
   Game.methodSetup = {
     method: function(id) {
@@ -919,6 +979,7 @@ function submitHighScore() {
     highscoreList = [];
   }
   highscoreList.push(highscoreItem);
+  sortHighScoreList();
   console.log(highscoreList);
   localStorage.setItem('highscores', JSON.stringify(highscoreList));
   highscoreItem = { name: '', score: 0 };
