@@ -407,12 +407,8 @@ function centerPaddle(event) {
   } else if (event.changedTouches) { // this is getting the touch screen position offset
     if (Game.selectedSetting === Game.enumSettings.high) {
       paddle.posX = event.changedTouches[0].clientX  * 0.8;
-    }
-    if (Game.selectedSetting === Game.enumSettings.med) {
+    } else {
       paddle.posX = event.changedTouches[0].clientX  * 0.85;
-    }
-    if (Game.selectedSetting === Game.enumSettings.low) {
-      paddle.posX = event.changedTouches[0].clientX  * 0.9;
     }
   }
 }
