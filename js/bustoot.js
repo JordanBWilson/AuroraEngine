@@ -379,11 +379,7 @@ function readyPaddle(event) {
 
 function movePaddle(event) {
   if (gameStart && isPaddleMoving) {
-    if (!event.changedTouches) { // this will get the mouse position offset
-      paddle.posX = event.clientX * 0.8;
-    } else if (event.changedTouches) { // this is getting the touch screen position offset
-      paddle.posX = event.changedTouches[0].clientX  * 0.8;
-    }
+    
     if (!event.changedTouches) { // this is the mouse controls
       if (paddle && paddle.props) {
         paddle.props.direction = 'non';
@@ -400,6 +396,23 @@ function movePaddle(event) {
         paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
+    }
+    centerPaddle(event);
+  }
+}
+
+function centerPaddle(event) {
+  if (!event.changedTouches) { // this will get the mouse position offset
+    paddle.posX = event.clientX * 0.8;
+  } else if (event.changedTouches) { // this is getting the touch screen position offset
+    if (Game.selectedSetting === Game.enumSettings.high) {
+      paddle.posX = event.changedTouches[0].clientX  * 0.8;
+    }
+    if (Game.selectedSetting === Game.enumSettings.med) {
+      paddle.posX = event.changedTouches[0].clientX  * 0.85;
+    }
+    if (Game.selectedSetting === Game.enumSettings.low) {
+      paddle.posX = event.changedTouches[0].clientX  * 0.9;
     }
   }
 }
@@ -803,7 +816,7 @@ function settingsMenu() {
         width: (Game.canvas.width * 0.5),
         height: (Game.entitySize * 11),
         lineWidth: 1,
-        btnColor: Game.selectedSetting === Main.enumSettings.high ? 'blue' : 'green',
+        btnColor: Game.selectedSetting === Game.enumSettings.high ? 'blue' : 'green',
         txtColor: 'white',
         font: '2em serif',
         msg: 'High',
@@ -825,7 +838,7 @@ function settingsMenu() {
         width: (Game.canvas.width * 0.5),
         height: (Game.entitySize * 11),
         lineWidth: 1,
-        btnColor: Game.selectedSetting === Main.enumSettings.med ? 'blue' : 'green',
+        btnColor: Game.selectedSetting === Game.enumSettings.med ? 'blue' : 'green',
         txtColor: 'white',
         font: '2em serif',
         msg: 'Medium',
@@ -847,7 +860,7 @@ function settingsMenu() {
         width: (Game.canvas.width * 0.5),
         height: (Game.entitySize * 11),
         lineWidth: 1,
-        btnColor: Game.selectedSetting === Main.enumSettings.low ? 'blue' : 'green',
+        btnColor: Game.selectedSetting === Game.enumSettings.low ? 'blue' : 'green',
         txtColor: 'white',
         font: '2em serif',
         msg: 'Low',

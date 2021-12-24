@@ -56,7 +56,7 @@ let Game = { // the user will want to use this object
   },
   // these settings will make the game run faster or slower
   setSettingsLow: function() {
-    this.selectedSetting = Main.enumSettings.low;
+    this.selectedSetting = Game.enumSettings.low;
     this.frameRate = 1000 / 15; // 15 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
@@ -64,7 +64,7 @@ let Game = { // the user will want to use this object
     },0);
   },
   setSettingsMed: function() {
-    this.selectedSetting = Main.enumSettings.med;
+    this.selectedSetting = Game.enumSettings.med;
     this.frameRate = 1000 / 30; // 30 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
@@ -72,7 +72,7 @@ let Game = { // the user will want to use this object
     },0);
   },
   setSettingsHigh: function() {
-    this.selectedSetting = Main.enumSettings.high;
+    this.selectedSetting = Game.enumSettings.high;
     this.frameRate = 1000 / 60; // 60 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
@@ -81,6 +81,11 @@ let Game = { // the user will want to use this object
     
   },
   selectedSetting: undefined, // the selected game setting
+  enumSettings: {
+    high: 0,
+    med: 1,
+    low: 2,
+  },
   enumDirections: { // this is the x and y directions
     topDown: 0,
     leftRight: 1
@@ -89,25 +94,25 @@ let Game = { // the user will want to use this object
   moveEntity: function(speed, direction) { 
     const speedPerc = speed * 0.01;
     if (direction === this.enumDirections.topDown) {
-      if (this.selectedSetting === Main.enumSettings.high) {
+      if (this.selectedSetting === Game.enumSettings.high) {
         return (Game.canvas.height * speedPerc);
       }
-      if (this.selectedSetting === Main.enumSettings.med) {
+      if (this.selectedSetting === Game.enumSettings.med) {
         return (Game.canvas.height * speedPerc) * 2;
       }
-      if (this.selectedSetting === Main.enumSettings.low) {
+      if (this.selectedSetting === Game.enumSettings.low) {
         return (Game.canvas.height * speedPerc) * 4;
       }
       
     }
     if (direction === this.enumDirections.leftRight) {
-      if (this.selectedSetting === Main.enumSettings.high) {
+      if (this.selectedSetting === Game.enumSettings.high) {
         return (Game.canvas.width * speedPerc);
       }
-      if (this.selectedSetting === Main.enumSettings.med) {
+      if (this.selectedSetting === Game.enumSettings.med) {
         return (Game.canvas.width * speedPerc) * 2;
       }
-      if (this.selectedSetting === Main.enumSettings.low) {
+      if (this.selectedSetting === Game.enumSettings.low) {
         return (Game.canvas.width * speedPerc) * 4;
       }
     }
@@ -140,11 +145,6 @@ let Main = { // global variables to keep the game running nicely
   globalId: 0, // makes all the objects easier to find
   methodObjectShadows: [], // this is all the param values recorded previously
   clearStage: false,
-  enumSettings: {
-    high: 0,
-    med: 1,
-    low: 2,
-  },
   collisions: [], // all the collisions in the game to look for
   methodsToRun: [], // all the methods to make the game run
 };
