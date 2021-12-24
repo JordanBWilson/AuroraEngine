@@ -408,7 +408,7 @@ function centerPaddle(event) {
     if (Game.selectedSetting === Game.enumSettings.high) {
       paddle.posX = event.changedTouches[0].clientX  * 0.8;
     } else {
-      paddle.posX = event.changedTouches[0].clientX  * 0.85;
+      paddle.posX = event.changedTouches[0].clientX  * 0.83;
     }
   }
 }
