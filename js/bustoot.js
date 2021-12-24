@@ -5,10 +5,8 @@ let highscoreItem = { name: '', score: 0 };
 
   Game.canvas = document.getElementById('Stage');
   drawMainMenu();
-  highscoreList = JSON.parse(localStorage.getItem('highscores'));
+  highscoreList = JSON.parse(localStorage.getItem('bustoot-highscores'));
   sortHighScoreList();
-  
-  console.log(highscoreList);
 })();
 
 let ball = {}; // initialize the game ball
@@ -55,10 +53,15 @@ window.addEventListener('resize', function() {
 }, false);
 
 function sortHighScoreList() {
+
   if (highscoreList && highscoreList.length > 0) {
     highscoreList.sort(function(a, b) {
-      return b - a;// a - b;
+      return b.score - a.score;
     });
+    if (highscoreList.length > 5) {
+      highscoreList.splice(highscoreList.length - 1, 1);
+      localStorage.setItem('bustoot-highscores', JSON.stringify(highscoreList));
+    }
   }
 }
 
@@ -193,6 +196,7 @@ function moveGameBall() {
         ball.props.direction = 'bot';
       }
       if (gameLives === 0) {
+        drawHighScoreMenu();
         drawLoseMenu();
       }
     }
@@ -520,22 +524,27 @@ function nextGameLevel() { // draw the game
     drawGameBricks();
   }
   if (gameLevel === 4) {
-    if (highscoreList && highscoreList.length < 5) {
-      document.querySelector('#highscore-wrapper').style = 'display: block';
-    }
-    if (highscoreList && highscoreList.length > 4) {
-      
-      for (let i = 0; i < highscoreList.length; i++) {
-        if (gamePoints >= highscoreList[i].score) {
-          document.querySelector('#highscore-wrapper').style = 'display: block';
-          break;
-        }
-      }
-      
-    }
+    drawHighScoreMenu();
     drawWinMenu();
   }
   
+}
+
+function drawHighScoreMenu() {
+  if (!highscoreList) {
+    highscoreList = [];
+  }
+  if (highscoreList && highscoreList.length < 5) {
+      document.querySelector('#highscore-wrapper').style = 'display: block';
+    }
+  if (highscoreList && highscoreList.length > 4) {
+    for (let i = 0; i < highscoreList.length; i++) {
+      if (gamePoints >= highscoreList[i].score) {
+        document.querySelector('#highscore-wrapper').style = 'display: block';
+        break;
+      }
+    }
+  }
 }
 
 function drawGameBricks() {
@@ -966,17 +975,10 @@ function submitHighScore() {
   const highscoreName = document.querySelector('#highscoreName').value;
   highscoreItem.name = highscoreName;
   highscoreItem.score = gamePoints;
-  console.log(highscoreName);
-  if (!highscoreList) {
-    highscoreList = [];
-  }
+  sortHighScoreList();
   highscoreList.push(highscoreItem);
   sortHighScoreList();
-  if (highscoreList.length > 5) {
-    highscoreList.splice(highscoreList.length - 1, 1);
-  }
-  console.log(highscoreList);
-  localStorage.setItem('highscores', JSON.stringify(highscoreList));
+  localStorage.setItem('bustoot-highscores', JSON.stringify(highscoreList));
   highscoreItem = { name: '', score: 0 };
   document.querySelector('#highscoreName').value = '';
   document.querySelector('#highscore-wrapper').style = 'display: none';
