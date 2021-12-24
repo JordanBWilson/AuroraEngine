@@ -379,8 +379,12 @@ function readyPaddle(event) {
 
 function movePaddle(event) {
   if (gameStart && isPaddleMoving) {
-    paddle.posX = event.clientX * 0.8;
-    if (!event.changedTouches) {
+    if (!event.changedTouches) { // this will get the mouse position offset
+      paddle.posX = event.clientX * 0.8;
+    } else if (event.changedTouches) { // this is getting the touch screen position offset
+      paddle.posX = event.changedTouches[0].clientX  * 0.8;
+    }
+    if (!event.changedTouches) { // this is the mouse controls
       if (paddle && paddle.props) {
         paddle.props.direction = 'non';
       }
@@ -388,7 +392,7 @@ function movePaddle(event) {
         paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
-    } else {
+    } else { // this is the touch screen controls
       if (paddle && paddle.props) {
         paddle.props.direction = 'non';
       }
