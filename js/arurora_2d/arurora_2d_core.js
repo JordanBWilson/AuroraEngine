@@ -1,5 +1,6 @@
-
-// draws text to the stage and only redraws it if the stage has been resized
+// this will draw objects to the screen and only redraws them if the stage has been resized
+// draws text to the stage
+// method: function(id) {drawText({ font: '1em serif', msg: 'Test', posX: 0, posY: 0, color: 'green', align: 'center', props: {}, id: 'test', methodId: id });}
 function drawText(incomingText) {
   drawTextMethod(incomingText);
 }
@@ -11,6 +12,7 @@ function drawRect(incomingRect) {
 function drawArc(incomingArc) {
   drawArcMethod(incomingArc);
 }
+// this will draw a button to the screen
 function drawButton(incomingButton) {
   drawButtonMethod(incomingButton);
 }
