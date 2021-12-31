@@ -1,6 +1,22 @@
 
 // draws text to the stage and only redraws it if the stage has been resized
 function drawText(incomingText) {
+  drawTextMethod(incomingText);
+}
+// this will draw a rectangle to the screen
+function drawRect(incomingRect) {
+  drawRectMethod(incomingRect);
+}
+// this will draw a circle to the screen
+function drawArc(incomingArc) {
+  drawArcMethod(incomingArc);
+}
+function drawButton(incomingButton) {
+  drawButtonMethod(incomingButton);
+}
+
+// this is where all the work happens
+function drawTextMethod(incomingText) {
   let doesExist = doesMethodParamExist(incomingText.methodId);
   let index = -1;
   if (doesExist) {
@@ -69,7 +85,7 @@ function drawText(incomingText) {
     Game.methodObjects[index].color === Main.methodObjectShadows[index].color || 
     Game.methodObjects[index].align === Main.methodObjectShadows[index].align)) {
       Game.methodObjects[index].isAnim = false;
-   }
+    }
 }
 function redrawText(incomingText) {
   Main.stage.fillStyle = incomingText.color;
@@ -77,8 +93,7 @@ function redrawText(incomingText) {
   Main.stage.textAlign = incomingText.align;
   Main.stage.fillText(incomingText.msg, incomingText.posX, incomingText.posY);
 }
-// this will draw a rectangle to the screen
-function drawRect(incomingRect) {
+function drawRectMethod(incomingRect) {
   let doesExist = doesMethodParamExist(incomingRect.methodId);
   let index = -1;
   if (doesExist) {
@@ -186,8 +201,7 @@ function redrawRect(incomingRect) {
     Main.stage.stroke();
   }
 }
-// this will draw a circle to the screen
-function drawArc(incomingArc) {
+function drawArcMethod(incomingArc) {
   let doesExist = doesMethodParamExist(incomingArc.methodId);
   let index = -1;
   if (doesExist) {
@@ -286,7 +300,7 @@ function redrawArc(incomingArc) {
     Main.stage.stroke();
   }
 }
-function drawButton(incomingButton) {
+function drawButtonMethod(incomingButton) {
   let doesExist = doesMethodParamExist(incomingButton.methodId);
   let index = -1;
   if (doesExist) {
@@ -382,7 +396,6 @@ function drawButton(incomingButton) {
       Game.methodObjects[index].isAnim = false;
    }
 }
-
 function redrawButton(incomingButton) {
   Main.stage.beginPath();
   if (!incomingButton.lineWidth) {

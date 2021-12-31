@@ -2,7 +2,6 @@ let newGame = false;
 let highscoreList; // this is an array
 let highscoreItem = { name: '', score: 0 };
 (function() {
-
   Game.canvas = document.getElementById('Stage');
   drawMainMenu();
   highscoreList = JSON.parse(localStorage.getItem('bustoot-highscores'));
@@ -53,7 +52,6 @@ window.addEventListener('resize', function() {
 }, false);
 
 function sortHighScoreList() {
-
   if (highscoreList && highscoreList.length > 0) {
     highscoreList.sort(function(a, b) {
       return b.score - a.score;
@@ -66,15 +64,12 @@ function sortHighScoreList() {
 }
 
 function playGame() { // draw the game
-  
   if (newGame) {
     gamePoints = 0;
     gameLevel = 0;
     gameLives = 3;
     newGame = false;
   }
-  
-  
   isPoweredUp = false;
   isDoublePoints = false;
   bricks = {};
@@ -123,7 +118,6 @@ function findGameObjects() {
 }
 
 function moveGameBall() {
-  
   if (ball?.methodId) {
     if (isPoweredUp && !isDoublePoints) {
       ballSpeed = 1.15;
@@ -312,7 +306,6 @@ function brickCollision(ball, bricks, methodId) {
     }
   }, 0);
 }
-
 function brickPowerReveal(index) {
   const random = Math.floor(Math.random() * 10) + 1;
   if (random <= 3) {
@@ -321,7 +314,6 @@ function brickPowerReveal(index) {
   }
   
 }
-
 function paddleCollision() {
   if (ball.props.direction === 'bot' && paddle.props.direction === 'non') {
     ball.props.direction = 'top';
@@ -351,7 +343,6 @@ function paddleCollision() {
     ball.props.direction = 'toprt';
   }
 }
-
 function gamePowerUp() {
   if (!isPoweredUp) {
     isPoweredUp = true;
@@ -363,7 +354,6 @@ function gamePowerUp() {
   }
   
 }
-
 function readyPaddle(event) {
   if (!gameStart && readyText?.methodId && 
   tapText?.methodId && swipeTextTop?.methodId && 
@@ -388,6 +378,10 @@ function movePaddle(event) {
         paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
+      if (paddle.posX > event.clientX) {
+        paddle.posX += Game.moveEntity(4.5, Game.enumDirections.leftRight);
+        paddle.props.direction = 'rt';
+      }
     } else { // this is the touch screen controls
       if (paddle && paddle.props) {
         paddle.props.direction = 'non';
@@ -396,11 +390,14 @@ function movePaddle(event) {
         paddle.posX -= Game.moveEntity(4.5, Game.enumDirections.leftRight);
         paddle.props.direction = 'lt';
       }
+      if (paddle.posX > event.changedTouches[0].clientX) {
+        paddle.posX += Game.moveEntity(4.5, Game.enumDirections.leftRight);
+        paddle.props.direction = 'rt';
+      }
     }
     centerPaddle(event);
   }
 }
-
 function centerPaddle(event) {
   if (!event.changedTouches) { // this will get the mouse position offset
     paddle.posX = event.clientX * 0.8;
@@ -419,7 +416,6 @@ function stopPaddle(event) {
     paddle.props.direction = 'non';
   }
 }
-
 function nextGameLevel() { // draw the game
   gameStart = false;
   ball = undefined;
@@ -431,7 +427,6 @@ function nextGameLevel() { // draw the game
   if (scoreBoard?.methodId) {
     scoreBoard = undefined;
   }
-  
   Game.clearStage();
   Game.methodSetup = { method: function(id) { findGameObjects(); }};
   Game.addMethod(Game.methodSetup);
@@ -507,7 +502,6 @@ function nextGameLevel() { // draw the game
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '1em serif', msg: 'To Move The Paddle', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.95), color: 'green', align: 'center', props: {}, id: 'swipeTextBot', methodId: id });} };
   Game.addMethod(Game.methodSetup);
-  
   drawToolbar();
   Game.collisionSetup = {
     primary: 'ball',
@@ -540,9 +534,7 @@ function nextGameLevel() { // draw the game
     drawHighScoreMenu();
     drawWinMenu();
   }
-  
 }
-
 function drawHighScoreMenu() {
   if (!highscoreList) {
     highscoreList = [];
@@ -593,7 +585,6 @@ function drawGameBricks() {
     }
   }
 }
-
 function drawLoseMenu() {
   Game.clearStage(); 
   newGame = true;
@@ -648,7 +639,6 @@ function drawLoseMenu() {
   }
   Game.addMethod(Game.methodSetup);
 }
-
 function drawWinMenu() {
   Game.clearStage();
   newGame = true;
@@ -681,7 +671,6 @@ function drawWinMenu() {
   };
   Game.addMethod(Game.methodSetup);
 }
-
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
   if (!Game.selectedSetting) {
@@ -795,7 +784,10 @@ function drawMainMenu() { // draw the main menu
   };
   Game.addMethod(Game.methodSetup);
 }
-
+function selectSetting() {
+  drawMainMenu(); 
+  localStorage.setItem('bustoot-highscores', JSON.stringify(highscoreList));
+}
 function settingsMenu() {
   Game.clearStage();
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
@@ -819,7 +811,7 @@ function settingsMenu() {
         isFilled: true,
         id: 'high-quality',
         isSolid: false,
-        action: { method: function(id) { Game.setSettingsHigh(); drawMainMenu(); }},
+        action: { method: function(id) { Game.setSettingsHigh(); selectSetting(); }},
         props: {},
         methodId: id
       });
@@ -841,7 +833,7 @@ function settingsMenu() {
         isFilled: true,
         id: 'med-quality',
         isSolid: false,
-        action: { method: function(id) { Game.setSettingsMed(); drawMainMenu(); }},
+        action: { method: function(id) { Game.setSettingsMed(); selectSetting(); }},
         props: {},
         methodId: id
       });
@@ -863,7 +855,7 @@ function settingsMenu() {
         isFilled: true,
         id: 'low-quality',
         isSolid: false,
-        action: { method: function(id) { Game.setSettingsLow(); drawMainMenu(); }},
+        action: { method: function(id) { Game.setSettingsLow(); selectSetting(); }},
         props: {},
         methodId: id
       });
