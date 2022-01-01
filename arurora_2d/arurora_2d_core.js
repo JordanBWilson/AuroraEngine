@@ -17,6 +17,10 @@ function drawButton(incomingButton) {
   drawButtonMethod(incomingButton);
 }
 
+// future Jordan, use the rect method to draw the image method. no need for an arc.
+// plus it will work for the backgrounds.
+// also make sure to make a button image method as well
+
 // this is where all the work happens
 function drawTextMethod(incomingText) {
   let doesExist = doesMethodParamExist(incomingText.methodId);
