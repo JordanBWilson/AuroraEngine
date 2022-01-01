@@ -12,6 +12,10 @@ function drawRect(incomingRect) {
 function drawArc(incomingArc) {
   drawArcMethod(incomingArc);
 }
+// this will draw a rectangle to the screen
+function drawImage(incomingImg) {
+  drawImageMethod(incomingImg);
+}
 // this will draw a button to the screen
 function drawButton(incomingButton) {
   drawButtonMethod(incomingButton);
@@ -421,4 +425,114 @@ function redrawButton(incomingButton) {
   Main.stage.font = incomingButton.font;
   Main.stage.textAlign = 'center';
   Main.stage.fillText(incomingButton.msg, (incomingButton.posX + (incomingButton.width * 0.5)), (incomingButton.posY + (incomingButton.height * 0.65)));
+}
+function drawImageMethod(incomingImg) {
+  let doesExist = doesMethodParamExist(incomingImg.methodId);
+  let index = -1;
+  if (doesExist) {
+    index = findMethodParamIndex(incomingImg.methodId);
+    // check to see if there is animations going on.
+    if (Game.methodObjects[index].isBackground) {
+      backgroundAnimationCheck(index);
+    }
+    
+  }
+  // to draw an image to the canvas:
+  // void ctx.drawImage(image, dx, dy, dWidth, dHeight);
+  if (!doesExist) {
+    let img = {
+      posX: incomingImg.posX,
+      posY: incomingImg.posY,
+      width: incomingImg.width,
+      height: incomingImg.height,
+      lineWidth: incomingImg.lineWidth,
+      color: incomingImg.color,
+      isFilled: incomingImg.isFilled,
+      id: incomingImg.id,
+      isSolid: incomingImg.isSolid,
+      isAnim: false,
+      isBackground: incomingImg.isBackground,
+      props: incomingImg.props,
+      methodId: incomingImg.methodId,
+    }
+    Game.methodObjects.push(img);
+    redrawRect(incomingImg);
+    const shadowImg = Object.assign({}, img);
+    Main.methodObjectShadows.push(shadowImg);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = incomingImg.posX;
+    Game.methodObjects[index].posY = incomingImg.posY;
+    Game.methodObjects[index].width = incomingImg.width;
+    Game.methodObjects[index].height = incomingImg.height;
+    Game.methodObjects[index].lineWidth = incomingImg.lineWidth;
+    Game.methodObjects[index].color = incomingImg.color;
+    Game.methodObjects[index].isFilled = incomingImg.isFilled;
+    Game.methodObjects[index].isSolid = incomingImg.isSolid;
+    Game.methodObjects[index].isAnim = false;
+    Game.methodObjects[index].isBackground = incomingImg.isBackground;
+    Game.methodObjects[index].props = incomingImg.props;
+    Main.methodObjectShadows[index].posX = incomingImg.posX;
+    Main.methodObjectShadows[index].posY = incomingImg.posY;
+    Main.methodObjectShadows[index].width = incomingImg.width;
+    Main.methodObjectShadows[index].height = incomingImg.height;
+    Main.methodObjectShadows[index].lineWidth = incomingImg.lineWidth;
+    Main.methodObjectShadows[index].color = incomingImg.color;
+    Main.methodObjectShadows[index].isFilled = incomingImg.isFilled;
+    Main.methodObjectShadows[index].isSolid = incomingImg.isSolid;
+    Main.methodObjectShadows[index].isAnim = false;
+    Main.methodObjectShadows[index].isBackground = incomingImg.isBackground;
+    Main.methodObjectShadows[index].props = incomingImg.props;
+    redrawRect(incomingRect);
+  }
+  if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
+    redrawImage(incomingImg);
+    Game.methodObjects[index].isAnim = false;
+  }
+  // checking for animations that isn't a background
+  if (doesExist && !Game.methodObjects[index].isBackground &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
+   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth || 
+   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
+   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   ) {
+      redrawImage(Game.methodObjects[index]);
+      const shadowImage = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowImage;
+      Game.methodObjects[index].isAnim = true;
+   } else if (doesExist && 
+    !Game.methodObjects[index].isBackground && 
+    Game.methodObjects[index].isAnim) {
+      Game.methodObjects[index].isAnim = true;
+      redrawImage(Game.methodObjects[index]);
+   } else if (doesExist && 
+    !Game.methodObjects[index].isBackground &&
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
+    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth || 
+    Game.methodObjects[index].color === Main.methodObjectShadows[index].color || 
+    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+      Game.methodObjects[index].isAnim = false;
+   }
+}
+function redrawImage(incomingImg) {
+  Main.stage.beginPath();
+  if (!incomingImg.lineWidth) {
+    Main.stage.lineWidth = '1';
+  } else {
+    Main.stage.lineWidth = incomingImg.lineWidth;
+  }
+  Main.stage.rect(incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
+  if (incomingImg.isFilled) {
+    Main.stage.fillStyle = incomingImg.color;
+    Main.stage.fill();
+  } else {
+    Main.stage.strokeStyle = incomingImg.color;
+    Main.stage.stroke();
+  }
 }
