@@ -3,7 +3,6 @@ const masonWorkerPath = './assets/images/stoneWorker.png';
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	masonWorkerImg.src = masonWorkerPath;
-	console.log(masonWorkerImg);
 	drawMainMenu();
 })();
 

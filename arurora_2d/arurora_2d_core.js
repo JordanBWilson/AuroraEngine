@@ -20,6 +20,10 @@ function drawImage(incomingImg) {
 function drawButton(incomingButton) {
   drawButtonMethod(incomingButton);
 }
+// this will draw a clickable/tappable image to the screen
+function drawButtonImage(incomingButtonImage) {
+  drawButtonImageMethod(incomingButtonImage);
+}
 
 // future Jordan, use the rect method to draw the image method. no need for an arc.
 // plus it will work for the backgrounds.
@@ -509,4 +513,105 @@ function drawImageMethod(incomingImg) {
 }
 function redrawImage(incomingImg) {
   Main.stage.drawImage(incomingImg.image, incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
+}
+
+function drawButtonImageMethod(incomingButtonImage) {
+  let doesExist = doesMethodParamExist(incomingButtonImage.methodId);
+  let index = -1;
+  if (doesExist) {
+    index = findMethodParamIndex(incomingButtonImage.methodId);
+  }
+  if (!doesExist) {
+    let buttonImg = {
+      posX: incomingButtonImage.posX,
+      posY: incomingButtonImage.posY,
+      width: incomingButtonImage.width,
+      height: incomingButtonImage.height,
+      lineWidth: incomingButtonImage.lineWidth,
+      btnColor: incomingButtonImage.btnColor,
+      txtColor: incomingButtonImage.txtColor,
+      font: incomingButtonImage.font,
+      msg: incomingButtonImage.msg,
+      isFilled: incomingButtonImage.isFilled,
+      id: incomingButtonImage.id,
+      isSolid: incomingButtonImage.isSolid,
+      action: incomingButtonImage.action,
+      isBtn: true,
+      isAnim: false,
+      props: incomingButtonImage.props,
+      methodId: incomingButtonImage.methodId,
+    }
+    Game.methodObjects.push(buttonImg);
+    redrawButtonImage(incomingButtonImage);
+    const shadowButtonImg = Object.assign({}, buttonImg);
+    Main.methodObjectShadows.push(shadowButtonImg);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = incomingButtonImage.posX;
+    Game.methodObjects[index].posY = incomingButtonImage.posY;
+    Game.methodObjects[index].width = incomingButtonImage.width;
+    Game.methodObjects[index].height = incomingButtonImage.height;
+    Game.methodObjects[index].lineWidth = incomingButtonImage.lineWidth;
+    Game.methodObjects[index].btnColor = incomingButtonImage.btnColor;
+    Game.methodObjects[index].txtColor = incomingButtonImage.txtColor;
+    Game.methodObjects[index].font = incomingButtonImage.font;
+    Game.methodObjects[index].msg = incomingButtonImage.msg;
+    Game.methodObjects[index].isFilled = incomingButtonImage.isFilled;
+    Game.methodObjects[index].isSolid = incomingButtonImage.isSolid;
+    Game.methodObjects[index].action = incomingButtonImage.action;
+    Game.methodObjects[index].isAnim = false;
+    Game.methodObjects[index].props = incomingButtonImage.props;
+    Main.methodObjectShadows[index].posX = incomingButtonImage.posX;
+    Main.methodObjectShadows[index].posY = incomingButtonImage.posY;
+    Main.methodObjectShadows[index].width = incomingButtonImage.width;
+    Main.methodObjectShadows[index].height = incomingButtonImage.height;
+    Main.methodObjectShadows[index].lineWidth = incomingButtonImage.lineWidth;
+    Main.methodObjectShadows[index].btnColor = incomingButtonImage.btnColor;
+    Main.methodObjectShadows[index].txtColor = incomingButtonImage.txtColor;
+    Main.methodObjectShadows[index].font = incomingButtonImage.font;
+    Main.methodObjectShadows[index].msg = incomingButtonImage.msg;
+    Main.methodObjectShadows[index].isFilled = incomingButtonImage.isFilled;
+    Main.methodObjectShadows[index].isSolid = incomingButtonImage.isSolid;
+    Main.methodObjectShadows[index].action = incomingButtonImage.action;
+    Main.methodObjectShadows[index].isAnim = false;
+    Main.methodObjectShadows[index].props = incomingButtonImage.props;
+    redrawButtonImage(incomingButtonImage);
+  }
+  // checking for animations
+  if (doesExist && 
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
+   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth || 
+   Game.methodObjects[index].btnColor !== Main.methodObjectShadows[index].btnColor || 
+   Game.methodObjects[index].txtColor !== Main.methodObjectShadows[index].txtColor ||
+   Game.methodObjects[index].font !== Main.methodObjectShadows[index].font ||
+   Game.methodObjects[index].msg !== Main.methodObjectShadows[index].font ||
+   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   ) {
+     redrawButtonImage(Game.methodObjects[index]);
+      const shadowButtonImg = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowButtonImg;
+      Game.methodObjects[index].isAnim = true;
+   } else if (doesExist && Game.methodObjects[index].isAnim) {
+      redrawButtonImage(Game.methodObjects[index]);
+      Game.methodObjects[index].isAnim = false;
+   } else if (doesExist &&
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
+    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth || 
+    Game.methodObjects[index].btnColor === Main.methodObjectShadows[index].btnColor || 
+    Game.methodObjects[index].txtColor === Main.methodObjectShadows[index].txtColor ||
+    Game.methodObjects[index].font === Main.methodObjectShadows[index].font ||
+    Game.methodObjects[index].msg === Main.methodObjectShadows[index].font ||
+    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+      Game.methodObjects[index].isAnim = false;
+   }
+}
+
+function redrawButtonImage(incomingButtonImage) {
+  
 }
