@@ -435,19 +435,14 @@ function drawImageMethod(incomingImg) {
     if (Game.methodObjects[index].isBackground) {
       backgroundAnimationCheck(index);
     }
-    
   }
-  // to draw an image to the canvas:
-  // void ctx.drawImage(image, dx, dy, dWidth, dHeight);
   if (!doesExist) {
     let img = {
       posX: incomingImg.posX,
       posY: incomingImg.posY,
       width: incomingImg.width,
       height: incomingImg.height,
-      lineWidth: incomingImg.lineWidth,
-      color: incomingImg.color,
-      isFilled: incomingImg.isFilled,
+      image: incomingImg.image,
       id: incomingImg.id,
       isSolid: incomingImg.isSolid,
       isAnim: false,
@@ -456,7 +451,7 @@ function drawImageMethod(incomingImg) {
       methodId: incomingImg.methodId,
     }
     Game.methodObjects.push(img);
-    redrawRect(incomingImg);
+    redrawImage(incomingImg);
     const shadowImg = Object.assign({}, img);
     Main.methodObjectShadows.push(shadowImg);
   }
@@ -465,9 +460,7 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].posY = incomingImg.posY;
     Game.methodObjects[index].width = incomingImg.width;
     Game.methodObjects[index].height = incomingImg.height;
-    Game.methodObjects[index].lineWidth = incomingImg.lineWidth;
-    Game.methodObjects[index].color = incomingImg.color;
-    Game.methodObjects[index].isFilled = incomingImg.isFilled;
+    Game.methodObjects[index].image = incomingImg.image;
     Game.methodObjects[index].isSolid = incomingImg.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImg.isBackground;
@@ -476,14 +469,12 @@ function drawImageMethod(incomingImg) {
     Main.methodObjectShadows[index].posY = incomingImg.posY;
     Main.methodObjectShadows[index].width = incomingImg.width;
     Main.methodObjectShadows[index].height = incomingImg.height;
-    Main.methodObjectShadows[index].lineWidth = incomingImg.lineWidth;
-    Main.methodObjectShadows[index].color = incomingImg.color;
-    Main.methodObjectShadows[index].isFilled = incomingImg.isFilled;
+    Main.methodObjectShadows[index].image = incomingImg.image;
     Main.methodObjectShadows[index].isSolid = incomingImg.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImg.isBackground;
     Main.methodObjectShadows[index].props = incomingImg.props;
-    redrawRect(incomingRect);
+    redrawImage(incomingImg);
   }
   if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
     redrawImage(incomingImg);
@@ -495,9 +486,7 @@ function drawImageMethod(incomingImg) {
    Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
    Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
-   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth || 
-   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
-   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
    ) {
       redrawImage(Game.methodObjects[index]);
       const shadowImage = Object.assign({}, Game.methodObjects[index]);
@@ -514,25 +503,10 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
     Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
-    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth || 
-    Game.methodObjects[index].color === Main.methodObjectShadows[index].color || 
-    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+    Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
 function redrawImage(incomingImg) {
-  Main.stage.beginPath();
-  if (!incomingImg.lineWidth) {
-    Main.stage.lineWidth = '1';
-  } else {
-    Main.stage.lineWidth = incomingImg.lineWidth;
-  }
-  Main.stage.rect(incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
-  if (incomingImg.isFilled) {
-    Main.stage.fillStyle = incomingImg.color;
-    Main.stage.fill();
-  } else {
-    Main.stage.strokeStyle = incomingImg.color;
-    Main.stage.stroke();
-  }
+  Main.stage.drawImage(incomingImg.image, incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
 }
