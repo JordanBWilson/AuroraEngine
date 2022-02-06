@@ -1,4 +1,5 @@
 // this will draw objects to the screen and only redraws them if the stage has been resized
+// or an animation is happening on stage
 // draws text to the stage
 // method: function(id) {drawText({ font: '1em serif', msg: 'Test', posX: 0, posY: 0, color: 'green', align: 'center', props: {}, id: 'test', methodId: id });}
 function drawText(incomingText) {
@@ -12,9 +13,13 @@ function drawRect(incomingRect) {
 function drawArc(incomingArc) {
   drawArcMethod(incomingArc);
 }
-// this will draw a rectangle to the screen
+// this will draws an image to the screen
 function drawImage(incomingImg) {
   drawImageMethod(incomingImg);
+}
+// this will draws an image pattern to the screen
+function drawImagePattern(incomingImgPat) {
+  drawImagePatternMethod(incomingImgPat);
 }
 // this will draw a button to the screen
 function drawButton(incomingButton) {
@@ -513,6 +518,110 @@ function drawImageMethod(incomingImg) {
 }
 function redrawImage(incomingImg) {
   Main.stage.drawImage(incomingImg.image, incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
+}
+function drawImagePatternMethod(incomingImgPat) {
+  let doesExist = doesMethodParamExist(incomingImgPat.methodId);
+  let index = -1;
+  if (doesExist) {
+    index = findMethodParamIndex(incomingImgPat.methodId);
+    // check to see if there is animations going on.
+    if (Game.methodObjects[index].isBackground) {
+      backgroundAnimationCheck(index);
+    }
+  }
+  if (!doesExist) {
+    let imgPat = {
+      posX: incomingImgPat.posX,
+      posY: incomingImgPat.posY,
+      width: incomingImgPat.width,
+      height: incomingImgPat.height,
+      patternWidth: incomingImgPat.patternWidth,
+      patternHeight: incomingImgPat.patternHeight,
+      image: incomingImgPat.image,
+      id: incomingImgPat.id,
+      isSolid: incomingImgPat.isSolid,
+      isAnim: false,
+      isBackground: incomingImgPat.isBackground,
+      props: incomingImgPat.props,
+      methodId: incomingImgPat.methodId,
+    }
+    Game.methodObjects.push(imgPat);
+    redrawImagePattern(incomingImgPat);
+    const shadowImgPat = Object.assign({}, imgPat);
+    Main.methodObjectShadows.push(shadowImgPat);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = incomingImgPat.posX;
+    Game.methodObjects[index].posY = incomingImgPat.posY;
+    Game.methodObjects[index].width = incomingImgPat.width;
+    Game.methodObjects[index].height = incomingImgPat.height;
+    Game.methodObjects[index].patternWidth = incomingImgPat.patternWidth;
+    Game.methodObjects[index].patternHeight = incomingImgPat.patternHeight;
+    Game.methodObjects[index].image = incomingImgPat.image;
+    Game.methodObjects[index].isSolid = incomingImgPat.isSolid;
+    Game.methodObjects[index].isAnim = false;
+    Game.methodObjects[index].isBackground = incomingImgPat.isBackground;
+    Game.methodObjects[index].props = incomingImgPat.props;
+    Main.methodObjectShadows[index].posX = incomingImgPat.posX;
+    Main.methodObjectShadows[index].posY = incomingImgPat.posY;
+    Main.methodObjectShadows[index].width = incomingImgPat.width;
+    Main.methodObjectShadows[index].height = incomingImgPat.height;
+    Main.methodObjectShadows[index].patternWidth = incomingImgPat.patternWidth;
+    Main.methodObjectShadows[index].patternHeight = incomingImgPat.patternHeight;
+    Main.methodObjectShadows[index].image = incomingImgPat.image;
+    Main.methodObjectShadows[index].isSolid = incomingImgPat.isSolid;
+    Main.methodObjectShadows[index].isAnim = false;
+    Main.methodObjectShadows[index].isBackground = incomingImgPat.isBackground;
+    Main.methodObjectShadows[index].props = incomingImgPat.props;
+    redrawImagePattern(incomingImgPat);
+  }
+  if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
+    redrawImagePattern(incomingImgPat);
+    Game.methodObjects[index].isAnim = false;
+  }
+  // checking for animations that isn't a background
+  if (doesExist && !Game.methodObjects[index].isBackground &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
+   Game.methodObjects[index].patternWidth !== Main.methodObjectShadows[index].patternWidth || 
+   Game.methodObjects[index].patternHeight !== Main.methodObjectShadows[index].patternHeight ||
+   Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
+   ) {
+      redrawImagePattern(Game.methodObjects[index]);
+      const shadowImagePat = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowImagePat;
+      Game.methodObjects[index].isAnim = true;
+   } else if (doesExist && 
+    !Game.methodObjects[index].isBackground && 
+    Game.methodObjects[index].isAnim) {
+      Game.methodObjects[index].isAnim = true;
+      redrawImagePattern(Game.methodObjects[index]);
+   } else if (doesExist && 
+    !Game.methodObjects[index].isBackground &&
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
+    Game.methodObjects[index].patternWidth === Main.methodObjectShadows[index].patternWidth || 
+    Game.methodObjects[index].patternHeight === Main.methodObjectShadows[index].patternHeight ||
+    Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
+      Game.methodObjects[index].isAnim = false;
+   }
+}
+function redrawImagePattern(incomingImgPat) {
+  let patternX = 0;
+  // console.log(incomingImgPat);
+  if (incomingImgPat && Main.isResizing) {
+    console.log(incomingImgPat.width);
+    while (patternX <= incomingImgPat.width) {
+      Main.stage.drawImage(incomingImgPat.image, patternX, incomingImgPat.posY, incomingImgPat.patternWidth, incomingImgPat.patternHeight);
+      patternX += incomingImgPat.patternWidth
+    }
+  }
+  
+  
 }
 function drawButtonImageMethod(incomingButtonImage) {
   let doesExist = doesMethodParamExist(incomingButtonImage.methodId);
