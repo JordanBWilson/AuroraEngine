@@ -19,11 +19,30 @@ function drawMainMenu() {
 				posX: 0, 
 				posY: 0, 
 				width: Game.canvas.width, 
+				height: (Game.canvas.height) * 0.50, 
+				lineWidth: 1, 
+				color: '#0000FF', 
+				isFilled: true, 
+				id: 'sky-background', 
+				isSolid: false, 
+				isBackground: true, 
+				props: {}, 
+				methodId: id 
+			});
+		} 
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = { 
+		method: function(id) {
+			drawRect({ 
+				posX: 0, 
+				posY: (Game.canvas.height) * 0.50, 
+				width: Game.canvas.width, 
 				height: Game.canvas.height, 
 				lineWidth: 1, 
-				color: 'black', 
+				color: '#3C7521', 
 				isFilled: true, 
-				id: 'menu-background', 
+				id: 'grass-background', 
 				isSolid: false, 
 				isBackground: false, 
 				props: {}, 
@@ -54,15 +73,17 @@ function drawMainMenu() {
 	Game.methodSetup = { 
 		method: function(id) {
 			drawImage({ 
-				posX: (Game.canvas.width * 0.50), 
-				posY: (Game.canvas.height * 0.50), 
+				posX: 0, 
+				posY: (Game.canvas.height * 0.65), 
 				width: (Game.entitySize * 10), 
 				height: (Game.entitySize * 10), 
 				image: masonWorkerImg, 
 				id: 'mason-worker', 
-				isSolid: false, 
+				isSolid: true, 
 				isBackground: false, 
-				props: {}, 
+				props: {
+					direction: 'right'
+				}, 
 				methodId: id 
 			});
 		} 
@@ -77,7 +98,7 @@ function drawMainMenu() {
         height: (Game.entitySize * 15),
         image: rockImg,
         id: 'rock',
-        isSolid: false,
+        isSolid: true,
         action: { method: function(id) { mineRock(); }},
         props: {},
         methodId: id
@@ -85,8 +106,32 @@ function drawMainMenu() {
     }
   };
   Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
+  Game.addMethod(Game.methodSetup);
+  
+  Game.collisionSetup = {
+    primary: 'mason-worker',
+    target: 'rock',
+    method: function(id) {masonRockCollision(this.methodId)},
+    methodId: undefined,
+  }
+  Game.addCollision(Game.collisionSetup);
 }
 
 function mineRock() {
 	console.log('chiseling rock!');
+}
+
+function moveMasonWorker() {
+	const masonWorkers = Game.methodObjects.filter(x => x.id === 'mason-worker');
+	// move the mason worker
+	masonWorkers.forEach((worker, i) => {
+		if (worker.props.direction === 'right') {
+			masonWorkers[i].posX += Game.moveEntity(0.1, Game.enumDirections.leftRight);
+		}
+	});
+}
+
+function masonRockCollision(methodId) {
+	console.log(methodId);
 }

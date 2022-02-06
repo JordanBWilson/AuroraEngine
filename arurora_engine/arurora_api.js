@@ -103,6 +103,9 @@ let Game = { // the user will want to use this object
       if (this.selectedSetting === Game.enumSettings.low) {
         return (Game.canvas.height * speedPerc) * 4;
       }
+      if (!this.selectedSetting) {
+        return (Game.canvas.height * speedPerc);
+      }
       
     }
     if (direction === this.enumDirections.leftRight) {
@@ -114,6 +117,9 @@ let Game = { // the user will want to use this object
       }
       if (this.selectedSetting === Game.enumSettings.low) {
         return (Game.canvas.width * speedPerc) * 4;
+      }
+      if (!this.selectedSetting) {
+        return (Game.canvas.width * speedPerc);
       }
     }
     
