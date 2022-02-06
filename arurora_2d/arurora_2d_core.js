@@ -611,13 +611,11 @@ function drawImagePatternMethod(incomingImgPat) {
    }
 }
 function redrawImagePattern(incomingImgPat) {
-  let patternX = 0;
-  // console.log(incomingImgPat);
-  if (incomingImgPat && Main.isResizing) {
-    console.log(incomingImgPat.width);
-    while (patternX <= incomingImgPat.width) {
-      Main.stage.drawImage(incomingImgPat.image, patternX, incomingImgPat.posY, incomingImgPat.patternWidth, incomingImgPat.patternHeight);
-      patternX += incomingImgPat.patternWidth
+  if (Game.entitySize > 0) { // when the game is ready...
+    for (let x = incomingImgPat.posX; x < incomingImgPat.width; x += incomingImgPat.patternWidth) {
+      for (let y = incomingImgPat.posY; y < incomingImgPat.height; y += incomingImgPat.patternHeight) {
+        Main.stage.drawImage(incomingImgPat.image, x, y, incomingImgPat.patternWidth, incomingImgPat.patternHeight);
+      }
     }
   }
   

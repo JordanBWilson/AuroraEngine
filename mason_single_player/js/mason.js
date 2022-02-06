@@ -36,11 +36,11 @@ function drawMainMenu() {
 		method: function(id) {
 			drawImagePattern({ 
 				posX: 0, 
-				posY: 0, 
+				posY: (Game.canvas.height) * 0.50, 
 				width: (Game.canvas.width), 
-				height: (Game.entitySize * 10), 
-				patternWidth: (Game.entitySize * 10), 
-				patternHeight: (Game.entitySize * 10),
+				height: (Game.canvas.height), 
+				patternWidth: (Game.entitySize * 20), 
+				patternHeight: (Game.entitySize * 20),
 				image: grassImg, 
 				id: 'grass-background', 
 				isSolid: false, 
