@@ -4,6 +4,12 @@ const grassImg = new Image();
 const masonWorkerPath = './assets/images/stoneWorker.png';
 const rock1Path = './assets/images/rock1.png';
 const grassPath = './assets/images/grass.png';
+
+// this will keep track of the game
+let gameObject = {
+	money: 0
+};
+
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	masonWorkerImg.src = masonWorkerPath;
@@ -82,7 +88,7 @@ function drawMainMenu() {
 				isSolid: true, 
 				isBackground: false, 
 				props: {
-					direction: 'right'
+					direction: 'right',
 				}, 
 				methodId: id 
 			});
@@ -92,13 +98,13 @@ function drawMainMenu() {
 	Game.methodSetup = {
     method: function(id) {
       drawButtonImage({
-        posX: (Game.canvas.width * 0.50),
+        posX: (Game.canvas.width * 0.45),
         posY: (Game.canvas.height * 0.65),
         width: (Game.entitySize * 15),
         height: (Game.entitySize * 15),
         image: rockImg,
         id: 'rock',
-        isSolid: true,
+        isSolid: false,
         action: { method: function(id) { mineRock(); }},
         props: {},
         methodId: id
@@ -110,8 +116,8 @@ function drawMainMenu() {
   Game.addMethod(Game.methodSetup);
   
   Game.collisionSetup = {
-    primary: 'mason-worker',
-    target: 'rock',
+    primary: 'rock',
+    target: 'mason-worker',
     method: function(id) {masonRockCollision(this.methodId)},
     methodId: undefined,
   }
@@ -119,7 +125,8 @@ function drawMainMenu() {
 }
 
 function mineRock() {
-	console.log('chiseling rock!');
+	gameObject.money++;
+	console.log('chiseling rock! ', gameObject.money);
 }
 
 function moveMasonWorker() {
@@ -127,11 +134,21 @@ function moveMasonWorker() {
 	// move the mason worker
 	masonWorkers.forEach((worker, i) => {
 		if (worker.props.direction === 'right') {
-			masonWorkers[i].posX += Game.moveEntity(0.1, Game.enumDirections.leftRight);
+			masonWorkers[i].posX += Game.moveEntity(0.15, Game.enumDirections.leftRight);
+		}
+		if (worker.props.direction === 'left') {
+			masonWorkers[i].posX -= Game.moveEntity(0.15, Game.enumDirections.leftRight);
 		}
 	});
 }
 
 function masonRockCollision(methodId) {
-	console.log(methodId);
+	const masonWorker = Game.methodObjects.find(x => x.methodId === methodId);
+	if (masonWorker.props.direction === 'left') {
+		masonWorker.props.direction = 'right';
+	}
+	if (masonWorker.props.direction === 'right') {
+		masonWorker.props.direction = 'left';
+	}
+	
 }
