@@ -23,7 +23,8 @@ function mainLoop() {
           Main.clearStage = false;
           break;
         }
-        if (Main.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
+        if (Main.methodsToRun[i].methodId === undefined // if there isn't a methodId, add one
+          && Main.methodsToRun[i].id !== 'particle-effect') { // particle effects are not considered game objects so they will not get unique ids
           Main.globalId++;
           Main.methodsToRun[i].methodId = Main.globalId;
         }
@@ -136,11 +137,11 @@ function backgroundAnimationCheck(index) {
               if (Game.methodObjects[j].posX >= Game.methodObjects[index].posX - Game.methodObjects[j].width &&
                   Game.methodObjects[j].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[j].width || Game.methodObjects[j].align) {
                 let widthOrHeight = findWidthHeightMethodObjects(j);
-                
+
                 if (Game.methodObjects[j].posY >= Game.methodObjects[index].posY - Game.methodObjects[j].width  &&
                      Game.methodObjects[j].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight || Game.methodObjects[j].align) {
                   // find out what shape this is and redraw it
-                  if (!Game.methodObjects[j].isAnim && !Game.methodObjects[j].isBackground && j !== index) { 
+                  if (!Game.methodObjects[j].isAnim && !Game.methodObjects[j].isBackground && j !== index) {
                     // this will need to be split up as the shapes and graphics grow
                     if (Game.methodObjects[j].height) { // check for a rect shape
                       Game.methodObjects[j].isAnim = true;
@@ -169,7 +170,7 @@ function findMethodParamIndex(methodId) {
   return Game.methodObjects.findIndex(x => x.methodId === methodId);
 }
 function findWidthHeightMethodObjects(index) {
-  // because we are dealing with arcs as well, there might not be a height. 
+  // because we are dealing with arcs as well, there might not be a height.
   if (!Game.methodObjects[index].height) {
     return Game.methodObjects[index].width;
   } else {

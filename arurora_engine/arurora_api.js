@@ -1,5 +1,5 @@
 
-let Game = { // the user will want to use this object
+const Game = { // the user will want to use this object
   frameRate: 1000 / 60, // how fast the game is running
   methodObjects: [], // this holds all the current param values
   canvas: undefined, // the game stage
@@ -15,7 +15,7 @@ let Game = { // the user will want to use this object
     this.methodObjects = [];
     Main.methodObjectShadows = [];
     Main.globalId = 0;
-    
+
   },
   collisionSetup: { // use this to create collisions
     primary: '', // the id that's waiting for a collision
@@ -78,7 +78,7 @@ let Game = { // the user will want to use this object
       clearInterval(Main.interval);
       mainLoop();
     },0);
-    
+
   },
   selectedSetting: undefined, // the selected game setting
   enumSettings: {
@@ -91,7 +91,7 @@ let Game = { // the user will want to use this object
     leftRight: 1
   },
   // this will calculate the speed based on the direction and settings
-  moveEntity: function(speed, direction) { 
+  moveEntity: function(speed, direction) {
     const speedPerc = speed * 0.01;
     if (direction === this.enumDirections.topDown) {
       if (this.selectedSetting === Game.enumSettings.high) {
@@ -106,7 +106,7 @@ let Game = { // the user will want to use this object
       if (!this.selectedSetting) {
         return (Game.canvas.height * speedPerc);
       }
-      
+
     }
     if (direction === this.enumDirections.leftRight) {
       if (this.selectedSetting === Game.enumSettings.high) {
@@ -122,7 +122,7 @@ let Game = { // the user will want to use this object
         return (Game.canvas.width * speedPerc);
       }
     }
-    
+
   },
   enumEvents: { // ways to interact with the game
     touchDown: 'touchstart',
@@ -139,7 +139,7 @@ let Game = { // the user will want to use this object
   },
 };
 
-let Main = { // global variables to keep the game running nicely
+const Main = { // global variables to keep the game running nicely
   interval: undefined, // the main loop running
   stage: undefined, // the 2D game stage
   resizeWindow: undefined, // when the browser window gets resized in the timeout

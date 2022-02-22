@@ -44,7 +44,7 @@ window.addEventListener('resize', function() {
   if (!newGame) {
     setTimeout(function() {
       Game.clearStage();
-      gameLevel--;
+      gameLevel = 0;
       gamePoints = 0;
       playGame();
     }, 300);
@@ -82,7 +82,7 @@ function playGame() { // draw the game
   swipeTextBot = undefined;
   gameStart = false;
   scoreBoard = undefined;
-  
+
   nextGameLevel();
 }
 
@@ -100,13 +100,13 @@ function findGameObjects() {
   if (!readyText?.methodId && !gameStart) {
     readyText = Game.methodObjects.find(x => x.id === 'readyText');
   }
-  if (!tapText?.methodId && !gameStart) { 
+  if (!tapText?.methodId && !gameStart) {
     tapText = Game.methodObjects.find(x => x.id === 'tapText');
   }
-  if (!swipeTextTop?.methodId && !gameStart) { 
+  if (!swipeTextTop?.methodId && !gameStart) {
     swipeTextTop = Game.methodObjects.find(x => x.id === 'swipeTextTop');
   }
-  if (!swipeTextBot?.methodId && !gameStart) { 
+  if (!swipeTextBot?.methodId && !gameStart) {
     swipeTextBot = Game.methodObjects.find(x => x.id === 'swipeTextBot');
   }
   if (!scoreBoard?.methodId && !gameStart) {
@@ -291,7 +291,7 @@ function brickCollision(ball, bricks, methodId) {
           isDoublePoints = true;
           gamePoints++;
         }
-        gamePowerUp(); 
+        gamePowerUp();
       }
       if (bricks[i].props.hp < 1) {
         Game.deleteEntity(methodId);
@@ -301,7 +301,7 @@ function brickCollision(ball, bricks, methodId) {
   }
   setTimeout(function() {
     ball.props.collision = false;
-    if (Game.methodObjects.filter(x => x.id==='brick').length === 0) {
+    if (Game.methodObjects.filter(x => x.id === 'brick').length === 0) {
       playGame();
     }
   }, 0);
@@ -312,7 +312,7 @@ function brickPowerReveal(index) {
     bricks[index].props.powerUp = true;
     bricks[index].color = 'blue';
   }
-  
+
 }
 function paddleCollision() {
   if (ball.props.direction === 'bot' && paddle.props.direction === 'non') {
@@ -352,12 +352,12 @@ function gamePowerUp() {
       clearTimeout(powerTime);
     }, 6000);
   }
-  
+
 }
 function readyPaddle(event) {
-  if (!gameStart && readyText?.methodId && 
-  tapText?.methodId && swipeTextTop?.methodId && 
-  swipeTextBot?.methodId) { 
+  if (!gameStart && readyText?.methodId &&
+  tapText?.methodId && swipeTextTop?.methodId &&
+  swipeTextBot?.methodId) {
     gameStart = true;
     Game.deleteEntity(readyText.methodId);
     Game.deleteEntity(tapText.methodId);
@@ -369,7 +369,7 @@ function readyPaddle(event) {
 
 function movePaddle(event) {
   if (gameStart && isPaddleMoving) {
-    
+
     if (!event.changedTouches) { // this is the mouse controls
       if (paddle && paddle.props) {
         paddle.props.direction = 'non';
@@ -432,42 +432,42 @@ function nextGameLevel() { // draw the game
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) { moveGameBall(); }};
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { 
+  Game.methodSetup = {
     method: function(id) {
-      drawRect({ 
-        posX: 0, 
-        posY: 0, 
-        width: Game.canvas.width, 
-        height: Game.canvas.height, 
-        lineWidth: 1, 
-        color: 'black', 
-        isFilled: true, 
-        id: 'background', 
-        isSolid: false, 
-        isBackground: true, 
-        props: {}, 
-        methodId: id 
+      drawRect({
+        posX: 0,
+        posY: 0,
+        width: Game.canvas.width,
+        height: Game.canvas.height,
+        lineWidth: 1,
+        color: 'black',
+        isFilled: true,
+        id: 'background',
+        isSolid: false,
+        isBackground: true,
+        props: {},
+        methodId: id
       });
-    } 
+    }
   };
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { 
+  Game.methodSetup = {
     method: function(id) {
-      drawRect({ 
-        posX: 0, 
-        posY: (Game.canvas.height * 0.90), 
-        width: Game.canvas.width, 
-        height: Game.canvas.height, 
-        lineWidth: 1, 
-        color: 'black', 
-        isFilled: true, 
-        id: 'danger', 
-        isSolid: false, 
-        isBackground: false, 
-        props: {}, 
-        methodId: id 
+      drawRect({
+        posX: 0,
+        posY: (Game.canvas.height * 0.90),
+        width: Game.canvas.width,
+        height: Game.canvas.height,
+        lineWidth: 1,
+        color: 'black',
+        isFilled: true,
+        id: 'danger',
+        isSolid: false,
+        isBackground: false,
+        props: {},
+        methodId: id
       });
-    } 
+    }
   };
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawRect({ posX: (Game.canvas.width * 0.5 - (Game.entityWidth * 12.5)), posY: (Game.canvas.height * 0.82), width: (Game.entityWidth * 25), height: (Game.entitySize * 3), lineWidth: 1, color: 'green', isFilled: true, id: 'paddle', isSolid: true, isBackground: false, props: {direction: 'non'}, methodId: id });} };
@@ -475,23 +475,23 @@ function nextGameLevel() { // draw the game
   Game.methodSetup = {
     method: function(id) {
       drawArc({
-        posX: (Game.canvas.width * 0.5), 
-        posY: (Game.canvas.height * 0.78), 
+        posX: (Game.canvas.width * 0.5),
+        posY: (Game.canvas.height * 0.78),
         width: (Game.entitySize * 2),
-        aglStrt: 0, 
-        aglEnd: (2 * Math.PI), 
-        lineWidth: 1, 
-        color: 'green', 
-        isFilled: true, 
-        id: 'ball', 
-        isSolid: true, 
+        aglStrt: 0,
+        aglEnd: (2 * Math.PI),
+        lineWidth: 1,
+        color: 'green',
+        isFilled: true,
+        id: 'ball',
+        isSolid: true,
         props: {
           direction: 'top',
           collision: false
-        }, 
+        },
         methodId: id
       });
-    } 
+    }
   }
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Ready?', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.68), color: 'green', align: 'center', props: {}, id: 'readyText', methodId: id });} };
@@ -586,7 +586,7 @@ function drawGameBricks() {
   }
 }
 function drawLoseMenu() {
-  Game.clearStage(); 
+  Game.clearStage();
   newGame = true;
   Game.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Game.canvas.width, height: Game.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isSolid: false, isBackground: false, props: {}, methodId: id });} };
   Game.addMethod(Game.methodSetup);
@@ -785,7 +785,7 @@ function drawMainMenu() { // draw the main menu
   Game.addMethod(Game.methodSetup);
 }
 function selectSetting() {
-  drawMainMenu(); 
+  drawMainMenu();
   localStorage.setItem('bustoot-highscores', JSON.stringify(highscoreList));
 }
 function settingsMenu() {
@@ -901,7 +901,7 @@ function highscoreMenu() {
     Game.methodSetup = { method: function(id) {drawText({ font: '1.5em serif', msg: 'No High Scores Yet!', posX: (Game.canvas.width * 0.5), posY: (Game.canvas.height * 0.2), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
     Game.addMethod(Game.methodSetup);
   }
-  
+
   Game.methodSetup = {
     method: function(id) {
       drawButton({
@@ -949,20 +949,20 @@ function drawToolbar() {
     }
   };
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { 
+  Game.methodSetup = {
     method: function(id) {
-      drawText({ 
-        font: '1.7em serif', 
-        msg: gamePoints.toString() + ' Points', 
-        posX: (Game.canvas.width * 0.75), 
-        posY: (Game.canvas.height * 0.07), 
-        color: 'green', 
-        align: 'center', 
-        props: {}, 
-        id: 'score-board', 
-        methodId: id 
+      drawText({
+        font: '1.7em serif',
+        msg: gamePoints.toString() + ' Points',
+        posX: (Game.canvas.width * 0.75),
+        posY: (Game.canvas.height * 0.07),
+        color: 'green',
+        align: 'center',
+        props: {},
+        id: 'score-board',
+        methodId: id
       });
-    } 
+    }
   };
   Game.addMethod(Game.methodSetup);
 }

@@ -16,83 +16,84 @@ let gameObject = {
 	rockImg.src = rock1Path;
 	grassImg.src = grassPath;
 	drawMainMenu();
+
 })();
 
 function drawMainMenu() {
-	Game.methodSetup = { 
+	Game.methodSetup = {
 		method: function(id) {
-			drawRect({ 
-				posX: 0, 
-				posY: 0, 
-				width: Game.canvas.width, 
-				height: (Game.canvas.height) * 0.50, 
-				lineWidth: 1, 
-				color: '#0000FF', 
-				isFilled: true, 
-				id: 'sky-background', 
-				isSolid: false, 
-				isBackground: true, 
-				props: {}, 
-				methodId: id 
+			drawRect({
+				posX: 0,
+				posY: 0,
+				width: Game.canvas.width,
+				height: (Game.canvas.height) * 0.50,
+				lineWidth: 1,
+				color: '#0000FF',
+				isFilled: true,
+				id: 'sky-background',
+				isSolid: false,
+				isBackground: true,
+				props: {},
+				methodId: id
 			});
-		} 
+		}
 	};
 	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = { 
+	Game.methodSetup = {
 		method: function(id) {
-			drawRect({ 
-				posX: 0, 
-				posY: (Game.canvas.height) * 0.50, 
-				width: Game.canvas.width, 
-				height: Game.canvas.height, 
-				lineWidth: 1, 
-				color: '#3C7521', 
-				isFilled: true, 
-				id: 'grass-background', 
-				isSolid: false, 
-				isBackground: false, 
-				props: {}, 
-				methodId: id 
+			drawRect({
+				posX: 0,
+				posY: (Game.canvas.height) * 0.50,
+				width: Game.canvas.width,
+				height: Game.canvas.height,
+				lineWidth: 1,
+				color: '#3C7521',
+				isFilled: true,
+				id: 'grass-background',
+				isSolid: false,
+				isBackground: false,
+				props: {},
+				methodId: id
 			});
-		} 
+		}
 	};
 	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = { 
+	Game.methodSetup = {
 		method: function(id) {
-			drawImagePattern({ 
-				posX: 0, 
-				posY: (Game.canvas.height) * 0.50, 
-				width: (Game.canvas.width), 
-				height: (Game.canvas.height), 
-				patternWidth: (Game.entitySize * 20), 
+			drawImagePattern({
+				posX: 0,
+				posY: (Game.canvas.height) * 0.50,
+				width: (Game.canvas.width),
+				height: (Game.canvas.height),
+				patternWidth: (Game.entitySize * 20),
 				patternHeight: (Game.entitySize * 20),
-				image: grassImg, 
-				id: 'grass-background', 
-				isSolid: false, 
-				isBackground: true, 
-				props: {}, 
-				methodId: id 
+				image: grassImg,
+				id: 'grass-background',
+				isSolid: false,
+				isBackground: true,
+				props: {},
+				methodId: id
 			});
-		} 
+		}
 	};
 	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = { 
+	Game.methodSetup = {
 		method: function(id) {
-			drawImage({ 
-				posX: 0, 
-				posY: (Game.canvas.height * 0.65), 
-				width: (Game.entitySize * 10), 
-				height: (Game.entitySize * 10), 
-				image: masonWorkerImg, 
-				id: 'mason-worker', 
-				isSolid: true, 
-				isBackground: false, 
+			drawImage({
+				posX: 0,
+				posY: (Game.canvas.height * 0.65),
+				width: (Game.entitySize * 10),
+				height: (Game.entitySize * 10),
+				image: masonWorkerImg,
+				id: 'mason-worker',
+				isSolid: true,
+				isBackground: false,
 				props: {
 					direction: 'right',
-				}, 
-				methodId: id 
+				},
+				methodId: id
 			});
-		} 
+		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
@@ -114,7 +115,7 @@ function drawMainMenu() {
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
   Game.addMethod(Game.methodSetup);
-  
+
   Game.collisionSetup = {
     primary: 'rock',
     target: 'mason-worker',
@@ -122,6 +123,7 @@ function drawMainMenu() {
     methodId: undefined,
   }
   Game.addCollision(Game.collisionSetup);
+	Particle.drawSpark({shape: 1});
 }
 
 function mineRock() {
@@ -150,5 +152,5 @@ function masonRockCollision(methodId) {
 	if (masonWorker.props.direction === 'right') {
 		masonWorker.props.direction = 'left';
 	}
-	
+
 }

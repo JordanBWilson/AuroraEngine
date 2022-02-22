@@ -30,11 +30,8 @@ function drawButtonImage(incomingButtonImage) {
   drawButtonImageMethod(incomingButtonImage);
 }
 
-// future Jordan, use the rect method to draw the image method. no need for an arc.
-// plus it will work for the backgrounds.
-// also make sure to make a button image method as well
+// this is where all the work happens for the methods above
 
-// this is where all the work happens
 function drawTextMethod(incomingText) {
   let doesExist = doesMethodParamExist(incomingText.methodId);
   let index = -1;
@@ -81,12 +78,12 @@ function drawTextMethod(incomingText) {
     redrawText(incomingText);
   }
   // checking for animations
-  if (doesExist && 
-   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
-   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
-   Game.methodObjects[index].font !== Main.methodObjectShadows[index].font || 
-   Game.methodObjects[index].msg !== Main.methodObjectShadows[index].msg || 
-   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
+  if (doesExist &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].font !== Main.methodObjectShadows[index].font ||
+   Game.methodObjects[index].msg !== Main.methodObjectShadows[index].msg ||
+   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color ||
    Game.methodObjects[index].align !== Main.methodObjectShadows[index].align)
    ) {
       redrawText(Game.methodObjects[index]);
@@ -97,11 +94,11 @@ function drawTextMethod(incomingText) {
       redrawText(Game.methodObjects[index]);
       Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
-    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
-    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
-    Game.methodObjects[index].font === Main.methodObjectShadows[index].font || 
-    Game.methodObjects[index].msg === Main.methodObjectShadows[index].msg || 
-    Game.methodObjects[index].color === Main.methodObjectShadows[index].color || 
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].font === Main.methodObjectShadows[index].font ||
+    Game.methodObjects[index].msg === Main.methodObjectShadows[index].msg ||
+    Game.methodObjects[index].color === Main.methodObjectShadows[index].color ||
     Game.methodObjects[index].align === Main.methodObjectShadows[index].align)) {
       Game.methodObjects[index].isAnim = false;
     }
@@ -121,7 +118,7 @@ function drawRectMethod(incomingRect) {
     if (Game.methodObjects[index].isBackground) {
       backgroundAnimationCheck(index);
     }
-    
+
   }
   if (!doesExist) {
     let rect = {
@@ -175,31 +172,31 @@ function drawRectMethod(incomingRect) {
   }
   // checking for animations that isn't a background
   if (doesExist && !Game.methodObjects[index].isBackground &&
-   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
-   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
-   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
-   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
-   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth || 
-   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
+   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
+   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color ||
    Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
    ) {
       redrawRect(Game.methodObjects[index]);
       const shadowRect = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowRect;
       Game.methodObjects[index].isAnim = true;
-   } else if (doesExist && 
-    !Game.methodObjects[index].isBackground && 
+   } else if (doesExist &&
+    !Game.methodObjects[index].isBackground &&
     Game.methodObjects[index].isAnim) {
       Game.methodObjects[index].isAnim = true;
       redrawRect(Game.methodObjects[index]);
-   } else if (doesExist && 
+   } else if (doesExist &&
     !Game.methodObjects[index].isBackground &&
-    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
-    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
-    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
-    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
-    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth || 
-    Game.methodObjects[index].color === Main.methodObjectShadows[index].color || 
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
+    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
+    Game.methodObjects[index].color === Main.methodObjectShadows[index].color ||
     Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
       Game.methodObjects[index].isAnim = false;
    }
@@ -272,15 +269,15 @@ function drawArcMethod(incomingArc) {
     Main.methodObjectShadows[index].props = incomingArc.props;
     redrawArc(incomingArc);
   }
-  // checking for animations
-  if (doesExist && 
-   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
-   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
-   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
-   Game.methodObjects[index].aglStrt !== Main.methodObjectShadows[index].aglStrt || 
-   Game.methodObjects[index].aglEnd !== Main.methodObjectShadows[index].aglEnd || 
-   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth || 
-   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color || 
+  // checking for animation
+  if (doesExist &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].aglStrt !== Main.methodObjectShadows[index].aglStrt ||
+   Game.methodObjects[index].aglEnd !== Main.methodObjectShadows[index].aglEnd ||
+   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
+   Game.methodObjects[index].color !== Main.methodObjectShadows[index].color ||
    Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
    ) {
      redrawArc(Game.methodObjects[index]);
@@ -289,16 +286,15 @@ function drawArcMethod(incomingArc) {
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
      redrawArc(Game.methodObjects[index]);
-     Game.methodObjects[index].isAnim = false;
-      
+     Game.methodObjects[index].isAnim = true;
    } else if (doesExist &&
-    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
-    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
-    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
-    Game.methodObjects[index].aglStrt === Main.methodObjectShadows[index].aglStrt || 
-    Game.methodObjects[index].aglEnd === Main.methodObjectShadows[index].aglEnd || 
-    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth || 
-    Game.methodObjects[index].color === Main.methodObjectShadows[index].color || 
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].aglStrt === Main.methodObjectShadows[index].aglStrt ||
+    Game.methodObjects[index].aglEnd === Main.methodObjectShadows[index].aglEnd ||
+    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
+    Game.methodObjects[index].color === Main.methodObjectShadows[index].color ||
     Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
       Game.methodObjects[index].isAnim = false;
    }
@@ -382,13 +378,13 @@ function drawButtonMethod(incomingButton) {
     redrawButton(incomingButton);
   }
   // checking for animations
-  if (doesExist && 
-   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
-   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
-   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
-   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
-   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth || 
-   Game.methodObjects[index].btnColor !== Main.methodObjectShadows[index].btnColor || 
+  if (doesExist &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
+   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
+   Game.methodObjects[index].btnColor !== Main.methodObjectShadows[index].btnColor ||
    Game.methodObjects[index].txtColor !== Main.methodObjectShadows[index].txtColor ||
    Game.methodObjects[index].font !== Main.methodObjectShadows[index].font ||
    Game.methodObjects[index].msg !== Main.methodObjectShadows[index].font ||
@@ -402,12 +398,12 @@ function drawButtonMethod(incomingButton) {
       redrawButton(Game.methodObjects[index]);
       Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
-    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
-    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
-    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
-    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
-    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth || 
-    Game.methodObjects[index].btnColor === Main.methodObjectShadows[index].btnColor || 
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
+    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
+    Game.methodObjects[index].btnColor === Main.methodObjectShadows[index].btnColor ||
     Game.methodObjects[index].txtColor === Main.methodObjectShadows[index].txtColor ||
     Game.methodObjects[index].font === Main.methodObjectShadows[index].font ||
     Game.methodObjects[index].msg === Main.methodObjectShadows[index].font ||
@@ -491,27 +487,27 @@ function drawImageMethod(incomingImg) {
   }
   // checking for animations that isn't a background
   if (doesExist && !Game.methodObjects[index].isBackground &&
-   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
-   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
-   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
-   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
    Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
    ) {
       redrawImage(Game.methodObjects[index]);
       const shadowImage = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowImage;
       Game.methodObjects[index].isAnim = true;
-   } else if (doesExist && 
-    !Game.methodObjects[index].isBackground && 
+   } else if (doesExist &&
+    !Game.methodObjects[index].isBackground &&
     Game.methodObjects[index].isAnim) {
       Game.methodObjects[index].isAnim = true;
       redrawImage(Game.methodObjects[index]);
-   } else if (doesExist && 
+   } else if (doesExist &&
     !Game.methodObjects[index].isBackground &&
-    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
-    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
-    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
-    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
     Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
       Game.methodObjects[index].isAnim = false;
    }
@@ -581,11 +577,11 @@ function drawImagePatternMethod(incomingImgPat) {
   }
   // checking for animations that isn't a background
   if (doesExist && !Game.methodObjects[index].isBackground &&
-   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
-   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
-   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
-   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
-   Game.methodObjects[index].patternWidth !== Main.methodObjectShadows[index].patternWidth || 
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
+   Game.methodObjects[index].patternWidth !== Main.methodObjectShadows[index].patternWidth ||
    Game.methodObjects[index].patternHeight !== Main.methodObjectShadows[index].patternHeight ||
    Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
    ) {
@@ -593,18 +589,18 @@ function drawImagePatternMethod(incomingImgPat) {
       const shadowImagePat = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowImagePat;
       Game.methodObjects[index].isAnim = true;
-   } else if (doesExist && 
-    !Game.methodObjects[index].isBackground && 
+   } else if (doesExist &&
+    !Game.methodObjects[index].isBackground &&
     Game.methodObjects[index].isAnim) {
       Game.methodObjects[index].isAnim = true;
       redrawImagePattern(Game.methodObjects[index]);
-   } else if (doesExist && 
+   } else if (doesExist &&
     !Game.methodObjects[index].isBackground &&
-    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
-    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
-    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
-    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
-    Game.methodObjects[index].patternWidth === Main.methodObjectShadows[index].patternWidth || 
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
+    Game.methodObjects[index].patternWidth === Main.methodObjectShadows[index].patternWidth ||
     Game.methodObjects[index].patternHeight === Main.methodObjectShadows[index].patternHeight ||
     Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
       Game.methodObjects[index].isAnim = false;
@@ -618,8 +614,8 @@ function redrawImagePattern(incomingImgPat) {
       }
     }
   }
-  
-  
+
+
 }
 function drawButtonImageMethod(incomingButtonImage) {
   let doesExist = doesMethodParamExist(incomingButtonImage.methodId);
@@ -669,11 +665,11 @@ function drawButtonImageMethod(incomingButtonImage) {
     redrawImage(incomingButtonImage);
   }
   // checking for animations
-  if (doesExist && 
-   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY || 
-   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX || 
-   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width || 
-   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height || 
+  if (doesExist &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
    Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
    ) {
      redrawImage(Game.methodObjects[index]);
@@ -684,10 +680,10 @@ function drawButtonImageMethod(incomingButtonImage) {
       redrawImage(Game.methodObjects[index]);
       Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
-    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY || 
-    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX || 
-    Game.methodObjects[index].width === Main.methodObjectShadows[index].width || 
-    Game.methodObjects[index].height === Main.methodObjectShadows[index].height || 
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
     Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
       Game.methodObjects[index].isAnim = false;
    }
