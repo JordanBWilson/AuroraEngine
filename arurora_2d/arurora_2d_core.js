@@ -118,7 +118,6 @@ function drawRectMethod(incomingRect) {
     if (Game.methodObjects[index].isBackground) {
       backgroundAnimationCheck(index);
     }
-
   }
   if (!doesExist) {
     let rect = {
