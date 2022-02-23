@@ -1,4 +1,8 @@
 const Particle = {
+  initParticles: function() {
+    Game.methodSetup = { method: function(id) { moveParticles(); }};
+    Game.addMethod(Game.methodSetup);  
+  },  
   drawSpark: function(drawParticle) {
     // const particle = {
     //   posX:0,
@@ -12,8 +16,7 @@ const Particle = {
     //   size: 0, // width and height
     // }
 
-    if (drawParticle?.shape === this.enumShapes.circle) {
-      console.log('made it');
+    if (drawParticle?.shape === this.enumShapes.arc) {
       Game.methodSetup = {
         method: function(id) {
           drawArc({
@@ -28,7 +31,7 @@ const Particle = {
             id: 'particle-effect',
             isSolid: false,
             props: {
-              direction: 'top',
+              direction: 'left',
               collision: false
             },
             methodId: id
@@ -51,7 +54,10 @@ const Particle = {
     				id: 'particle-effect',
     				isSolid: false,
     				isBackground: false,
-    				props: {},
+    				props: {
+                        direction: 'right',
+                        collision: false
+                    },
     				methodId: id
     			});
     		}
@@ -61,7 +67,21 @@ const Particle = {
 
   },
   enumShapes: {
-    circle: 0,
+    arc: 0,
     rect: 1,
   }
 }
+
+function moveParticles() {
+	const particles = Game.methodObjects.filter(x => x.id === 'particle-effect');
+	// move the particles
+	particles.forEach((particle, i) => {
+		if (particle.props.direction === 'right') {
+			particles[i].posX += Game.moveEntity(0.15, Game.enumDirections.leftRight);
+		}
+		if (particle.props.direction === 'left') {
+			particles[i].posX -= Game.moveEntity(0.15, Game.enumDirections.leftRight);
+		}
+	});
+}
+

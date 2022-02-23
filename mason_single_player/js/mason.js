@@ -123,7 +123,8 @@ function drawMainMenu() {
     methodId: undefined,
   }
   Game.addCollision(Game.collisionSetup);
-	Particle.drawSpark({shape: 1});
+  Particle.initParticles();
+  Particle.drawSpark({shape: 0});
 }
 
 function mineRock() {
