@@ -129,6 +129,7 @@ function drawMainMenu() {
 	  posY: 200, 
 	  shape: 0, 
 	  color: 'purple', 
+	  count: 1,
 	  size: (Game.canvas.width * 0.05) 
 	});
 }

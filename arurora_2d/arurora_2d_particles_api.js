@@ -17,32 +17,34 @@ const Particle = {
     // }
 
     if (drawParticle?.shape === this.enumShapes.arc) {
-      Game.methodSetup = {
-          
-        method: function(id) {
-          drawArc({
-            posX: drawParticle.posX,
-            posY: drawParticle.posY,
-            width: drawParticle.size,
-            aglStrt: 0,
-            aglEnd: (2 * Math.PI),
-            lineWidth: 1,
-            color: drawParticle.color,
-            isFilled: true,
-            id: 'particle-effect',
-            isSolid: drawParticle.isSolid,
-            props: {
-              direction: 'left',
-              collision: false
-            },
-            methodId: undefined
-          });
+        for (let i = 0; i < drawParticle.count; i++) {
+            Game.methodSetup = {
+                method: function(id) {
+                    drawArc({
+                        posX: drawParticle.posX,
+                        posY: drawParticle.posY,
+                        width: drawParticle.size,
+                        aglStrt: 0,
+                        aglEnd: (2 * Math.PI),
+                        lineWidth: 1,
+                        color: drawParticle.color,
+                        isFilled: true,
+                        id: 'particle-effect',
+                        isSolid: drawParticle.isSolid,
+                        props: {
+                            direction: 'left',
+                            collision: false
+                        },
+                        methodId: undefined
+                    });
+            }
         }
-      }
-      Game.addMethod(Game.methodSetup);
+            Game.addMethod(Game.methodSetup);
+        }
     }
     if (drawParticle?.shape === this.enumShapes.rect) {
-      Game.methodSetup = {
+        for (let i = 0; i < drawParticle.count; i++) {
+            Game.methodSetup = {
     		method: function(id) {
     			drawRect({
     				posX: drawParticle.posX,
@@ -63,7 +65,8 @@ const Particle = {
     			});
     		}
     	};
-    	Game.addMethod(Game.methodSetup);
+            Game.addMethod(Game.methodSetup);
+        }
     }
 
   },
