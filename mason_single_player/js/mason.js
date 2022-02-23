@@ -65,8 +65,8 @@ function drawMainMenu() {
 				posY: (Game.canvas.height) * 0.50,
 				width: (Game.canvas.width),
 				height: (Game.canvas.height),
-				patternWidth: (Game.entitySize * 20),
-				patternHeight: (Game.entitySize * 20),
+				patternWidth: (Game.canvas.height * 0.2),
+				patternHeight: (Game.canvas.height * 0.2),
 				image: grassImg,
 				id: 'grass-background',
 				isSolid: false,
@@ -82,8 +82,8 @@ function drawMainMenu() {
 			drawImage({
 				posX: 0,
 				posY: (Game.canvas.height * 0.65),
-				width: (Game.entitySize * 10),
-				height: (Game.entitySize * 10),
+				width: (Game.canvas.height * 0.1),
+				height: (Game.canvas.height * 0.1),
 				image: masonWorkerImg,
 				id: 'mason-worker',
 				isSolid: true,
@@ -101,8 +101,8 @@ function drawMainMenu() {
       drawButtonImage({
         posX: (Game.canvas.width * 0.45),
         posY: (Game.canvas.height * 0.65),
-        width: (Game.entitySize * 15),
-        height: (Game.entitySize * 15),
+        width: (Game.canvas.height * 0.15),
+        height: (Game.canvas.height * 0.15),
         image: rockImg,
         id: 'rock',
         isSolid: false,
@@ -124,7 +124,13 @@ function drawMainMenu() {
   }
   Game.addCollision(Game.collisionSetup);
   Particle.initParticles();
-  Particle.drawSpark({shape: 0});
+  Particle.drawSpark({
+	  posX: 200, 
+	  posY: 200, 
+	  shape: 0, 
+	  color: 'purple', 
+	  size: (Game.canvas.width * 0.05) 
+	});
 }
 
 function mineRock() {

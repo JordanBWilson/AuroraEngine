@@ -18,23 +18,24 @@ const Particle = {
 
     if (drawParticle?.shape === this.enumShapes.arc) {
       Game.methodSetup = {
+          
         method: function(id) {
           drawArc({
-            posX: 200,
-            posY: 200,
-            width: (Game.entitySize * 2),
+            posX: drawParticle.posX,
+            posY: drawParticle.posY,
+            width: drawParticle.size,
             aglStrt: 0,
             aglEnd: (2 * Math.PI),
             lineWidth: 1,
-            color: 'purple',
+            color: drawParticle.color,
             isFilled: true,
             id: 'particle-effect',
-            isSolid: false,
+            isSolid: drawParticle.isSolid,
             props: {
               direction: 'left',
               collision: false
             },
-            methodId: id
+            methodId: undefined
           });
         }
       }
@@ -44,21 +45,21 @@ const Particle = {
       Game.methodSetup = {
     		method: function(id) {
     			drawRect({
-    				posX: 0,
-    				posY: 0,
-    				width: Game.canvas.width * 0.10,
-    				height: (Game.canvas.height) * 0.50,
+    				posX: drawParticle.posX,
+    				posY: drawParticle.posY,
+    				width: drawParticle.size,
+    				height: drawParticle.size,
     				lineWidth: 1,
-    				color: 'purple',
+    				color: drawParticle.color,
     				isFilled: true,
     				id: 'particle-effect',
-    				isSolid: false,
+    				isSolid: drawParticle.isSolid,
     				isBackground: false,
     				props: {
                         direction: 'right',
                         collision: false
                     },
-    				methodId: id
+    				methodId: undefined
     			});
     		}
     	};
