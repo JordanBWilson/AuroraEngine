@@ -1,8 +1,8 @@
 const Particle = {
   initParticles: function() {
     Game.methodSetup = { method: function(id) { moveParticles(); }};
-    Game.addMethod(Game.methodSetup);  
-  },  
+    Game.addMethod(Game.methodSetup);
+  },
   drawSpark: function(drawParticle) {
     // const particle = {
     //   posX:0,
@@ -17,63 +17,62 @@ const Particle = {
     // }
 
     if (drawParticle?.shape === this.enumShapes.arc) {
-        for (let i = 0; i < drawParticle.count; i++) {
-            Game.methodSetup = {
-                method: function(id) {
-                    drawArc({
-                        posX: drawParticle.posX,
-                        posY: drawParticle.posY,
-                        width: drawParticle.size,
-                        aglStrt: 0,
-                        aglEnd: (2 * Math.PI),
-                        lineWidth: 1,
-                        color: drawParticle.color,
-                        isFilled: true,
-                        id: 'particle-effect',
-                        isSolid: drawParticle.isSolid,
-                        props: {
-                            direction: 'left',
-                            collision: false
-                        },
-                        methodId: undefined
-                    });
-            }
+      for (let i = 0; i < drawParticle.count; i++) {
+        Game.methodSetup = {
+          method: function(id) {
+            drawArc({
+                posX: drawParticle.posX,
+                posY: drawParticle.posY,
+                width: drawParticle.size,
+                aglStrt: 0,
+                aglEnd: (2 * Math.PI),
+                lineWidth: 1,
+                color: drawParticle.color,
+                isFilled: true,
+                id: 'particle-effect',
+                isSolid: drawParticle.isSolid,
+                props: {
+                    direction: 'left',
+                    collision: false
+                },
+                methodId: undefined
+            });
+          }
         }
-            Game.addMethod(Game.methodSetup);
-        }
+        Game.addMethod(Game.methodSetup);
+      }
     }
     if (drawParticle?.shape === this.enumShapes.rect) {
-        for (let i = 0; i < drawParticle.count; i++) {
-            Game.methodSetup = {
-    		method: function(id) {
-    			drawRect({
-    				posX: drawParticle.posX,
-    				posY: drawParticle.posY,
-    				width: drawParticle.size,
-    				height: drawParticle.size,
-    				lineWidth: 1,
-    				color: drawParticle.color,
-    				isFilled: true,
-    				id: 'particle-effect',
-    				isSolid: drawParticle.isSolid,
-    				isBackground: false,
-    				props: {
-                        direction: 'right',
-                        collision: false
-                    },
-    				methodId: undefined
-    			});
-    		}
-    	};
-            Game.addMethod(Game.methodSetup);
-        }
+      for (let i = 0; i < drawParticle.count; i++) {
+          Game.methodSetup = {
+        		method: function(id) {
+        			drawRect({
+        				posX: drawParticle.posX,
+        				posY: drawParticle.posY,
+        				width: drawParticle.size,
+        				height: drawParticle.size,
+        				lineWidth: 1,
+        				color: drawParticle.color,
+        				isFilled: true,
+        				id: 'particle-effect',
+        				isSolid: drawParticle.isSolid,
+        				isBackground: false,
+        				props: {
+                  direction: 'right',
+                  collision: false
+                },
+        				methodId: undefined
+        			});
+        		}
+  	       };
+           Game.addMethod(Game.methodSetup);
+         }
+       }
+    },
+    enumShapes: {
+      arc: 0,
+      rect: 1,
     }
-
-  },
-  enumShapes: {
-    arc: 0,
-    rect: 1,
-  }
 }
 
 function moveParticles() {
@@ -88,4 +87,3 @@ function moveParticles() {
 		}
 	});
 }
-

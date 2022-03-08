@@ -16,6 +16,17 @@ let gameObject = {
 	rockImg.src = rock1Path;
 	grassImg.src = grassPath;
 	drawMainMenu();
+	// let xhr = new XMLHttpRequest();
+	// xhr.open('get', './assets/images/testKnight.GIF');
+	// xhr.setRequestHeader('Content-Type', 'image/gif');
+	// xhr.send();
+	// xhr.onreadystatechange = function() {
+	// 	if (xhr.readyState === 4) {
+	// 		if (xhr.status === 200) {
+	// 			console.log(xhr.response);
+	// 		}
+	// 	}
+	// }
 
 })();
 
@@ -125,12 +136,12 @@ function drawMainMenu() {
   Game.addCollision(Game.collisionSetup);
   Particle.initParticles();
   Particle.drawSpark({
-	  posX: 200, 
-	  posY: 200, 
-	  shape: 0, 
-	  color: 'purple', 
+	  posX: 200,
+	  posY: 200,
+	  shape: 0,
+	  color: 'purple',
 	  count: 1,
-	  size: (Game.canvas.width * 0.05) 
+	  size: (Game.canvas.width * 0.05)
 	});
 }
 
