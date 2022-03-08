@@ -130,7 +130,7 @@ function drawMainMenu() {
   Game.collisionSetup = {
     primary: 'rock',
     target: 'mason-worker',
-    method: function(id) {masonRockCollision(this.methodId)},
+    method: function(id) { masonRockCollision(this.methodId) },
     methodId: undefined,
   }
   Game.addCollision(Game.collisionSetup);
