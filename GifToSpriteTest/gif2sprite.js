@@ -37,7 +37,6 @@ function sampleImg(img, banana) {
         canvas.height = rows * finalRowWidth;
 
         var ctx = canvas.getContext("2d");
-
         for (var i = 0; i < gif.frameCount; i++) {
             var c = i % cols;
             var r = Math.floor(i / cols);
