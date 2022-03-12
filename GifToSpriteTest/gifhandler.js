@@ -13,7 +13,7 @@
         'jsgif',
     ]);
     core.logScript();
-
+    console.log(core);
     var currentScript = core.getCurrentScript();
     var gifWorker;
     var gifWorkerCallbacks = {};
@@ -171,7 +171,7 @@
             );
           },
           gce: function (gce) {
-              console.log(gce);
+              // console.log(gce);
             if(frameInfos.length==0 || frameInfos[frameInfos.length-1].gce) {
                 frameInfos.push({});
             }
