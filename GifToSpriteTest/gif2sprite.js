@@ -14,14 +14,14 @@ function calculateBestSize(width, height, count) {
   return bestcols;
 }
 
-function putImage(src, ctx, x, y, w, h) {
-  var img = new Image();
-  img.onload = function() {
-    ctx.drawImage(img, x, y, w, h);
+function handleFiles(e) {
+  var reader = new FileReader;
+  reader.onload = function(event) {
+    var img = document.getElementById('image1');
+    img.src = event.target.result;
   }
-  img.src = src;
+  reader.readAsDataURL(e.target.files[0]);
 }
-
 function sampleImg(img, banana) {
     // var gif = DOK.createGif(img.src); // original call
     var gif = createGif(img.src);
@@ -60,13 +60,11 @@ function sampleImg(img, banana) {
         function completedCallback() {
             count++;
             if(count>=gif.frameCount) {
-                setTimeout(function() {
-                    var imagetype = document.getElementById('imagetype').value;
-                    var url = canvas.toDataURL(imagetype);
-                    document.getElementById('result').src = url;
-                    var link = document.getElementById('link');
-                    link.href = url;
-                }, 100);
+              var imagetype = document.getElementById('imagetype').value;
+              var url = canvas.toDataURL(imagetype);
+              document.getElementById('result').src = url;
+              var link = document.getElementById('link');
+              link.href = url;
             }
         }
     });
@@ -124,10 +122,10 @@ function createGif(src) {
         multiFrame: true,
         getFrame: function() {
             if(!gifImage.complete) return 0;
-            if(core.time > renderTime) {
+            if(new Date() > renderTime) {
                 currentFrame = (currentFrame+1) % frameInfos.length;
                 var totalAnimationTime = frameInfos[frameInfos.length-1].cycleTime;
-                renderTime = Math.floor(core.time / totalAnimationTime) * totalAnimationTime + frameInfos[currentFrame].cycleTime;
+                renderTime = Math.floor(new Date() / totalAnimationTime) * totalAnimationTime + frameInfos[currentFrame].cycleTime;
             }
             return currentFrame;
         },
@@ -229,7 +227,6 @@ function createGif(src) {
         );
       },
       gce: function (gce) {
-          // console.log(gce);
         if(frameInfos.length==0 || frameInfos[frameInfos.length-1].gce) {
             frameInfos.push({});
         }
@@ -308,14 +305,14 @@ function loadAsync(src, callback, binary, method, data) {
              if (xhr.status === 200) {
                  callback(xhr.responseText);
              } else {
-                 core.handleError(xhr.responseText);
+                 handleError(xhr.responseText);
              }
            }
          }
      );
      xhr.addEventListener('error',
          function (e) {
-             core.handleError(e);
+             handleError(e);
          }
      );
      xhr.send(data);
@@ -338,15 +335,31 @@ function getCurrentScript() {
      };
 }
 
+function handleError(error, soft) {
+     if(Array.isArray(error)) {
+         var array = [];
+         for(var i=0;i<error.length;i++) {
+             array.push(error[i]);
+             array.push("\n ");
+         }
+         console.error.apply(null, array);
+     } else {
+         console.error(error);
+     }
+     if(!soft) {
+         throw new Error("Last error terminated the process.");
+     }
+}
+
 document.addEventListener("DOMContentLoaded",
     function() {
-        var input = document.getElementById('input');
-
-        var img = document.getElementById('image1');
-        var banana = true;
-        img.onload = function() {
-          sampleImg(img, banana);
-          banana = false;
-        }
+      var input = document.getElementById('input');
+      input.addEventListener('change', handleFiles);
+      var img = document.getElementById('image1');
+      var banana = true;
+      img.onload = function() {
+        sampleImg(img, banana);
+        banana = false;
+      }
     }
 );
