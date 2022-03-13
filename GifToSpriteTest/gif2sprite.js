@@ -3,7 +3,7 @@ function calculateBestSize(width, height, count) {
   var bestcols = 1,
     bestratio = Number.MAX_VALUE;
   for (var cols = 1; cols <= count; cols++) {
-    var w = cols * width;
+    var w = width;//cols * width;
     var h = Math.ceil(count / cols) * height;
     var ratio = w / h;
     if (Math.abs(ratio - 1) < bestratio) {
@@ -43,11 +43,12 @@ function sampleImg(img, banana) {
 
             gif.putOnCanvas(
                 ctx,
+                canvas,
                 0,0,
                 finalColWidth,
                 finalRowWidth,
                 c * finalColWidth,
-                r * finalRowWidth,
+                r * finalColWidth,
                 finalColWidth,
                 finalRowWidth,
                 i,
@@ -130,6 +131,7 @@ function createGif(src) {
         },
         putOnCanvas: function(
                 ctx,
+                canvas,
                 srcX, srcY, srcWidth, srcHeight,
                 destX, destY, destWidth, destHeight,
                 frameIndex,
@@ -182,9 +184,13 @@ function createGif(src) {
                      frameInfo, cData,
                      header,
                      function(cData) {
-                       // this is where each piece of the gif are copied to the canvas
-                       // try scaling the image here
-                        ctx.putImageData(cData, destX + img.leftPos, destY + img.topPos);
+                        // this is where each piece of the gif are copied to the canvas
+                        // try scaling the image here
+                        // ctx.clearRect(0, 0, canvas.width, canvas.height); // clears the last image
+                        ctx.putImageData(cData, destX + img.leftPos, destY + img.topPos); // old method
+                        // ctx.putImageData(cData, img.leftPos, img.topPos); // this will keep the image in one spot
+
+                        console.log(canvas.toDataURL()); // when the image is ready, this is the raw base64 png
                         frameInfos[frameIndex].renderPosition = {
                             context: ctx,
                             x: destX,
