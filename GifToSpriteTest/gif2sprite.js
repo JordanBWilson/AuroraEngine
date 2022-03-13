@@ -182,6 +182,8 @@ function createGif(src) {
                      frameInfo, cData,
                      header,
                      function(cData) {
+                       // this is where each piece of the gif are copied to the canvas
+                       // try scaling the image here
                         ctx.putImageData(cData, destX + img.leftPos, destY + img.topPos);
                         frameInfos[frameIndex].renderPosition = {
                             context: ctx,
