@@ -33,7 +33,7 @@ function sampleImg(img, banana) {
         var finalColWidth = Math.round(width * scale);
         var finalRowWidth = Math.round(height * scale);
         var canvas = document.createElement('canvas');
-        canvas.width = cols * finalColWidth;
+        canvas.width = finalColWidth;
         canvas.height = rows * finalRowWidth;
 
         var ctx = canvas.getContext("2d");
@@ -151,7 +151,7 @@ function createGif(src) {
                     function() {
                         plasterPixels(
                             srcX,srcY,srcWidth,srcHeight,
-                            destX,destY,destWidth,destHeight,
+                            0,0,destWidth,destHeight,
                             frameIndex
                         );
                     }
