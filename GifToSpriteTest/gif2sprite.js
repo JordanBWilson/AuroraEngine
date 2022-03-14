@@ -1,9 +1,13 @@
+var currentScript = getCurrentScript();
+var gifWorker;
+var gifWorkerCallbacks = {};
+var gifImages = [];
 
 function calculateBestSize(width, height, count) {
   var bestcols = 1,
     bestratio = Number.MAX_VALUE;
   for (var cols = 1; cols <= count; cols++) {
-    var w = width;//cols * width;
+    var w = width;
     var h = Math.ceil(count / cols) * height;
     var ratio = w / h;
     if (Math.abs(ratio - 1) < bestratio) {
@@ -13,7 +17,6 @@ function calculateBestSize(width, height, count) {
   }
   return bestcols;
 }
-
 function handleFiles(e) {
   var reader = new FileReader;
   reader.onload = function(event) {
@@ -23,7 +26,6 @@ function handleFiles(e) {
   reader.readAsDataURL(e.target.files[0]);
 }
 function sampleImg(img, banana) {
-    // var gif = DOK.createGif(img.src); // original call
     var gif = createGif(img.src);
     gif.addEventListener("load", function(e) {
         var width = gif.naturalWidth, height = gif.naturalHeight;
@@ -35,7 +37,6 @@ function sampleImg(img, banana) {
         var canvas = document.createElement('canvas');
         canvas.width = finalColWidth;
         canvas.height = rows * finalRowWidth;
-
         var ctx = canvas.getContext("2d");
         for (var i = 0; i < gif.frameCount; i++) {
             var c = i % cols;
@@ -55,11 +56,12 @@ function sampleImg(img, banana) {
                 completedCallback
             );
         }
-
         var count = 0;
         function completedCallback() {
             count++;
+
             if(count>=gif.frameCount) {
+              console.log(gifImages); // when the images is ready, these are the raw base64 pngs
               var imagetype = document.getElementById('imagetype').value;
               var url = canvas.toDataURL(imagetype);
               document.getElementById('result').src = url;
@@ -69,15 +71,6 @@ function sampleImg(img, banana) {
         }
     });
 }
-
-var currentScript = getCurrentScript();
-var gifWorker;
-var gifWorkerCallbacks = {};
-
-
-/**
- *  FUNCTION DEFINITIONS
- */
 function createGif(src) {
     var completeCallbacks = [];
     var sizeLoadedCallbacks = [];
@@ -157,8 +150,6 @@ function createGif(src) {
                     }
                 );
             }
-
-
             function plasterPixels(
                     srcX, srcY, srcWidth, srcHeight,
                     destX, destY, destWidth, destHeight,
@@ -184,13 +175,9 @@ function createGif(src) {
                      frameInfo, cData,
                      header,
                      function(cData) {
-                        // this is where each piece of the gif are copied to the canvas
-                        // try scaling the image here
-                        // ctx.clearRect(0, 0, canvas.width, canvas.height); // clears the last image
-                        ctx.putImageData(cData, destX + img.leftPos, destY + img.topPos); // old method
-                        // ctx.putImageData(cData, img.leftPos, img.topPos); // this will keep the image in one spot
+                        ctx.putImageData(cData, destX + img.leftPos, destY + img.topPos);
 
-                        console.log(canvas.toDataURL()); // when the image is ready, this is the raw base64 png
+                        gifImages.push(canvas.toDataURL());
                         frameInfos[frameIndex].renderPosition = {
                             context: ctx,
                             x: destX,
@@ -223,7 +210,6 @@ function createGif(src) {
             );
         }
     }
-
     var handler = {
       hdr: function (hdr) {
         header = hdr;
@@ -271,7 +257,6 @@ function createGif(src) {
     );
     return gifImage;
 }
-
 function initializeGifWorker() {
     gifWorker = new Worker(currentScript.path + "workers/gifworker.js");
     gifWorker.onmessage = function(e) {
@@ -279,12 +264,11 @@ function initializeGifWorker() {
        delete gifWorkerCallbacks[e.data.id];
     }
 }
-
 function sendToGifWorker(frameInfo, cData, header, callback) {
     if(!gifWorker) {
         initializeGifWorker();
     }
-    var id = md5(Math.random()+""+ new Date());
+    var id = Math.floor(Math.random() * 1000 + 1) + '-' + Math.floor(Math.random() * 1000 + 1) + '-' + Math.floor(Math.random() * 1000 + 1);
     gifWorkerCallbacks[id] = callback;
     gifWorker.postMessage({
         frameInfo: frameInfo,
@@ -293,7 +277,6 @@ function sendToGifWorker(frameInfo, cData, header, callback) {
         id: id
     });
 }
-
 function destroyEverything() {
     if(gifWorker) {
         gifWorker.terminate();
@@ -301,7 +284,6 @@ function destroyEverything() {
     gifWorker = null;
     gifWorkerCallbacks = null;
 }
-
 function loadAsync(src, callback, binary, method, data) {
      var xhr = new XMLHttpRequest();
      xhr.overrideMimeType(binary ? "text/plain; charset=x-user-defined" : "text/plain; charset=UTF-8");
@@ -330,7 +312,6 @@ function assert(condition, message) {
          handleError(message ? message: "Assert failed: condition not met.");
      }
 }
-
 function getCurrentScript() {
      var currentScript = document.currentScript.src;
      var regex = /[a-zA-Z-]*:\/\/[^/]+(\/([^/]+\/)+)(.+)/g;
@@ -341,7 +322,6 @@ function getCurrentScript() {
          src: match[0],
      };
 }
-
 function handleError(error, soft) {
      if(Array.isArray(error)) {
          var array = [];
@@ -358,15 +338,28 @@ function handleError(error, soft) {
      }
 }
 
-document.addEventListener("DOMContentLoaded",
-    function() {
-      var input = document.getElementById('input');
-      input.addEventListener('change', handleFiles);
-      var img = document.getElementById('image1');
-      var banana = true;
-      img.onload = function() {
-        sampleImg(img, banana);
-        banana = false;
-      }
-    }
-);
+(function() {
+  // var input = document.getElementById('input');
+  // input.addEventListener('change', handleFiles);
+  var img = new Image();
+  // ../mason_single_player/assets/images/testKnight.GIF
+  img.src = './sample.gif';
+  var banana = true;
+  img.onload = function() {
+    sampleImg(img, banana);
+    banana = false;
+  }
+})();
+// document.addEventListener("DOMContentLoaded",
+//     function() {
+//       var input = document.getElementById('input');
+//       input.addEventListener('change', handleFiles);
+//       var img = new Image();
+//       img.src = './sample.gif';
+//       var banana = true;
+//       img.onload = function() {
+//         sampleImg(img, banana);
+//         banana = false;
+//       }
+//     }
+// );
