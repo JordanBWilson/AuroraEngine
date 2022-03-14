@@ -16,18 +16,6 @@ let gameObject = {
 	rockImg.src = rock1Path;
 	grassImg.src = grassPath;
 	drawMainMenu();
-	// let xhr = new XMLHttpRequest();
-	// xhr.open('get', './assets/images/testKnight.GIF');
-	// xhr.setRequestHeader('Content-Type', 'image/gif');
-	// xhr.send();
-	// xhr.onreadystatechange = function() {
-	// 	if (xhr.readyState === 4) {
-	// 		if (xhr.status === 200) {
-	// 			console.log(xhr.response);
-	// 		}
-	// 	}
-	// }
-
 })();
 
 function drawMainMenu() {
