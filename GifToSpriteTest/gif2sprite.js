@@ -1,15 +1,15 @@
-var currentScript = getCurrentScript();
-var gifWorker;
-var gifWorkerCallbacks = {};
-var gifImages = [];
+const currentScript = getCurrentScript();
+let gifWorker;
+const gifWorkerCallbacks = {};
+const gifImages = [];
 
 function calculateBestSize(width, height, count) {
-  var bestcols = 1,
+  let bestcols = 1,
     bestratio = Number.MAX_VALUE;
-  for (var cols = 1; cols <= count; cols++) {
-    var w = width;
-    var h = Math.ceil(count / cols) * height;
-    var ratio = w / h;
+  for (let cols = 1; cols <= count; cols++) {
+    const w = width;
+    const h = Math.ceil(count / cols) * height;
+    const ratio = w / h;
     if (Math.abs(ratio - 1) < bestratio) {
       bestratio = Math.abs(ratio - 1);
       bestcols = cols;
@@ -18,29 +18,29 @@ function calculateBestSize(width, height, count) {
   return bestcols;
 }
 function handleFiles(e) {
-  var reader = new FileReader;
+  const reader = new FileReader;
   reader.onload = function(event) {
-    var img = document.getElementById('image1');
+    const img = document.getElementById('image1');
     img.src = event.target.result;
   }
   reader.readAsDataURL(e.target.files[0]);
 }
 function sampleImg(img, banana) {
-    var gif = createGif(img.src);
-    gif.addEventListener("load", function(e) {
-        var width = gif.naturalWidth, height = gif.naturalHeight;
-        var cols = calculateBestSize(width, gif.naturalHeight, gif.frameCount);
-        var rows = Math.ceil(gif.frameCount / cols);
-        var scale = 1;
-        var finalColWidth = Math.round(width * scale);
-        var finalRowWidth = Math.round(height * scale);
-        var canvas = document.createElement('canvas');
+    const gif = createGif(img.src);
+    gif.addEventListener('load', function(e) {
+        const width = gif.naturalWidth, height = gif.naturalHeight;
+        const cols = calculateBestSize(width, gif.naturalHeight, gif.frameCount);
+        const rows = Math.ceil(gif.frameCount / cols);
+        const scale = 1;
+        const finalColWidth = Math.round(width * scale);
+        const finalRowWidth = Math.round(height * scale);
+        const canvas = document.createElement('canvas');
         canvas.width = finalColWidth;
         canvas.height = rows * finalRowWidth;
-        var ctx = canvas.getContext("2d");
-        for (var i = 0; i < gif.frameCount; i++) {
-            var c = i % cols;
-            var r = Math.floor(i / cols);
+        const ctx = canvas.getContext('2d');
+        for (let i = 0; i < gif.frameCount; i++) {
+            const c = i % cols;
+            const r = Math.floor(i / cols);
 
             gif.putOnCanvas(
                 ctx,
@@ -56,57 +56,57 @@ function sampleImg(img, banana) {
                 completedCallback
             );
         }
-        var count = 0;
+        let count = 0;
         function completedCallback() {
             count++;
 
-            if(count>=gif.frameCount) {
+            if (count>=gif.frameCount) {
               console.log(gifImages); // when the images is ready, these are the raw base64 pngs
-              var imagetype = document.getElementById('imagetype').value;
-              var url = canvas.toDataURL(imagetype);
+              const imagetype = document.getElementById('imagetype').value;
+              const url = canvas.toDataURL(imagetype);
               document.getElementById('result').src = url;
-              var link = document.getElementById('link');
+              const link = document.getElementById('link');
               link.href = url;
             }
         }
     });
 }
 function createGif(src) {
-    var completeCallbacks = [];
-    var sizeLoadedCallbacks = [];
-    var frameReadyCallbacks = [];
-    var frameRenderedCallbacks = [];
-    var header;
-    var frameInfos = [];
-    var renderTime = 0;
-    var currentFrame = 0;
-    var totalAnimationTime = 0;
+    const completeCallbacks = [];
+    const sizeLoadedCallbacks = [];
+    const frameReadyCallbacks = [];
+    const frameRenderedCallbacks = [];
+    let header;
+    const frameInfos = [];
+    let renderTime = 0;
+    let currentFrame = 0;
+    let totalAnimationTime = 0;
 
-    var gifImage = {
+    const gifImage = {
         complete:false,
         addFrameReadyCallback: function(frameIndex, callback) {
-            if(!frameReadyCallbacks[frameIndex]) {
+            if (!frameReadyCallbacks[frameIndex]) {
                 frameReadyCallbacks[frameIndex] = [];
             }
             frameReadyCallbacks[frameIndex].push(callback);
         },
         addFrameRenderedCallback: function(frameIndex, callback) {
-            if(!frameRenderedCallbacks[frameIndex]) {
+            if (!frameRenderedCallbacks[frameIndex]) {
                 frameRenderedCallbacks[frameIndex] = [];
             }
             frameRenderedCallbacks[frameIndex].push(callback);
         },
         addEventListener:function(type, callback) {
-            if(type=="load") {
+            if (type == 'load') {
                 completeCallbacks.push(callback);
-            } else if(type=="sizeLoaded") {
+            } else if (type == 'sizeLoaded') {
                 sizeLoadedCallbacks.push(callback);
             }
         },
         removeEventListener:function(type, callback) {
-            var array = type=="load" ? completeCallbacks : type=="sizeLoaded" ? sizeLoadedCallbacks : null;
-            if(array) {
-                var index = array.indexOf(callback);
+            const array = type == 'load' ? completeCallbacks : type == 'sizeLoaded' ? sizeLoadedCallbacks : null;
+            if (array) {
+                const index = array.indexOf(callback);
                 array.splice(index,1);
             }
         },
@@ -114,10 +114,10 @@ function createGif(src) {
         naturalHeight: 0,
         multiFrame: true,
         getFrame: function() {
-            if(!gifImage.complete) return 0;
-            if(new Date() > renderTime) {
+            if (!gifImage.complete) return 0;
+            if (new Date() > renderTime) {
                 currentFrame = (currentFrame+1) % frameInfos.length;
-                var totalAnimationTime = frameInfos[frameInfos.length-1].cycleTime;
+                const totalAnimationTime = frameInfos[frameInfos.length-1].cycleTime;
                 renderTime = Math.floor(new Date() / totalAnimationTime) * totalAnimationTime + frameInfos[currentFrame].cycleTime;
             }
             return currentFrame;
@@ -131,16 +131,16 @@ function createGif(src) {
                 completedCallback
                 ) {
             console.log(srcWidth, destWidth, srcHeight, destHeight);
-            assert(srcWidth==destWidth && srcHeight==destHeight, "source and dest must match dimensions");
+            assert(srcWidth==destWidth && srcHeight==destHeight, 'source and dest must match dimensions');
 
-            if(frameIndex===0 || frameInfos[frameIndex-1].renderPosition) {
+            if (frameIndex === 0 || frameInfos[frameIndex-1].renderPosition) {
                 plasterPixels(
                     srcX,srcY,srcWidth,srcHeight,
                     destX,destY,destWidth,destHeight,
                     frameIndex
                 );
             } else {
-                gifImage.addFrameRenderedCallback(frameIndex-1,
+                gifImage.addFrameRenderedCallback(frameIndex - 1,
                     function() {
                         plasterPixels(
                             srcX,srcY,srcWidth,srcHeight,
@@ -155,9 +155,9 @@ function createGif(src) {
                     destX, destY, destWidth, destHeight,
                     frameIndex) {
 
-                 if(frameIndex>0) { //  copy previous frame. That's how gifs work
-                    var previousFramePosition = frameInfos[frameIndex-1].renderPosition;
-                    var cData = previousFramePosition.context.getImageData(
+                 if (frameIndex > 0) { //  copy previous frame. That's how gifs work
+                    const previousFramePosition = frameInfos[frameIndex-1].renderPosition;
+                    const cData = previousFramePosition.context.getImageData(
                         previousFramePosition.x,
                         previousFramePosition.y,
                         previousFramePosition.width,
@@ -166,10 +166,10 @@ function createGif(src) {
                     ctx.putImageData(cData, destX, destY);
                  }
 
-                 var frameInfo = frameInfos[frameIndex];
-                 var img = frameInfo.img;
-                 var cData = ctx.getImageData(destX + img.leftPos, destY + img.topPos, img.width, img.height);
-                 var ct = img.lctFlag ? img.lct : header.gct;
+                 const frameInfo = frameInfos[frameIndex];
+                 const img = frameInfo.img;
+                 const cData = ctx.getImageData(destX + img.leftPos, destY + img.topPos, img.width, img.height);
+                 const ct = img.lctFlag ? img.lct : header.gct;
 
                  sendToGifWorker(
                      frameInfo, cData,
@@ -185,7 +185,7 @@ function createGif(src) {
                             width: destWidth,
                             height: destHeight,
                         };
-                        if(frameRenderedCallbacks[frameIndex]) {
+                        if (frameRenderedCallbacks[frameIndex]) {
                             frameRenderedCallbacks[frameIndex].forEach(
                                function(callback) { callback.call(); }
                             );
@@ -202,15 +202,14 @@ function createGif(src) {
             return frameInfos.length;
         },
     };
-
     function checkComplete(frameIndex) {
-        if(gifImage.isFrameLoaded(frameIndex) && frameReadyCallbacks[frameIndex]) {
+        if (gifImage.isFrameLoaded(frameIndex) && frameReadyCallbacks[frameIndex]) {
             frameReadyCallbacks[frameIndex].forEach(
                function(callback) { callback.call(); }
             );
         }
     }
-    var handler = {
+    const handler = {
       hdr: function (hdr) {
         header = hdr;
         gifImage.naturalWidth = header.width;
@@ -220,12 +219,12 @@ function createGif(src) {
         );
       },
       gce: function (gce) {
-        if(frameInfos.length==0 || frameInfos[frameInfos.length-1].gce) {
+        if (frameInfos.length==0 || frameInfos[frameInfos.length-1].gce) {
             frameInfos.push({});
         }
-        var currentIndex = frameInfos.length-1;
+        const currentIndex = frameInfos.length - 1;
         frameInfos[currentIndex].gce = gce;
-        if(!gce.delayTime) {
+        if (!gce.delayTime) {
             gce.delayTime = 1;
         }
         frameInfos[currentIndex].cycleTime = gce.delayTime * 10
@@ -233,7 +232,7 @@ function createGif(src) {
         checkComplete(frameInfos.length-1);
       },
       img: function(img) {
-        if(frameInfos.length==0 || frameInfos[frameInfos.length-1].img) {
+        if (frameInfos.length==0 || frameInfos[frameInfos.length-1].img) {
             frameInfos.push({});
         }
         frameInfos[frameInfos.length-1].img = img;
@@ -247,10 +246,9 @@ function createGif(src) {
         console.log(frameInfos);
       }
     };
-
     loadAsync(src,
         function(content) {
-            var stream = new Stream(content);
+            const stream = new Stream(content);
             parseGIF(stream, handler);
         },
         true
@@ -265,10 +263,10 @@ function initializeGifWorker() {
     }
 }
 function sendToGifWorker(frameInfo, cData, header, callback) {
-    if(!gifWorker) {
+    if (!gifWorker) {
         initializeGifWorker();
     }
-    var id = Math.floor(Math.random() * 1000 + 1) + '-' + Math.floor(Math.random() * 1000 + 1) + '-' + Math.floor(Math.random() * 1000 + 1);
+    const id = Math.floor(Math.random() * 1000 + 1) + '-' + Math.floor(Math.random() * 1000 + 1) + '-' + Math.floor(Math.random() * 1000 + 1);
     gifWorkerCallbacks[id] = callback;
     gifWorker.postMessage({
         frameInfo: frameInfo,
@@ -278,16 +276,16 @@ function sendToGifWorker(frameInfo, cData, header, callback) {
     });
 }
 function destroyEverything() {
-    if(gifWorker) {
+    if (gifWorker) {
         gifWorker.terminate();
     }
     gifWorker = null;
     gifWorkerCallbacks = null;
 }
 function loadAsync(src, callback, binary, method, data) {
-     var xhr = new XMLHttpRequest();
-     xhr.overrideMimeType(binary ? "text/plain; charset=x-user-defined" : "text/plain; charset=UTF-8");
-     xhr.open(method?method:"GET", src, true);
+     const xhr = new XMLHttpRequest();
+     xhr.overrideMimeType(binary ? 'text/plain; charset=x-user-defined' : 'text/plain; charset=UTF-8');
+     xhr.open(method?method:'GET', src, true);
      xhr.addEventListener('load',
          function (e) {
            if (xhr.readyState === 4) {
@@ -306,16 +304,15 @@ function loadAsync(src, callback, binary, method, data) {
      );
      xhr.send(data);
 }
-
 function assert(condition, message) {
-     if(!condition) {
-         handleError(message ? message: "Assert failed: condition not met.");
+     if (!condition) {
+         handleError(message ? message: 'Assert failed: condition not met.');
      }
 }
 function getCurrentScript() {
-     var currentScript = document.currentScript.src;
-     var regex = /[a-zA-Z-]*:\/\/[^/]+(\/([^/]+\/)+)(.+)/g;
-     var match = regex.exec(currentScript);
+     const currentScript = document.currentScript.src;
+     const regex = /[a-zA-Z-]*:\/\/[^/]+(\/([^/]+\/)+)(.+)/g;
+     const match = regex.exec(currentScript);
      return {
          filename: match[3],
          path: match[1],
@@ -323,28 +320,25 @@ function getCurrentScript() {
      };
 }
 function handleError(error, soft) {
-     if(Array.isArray(error)) {
-         var array = [];
-         for(var i=0;i<error.length;i++) {
+     if (Array.isArray(error)) {
+         const array = [];
+         for (let i = 0; i < error.length; i++) {
              array.push(error[i]);
-             array.push("\n ");
+             array.push('\n ');
          }
          console.error.apply(null, array);
      } else {
          console.error(error);
      }
-     if(!soft) {
-         throw new Error("Last error terminated the process.");
+     if (!soft) {
+         throw new Error('Last error terminated the process.');
      }
 }
-
 (function() {
-  // var input = document.getElementById('input');
-  // input.addEventListener('change', handleFiles);
-  var img = new Image();
+  const img = new Image();
   // ../mason_single_player/assets/images/testKnight.GIF
   img.src = './sample.gif';
-  var banana = true;
+  let banana = true;
   img.onload = function() {
     sampleImg(img, banana);
     banana = false;
@@ -352,11 +346,10 @@ function handleError(error, soft) {
 })();
 // document.addEventListener("DOMContentLoaded",
 //     function() {
-//       var input = document.getElementById('input');
+//       const input = document.getElementById('input');
 //       input.addEventListener('change', handleFiles);
-//       var img = new Image();
-//       img.src = './sample.gif';
-//       var banana = true;
+//       const img = document.getElementById('image1');
+//       let banana = true;
 //       img.onload = function() {
 //         sampleImg(img, banana);
 //         banana = false;
