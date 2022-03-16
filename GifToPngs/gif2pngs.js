@@ -264,7 +264,7 @@ function createGif(src) {
     return gifImage;
 }
 function initializeGifWorker() {
-    gifWorker = new Worker(currentScript.path + 'workers/gifworker.js');
+    gifWorker = new Worker(currentScript.path + 'worker/gifworker.js');
     gifWorker.onmessage = function(e) {
        gifWorkerCallbacks[e.data.id] (e.data.response);
        delete gifWorkerCallbacks[e.data.id];
