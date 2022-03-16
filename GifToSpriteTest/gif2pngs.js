@@ -25,9 +25,10 @@ function handleFiles(e) {
   }
   reader.readAsDataURL(e.target.files[0]);
 }
-function newGifImg(img, banana) { // this is the main function
+function newGifImg(img, banana, methodId) { // this is the main function
     const gif = createGif(img.src);
-    gif.addEventListener('load', function(e) {
+    gif.addEventListener('load', function readGif(e) {
+        currentMethodId = methodId;
         const width = gif.naturalWidth, height = gif.naturalHeight;
         const cols = calculateBestSize(width, gif.naturalHeight, gif.frameCount);
         const rows = Math.ceil(gif.frameCount / cols);
@@ -57,16 +58,23 @@ function newGifImg(img, banana) { // this is the main function
             );
         }
         let count = 0;
+
         function completedCallback() {
             count++;
-
             if (count>=gif.frameCount) {
-              console.log(gifImages); // when the images is ready, these are the raw base64 pngs
-              const imagetype = document.getElementById('imagetype').value;
-              const url = canvas.toDataURL(imagetype);
+              if (currentMethodId) { // if the current methodId is defined...
+                console.log(currentMethodId);
+                currentMethodId = undefined;
+                // send the images somewhere
+                console.log(gifImages); // when the images are ready, these are the raw base64 pngs
+                gif.removeEventListener('load', readGif); // remove the old event listenter
+              }
+              // const imagetype = document.getElementById('imagetype').value;
+              const url = canvas.toDataURL('image/png');
               document.getElementById('result').src = url;
-              const link = document.getElementById('link');
-              link.href = url;
+
+              // const link = document.getElementById('link');
+              // link.href = url;
             }
         }
     });
@@ -340,22 +348,24 @@ function handleError(error, soft) {
   img.src = './sample.gif';
   let banana = true;
   img.onload = function() {
-    newGifImg(img, banana);
+    newGifImg(img, banana, 1);
     banana = false;
   }
 })();
 
-function createImagesFromGif(imageSrc) { // call this when you want to convert a gif to base64 pngs
+function createImagesFromGif(imageSrc, methodId) { // call this when you want to convert a gif to base64 pngs
 
   const img = new Image();
   // ../mason_single_player/assets/images/testKnight.GIF
   img.src = imageSrc;
   let sendImage = true;
   img.onload = function() {
-    newGifImg(img, sendImage);
+    newGifImg(img, sendImage, methodId);
     sendImage = false;
   }
 }
+
+let currentMethodId = undefined;
 // document.addEventListener("DOMContentLoaded", // this will get the image uploads working
 //     function() {
 //       const input = document.getElementById('input');
