@@ -1,7 +1,7 @@
 const currentScript = getCurrentScript();
 let gifWorker;
 const gifWorkerCallbacks = {};
-const gifImages = [];
+let gifImages = [];
 
 function calculateBestSize(width, height, count) {
   let bestcols = 1,
@@ -28,7 +28,6 @@ function handleFiles(e) {
 function newGifImg(img, banana, methodId) { // this is the main function
     const gif = createGif(img.src);
     gif.addEventListener('load', function readGif(e) {
-        currentMethodId = methodId;
         const width = gif.naturalWidth, height = gif.naturalHeight;
         const cols = calculateBestSize(width, gif.naturalHeight, gif.frameCount);
         const rows = Math.ceil(gif.frameCount / cols);
@@ -59,15 +58,17 @@ function newGifImg(img, banana, methodId) { // this is the main function
         }
         let count = 0;
 
+        return count;
+
         function completedCallback() {
             count++;
             if (count>=gif.frameCount) {
-              if (currentMethodId) { // if the current methodId is defined...
-                console.log(currentMethodId);
-                currentMethodId = undefined;
+              if (methodId) { // if the current methodId is defined...
                 // send the images somewhere
-                console.log(gifImages); // when the images are ready, these are the raw base64 pngs
+                // console.log(gifImages); // when the images are ready, these are the raw base64 pngs
+                assignImages(gifImages, methodId);
                 gif.removeEventListener('load', readGif); // remove the old event listenter
+                gifImages = [];
               }
               // const imagetype = document.getElementById('imagetype').value;
               const url = canvas.toDataURL('image/png');
@@ -343,14 +344,20 @@ function handleError(error, soft) {
      }
 }
 (function() { // this is for testing purposes
-  const img = new Image();
-  // ../mason_single_player/assets/images/testKnight.GIF
-  img.src = './sample.gif';
-  let banana = true;
-  img.onload = function() {
-    newGifImg(img, banana, 1);
-    banana = false;
-  }
+  // const img = new Image();
+  // // ../mason_single_player/assets/images/testKnight.GIF
+  // img.src = './sample.gif';
+  // let banana = true;
+  // img.onload = function() {
+  //   newGifImg(img, banana, 1);
+  //   banana = false;
+  //   console.log(img);
+  // }
+
+  
+  // this is close but some images are getting into the other array \
+  createImagesFromGif('./sample.gif', 1);
+  createImagesFromGif('../mason_single_player/assets/images/testKnight.GIF', 2);
 })();
 
 function createImagesFromGif(imageSrc, methodId) { // call this when you want to convert a gif to base64 pngs
@@ -364,8 +371,11 @@ function createImagesFromGif(imageSrc, methodId) { // call this when you want to
     sendImage = false;
   }
 }
+// this method should exist in arurora_2d_core to find the object that gets the image
+function assignImages(pngs, methodId) {
 
-let currentMethodId = undefined;
+  console.log(pngs, methodId);
+}
 // document.addEventListener("DOMContentLoaded", // this will get the image uploads working
 //     function() {
 //       const input = document.getElementById('input');
