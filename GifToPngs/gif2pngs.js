@@ -1,7 +1,7 @@
 const currentScript = getCurrentScript();
 let gifWorker;
 const gifWorkerCallbacks = {};
-let gifImages = [];
+// let gifImages = [];
 
 function calculateBestSize(width, height, count) {
   let bestcols = 1,
@@ -57,18 +57,22 @@ function newGifImg(img, banana, methodId) { // this is the main function
             );
         }
         let count = 0;
+        const gifImages = [];
+
 
         return count;
 
         function completedCallback() {
             count++;
+            // console.log(canvas.toDataURL());
+            gifImages.push(canvas.toDataURL());
             if (count>=gif.frameCount) {
               if (methodId) { // if the current methodId is defined...
                 // send the images somewhere
                 // console.log(gifImages); // when the images are ready, these are the raw base64 pngs
                 assignImages(gifImages, methodId);
                 gif.removeEventListener('load', readGif); // remove the old event listenter
-                gifImages = [];
+                // gifImages = [];
               }
               // const imagetype = document.getElementById('imagetype').value;
               const url = canvas.toDataURL('image/png');
@@ -186,7 +190,7 @@ function createGif(src) {
                      function(cData) {
                         ctx.putImageData(cData, destX + img.leftPos, destY + img.topPos);
 
-                        gifImages.push(canvas.toDataURL());
+                        // gifImages.push(canvas.toDataURL());
                         frameInfos[frameIndex].renderPosition = {
                             context: ctx,
                             x: destX,
@@ -354,10 +358,11 @@ function handleError(error, soft) {
   //   console.log(img);
   // }
 
-  
+
   // this is close but some images are getting into the other array \
   createImagesFromGif('./sample.gif', 1);
   createImagesFromGif('../mason_single_player/assets/images/testKnight.GIF', 2);
+  // future Jordan, clean this all up. It works now
 })();
 
 function createImagesFromGif(imageSrc, methodId) { // call this when you want to convert a gif to base64 pngs
