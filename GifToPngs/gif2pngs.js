@@ -1,7 +1,6 @@
 const currentScript = getCurrentScript();
 let gifWorker;
 const gifWorkerCallbacks = {};
-// let gifImages = [];
 
 function calculateBestSize(width, height, count) {
   let bestcols = 1,
@@ -64,22 +63,16 @@ function newGifImg(img, banana, methodId) { // this is the main function
 
         function completedCallback() {
             count++;
-            // console.log(canvas.toDataURL());
             gifImages.push(canvas.toDataURL());
             if (count>=gif.frameCount) {
               if (methodId) { // if the current methodId is defined...
                 // send the images somewhere
-                // console.log(gifImages); // when the images are ready, these are the raw base64 pngs
-                assignImages(gifImages, methodId);
+                assignImages(gifImages, methodId); // when the images are ready, these are the raw base64 pngs
                 gif.removeEventListener('load', readGif); // remove the old event listenter
-                // gifImages = [];
               }
-              // const imagetype = document.getElementById('imagetype').value;
-              const url = canvas.toDataURL('image/png');
-              document.getElementById('result').src = url;
-
-              // const link = document.getElementById('link');
-              // link.href = url;
+              // below is for testing purposes
+              // const url = canvas.toDataURL('image/png');
+              // document.getElementById('result').src = url;
             }
         }
     });
@@ -190,7 +183,6 @@ function createGif(src) {
                      function(cData) {
                         ctx.putImageData(cData, destX + img.leftPos, destY + img.topPos);
 
-                        // gifImages.push(canvas.toDataURL());
                         frameInfos[frameIndex].renderPosition = {
                             context: ctx,
                             x: destX,
@@ -348,21 +340,8 @@ function handleError(error, soft) {
      }
 }
 (function() { // this is for testing purposes
-  // const img = new Image();
-  // // ../mason_single_player/assets/images/testKnight.GIF
-  // img.src = './sample.gif';
-  // let banana = true;
-  // img.onload = function() {
-  //   newGifImg(img, banana, 1);
-  //   banana = false;
-  //   console.log(img);
-  // }
-
-
-  // this is close but some images are getting into the other array \
   createImagesFromGif('./sample.gif', 1);
   createImagesFromGif('../mason_single_player/assets/images/testKnight.GIF', 2);
-  // future Jordan, clean this all up. It works now
 })();
 
 function createImagesFromGif(imageSrc, methodId) { // call this when you want to convert a gif to base64 pngs
@@ -381,18 +360,6 @@ function assignImages(pngs, methodId) {
 
   console.log(pngs, methodId);
 }
-// document.addEventListener("DOMContentLoaded", // this will get the image uploads working
-//     function() {
-//       const input = document.getElementById('input');
-//       input.addEventListener('change', handleFiles);
-//       const img = document.getElementById('image1');
-//       let banana = true;
-//       img.onload = function() {
-//         newGifImg(img, banana);
-//         banana = false;
-//       }
-//     }
-// );
 
 // *** gif.js begins ***
 // *** this reads the gif file... ***
