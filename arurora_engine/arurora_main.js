@@ -10,12 +10,14 @@
       screenTapped(event);
     }, false);
     resizeStage();
-    mainLoop();
+    Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
   }
 })();
 
 function mainLoop() {
+
   Main.interval = setInterval(function() {
+
     if (Main.methodsToRun.length > 0) {
       // run the game
       for (let i = 0; i < Main.methodsToRun.length; i++) {
@@ -47,6 +49,7 @@ function mainLoop() {
       // stop the game
       console.log('The game has stopped. No more methods to listen to.');
       clearInterval(Main.interval);
+      cancelAnimationFrame(Main.intervalAnimateId);
     }
   }, Game.frameRate);
 }
@@ -176,4 +179,10 @@ function findWidthHeightMethodObjects(index) {
   } else {
     return Game.methodObjects[index].height;
   }
+}
+
+// this method grabs the gif image frames and assigns it to the correct method Id
+function assignImages(pngs, methodId) {
+
+  console.log(pngs, methodId);
 }

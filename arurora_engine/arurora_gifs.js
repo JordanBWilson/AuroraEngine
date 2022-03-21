@@ -2,6 +2,17 @@ const currentScript = getCurrentScript();
 let gifWorker;
 const gifWorkerCallbacks = {};
 
+function createImagesFromGif(imageSrc, methodId) { // call this when you want to convert a gif to base64 pngs
+
+  const img = new Image();
+  img.src = imageSrc;
+  let sendImage = true;
+  img.onload = function() {
+    newGifImg(img, sendImage, methodId);
+    sendImage = false;
+  }
+} // completedCallback() is the method that returns the base64 pngs
+
 function calculateBestSize(width, height, count) {
   let bestcols = 1,
     bestratio = Number.MAX_VALUE;
@@ -58,7 +69,6 @@ function newGifImg(img, banana, methodId) { // this is the main function
         let count = 0;
         const gifImages = [];
 
-
         return count;
 
         function completedCallback() {
@@ -66,13 +76,10 @@ function newGifImg(img, banana, methodId) { // this is the main function
             gifImages.push(canvas.toDataURL());
             if (count>=gif.frameCount) {
               if (methodId) { // if the current methodId is defined...
-                // send the images somewhere
+                // send the images to aruroa_main
                 assignImages(gifImages, methodId); // when the images are ready, these are the raw base64 pngs
                 gif.removeEventListener('load', readGif); // remove the old event listenter
               }
-              // below is for testing purposes
-              const url = canvas.toDataURL('image/png');
-              document.getElementById('result').src = url;
             }
         }
     });
@@ -136,7 +143,6 @@ function createGif(src) {
                 frameIndex,
                 completedCallback
                 ) {
-            console.log(srcWidth, destWidth, srcHeight, destHeight);
             assert(srcWidth==destWidth && srcHeight==destHeight, 'source and dest must match dimensions');
 
             if (frameIndex === 0 || frameInfos[frameIndex-1].renderPosition) {
@@ -248,7 +254,6 @@ function createGif(src) {
         completeCallbacks.forEach(
             function(callback) { callback.call(); }
         );
-        console.log(frameInfos);
       }
     };
     loadAsync(src,
@@ -261,7 +266,7 @@ function createGif(src) {
     return gifImage;
 }
 function initializeGifWorker() {
-    gifWorker = new Worker(currentScript.path + 'worker/gifworker.js');
+    gifWorker = new Worker(currentScript.path + 'workers/gifworker.js');
     gifWorker.onmessage = function(e) {
        gifWorkerCallbacks[e.data.id] (e.data.response);
        delete gifWorkerCallbacks[e.data.id];
@@ -339,28 +344,6 @@ function handleError(error, soft) {
          throw new Error('Last error terminated the process.');
      }
 }
-(function() { // this is for testing purposes
-  createImagesFromGif('./sample.gif', 1);
-  // createImagesFromGif('../mason_single_player/assets/images/testKnight.GIF', 2);
-})();
-
-function createImagesFromGif(imageSrc, methodId) { // call this when you want to convert a gif to base64 pngs
-
-  const img = new Image();
-  // ../mason_single_player/assets/images/testKnight.GIF
-  img.src = imageSrc;
-  let sendImage = true;
-  img.onload = function() {
-    newGifImg(img, sendImage, methodId);
-    sendImage = false;
-  }
-}
-// this method should exist in arurora_2d_core to find the object that gets the image
-function assignImages(pngs, methodId) {
-
-  console.log(pngs, methodId);
-}
-
 // *** gif.js begins ***
 // *** this reads the gif file... ***
 

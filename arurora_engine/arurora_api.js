@@ -58,7 +58,8 @@ const Game = { // the user will want to use this object
     this.frameRate = 1000 / 15; // 15 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
-      mainLoop();
+      cancelAnimationFrame(Main.intervalAnimateId);
+      Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
     },0);
   },
   setSettingsMed: function() {
@@ -66,7 +67,8 @@ const Game = { // the user will want to use this object
     this.frameRate = 1000 / 30; // 30 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
-      mainLoop();
+      cancelAnimationFrame(Main.intervalAnimateId);
+      Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
     },0);
   },
   setSettingsHigh: function() {
@@ -74,10 +76,11 @@ const Game = { // the user will want to use this object
     this.frameRate = 1000 / 60; // 60 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
-      mainLoop();
+      cancelAnimationFrame(Main.intervalAnimateId);
+      Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
     },0);
 
-  },
+  }, // give your game a default setting for the smoothest frames
   selectedSetting: undefined, // the selected game setting
   enumSettings: {
     high: 0,
@@ -138,10 +141,11 @@ const Game = { // the user will want to use this object
 };
 
 const Main = { // global variables to keep the game running nicely
+  intervalAnimateId: undefined, // this keeps track of the animations
   interval: undefined, // the main loop running
   stage: undefined, // the 2D game stage
   resizeWindow: undefined, // when the browser window gets resized in the timeout
-  isResizing: false,
+  isResizing: false, // is the game resizing
   resizeWindowTime: 250, // how long to wait for the browser to resize
   isStageTapped: false, // is the stage tapped
   tappedX: 0, // where the user tapped on the stage last on the X axis

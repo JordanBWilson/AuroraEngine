@@ -15,7 +15,14 @@ let gameObject = {
 	masonWorkerImg.src = masonWorkerPath;
 	rockImg.src = rock1Path;
 	grassImg.src = grassPath;
+	Game.setSettingsHigh();
 	drawMainMenu();
+
+	// may need some sort of loading screen or loading indicator
+	// the bigger the image, the bigger the lag
+	// createImagesFromGif('./assets/images/testKnight.GIF', 1);
+	// future Jordan, setup arurora_2d_core to handle an array of images and
+	// make a parameter to display the current image selected with an index
 })();
 
 function drawMainMenu() {
