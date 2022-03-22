@@ -138,6 +138,14 @@ const Game = { // the user will want to use this object
       method(event);
     }, false);
   },
+  createImageListFromGif: function(gifLocation, methodId) {
+    // this method is dependent on arurora_gifs.js
+    if (gifLocation.length > 0 && methodId > 0) {
+    console.log(gifLocation);
+      createImagesFromGif(gifLocation, methodId);
+    }
+
+  }
 };
 
 const Main = { // global variables to keep the game running nicely
