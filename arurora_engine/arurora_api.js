@@ -141,7 +141,6 @@ const Game = { // the user will want to use this object
   createImageListFromGif: function(gifLocation, methodId) {
     // this method is dependent on arurora_gifs.js
     if (gifLocation.length > 0 && methodId > 0) {
-    console.log(gifLocation);
       createImagesFromGif(gifLocation, methodId);
     }
 

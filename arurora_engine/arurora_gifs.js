@@ -73,7 +73,7 @@ function newGifImg(img, banana, methodId) { // this is the main function
 
         function completedCallback() {
             count++;
-            gifImages.push(canvas.toDataURL());
+            gifImages.push(canvas.toDataURL('image/png'));
             if (count>=gif.frameCount) {
               if (methodId) { // if the current methodId is defined...
                 // send the images to aruroa_main

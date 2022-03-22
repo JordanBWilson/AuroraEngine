@@ -183,6 +183,11 @@ function findWidthHeightMethodObjects(index) {
 
 // this method grabs the gif image frames and assigns it to the correct method Id
 function assignImages(pngs, methodId) {
-
-  console.log(pngs, methodId);
+  const imagePngs = [];
+  pngs.forEach((img, i) => {
+    const image = new Image();
+    image.src = img
+    imagePngs.push(image);
+  });
+  Game.methodObjects.find(x => x.methodId === methodId).images = imagePngs;
 }

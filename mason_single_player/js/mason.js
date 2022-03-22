@@ -4,6 +4,7 @@ const grassImg = new Image();
 const masonWorkerPath = './assets/images/stoneWorker.png';
 const rock1Path = './assets/images/rock1.png';
 const grassPath = './assets/images/grass.png';
+let knight = {};
 
 // this will keep track of the game
 let gameObject = {
@@ -73,7 +74,8 @@ function drawMainMenu() {
 				height: (Game.canvas.height),
 				patternWidth: (Game.canvas.height * 0.2),
 				patternHeight: (Game.canvas.height * 0.2),
-				image: grassImg,
+				images: [grassImg],
+				selectedImage: 0,
 				id: 'grass-background',
 				isSolid: false,
 				isBackground: true,
@@ -90,8 +92,29 @@ function drawMainMenu() {
 				posY: (Game.canvas.height * 0.65),
 				width: (Game.canvas.height * 0.1),
 				height: (Game.canvas.height * 0.1),
-				image: masonWorkerImg,
+				images: [masonWorkerImg],
+				selectedImage: 0,
 				id: 'mason-worker',
+				isSolid: true,
+				isBackground: false,
+				props: {
+					direction: 'right',
+				},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawImage({
+				posX: (Game.canvas.width * 0.35),
+				posY: (Game.canvas.height * 0.65),
+				width: (Game.canvas.height * 0.1),
+				height: (Game.canvas.height * 0.1),
+				images: [], // masonWorkerImg
+				selectedImage: 0,
+				id: 'knight',
 				isSolid: true,
 				isBackground: false,
 				props: {
@@ -109,7 +132,8 @@ function drawMainMenu() {
         posY: (Game.canvas.height * 0.65),
         width: (Game.canvas.height * 0.15),
         height: (Game.canvas.height * 0.15),
-        image: rockImg,
+        images: [rockImg],
+				selectedImage: 0,
         id: 'rock',
         isSolid: false,
         action: { method: function(id) { mineRock(); }},
@@ -121,6 +145,12 @@ function drawMainMenu() {
   Game.addMethod(Game.methodSetup);
   Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
   Game.addMethod(Game.methodSetup);
+
+	Game.methodSetup = { method: function(id) { findGameObjects(); }};
+	Game.addMethod(Game.methodSetup);
+
+	Game.methodSetup = { method: function(id) { animateObjects(); }};
+	Game.addMethod(Game.methodSetup);
 
   Game.collisionSetup = {
     primary: 'rock',
@@ -138,6 +168,37 @@ function drawMainMenu() {
 	  count: 1,
 	  size: (Game.canvas.width * 0.05)
 	});
+}
+
+function findGameObjects() {
+  // when the game starts up, look for the knight and animate it
+  if (!knight?.methodId) {
+    knight = Game.methodObjects.find(x => x.id === 'knight');
+		if (knight.methodId) {
+			Game.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);
+			animateObjects();
+		}
+  }
+}
+
+function animateObjects() {
+	// if (knight?.images?.length > 0) {
+		const frame1 = setInterval(function() {
+			if (knight.selectedImage === 0) {
+				knight.selectedImage = 1;
+			} else if (knight.selectedImage === 1) {
+				knight.selectedImage = 0;
+			}
+			clearInterval(frame1);
+		}, 2000);
+
+		// setTimeout(function() {
+			// knight.selectedImage = 1;
+		// }, 1000);
+		// setTimeout(function() {
+			// knight.selectedImage = 1;
+		// }, 900);
+	// }
 }
 
 function mineRock() {

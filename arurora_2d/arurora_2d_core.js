@@ -446,7 +446,8 @@ function drawImageMethod(incomingImg) {
       posY: incomingImg.posY,
       width: incomingImg.width,
       height: incomingImg.height,
-      image: incomingImg.image,
+      images: incomingImg.images,
+      selectedImage: incomingImg.selectedImage,
       id: incomingImg.id,
       isSolid: incomingImg.isSolid,
       isAnim: false,
@@ -464,7 +465,8 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].posY = incomingImg.posY;
     Game.methodObjects[index].width = incomingImg.width;
     Game.methodObjects[index].height = incomingImg.height;
-    Game.methodObjects[index].image = incomingImg.image;
+    Game.methodObjects[index].images = incomingImg.images;
+    Game.methodObjects[index].selectedImage = incomingImg.selectedImage;
     Game.methodObjects[index].isSolid = incomingImg.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImg.isBackground;
@@ -473,7 +475,8 @@ function drawImageMethod(incomingImg) {
     Main.methodObjectShadows[index].posY = incomingImg.posY;
     Main.methodObjectShadows[index].width = incomingImg.width;
     Main.methodObjectShadows[index].height = incomingImg.height;
-    Main.methodObjectShadows[index].image = incomingImg.image;
+    Main.methodObjectShadows[index].images = incomingImg.images;
+    Main.methodObjectShadows[index].selectedImage = incomingImg.selectedImage;
     Main.methodObjectShadows[index].isSolid = incomingImg.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImg.isBackground;
@@ -490,7 +493,8 @@ function drawImageMethod(incomingImg) {
    Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
    Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
-   Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
+   Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
+   Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage)
    ) {
       redrawImage(Game.methodObjects[index]);
       const shadowImage = Object.assign({}, Game.methodObjects[index]);
@@ -507,12 +511,16 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
     Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
-    Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
+    Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
+    Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
 function redrawImage(incomingImg) {
-  Main.stage.drawImage(incomingImg.image, incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
+  if (incomingImg.images.length > 0) {
+    Main.stage.drawImage(incomingImg.images[incomingImg.selectedImage], incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
+  }
+
 }
 function drawImagePatternMethod(incomingImgPat) {
   let doesExist = doesMethodParamExist(incomingImgPat.methodId);
@@ -532,7 +540,8 @@ function drawImagePatternMethod(incomingImgPat) {
       height: incomingImgPat.height,
       patternWidth: incomingImgPat.patternWidth,
       patternHeight: incomingImgPat.patternHeight,
-      image: incomingImgPat.image,
+      images: incomingImgPat.images,
+      selectedImage: incomingImgPat.selectedImage,
       id: incomingImgPat.id,
       isSolid: incomingImgPat.isSolid,
       isAnim: false,
@@ -552,7 +561,8 @@ function drawImagePatternMethod(incomingImgPat) {
     Game.methodObjects[index].height = incomingImgPat.height;
     Game.methodObjects[index].patternWidth = incomingImgPat.patternWidth;
     Game.methodObjects[index].patternHeight = incomingImgPat.patternHeight;
-    Game.methodObjects[index].image = incomingImgPat.image;
+    Game.methodObjects[index].images = incomingImgPat.images;
+    Game.methodObjects[index].selectedImage = incomingImgPat.selectedImage;
     Game.methodObjects[index].isSolid = incomingImgPat.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImgPat.isBackground;
@@ -563,7 +573,8 @@ function drawImagePatternMethod(incomingImgPat) {
     Main.methodObjectShadows[index].height = incomingImgPat.height;
     Main.methodObjectShadows[index].patternWidth = incomingImgPat.patternWidth;
     Main.methodObjectShadows[index].patternHeight = incomingImgPat.patternHeight;
-    Main.methodObjectShadows[index].image = incomingImgPat.image;
+    Main.methodObjectShadows[index].images = incomingImgPat.images;
+    Main.methodObjectShadows[index].selectedImage = incomingImgPat.selectedImage;
     Main.methodObjectShadows[index].isSolid = incomingImgPat.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImgPat.isBackground;
@@ -582,7 +593,8 @@ function drawImagePatternMethod(incomingImgPat) {
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
    Game.methodObjects[index].patternWidth !== Main.methodObjectShadows[index].patternWidth ||
    Game.methodObjects[index].patternHeight !== Main.methodObjectShadows[index].patternHeight ||
-   Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
+   Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
+   Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage)
    ) {
       redrawImagePattern(Game.methodObjects[index]);
       const shadowImagePat = Object.assign({}, Game.methodObjects[index]);
@@ -601,19 +613,21 @@ function drawImagePatternMethod(incomingImgPat) {
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
     Game.methodObjects[index].patternWidth === Main.methodObjectShadows[index].patternWidth ||
     Game.methodObjects[index].patternHeight === Main.methodObjectShadows[index].patternHeight ||
-    Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
+    Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
+    Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
 function redrawImagePattern(incomingImgPat) {
-  if (Game.entitySize > 0) { // when the game is ready...
-    for (let x = incomingImgPat.posX; x < incomingImgPat.width; x += incomingImgPat.patternWidth) {
-      for (let y = incomingImgPat.posY; y < incomingImgPat.height; y += incomingImgPat.patternHeight) {
-        Main.stage.drawImage(incomingImgPat.image, x, y, incomingImgPat.patternWidth, incomingImgPat.patternHeight);
+  if (incomingImgPat.images.length > 0) {
+    if (Game.entitySize > 0) { // when the game is ready...
+      for (let x = incomingImgPat.posX; x < incomingImgPat.width; x += incomingImgPat.patternWidth) {
+        for (let y = incomingImgPat.posY; y < incomingImgPat.height; y += incomingImgPat.patternHeight) {
+          Main.stage.drawImage(incomingImgPat.images[incomingImgPat.selectedImage], x, y, incomingImgPat.patternWidth, incomingImgPat.patternHeight);
+        }
       }
     }
   }
-
 
 }
 function drawButtonImageMethod(incomingButtonImage) {
@@ -628,7 +642,8 @@ function drawButtonImageMethod(incomingButtonImage) {
       posY: incomingButtonImage.posY,
       width: incomingButtonImage.width,
       height: incomingButtonImage.height,
-      image: incomingButtonImage.image,
+      images: incomingButtonImage.images,
+      selectedImage: incomingButtonImage.selectedImage,
       id: incomingButtonImage.id,
       isSolid: incomingButtonImage.isSolid,
       action: incomingButtonImage.action,
@@ -647,7 +662,8 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].posY = incomingButtonImage.posY;
     Game.methodObjects[index].width = incomingButtonImage.width;
     Game.methodObjects[index].height = incomingButtonImage.height;
-    Game.methodObjects[index].image = incomingButtonImage.image;
+    Game.methodObjects[index].images = incomingButtonImage.images;
+    Game.methodObjects[index].selectedImage = incomingButtonImage.selectedImage;
     Game.methodObjects[index].isSolid = incomingButtonImage.isSolid;
     Game.methodObjects[index].action = incomingButtonImage.action;
     Game.methodObjects[index].isAnim = false;
@@ -656,7 +672,8 @@ function drawButtonImageMethod(incomingButtonImage) {
     Main.methodObjectShadows[index].posY = incomingButtonImage.posY;
     Main.methodObjectShadows[index].width = incomingButtonImage.width;
     Main.methodObjectShadows[index].height = incomingButtonImage.height;
-    Main.methodObjectShadows[index].image = incomingButtonImage.image;
+    Main.methodObjectShadows[index].images = incomingButtonImage.images;
+    Main.methodObjectShadows[index].selectedImage = incomingButtonImage.selectedImage;
     Main.methodObjectShadows[index].isSolid = incomingButtonImage.isSolid;
     Main.methodObjectShadows[index].action = incomingButtonImage.action;
     Main.methodObjectShadows[index].isAnim = false;
@@ -669,7 +686,8 @@ function drawButtonImageMethod(incomingButtonImage) {
    Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
    Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
-   Game.methodObjects[index].image !== Main.methodObjectShadows[index].image)
+   Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
+   Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage)
    ) {
      redrawImage(Game.methodObjects[index]);
       const shadowButtonImg = Object.assign({}, Game.methodObjects[index]);
@@ -683,7 +701,8 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
     Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
-    Game.methodObjects[index].image === Main.methodObjectShadows[index].image)) {
+    Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
+    Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
