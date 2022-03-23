@@ -5,6 +5,7 @@ const masonWorkerPath = './assets/images/stoneWorker.png';
 const rock1Path = './assets/images/rock1.png';
 const grassPath = './assets/images/grass.png';
 let knight = {};
+let animationTick = 0;
 
 // this will keep track of the game
 let gameObject = {
@@ -182,23 +183,22 @@ function findGameObjects() {
 }
 
 function animateObjects() {
-	// if (knight?.images?.length > 0) {
-		const frame1 = setInterval(function() {
+	if (knight?.methodId) {
+		if (animationTick === 50) {
 			if (knight.selectedImage === 0) {
 				knight.selectedImage = 1;
+				animationTick = 0;
 			} else if (knight.selectedImage === 1) {
 				knight.selectedImage = 0;
+				animationTick = 0;
 			}
-			clearInterval(frame1);
-		}, 2000);
+		}
+	}
+	animationTick++;
 
-		// setTimeout(function() {
-			// knight.selectedImage = 1;
-		// }, 1000);
-		// setTimeout(function() {
-			// knight.selectedImage = 1;
-		// }, 900);
-	// }
+	// console.log(animationTick);
+	//console.log(tick++);
+
 }
 
 function mineRock() {
