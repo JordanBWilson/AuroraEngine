@@ -77,6 +77,7 @@ function drawMainMenu() {
 				patternHeight: (Game.canvas.height * 0.2),
 				images: [grassImg],
 				selectedImage: 0,
+				animTicks: 0,
 				id: 'grass-background',
 				isSolid: false,
 				isBackground: true,
@@ -95,6 +96,7 @@ function drawMainMenu() {
 				height: (Game.canvas.height * 0.1),
 				images: [masonWorkerImg],
 				selectedImage: 0,
+				animTicks: 0,
 				id: 'mason-worker',
 				isSolid: true,
 				isBackground: false,
@@ -113,8 +115,9 @@ function drawMainMenu() {
 				posY: (Game.canvas.height * 0.65),
 				width: (Game.canvas.height * 0.1),
 				height: (Game.canvas.height * 0.1),
-				images: [], // masonWorkerImg
+				images: [],
 				selectedImage: 0,
+				animTicks: 50,
 				id: 'knight',
 				isSolid: true,
 				isBackground: false,
@@ -135,6 +138,7 @@ function drawMainMenu() {
         height: (Game.canvas.height * 0.15),
         images: [rockImg],
 				selectedImage: 0,
+				animTicks: 0,
         id: 'rock',
         isSolid: false,
         action: { method: function(id) { mineRock(); }},
@@ -182,9 +186,9 @@ function findGameObjects() {
   }
 }
 
-function animateObjects() {
+function animateObjects() { // future Jordan, this method or some part of it can/could be made into the engine
 	if (knight?.methodId) {
-		if (animationTick === 50) {
+		if (animationTick >= knight.animTicks) {
 			if (knight.selectedImage === 0) {
 				knight.selectedImage = 1;
 				animationTick = 0;
@@ -194,10 +198,13 @@ function animateObjects() {
 			}
 		}
 	}
-	animationTick++;
-
-	// console.log(animationTick);
-	//console.log(tick++);
+	if (Game.selectedSetting === Game.enumSettings.high) {
+		animationTick++;
+	} else if (Game.selectedSetting === Game.enumSettings.med) {
+		animationTick += 2;
+	} else if (Game.selectedSetting === Game.enumSettings.low) {
+		animationTick += 4;
+	}
 
 }
 
