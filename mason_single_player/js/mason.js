@@ -5,7 +5,6 @@ const masonWorkerPath = './assets/images/stoneWorker.png';
 const rock1Path = './assets/images/rock1.png';
 const grassPath = './assets/images/grass.png';
 let knight = {};
-let animationTick = 0;
 
 // this will keep track of the game
 let gameObject = {
@@ -23,8 +22,6 @@ let gameObject = {
 	// may need some sort of loading screen or loading indicator
 	// the bigger the image, the bigger the lag
 	// Game.createImageListFromGif('./assets/images/testKnight.GIF', 1);
-	// future Jordan, setup arurora_2d_core to handle an array of images and
-	// make a parameter to display the current image selected with an index
 })();
 
 function drawMainMenu() {
@@ -78,6 +75,7 @@ function drawMainMenu() {
 				images: [grassImg],
 				selectedImage: 0,
 				animTicks: 0,
+				ticks: 0,
 				id: 'grass-background',
 				isSolid: false,
 				isBackground: true,
@@ -97,6 +95,7 @@ function drawMainMenu() {
 				images: [masonWorkerImg],
 				selectedImage: 0,
 				animTicks: 0,
+				ticks: 0,
 				id: 'mason-worker',
 				isSolid: true,
 				isBackground: false,
@@ -117,7 +116,8 @@ function drawMainMenu() {
 				height: (Game.canvas.height * 0.1),
 				images: [],
 				selectedImage: 0,
-				animTicks: 50,
+				animTicks: 25,
+				ticks: 25,
 				id: 'knight',
 				isSolid: true,
 				isBackground: false,
@@ -139,6 +139,7 @@ function drawMainMenu() {
         images: [rockImg],
 				selectedImage: 0,
 				animTicks: 0,
+				ticks: 0,
         id: 'rock',
         isSolid: false,
         action: { method: function(id) { mineRock(); }},
@@ -186,24 +187,16 @@ function findGameObjects() {
   }
 }
 
-function animateObjects() { // future Jordan, this method or some part of it can/could be made into the engine
+function animateObjects() {
 	if (knight?.methodId) {
-		if (animationTick >= knight.animTicks) {
+		if (knight.animTicks <= 1) {
 			if (knight.selectedImage === 0) {
 				knight.selectedImage = 1;
-				animationTick = 0;
 			} else if (knight.selectedImage === 1) {
 				knight.selectedImage = 0;
-				animationTick = 0;
 			}
 		}
-	}
-	if (Game.selectedSetting === Game.enumSettings.high) {
-		animationTick++;
-	} else if (Game.selectedSetting === Game.enumSettings.med) {
-		animationTick += 2;
-	} else if (Game.selectedSetting === Game.enumSettings.low) {
-		animationTick += 4;
+		knight = Game.nextTick(knight);
 	}
 
 }

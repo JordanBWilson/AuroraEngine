@@ -449,6 +449,7 @@ function drawImageMethod(incomingImg) {
       images: incomingImg.images,
       selectedImage: incomingImg.selectedImage,
       animTicks: incomingImg.animTicks,
+      ticks: incomingImg.ticks,
       id: incomingImg.id,
       isSolid: incomingImg.isSolid,
       isAnim: false,
@@ -469,6 +470,7 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].images = incomingImg.images;
     Game.methodObjects[index].selectedImage = incomingImg.selectedImage;
     Game.methodObjects[index].animTicks = incomingImg.animTicks;
+    Game.methodObjects[index].ticks = incomingImg.ticks;
     Game.methodObjects[index].isSolid = incomingImg.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImg.isBackground;
@@ -480,6 +482,7 @@ function drawImageMethod(incomingImg) {
     Main.methodObjectShadows[index].images = incomingImg.images;
     Main.methodObjectShadows[index].selectedImage = incomingImg.selectedImage;
     Main.methodObjectShadows[index].animTicks = incomingImg.animTicks;
+    Main.methodObjectShadows[index].ticks = incomingImg.ticks;
     Main.methodObjectShadows[index].isSolid = incomingImg.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImg.isBackground;
@@ -498,7 +501,8 @@ function drawImageMethod(incomingImg) {
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
    Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
-   Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks)
+   Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
    ) {
       redrawImage(Game.methodObjects[index]);
       const shadowImage = Object.assign({}, Game.methodObjects[index]);
@@ -517,7 +521,8 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
     Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
-    Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks)) {
+    Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -548,6 +553,7 @@ function drawImagePatternMethod(incomingImgPat) {
       images: incomingImgPat.images,
       selectedImage: incomingImgPat.selectedImage,
       animTicks: incomingImgPat.animTicks,
+      ticks: incomingImgPat.ticks,
       id: incomingImgPat.id,
       isSolid: incomingImgPat.isSolid,
       isAnim: false,
@@ -570,6 +576,7 @@ function drawImagePatternMethod(incomingImgPat) {
     Game.methodObjects[index].images = incomingImgPat.images;
     Game.methodObjects[index].selectedImage = incomingImgPat.selectedImage;
     Game.methodObjects[index].animTicks = incomingImgPat.animTicks;
+    Game.methodObjects[index].ticks = incomingImgPat.ticks;
     Game.methodObjects[index].isSolid = incomingImgPat.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImgPat.isBackground;
@@ -583,6 +590,7 @@ function drawImagePatternMethod(incomingImgPat) {
     Main.methodObjectShadows[index].images = incomingImgPat.images;
     Main.methodObjectShadows[index].selectedImage = incomingImgPat.selectedImage;
     Main.methodObjectShadows[index].animTicks = incomingImgPat.animTicks;
+    Main.methodObjectShadows[index].ticks = incomingImgPat.ticks;
     Main.methodObjectShadows[index].isSolid = incomingImgPat.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImgPat.isBackground;
@@ -603,7 +611,8 @@ function drawImagePatternMethod(incomingImgPat) {
    Game.methodObjects[index].patternHeight !== Main.methodObjectShadows[index].patternHeight ||
    Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
-   Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks)
+   Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
    ) {
       redrawImagePattern(Game.methodObjects[index]);
       const shadowImagePat = Object.assign({}, Game.methodObjects[index]);
@@ -624,7 +633,8 @@ function drawImagePatternMethod(incomingImgPat) {
     Game.methodObjects[index].patternHeight === Main.methodObjectShadows[index].patternHeight ||
     Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
-    Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks)) {
+    Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -655,6 +665,7 @@ function drawButtonImageMethod(incomingButtonImage) {
       images: incomingButtonImage.images,
       selectedImage: incomingButtonImage.selectedImage,
       animTicks: incomingButtonImage.animTicks,
+      ticks: incomingButtonImage.ticks,
       id: incomingButtonImage.id,
       isSolid: incomingButtonImage.isSolid,
       action: incomingButtonImage.action,
@@ -676,6 +687,7 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].images = incomingButtonImage.images;
     Game.methodObjects[index].selectedImage = incomingButtonImage.selectedImage;
     Game.methodObjects[index].animTicks = incomingButtonImage.animTicks;
+    Game.methodObjects[index].ticks = incomingButtonImage.ticks;
     Game.methodObjects[index].isSolid = incomingButtonImage.isSolid;
     Game.methodObjects[index].action = incomingButtonImage.action;
     Game.methodObjects[index].isAnim = false;
@@ -687,6 +699,7 @@ function drawButtonImageMethod(incomingButtonImage) {
     Main.methodObjectShadows[index].images = incomingButtonImage.images;
     Main.methodObjectShadows[index].selectedImage = incomingButtonImage.selectedImage;
     Main.methodObjectShadows[index].animTicks = incomingButtonImage.animTicks;
+    Main.methodObjectShadows[index].ticks = incomingButtonImage.ticks;
     Main.methodObjectShadows[index].isSolid = incomingButtonImage.isSolid;
     Main.methodObjectShadows[index].action = incomingButtonImage.action;
     Main.methodObjectShadows[index].isAnim = false;
@@ -701,7 +714,8 @@ function drawButtonImageMethod(incomingButtonImage) {
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
    Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
-   Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks)
+   Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
    ) {
      redrawImage(Game.methodObjects[index]);
       const shadowButtonImg = Object.assign({}, Game.methodObjects[index]);
@@ -717,7 +731,8 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
     Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
-    Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks)) {
+    Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
       Game.methodObjects[index].isAnim = false;
    }
 }

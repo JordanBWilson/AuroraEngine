@@ -143,8 +143,22 @@ const Game = { // the user will want to use this object
     if (gifLocation.length > 0 && methodId > 0) {
       createImagesFromGif(gifLocation, methodId);
     }
-
-  }
+  },
+  nextTick: function(entity) {
+    if (this.selectedSetting === this.enumSettings.high) {
+  		entity.animTicks--;
+  	} else if (this.selectedSetting === this.enumSettings.med) {
+  		entity.animTicks -= 2;
+  	} else if (this.selectedSetting === this.enumSettings.low) {
+  		entity.animTicks -= 4;
+  	} else {
+      entity.animTicks--;
+    }
+    if (entity.animTicks <= 0) {
+      entity.animTicks = entity.ticks;
+    }
+    return entity;
+  },
 };
 
 const Main = { // global variables to keep the game running nicely
