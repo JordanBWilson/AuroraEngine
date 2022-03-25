@@ -198,7 +198,6 @@ function animateObjects() {
 		}
 		knight = Game.nextTick(knight);
 	}
-
 }
 
 function mineRock() {
@@ -227,5 +226,4 @@ function masonRockCollision(methodId) {
 	if (masonWorker.props.direction === 'right') {
 		masonWorker.props.direction = 'left';
 	}
-
 }
