@@ -44,10 +44,10 @@ const Game = { // the user will want to use this object
       if (this.methodObjects[i].methodId === id) {
         for (let j = 0; j < Main.methodsToRun.length; j++) {
           if (this.methodObjects[i]?.methodId === Main.methodsToRun[j]?.methodId) {
-
             this.methodObjects.splice(i, 1);
             Main.methodObjectShadows.splice(i, 1);
             Main.methodsToRun.splice(j, 1);
+            break;
           }
         }
       }
