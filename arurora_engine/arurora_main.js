@@ -55,7 +55,7 @@ function mainLoop() {
         cancelAnimationFrame(Main.intervalAnimateId);
       }
     } else {
-      // removeLoadingScreen();
+      removeLoadingScreen();
     }
   }, Game.frameRate);
 }
@@ -64,22 +64,22 @@ function resizeStage() {
   // don't want to grab the new width and height too many times..
   clearTimeout(Main.resizeWindow);
   // this was an attempt to draw a loading message..
-  // Game.methodSetup = {
-  //   method: function(id) {
-  //     drawText({
-  //       font: '3em serif',
-  //       msg: 'Loading',
-  //       posX: (Game.canvas.width * 0.5),
-  //       posY: (Game.canvas.height * 0.58),
-  //       color: 'indigo',
-  //       align: 'center',
-  //       props: {},
-  //       id: 'loadingMessage',
-  //       methodId: id
-  //     });
-  //   }
-  // };
-  // Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawText({
+        font: '3em serif',
+        msg: 'Loading',
+        posX: (Game.canvas.width * 0.5),
+        posY: (Game.canvas.height * 0.58),
+        color: 'indigo',
+        align: 'center',
+        props: {},
+        id: 'loading-message',
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
   Main.resizeWindow = setTimeout(function() {
     // resize the game stage and set new base values
     Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
@@ -90,7 +90,7 @@ function resizeStage() {
     Main.isLoaded = true;
     const doneResizing = setTimeout(function() {
       Main.isResizing = false;
-      // removeLoadingScreen();
+      removeLoadingScreen();
       clearTimeout(doneResizing);
     }, 100);
   }, Main.resizeWindowTime);
@@ -211,7 +211,7 @@ function assignImages(pngs, methodId) {
   Main.isLoaded = true;
 }
 function removeLoadingScreen() {
-  const loading = Game.methodObjects.find(x => x.id === 'loadingMessage')?.methodId;
+  const loading = Game.methodObjects.find(x => x.id === 'loading-message')?.methodId;
   console.log(loading);
   if (loading) {
     console.log(Game.methodObjects);

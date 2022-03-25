@@ -92,7 +92,6 @@ function drawTextMethod(incomingText) {
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
       redrawText(Game.methodObjects[index]);
-      Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
     Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
