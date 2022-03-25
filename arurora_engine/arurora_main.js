@@ -10,46 +10,52 @@
       screenTapped(event);
     }, false);
     resizeStage();
-    Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
+    Main.intervalAnimateId = requestAnimationFrame(function() { mainLoop(); });
+    // future Jordan, make the loading image customizable
+    // I'm thinking creating an html tag for the loading image would be best
+
   }
 })();
 
 function mainLoop() {
 
   Main.interval = setInterval(function() {
-
-    if (Main.methodsToRun.length > 0) {
-      // run the game
-      for (let i = 0; i < Main.methodsToRun.length; i++) {
-        if (Main.clearStage === true) {
-          Main.clearStage = false;
-          break;
-        }
-        if (Main.methodsToRun[i].methodId === undefined // if there isn't a methodId, add one
-          && Main.methodsToRun[i].id !== 'particle-effect') { // particle effects are not considered game objects so they will not get unique ids
-          Main.globalId++;
-          Main.methodsToRun[i].methodId = Main.globalId;
-        }
-        Main.methodsToRun[i].method(Main.methodsToRun[i].methodId); // run through all the methods the user sent us
-        if (Main.isStageTapped) { // when the stage is tapped
-          if (Game.methodObjects[i]?.isBtn) { // look to see if the user tapped on a button
-            isButtonTapped(Game.methodObjects[i]);
-            if (i == Main.methodsToRun.length - 1) {
+    if (Main.isLoaded) {
+      if (Main.methodsToRun.length > 0) {
+        // run the game
+        for (let i = 0; i < Main.methodsToRun.length; i++) {
+          if (Main.clearStage === true) {
+            Main.clearStage = false;
+            break;
+          }
+          if (Main.methodsToRun[i].methodId === undefined // if there isn't a methodId, add one
+            && Main.methodsToRun[i].id !== 'particle-effect') { // particle effects are not considered game objects so they will not get unique ids
+            Main.globalId++;
+            Main.methodsToRun[i].methodId = Main.globalId;
+          }
+          Main.methodsToRun[i].method(Main.methodsToRun[i].methodId); // run through all the methods the user sent us
+          if (Main.isStageTapped) { // when the stage is tapped
+            if (Game.methodObjects[i]?.isBtn) { // look to see if the user tapped on a button
+              isButtonTapped(Game.methodObjects[i]);
+              if (i == Main.methodsToRun.length - 1) {
+                Main.isStageTapped = false;
+                Main.tappedX = 0;
+                Main.tappedY = 0;
+              }
+            } else if (i === (Main.methodsToRun.length - 1)) {
               Main.isStageTapped = false;
-              Main.tappedX = 0;
-              Main.tappedY = 0;
             }
-          } else if (i === (Main.methodsToRun.length - 1)) {
-            Main.isStageTapped = false;
           }
         }
+        collisionCheck();
+      } else {
+        // stop the game
+        console.log('The game has stopped. No more methods to listen to.');
+        clearInterval(Main.interval);
+        cancelAnimationFrame(Main.intervalAnimateId);
       }
-      collisionCheck();
     } else {
-      // stop the game
-      console.log('The game has stopped. No more methods to listen to.');
-      clearInterval(Main.interval);
-      cancelAnimationFrame(Main.intervalAnimateId);
+      // removeLoadingScreen();
     }
   }, Game.frameRate);
 }
@@ -57,6 +63,23 @@ function mainLoop() {
 function resizeStage() {
   // don't want to grab the new width and height too many times..
   clearTimeout(Main.resizeWindow);
+  // this was an attempt to draw a loading message..
+  // Game.methodSetup = {
+  //   method: function(id) {
+  //     drawText({
+  //       font: '3em serif',
+  //       msg: 'Loading',
+  //       posX: (Game.canvas.width * 0.5),
+  //       posY: (Game.canvas.height * 0.58),
+  //       color: 'indigo',
+  //       align: 'center',
+  //       props: {},
+  //       id: 'loadingMessage',
+  //       methodId: id
+  //     });
+  //   }
+  // };
+  // Game.addMethod(Game.methodSetup);
   Main.resizeWindow = setTimeout(function() {
     // resize the game stage and set new base values
     Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
@@ -64,8 +87,10 @@ function resizeStage() {
     Game.entitySize = (Game.canvas.height * 0.01);
     Game.entityWidth = (Game.canvas.width * 0.01);
     Main.isResizing = true;
+    Main.isLoaded = true;
     const doneResizing = setTimeout(function() {
       Main.isResizing = false;
+      // removeLoadingScreen();
       clearTimeout(doneResizing);
     }, 100);
   }, Main.resizeWindowTime);
@@ -180,8 +205,17 @@ function findWidthHeightMethodObjects(index) {
     return Game.methodObjects[index].height;
   }
 }
-
 // this method grabs the gif image frames and assigns it to the correct method Id
 function assignImages(pngs, methodId) {
   Game.methodObjects.find(x => x.methodId === methodId).images = pngs;
+  Main.isLoaded = true;
+}
+function removeLoadingScreen() {
+  const loading = Game.methodObjects.find(x => x.id === 'loadingMessage')?.methodId;
+  console.log(loading);
+  if (loading) {
+    console.log(Game.methodObjects);
+    // remove the loading message
+    Game.deleteEntity(loading);
+  }
 }

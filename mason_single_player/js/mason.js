@@ -20,6 +20,7 @@ let gameObject = {
 	drawMainMenu();
 
 	// may need some sort of loading screen or loading indicator
+	// I'm thinking creating an html tag for the loading image would be best
 	// the bigger the image, the bigger the lag
 	// Game.createImageListFromGif('./assets/images/testKnight.GIF', 1);
 })();

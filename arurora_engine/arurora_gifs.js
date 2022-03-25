@@ -10,6 +10,7 @@ function createImagesFromGif(imageSrc, methodId) { // call this when you want to
   img.onload = function() {
     newGifImg(img, sendImage, methodId);
     sendImage = false;
+    Main.isLoaded = false;
   }
 } // completedCallback() is the method that returns the base64 pngs
 

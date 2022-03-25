@@ -44,6 +44,7 @@ const Game = { // the user will want to use this object
       if (this.methodObjects[i].methodId === id) {
         for (let j = 0; j < Main.methodsToRun.length; j++) {
           if (this.methodObjects[i]?.methodId === Main.methodsToRun[j]?.methodId) {
+
             this.methodObjects.splice(i, 1);
             Main.methodObjectShadows.splice(i, 1);
             Main.methodsToRun.splice(j, 1);
@@ -145,6 +146,7 @@ const Game = { // the user will want to use this object
     }
   },
   nextTick: function(entity) {
+    // this will animate an entity at the based on the frame rate
     if (this.selectedSetting === this.enumSettings.high) {
   		entity.animTicks--;
   	} else if (this.selectedSetting === this.enumSettings.med) {
@@ -176,4 +178,5 @@ const Main = { // global variables to keep the game running nicely
   clearStage: false,
   collisions: [], // all the collisions in the game to look for
   methodsToRun: [], // all the methods to make the game run
+  isLoaded: false,
 };
