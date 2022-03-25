@@ -18,7 +18,7 @@ let gameObject = {
 	grassImg.src = grassPath;
 	Game.setSettingsHigh();
 	drawMainMenu();
-
+	Game.loadingMessage.msg = 'Loading...';
 	// may need some sort of loading screen or loading indicator
 	// I'm thinking creating an html tag for the loading image would be best
 	// the bigger the image, the bigger the lag
@@ -186,6 +186,10 @@ function findGameObjects() {
 			animateObjects();
 		}
   }
+	if (Game.methodObjects.find(x => x.id === Game.loadingMessage.id)) {
+		Game.loadingMessage.posX = Game.canvas.width * 0.50;
+		Game.loadingMessage.posY = Game.canvas.height * 0.50;
+	}
 }
 
 function animateObjects() {

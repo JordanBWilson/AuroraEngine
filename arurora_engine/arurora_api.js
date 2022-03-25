@@ -167,6 +167,15 @@ const Game = { // the user will want to use this object
     }
     return entity;
   },
+  loadingMessage: {
+    msg: '',
+    font: '3em serif',
+    posX: 300,
+    posY: 300,
+    color: 'indigo',
+    align: 'center',
+    id: 'loading-message',
+  }
 };
 
 const Main = { // global variables to keep the game running nicely
@@ -184,5 +193,23 @@ const Main = { // global variables to keep the game running nicely
   clearStage: false,
   collisions: [], // all the collisions in the game to look for
   methodsToRun: [], // all the methods to make the game run
-  isLoaded: false, // wait for assets to load before starting the game 
+  isLoaded: false, // wait for assets to load before starting the game
+  loadingMessage: function() {
+    Game.methodSetup = {
+      method: function(id) {
+        drawText({
+          font: Game.loadingMessage.font,
+          msg: Game.loadingMessage.msg,
+          posX: Game.loadingMessage.posX,
+          posY: Game.loadingMessage.posY,
+          color: Game.loadingMessage.color,
+          align: Game.loadingMessage.align,
+          props: {},
+          id: Game.loadingMessage.id,
+          methodId: id
+        });
+      }
+    };
+    Game.addMethod(Game.methodSetup);
+  }
 };
