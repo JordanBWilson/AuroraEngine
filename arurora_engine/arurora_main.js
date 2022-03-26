@@ -10,6 +10,8 @@
       screenTapped(event);
     }, false);
     resizeStage();
+    // this takes out the old animationId when the page is refreshed
+    window.addEventListener('beforeunload', function(e) { cancelAnimationFrame(Main.intervalAnimateId); });
     Main.intervalAnimateId = requestAnimationFrame(function() { mainLoop(); });
   }
 })();
