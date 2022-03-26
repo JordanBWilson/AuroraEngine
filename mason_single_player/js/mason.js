@@ -190,7 +190,7 @@ function drawMainMenu() {
 
 function findGameObjects() {
   // when the game starts up, look for the knight and animate it
-  if (!knight?.methodId) {
+  if (!knight?.methodId || knight?.images?.length === 0) {
     knight = Game.methodObjects.find(x => x.id === 'knight');
 		if (knight.methodId) {
 			Game.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);
