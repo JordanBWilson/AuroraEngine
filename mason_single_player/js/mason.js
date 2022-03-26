@@ -18,11 +18,6 @@ let gameObject = {
 	grassImg.src = grassPath;
 	Game.setSettingsHigh();
 	drawMainMenu();
-	Game.loadingMessage.msg = 'Loading...';
-	// may need some sort of loading screen or loading indicator
-	// I'm thinking creating an html tag for the loading image would be best
-	// the bigger the image, the bigger the lag
-	// Game.createImageListFromGif('./assets/images/testKnight.GIF', 1);
 })();
 
 function drawMainMenu() {
@@ -86,6 +81,22 @@ function drawMainMenu() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '3em serif',
+				msg: 'Loading...',
+				posX: (Game.canvas.width * 0.5),
+				posY: (Game.canvas.height * 0.55),
+				color: 'indigo',
+				align: 'center',
+				props: {},
+				id: Game.loadingId,
+				methodId: id
+			});
+		}
+	};
+  Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawImage({
@@ -186,10 +197,6 @@ function findGameObjects() {
 			animateObjects();
 		}
   }
-	if (Game.methodObjects.find(x => x.id === Game.loadingMessage.id)) {
-		Game.loadingMessage.posX = Game.canvas.width * 0.50;
-		Game.loadingMessage.posY = Game.canvas.height * 0.50;
-	}
 }
 
 function animateObjects() {

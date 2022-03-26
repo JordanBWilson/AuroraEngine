@@ -52,9 +52,7 @@ function mainLoop() {
         cancelAnimationFrame(Main.intervalAnimateId);
       }
     } else {
-      if (Game.loadingMessage.msg.length > 0) {
-        removeLoadingScreen();
-      }
+      removeLoadingScreen();
     }
   }, Game.frameRate);
 }
@@ -62,11 +60,6 @@ function mainLoop() {
 function resizeStage() {
   // don't want to grab the new width and height too many times..
   clearTimeout(Main.resizeWindow);
-  // this was an attempt to draw a loading message..
-  if (Game.loadingMessage.msg.length > 0) {
-    Main.loadingMessage();
-  }
-
   Main.resizeWindow = setTimeout(function() {
     // resize the game stage and set new base values
     Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
@@ -77,9 +70,7 @@ function resizeStage() {
     Main.isLoaded = true;
     const doneResizing = setTimeout(function() {
       Main.isResizing = false;
-      if (Game.loadingMessage.msg.length > 0) {
-        removeLoadingScreen();
-      }
+      removeLoadingScreen();
       clearTimeout(doneResizing);
     }, 100);
   }, Main.resizeWindowTime);
@@ -200,10 +191,8 @@ function assignImages(pngs, methodId) {
   Main.isLoaded = true;
 }
 function removeLoadingScreen() {
-  const loading = Game.methodObjects.find(x => x.id === Game.loadingMessage.id)?.methodId;
-  console.log(loading);
+  const loading = Game.methodObjects.find(x => x.id === 'loading-message')?.methodId;
   if (loading) {
-    console.log(Game.methodObjects);
     // remove the loading message
     Game.deleteEntity(loading);
   }

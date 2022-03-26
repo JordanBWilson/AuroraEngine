@@ -29,6 +29,10 @@ function drawButton(incomingButton) {
 function drawButtonImage(incomingButtonImage) {
   drawButtonImageMethod(incomingButtonImage);
 }
+// this will draw a loading screen or message while resources are loaded
+function drawLoadingScreen(incomingLoadingScreen) {
+  drawLoadingScreenMethod(incomingLoadingScreen);
+}
 
 // this is where all the work happens for the methods above
 
