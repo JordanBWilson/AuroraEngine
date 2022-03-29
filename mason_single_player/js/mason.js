@@ -126,7 +126,7 @@ function drawMainMenu() {
 				posY: (Game.canvas.height * 0.65),
 				width: (Game.canvas.height * 0.1),
 				height: (Game.canvas.height * 0.1),
-				images: [],
+				images: Game.gifImageList.length > 0 ? Game.gifImageList.find(img => img.methodId === id).pngs : [],
 				selectedImage: 0,
 				animTicks: 25,
 				ticks: 25,
@@ -190,7 +190,7 @@ function drawMainMenu() {
 
 function findGameObjects() {
   // when the game starts up, look for the knight and animate it
-  if (!knight?.methodId || knight?.images?.length === 0) {
+  if (!knight?.methodId) {
     knight = Game.methodObjects.find(x => x.id === 'knight');
 		if (knight.methodId) {
 			Game.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);

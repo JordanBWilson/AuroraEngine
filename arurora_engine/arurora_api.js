@@ -151,6 +151,7 @@ const Game = { // the user will want to use this object
       createImagesFromGif(gifLocation, methodId);
     }
   },
+  gifImageList: [],
   nextTick: function(entity) {
     // this will animate an entity at the based on the frame rate
     if (this.selectedSetting === this.enumSettings.high) {

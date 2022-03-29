@@ -189,6 +189,14 @@ function findWidthHeightMethodObjects(index) {
 }
 // this method grabs the gif image frames and assigns it to the correct method Id
 function assignImages(pngs, methodId) {
+  if (Game.gifImageList.length === 0) { // if the list is empty, add the new method
+    Game.gifImageList.push({pngs: pngs, methodId: methodId});
+  } else { // if the list has something, look and see if the same id is getting used
+    const imgCheck = Game.gifImageList.filter(img => img.methodId === methodId);
+    if (imgCheck.length === 0) {
+      Game.gifImageList.push({pngs: pngs, methodId: methodId});
+    }
+  }
   Game.methodObjects.find(x => x.methodId === methodId).images = pngs;
   Main.isLoaded = true;
 }
