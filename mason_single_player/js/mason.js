@@ -188,16 +188,6 @@ function findGameObjects() {
 		if (knight.methodId) {
 			Game.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);
 			animateObjects();
-			Particle.drawSpark({
-			  posX: (Game.canvas.width * 0.50),
-			  posY: (Game.canvas.height * 0.50),
-			  shape: 0,
-			  color: 'purple',
-				ticks: 10,
-			  count: 2,
-			  size: (Game.canvas.width * 0.01),
-				speed: 1.3,
-			});
 		}
   }
 }
@@ -217,6 +207,17 @@ function animateObjects() {
 
 function mineRock() {
 	gameObject.money++;
+	Particle.drawSpark({
+		posX: (Game.canvas.width * 0.50),
+		posY: (Game.canvas.height * 0.70),
+		shape: 0,
+		color: '#909090',
+		ticks: 11,
+		count: 8,
+		size: (Game.canvas.width * 0.003),
+		speed: 1.3,
+		isSolid: false,
+	});
 	console.log('chiseling rock! ', gameObject.money);
 }
 
