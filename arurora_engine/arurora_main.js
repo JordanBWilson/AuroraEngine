@@ -27,9 +27,8 @@ function mainLoop() {
             Main.clearStage = false;
             break;
           }
-          if (Main.methodsToRun[i].methodId === undefined // if there isn't a methodId, add one
-            && Main.methodsToRun[i].id !== 'particle-effect') { // particle effects are not considered game objects so they will not get unique ids
-            Main.globalId++;
+          if (Main.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
+            Main.globalId = Math.floor((Math.random() * 9007199254740992) + 1); // max int size
             Main.methodsToRun[i].methodId = Main.globalId;
           }
           Main.methodsToRun[i].method(Main.methodsToRun[i].methodId); // run through all the methods the user sent us

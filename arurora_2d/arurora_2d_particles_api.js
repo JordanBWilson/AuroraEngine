@@ -1,5 +1,5 @@
 const Particle = {
-  initParticles: function() {
+  init: function() {
     Game.methodSetup = { method: function(id) { moveParticles(); }};
     Game.addMethod(Game.methodSetup);
   },
@@ -11,12 +11,13 @@ const Particle = {
     //   count:0,
     //   speed:0,
     //   color:'#fff',
-    //   duration: 0, // in milliseconds,
+    //   ticks: 0, // in milliseconds,
     //   isSolid: false,
     //   size: 0, // width and height
     // }
 
     if (drawParticle?.shape === this.enumShapes.arc) {
+      console.log(drawParticle.count);
       for (let i = 0; i < drawParticle.count; i++) {
         Game.methodSetup = {
           method: function(id) {
@@ -33,9 +34,11 @@ const Particle = {
                 isSolid: drawParticle.isSolid,
                 props: {
                     direction: 'left',
-                    collision: false
+                    collision: false,
+                    ticks: drawParticle.ticks,
+                    speed: drawParticle.speed,
                 },
-                methodId: undefined
+                methodId: id
             });
           }
         }
@@ -59,9 +62,11 @@ const Particle = {
         				isBackground: false,
         				props: {
                   direction: 'right',
-                  collision: false
+                  collision: false,
+                  ticks: drawParticle.ticks,
+                  speed: drawParticle.speed,
                 },
-        				methodId: undefined
+        				methodId: id
         			});
         		}
   	       };
@@ -77,13 +82,29 @@ const Particle = {
 
 function moveParticles() {
 	const particles = Game.methodObjects.filter(x => x.id === 'particle-effect');
+  // console.log(particles);
 	// move the particles
-	particles.forEach((particle, i) => {
-		if (particle.props.direction === 'right') {
-			particles[i].posX += Game.moveEntity(0.15, Game.enumDirections.leftRight);
-		}
-		if (particle.props.direction === 'left') {
-			particles[i].posX -= Game.moveEntity(0.15, Game.enumDirections.leftRight);
-		}
-	});
+  for (let i = 0; i < particles.length; i++) {
+    if (particles[i].props.direction === 'right') {
+      particles[i].posX += Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+    }
+    if (particles[i].props.direction === 'left') {
+      particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+    }
+    if (particles[i].props.ticks <= 1) {
+      // particles.splice(i, 1);
+      // break;
+      Game.deleteEntity(particles[i].methodId);
+    }
+    if (Game.selectedSetting === Game.enumSettings.high) {
+  		particles[i].props.ticks--;
+  	} else if (Game.selectedSetting === Game.enumSettings.med) {
+  		particles[i].props.ticks -= 2;
+  	} else if (Game.selectedSetting === Game.enumSettings.low) {
+  		particles[i].props.ticks -= 4;
+  	} else {
+      particles[i].props.ticks--;
+    }
+
+  }
 }

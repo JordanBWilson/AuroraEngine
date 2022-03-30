@@ -153,7 +153,7 @@ const Game = { // the user will want to use this object
   },
   gifImageList: [],
   nextTick: function(entity) {
-    // this will animate an entity at the based on the frame rate
+    // this will animate an entity based on the frame rate
     if (this.selectedSetting === this.enumSettings.high) {
   		entity.animTicks--;
   	} else if (this.selectedSetting === this.enumSettings.med) {

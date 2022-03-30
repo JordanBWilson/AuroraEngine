@@ -177,15 +177,8 @@ function drawMainMenu() {
     methodId: undefined,
   }
   Game.addCollision(Game.collisionSetup);
-  Particle.initParticles();
-  Particle.drawSpark({
-	  posX: 200,
-	  posY: 200,
-	  shape: 0,
-	  color: 'purple',
-	  count: 1,
-	  size: (Game.canvas.width * 0.05)
-	});
+  Particle.init();
+
 }
 
 function findGameObjects() {
@@ -195,6 +188,16 @@ function findGameObjects() {
 		if (knight.methodId) {
 			Game.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);
 			animateObjects();
+			Particle.drawSpark({
+			  posX: (Game.canvas.width * 0.50),
+			  posY: (Game.canvas.height * 0.50),
+			  shape: 0,
+			  color: 'purple',
+				ticks: 10,
+			  count: 2,
+			  size: (Game.canvas.width * 0.01),
+				speed: 1.3,
+			});
 		}
   }
 }
