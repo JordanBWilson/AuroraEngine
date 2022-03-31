@@ -101,7 +101,7 @@ function drawMainMenu() {
 		method: function(id) {
 			drawImage({
 				posX: 0,
-				posY: (Game.canvas.height * 0.65),
+				posY: (Game.canvas.height * 0.72),
 				width: (Game.canvas.height * 0.1),
 				height: (Game.canvas.height * 0.1),
 				images: [masonWorkerImg],
@@ -123,7 +123,7 @@ function drawMainMenu() {
 		method: function(id) {
 			drawImage({
 				posX: (Game.canvas.width * 0.35),
-				posY: (Game.canvas.height * 0.65),
+				posY: (Game.canvas.height * 0.72),
 				width: (Game.canvas.height * 0.1),
 				height: (Game.canvas.height * 0.1),
 				images: Game.gifImageList.length > 0 ? Game.gifImageList.find(img => img.methodId === id).pngs : [],
@@ -144,8 +144,8 @@ function drawMainMenu() {
 	Game.methodSetup = {
     method: function(id) {
       drawButtonImage({
-        posX: (Game.canvas.width * 0.45),
-        posY: (Game.canvas.height * 0.65),
+        posX: (Game.canvas.width * 0.50),
+        posY: (Game.canvas.height * 0.72),
         width: (Game.canvas.height * 0.15),
         height: (Game.canvas.height * 0.15),
         images: [rockImg],
@@ -214,7 +214,7 @@ function mineRock() {
 		color: '#909090',
 		ticks: 11,
 		count: 8,
-		size: (Game.canvas.width * 0.003),
+		size: (Game.entitySize * 0.5),
 		speed: 1.3,
 		isSolid: false,
 	});

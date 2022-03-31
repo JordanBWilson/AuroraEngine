@@ -17,7 +17,6 @@ const Particle = {
     // }
 
     if (drawParticle?.shape === this.enumShapes.arc) {
-      console.log(drawParticle.count);
       for (let i = 0; i < drawParticle.count; i++) {
         const direction = chooseDirection();
         Game.methodSetup = {

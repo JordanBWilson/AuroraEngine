@@ -5,6 +5,8 @@ const Game = { // the user will want to use this object
   canvas: undefined, // the game stage
   stageWidthPrct: 1, // how much of the screen width will it take up. use a percent
   stageHeightPrct: 1, // how much of the screen height will it take up. use a percent
+  entitySize: 0,
+  entityWidth: 0,
   clearStage: function() { // clear the game stage
     Main.clearStage = true;
     Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
