@@ -24,8 +24,8 @@ function drawMainMenu() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
-				posX: 0,
-				posY: 0,
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
 				width: Game.canvas.width,
 				height: (Game.canvas.height) * 0.50,
 				lineWidth: 1,
@@ -43,8 +43,8 @@ function drawMainMenu() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
-				posX: 0,
-				posY: (Game.canvas.height) * 0.50,
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0.50),
 				width: Game.canvas.width,
 				height: Game.canvas.height,
 				lineWidth: 1,
@@ -62,8 +62,8 @@ function drawMainMenu() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawImagePattern({
-				posX: 0,
-				posY: (Game.canvas.height) * 0.50,
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0.50),// (Game.canvas.height) * 0.50,
 				width: (Game.canvas.width),
 				height: (Game.canvas.height),
 				patternWidth: (Game.canvas.height * 0.2),
@@ -86,8 +86,8 @@ function drawMainMenu() {
 			drawText({
 				font: '3em serif',
 				msg: 'Loading...',
-				posX: (Game.canvas.width * 0.5),
-				posY: (Game.canvas.height * 0.55),
+				posX: Game.placeEntityX(0.50),// (Game.canvas.width * 0.5),
+				posY: Game.placeEntityY(0.55),// (Game.canvas.height * 0.55),
 				color: 'indigo',
 				align: 'center',
 				props: {},
@@ -100,10 +100,10 @@ function drawMainMenu() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawImage({
-				posX: 0,
-				posY: (Game.canvas.height * 0.72),
-				width: (Game.canvas.height * 0.1),
-				height: (Game.canvas.height * 0.1),
+				posX: Game.placeEntityX(0, (Game.entitySize * 10)),
+				posY: Game.placeEntityY(0.77, (Game.entitySize * 10)),
+				width: (Game.entitySize * 10),
+				height: (Game.entitySize * 10),
 				images: [masonWorkerImg],
 				selectedImage: 0,
 				animTicks: 0,
@@ -122,10 +122,10 @@ function drawMainMenu() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawImage({
-				posX: (Game.canvas.width * 0.35),
-				posY: (Game.canvas.height * 0.72),
-				width: (Game.canvas.height * 0.1),
-				height: (Game.canvas.height * 0.1),
+				posX: Game.placeEntityX(0.75, (Game.entitySize * 10)),
+				posY: Game.placeEntityY(0.77, (Game.entitySize * 10)),
+				width: (Game.entitySize * 10),
+				height: (Game.entitySize * 10),
 				images: Game.gifImageList.length > 0 ? Game.gifImageList.find(img => img.methodId === id).pngs : [],
 				selectedImage: 0,
 				animTicks: 25,
@@ -144,10 +144,10 @@ function drawMainMenu() {
 	Game.methodSetup = {
     method: function(id) {
       drawButtonImage({
-        posX: (Game.canvas.width * 0.50),
-        posY: (Game.canvas.height * 0.72),
-        width: (Game.canvas.height * 0.15),
-        height: (Game.canvas.height * 0.15),
+        posX: Game.placeEntityX(0.50, (Game.entitySize * 15)),
+        posY: Game.placeEntityY(0.795, (Game.entitySize * 15)),
+        width: (Game.entitySize * 15),
+        height: (Game.entitySize * 15),
         images: [rockImg],
 				selectedImage: 0,
 				animTicks: 0,

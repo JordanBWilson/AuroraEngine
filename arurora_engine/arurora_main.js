@@ -11,6 +11,7 @@
     }, false);
     resizeStage();
     // this takes out the old animationId when the page is refreshed
+    cancelAnimationFrame(Main.intervalAnimateId);
     window.addEventListener('beforeunload', function(e) { cancelAnimationFrame(Main.intervalAnimateId); });
     Main.intervalAnimateId = requestAnimationFrame(function() { mainLoop(); });
   }

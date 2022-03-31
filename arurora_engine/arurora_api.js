@@ -5,8 +5,8 @@ const Game = { // the user will want to use this object
   canvas: undefined, // the game stage
   stageWidthPrct: 1, // how much of the screen width will it take up. use a percent
   stageHeightPrct: 1, // how much of the screen height will it take up. use a percent
-  entitySize: 0,
-  entityWidth: 0,
+  entitySize: (window.innerHeight * this.stageHeightPrct) * 0.01,
+  entityWidth: (window.innerWidth * this.stageWidthPrct) * 0.01,
   clearStage: function() { // clear the game stage
     Main.clearStage = true;
     Main.stage?.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -39,6 +39,20 @@ const Game = { // the user will want to use this object
     Main.methodsToRun.push(method);
     this.methodSetup = {
       method: function(id) {},
+    }
+  },
+  placeEntityX: function(pos, size) {
+    if (size) { // this will help center the entity X coord before placing
+      return (Game.canvas.width * pos) - (size / 2);
+    } else {
+      return (Game.canvas.width * pos);
+    }
+  },
+  placeEntityY: function(pos, size) {
+    if (size) { // this will help center the entity Y coord before placing
+      return (Game.canvas.height * pos) - (size / 2);
+    } else {
+      return (Game.canvas.height * pos);
     }
   },
   deleteEntity: function(id) { // delete an object in the MethodObjects
