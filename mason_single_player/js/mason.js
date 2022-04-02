@@ -27,7 +27,7 @@ function drawMainMenu() {
 				posX: Game.placeEntityX(0),
 				posY: Game.placeEntityY(0),
 				width: Game.canvas.width,
-				height: (Game.canvas.height) * 0.50,
+				height: (Game.canvas.height * 0.50),
 				lineWidth: 1,
 				color: '#0000FF',
 				isFilled: true,
@@ -63,7 +63,7 @@ function drawMainMenu() {
 		method: function(id) {
 			drawImagePattern({
 				posX: Game.placeEntityX(0),
-				posY: Game.placeEntityY(0.50),// (Game.canvas.height) * 0.50,
+				posY: Game.placeEntityY(0.50),
 				width: (Game.canvas.width),
 				height: (Game.canvas.height),
 				patternWidth: (Game.canvas.height * 0.2),
@@ -86,8 +86,8 @@ function drawMainMenu() {
 			drawText({
 				font: '3em serif',
 				msg: 'Loading...',
-				posX: Game.placeEntityX(0.50),// (Game.canvas.width * 0.5),
-				posY: Game.placeEntityY(0.55),// (Game.canvas.height * 0.55),
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.55),
 				color: 'indigo',
 				align: 'center',
 				props: {},
@@ -208,8 +208,8 @@ function animateObjects() {
 function mineRock() {
 	gameObject.money++;
 	Particle.drawSpark({
-		posX: (Game.canvas.width * 0.50),
-		posY: (Game.canvas.height * 0.70),
+		posX: Game.placeEntityX(0.50, (Game.entitySize * 0.5)),
+		posY: Game.placeEntityY(0.78, (Game.entitySize * 0.5)),
 		shape: 0,
 		color: '#909090',
 		ticks: 11,
