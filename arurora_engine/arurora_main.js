@@ -85,8 +85,8 @@ function screenTapped(event) {
 }
 
 function isButtonTapped(btnParams) {
-  if (Main.tappedX >= btnParams.posX && Main.tappedX <= btnParams.posX + btnParams.width) {
-    if (Main.tappedY >= btnParams.posY && Main.tappedY <= btnParams.posY + btnParams.height) {
+  if (Main.tappedY >= btnParams.posY && Main.tappedY <= btnParams.posY + btnParams.height) {
+    if (Main.tappedX >= btnParams.posX && Main.tappedX <= btnParams.posX + btnParams.width) {
       btnParams.action.method();
       Main.isStageTapped = false;
       Main.tappedX = 0;
@@ -117,8 +117,8 @@ function collisionCheck() {
             } else {
               widthOrHeight = targetMethods[k].height;
             }
-              if (primaryMethods[j].posY + (primaryMethods[j].width * 0.94) >= targetMethods[k].posY && primaryMethods[j].posY <= (targetMethods[k].posY + widthOrHeight + (widthOrHeight * 0.27))) {
-                if (primaryMethods[j].posX + (primaryMethods[j].width * 0.94) >= targetMethods[k].posX && primaryMethods[j].posX <= (targetMethods[k].posX + targetMethods[k].width + (targetMethods[k].width * 0.27))) {
+              if (primaryMethods[j].posY + (primaryMethods[j].width * 0.94) >= targetMethods[k].posY && primaryMethods[j].posY <= (targetMethods[k].posY + widthOrHeight)) {
+                if (primaryMethods[j].posX + (primaryMethods[j].width * 0.94) >= targetMethods[k].posX && primaryMethods[j].posX <= (targetMethods[k].posX + targetMethods[k].width)) {
                   Main.collisions[i].methodId = targetMethods[k].methodId;
                   Main.collisions[i].method();
                   break;
@@ -137,19 +137,17 @@ function backgroundAnimationCheck(index) {
       if (Game.methodObjects[i].isAnim && !Game.methodObjects[i].isBtn) { // is this thing animated? Find if it is colliding with this background
         // future Jordan. '&& !Game.methodObjects[i].isBtn' check may not be needed there. fixes a bug with the button on an animated screen
         let widthOrHeight = findWidthHeightMethodObjects(i);
-
-        if (Game.methodObjects[i].posX >= Game.methodObjects[index].posX - Game.methodObjects[i].width &&
-           Game.methodObjects[i].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[i].width) {
-          if (Game.methodObjects[i].posY >= Game.methodObjects[index].posY - widthOrHeight  &&
-             Game.methodObjects[i].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight) {
+        if (Game.methodObjects[i].posY >= Game.methodObjects[index].posY - widthOrHeight  &&
+           Game.methodObjects[i].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight) {
+          if (Game.methodObjects[i].posX >= Game.methodObjects[index].posX - Game.methodObjects[i].width &&
+             Game.methodObjects[i].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[i].width) {
 
             for (let j = 0; j < Game.methodObjects.length; j++) { // look and see if there is anything not animated that needs to be redrawn..
-              if (Game.methodObjects[j].posX >= Game.methodObjects[index].posX - Game.methodObjects[j].width &&
-                  Game.methodObjects[j].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[j].width || Game.methodObjects[j].align) {
-                let widthOrHeight = findWidthHeightMethodObjects(j);
-
-                if (Game.methodObjects[j].posY >= Game.methodObjects[index].posY - Game.methodObjects[j].width  &&
-                     Game.methodObjects[j].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight || Game.methodObjects[j].align) {
+              let widthOrHeight = findWidthHeightMethodObjects(j);
+              if (Game.methodObjects[j].posY >= Game.methodObjects[index].posY - Game.methodObjects[j].width  &&
+                   Game.methodObjects[j].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight || Game.methodObjects[j].align) {
+                if (Game.methodObjects[j].posX >= Game.methodObjects[index].posX - Game.methodObjects[j].width &&
+                    Game.methodObjects[j].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[j].width || Game.methodObjects[j].align) {
                   // find out what shape this is and redraw it
                   if (!Game.methodObjects[j].isAnim && !Game.methodObjects[j].isBackground && j !== index) {
                     // this will need to be split up as the shapes and graphics grow
