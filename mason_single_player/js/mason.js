@@ -118,48 +118,48 @@ function drawMainMenu() {
 		}
 	};
   Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawImage({
-				posX: Game.placeEntityX(0, (Game.entitySize * 10)),
-				posY: Game.placeEntityY(0.77, (Game.entitySize * 10)),
-				width: (Game.entitySize * 10),
-				height: (Game.entitySize * 10),
-				images: [masonWorkerImg],
-				selectedImage: 0,
-				animTicks: 0,
-				ticks: 0,
-				id: 'mason-worker',
-				isBackground: false,
-				props: {
-					direction: 'right',
-				},
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawImage({
-				posX: Game.placeEntityX(0.75, (Game.entitySize * 10)),
-				posY: Game.placeEntityY(0.77, (Game.entitySize * 10)),
-				width: (Game.entitySize * 10),
-				height: (Game.entitySize * 10),
-				images: Game.gifImageList.length > 0 ? Game.gifImageList.find(img => img.methodId === id).pngs : [],
-				selectedImage: 0,
-				animTicks: 25,
-				ticks: 25,
-				id: 'knight',
-				isBackground: false,
-				props: {
-					direction: 'right',
-				},
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
+	// Game.methodSetup = {
+	// 	method: function(id) {
+	// 		drawImage({
+	// 			posX: Game.placeEntityX(0, (Game.entitySize * 10)),
+	// 			posY: Game.placeEntityY(0.77, (Game.entitySize * 10)),
+	// 			width: (Game.entitySize * 10),
+	// 			height: (Game.entitySize * 10),
+	// 			images: [masonWorkerImg],
+	// 			selectedImage: 0,
+	// 			animTicks: 0,
+	// 			ticks: 0,
+	// 			id: 'mason-worker',
+	// 			isBackground: false,
+	// 			props: {
+	// 				direction: 'right',
+	// 			},
+	// 			methodId: id
+	// 		});
+	// 	}
+	// };
+	// Game.addMethod(Game.methodSetup);
+	// Game.methodSetup = {
+	// 	method: function(id) {
+	// 		drawImage({
+	// 			posX: Game.placeEntityX(0.75, (Game.entitySize * 10)),
+	// 			posY: Game.placeEntityY(0.77, (Game.entitySize * 10)),
+	// 			width: (Game.entitySize * 10),
+	// 			height: (Game.entitySize * 10),
+	// 			images: Game.gifImageList.length > 0 ? Game.gifImageList.find(img => img.methodId === id).pngs : [],
+	// 			selectedImage: 0,
+	// 			animTicks: 25,
+	// 			ticks: 25,
+	// 			id: 'knight',
+	// 			isBackground: false,
+	// 			props: {
+	// 				direction: 'right',
+	// 			},
+	// 			methodId: id
+	// 		});
+	// 	}
+	// };
+	// Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
     method: function(id) {
       // drawButtonImage({
@@ -172,58 +172,121 @@ function drawMainMenu() {
 			// 	animTicks: 0,
 			// 	ticks: 0,
       //   id: 'rock',
-      //   action: { method: function(id) { mineRock(); }},
+      //   action: { method: function(id) { mineScrap(); }},
       //   props: {},
       //   methodId: id
       // });
 			drawButton({
         posX: Game.placeEntityX(0.50, (Game.entitySize * 15)),
-        posY: Game.placeEntityY(0.795, (Game.entitySize * 15)),
+        posY: Game.placeEntityY(0.75, (Game.entitySize * 15)),
         width: (Game.entitySize * 15),
         height: (Game.entitySize * 15),
         lineWidth: 1,
-        btnColor: 'grey',
+        btnColor: 'darkgrey',
         txtColor: 'black',
         font: '1.5em serif',
         msg: 'Scrap',
         isFilled: true,
-        id: 'rock',
-        action: { method: function(id) { mineRock(); }},
+        id: 'scrap',
+        action: { method: function(id) { mineScrap(); }},
         props: {},
         methodId: id
       });
     }
   };
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
-  Game.addMethod(Game.methodSetup);
-
-	Game.methodSetup = { method: function(id) { findGameObjects(); }};
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
+        posY: Game.placeEntityY(0.90, (Game.entitySize * 15)),
+        width: (Game.entitySize * 15),
+        height: (Game.entitySize * 15),
+        lineWidth: 1,
+        btnColor: 'green',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Home',
+        isFilled: true,
+        id: 'home',
+        action: { method: function(id) { openHome(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
 	Game.addMethod(Game.methodSetup);
-
-	Game.methodSetup = { method: function(id) { animateObjects(); }};
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
+        posY: Game.placeEntityY(0.60, (Game.entitySize * 15)),
+        width: (Game.entitySize * 15),
+        height: (Game.entitySize * 15),
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: 'Factory',
+        isFilled: true,
+        id: 'factory',
+        action: { method: function(id) { openFactory(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
 	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.165, (Game.entitySize * 15)),
+        posY: Game.placeEntityY(0.75, (Game.entitySize * 15)),
+        width: (Game.entitySize * 15),
+        height: (Game.entitySize * 15),
+        lineWidth: 1,
+        btnColor: 'brown',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Arena',
+        isFilled: true,
+        id: 'factory',
+        action: { method: function(id) { openArena(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+  // Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
+  // Game.addMethod(Game.methodSetup);
+
+	// Game.methodSetup = { method: function(id) { findGameObjects(); }};
+	// Game.addMethod(Game.methodSetup);
+
+	// Game.methodSetup = { method: function(id) { animateObjects(); }};
+	// Game.addMethod(Game.methodSetup);
 
   Game.collisionSetup = {
-    primary: 'rock',
+    primary: 'scrap',
     target: 'mason-worker',
     method: function(id) { masonRockCollision(this.methodId) },
     methodId: undefined,
   }
-  Game.addCollision(Game.collisionSetup);
+  // Game.addCollision(Game.collisionSetup);
   Particle.init();
 
 }
 
 function findGameObjects() {
   // when the game starts up, look for the knight and animate it
-  if (!knight?.methodId) {
-    knight = Game.methodObjects.find(x => x.id === 'knight');
-		if (knight.methodId) {
-			Game.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);
-			animateObjects();
-		}
-  }
+  // if (!knight?.methodId) {
+  //   knight = Game.methodObjects.find(x => x.id === 'knight');
+	// 	if (knight.methodId) {
+	// 		Game.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);
+	// 		animateObjects();
+	// 	}
+  // }
 }
 
 function animateObjects() {
@@ -239,19 +302,30 @@ function animateObjects() {
 	}
 }
 
-function mineRock() {
-	gameObject.money++;
+function mineScrap() {
 	Particle.drawSpark({
-		posX: Game.placeEntityX(0.50, (Game.entitySize * 0.5)),
-		posY: Game.placeEntityY(0.78, (Game.entitySize * 0.5)),
-		shape: 0,
+		posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
+		posY: Game.placeEntityY(0.78, (Game.entitySize * 0.7)),
+		shape: Particle.enumShapes.rect,
 		color: '#909090',
 		ticks: 11,
 		count: 8,
-		size: (Game.entitySize * 0.5),
+		size: (Game.entitySize * 0.7),
 		speed: 1.3,
 	});
-	console.log('chiseling rock! ');
+	console.log('scrapping! ');
+}
+
+function openHome() {
+	console.log('open Home');
+}
+
+function openFactory() {
+	console.log('open Factory');
+}
+
+function openArena() {
+	console.log('open Arena');
 }
 
 function moveMasonWorker() {

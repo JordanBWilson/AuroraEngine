@@ -15,7 +15,6 @@ const Game = { // the user will want to use this object
     this.methodObjects = [];
     Main.methodObjectShadows = [];
     Main.globalId = 0;
-
   },
   collisionSetup: { // use this to create collisions
     primary: '', // the id that's waiting for a collision
