@@ -16,7 +16,11 @@ let gameObject = {
 	facinatingScrap: 0, // legendary
 	mythicScrap: 0,
 	exoticScrap: 0, // I'm thinking this scrap type could be used to make special items
-	scrapInvintory: 10,
+	scrapInvintory: 10, // how much scrap can the player hold
+	scrapperSkill: 0, // ability to find more rare scrap
+	roboticSkill: 0, // ability to put together robots with higher tiered parts
+	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts
+	barterSkill: 0, // sell for more on the grand exchange
 	// different tiers of money
 	copper: 0, // 1000 copper = 1 bronze
 	bronze: 0, // 1000 bronze = 1 silver
@@ -24,6 +28,10 @@ let gameObject = {
 	gold: 0, // 1000 gold = 1 platinum
 	platinum: 0, // 1000 platinum = 1 mythryl
 	mythryl: 0, // mythryl is the highest tier
+	// types of buildings
+	factoryBuilt: false, // this building is where the player can make and automate robot production
+	arenaBuild: false, // this is where multiplayer will come in. assign and build battle bots and buildings
+	robotStorage: 5, // these robots can be sold on the grand exchange or go on adventures to find riches
 };
 
 (function() {
