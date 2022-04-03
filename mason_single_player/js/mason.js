@@ -31,7 +31,8 @@ let gameObject = {
 	// types of buildings
 	factoryBuilt: false, // this building is where the player can make and automate robot production
 	arenaBuild: false, // this is where multiplayer will come in. assign and build battle bots and buildings
-	robotStorage: 5, // these robots can be sold on the grand exchange or go on adventures to find riches
+	robotStorage: 5, // these robots can be sold on the grand exchange
+	robotsMade: 0, // or go on adventures to find riches
 };
 
 (function() {
