@@ -5,6 +5,7 @@ const masonWorkerPath = './assets/images/stoneWorker.png';
 const rock1Path = './assets/images/rock1.png';
 const grassPath = './assets/images/grass.png';
 let knight = {};
+let robot = {};
 
 // this will keep track of the game
 let gameObject = {
@@ -250,9 +251,48 @@ function drawMainMenu() {
         font: '1.5em serif',
         msg: 'Arena',
         isFilled: true,
-        id: 'factory',
+        id: 'arena',
         action: { method: function(id) { openArena(); }},
         props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawArc({
+        posX: Game.placeEntityX(0.60, (Game.entitySize * 2)),
+        posY: Game.placeEntityY(0.56, (Game.entitySize * 2)),
+        width: (Game.entitySize * 2),
+        aglStrt: 0,
+        aglEnd: (2 * Math.PI),
+        lineWidth: 1,
+        color: 'yellow',
+        isFilled: true,
+        id: 'robot',
+        props: {
+					drawBody: function(parent) {
+						Game.methodSetup = {
+							method: function(id) {
+								drawRect({
+								  posX: parent.posX - Game.placeEntityX(0.0267, (Game.entitySize * 4)),
+								  posY: parent.posY + Game.placeEntityY(0.0287, (Game.entitySize * 4)),
+								  width: (Game.entitySize * 4),
+								  height: (Game.entitySize * 4),
+								  lineWidth: 1,
+								  color: 'blue',
+								  isFilled: true,
+								  id: parent.id,
+								  isBackground: false,
+								  props: {},
+								  methodId: id
+								});
+							}
+						}
+						Game.addMethod(Game.methodSetup);
+					}
+				},
         methodId: id
       });
 		}
@@ -261,11 +301,11 @@ function drawMainMenu() {
   // Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
   // Game.addMethod(Game.methodSetup);
 
-	// Game.methodSetup = { method: function(id) { findGameObjects(); }};
-	// Game.addMethod(Game.methodSetup);
+	Game.methodSetup = { method: function(id) { findGameObjects(); }};
+	Game.addMethod(Game.methodSetup);
 
-	// Game.methodSetup = { method: function(id) { animateObjects(); }};
-	// Game.addMethod(Game.methodSetup);
+	Game.methodSetup = { method: function(id) { animateObjects(); }};
+	Game.addMethod(Game.methodSetup);
 
   Game.collisionSetup = {
     primary: 'scrap',
@@ -287,6 +327,13 @@ function findGameObjects() {
 	// 		animateObjects();
 	// 	}
   // }
+	if (!robot?.methodId) {
+		robot = Game.methodObjects.find(x => x.id === 'robot');
+		console.log(robot);
+		robot.props.drawBody(robot);
+		// console.log(robot);
+
+	}
 }
 
 function animateObjects() {
@@ -299,6 +346,11 @@ function animateObjects() {
 			}
 		}
 		knight = Game.nextTick(knight);
+	}
+	if (robot?.methodId) {
+
+		// console.log('draw body', robot.methodId);
+		// robot.props.drawBody(robot.methodId);
 	}
 }
 
