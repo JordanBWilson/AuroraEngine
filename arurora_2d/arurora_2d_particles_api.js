@@ -78,7 +78,66 @@ const Particle = {
     enumShapes: {
       arc: 0,
       rect: 1,
-    }
+    },
+    drawStars: function() {
+      // this is from the original Mason. Convert this
+      // export interface StarModel {
+      //   x: number;
+      //   y: number;
+      //   radius: number;
+      //   starLight: number;
+      // }
+    //   public drawStars(ctx: CanvasRenderingContext2D, starCount: number, stars: StarModel[], playerResourcesTemp: PlayerModel) {
+    //   const sparkleStars = [];
+    //   let starLight = 0;
+    //   for (let i = 0; i < starCount; i++) {
+    //     sparkleStars.push(new sparkleStar(i));
+    //   }
+    //   function sparkleStar(i: number) {
+    //     this.x = stars[i].x;
+    //     this.y = stars[i].y;
+    //     this.radius = (Math.random() * .5) + 1;
+    //
+    //     this.draw = function(i) {
+    //       // this changes the brightness of the stars based on the time of day
+    //       if (playerResourcesTemp.dayCounter >= 78 && playerResourcesTemp.dayCounter <= 79) {
+    //         starLight += 0.01;
+    //         if (starLight >= stars[i].starLight) {
+    //           starLight = stars[i].starLight;
+    //         }
+    //       } else if (playerResourcesTemp.dayCounter <= 115) {
+    //         starLight = stars[i].starLight;
+    //       } else if (playerResourcesTemp.dayCounter >= 116 && playerResourcesTemp.dayCounter <= 117) {
+    //         if (starLight === 0) {
+    //           starLight = stars[i].starLight;
+    //         }
+    //         starLight -= 0.01;
+    //         if (starLight <= 0.1) {
+    //           starLight = 0;
+    //         }
+    //       }
+    //       ctx.save();
+    //       ctx.beginPath();
+    //         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    //       ctx.fillStyle = 'rgba(255, 255, 255, ' + starLight + ')'; // white
+    //         ctx.shadowColor = '#E3EAEF';
+    //       ctx.shadowBlur = (Math.random() * 10) + 10;
+    //       ctx.shadowOffsetX = 0;
+    //       ctx.shadowOffsetY = 0;
+    //         ctx.fill();
+    //         ctx.closePath();
+    //       ctx.restore();
+    //     }
+    //   }
+    //   function animateStars() {
+    //     for (let i = 0; i < sparkleStars.length; i++) {
+    //       sparkleStars[i].draw(i);
+    //     }
+    //   }
+    //   animateStars();
+    // }
+
+    },
 }
 
 function moveParticles() {

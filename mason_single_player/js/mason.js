@@ -8,7 +8,22 @@ let knight = {};
 
 // this will keep track of the game
 let gameObject = {
-	money: 0
+	// types of scrap matirials
+	commonScrap: 0,
+	unCommonScrap: 0,
+	uniqueScrap: 0, // rare
+	intriguingScrap: 0, // epic
+	facinatingScrap: 0, // legendary
+	mythicScrap: 0,
+	exoticScrap: 0, // I'm thinking this scrap type could be used to make special items
+	scrapInvintory: 10,
+	// different tiers of money
+	copper: 0, // 1000 copper = 1 bronze
+	bronze: 0, // 1000 bronze = 1 silver
+	silver: 0, // 1000 silver = 1 gold
+	gold: 0, // 1000 gold = 1 platinum
+	platinum: 0, // 1000 platinum = 1 mythryl
+	mythryl: 0, // mythryl is the highest tier
 };
 
 (function() {
