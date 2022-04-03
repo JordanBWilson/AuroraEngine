@@ -132,7 +132,6 @@ function drawRectMethod(incomingRect) {
       color: incomingRect.color,
       isFilled: incomingRect.isFilled,
       id: incomingRect.id,
-      isSolid: incomingRect.isSolid,
       isAnim: false,
       isBackground: incomingRect.isBackground,
       props: incomingRect.props,
@@ -151,7 +150,6 @@ function drawRectMethod(incomingRect) {
     Game.methodObjects[index].lineWidth = incomingRect.lineWidth;
     Game.methodObjects[index].color = incomingRect.color;
     Game.methodObjects[index].isFilled = incomingRect.isFilled;
-    Game.methodObjects[index].isSolid = incomingRect.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingRect.isBackground;
     Game.methodObjects[index].props = incomingRect.props;
@@ -162,7 +160,6 @@ function drawRectMethod(incomingRect) {
     Main.methodObjectShadows[index].lineWidth = incomingRect.lineWidth;
     Main.methodObjectShadows[index].color = incomingRect.color;
     Main.methodObjectShadows[index].isFilled = incomingRect.isFilled;
-    Main.methodObjectShadows[index].isSolid = incomingRect.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingRect.isBackground;
     Main.methodObjectShadows[index].props = incomingRect.props;
@@ -236,7 +233,6 @@ function drawArcMethod(incomingArc) {
       color: incomingArc.color,
       isFilled: incomingArc.isFilled,
       id: incomingArc.id,
-      isSolid: incomingArc.isSolid,
       isAnim: false,
       props: incomingArc.props,
       methodId: incomingArc.methodId,
@@ -255,7 +251,6 @@ function drawArcMethod(incomingArc) {
     Game.methodObjects[index].lineWidth = incomingArc.lineWidth;
     Game.methodObjects[index].color = incomingArc.color;
     Game.methodObjects[index].isFilled = incomingArc.isFilled;
-    Game.methodObjects[index].isSolid = incomingArc.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingArc.props;
     Main.methodObjectShadows[index].posX = incomingArc.posX;
@@ -266,7 +261,6 @@ function drawArcMethod(incomingArc) {
     Main.methodObjectShadows[index].lineWidth = incomingArc.lineWidth;
     Main.methodObjectShadows[index].color = incomingArc.color;
     Main.methodObjectShadows[index].isFilled = incomingArc.isFilled;
-    Main.methodObjectShadows[index].isSolid = incomingArc.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingArc.props;
     redrawArc(incomingArc);
@@ -336,7 +330,6 @@ function drawButtonMethod(incomingButton) {
       msg: incomingButton.msg,
       isFilled: incomingButton.isFilled,
       id: incomingButton.id,
-      isSolid: incomingButton.isSolid,
       action: incomingButton.action,
       isBtn: true,
       isAnim: false,
@@ -359,7 +352,6 @@ function drawButtonMethod(incomingButton) {
     Game.methodObjects[index].font = incomingButton.font;
     Game.methodObjects[index].msg = incomingButton.msg;
     Game.methodObjects[index].isFilled = incomingButton.isFilled;
-    Game.methodObjects[index].isSolid = incomingButton.isSolid;
     Game.methodObjects[index].action = incomingButton.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingButton.props;
@@ -373,7 +365,6 @@ function drawButtonMethod(incomingButton) {
     Main.methodObjectShadows[index].font = incomingButton.font;
     Main.methodObjectShadows[index].msg = incomingButton.msg;
     Main.methodObjectShadows[index].isFilled = incomingButton.isFilled;
-    Main.methodObjectShadows[index].isSolid = incomingButton.isSolid;
     Main.methodObjectShadows[index].action = incomingButton.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButton.props;
@@ -454,7 +445,6 @@ function drawImageMethod(incomingImg) {
       animTicks: incomingImg.animTicks,
       ticks: incomingImg.ticks,
       id: incomingImg.id,
-      isSolid: incomingImg.isSolid,
       isAnim: false,
       isBackground: incomingImg.isBackground,
       props: incomingImg.props,
@@ -474,7 +464,6 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].selectedImage = incomingImg.selectedImage;
     Game.methodObjects[index].animTicks = incomingImg.animTicks;
     Game.methodObjects[index].ticks = incomingImg.ticks;
-    Game.methodObjects[index].isSolid = incomingImg.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImg.isBackground;
     Game.methodObjects[index].props = incomingImg.props;
@@ -486,7 +475,6 @@ function drawImageMethod(incomingImg) {
     Main.methodObjectShadows[index].selectedImage = incomingImg.selectedImage;
     Main.methodObjectShadows[index].animTicks = incomingImg.animTicks;
     Main.methodObjectShadows[index].ticks = incomingImg.ticks;
-    Main.methodObjectShadows[index].isSolid = incomingImg.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImg.isBackground;
     Main.methodObjectShadows[index].props = incomingImg.props;
@@ -558,7 +546,6 @@ function drawImagePatternMethod(incomingImgPat) {
       animTicks: incomingImgPat.animTicks,
       ticks: incomingImgPat.ticks,
       id: incomingImgPat.id,
-      isSolid: incomingImgPat.isSolid,
       isAnim: false,
       isBackground: incomingImgPat.isBackground,
       props: incomingImgPat.props,
@@ -580,7 +567,6 @@ function drawImagePatternMethod(incomingImgPat) {
     Game.methodObjects[index].selectedImage = incomingImgPat.selectedImage;
     Game.methodObjects[index].animTicks = incomingImgPat.animTicks;
     Game.methodObjects[index].ticks = incomingImgPat.ticks;
-    Game.methodObjects[index].isSolid = incomingImgPat.isSolid;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImgPat.isBackground;
     Game.methodObjects[index].props = incomingImgPat.props;
@@ -594,7 +580,6 @@ function drawImagePatternMethod(incomingImgPat) {
     Main.methodObjectShadows[index].selectedImage = incomingImgPat.selectedImage;
     Main.methodObjectShadows[index].animTicks = incomingImgPat.animTicks;
     Main.methodObjectShadows[index].ticks = incomingImgPat.ticks;
-    Main.methodObjectShadows[index].isSolid = incomingImgPat.isSolid;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImgPat.isBackground;
     Main.methodObjectShadows[index].props = incomingImgPat.props;
@@ -670,7 +655,6 @@ function drawButtonImageMethod(incomingButtonImage) {
       animTicks: incomingButtonImage.animTicks,
       ticks: incomingButtonImage.ticks,
       id: incomingButtonImage.id,
-      isSolid: incomingButtonImage.isSolid,
       action: incomingButtonImage.action,
       isBtn: true,
       isAnim: false,
@@ -691,7 +675,6 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].selectedImage = incomingButtonImage.selectedImage;
     Game.methodObjects[index].animTicks = incomingButtonImage.animTicks;
     Game.methodObjects[index].ticks = incomingButtonImage.ticks;
-    Game.methodObjects[index].isSolid = incomingButtonImage.isSolid;
     Game.methodObjects[index].action = incomingButtonImage.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingButtonImage.props;
@@ -703,7 +686,6 @@ function drawButtonImageMethod(incomingButtonImage) {
     Main.methodObjectShadows[index].selectedImage = incomingButtonImage.selectedImage;
     Main.methodObjectShadows[index].animTicks = incomingButtonImage.animTicks;
     Main.methodObjectShadows[index].ticks = incomingButtonImage.ticks;
-    Main.methodObjectShadows[index].isSolid = incomingButtonImage.isSolid;
     Main.methodObjectShadows[index].action = incomingButtonImage.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButtonImage.props;

@@ -12,7 +12,6 @@ const Particle = {
     //   speed:0,
     //   color:'#fff',
     //   ticks: 0, // in milliseconds,
-    //   isSolid: false,
     //   size: 0, // width and height
     // }
 
@@ -31,7 +30,6 @@ const Particle = {
                 color: drawParticle.color,
                 isFilled: true,
                 id: 'particle-effect',
-                isSolid: drawParticle.isSolid,
                 props: {
                     direction: direction,
                     collision: false,
@@ -59,7 +57,6 @@ const Particle = {
         				color: drawParticle.color,
         				isFilled: true,
         				id: 'particle-effect',
-        				isSolid: drawParticle.isSolid,
         				isBackground: false,
         				props: {
                   direction: direction,

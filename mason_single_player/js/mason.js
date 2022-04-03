@@ -56,7 +56,6 @@ function drawMainMenu() {
 				color: '#0000FF',
 				isFilled: true,
 				id: 'sky-background',
-				isSolid: false,
 				isBackground: true,
 				props: {},
 				methodId: id
@@ -75,7 +74,6 @@ function drawMainMenu() {
 				color: '#3C7521',
 				isFilled: true,
 				id: 'grass-background',
-				isSolid: false,
 				isBackground: false,
 				props: {},
 				methodId: id
@@ -97,7 +95,6 @@ function drawMainMenu() {
 				animTicks: 0,
 				ticks: 0,
 				id: 'grass-background',
-				isSolid: false,
 				isBackground: true,
 				props: {},
 				methodId: id
@@ -133,7 +130,6 @@ function drawMainMenu() {
 				animTicks: 0,
 				ticks: 0,
 				id: 'mason-worker',
-				isSolid: true,
 				isBackground: false,
 				props: {
 					direction: 'right',
@@ -155,7 +151,6 @@ function drawMainMenu() {
 				animTicks: 25,
 				ticks: 25,
 				id: 'knight',
-				isSolid: true,
 				isBackground: false,
 				props: {
 					direction: 'right',
@@ -167,17 +162,32 @@ function drawMainMenu() {
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
     method: function(id) {
-      drawButtonImage({
+      // drawButtonImage({
+      //   posX: Game.placeEntityX(0.50, (Game.entitySize * 15)),
+      //   posY: Game.placeEntityY(0.795, (Game.entitySize * 15)),
+      //   width: (Game.entitySize * 15),
+      //   height: (Game.entitySize * 15),
+      //   images: [rockImg],
+			// 	selectedImage: 0,
+			// 	animTicks: 0,
+			// 	ticks: 0,
+      //   id: 'rock',
+      //   action: { method: function(id) { mineRock(); }},
+      //   props: {},
+      //   methodId: id
+      // });
+			drawButton({
         posX: Game.placeEntityX(0.50, (Game.entitySize * 15)),
         posY: Game.placeEntityY(0.795, (Game.entitySize * 15)),
         width: (Game.entitySize * 15),
         height: (Game.entitySize * 15),
-        images: [rockImg],
-				selectedImage: 0,
-				animTicks: 0,
-				ticks: 0,
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: 'Scrap',
+        isFilled: true,
         id: 'rock',
-        isSolid: false,
         action: { method: function(id) { mineRock(); }},
         props: {},
         methodId: id
@@ -240,9 +250,8 @@ function mineRock() {
 		count: 8,
 		size: (Game.entitySize * 0.5),
 		speed: 1.3,
-		isSolid: false,
 	});
-	console.log('chiseling rock! ', gameObject.money);
+	console.log('chiseling rock! ');
 }
 
 function moveMasonWorker() {

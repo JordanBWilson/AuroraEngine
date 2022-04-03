@@ -97,33 +97,27 @@ function isButtonTapped(btnParams) {
 
 function collisionCheck() {
   // this will check for any collisions in game
-  if (Main.collisions.length > 0) {
-    // find all the methods that are accepting collision events
-    let solidMethods = Game.methodObjects.filter(x => x.isSolid === true);
-    if (solidMethods && solidMethods.length > 0) {
-      // go through all the collisions
-      for (let i = 0; i < Main.collisions.length; i++) {
-        let primary = Main.collisions[i].primary;
-        let target = Main.collisions[i].target;
-        let primaryMethods = Game.methodObjects.filter(x => x.id === primary);
-        let targetMethods = Game.methodObjects.filter(x => x.id === target);
-        // find out if a collision is happening
-        for (let j = 0; j < primaryMethods.length; j++) {
-          for (let k = 0; k < targetMethods.length; k++) {
-            let widthOrHeight = 0;
-            // because we are dealing with arcs as well, you can't be too careful
-            if (!targetMethods[k]?.height) {
-              widthOrHeight = targetMethods[k].width;
-            } else {
-              widthOrHeight = targetMethods[k].height;
-            }
-              if (primaryMethods[j].posY + (primaryMethods[j].width * 0.94) >= targetMethods[k].posY && primaryMethods[j].posY <= (targetMethods[k].posY + widthOrHeight)) {
-                if (primaryMethods[j].posX + (primaryMethods[j].width * 0.94) >= targetMethods[k].posX && primaryMethods[j].posX <= (targetMethods[k].posX + targetMethods[k].width)) {
-                  Main.collisions[i].methodId = targetMethods[k].methodId;
-                  Main.collisions[i].method();
-                  break;
-                }
-              }
+  // go through all the collisions
+  for (let i = 0; i < Main.collisions.length; i++) {
+    let primary = Main.collisions[i].primary;
+    let target = Main.collisions[i].target;
+    let primaryMethods = Game.methodObjects.filter(x => x.id === primary);
+    let targetMethods = Game.methodObjects.filter(x => x.id === target);
+    // find out if a collision is happening
+    for (let j = 0; j < primaryMethods.length; j++) {
+      for (let k = 0; k < targetMethods.length; k++) {
+        let widthOrHeight = 0;
+        // because we are dealing with arcs as well, you can't be too careful
+        if (!targetMethods[k]?.height) {
+          widthOrHeight = targetMethods[k].width;
+        } else {
+          widthOrHeight = targetMethods[k].height;
+        }
+        if (primaryMethods[j].posY + (primaryMethods[j].width * 0.94) >= targetMethods[k].posY && primaryMethods[j].posY <= (targetMethods[k].posY + widthOrHeight)) {
+          if (primaryMethods[j].posX + (primaryMethods[j].width * 0.94) >= targetMethods[k].posX && primaryMethods[j].posX <= (targetMethods[k].posX + targetMethods[k].width)) {
+            Main.collisions[i].methodId = targetMethods[k].methodId;
+            Main.collisions[i].method();
+            break;
           }
         }
       }
