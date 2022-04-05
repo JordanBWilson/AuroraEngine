@@ -261,40 +261,40 @@ function drawMainMenu() {
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
-			drawArc({
-        posX: Game.placeEntityX(0.60, (Game.entitySize * 2)),
-        posY: Game.placeEntityY(0.56, (Game.entitySize * 2)),
-        width: (Game.entitySize * 2),
-        aglStrt: 0,
-        aglEnd: (2 * Math.PI),
-        lineWidth: 1,
-        color: 'yellow',
-        isFilled: true,
-        id: 'robot',
-        props: {
-					drawBody: function(parent) {
+			drawRect({
+				posX: Game.placeEntityX(0.65, (Game.entitySize * 4)),
+				posY: Game.placeEntityY(0.62, (Game.entitySize * 4)),
+				width: (Game.entitySize * 4),
+				height: (Game.entitySize * 4),
+				lineWidth: 1,
+				color: 'blue',
+				isFilled: true,
+				id: 'robot',
+				isBackground: false,
+				props: {
+					drawHead: function(parent) {
 						Game.methodSetup = {
 							method: function(id) {
-								drawRect({
-								  posX: parent.posX - Game.placeEntityX(0.0267, (Game.entitySize * 4)),
-								  posY: parent.posY + Game.placeEntityY(0.0287, (Game.entitySize * 4)),
-								  width: (Game.entitySize * 4),
-								  height: (Game.entitySize * 4),
-								  lineWidth: 1,
-								  color: 'blue',
-								  isFilled: true,
-								  id: parent.id,
-								  isBackground: false,
-								  props: {},
-								  methodId: id
-								});
+								drawArc({ // this will need to be centered better. perhaps just subtracting the size will do it?
+					        posX: parent.posX + Game.placeEntityX(0.015, (Game.entitySize * 2)),
+					        posY: parent.posY - Game.placeEntityY(0.025, (Game.entitySize * 2)),
+					        width: (Game.entitySize * 2),
+					        aglStrt: 0,
+					        aglEnd: (2 * Math.PI),
+					        lineWidth: 1,
+					        color: 'yellow',
+					        isFilled: true,
+					        id: parent.id,
+					        props: {},
+					        methodId: id
+					      });
 							}
 						}
 						Game.addMethod(Game.methodSetup);
 					}
 				},
-        methodId: id
-      });
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
@@ -330,7 +330,7 @@ function findGameObjects() {
 	if (!robot?.methodId) {
 		robot = Game.methodObjects.find(x => x.id === 'robot');
 		console.log(robot);
-		robot.props.drawBody(robot);
+		robot.props.drawHead(robot);
 		// console.log(robot);
 
 	}
