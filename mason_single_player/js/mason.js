@@ -276,7 +276,7 @@ function drawMainMenu() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
-				posX: Game.placeEntityX(0.65, (Game.entitySize * 4)),
+				posX: Game.placeEntityX(0.60, (Game.entitySize * 4)),
 				posY: Game.placeEntityY(0.62, (Game.entitySize * 4)),
 				width: (Game.entitySize * 4),
 				height: (Game.entitySize * 4),
@@ -289,9 +289,9 @@ function drawMainMenu() {
 					drawHead: function(parent) {
 						Game.methodSetup = {
 							method: function(id) {
-								drawArc({ // this will need to be centered better. perhaps just subtracting the size will do it?
-					        posX: parent.posX + Game.placeEntityX(0.015, (Game.entitySize * 2)),
-					        posY: parent.posY - Game.placeEntityY(0.025, (Game.entitySize * 2)),
+								drawArc({
+					        posX: parent.posX + (Game.entitySize * 2),
+					        posY: parent.posY - (Game.entitySize * 2),
 					        width: (Game.entitySize * 2),
 					        aglStrt: 0,
 					        aglEnd: (2 * Math.PI),
@@ -305,7 +305,87 @@ function drawMainMenu() {
 							}
 						}
 						Game.addMethod(Game.methodSetup);
-					}
+					},
+					drawLeftArm: function(parent) {
+						Game.methodSetup = {
+							method: function(id) {
+								drawRect({
+									posX: parent.posX - (Game.entitySize * 1),
+									posY: parent.posY,
+									width: (Game.entitySize * 1),
+									height: (Game.entitySize * 4),
+									lineWidth: 1,
+									color: 'purple',
+									isFilled: true,
+									id: parent.id,
+									isBackground: false,
+									props: {},
+									methodId: id
+								});
+							}
+						};
+						Game.addMethod(Game.methodSetup);
+					},
+					drawRightArm: function(parent) {
+						Game.methodSetup = {
+							method: function(id) {
+								drawRect({
+									posX: parent.posX + (Game.entitySize * 4),
+									posY: parent.posY,
+									width: (Game.entitySize * 1),
+									height: (Game.entitySize * 4),
+									lineWidth: 1,
+									color: 'khaki',
+									isFilled: true,
+									id: parent.id,
+									isBackground: false,
+									props: {},
+									methodId: id
+								});
+							}
+						};
+						Game.addMethod(Game.methodSetup);
+					},
+					drawLeftLeg: function(parent) {
+						Game.methodSetup = {
+							method: function(id) {
+								drawRect({
+									posX: parent.posX,
+									posY: parent.posY + (Game.entitySize * 4),
+									width: (Game.entitySize * 1),
+									height: (Game.entitySize * 4),
+									lineWidth: 1,
+									color: 'lightslategrey',
+									isFilled: true,
+									id: parent.id,
+									isBackground: false,
+									props: {},
+									methodId: id
+								});
+							}
+						};
+						Game.addMethod(Game.methodSetup);
+					},
+					drawRightLeg: function(parent) {
+						Game.methodSetup = {
+							method: function(id) {
+								drawRect({
+									posX: parent.posX + (Game.entitySize * 2.9),
+									posY: parent.posY + (Game.entitySize * 4),
+									width: (Game.entitySize * 1),
+									height: (Game.entitySize * 4),
+									lineWidth: 1,
+									color: 'navy',
+									isFilled: true,
+									id: parent.id,
+									isBackground: false,
+									props: {},
+									methodId: id
+								});
+							}
+						};
+						Game.addMethod(Game.methodSetup);
+					},
 				},
 				methodId: id
 			});
@@ -345,6 +425,10 @@ function findGameObjects() {
 		robot = Game.methodObjects.find(x => x.id === 'robot');
 		console.log(robot);
 		robot.props.drawHead(robot);
+		robot.props.drawLeftArm(robot);
+		robot.props.drawRightArm(robot);
+		robot.props.drawLeftLeg(robot);
+		robot.props.drawRightLeg(robot);
 		// console.log(robot);
 
 	}
