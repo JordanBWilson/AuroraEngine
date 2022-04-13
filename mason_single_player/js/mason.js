@@ -276,10 +276,10 @@ function drawMainMenu() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
-				posX: Game.placeEntityX(0.60, (Game.entitySize * 4)),
-				posY: Game.placeEntityY(0.62, (Game.entitySize * 4)),
-				width: (Game.entitySize * 4),
-				height: (Game.entitySize * 4),
+				posX: Game.placeEntityX(0.60, (Game.entitySize * 3)),
+				posY: Game.placeEntityY(0.62, (Game.entitySize * 3)),
+				width: (Game.entitySize * 3),
+				height: (Game.entitySize * 3),
 				lineWidth: 1,
 				color: 'blue',
 				isFilled: true,
@@ -290,9 +290,9 @@ function drawMainMenu() {
 						Game.methodSetup = {
 							method: function(id) {
 								drawArc({
-					        posX: parent.posX + (Game.entitySize * 2),
-					        posY: parent.posY - (Game.entitySize * 2),
-					        width: (Game.entitySize * 2),
+					        posX: parent.posX + (Game.entitySize * 1.33),
+					        posY: parent.posY - (Game.entitySize * 1),
+					        width: (Game.entitySize * 1),
 					        aglStrt: 0,
 					        aglEnd: (2 * Math.PI),
 					        lineWidth: 1,
@@ -310,10 +310,10 @@ function drawMainMenu() {
 						Game.methodSetup = {
 							method: function(id) {
 								drawRect({
-									posX: parent.posX - (Game.entitySize * 1),
+									posX: parent.posX - (Game.entitySize * 0.9),
 									posY: parent.posY,
 									width: (Game.entitySize * 1),
-									height: (Game.entitySize * 4),
+									height: (Game.entitySize * 3),
 									lineWidth: 1,
 									color: 'purple',
 									isFilled: true,
@@ -330,10 +330,10 @@ function drawMainMenu() {
 						Game.methodSetup = {
 							method: function(id) {
 								drawRect({
-									posX: parent.posX + (Game.entitySize * 4),
+									posX: parent.posX + (Game.entitySize * 3),
 									posY: parent.posY,
 									width: (Game.entitySize * 1),
-									height: (Game.entitySize * 4),
+									height: (Game.entitySize * 3),
 									lineWidth: 1,
 									color: 'khaki',
 									isFilled: true,
@@ -350,10 +350,10 @@ function drawMainMenu() {
 						Game.methodSetup = {
 							method: function(id) {
 								drawRect({
-									posX: parent.posX,
-									posY: parent.posY + (Game.entitySize * 4),
+									posX: parent.posX + (Game.entitySize * 0.19),
+									posY: parent.posY + (Game.entitySize * 3),
 									width: (Game.entitySize * 1),
-									height: (Game.entitySize * 4),
+									height: (Game.entitySize * 3),
 									lineWidth: 1,
 									color: 'lightslategrey',
 									isFilled: true,
@@ -370,10 +370,10 @@ function drawMainMenu() {
 						Game.methodSetup = {
 							method: function(id) {
 								drawRect({
-									posX: parent.posX + (Game.entitySize * 2.9),
-									posY: parent.posY + (Game.entitySize * 4),
+									posX: parent.posX + (Game.entitySize * 1.9),
+									posY: parent.posY + (Game.entitySize * 3),
 									width: (Game.entitySize * 1),
-									height: (Game.entitySize * 4),
+									height: (Game.entitySize * 3),
 									lineWidth: 1,
 									color: 'navy',
 									isFilled: true,
@@ -423,13 +423,11 @@ function findGameObjects() {
   // }
 	if (!robot?.methodId) {
 		robot = Game.methodObjects.find(x => x.id === 'robot');
-		console.log(robot);
 		robot.props.drawHead(robot);
 		robot.props.drawLeftArm(robot);
 		robot.props.drawRightArm(robot);
 		robot.props.drawLeftLeg(robot);
 		robot.props.drawRightLeg(robot);
-		// console.log(robot);
 
 	}
 }
@@ -446,9 +444,10 @@ function animateObjects() {
 		knight = Game.nextTick(knight);
 	}
 	if (robot?.methodId) {
-
-		// console.log('draw body', robot.methodId);
-		// robot.props.drawBody(robot.methodId);
+		const roboParts = Game.methodObjects.filter(x => x.id === 'robot');
+		roboParts.forEach((item, i) => {
+			item.posX -= Game.moveEntity(0.1, Game.enumDirections.leftRight);
+		});
 	}
 }
 
