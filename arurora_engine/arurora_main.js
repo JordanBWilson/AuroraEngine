@@ -33,7 +33,7 @@
 function mainLoop() {
 
   Main.interval = setInterval(function() {
-    if (Main.isLoaded) {
+    if (Game.isLoaded) {
       if (Main.methodsToRun.length > 0) {
         // run the game
         for (let i = 0; i < Main.methodsToRun.length; i++) {
@@ -82,7 +82,7 @@ function resizeStage() {
     Game.entitySize = (Game.canvas.height * 0.01);
     Game.entityWidth = (Game.canvas.width * 0.01);
     Main.isResizing = true;
-    Main.isLoaded = true;
+    Game.isLoaded = true;
     const doneResizing = setTimeout(function() {
       Main.isResizing = false;
       removeLoadingScreen();
@@ -203,7 +203,7 @@ function assignImages(pngs, methodId) {
     }
   }
   Game.methodObjects.find(x => x.methodId === methodId).images = pngs;
-  Main.isLoaded = true;
+  Game.isLoaded = true;
 }
 function removeLoadingScreen() {
   const loading = Game.methodObjects.find(x => x.id === 'loading-message')?.methodId;

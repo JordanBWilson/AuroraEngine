@@ -197,6 +197,7 @@ const Game = { // the user will want to use this object
     return entity;
   },
   loadingId: 'loading-message',
+  isLoaded: false, // wait for assets to load before starting the game
 };
 
 const Main = { // global variables to keep the game running nicely
@@ -214,5 +215,4 @@ const Main = { // global variables to keep the game running nicely
   clearStage: false,
   collisions: [], // all the collisions in the game to look for
   methodsToRun: [], // all the methods to make the game run
-  isLoaded: false, // wait for assets to load before starting the game
 };

@@ -45,9 +45,13 @@ let gameObject = {
 	mythryl: 0, // mythryl is the highest tier
 	// types of buildings
 	factoryBuilt: false, // this building is where the player can make and automate robot production
+	factoryLevel: 0, // the factory level will determine how many different robots can be qued and saved
 	arenaBuild: false, // this is where multiplayer will come in. assign and build battle bots and buildings
+	arenaLevel: 0, // this will determine what type of buildings are availiable in multiplayer
+	// robot adventuring
 	robotStorage: 5, // these robots can be sold on the grand exchange
 	robotsMade: 0, // or go on adventures to find riches
+	robotTeams: [], // the number of robot teams going out to find riches
 };
 
 (function() {
@@ -56,10 +60,12 @@ let gameObject = {
 	rockImg.src = rock1Path;
 	grassImg.src = grassPath;
 	Game.setSettingsHigh();
-	drawMainMenu();
+	playGame();
 })();
 
-function drawMainMenu() {
+function playGame() {
+	robot = {};
+	Game.clearStage();
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
@@ -117,22 +123,25 @@ function drawMainMenu() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawText({
-				font: '3em serif',
-				msg: 'Loading...',
-				posX: Game.placeEntityX(0.50),
-				posY: Game.placeEntityY(0.55),
-				color: 'indigo',
-				align: 'center',
-				props: {},
-				id: Game.loadingId,
-				methodId: id
-			});
-		}
-	};
-  Game.addMethod(Game.methodSetup);
+	if (!Game.isLoaded) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '3em serif',
+					msg: 'Loading...',
+					posX: Game.placeEntityX(0.50),
+					posY: Game.placeEntityY(0.55),
+					color: 'indigo',
+					align: 'center',
+					props: {},
+					id: Game.loadingId,
+					methodId: id
+				});
+			}
+		};
+	  Game.addMethod(Game.methodSetup);
+	}
+
 	// Game.methodSetup = {
 	// 	method: function(id) {
 	// 		drawImage({
@@ -289,21 +298,21 @@ function drawMainMenu() {
 					drawHead: function(parent) {
 						Game.methodSetup = {
 							method: function(id) {
-								drawArc({
-					        posX: parent.posX + (Game.entitySize * 1.33),
-					        posY: parent.posY - (Game.entitySize * 1),
-					        width: (Game.entitySize * 1),
-					        aglStrt: 0,
-					        aglEnd: (2 * Math.PI),
-					        lineWidth: 1,
-					        color: 'yellow',
-					        isFilled: true,
-					        id: parent.id,
-					        props: {},
-					        methodId: id
-					      });
+								drawRect({
+									posX: parent.posX + (Game.entitySize * 0.5),
+									posY: parent.posY - (Game.entitySize * 2),
+									width: (Game.entitySize * 2),
+									height: (Game.entitySize * 2),
+									lineWidth: 1,
+									color: 'yellow',
+									isFilled: true,
+									id: parent.id,
+									isBackground: false,
+									props: {},
+									methodId: id
+								});
 							}
-						}
+						};
 						Game.addMethod(Game.methodSetup);
 					},
 					drawLeftArm: function(parent) {
@@ -471,6 +480,64 @@ function openHome() {
 
 function openFactory() {
 	console.log('open Factory');
+	Game.clearStage();
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height),
+				lineWidth: 1,
+				color: 'grey',
+				isFilled: true,
+				id: 'factory-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.15),
+				width: (Game.canvas.width * 0.45),
+				height: (Game.canvas.height * 0.45),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'factory-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.03),
+        posY: Game.placeEntityY(0.03),
+        width: (Game.entitySize * 12),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'darkgrey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Back',
+        isFilled: true,
+        id: 'factory-back-game',
+        action: { method: function(id) { playGame(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
 
 function openArena() {
