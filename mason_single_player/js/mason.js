@@ -541,7 +541,7 @@ function openFactory() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.25, (Game.entitySize * 10)),
+        posX: Game.placeEntityX(0.249, (Game.entitySize * 10)),
         posY: Game.placeEntityY(0.22, (Game.entitySize * 10)),
         width: (Game.entitySize * 10),
         height: (Game.entitySize * 10),
@@ -583,7 +583,7 @@ function openFactory() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
+        posX: Game.placeEntityX(0.31, (Game.entitySize * -8.3)),
         posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
         width: (Game.entitySize * 3),
         height: (Game.entitySize * 12),
