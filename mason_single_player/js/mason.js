@@ -562,7 +562,7 @@ function openFactory() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.08, (Game.entitySize * 3)),
+        posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
         posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
         width: (Game.entitySize * 3),
         height: (Game.entitySize * 12),
@@ -583,7 +583,7 @@ function openFactory() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.42, (Game.entitySize * 3)),
+        posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
         posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
         width: (Game.entitySize * 3),
         height: (Game.entitySize * 12),
@@ -594,27 +594,6 @@ function openFactory() {
         msg: '',
         isFilled: true,
         id: 'robot-right-arm',
-        action: { method: function(id) { console.log('Select Right Arm'); }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.42, (Game.entitySize * 3)),
-        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: 'khaki',
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-head',
         action: { method: function(id) { console.log('Select Right Arm'); }},
         props: {},
         methodId: id
