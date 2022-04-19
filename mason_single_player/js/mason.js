@@ -480,6 +480,11 @@ function openHome() {
 
 function openFactory() {
 	console.log('open Factory');
+	// future Jordan, we are going to need to show the free robot spots and any
+	// past made robots. when selecting the past made robots, show this detailed
+	// robot screen. We will need to make some tabs at the top to show the robot
+	// selection screen and then the robot part screen where the player can make
+	// different heads, bodys, arms and legs
 	Game.clearStage();
 	Game.methodSetup = {
 		method: function(id) {
