@@ -604,6 +604,48 @@ function openFactory() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
+        posX: Game.placeEntityX(0.246, (Game.entitySize * 9)),
+        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+        width: (Game.entitySize * 3),
+        height: (Game.entitySize * 12),
+        lineWidth: 1,
+        btnColor: 'lightslategrey',
+        txtColor: 'black',
+        font: '1em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-left-leg',
+        action: { method: function(id) { console.log('Select Left Leg'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.247, (Game.entitySize * -4.3)),
+        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+        width: (Game.entitySize * 3),
+        height: (Game.entitySize * 12),
+        lineWidth: 1,
+        btnColor: 'navy',
+        txtColor: 'black',
+        font: '1em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-right-leg',
+        action: { method: function(id) { console.log('Select Right Leg'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
         posX: Game.placeEntityX(0.03),
         posY: Game.placeEntityY(0.03),
         width: (Game.entitySize * 12),
