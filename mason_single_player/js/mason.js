@@ -485,6 +485,10 @@ function openFactory() {
 	// robot screen. We will need to make some tabs at the top to show the robot
 	// selection screen and then the robot part screen where the player can make
 	// different heads, bodys, arms and legs
+	factoryRobotDetails();
+}
+
+function factoryRobotDetails() {
 	Game.clearStage();
 	Game.methodSetup = {
 		method: function(id) {
@@ -663,6 +667,43 @@ function openFactory() {
         isFilled: true,
         id: 'factory-back-game',
         action: { method: function(id) { playGame(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Details',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'factory-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.95, (Game.entitySize * 27)),
+        posY: Game.placeEntityY(0.03),
+        width: (Game.entitySize * 15),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'darkgrey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Factory',
+        isFilled: true,
+        id: 'factory-view',
+        action: { method: function(id) { playGame(); }}, // this needs to go to the robot list view
         props: {},
         methodId: id
       });
