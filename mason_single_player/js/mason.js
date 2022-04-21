@@ -528,6 +528,24 @@ function factoryRobotDetails() {
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.55)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.43),
+				height: (Game.canvas.height * 0.855),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'part-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
 			drawButton({
         posX: Game.placeEntityX(0.25, (Game.entitySize * 12)),
         posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
@@ -692,7 +710,7 @@ function factoryRobotDetails() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.95, (Game.entitySize * 27)),
+        posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
         posY: Game.placeEntityY(0.03),
         width: (Game.entitySize * 15),
         height: (Game.entitySize * 7),
