@@ -54,6 +54,27 @@ let gameObject = {
 	robotTeams: [], // the number of robot teams going out to find riches
 };
 
+const robotHeads = [
+	{
+		headId: 0,
+	}
+];
+const robotBodies = [
+	{
+		bodyId: 0,
+	}
+];
+const robotLegs = [
+	{
+		legId: 0,
+	}
+];
+const robotArms = [
+	{
+		armId: 0,
+	}
+];
+
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	masonWorkerImg.src = masonWorkerPath;
