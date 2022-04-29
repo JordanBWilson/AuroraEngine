@@ -80,7 +80,7 @@ const robotLegs = [
 		stats: {
 			def: 1,
 			att: 1,
-		}.
+		},
 	}
 ];
 const robotArms = [
