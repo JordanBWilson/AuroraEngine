@@ -58,9 +58,13 @@ const robotHeads = [
 	{
 		headId: 1,
 		name: 'New World Head',
+		img: 'orange',
 		stats: {
+			att: 0,
 			def: 1,
-			ai: 1
+			spd: 0,
+			ai: 1,
+			storage: 0,
 		},
 	}
 ];
@@ -68,8 +72,13 @@ const robotBodies = [
 	{
 		bodyId: 1,
 		name: 'New World Body',
+		img: 'orange',
 		stats: {
+			att: 0,
 			def: 1,
+			spd: 0,
+			ai: 0,
+			storage: 1,
 		},
 	}
 ];
@@ -77,9 +86,13 @@ const robotLegs = [
 	{
 		legId: 1,
 		name: 'New World Leg',
+		img: 'orange',
 		stats: {
+			att: 0,
 			def: 1,
-			att: 1,
+			spd: 1,
+			ai: 0,
+			storage: 0,
 		},
 	}
 ];
@@ -87,9 +100,13 @@ const robotArms = [
 	{
 		armId: 1,
 		name: 'New World Arm',
+		img: 'orange',
 		stats: {
+			att: 1,
 			def: 1,
-			att: 1
+			spd: 0,
+			ai: 0,
+			storage: 0,
 		},
 	}
 ];
