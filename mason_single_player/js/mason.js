@@ -56,22 +56,41 @@ let gameObject = {
 
 const robotHeads = [
 	{
-		headId: 0,
+		headId: 1,
+		name: 'New World Head',
+		stats: {
+			def: 1,
+			ai: 1
+		},
 	}
 ];
 const robotBodies = [
 	{
-		bodyId: 0,
+		bodyId: 1,
+		name: 'New World Body',
+		stats: {
+			def: 1,
+		},
 	}
 ];
 const robotLegs = [
 	{
-		legId: 0,
+		legId: 1,
+		name: 'New World Leg',
+		stats: {
+			def: 1,
+			att: 1,
+		}.
 	}
 ];
 const robotArms = [
 	{
-		armId: 0,
+		armId: 1,
+		name: 'New World Arm',
+		stats: {
+			def: 1,
+			att: 1
+		},
 	}
 ];
 
