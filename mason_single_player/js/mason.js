@@ -100,6 +100,27 @@ const robotHeads = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+	},
+	{
+		headId: 3,
+		name: 'NW Scout Head',
+		img: 'darkgoldenrod',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 0,
+			ai: 2,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 4,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
 	}
 ];
 const robotChassis = [
@@ -144,7 +165,28 @@ const robotChassis = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
-	}
+	},
+	{
+		bodyId: 3,
+		name: 'NW Scout Chassis',
+		img: 'darkgoldenrod',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 0,
+			ai: 2,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 9,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
 ];
 const robotLegs = [
 	{
@@ -176,11 +218,32 @@ const robotLegs = [
 			att: 0,
 			def: 1,
 			spd: 1,
-			ai: 0,
-			storage: 1,
+			ai: 1,
+			storage: 0,
 		},
 		partsToBuild: {
 			commonScrap: 7,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
+	{
+		legId: 3,
+		name: 'NW Scout Leg',
+		img: 'darkgoldenrod',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 1,
+			ai: 1,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 6,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
 			intriguingScrap: 0,
@@ -213,7 +276,7 @@ const robotArms = [
 		},
 	},
 	{
-		armId: 1,
+		armId: 2,
 		name: 'NW Scrapper Arm',
 		img: 'coral',
 		stats: {
@@ -225,6 +288,27 @@ const robotArms = [
 		},
 		partsToBuild: {
 			commonScrap: 7,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
+	{
+		armId: 3,
+		name: 'NW Scout Arm',
+		img: 'darkgoldenrod',
+		stats: {
+			att: 1,
+			def: 1,
+			spd: 0,
+			ai: 1,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 6,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
 			intriguingScrap: 0,
@@ -960,9 +1044,79 @@ function selectRobotLegs(leg) {
 function selectRobotChassis() {
 	console.log('selecting the body...');
 	// load up the robot parts the player has discovered...
+	// only show the next and previous buttons if the number of parts is greater than 3 or something
+	drawNextPrevPartList('chassis');
+	// Game.methodSetup = {
+	// 	method: function(id) {
+	// 		drawButton({
+  //       posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
+  //       posY: Game.placeEntityY(0.15),
+  //       width: (Game.entitySize * 15),
+  //       height: (Game.entitySize * 7),
+  //       lineWidth: 1,
+  //       btnColor: 'yellow',
+  //       txtColor: 'black',
+  //       font: '1.5em serif',
+  //       msg: 'Chassis',
+  //       isFilled: true,
+  //       id: 'robot-chassis',
+  //       action: { method: function(id) { playGame(); }}, // this needs to select a robot part
+  //       props: {},
+  //       methodId: id
+  //     });
+	// 	}
+	// };
+	// Game.addMethod(Game.methodSetup);
 }
 
 function selectRobotHead() {
 	console.log('selecting the head...');
 	// load up the robot parts the player has discovered...
+}
+
+function drawNextPrevPartList(part) {
+	// the part could be head, chassis, legs and arms
+	console.log(part);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.5)),
+        posY: Game.placeEntityY(0.135),
+        width: (Game.entitySize * 22),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Next',
+        isFilled: true,
+        id: 'next-part',
+        action: { method: function(id) { console.log('next part'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.5)),
+        posY: Game.placeEntityY(0.90),
+        width: (Game.entitySize * 22),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Previous',
+        isFilled: true,
+        id: 'last-part',
+        action: { method: function(id) { console.log('previous part'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
