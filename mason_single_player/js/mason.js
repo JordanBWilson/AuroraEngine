@@ -51,7 +51,11 @@ let gameObject = {
 	// robot adventuring
 	robotStorage: 5, // these robots can be sold on the grand exchange
 	robotsMade: 0, // or go on adventures to find riches
-	robotTeams: [], // the number of robot teams going out to find riches
+	robotTeams: [], // the different number of robot teams going out to find riches
+	discoveredHeads: [], // all the robot heads discovered by the player
+	discoveredChassis: [], // all the robot chassis discovered by the player
+	discoveredLegs: [], // all the robot legs discovered by the player
+	discoveredArms: [], // all the robot arms discovered by the player
 };
 
 const robotHeads = [
@@ -66,12 +70,42 @@ const robotHeads = [
 			ai: 1,
 			storage: 0,
 		},
+		partsToBuild: {
+			commonScrap: 3,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
+	{
+		headId: 2,
+		name: 'NW Scrapper Head',
+		img: 'coral',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 0,
+			ai: 1,
+			storage: 1,
+		},
+		partsToBuild: {
+			commonScrap: 5,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
 	}
 ];
-const robotBodies = [
+const robotChassis = [
 	{
 		bodyId: 1,
-		name: 'New World Body',
+		name: 'New World Chassis',
 		img: 'orange',
 		stats: {
 			att: 0,
@@ -79,6 +113,36 @@ const robotBodies = [
 			spd: 0,
 			ai: 0,
 			storage: 1,
+		},
+		partsToBuild: {
+			commonScrap: 7,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
+	{
+		bodyId: 2,
+		name: 'NW Scrapper Chassis',
+		img: 'coral',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 0,
+			ai: 0,
+			storage: 2,
+		},
+		partsToBuild: {
+			commonScrap: 10,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
 		},
 	}
 ];
@@ -94,6 +158,36 @@ const robotLegs = [
 			ai: 0,
 			storage: 0,
 		},
+		partsToBuild: {
+			commonScrap: 5,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
+	{
+		legId: 2,
+		name: 'NW Scrapper Leg',
+		img: 'coral',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 1,
+			ai: 0,
+			storage: 1,
+		},
+		partsToBuild: {
+			commonScrap: 7,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
 	}
 ];
 const robotArms = [
@@ -107,6 +201,36 @@ const robotArms = [
 			spd: 0,
 			ai: 0,
 			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 5,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
+	{
+		armId: 1,
+		name: 'NW Scrapper Arm',
+		img: 'coral',
+		stats: {
+			att: 1,
+			def: 1,
+			spd: 0,
+			ai: 0,
+			storage: 1,
+		},
+		partsToBuild: {
+			commonScrap: 7,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
 		},
 	}
 ];
@@ -123,63 +247,7 @@ const robotArms = [
 function playGame() {
 	robot = {};
 	Game.clearStage();
-	Game.methodSetup = {
-		method: function(id) {
-			drawRect({
-				posX: Game.placeEntityX(0),
-				posY: Game.placeEntityY(0),
-				width: Game.canvas.width,
-				height: (Game.canvas.height * 0.50),
-				lineWidth: 1,
-				color: '#0000FF',
-				isFilled: true,
-				id: 'sky-background',
-				isBackground: true,
-				props: {},
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawRect({
-				posX: Game.placeEntityX(0),
-				posY: Game.placeEntityY(0.50),
-				width: Game.canvas.width,
-				height: Game.canvas.height,
-				lineWidth: 1,
-				color: '#3C7521',
-				isFilled: true,
-				id: 'grass-background',
-				isBackground: false,
-				props: {},
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawImagePattern({
-				posX: Game.placeEntityX(0),
-				posY: Game.placeEntityY(0.50),
-				width: (Game.canvas.width),
-				height: (Game.canvas.height),
-				patternWidth: (Game.canvas.height * 0.2),
-				patternHeight: (Game.canvas.height * 0.2),
-				images: [grassImg],
-				selectedImage: 0,
-				animTicks: 0,
-				ticks: 0,
-				id: 'grass-background',
-				isBackground: true,
-				props: {},
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
+	drawBackground();
 	if (!Game.isLoaded) {
 		Game.methodSetup = {
 			method: function(id) {
@@ -339,6 +407,87 @@ function playGame() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	drawRobot();
+  // Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
+  // Game.addMethod(Game.methodSetup);
+
+	Game.methodSetup = { method: function(id) { findGameObjects(); }};
+	Game.addMethod(Game.methodSetup);
+
+	Game.methodSetup = { method: function(id) { animateObjects(); }};
+	Game.addMethod(Game.methodSetup);
+
+  Game.collisionSetup = {
+    primary: 'scrap',
+    target: 'mason-worker',
+    method: function(id) { masonRockCollision(this.methodId) },
+    methodId: undefined,
+  }
+  // Game.addCollision(Game.collisionSetup);
+  Particle.init();
+}
+
+function drawBackground() {
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height * 0.50),
+				lineWidth: 1,
+				color: '#0000FF',
+				isFilled: true,
+				id: 'sky-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0.50),
+				width: Game.canvas.width,
+				height: Game.canvas.height,
+				lineWidth: 1,
+				color: '#3C7521',
+				isFilled: true,
+				id: 'grass-background',
+				isBackground: false,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawImagePattern({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0.50),
+				width: (Game.canvas.width),
+				height: (Game.canvas.height),
+				patternWidth: (Game.canvas.height * 0.2),
+				patternHeight: (Game.canvas.height * 0.2),
+				images: [grassImg],
+				selectedImage: 0,
+				animTicks: 0,
+				ticks: 0,
+				id: 'grass-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}
+
+function drawRobot() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
@@ -458,24 +607,6 @@ function playGame() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-  // Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
-  // Game.addMethod(Game.methodSetup);
-
-	Game.methodSetup = { method: function(id) { findGameObjects(); }};
-	Game.addMethod(Game.methodSetup);
-
-	Game.methodSetup = { method: function(id) { animateObjects(); }};
-	Game.addMethod(Game.methodSetup);
-
-  Game.collisionSetup = {
-    primary: 'scrap',
-    target: 'mason-worker',
-    method: function(id) { masonRockCollision(this.methodId) },
-    methodId: undefined,
-  }
-  // Game.addCollision(Game.collisionSetup);
-  Particle.init();
-
 }
 
 function findGameObjects() {
@@ -615,7 +746,7 @@ function factoryRobotDetails() {
         msg: '',
         isFilled: true,
         id: 'robot-body',
-        action: { method: function(id) { console.log('Select body'); }},
+        action: { method: function(id) { selectRobotChassis() }},
         props: {},
         methodId: id
       });
@@ -636,7 +767,7 @@ function factoryRobotDetails() {
         msg: '',
         isFilled: true,
         id: 'robot-head',
-        action: { method: function(id) { console.log('Select head'); }},
+        action: { method: function(id) { selectRobotHead() }},
         props: {},
         methodId: id
       });
@@ -657,7 +788,7 @@ function factoryRobotDetails() {
         msg: '',
         isFilled: true,
         id: 'robot-left-arm',
-        action: { method: function(id) { console.log('Select Left Arm'); }},
+        action: { method: function(id) { selectRobotArms('left'); }},
         props: {},
         methodId: id
       });
@@ -678,7 +809,7 @@ function factoryRobotDetails() {
         msg: '',
         isFilled: true,
         id: 'robot-right-arm',
-        action: { method: function(id) { console.log('Select Right Arm'); }},
+        action: { method: function(id) { selectRobotArms('right'); }},
         props: {},
         methodId: id
       });
@@ -699,7 +830,7 @@ function factoryRobotDetails() {
         msg: '',
         isFilled: true,
         id: 'robot-left-leg',
-        action: { method: function(id) { console.log('Select Left Leg'); }},
+        action: { method: function(id) { selectRobotLegs('left'); }},
         props: {},
         methodId: id
       });
@@ -720,7 +851,7 @@ function factoryRobotDetails() {
         msg: '',
         isFilled: true,
         id: 'robot-right-leg',
-        action: { method: function(id) { console.log('Select Right Leg'); }},
+        action: { method: function(id) { selectRobotLegs('right'); }},
         props: {},
         methodId: id
       });
@@ -812,4 +943,26 @@ function masonRockCollision(methodId) {
 	if (masonWorker.props.direction === 'right') {
 		masonWorker.props.direction = 'left';
 	}
+}
+
+function selectRobotArms(arm) {
+	// the arm could be left or right
+	console.log('selecting the ' + arm + ' arm...');
+	// load up the robot parts the player has discovered...
+}
+
+function selectRobotLegs(leg) {
+	// the leg could be left or right
+	console.log('selecting the ' + leg + ' leg...');
+	// load up the robot parts the player has discovered...
+}
+
+function selectRobotChassis() {
+	console.log('selecting the body...');
+	// load up the robot parts the player has discovered...
+}
+
+function selectRobotHead() {
+	console.log('selecting the head...');
+	// load up the robot parts the player has discovered...
 }
