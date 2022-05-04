@@ -818,6 +818,24 @@ function factoryRobotDetails() {
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.45),
+				height: (Game.canvas.height * 0.39),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'robot-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
 			drawButton({
         posX: Game.placeEntityX(0.25, (Game.entitySize * 12)),
         posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
@@ -981,6 +999,22 @@ function factoryRobotDetails() {
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Stats',
+				posX: Game.placeEntityX(0.247),
+				posY: Game.placeEntityY(0.65),
+				color: 'grey',
+				align: 'center',
+				props: {},
+				id: 'stat-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
 			drawButton({
         posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
         posY: Game.placeEntityY(0.03),
@@ -1044,29 +1078,114 @@ function selectRobotLegs(leg) {
 function selectRobotChassis() {
 	console.log('selecting the body...');
 	// load up the robot parts the player has discovered...
-	// only show the next and previous buttons if the number of parts is greater than 3 or something
+	// only show the next and previous buttons if the number of parts is greater than 5
 	drawNextPrevPartList('chassis');
-	// Game.methodSetup = {
-	// 	method: function(id) {
-	// 		drawButton({
-  //       posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
-  //       posY: Game.placeEntityY(0.15),
-  //       width: (Game.entitySize * 15),
-  //       height: (Game.entitySize * 7),
-  //       lineWidth: 1,
-  //       btnColor: 'yellow',
-  //       txtColor: 'black',
-  //       font: '1.5em serif',
-  //       msg: 'Chassis',
-  //       isFilled: true,
-  //       id: 'robot-chassis',
-  //       action: { method: function(id) { playGame(); }}, // this needs to select a robot part
-  //       props: {},
-  //       methodId: id
-  //     });
-	// 	}
-	// };
-	// Game.addMethod(Game.methodSetup);
+	// put these in a loop once we find an equation to properly position them
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+        posY: Game.placeEntityY(0.24),
+        width: (Game.entitySize * 22),
+        height: (Game.entitySize * 9),
+        lineWidth: 1,
+        btnColor: 'yellow',
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: 'Chassis-0',
+        isFilled: true,
+        id: 'robot-chassis',
+        action: { method: function(id) { console.log('select robot part-0'); displaySelectPart(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+        posY: Game.placeEntityY(0.38),
+        width: (Game.entitySize * 22),
+        height: (Game.entitySize * 9),
+        lineWidth: 1,
+        btnColor: 'yellow',
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: 'Chassis-1',
+        isFilled: true,
+        id: 'robot-chassis',
+        action: { method: function(id) { console.log('select robot part-1'); displaySelectPart(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+        posY: Game.placeEntityY(0.51),
+        width: (Game.entitySize * 22),
+        height: (Game.entitySize * 9),
+        lineWidth: 1,
+        btnColor: 'yellow',
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: 'Chassis-2',
+        isFilled: true,
+        id: 'robot-chassis',
+        action: { method: function(id) { console.log('select robot part-2'); displaySelectPart(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+        posY: Game.placeEntityY(0.64),
+        width: (Game.entitySize * 22),
+        height: (Game.entitySize * 9),
+        lineWidth: 1,
+        btnColor: 'yellow',
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: 'Chassis-3',
+        isFilled: true,
+        id: 'robot-chassis',
+        action: { method: function(id) { console.log('select robot part-3'); displaySelectPart(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+        posY: Game.placeEntityY(0.77),
+        width: (Game.entitySize * 22),
+        height: (Game.entitySize * 9),
+        lineWidth: 1,
+        btnColor: 'yellow',
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: 'Chassis-4',
+        isFilled: true,
+        id: 'robot-chassis',
+        action: { method: function(id) { console.log('select robot part-4'); displaySelectPart(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
 
 function selectRobotHead() {
@@ -1113,6 +1232,30 @@ function drawNextPrevPartList(part) {
         isFilled: true,
         id: 'last-part',
         action: { method: function(id) { console.log('previous part'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}
+
+function displaySelectPart() {
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.225, (Game.entitySize * 19.5)),
+        posY: Game.placeEntityY(0.90),
+        width: (Game.entitySize * 23),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Select',
+        isFilled: true,
+        id: 'select-part',
+        action: { method: function(id) { console.log('select part'); }},
         props: {},
         methodId: id
       });
