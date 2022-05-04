@@ -1142,7 +1142,7 @@ function selectRobotChassis() {
 	        msg: chassis.name,
 	        isFilled: true,
 	        id: 'robot-chassis',
-	        action: { method: function(id) { console.log('select robot part-0'); displaySelectPart(); }},
+	        action: { method: function(id) { console.log('select robot part-0'); displaySelectPart(chassis.stats); }},
 	        props: {
 						bodyId: chassis.bodyId,
 						stats: chassis.stats
@@ -1208,7 +1208,7 @@ function drawNextPrevPartList(part) {
 	Game.addMethod(Game.methodSetup);
 }
 
-function displaySelectPart() {
+function displaySelectPart(stats) {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
