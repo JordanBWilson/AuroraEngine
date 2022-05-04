@@ -1265,12 +1265,12 @@ function displaySelectPart() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
-				font: '1.2em serif',
+				font: '1em serif',
 				msg: 'Attack:',
-				posX: Game.placeEntityX(0.16),
+				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.69),
 				color: 'grey',
-				align: 'center',
+				align: 'left',
 				props: {},
 				id: 'att-stat',
 				methodId: id
@@ -1281,12 +1281,12 @@ function displaySelectPart() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
-				font: '1.2em serif',
+				font: '1em serif',
 				msg: 'Defense:',
-				posX: Game.placeEntityX(0.16),
+				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.74),
 				color: 'grey',
-				align: 'center',
+				align: 'left',
 				props: {},
 				id: 'def-stat',
 				methodId: id
@@ -1297,12 +1297,12 @@ function displaySelectPart() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
-				font: '1.2em serif',
+				font: '1em serif',
 				msg: 'Speed:',
-				posX: Game.placeEntityX(0.16),
+				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.79),
 				color: 'grey',
-				align: 'center',
+				align: 'left',
 				props: {},
 				id: 'spd-stat',
 				methodId: id
@@ -1313,12 +1313,12 @@ function displaySelectPart() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
-				font: '1.2em serif',
+				font: '1em serif',
 				msg: 'AI:',
-				posX: Game.placeEntityX(0.16),
+				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.84),
 				color: 'grey',
-				align: 'center',
+				align: 'left',
 				props: {},
 				id: 'ai-stat',
 				methodId: id
@@ -1329,12 +1329,12 @@ function displaySelectPart() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
-				font: '1.2em serif',
+				font: '1em serif',
 				msg: 'Storage:',
-				posX: Game.placeEntityX(0.16),
+				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.88),
 				color: 'grey',
-				align: 'center',
+				align: 'left',
 				props: {},
 				id: 'storage-stat',
 				methodId: id
