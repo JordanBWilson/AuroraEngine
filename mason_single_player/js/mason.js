@@ -56,6 +56,7 @@ const gameObject = {
 	discoveredChassis: [], // all the robot chassis discovered by the player
 	discoveredLegs: [], // all the robot legs discovered by the player
 	discoveredArms: [], // all the robot arms discovered by the player
+	selectedRobot: [], // this is the robot currently selected in the shop
 };
 
 const robotHeads = [
@@ -233,6 +234,7 @@ const robotChassis = [
 const robotLegs = [
 	{
 		legId: 1,
+		legPos: undefined, // can be 'left' or 'right'
 		name: 'New World Leg',
 		img: 'orange',
 		stats: {
@@ -254,6 +256,7 @@ const robotLegs = [
 	},
 	{
 		legId: 2,
+		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Leg',
 		img: 'coral',
 		stats: {
@@ -275,6 +278,7 @@ const robotLegs = [
 	},
 	{
 		legId: 3,
+		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
 		stats: {
@@ -298,6 +302,7 @@ const robotLegs = [
 const robotArms = [
 	{
 		armId: 1,
+		armPos: undefined, // can be 'left' or 'right'
 		name: 'New World Arm',
 		img: 'orange',
 		stats: {
@@ -319,6 +324,7 @@ const robotArms = [
 	},
 	{
 		armId: 2,
+		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Arm',
 		img: 'coral',
 		stats: {
@@ -340,6 +346,7 @@ const robotArms = [
 	},
 	{
 		armId: 3,
+		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Arm',
 		img: 'darkgoldenrod',
 		stats: {
@@ -374,7 +381,6 @@ function playGame() {
 	robot = {};
 	// below is a test...
 	gameObject.discoveredChassis = robotChassis;
-	console.log(gameObject.discoveredChassis);
 	Game.clearStage();
 	drawBackground();
 	if (!Game.isLoaded) {
@@ -1127,7 +1133,6 @@ function selectRobotChassis() {
 	drawNextPrevPartList('chassis');
 	// put these in a loop once we find an equation to properly position them
 	gameObject.discoveredChassis.forEach((chassis, i) => {
-		console.log(chassis, i);
 		Game.methodSetup = {
 			method: function(id) {
 				drawButton({
@@ -1142,7 +1147,7 @@ function selectRobotChassis() {
 	        msg: chassis.name,
 	        isFilled: true,
 	        id: 'robot-chassis',
-	        action: { method: function(id) { console.log('select robot part-0'); displaySelectPart(chassis.stats); }},
+	        action: { method: function(id) { console.log('select robot part-' + i); displaySelectPart(gameObject.discoveredChassis[i]); }},
 	        props: {
 						bodyId: chassis.bodyId,
 						stats: chassis.stats
@@ -1152,7 +1157,6 @@ function selectRobotChassis() {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
-		console.log(Game.methodObjects);
 	});
 }
 
@@ -1208,7 +1212,22 @@ function drawNextPrevPartList(part) {
 	Game.addMethod(Game.methodSetup);
 }
 
-function displaySelectPart(stats) {
+function clearSelectedPartStatsDetails() {
+	// clear the stats and the buttons, in fact the whole screen might need to be redrawn
+	const selectPartBtn = Game.methodObjects.find(x => x.id === 'select-part');
+	if (selectPartBtn) {
+		Game.deleteEntity(selectPartBtn.methodId);
+	}
+	const factoryTitle = Game.methodObjects.find(x => x.id === 'factory-title');
+	if (factoryTitle) {
+		Game.deleteEntity(factoryTitle.methodId);
+	}
+
+}
+
+function displaySelectPart(chassis) {
+	console.log(chassis);
+	clearSelectedPartStatsDetails();
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1223,7 +1242,7 @@ function displaySelectPart(stats) {
         msg: 'Select',
         isFilled: true,
         id: 'select-part',
-        action: { method: function(id) { console.log('select part'); }},
+        action: { method: function(id) { console.log(chassis); }},
         props: {},
         methodId: id
       });
@@ -1234,7 +1253,7 @@ function displaySelectPart(stats) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Attack:',
+				msg: 'Attack: ' + chassis.stats.att,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.69),
 				color: 'grey',
@@ -1250,7 +1269,7 @@ function displaySelectPart(stats) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Defense:',
+				msg: 'Defense: ' + chassis.stats.def,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.74),
 				color: 'grey',
@@ -1266,7 +1285,7 @@ function displaySelectPart(stats) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Speed:',
+				msg: 'Speed: ' + chassis.stats.spd,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.79),
 				color: 'grey',
@@ -1282,7 +1301,7 @@ function displaySelectPart(stats) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'AI:',
+				msg: 'AI: ' + chassis.stats.ai,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.84),
 				color: 'grey',
@@ -1298,7 +1317,7 @@ function displaySelectPart(stats) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Storage:',
+				msg: 'Storage: ' + chassis.stats.storage,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.88),
 				color: 'grey',

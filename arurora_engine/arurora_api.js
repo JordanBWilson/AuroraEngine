@@ -67,7 +67,7 @@ const Game = { // the user will want to use this object
       return (Game.canvas.height * pos);
     }
   },
-  deleteEntity: function(id) { // delete an object in the MethodObjects
+  deleteEntity: function(id) { // delete an object in the MethodObjects using the methodId
     for (let i = 0; i < this.methodObjects.length; i++) {
       if (this.methodObjects[i].methodId === id) {
         for (let j = 0; j < Main.methodsToRun.length; j++) {
