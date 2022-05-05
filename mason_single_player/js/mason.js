@@ -1315,7 +1315,7 @@ function displaySelectPart(part) {
 	        msg: 'Select',
 	        isFilled: true,
 	        id: 'select-part',
-	        action: { method: function(id) { console.log(part); }},
+	        action: { method: function(id) { equipPart(part); }},
 	        props: {},
 	        methodId: id
 	      });
@@ -1403,5 +1403,13 @@ function displaySelectPart(part) {
 		};
 		Game.addMethod(Game.methodSetup);
 	}, 10);
+}
 
+function equipPart(part) {
+	// future Jordan make sure the player can't equip multiple of the same part
+	// if there is the same part already equiped show how much the stats are going up or down
+	if (part.type === 'chassis') {
+		gameObject.selectedRobot.push(part);
+	}
+	console.log(gameObject.selectedRobot);
 }
