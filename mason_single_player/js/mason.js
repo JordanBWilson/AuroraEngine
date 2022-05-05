@@ -62,6 +62,7 @@ const gameObject = {
 const robotHeads = [
 	{
 		headId: 1,
+		type: 'head',
 		name: 'New World Head',
 		img: 'orange',
 		stats: {
@@ -83,6 +84,7 @@ const robotHeads = [
 	},
 	{
 		headId: 2,
+		type: 'head',
 		name: 'NW Scrapper Head',
 		img: 'coral',
 		stats: {
@@ -104,6 +106,7 @@ const robotHeads = [
 	},
 	{
 		headId: 3,
+		type: 'head',
 		name: 'NW Scout Head',
 		img: 'darkgoldenrod',
 		stats: {
@@ -126,7 +129,8 @@ const robotHeads = [
 ];
 const robotChassis = [
 	{
-		bodyId: 1,
+		chassisId: 1,
+		type: 'chassis',
 		name: 'New World Chassis',
 		img: 'orange',
 		stats: {
@@ -147,7 +151,8 @@ const robotChassis = [
 		},
 	},
 	{
-		bodyId: 2,
+		chassisId: 2,
+		type: 'chassis',
 		name: 'NW Scrapper Chassis',
 		img: 'coral',
 		stats: {
@@ -168,7 +173,8 @@ const robotChassis = [
 		},
 	},
 	{
-		bodyId: 3,
+		chassisId: 3,
+		type: 'chassis',
 		name: 'NW Scout Chassis',
 		img: 'darkgoldenrod',
 		stats: {
@@ -189,7 +195,8 @@ const robotChassis = [
 		},
 	},
 	{
-		bodyId: 4,
+		chassisId: 4,
+		type: 'chassis',
 		name: 'Test Chassis',
 		img: 'red',
 		stats: {
@@ -210,7 +217,8 @@ const robotChassis = [
 		},
 	},
 	{
-		bodyId: 5,
+		chassisId: 5,
+		type: 'chassis',
 		name: 'Test Chassis-1',
 		img: 'red',
 		stats: {
@@ -234,6 +242,7 @@ const robotChassis = [
 const robotLegs = [
 	{
 		legId: 1,
+		type: 'leg',
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'New World Leg',
 		img: 'orange',
@@ -256,6 +265,7 @@ const robotLegs = [
 	},
 	{
 		legId: 2,
+		type: 'leg',
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Leg',
 		img: 'coral',
@@ -278,6 +288,7 @@ const robotLegs = [
 	},
 	{
 		legId: 3,
+		type: 'leg',
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
@@ -302,6 +313,7 @@ const robotLegs = [
 const robotArms = [
 	{
 		armId: 1,
+		type: 'arm',
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'New World Arm',
 		img: 'orange',
@@ -324,6 +336,7 @@ const robotArms = [
 	},
 	{
 		armId: 2,
+		type: 'arm',
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Arm',
 		img: 'coral',
@@ -346,6 +359,7 @@ const robotArms = [
 	},
 	{
 		armId: 3,
+		type: 'arm',
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Arm',
 		img: 'darkgoldenrod',
@@ -877,7 +891,7 @@ function factoryRobotDetails() {
 				lineWidth: 1,
 				color: 'lightgrey',
 				isFilled: true,
-				id: 'robot-background',
+				id: 'robot-stat-background',
 				isBackground: true,
 				props: {},
 				methodId: id
@@ -1149,7 +1163,7 @@ function selectRobotChassis() {
 	        id: 'robot-chassis',
 	        action: { method: function(id) { console.log('select robot part-' + i); displaySelectPart(gameObject.discoveredChassis[i]); }},
 	        props: {
-						bodyId: chassis.bodyId,
+						chassisId: chassis.chassisId,
 						stats: chassis.stats
 					},
 	        methodId: id
@@ -1167,7 +1181,6 @@ function selectRobotHead() {
 
 function drawNextPrevPartList(part) {
 	// the part could be head, chassis, legs and arms
-	console.log(part);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1212,121 +1225,183 @@ function drawNextPrevPartList(part) {
 	Game.addMethod(Game.methodSetup);
 }
 
-function clearSelectedPartStatsDetails() {
-	// clear the stats and the buttons, in fact the whole screen might need to be redrawn
+function clearSelectedPartStatDetails() {
+	// clear the stats and the buttons
 	const selectPartBtn = Game.methodObjects.find(x => x.id === 'select-part');
 	if (selectPartBtn) {
 		Game.deleteEntity(selectPartBtn.methodId);
 	}
+	const selectAttStat = Game.methodObjects.find(x => x.id === 'att-stat');
+	if (selectAttStat) {
+		Game.deleteEntity(selectAttStat.methodId);
+	}
+	const selectDefStat = Game.methodObjects.find(x => x.id === 'def-stat');
+	if (selectDefStat) {
+		Game.deleteEntity(selectDefStat.methodId);
+	}
+	const selectSpdStat = Game.methodObjects.find(x => x.id === 'spd-stat');
+	if (selectSpdStat) {
+		Game.deleteEntity(selectSpdStat.methodId);
+	}
+	const selectAiStat = Game.methodObjects.find(x => x.id === 'ai-stat');
+	if (selectAiStat) {
+		Game.deleteEntity(selectAiStat.methodId);
+	}
+	const selectStorageStat = Game.methodObjects.find(x => x.id === 'storage-stat');
+	if (selectStorageStat) {
+		Game.deleteEntity(selectStorageStat.methodId);
+	}
+	// clear the titles
 	const factoryTitle = Game.methodObjects.find(x => x.id === 'factory-title');
 	if (factoryTitle) {
 		Game.deleteEntity(factoryTitle.methodId);
 	}
+	const statTitle = Game.methodObjects.find(x => x.id === 'stat-title');
+	if (statTitle) {
+		Game.deleteEntity(statTitle.methodId);
+	}
 
 }
 
-function displaySelectPart(chassis) {
-	console.log(chassis);
-	clearSelectedPartStatsDetails();
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-        posY: Game.placeEntityY(0.90),
-        width: (Game.entitySize * 23),
-        height: (Game.entitySize * 7),
-        lineWidth: 1,
-        btnColor: 'grey',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Select',
-        isFilled: true,
-        id: 'select-part',
-        action: { method: function(id) { console.log(chassis); }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawText({
-				font: '1em serif',
-				msg: 'Attack: ' + chassis.stats.att,
-				posX: Game.placeEntityX(0.09),
-				posY: Game.placeEntityY(0.69),
-				color: 'grey',
-				align: 'left',
-				props: {},
-				id: 'att-stat',
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawText({
-				font: '1em serif',
-				msg: 'Defense: ' + chassis.stats.def,
-				posX: Game.placeEntityX(0.09),
-				posY: Game.placeEntityY(0.74),
-				color: 'grey',
-				align: 'left',
-				props: {},
-				id: 'def-stat',
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawText({
-				font: '1em serif',
-				msg: 'Speed: ' + chassis.stats.spd,
-				posX: Game.placeEntityX(0.09),
-				posY: Game.placeEntityY(0.79),
-				color: 'grey',
-				align: 'left',
-				props: {},
-				id: 'spd-stat',
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawText({
-				font: '1em serif',
-				msg: 'AI: ' + chassis.stats.ai,
-				posX: Game.placeEntityX(0.09),
-				posY: Game.placeEntityY(0.84),
-				color: 'grey',
-				align: 'left',
-				props: {},
-				id: 'ai-stat',
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawText({
-				font: '1em serif',
-				msg: 'Storage: ' + chassis.stats.storage,
-				posX: Game.placeEntityX(0.09),
-				posY: Game.placeEntityY(0.88),
-				color: 'grey',
-				align: 'left',
-				props: {},
-				id: 'storage-stat',
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
+function displaySelectPart(part) {
+	clearSelectedPartStatDetails();
+	setTimeout(function() {
+		Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
+		Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
+		Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '2.3em serif',
+					msg: 'Stats',
+					posX: Game.placeEntityX(0.247),
+					posY: Game.placeEntityY(0.65),
+					color: 'grey',
+					align: 'center',
+					props: {},
+					id: 'stat-title',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '2.3em serif',
+					msg: 'Details',
+					posX: Game.placeEntityX(0.50),
+					posY: Game.placeEntityY(0.085),
+					color: 'darkgrey',
+					align: 'center',
+					props: {},
+					id: 'factory-title',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+	        posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
+	        posY: Game.placeEntityY(0.90),
+	        width: (Game.entitySize * 23),
+	        height: (Game.entitySize * 7),
+	        lineWidth: 1,
+	        btnColor: 'grey',
+	        txtColor: 'white',
+	        font: '1.5em serif',
+	        msg: 'Select',
+	        isFilled: true,
+	        id: 'select-part',
+	        action: { method: function(id) { console.log(part); }},
+	        props: {},
+	        methodId: id
+	      });
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1em serif',
+					msg: 'Attack: ' + part.stats.att,
+					posX: Game.placeEntityX(0.09),
+					posY: Game.placeEntityY(0.69),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'att-stat',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1em serif',
+					msg: 'Defense: ' + part.stats.def,
+					posX: Game.placeEntityX(0.09),
+					posY: Game.placeEntityY(0.74),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'def-stat',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1em serif',
+					msg: 'Speed: ' + part.stats.spd,
+					posX: Game.placeEntityX(0.09),
+					posY: Game.placeEntityY(0.79),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'spd-stat',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1em serif',
+					msg: 'AI: ' + part.stats.ai,
+					posX: Game.placeEntityX(0.09),
+					posY: Game.placeEntityY(0.84),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'ai-stat',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1em serif',
+					msg: 'Storage: ' + part.stats.storage,
+					posX: Game.placeEntityX(0.09),
+					posY: Game.placeEntityY(0.88),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'storage-stat',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	}, 10);
+
 }
