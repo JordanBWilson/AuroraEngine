@@ -1269,6 +1269,10 @@ function displaySelectPart(part) {
 		Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
 		Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
 		Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+		let existingPart;
+		if (part.type === 'chassis') {
+			existingPart = gameObject.selectedRobot.find(build => build.type === 'chassis');
+		}
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
@@ -1390,10 +1394,10 @@ function displaySelectPart(part) {
 			method: function(id) {
 				drawText({
 					font: '1em serif',
-					msg: 'Storage: ' + part.stats.storage,
+					msg: 'Storage: ' + part.stats.storage, // + (existingPart ? ((existingPart.stats.storage - part.stats.storage) * -1) : '')
 					posX: Game.placeEntityX(0.09),
-					posY: Game.placeEntityY(0.88),
-					color: 'grey',
+					posY: Game.placeEntityY(0.88), // make the text color red when the stats is under 0, green when it's over 0 and grey when it is 0
+					color: ((existingPart && existingPart.stats.storage - part.stats.storage) * -1) > 0 ? 'green' : 'grey',
 					align: 'left',
 					props: {},
 					id: 'storage-stat',
@@ -1409,7 +1413,12 @@ function equipPart(part) {
 	// future Jordan make sure the player can't equip multiple of the same part
 	// if there is the same part already equiped show how much the stats are going up or down
 	if (part.type === 'chassis') {
+		const existingChassis = gameObject.selectedRobot.findIndex(part => part.type === 'chassis');
+		if (existingChassis > -1) {
+			gameObject.selectedRobot.splice(existingChassis, 1);
+		}
 		gameObject.selectedRobot.push(part);
+		Game.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
 	}
 	console.log(gameObject.selectedRobot);
 }
