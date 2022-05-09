@@ -1394,10 +1394,10 @@ function displaySelectPart(part) {
 			method: function(id) {
 				drawText({
 					font: '1em serif',
-					msg: 'Storage: ' + part.stats.storage, // + (existingPart ? ((existingPart.stats.storage - part.stats.storage) * -1) : '')
+					msg: 'Storage: ' + part.stats.storage,
 					posX: Game.placeEntityX(0.09),
-					posY: Game.placeEntityY(0.88), // make the text color red when the stats is under 0, green when it's over 0 and grey when it is 0
-					color: ((existingPart && existingPart.stats.storage - part.stats.storage) * -1) > 0 ? 'green' : 'grey',
+					posY: Game.placeEntityY(0.88),
+					color: returnStatColor(existingPart?.stats?.storage, part?.stats?.storage),
 					align: 'left',
 					props: {},
 					id: 'storage-stat',
@@ -1409,9 +1409,17 @@ function displaySelectPart(part) {
 	}, 10);
 }
 
+function returnStatColor(existingPartValue, newPartValue) {
+	if (!existingPartValue) {
+		return 'grey';
+	} else if (((existingPartValue - newPartValue) * -1) > 0) {
+		return 'green';
+	} else if (((existingPartValue - newPartValue) * -1) < 0) {
+		return 'red';
+	}
+}
+
 function equipPart(part) {
-	// future Jordan make sure the player can't equip multiple of the same part
-	// if there is the same part already equiped show how much the stats are going up or down
 	if (part.type === 'chassis') {
 		const existingChassis = gameObject.selectedRobot.findIndex(part => part.type === 'chassis');
 		if (existingChassis > -1) {
@@ -1420,5 +1428,6 @@ function equipPart(part) {
 		gameObject.selectedRobot.push(part);
 		Game.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
 	}
+	displaySelectPart(part);
 	console.log(gameObject.selectedRobot);
 }
