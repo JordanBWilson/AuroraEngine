@@ -395,6 +395,9 @@ function playGame() {
 	robot = {};
 	// below is a test...
 	gameObject.discoveredChassis = robotChassis;
+	gameObject.discoveredHeads = robotHeads;
+	gameObject.discoveredLegs = robotLegs;
+	gameObject.discoveredArms = robotArms;
 	Game.clearStage();
 	drawBackground();
 	if (!Game.isLoaded) {
@@ -1161,7 +1164,7 @@ function selectRobotChassis() {
 	        msg: chassis.name,
 	        isFilled: true,
 	        id: 'robot-chassis',
-	        action: { method: function(id) { console.log('select robot part-' + i); displaySelectPart(gameObject.discoveredChassis[i]); }},
+	        action: { method: function(id) { console.log('select robot chassis-' + i); displaySelectPart(gameObject.discoveredChassis[i]); }},
 	        props: {
 						chassisId: chassis.chassisId,
 						stats: chassis.stats
@@ -1177,6 +1180,36 @@ function selectRobotChassis() {
 function selectRobotHead() {
 	console.log('selecting the head...');
 	// load up the robot parts the player has discovered...
+	// only show the next and previous buttons if the number of parts is greater than 5
+	drawNextPrevPartList('head');
+	// put these in a loop once we find an equation to properly position them
+	// clear the parts from the last selection future Jordan
+	gameObject.discoveredHeads.forEach((head, i) => {
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+	        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+	        posY: Game.placeEntityY(0.24 + (i * 0.135)),
+	        width: (Game.entitySize * 22),
+	        height: (Game.entitySize * 9),
+	        lineWidth: 1,
+	        btnColor: head.img,
+	        txtColor: 'black',
+	        font: '0.8em serif',
+	        msg: head.name,
+	        isFilled: true,
+	        id: 'robot-head',
+	        action: { method: function(id) { console.log('select robot head-' + i); displaySelectPart(gameObject.discoveredHeads[i]); }},
+	        props: {
+						chassisId: head.chassisId,
+						stats: head.stats
+					},
+	        methodId: id
+	      });
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	});
 }
 
 function drawNextPrevPartList(part) {
@@ -1333,7 +1366,7 @@ function displaySelectPart(part) {
 					msg: 'Attack: ' + part.stats.att,
 					posX: Game.placeEntityX(0.09),
 					posY: Game.placeEntityY(0.69),
-					color: 'grey',
+					color: returnStatColor(existingPart?.stats?.att, part?.stats?.att),
 					align: 'left',
 					props: {},
 					id: 'att-stat',
@@ -1349,7 +1382,7 @@ function displaySelectPart(part) {
 					msg: 'Defense: ' + part.stats.def,
 					posX: Game.placeEntityX(0.09),
 					posY: Game.placeEntityY(0.74),
-					color: 'grey',
+					color: returnStatColor(existingPart?.stats?.def, part?.stats?.def),
 					align: 'left',
 					props: {},
 					id: 'def-stat',
@@ -1365,7 +1398,7 @@ function displaySelectPart(part) {
 					msg: 'Speed: ' + part.stats.spd,
 					posX: Game.placeEntityX(0.09),
 					posY: Game.placeEntityY(0.79),
-					color: 'grey',
+					color: returnStatColor(existingPart?.stats?.spd, part?.stats?.spd),
 					align: 'left',
 					props: {},
 					id: 'spd-stat',
@@ -1381,7 +1414,7 @@ function displaySelectPart(part) {
 					msg: 'AI: ' + part.stats.ai,
 					posX: Game.placeEntityX(0.09),
 					posY: Game.placeEntityY(0.84),
-					color: 'grey',
+					color: returnStatColor(existingPart?.stats?.ai, part?.stats?.ai),
 					align: 'left',
 					props: {},
 					id: 'ai-stat',
