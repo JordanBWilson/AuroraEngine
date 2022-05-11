@@ -1131,6 +1131,33 @@ function masonRockCollision(methodId) {
 	}
 }
 
+function clearRobotParts() {
+	const chassisParts = Game.methodObjects.filter(x => x.id === 'robot-chassis-part');
+	const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
+	console.log(chassisParts, headParts);
+	if (chassisParts.length > 0) {
+		chassisParts.forEach((item, i) => {
+			Game.deleteEntity(chassisParts[i].methodId);
+		});
+	}
+	if (headParts.length > 0) {
+		headParts.forEach((item, i) => {
+			Game.deleteEntity(headParts[i].methodId);
+		});
+	}
+	clearSelectedPartStatDetails();
+	Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
+	Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
+	Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+	setTimeout(function() {
+		createFactoryTitleStats(undefined, undefined);
+	}, 0);
+
+
+
+	// Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
+}
+
 function selectRobotArms(arm) {
 	// the arm could be left or right
 	console.log('selecting the ' + arm + ' arm...');
@@ -1147,7 +1174,9 @@ function selectRobotChassis() {
 	console.log('selecting the body...');
 	// load up the robot parts the player has discovered...
 	// only show the next and previous buttons if the number of parts is greater than 5
+	clearRobotParts();
 	drawNextPrevPartList('chassis');
+
 	// put these in a loop once we find an equation to properly position them
 	gameObject.discoveredChassis.forEach((chassis, i) => {
 		Game.methodSetup = {
@@ -1163,7 +1192,7 @@ function selectRobotChassis() {
 	        font: '0.8em serif',
 	        msg: chassis.name,
 	        isFilled: true,
-	        id: 'robot-chassis',
+	        id: 'robot-chassis-part',
 	        action: { method: function(id) { console.log('select robot chassis-' + i); displaySelectPart(gameObject.discoveredChassis[i]); }},
 	        props: {
 						chassisId: chassis.chassisId,
@@ -1181,7 +1210,9 @@ function selectRobotHead() {
 	console.log('selecting the head...');
 	// load up the robot parts the player has discovered...
 	// only show the next and previous buttons if the number of parts is greater than 5
+	clearRobotParts();
 	drawNextPrevPartList('head');
+
 	// put these in a loop once we find an equation to properly position them
 	// clear the parts from the last selection future Jordan
 	gameObject.discoveredHeads.forEach((head, i) => {
@@ -1198,7 +1229,7 @@ function selectRobotHead() {
 	        font: '0.8em serif',
 	        msg: head.name,
 	        isFilled: true,
-	        id: 'robot-head',
+	        id: 'robot-head-part',
 	        action: { method: function(id) { console.log('select robot head-' + i); displaySelectPart(gameObject.discoveredHeads[i]); }},
 	        props: {
 						chassisId: head.chassisId,
@@ -1293,7 +1324,144 @@ function clearSelectedPartStatDetails() {
 	if (statTitle) {
 		Game.deleteEntity(statTitle.methodId);
 	}
+}
 
+function createFactoryTitleStats(existingPart, part) {
+	// when the existingPart and parts come in, then we are sorting the different parts
+	// if part is undefined then we need to show the total stats of the selected parts
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Stats',
+				posX: Game.placeEntityX(0.247),
+				posY: Game.placeEntityY(0.65),
+				color: 'grey',
+				align: 'center',
+				props: {},
+				id: 'stat-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Details',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'factory-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
+				posY: Game.placeEntityY(0.90),
+				width: (Game.entitySize * 23),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'grey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Confirm',
+				isFilled: true,
+				id: 'select-part',
+				action: { method: function(id) { equipPart(part); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '1em serif',
+				msg: 'Attack: ' + part?.stats?.att,
+				posX: Game.placeEntityX(0.09),
+				posY: Game.placeEntityY(0.69),
+				color: returnStatColor(existingPart?.stats?.att, part?.stats?.att),
+				align: 'left',
+				props: {},
+				id: 'att-stat',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '1em serif',
+				msg: 'Defense: ' + part?.stats?.def,
+				posX: Game.placeEntityX(0.09),
+				posY: Game.placeEntityY(0.74),
+				color: returnStatColor(existingPart?.stats?.def, part?.stats?.def),
+				align: 'left',
+				props: {},
+				id: 'def-stat',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '1em serif',
+				msg: 'Speed: ' + part?.stats?.spd,
+				posX: Game.placeEntityX(0.09),
+				posY: Game.placeEntityY(0.79),
+				color: returnStatColor(existingPart?.stats?.spd, part?.stats?.spd),
+				align: 'left',
+				props: {},
+				id: 'spd-stat',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '1em serif',
+				msg: 'AI: ' + part?.stats?.ai,
+				posX: Game.placeEntityX(0.09),
+				posY: Game.placeEntityY(0.84),
+				color: returnStatColor(existingPart?.stats?.ai, part?.stats?.ai),
+				align: 'left',
+				props: {},
+				id: 'ai-stat',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '1em serif',
+				msg: 'Storage: ' + part?.stats?.storage,
+				posX: Game.placeEntityX(0.09),
+				posY: Game.placeEntityY(0.88),
+				color: returnStatColor(existingPart?.stats?.storage, part?.stats?.storage),
+				align: 'left',
+				props: {},
+				id: 'storage-stat',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
 
 function displaySelectPart(part) {
@@ -1306,140 +1474,8 @@ function displaySelectPart(part) {
 		if (part.type === 'chassis') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'chassis');
 		}
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '2.3em serif',
-					msg: 'Stats',
-					posX: Game.placeEntityX(0.247),
-					posY: Game.placeEntityY(0.65),
-					color: 'grey',
-					align: 'center',
-					props: {},
-					id: 'stat-title',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '2.3em serif',
-					msg: 'Details',
-					posX: Game.placeEntityX(0.50),
-					posY: Game.placeEntityY(0.085),
-					color: 'darkgrey',
-					align: 'center',
-					props: {},
-					id: 'factory-title',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
-			method: function(id) {
-				drawButton({
-	        posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-	        posY: Game.placeEntityY(0.90),
-	        width: (Game.entitySize * 23),
-	        height: (Game.entitySize * 7),
-	        lineWidth: 1,
-	        btnColor: 'grey',
-	        txtColor: 'white',
-	        font: '1.5em serif',
-	        msg: 'Select',
-	        isFilled: true,
-	        id: 'select-part',
-	        action: { method: function(id) { equipPart(part); }},
-	        props: {},
-	        methodId: id
-	      });
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '1em serif',
-					msg: 'Attack: ' + part.stats.att,
-					posX: Game.placeEntityX(0.09),
-					posY: Game.placeEntityY(0.69),
-					color: returnStatColor(existingPart?.stats?.att, part?.stats?.att),
-					align: 'left',
-					props: {},
-					id: 'att-stat',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '1em serif',
-					msg: 'Defense: ' + part.stats.def,
-					posX: Game.placeEntityX(0.09),
-					posY: Game.placeEntityY(0.74),
-					color: returnStatColor(existingPart?.stats?.def, part?.stats?.def),
-					align: 'left',
-					props: {},
-					id: 'def-stat',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '1em serif',
-					msg: 'Speed: ' + part.stats.spd,
-					posX: Game.placeEntityX(0.09),
-					posY: Game.placeEntityY(0.79),
-					color: returnStatColor(existingPart?.stats?.spd, part?.stats?.spd),
-					align: 'left',
-					props: {},
-					id: 'spd-stat',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '1em serif',
-					msg: 'AI: ' + part.stats.ai,
-					posX: Game.placeEntityX(0.09),
-					posY: Game.placeEntityY(0.84),
-					color: returnStatColor(existingPart?.stats?.ai, part?.stats?.ai),
-					align: 'left',
-					props: {},
-					id: 'ai-stat',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '1em serif',
-					msg: 'Storage: ' + part.stats.storage,
-					posX: Game.placeEntityX(0.09),
-					posY: Game.placeEntityY(0.88),
-					color: returnStatColor(existingPart?.stats?.storage, part?.stats?.storage),
-					align: 'left',
-					props: {},
-					id: 'storage-stat',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-	}, 10);
+		createFactoryTitleStats(existingPart, part);
+	}, 0);
 }
 
 function returnStatColor(existingPartValue, newPartValue) {
