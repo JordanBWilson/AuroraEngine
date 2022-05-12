@@ -1394,7 +1394,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
+	Game.methodSetup = { // future Jordan, this button should only appear when a part is selected
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
@@ -1422,7 +1422,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 				msg: 'Attack: ' + selectedPart?.stats?.att,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.69),
-				color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att),
+				color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att'),
 				align: 'left',
 				props: {},
 				id: 'att-stat',
@@ -1438,7 +1438,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 				msg: 'Defense: ' + selectedPart?.stats?.def,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.74),
-				color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def),
+				color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def'),
 				align: 'left',
 				props: {},
 				id: 'def-stat',
@@ -1454,7 +1454,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 				msg: 'Speed: ' + selectedPart?.stats?.spd,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.79),
-				color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd),
+				color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd'),
 				align: 'left',
 				props: {},
 				id: 'spd-stat',
@@ -1470,7 +1470,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 				msg: 'AI: ' + selectedPart?.stats?.ai,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.84),
-				color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai),
+				color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai'),
 				align: 'left',
 				props: {},
 				id: 'ai-stat',
@@ -1486,7 +1486,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 				msg: 'Storage: ' + selectedPart?.stats?.storage,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.88),
-				color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage),
+				color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage'),
 				align: 'left',
 				props: {},
 				id: 'storage-stat',
@@ -1518,9 +1518,25 @@ function displaySelectPart(part, confirmed) {
 	}, 0);
 }
 
-function returnStatColor(existingPartValue, newPartValue) {
+function returnStatColor(existingPartValue, newPartValue, stat) {
 	// future Jordan we need to fix up the stat colors
+	// if the part is a like part, compare it and show display the colors based on
+	// how much or little over it is. If the parts are different, show the stat in
+	// green if it's over 1 and grey if it's 0
+	
+	// console.log(totalSelectedRobotStats(), existingPartValue, newPartValue);
+	// const totalStats = totalSelectedRobotStats();
+	// if (stat === 'storage') {
+	// 	if (((totalStats.stats.storage - newPartValue) * -1) > 0) {
+	// 		return 'green';
+	// 	} else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
+	// 		return 'red';
+	// 	} else if (((totalStats.stats.storage - newPartValue) * -1) === 0) {
+	// 		return 'grey';
+	// 	}
+	// }
 	if (!existingPartValue) {
+		// console.log(newPartValue);
 		return 'grey';
 	} else if (((existingPartValue - newPartValue) * -1) > 0) {
 		return 'green';
