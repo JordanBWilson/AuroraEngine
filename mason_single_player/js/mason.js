@@ -826,6 +826,21 @@ function openFactory() {
 	// selection screen and then the robot part screen where the player can make
 	// different heads, bodys, arms and legs
 	factoryRobotDetails();
+
+	gameObject.selectedRobot.forEach((part, i) => {
+		const waitForRobot = setInterval(function() {
+			console.log(part);
+			const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
+			const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
+			if (robotBody && robotHead) {
+				equipPart(part);
+				clearSelectedPartStatDetails();
+				refreshFactoryBackgrounds();
+				// createFactoryTitleStats(existingPart, part, confirmed);
+				clearInterval(waitForRobot);
+			}
+		}, 5);
+	});
 }
 
 function factoryRobotDetails() {
@@ -1167,7 +1182,9 @@ function selectRobotChassis() {
 	console.log('selecting the body...');
 	// load up the robot parts the player has discovered...
 	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
-	clearRobotParts();
+	clearRobotParts(); // clear the previous parts
+	clearSelectedPartStatDetails(); // clear the stats
+	refreshFactoryBackgrounds(); // refresh the background
 	drawNextPrevPartList('chassis');
 	gameObject.discoveredChassis.forEach((chassis, i) => {
 		Game.methodSetup = {
@@ -1201,7 +1218,9 @@ function selectRobotHead() {
 	console.log('selecting the head...');
 	// load up the robot parts the player has discovered...
 	// only show the next and previous buttons if the number of parts is greater than 5
-	clearRobotParts();
+	clearRobotParts(); // clear the previous parts
+	clearSelectedPartStatDetails(); // clear the stats
+	refreshFactoryBackgrounds(); // refresh the background
 	drawNextPrevPartList('head');
 	// clear the parts from the last selection future Jordan
 	gameObject.discoveredHeads.forEach((head, i) => {
