@@ -1134,7 +1134,6 @@ function masonRockCollision(methodId) {
 function clearRobotParts() {
 	const chassisParts = Game.methodObjects.filter(x => x.id === 'robot-chassis-part');
 	const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
-	console.log(chassisParts, headParts);
 	if (chassisParts.length > 0) {
 		chassisParts.forEach((item, i) => {
 			Game.deleteEntity(chassisParts[i].methodId);
@@ -1146,16 +1145,10 @@ function clearRobotParts() {
 		});
 	}
 	clearSelectedPartStatDetails();
-	Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
-	Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
-	Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+	refreshFactoryBackgrounds();
 	setTimeout(function() {
-		createFactoryTitleStats(undefined, undefined);
+		createFactoryTitleStats(undefined, undefined, undefined);
 	}, 0);
-
-
-
-	// Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
 }
 
 function selectRobotArms(arm) {
@@ -1173,11 +1166,9 @@ function selectRobotLegs(leg) {
 function selectRobotChassis() {
 	console.log('selecting the body...');
 	// load up the robot parts the player has discovered...
-	// only show the next and previous buttons if the number of parts is greater than 5
+	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
 	clearRobotParts();
 	drawNextPrevPartList('chassis');
-
-	// put these in a loop once we find an equation to properly position them
 	gameObject.discoveredChassis.forEach((chassis, i) => {
 		Game.methodSetup = {
 			method: function(id) {
@@ -1193,7 +1184,7 @@ function selectRobotChassis() {
 	        msg: chassis.name,
 	        isFilled: true,
 	        id: 'robot-chassis-part',
-	        action: { method: function(id) { console.log('select robot chassis-' + i); displaySelectPart(gameObject.discoveredChassis[i]); }},
+	        action: { method: function(id) { console.log('select robot chassis-' + i); displaySelectPart(gameObject.discoveredChassis[i], false); }},
 	        props: {
 						chassisId: chassis.chassisId,
 						stats: chassis.stats
@@ -1212,8 +1203,6 @@ function selectRobotHead() {
 	// only show the next and previous buttons if the number of parts is greater than 5
 	clearRobotParts();
 	drawNextPrevPartList('head');
-
-	// put these in a loop once we find an equation to properly position them
 	// clear the parts from the last selection future Jordan
 	gameObject.discoveredHeads.forEach((head, i) => {
 		Game.methodSetup = {
@@ -1230,7 +1219,7 @@ function selectRobotHead() {
 	        msg: head.name,
 	        isFilled: true,
 	        id: 'robot-head-part',
-	        action: { method: function(id) { console.log('select robot head-' + i); displaySelectPart(gameObject.discoveredHeads[i]); }},
+	        action: { method: function(id) { console.log('select robot head-' + i); displaySelectPart(gameObject.discoveredHeads[i], false); }},
 	        props: {
 						chassisId: head.chassisId,
 						stats: head.stats
@@ -1291,7 +1280,7 @@ function drawNextPrevPartList(part) {
 
 function clearSelectedPartStatDetails() {
 	// clear the stats and the buttons
-	const selectPartBtn = Game.methodObjects.find(x => x.id === 'select-part');
+	const selectPartBtn = Game.methodObjects.find(x => x.id === 'confirm-part');
 	if (selectPartBtn) {
 		Game.deleteEntity(selectPartBtn.methodId);
 	}
@@ -1326,9 +1315,34 @@ function clearSelectedPartStatDetails() {
 	}
 }
 
-function createFactoryTitleStats(existingPart, part) {
-	// when the existingPart and parts come in, then we are sorting the different parts
-	// if part is undefined then we need to show the total stats of the selected parts
+function totalSelectedRobotStats() {
+	const stat = {
+		stats: {
+			att: 0,
+			def: 0,
+			spd: 0,
+			ai: 0,
+			storage: 0,
+		}
+	};
+	gameObject.selectedRobot.forEach((part, i) => {
+		stat.stats.att += part.stats.att;
+		stat.stats.def += part.stats.def;
+		stat.stats.spd += part.stats.spd;
+		stat.stats.ai += part.stats.ai;
+		stat.stats.storage += part.stats.storage;
+	});
+
+	return stat;
+
+}
+
+function createFactoryTitleStats(existingPart, part, confirmed) {
+	// when the existingPart and parts come in, then we are selecting different parts
+	let selectedPart = part;
+	if (!selectedPart || confirmed) {
+		selectedPart = totalSelectedRobotStats();
+	}
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
@@ -1374,8 +1388,8 @@ function createFactoryTitleStats(existingPart, part) {
 				font: '1.5em serif',
 				msg: 'Confirm',
 				isFilled: true,
-				id: 'select-part',
-				action: { method: function(id) { equipPart(part); }},
+				id: 'confirm-part',
+				action: { method: function(id) { equipPart(selectedPart); }},
 				props: {},
 				methodId: id
 			});
@@ -1386,10 +1400,10 @@ function createFactoryTitleStats(existingPart, part) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Attack: ' + part?.stats?.att,
+				msg: 'Attack: ' + selectedPart?.stats?.att,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.69),
-				color: returnStatColor(existingPart?.stats?.att, part?.stats?.att),
+				color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att),
 				align: 'left',
 				props: {},
 				id: 'att-stat',
@@ -1402,10 +1416,10 @@ function createFactoryTitleStats(existingPart, part) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Defense: ' + part?.stats?.def,
+				msg: 'Defense: ' + selectedPart?.stats?.def,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.74),
-				color: returnStatColor(existingPart?.stats?.def, part?.stats?.def),
+				color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def),
 				align: 'left',
 				props: {},
 				id: 'def-stat',
@@ -1418,10 +1432,10 @@ function createFactoryTitleStats(existingPart, part) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Speed: ' + part?.stats?.spd,
+				msg: 'Speed: ' + selectedPart?.stats?.spd,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.79),
-				color: returnStatColor(existingPart?.stats?.spd, part?.stats?.spd),
+				color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd),
 				align: 'left',
 				props: {},
 				id: 'spd-stat',
@@ -1434,10 +1448,10 @@ function createFactoryTitleStats(existingPart, part) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'AI: ' + part?.stats?.ai,
+				msg: 'AI: ' + selectedPart?.stats?.ai,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.84),
-				color: returnStatColor(existingPart?.stats?.ai, part?.stats?.ai),
+				color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai),
 				align: 'left',
 				props: {},
 				id: 'ai-stat',
@@ -1450,10 +1464,10 @@ function createFactoryTitleStats(existingPart, part) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Storage: ' + part?.stats?.storage,
+				msg: 'Storage: ' + selectedPart?.stats?.storage,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.88),
-				color: returnStatColor(existingPart?.stats?.storage, part?.stats?.storage),
+				color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage),
 				align: 'left',
 				props: {},
 				id: 'storage-stat',
@@ -1464,21 +1478,29 @@ function createFactoryTitleStats(existingPart, part) {
 	Game.addMethod(Game.methodSetup);
 }
 
-function displaySelectPart(part) {
+function refreshFactoryBackgrounds() {
+	Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
+	Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
+	Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+}
+
+function displaySelectPart(part, confirmed) {
 	clearSelectedPartStatDetails();
 	setTimeout(function() {
-		Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
-		Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
-		Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+		refreshFactoryBackgrounds();
 		let existingPart;
 		if (part.type === 'chassis') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'chassis');
 		}
-		createFactoryTitleStats(existingPart, part);
+		if (part.type === 'head') {
+			existingPart = gameObject.selectedRobot.find(build => build.type === 'head');
+		}
+		createFactoryTitleStats(existingPart, part, confirmed);
 	}, 0);
 }
 
 function returnStatColor(existingPartValue, newPartValue) {
+	// future Jordan we need to fix up the stat colors
 	if (!existingPartValue) {
 		return 'grey';
 	} else if (((existingPartValue - newPartValue) * -1) > 0) {
@@ -1496,7 +1518,15 @@ function equipPart(part) {
 		}
 		gameObject.selectedRobot.push(part);
 		Game.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
+	} else if (part.type === 'head') {
+		const existingHead = gameObject.selectedRobot.findIndex(part => part.type === 'head');
+		if (existingHead > -1) {
+			gameObject.selectedRobot.splice(existingHead, 1);
+		}
+		gameObject.selectedRobot.push(part);
+		Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
 	}
-	displaySelectPart(part);
+	displaySelectPart(part, true);
+
 	console.log(gameObject.selectedRobot);
 }
