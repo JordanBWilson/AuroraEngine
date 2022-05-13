@@ -1358,9 +1358,12 @@ function totalSelectedRobotStats() {
 
 function createFactoryTitleStats(existingPart, part, confirmed) {
 	// when the existingPart and parts come in, then we are selecting different parts
+	// future Jordan, when gameObject.selectedRobot.length > 0 we need to add up then
+	// current stats and the new stats
 	let selectedPart = part;
 	if (!selectedPart || confirmed) {
 		selectedPart = totalSelectedRobotStats();
+		console.log(selectedPart);
 	}
 	Game.methodSetup = {
 		method: function(id) {
@@ -1479,6 +1482,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	console.log(existingPart?.stats?.storage, selectedPart?.stats?.storage);
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
@@ -1523,26 +1527,58 @@ function returnStatColor(existingPartValue, newPartValue, stat) {
 	// if the part is a like part, compare it and show display the colors based on
 	// how much or little over it is. If the parts are different, show the stat in
 	// green if it's over 1 and grey if it's 0
-	
+
 	// console.log(totalSelectedRobotStats(), existingPartValue, newPartValue);
-	// const totalStats = totalSelectedRobotStats();
-	// if (stat === 'storage') {
-	// 	if (((totalStats.stats.storage - newPartValue) * -1) > 0) {
-	// 		return 'green';
-	// 	} else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
-	// 		return 'red';
-	// 	} else if (((totalStats.stats.storage - newPartValue) * -1) === 0) {
-	// 		return 'grey';
-	// 	}
-	// }
+	const totalStats = totalSelectedRobotStats();
 	if (!existingPartValue) {
-		// console.log(newPartValue);
-		return 'grey';
-	} else if (((existingPartValue - newPartValue) * -1) > 0) {
+		if (gameObject.selectedRobot.length === 0) {
+			if (stat === 'storage') {
+				if (newPartValue === 0 || !newPartValue) {
+					return 'grey';
+				}
+				else if (((totalStats.stats.storage - newPartValue) * -1) >= 1) {
+					return 'green';
+				}
+				else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
+					return 'red';
+				}
+				else {
+					// return 'grey';
+				}
+				// if (((totalStats.stats.storage - newPartValue) * -1) > 0) {
+				// 	return 'green';
+				// } else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
+				// 	return 'red';
+				// } else if (((totalStats.stats.storage - newPartValue) * -1) === 0) {
+				// 	return 'grey';
+				// }
+			}
+		} else { // when the new value is 0 then return grey if it's greater than 1 return green
+			return 'green';
+		}
+
+	}
+	// else
+	if (((existingPartValue - newPartValue) * -1) > 0) {
 		return 'green';
 	} else if (((existingPartValue - newPartValue) * -1) < 0) {
 		return 'red';
 	}
+	else if (existingPartValue === newPartValue) {
+		return 'grey';
+	}
+	else {
+		return 'grey';
+	}
+
+	// if (!existingPartValue) {
+	// 	// console.log(newPartValue, totalStats);
+	// 	return 'grey';
+	// } else if (((existingPartValue - newPartValue) * -1) > 0) {
+	// 	return 'green';
+	// } else if (((existingPartValue - newPartValue) * -1) < 0) {
+	// 	return 'red';
+	// }
 }
 
 function equipPart(part) {
