@@ -1525,6 +1525,7 @@ function displaySelectPart(part, confirmed) {
 
 function returnStatValue(selectedPartVal, stat, confirmed, partChanged) {
 	// if there are no parts equiped, display the part value
+	// future Jordan, we need to pass the existing part variable to this method
 	if (gameObject.selectedRobot.length === 0) {
 		return selectedPartVal;
 	} else {
@@ -1537,7 +1538,8 @@ function returnStatValue(selectedPartVal, stat, confirmed, partChanged) {
 				totalStats.stats.storage === selectedPartVal ||
 				partChanged) {
 					return totalStats.stats.storage + '|' + selectedPartVal;
-			}
+			} // else if the existing part exists, show the total stat | and then
+			// take the existing part and subtract from the selected part val
 		}
 	}
 }
