@@ -1524,12 +1524,11 @@ function displaySelectPart(part, confirmed) {
 }
 
 function returnStatValue(selectedPartVal, stat, confirmed, partChanged) {
-
 	// if there are no parts equiped, display the part value
 	if (gameObject.selectedRobot.length === 0) {
 		return selectedPartVal;
 	} else {
-
+		if (stat === 'storage') {
 			const totalStats = totalSelectedRobotStats();
 			if (confirmed || !partChanged) {
 				return totalStats.stats.storage;
@@ -1537,10 +1536,9 @@ function returnStatValue(selectedPartVal, stat, confirmed, partChanged) {
 				totalStats.stats.storage < selectedPartVal ||
 				totalStats.stats.storage === selectedPartVal ||
 				partChanged) {
-					if (stat === 'storage') {
-						return totalStats.stats.storage + '|' + selectedPartVal;
-					}
-				}
+					return totalStats.stats.storage + '|' + selectedPartVal;
+			}
+		}
 	}
 }
 
