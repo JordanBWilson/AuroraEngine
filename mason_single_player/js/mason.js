@@ -1162,7 +1162,7 @@ function clearRobotParts() {
 	clearSelectedPartStatDetails();
 	refreshFactoryBackgrounds();
 	setTimeout(function() {
-		createFactoryTitleStats(undefined, undefined, undefined);
+		createFactoryTitleStats(undefined, undefined, undefined, undefined);
 	}, 0);
 }
 
@@ -1356,7 +1356,7 @@ function totalSelectedRobotStats() {
 
 }
 
-function createFactoryTitleStats(existingPart, part, confirmed) {
+function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 	// when the existingPart and parts come in, then we are selecting different parts
 	// future Jordan, when gameObject.selectedRobot.length > 0 we need to add up then
 	// current stats and the new stats
@@ -1487,7 +1487,7 @@ function createFactoryTitleStats(existingPart, part, confirmed) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Storage: ' + selectedPart?.stats?.storage,
+				msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged),
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.88),
 				color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage'),
@@ -1508,6 +1508,7 @@ function refreshFactoryBackgrounds() {
 }
 
 function displaySelectPart(part, confirmed) {
+	const partChanged = true;
 	clearSelectedPartStatDetails();
 	setTimeout(function() {
 		refreshFactoryBackgrounds();
@@ -1518,8 +1519,29 @@ function displaySelectPart(part, confirmed) {
 		if (part.type === 'head') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'head');
 		}
-		createFactoryTitleStats(existingPart, part, confirmed);
+		createFactoryTitleStats(existingPart, part, confirmed, partChanged);
 	}, 0);
+}
+
+function returnStatValue(selectedPartVal, stat, confirmed, partChanged) {
+
+	// if there are no parts equiped, display the part value
+	if (gameObject.selectedRobot.length === 0) {
+		return selectedPartVal;
+	} else {
+
+			const totalStats = totalSelectedRobotStats();
+			if (confirmed || !partChanged) {
+				return totalStats.stats.storage;
+			} else if (totalStats.stats.storage > selectedPartVal ||
+				totalStats.stats.storage < selectedPartVal ||
+				totalStats.stats.storage === selectedPartVal ||
+				partChanged) {
+					if (stat === 'storage') {
+						return totalStats.stats.storage + '|' + selectedPartVal;
+					}
+				}
+	}
 }
 
 function returnStatColor(existingPartValue, newPartValue, stat) {
