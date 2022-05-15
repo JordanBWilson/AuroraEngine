@@ -829,14 +829,12 @@ function openFactory() {
 
 	gameObject.selectedRobot.forEach((part, i) => {
 		const waitForRobot = setInterval(function() {
-			console.log(part);
 			const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
 			const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
 			if (robotBody && robotHead) {
 				equipPart(part);
 				clearSelectedPartStatDetails();
 				refreshFactoryBackgrounds();
-				// createFactoryTitleStats(existingPart, part, confirmed);
 				clearInterval(waitForRobot);
 			}
 		}, 5);
@@ -1358,12 +1356,9 @@ function totalSelectedRobotStats() {
 
 function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 	// when the existingPart and parts come in, then we are selecting different parts
-	// future Jordan, when gameObject.selectedRobot.length > 0 we need to add up then
-	// current stats and the new stats
 	let selectedPart = part;
 	if (!selectedPart || confirmed) {
 		selectedPart = totalSelectedRobotStats();
-		console.log(selectedPart);
 	}
 	Game.methodSetup = {
 		method: function(id) {
@@ -1423,7 +1418,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Attack: ' + selectedPart?.stats?.att,
+				msg: 'Attack: ' + returnStatValue(selectedPart?.stats?.att, 'att', confirmed, partChanged, existingPart?.stats?.att),
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.69),
 				color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att', partChanged, confirmed),
@@ -1439,7 +1434,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Defense: ' + selectedPart?.stats?.def,
+				msg: 'Defense: ' + returnStatValue(selectedPart?.stats?.def, 'def', confirmed, partChanged, existingPart?.stats?.def),
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.74),
 				color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def', partChanged, confirmed),
@@ -1455,7 +1450,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Speed: ' + selectedPart?.stats?.spd,
+				msg: 'Speed: ' + returnStatValue(selectedPart?.stats?.spd, 'spd', confirmed, partChanged, existingPart?.stats?.spd),
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.79),
 				color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd', partChanged, confirmed),
@@ -1471,7 +1466,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'AI: ' + selectedPart?.stats?.ai,
+				msg: 'AI: ' + returnStatValue(selectedPart?.stats?.ai, 'ai', confirmed, partChanged, existingPart?.stats?.ai),
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.84),
 				color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai', partChanged, confirmed),
@@ -1483,7 +1478,6 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	console.log(existingPart?.stats?.storage, selectedPart?.stats?.storage);
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
@@ -1525,66 +1519,42 @@ function displaySelectPart(part, confirmed) {
 }
 
 function returnStatValue(selectedPartVal, stat, confirmed, partChanged, existingPartValue) {
-	// if there are no parts equiped, display the part value
-	// future Jordan, we need to pass the existing part variable to this method
 	if (gameObject.selectedRobot.length === 0) {
 		return selectedPartVal;
 	} else {
-		if (stat === 'storage') {
-			const totalStats = totalSelectedRobotStats();
-			if (confirmed || !partChanged) {
-				return totalStats.stats.storage;
-			} else if (totalStats.stats.storage > selectedPartVal ||
-				totalStats.stats.storage < selectedPartVal ||
-				totalStats.stats.storage === selectedPartVal ||
-				partChanged) {
-					if (existingPartValue) {
-						const partUpgradeValue = (selectedPartVal - existingPartValue);
-						const displayUpgrade = (partUpgradeValue > 0) ? ('+' + partUpgradeValue) : partUpgradeValue;
-						return totalStats.stats.storage + '|' + displayUpgrade;
-					} else {
-						const displayUpgrade = (selectedPartVal > 0) ? ('+' + selectedPartVal) : selectedPartVal;
-						return totalStats.stats.storage + '|' + displayUpgrade;
-					}
-
-			} // else if the existing part exists, show the total stat | and then
-			// take the existing part and subtract from the selected part val
+		const totalStats = totalSelectedRobotStats();
+		if (confirmed || !partChanged) {
+			return totalStats.stats[stat];
+		} else if (totalStats.stats[stat] > selectedPartVal ||
+			totalStats.stats[stat] < selectedPartVal ||
+			totalStats.stats[stat] === selectedPartVal ||
+			partChanged) {
+				if (existingPartValue) {
+					const partUpgradeValue = (selectedPartVal - existingPartValue);
+					const displayUpgrade = (partUpgradeValue > 0) ? ('+' + partUpgradeValue) : partUpgradeValue;
+					return totalStats.stats[stat] + '|' + displayUpgrade;
+				} else {
+					const displayUpgrade = (selectedPartVal > 0) ? ('+' + selectedPartVal) : selectedPartVal;
+					return totalStats.stats[stat] + '|' + displayUpgrade;
+				}
 		}
 	}
 }
 
 function returnStatColor(existingPartValue, newPartValue, stat, partChanged, confirmed) {
-	// future Jordan we need to fix up the stat colors
-	// if the part is a like part, compare it and show display the colors based on
-	// how much or little over it is. If the parts are different, show the stat in
-	// green if it's over 1 and grey if it's 0
-
-	// console.log(totalSelectedRobotStats(), existingPartValue, newPartValue);
 	const totalStats = totalSelectedRobotStats();
 	if (!existingPartValue) {
 		if (gameObject.selectedRobot.length === 0) {
-			if (stat === 'storage') {
-				if (newPartValue === 0 || !newPartValue) {
-					return 'grey';
-				}
-				else if (((totalStats.stats.storage - newPartValue) * -1) >= 1) {
-					return 'green';
-				}
-				else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
-					return 'red';
-				}
-				// else {
-				// 	return 'grey';
-				// }
-				// if (((totalStats.stats.storage - newPartValue) * -1) > 0) {
-				// 	return 'green';
-				// } else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
-				// 	return 'red';
-				// } else if (((totalStats.stats.storage - newPartValue) * -1) === 0) {
-				// 	return 'grey';
-				// }
+			if (newPartValue === 0 || !newPartValue) {
+				return 'grey';
 			}
-		} else { // when the new value is 0 then return grey if it's greater than 1 return green
+			else if (((totalStats.stats[stat] - newPartValue) * -1) >= 1) {
+				return 'green';
+			}
+			else if (((totalStats.stats[stat] - newPartValue) * -1) < 0) {
+				return 'red';
+			}
+		} else {
 			if (!confirmed && !partChanged) {
 				return 'grey';
 			}
@@ -1594,17 +1564,8 @@ function returnStatColor(existingPartValue, newPartValue, stat, partChanged, con
 			else {
 				return 'grey';
 			}
-			// if (newPartValue > 0) {
-			// 	return 'green';
-			// } else {
-			// 	return 'grey';
-			// }
-
-
 		}
-
 	}
-	// else
 	if (!confirmed && ((existingPartValue - newPartValue) * -1) > 0) {
 		return 'green';
 	} else if (!confirmed && ((existingPartValue - newPartValue) * -1) < 0) {
@@ -1616,15 +1577,6 @@ function returnStatColor(existingPartValue, newPartValue, stat, partChanged, con
 	else {
 		return 'grey';
 	}
-
-	// if (!existingPartValue) {
-	// 	// console.log(newPartValue, totalStats);
-	// 	return 'grey';
-	// } else if (((existingPartValue - newPartValue) * -1) > 0) {
-	// 	return 'green';
-	// } else if (((existingPartValue - newPartValue) * -1) < 0) {
-	// 	return 'red';
-	// }
 }
 
 function equipPart(part) {
