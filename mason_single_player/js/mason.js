@@ -1299,7 +1299,7 @@ function drawNextPrevPartList(part) {
 
 function clearSelectedPartStatDetails() {
 	// clear the stats and the buttons
-	const selectPartBtn = Game.methodObjects.find(x => x.id === 'confirm-part');
+	const selectPartBtn = Game.methodObjects.find(x => x.id === 'select-part');
 	if (selectPartBtn) {
 		Game.deleteEntity(selectPartBtn.methodId);
 	}
@@ -1397,6 +1397,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	// future Jordan, after a part is selected, if the robot is completed, display a confirm button
 	Game.methodSetup = { // future Jordan, this button should only appear when a part is selected
 		method: function(id) {
 			drawButton({
@@ -1408,9 +1409,9 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 				btnColor: 'grey',
 				txtColor: 'white',
 				font: '1.5em serif',
-				msg: 'Confirm',
+				msg: 'Select',
 				isFilled: true,
-				id: 'confirm-part',
+				id: 'select-part',
 				action: { method: function(id) { equipPart(selectedPart); }},
 				props: {},
 				methodId: id
@@ -1425,7 +1426,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 				msg: 'Attack: ' + selectedPart?.stats?.att,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.69),
-				color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att'),
+				color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att', partChanged, confirmed),
 				align: 'left',
 				props: {},
 				id: 'att-stat',
@@ -1441,7 +1442,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 				msg: 'Defense: ' + selectedPart?.stats?.def,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.74),
-				color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def'),
+				color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def', partChanged, confirmed),
 				align: 'left',
 				props: {},
 				id: 'def-stat',
@@ -1457,7 +1458,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 				msg: 'Speed: ' + selectedPart?.stats?.spd,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.79),
-				color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd'),
+				color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd', partChanged, confirmed),
 				align: 'left',
 				props: {},
 				id: 'spd-stat',
@@ -1473,7 +1474,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 				msg: 'AI: ' + selectedPart?.stats?.ai,
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.84),
-				color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai'),
+				color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai', partChanged, confirmed),
 				align: 'left',
 				props: {},
 				id: 'ai-stat',
@@ -1490,7 +1491,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 				msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged, existingPart?.stats?.storage),
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.88),
-				color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage'),
+				color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage', partChanged, confirmed),
 				align: 'left',
 				props: {},
 				id: 'storage-stat',
@@ -1552,7 +1553,7 @@ function returnStatValue(selectedPartVal, stat, confirmed, partChanged, existing
 	}
 }
 
-function returnStatColor(existingPartValue, newPartValue, stat) {
+function returnStatColor(existingPartValue, newPartValue, stat, partChanged, confirmed) {
 	// future Jordan we need to fix up the stat colors
 	// if the part is a like part, compare it and show display the colors based on
 	// how much or little over it is. If the parts are different, show the stat in
@@ -1572,9 +1573,9 @@ function returnStatColor(existingPartValue, newPartValue, stat) {
 				else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
 					return 'red';
 				}
-				else {
-					// return 'grey';
-				}
+				// else {
+				// 	return 'grey';
+				// }
 				// if (((totalStats.stats.storage - newPartValue) * -1) > 0) {
 				// 	return 'green';
 				// } else if (((totalStats.stats.storage - newPartValue) * -1) < 0) {
@@ -1584,17 +1585,32 @@ function returnStatColor(existingPartValue, newPartValue, stat) {
 				// }
 			}
 		} else { // when the new value is 0 then return grey if it's greater than 1 return green
-			return 'green';
+			if (!confirmed && !partChanged) {
+				return 'grey';
+			}
+			else if (!confirmed && partChanged && newPartValue > 0) {
+				return 'green';
+			}
+			else {
+				return 'grey';
+			}
+			// if (newPartValue > 0) {
+			// 	return 'green';
+			// } else {
+			// 	return 'grey';
+			// }
+
+
 		}
 
 	}
 	// else
-	if (((existingPartValue - newPartValue) * -1) > 0) {
+	if (!confirmed && ((existingPartValue - newPartValue) * -1) > 0) {
 		return 'green';
-	} else if (((existingPartValue - newPartValue) * -1) < 0) {
+	} else if (!confirmed && ((existingPartValue - newPartValue) * -1) < 0) {
 		return 'red';
 	}
-	else if (existingPartValue === newPartValue) {
+	else if (!confirmed && existingPartValue === newPartValue) {
 		return 'grey';
 	}
 	else {
