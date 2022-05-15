@@ -1487,7 +1487,7 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		method: function(id) {
 			drawText({
 				font: '1em serif',
-				msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged),
+				msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged, existingPart?.stats?.storage),
 				posX: Game.placeEntityX(0.09),
 				posY: Game.placeEntityY(0.88),
 				color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage'),
@@ -1523,7 +1523,7 @@ function displaySelectPart(part, confirmed) {
 	}, 0);
 }
 
-function returnStatValue(selectedPartVal, stat, confirmed, partChanged) {
+function returnStatValue(selectedPartVal, stat, confirmed, partChanged, existingPartValue) {
 	// if there are no parts equiped, display the part value
 	// future Jordan, we need to pass the existing part variable to this method
 	if (gameObject.selectedRobot.length === 0) {
@@ -1537,7 +1537,15 @@ function returnStatValue(selectedPartVal, stat, confirmed, partChanged) {
 				totalStats.stats.storage < selectedPartVal ||
 				totalStats.stats.storage === selectedPartVal ||
 				partChanged) {
-					return totalStats.stats.storage + '|' + selectedPartVal;
+					if (existingPartValue) {
+						const partUpgradeValue = (selectedPartVal - existingPartValue);
+						const displayUpgrade = (partUpgradeValue > 0) ? ('+' + partUpgradeValue) : partUpgradeValue;
+						return totalStats.stats.storage + '|' + displayUpgrade;
+					} else {
+						const displayUpgrade = (selectedPartVal > 0) ? ('+' + selectedPartVal) : selectedPartVal;
+						return totalStats.stats.storage + '|' + displayUpgrade;
+					}
+
 			} // else if the existing part exists, show the total stat | and then
 			// take the existing part and subtract from the selected part val
 		}
