@@ -57,6 +57,8 @@ const gameObject = {
 	discoveredLegs: [], // all the robot legs discovered by the player
 	discoveredArms: [], // all the robot arms discovered by the player
 	selectedRobot: [], // this is the robot currently selected in the shop
+	robotDesigns: [], // this will hold all the different robot design the player has made
+	// a robot design can be made into a robot team
 };
 
 const robotHeads = [
@@ -1147,6 +1149,9 @@ function masonRockCollision(methodId) {
 function clearRobotParts() {
 	const chassisParts = Game.methodObjects.filter(x => x.id === 'robot-chassis-part');
 	const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
+	const legLeftParts = Game.methodObjects.filter(x => x.id === 'robot-left-leg-part');
+	const legRightParts = Game.methodObjects.filter(x => x.id === 'robot-right-leg-part');
+	// const armParts = Game.methodObjects.filter(x => x.id === 'robot-arm-part');
 	if (chassisParts.length > 0) {
 		chassisParts.forEach((item, i) => {
 			Game.deleteEntity(chassisParts[i].methodId);
@@ -1157,6 +1162,21 @@ function clearRobotParts() {
 			Game.deleteEntity(headParts[i].methodId);
 		});
 	}
+	if (legLeftParts.length > 0) {
+		legLeftParts.forEach((item, i) => {
+			Game.deleteEntity(legLeftParts[i].methodId);
+		});
+	}
+	if (legRightParts.length > 0) {
+		legRightParts.forEach((item, i) => {
+			Game.deleteEntity(legRightParts[i].methodId);
+		});
+	}
+	// if (armParts.length > 0) {
+	// 	armParts.forEach((item, i) => {
+	// 		Game.deleteEntity(armParts[i].methodId);
+	// 	});
+	// }
 	clearSelectedPartStatDetails();
 	refreshFactoryBackgrounds();
 	setTimeout(function() {
@@ -1164,16 +1184,50 @@ function clearRobotParts() {
 	}, 0);
 }
 
-function selectRobotArms(arm) {
-	// the arm could be left or right
-	console.log('selecting the ' + arm + ' arm...');
+function selectRobotArms(armPos) {
+	// the armPos could be left or right
+	console.log('selecting the ' + armPos + ' arm...');
 	// load up the robot parts the player has discovered...
+	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
 }
 
-function selectRobotLegs(leg) {
-	// the leg could be left or right
-	console.log('selecting the ' + leg + ' leg...');
+function selectRobotLegs(legPos) {
+	// the legPos could be left or right
+	console.log('selecting the ' + legPos + ' leg...');
 	// load up the robot parts the player has discovered...
+	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
+	clearRobotParts(); // clear the previous parts
+	clearSelectedPartStatDetails(); // clear the stats
+	refreshFactoryBackgrounds(); // refresh the background
+	drawNextPrevPartList('legs');
+	gameObject.discoveredLegs.forEach((legs, i) => {
+		gameObject.discoveredLegs[i].legPos = legPos;
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+	        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+	        posY: Game.placeEntityY(0.24 + (i * 0.135)),
+	        width: (Game.entitySize * 22),
+	        height: (Game.entitySize * 9),
+	        lineWidth: 1,
+	        btnColor: legs.img,
+	        txtColor: 'black',
+	        font: '0.8em serif',
+	        msg: legs.name,
+	        isFilled: true,
+	        id: 'robot-'+ legPos +'-leg-part',
+	        action: { method: function(id) { console.log('select robot '+ legPos +' leg-' + i); displaySelectPart(gameObject.discoveredLegs[i], false); }},
+	        props: {
+						legId: legs.legId,
+						stats: legs.stats,
+						legPos: legPos,
+					},
+	        methodId: id
+	      });
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	});
 }
 
 function selectRobotChassis() {
@@ -1514,6 +1568,12 @@ function displaySelectPart(part, confirmed) {
 		if (part.type === 'head') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'head');
 		}
+		if (part.type === 'leg') {
+			existingPart = gameObject.selectedRobot.find(build => build.type === 'leg' && build.legPos === part.legPos);
+			// future Jordan, find a better way to update the left and right leg and arm position
+			// it looks like the parts are being treated as one item
+			console.log(existingPart);
+		}
 		createFactoryTitleStats(existingPart, part, confirmed, partChanged);
 	}, 0);
 }
@@ -1580,20 +1640,34 @@ function returnStatColor(existingPartValue, newPartValue, stat, partChanged, con
 }
 
 function equipPart(part) {
+	// console.log(part);
 	if (part.type === 'chassis') {
-		const existingChassis = gameObject.selectedRobot.findIndex(part => part.type === 'chassis');
+		const existingChassis = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'chassis');
 		if (existingChassis > -1) {
 			gameObject.selectedRobot.splice(existingChassis, 1);
 		}
 		gameObject.selectedRobot.push(part);
 		Game.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
 	} else if (part.type === 'head') {
-		const existingHead = gameObject.selectedRobot.findIndex(part => part.type === 'head');
+		const existingHead = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'head');
 		if (existingHead > -1) {
 			gameObject.selectedRobot.splice(existingHead, 1);
 		}
 		gameObject.selectedRobot.push(part);
 		Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
+	} else if (part.type === 'leg') {
+		const existingLeg = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'leg' && partPos.legPos === part.legPos);
+		console.log(existingLeg, part.legPos);
+		if (existingLeg > -1) {
+			gameObject.selectedRobot.splice(existingLeg, 1);
+		}
+		if (part.legPos === 'left') {
+			gameObject.selectedRobot.push(part);
+			Game.methodObjects.find(x => x.id === 'robot-left-leg').btnColor = part.img; // change this to the actual image when availiable
+		} else {
+			gameObject.selectedRobot.push(part);
+			Game.methodObjects.find(x => x.id === 'robot-right-leg').btnColor = part.img; // change this to the actual image when availiable
+		}
 	}
 	displaySelectPart(part, true);
 
