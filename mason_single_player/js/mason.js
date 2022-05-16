@@ -830,16 +830,16 @@ function openFactory() {
 	factoryRobotDetails();
 
 	gameObject.selectedRobot.forEach((part, i) => {
-		const waitForRobot = setInterval(function() {
+		const waitForRobot = setTimeout(function() {
 			const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
 			const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
 			if (robotBody && robotHead) {
 				equipPart(part);
 				clearSelectedPartStatDetails();
 				refreshFactoryBackgrounds();
-				clearInterval(waitForRobot);
+				clearTimeout(waitForRobot);
 			}
-		}, 5);
+		}, Game.frameRate);
 	});
 }
 
@@ -1200,8 +1200,7 @@ function selectRobotLegs(legPos) {
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
 	drawNextPrevPartList('legs');
-	gameObject.discoveredLegs.forEach((legs, i) => {
-		gameObject.discoveredLegs[i].legPos = legPos;
+	gameObject.discoveredLegs.forEach((leg, i) => {
 		Game.methodSetup = {
 			method: function(id) {
 				drawButton({
@@ -1210,16 +1209,22 @@ function selectRobotLegs(legPos) {
 	        width: (Game.entitySize * 22),
 	        height: (Game.entitySize * 9),
 	        lineWidth: 1,
-	        btnColor: legs.img,
+	        btnColor: leg.img,
 	        txtColor: 'black',
 	        font: '0.8em serif',
-	        msg: legs.name,
+	        msg: leg.name,
 	        isFilled: true,
 	        id: 'robot-'+ legPos +'-leg-part',
-	        action: { method: function(id) { console.log('select robot '+ legPos +' leg-' + i); displaySelectPart(gameObject.discoveredLegs[i], false); }},
+	        action: { method: function(id) {
+						console.log('select robot '+ legPos +' leg-' + i);
+						const newLeg = Object.assign({}, leg);
+						newLeg.legPos = legPos;
+						console.log(newLeg);
+						displaySelectPart(newLeg, false);
+					}},
 	        props: {
-						legId: legs.legId,
-						stats: legs.stats,
+						legId: leg.legId,
+						stats: leg.stats,
 						legPos: legPos,
 					},
 	        methodId: id
@@ -1569,6 +1574,7 @@ function displaySelectPart(part, confirmed) {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'head');
 		}
 		if (part.type === 'leg') {
+			console.log(part.legPos);
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'leg' && build.legPos === part.legPos);
 			// future Jordan, find a better way to update the left and right leg and arm position
 			// it looks like the parts are being treated as one item
