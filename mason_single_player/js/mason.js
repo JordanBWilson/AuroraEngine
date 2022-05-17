@@ -829,18 +829,44 @@ function openFactory() {
 	// different heads, bodys, arms and legs
 	factoryRobotDetails();
 
-	gameObject.selectedRobot.forEach((part, i) => {
-		const waitForRobot = setTimeout(function() {
-			const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
-			const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
-			if (robotBody && robotHead) {
-				equipPart(part);
-				clearSelectedPartStatDetails();
-				refreshFactoryBackgrounds();
-				clearTimeout(waitForRobot);
-			}
-		}, Game.frameRate);
-	});
+	// future Jordan look into this... When a robot is fully built, the stat text
+	// is darker than it should be. Figure out a way to equip the parts slower perhaps
+	const equipParts = setInterval(function() {
+		const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
+		const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
+		const robotLeftLeg = Game.methodObjects.find(x => x.id === 'robot-left-leg');
+		const robotRightLeg = Game.methodObjects.find(x => x.id === 'robot-right-leg');
+		if (robotBody && robotHead && robotLeftLeg && robotRightLeg) {
+			gameObject.selectedRobot.forEach((part, i) => {
+				setTimeout(function() {
+					equipPart(part);
+					if (i === (gameObject.selectedRobot.length - 1)) {
+						clearInterval(equipParts);
+					}
+				}, Game.frameRate);
+
+			});
+
+		}
+	}, Game.frameRate * 2);
+
+	// gameObject.selectedRobot.forEach((part, i) => {
+	// 	const waitForRobot = setInterval(function() {
+	// 		const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
+	// 		const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
+	// 		const robotLeftLeg = Game.methodObjects.find(x => x.id === 'robot-left-leg');
+	// 		const robotRightLeg = Game.methodObjects.find(x => x.id === 'robot-right-leg');
+	// 		if (robotBody && robotHead && robotLeftLeg && robotRightLeg) {
+	// 			const waitForPart = setTimeout(function() {
+	// 				equipPart(part);
+	// 				// clearTimeout(waitForPart);
+	// 			}, Game.frameRate);
+	//
+	// 			clearInterval(waitForRobot);
+	//
+	// 		}
+	// 	}, Game.frameRate * 2);
+	// });
 }
 
 function factoryRobotDetails() {
@@ -1177,8 +1203,6 @@ function clearRobotParts() {
 	// 		Game.deleteEntity(armParts[i].methodId);
 	// 	});
 	// }
-	clearSelectedPartStatDetails();
-	refreshFactoryBackgrounds();
 	setTimeout(function() {
 		createFactoryTitleStats(undefined, undefined, undefined, undefined);
 	}, 0);
@@ -1219,7 +1243,6 @@ function selectRobotLegs(legPos) {
 						console.log('select robot '+ legPos +' leg-' + i);
 						const newLeg = Object.assign({}, leg);
 						newLeg.legPos = legPos;
-						console.log(newLeg);
 						displaySelectPart(newLeg, false);
 					}},
 	        props: {
@@ -1258,7 +1281,11 @@ function selectRobotChassis() {
 	        msg: chassis.name,
 	        isFilled: true,
 	        id: 'robot-chassis-part',
-	        action: { method: function(id) { console.log('select robot chassis-' + i); displaySelectPart(gameObject.discoveredChassis[i], false); }},
+	        action: { method: function(id) {
+						 console.log('select robot chassis-' + i);
+						 const newChassis = Object.assign({}, chassis);
+						 displaySelectPart(newChassis, false);
+					 }},
 	        props: {
 						chassisId: chassis.chassisId,
 						stats: chassis.stats
@@ -1295,7 +1322,11 @@ function selectRobotHead() {
 	        msg: head.name,
 	        isFilled: true,
 	        id: 'robot-head-part',
-	        action: { method: function(id) { console.log('select robot head-' + i); displaySelectPart(gameObject.discoveredHeads[i], false); }},
+	        action: { method: function(id) {
+						 console.log('select robot head-' + i);
+						 const newHead = Object.assign({}, head);
+						 displaySelectPart(newHead, false);
+					  }},
 	        props: {
 						chassisId: head.chassisId,
 						stats: head.stats
@@ -1356,38 +1387,54 @@ function drawNextPrevPartList(part) {
 
 function clearSelectedPartStatDetails() {
 	// clear the stats and the buttons
-	const selectPartBtn = Game.methodObjects.find(x => x.id === 'select-part');
+	const selectPartBtn = Game.methodObjects.filter(x => x.id === 'select-part');
 	if (selectPartBtn) {
-		Game.deleteEntity(selectPartBtn.methodId);
+		selectPartBtn.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
-	const selectAttStat = Game.methodObjects.find(x => x.id === 'att-stat');
+	const selectAttStat = Game.methodObjects.filter(x => x.id === 'att-stat');
 	if (selectAttStat) {
-		Game.deleteEntity(selectAttStat.methodId);
+		selectAttStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
-	const selectDefStat = Game.methodObjects.find(x => x.id === 'def-stat');
+	const selectDefStat = Game.methodObjects.filter(x => x.id === 'def-stat');
 	if (selectDefStat) {
-		Game.deleteEntity(selectDefStat.methodId);
+		selectDefStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
-	const selectSpdStat = Game.methodObjects.find(x => x.id === 'spd-stat');
+	const selectSpdStat = Game.methodObjects.filter(x => x.id === 'spd-stat');
 	if (selectSpdStat) {
-		Game.deleteEntity(selectSpdStat.methodId);
+		selectSpdStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
-	const selectAiStat = Game.methodObjects.find(x => x.id === 'ai-stat');
+	const selectAiStat = Game.methodObjects.filter(x => x.id === 'ai-stat');
 	if (selectAiStat) {
-		Game.deleteEntity(selectAiStat.methodId);
+		selectAiStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
-	const selectStorageStat = Game.methodObjects.find(x => x.id === 'storage-stat');
+	const selectStorageStat = Game.methodObjects.filter(x => x.id === 'storage-stat');
 	if (selectStorageStat) {
-		Game.deleteEntity(selectStorageStat.methodId);
+		selectStorageStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
 	// clear the titles
-	const factoryTitle = Game.methodObjects.find(x => x.id === 'factory-title');
+	const factoryTitle = Game.methodObjects.filter(x => x.id === 'factory-title');
 	if (factoryTitle) {
-		Game.deleteEntity(factoryTitle.methodId);
+		factoryTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
-	const statTitle = Game.methodObjects.find(x => x.id === 'stat-title');
+	const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
 	if (statTitle) {
-		Game.deleteEntity(statTitle.methodId);
+		statTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
 	}
 }
 
@@ -1553,19 +1600,25 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	clearSelectedPartStatDetails();
+	refreshFactoryBackgrounds();
 }
 
 function refreshFactoryBackgrounds() {
-	Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
-	Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
-	Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+	if (Game.methodObjects.find(x => x.id === 'robot-stat-background')) {
+		Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
+	}
+	if (Game.methodObjects.find(x => x.id === 'part-background')) {
+		Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
+	}
+	if (Game.methodObjects.find(x => x.id === 'factory-background')) {
+		Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+	}
 }
 
 function displaySelectPart(part, confirmed) {
 	const partChanged = true;
-	clearSelectedPartStatDetails();
 	setTimeout(function() {
-		refreshFactoryBackgrounds();
 		let existingPart;
 		if (part.type === 'chassis') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'chassis');
@@ -1574,11 +1627,7 @@ function displaySelectPart(part, confirmed) {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'head');
 		}
 		if (part.type === 'leg') {
-			console.log(part.legPos);
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'leg' && build.legPos === part.legPos);
-			// future Jordan, find a better way to update the left and right leg and arm position
-			// it looks like the parts are being treated as one item
-			console.log(existingPart);
 		}
 		createFactoryTitleStats(existingPart, part, confirmed, partChanged);
 	}, 0);
@@ -1646,7 +1695,6 @@ function returnStatColor(existingPartValue, newPartValue, stat, partChanged, con
 }
 
 function equipPart(part) {
-	// console.log(part);
 	if (part.type === 'chassis') {
 		const existingChassis = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'chassis');
 		if (existingChassis > -1) {
@@ -1663,14 +1711,13 @@ function equipPart(part) {
 		Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
 	} else if (part.type === 'leg') {
 		const existingLeg = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'leg' && partPos.legPos === part.legPos);
-		console.log(existingLeg, part.legPos);
 		if (existingLeg > -1) {
 			gameObject.selectedRobot.splice(existingLeg, 1);
 		}
 		if (part.legPos === 'left') {
 			gameObject.selectedRobot.push(part);
 			Game.methodObjects.find(x => x.id === 'robot-left-leg').btnColor = part.img; // change this to the actual image when availiable
-		} else {
+		} else if (part.legPos === 'right') {
 			gameObject.selectedRobot.push(part);
 			Game.methodObjects.find(x => x.id === 'robot-right-leg').btnColor = part.img; // change this to the actual image when availiable
 		}
