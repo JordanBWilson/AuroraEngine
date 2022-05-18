@@ -127,7 +127,29 @@ const robotHeads = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
-	}
+	},
+	{
+		headId: 4,
+		type: 'head',
+		name: 'NW Harvester Head',
+		img: 'cornflowerblue',
+		stats: {
+			att: 1,
+			def: 1,
+			spd: 0,
+			ai: 1,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 6,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
 ];
 const robotChassis = [
 	{
@@ -199,17 +221,17 @@ const robotChassis = [
 	{
 		chassisId: 4,
 		type: 'chassis',
-		name: 'Test Chassis',
-		img: 'red',
+		name: 'NW Harvester Chassis',
+		img: 'cornflowerblue',
 		stats: {
-			att: 0,
+			att: 1,
 			def: 1,
 			spd: 0,
 			ai: 0,
 			storage: 0,
 		},
 		partsToBuild: {
-			commonScrap: 0,
+			commonScrap: 10,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
 			intriguingScrap: 0,
@@ -310,7 +332,30 @@ const robotLegs = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
-	}
+	},
+	{
+		legId: 4,
+		type: 'leg',
+		legPos: undefined, // can be 'left' or 'right'
+		name: 'NW Harvester Leg',
+		img: 'cornflowerblue',
+		stats: {
+			att: 1,
+			def: 1,
+			spd: 1,
+			ai: 0,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 7,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
 ];
 const robotArms = [
 	{
@@ -381,7 +426,30 @@ const robotArms = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
-	}
+	},
+	{
+		armId: 4,
+		type: 'arm',
+		armPos: undefined, // can be 'left' or 'right'
+		name: 'NW Harvester Arm',
+		img: 'cornflowerblue',
+		stats: {
+			att: 1,
+			def: 1,
+			spd: 0,
+			ai: 0,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 7,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
 ];
 
 (function() {
@@ -829,26 +897,7 @@ function openFactory() {
 	// different heads, bodys, arms and legs
 	factoryRobotDetails();
 
-	// future Jordan look into this... When a robot is fully built, the stat text
-	// is darker than it should be. Figure out a way to equip the parts slower perhaps
-	const equipParts = setInterval(function() {
-		const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
-		const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
-		const robotLeftLeg = Game.methodObjects.find(x => x.id === 'robot-left-leg');
-		const robotRightLeg = Game.methodObjects.find(x => x.id === 'robot-right-leg');
-		if (robotBody && robotHead && robotLeftLeg && robotRightLeg) {
-			gameObject.selectedRobot.forEach((part, i) => {
-				setTimeout(function() {
-					equipPart(part);
-					if (i === (gameObject.selectedRobot.length - 1)) {
-						clearInterval(equipParts);
-					}
-				}, Game.frameRate);
-
-			});
-
-		}
-	}, Game.frameRate * 2);
+	loadSelectedRobot();
 
 	// gameObject.selectedRobot.forEach((part, i) => {
 	// 	const waitForRobot = setInterval(function() {
@@ -1725,4 +1774,27 @@ function equipPart(part) {
 	displaySelectPart(part, true);
 
 	console.log(gameObject.selectedRobot);
+}
+
+function loadSelectedRobot() {
+	// future Jordan look into this... When a robot is fully built, the stat text
+	// is darker than it should be. Figure out a way to equip the parts slower perhaps
+	const equipParts = setInterval(function() {
+		const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
+		const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
+		const robotLeftLeg = Game.methodObjects.find(x => x.id === 'robot-left-leg');
+		const robotRightLeg = Game.methodObjects.find(x => x.id === 'robot-right-leg');
+		if (robotBody && robotHead && robotLeftLeg && robotRightLeg) {
+			gameObject.selectedRobot.forEach((part, i) => {
+				setTimeout(function() {
+					equipPart(part);
+					if (i === (gameObject.selectedRobot.length - 1)) {
+						clearInterval(equipParts);
+					}
+				}, Game.frameRate);
+
+			});
+
+		}
+	}, Game.frameRate * 2);
 }
