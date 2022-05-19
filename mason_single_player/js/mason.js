@@ -1098,6 +1098,30 @@ function drawRobotPreviewParts(partType) {
 			}
 		}
 	}
+	if (partType === 'left-arm') {
+		if (gameObject.selectedRobot.length === 0) {
+			return 'purple';
+		} else if (gameObject.selectedRobot) {
+			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left');
+			if (part) {
+				return gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left').img;
+			} else {
+				return 'purple';
+			}
+		}
+	}
+	if (partType === 'right-arm') {
+		if (gameObject.selectedRobot.length === 0) {
+			return 'khaki';
+		} else if (gameObject.selectedRobot) {
+			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right');
+			if (part) {
+				return gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right').img;
+			} else {
+				return 'khaki';
+			}
+		}
+	}
 }
 
 function drawRobotPreview() {
@@ -1151,7 +1175,7 @@ function drawRobotPreview() {
         width: (Game.entitySize * 3),
         height: (Game.entitySize * 12),
         lineWidth: 1,
-        btnColor: 'purple',
+        btnColor: drawRobotPreviewParts('left-arm'),
         txtColor: 'black',
         font: '1em serif',
         msg: '',
@@ -1172,7 +1196,7 @@ function drawRobotPreview() {
         width: (Game.entitySize * 3),
         height: (Game.entitySize * 12),
         lineWidth: 1,
-        btnColor: 'khaki',
+        btnColor: drawRobotPreviewParts('right-arm'),
         txtColor: 'black',
         font: '1em serif',
         msg: '',
@@ -1266,7 +1290,8 @@ function clearRobotParts() {
 	const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
 	const legLeftParts = Game.methodObjects.filter(x => x.id === 'robot-left-leg-part');
 	const legRightParts = Game.methodObjects.filter(x => x.id === 'robot-right-leg-part');
-	// const armParts = Game.methodObjects.filter(x => x.id === 'robot-arm-part');
+	const armRightParts = Game.methodObjects.filter(x => x.id === 'robot-right-arm-part');
+	const armLeftParts = Game.methodObjects.filter(x => x.id === 'robot-left-arm-part');
 	if (chassisParts.length > 0) {
 		chassisParts.forEach((item, i) => {
 			Game.deleteEntity(chassisParts[i].methodId);
@@ -1287,11 +1312,16 @@ function clearRobotParts() {
 			Game.deleteEntity(legRightParts[i].methodId);
 		});
 	}
-	// if (armParts.length > 0) {
-	// 	armParts.forEach((item, i) => {
-	// 		Game.deleteEntity(armParts[i].methodId);
-	// 	});
-	// }
+	if (armRightParts.length > 0) {
+		armRightParts.forEach((item, i) => {
+			Game.deleteEntity(armRightParts[i].methodId);
+		});
+	}
+	if (armLeftParts.length > 0) {
+		armLeftParts.forEach((item, i) => {
+			Game.deleteEntity(armLeftParts[i].methodId);
+		});
+	}
 	setTimeout(function() {
 		createFactoryTitleStats(undefined, undefined, undefined, undefined);
 	}, 0);
@@ -1302,6 +1332,42 @@ function selectRobotArms(armPos) {
 	console.log('selecting the ' + armPos + ' arm...');
 	// load up the robot parts the player has discovered...
 	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
+	clearRobotParts(); // clear the previous parts
+	clearSelectedPartStatDetails(); // clear the stats
+	refreshFactoryBackgrounds(); // refresh the background
+	drawNextPrevPartList('arms');
+	gameObject.discoveredArms.forEach((arm, i) => {
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+	        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+	        posY: Game.placeEntityY(0.24 + (i * 0.135)),
+	        width: (Game.entitySize * 22),
+	        height: (Game.entitySize * 9),
+	        lineWidth: 1,
+	        btnColor: arm.img,
+	        txtColor: 'black',
+	        font: '0.8em serif',
+	        msg: arm.name,
+	        isFilled: true,
+	        id: 'robot-'+ armPos +'-arm-part',
+	        action: { method: function(id) {
+						console.log('select robot '+ armPos +' arm-' + i);
+						const newArm = Object.assign({}, arm);
+						newArm.armPos = armPos;
+						displaySelectPart(newArm, false);
+					}},
+	        props: {
+						legId: arm.legId,
+						stats: arm.stats,
+						armPos: armPos,
+					},
+	        methodId: id
+	      });
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	});
 }
 
 function selectRobotLegs(legPos) {
@@ -1718,6 +1784,9 @@ function displaySelectPart(part, confirmed) {
 		if (part.type === 'leg') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'leg' && build.legPos === part.legPos);
 		}
+		if (part.type === 'arm') {
+			existingPart = gameObject.selectedRobot.find(build => build.type === 'arm' && build.armPos === part.armPos);
+		}
 		createFactoryTitleStats(existingPart, part, confirmed, partChanged);
 	}, 0);
 }
@@ -1799,7 +1868,7 @@ function equipPart(part) {
 		gameObject.selectedRobot.push(part);
 		Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
 	} else if (part.type === 'leg') {
-		const existingLeg = gameObject.selectedRobot.findIndex(partPos =>  'leg' && partPos.legPos === part.legPos);
+		const existingLeg = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'leg' && partPos.legPos === part.legPos);
 		if (existingLeg > -1) {
 			gameObject.selectedRobot.splice(existingLeg, 1);
 		}
@@ -1809,6 +1878,18 @@ function equipPart(part) {
 		} else if (part.legPos === 'right') {
 			gameObject.selectedRobot.push(part);
 			Game.methodObjects.find(x => x.id === 'robot-right-leg').btnColor = part.img; // change this to the actual image when availiable
+		}
+	} else if (part.type === 'arm') {
+		const existingArm = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'arm' && partPos.armPos === part.armPos);
+		if (existingArm > -1) {
+			gameObject.selectedRobot.splice(existingArm, 1);
+		}
+		if (part.armPos === 'left') {
+			gameObject.selectedRobot.push(part);
+			Game.methodObjects.find(x => x.id === 'robot-left-arm').btnColor = part.img; // change this to the actual image when availiable
+		} else if (part.armPos === 'right') {
+			gameObject.selectedRobot.push(part);
+			Game.methodObjects.find(x => x.id === 'robot-right-arm').btnColor = part.img; // change this to the actual image when availiable
 		}
 	}
 	displaySelectPart(part, true);
