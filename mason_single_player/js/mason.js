@@ -463,7 +463,7 @@ const robotArms = [
 
 function playGame() {
 	robot = {};
-	// below is a test...
+	// below is a test... the player needs to discover these
 	gameObject.discoveredChassis = robotChassis;
 	gameObject.discoveredHeads = robotHeads;
 	gameObject.discoveredLegs = robotLegs;
@@ -896,26 +896,6 @@ function openFactory() {
 	// selection screen and then the robot part screen where the player can make
 	// different heads, bodys, arms and legs
 	factoryRobotDetails();
-
-	loadSelectedRobot();
-
-	// gameObject.selectedRobot.forEach((part, i) => {
-	// 	const waitForRobot = setInterval(function() {
-	// 		const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
-	// 		const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
-	// 		const robotLeftLeg = Game.methodObjects.find(x => x.id === 'robot-left-leg');
-	// 		const robotRightLeg = Game.methodObjects.find(x => x.id === 'robot-right-leg');
-	// 		if (robotBody && robotHead && robotLeftLeg && robotRightLeg) {
-	// 			const waitForPart = setTimeout(function() {
-	// 				equipPart(part);
-	// 				// clearTimeout(waitForPart);
-	// 			}, Game.frameRate);
-	//
-	// 			clearInterval(waitForRobot);
-	//
-	// 		}
-	// 	}, Game.frameRate * 2);
-	// });
 }
 
 function factoryRobotDetails() {
@@ -992,132 +972,7 @@ function factoryRobotDetails() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.25, (Game.entitySize * 12)),
-        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-        width: (Game.entitySize * 12),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: 'blue',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-body',
-        action: { method: function(id) { selectRobotChassis() }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.249, (Game.entitySize * 10)),
-        posY: Game.placeEntityY(0.22, (Game.entitySize * 10)),
-        width: (Game.entitySize * 10),
-        height: (Game.entitySize * 10),
-        lineWidth: 1,
-        btnColor: 'yellow',
-        txtColor: 'black',
-        font: '1.5em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-head',
-        action: { method: function(id) { selectRobotHead() }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
-        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: 'purple',
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-left-arm',
-        action: { method: function(id) { selectRobotArms('left'); }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.31, (Game.entitySize * -8.3)),
-        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: 'khaki',
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-right-arm',
-        action: { method: function(id) { selectRobotArms('right'); }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.246, (Game.entitySize * 9)),
-        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: 'lightslategrey',
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-left-leg',
-        action: { method: function(id) { selectRobotLegs('left'); }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-        posX: Game.placeEntityX(0.247, (Game.entitySize * -4.3)),
-        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: 'navy',
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-right-leg',
-        action: { method: function(id) { selectRobotLegs('right'); }},
-        props: {},
-        methodId: id
-      });
-		}
-	};
-	Game.addMethod(Game.methodSetup);
+	drawRobotPreview();
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1192,6 +1047,191 @@ function factoryRobotDetails() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+}
+
+function drawRobotPreviewParts(partType) {
+	if (partType === 'chassis') {
+		if (gameObject.selectedRobot.length === 0) {
+			return 'blue';
+		} else if (gameObject.selectedRobot) {
+			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'chassis');
+			if (part) {
+				return gameObject.selectedRobot.find(partPos => partPos.type === 'chassis').img;
+			} else {
+				return 'blue';
+			}
+		}
+	}
+	if (partType === 'head') {
+		if (gameObject.selectedRobot.length === 0) {
+			return 'yellow';
+		} else if (gameObject.selectedRobot) {
+			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'head');
+			if (part) {
+				return gameObject.selectedRobot.find(partPos => partPos.type === 'head').img;
+			} else {
+				return 'yellow';
+			}
+		}
+	}
+	if (partType === 'left-leg') {
+		if (gameObject.selectedRobot.length === 0) {
+			return 'lightslategrey';
+		} else if (gameObject.selectedRobot) {
+			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left');
+			if (part) {
+				return gameObject.selectedRobot.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left').img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'right-leg') {
+		if (gameObject.selectedRobot.length === 0) {
+			return 'navy';
+		} else if (gameObject.selectedRobot) {
+			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right');
+			if (part) {
+				return gameObject.selectedRobot.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right').img;
+			} else {
+				return 'navy';
+			}
+		}
+	}
+}
+
+function drawRobotPreview() {
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.25, (Game.entitySize * 12)),
+        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+        width: (Game.entitySize * 12),
+        height: (Game.entitySize * 12),
+        lineWidth: 1,
+        btnColor: drawRobotPreviewParts('chassis'),
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-body',
+        action: { method: function(id) { selectRobotChassis() }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.249, (Game.entitySize * 10)),
+        posY: Game.placeEntityY(0.22, (Game.entitySize * 10)),
+        width: (Game.entitySize * 10),
+        height: (Game.entitySize * 10),
+        lineWidth: 1,
+        btnColor: drawRobotPreviewParts('head'),
+        txtColor: 'black',
+        font: '1.5em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-head',
+        action: { method: function(id) { selectRobotHead() }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
+        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+        width: (Game.entitySize * 3),
+        height: (Game.entitySize * 12),
+        lineWidth: 1,
+        btnColor: 'purple',
+        txtColor: 'black',
+        font: '1em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-left-arm',
+        action: { method: function(id) { selectRobotArms('left'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.31, (Game.entitySize * -8.3)),
+        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+        width: (Game.entitySize * 3),
+        height: (Game.entitySize * 12),
+        lineWidth: 1,
+        btnColor: 'khaki',
+        txtColor: 'black',
+        font: '1em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-right-arm',
+        action: { method: function(id) { selectRobotArms('right'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.246, (Game.entitySize * 9)),
+        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+        width: (Game.entitySize * 3),
+        height: (Game.entitySize * 12),
+        lineWidth: 1,
+        btnColor: drawRobotPreviewParts('left-leg'),
+        txtColor: 'black',
+        font: '1em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-left-leg',
+        action: { method: function(id) { selectRobotLegs('left'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.247, (Game.entitySize * -4.3)),
+        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+        width: (Game.entitySize * 3),
+        height: (Game.entitySize * 12),
+        lineWidth: 1,
+        btnColor: drawRobotPreviewParts('right-leg'),
+        txtColor: 'black',
+        font: '1em serif',
+        msg: '',
+        isFilled: true,
+        id: 'robot-right-leg',
+        action: { method: function(id) { selectRobotLegs('right'); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+
+	if (gameObject.selectedRobot.length > 0) {
+		createFactoryTitleStats(undefined, undefined, undefined, undefined);
+	}
+
 }
 
 function openArena() {
@@ -1389,7 +1429,7 @@ function selectRobotHead() {
 }
 
 function drawNextPrevPartList(part) {
-	// the part could be head, chassis, legs and arms
+	// the part could be head, chassis, legs or arms
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1759,7 +1799,7 @@ function equipPart(part) {
 		gameObject.selectedRobot.push(part);
 		Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
 	} else if (part.type === 'leg') {
-		const existingLeg = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'leg' && partPos.legPos === part.legPos);
+		const existingLeg = gameObject.selectedRobot.findIndex(partPos =>  'leg' && partPos.legPos === part.legPos);
 		if (existingLeg > -1) {
 			gameObject.selectedRobot.splice(existingLeg, 1);
 		}
@@ -1774,27 +1814,4 @@ function equipPart(part) {
 	displaySelectPart(part, true);
 
 	console.log(gameObject.selectedRobot);
-}
-
-function loadSelectedRobot() {
-	// future Jordan look into this... When a robot is fully built, the stat text
-	// is darker than it should be. Figure out a way to equip the parts slower perhaps
-	const equipParts = setInterval(function() {
-		const robotBody = Game.methodObjects.find(x => x.id === 'robot-body');
-		const robotHead = Game.methodObjects.find(x => x.id === 'robot-head');
-		const robotLeftLeg = Game.methodObjects.find(x => x.id === 'robot-left-leg');
-		const robotRightLeg = Game.methodObjects.find(x => x.id === 'robot-right-leg');
-		if (robotBody && robotHead && robotLeftLeg && robotRightLeg) {
-			gameObject.selectedRobot.forEach((part, i) => {
-				setTimeout(function() {
-					equipPart(part);
-					if (i === (gameObject.selectedRobot.length - 1)) {
-						clearInterval(equipParts);
-					}
-				}, Game.frameRate);
-
-			});
-
-		}
-	}, Game.frameRate * 2);
 }
