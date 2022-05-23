@@ -1569,7 +1569,7 @@ function clearRobotPreviewHighlight() {
 
 function clearSelectedPartStatDetails() {
 	// clear the stats and the buttons
-	const selectPartBtn = Game.methodObjects.filter(x => x.id === 'select-part');
+	const selectPartBtn = Game.methodObjects.filter(x => x.id === 'confirm-part');
 	if (selectPartBtn) {
 		selectPartBtn.forEach((item, i) => {
 			Game.deleteEntity(item.methodId);
@@ -1639,7 +1639,6 @@ function totalSelectedRobotStats() {
 	});
 
 	return stat;
-
 }
 
 function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
@@ -1675,28 +1674,6 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 				align: 'center',
 				props: {},
 				id: 'factory-title',
-				methodId: id
-			});
-		}
-	};
-	Game.addMethod(Game.methodSetup);
-	// future Jordan, after a part is selected, if the robot is completed, display a confirm button
-	Game.methodSetup = { // future Jordan, this button should only appear when a part is selected
-		method: function(id) {
-			drawButton({
-				posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-				posY: Game.placeEntityY(0.90),
-				width: (Game.entitySize * 23),
-				height: (Game.entitySize * 7),
-				lineWidth: 1,
-				btnColor: 'grey',
-				txtColor: 'white',
-				font: '1.5em serif',
-				msg: 'Select',
-				isFilled: true,
-				id: 'select-part',
-				action: { method: function(id) { equipPart(selectedPart); }},
-				props: {},
 				methodId: id
 			});
 		}
@@ -1801,6 +1778,27 @@ function refreshFactoryBackgrounds() {
 function displaySelectPart(part, confirmed) {
 	const partChanged = true;
 	setTimeout(function() {
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
+					posY: Game.placeEntityY(0.90),
+					width: (Game.entitySize * 23),
+					height: (Game.entitySize * 7),
+					lineWidth: 1,
+					btnColor: 'grey',
+					txtColor: 'white',
+					font: '1.5em serif',
+					msg: gameObject.selectedRobot.length <= 5 ? 'Confirm' : 'Build',
+					isFilled: true,
+					id: 'confirm-part',
+					action: { method: function(id) { if (gameObject.selectedRobot.length <= 5) {equipPart(part);} else {console.log('Build Robot');} }},
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
 		let existingPart;
 		if (part.type === 'chassis') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'chassis');
@@ -1880,6 +1878,7 @@ function returnStatColor(existingPartValue, newPartValue, stat, partChanged, con
 }
 
 function equipPart(part) {
+	// clear the confirm button
 	if (part.type === 'chassis') {
 		const existingChassis = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'chassis');
 		if (existingChassis > -1) {
