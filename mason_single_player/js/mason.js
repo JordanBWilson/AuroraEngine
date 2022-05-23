@@ -1052,25 +1052,25 @@ function factoryRobotDetails() {
 function drawRobotPreviewParts(partType) {
 	if (partType === 'chassis') {
 		if (gameObject.selectedRobot.length === 0) {
-			return 'blue';
+			return 'lightslategrey';
 		} else if (gameObject.selectedRobot) {
 			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'chassis');
 			if (part) {
 				return gameObject.selectedRobot.find(partPos => partPos.type === 'chassis').img;
 			} else {
-				return 'blue';
+				return 'lightslategrey';
 			}
 		}
 	}
 	if (partType === 'head') {
 		if (gameObject.selectedRobot.length === 0) {
-			return 'yellow';
+			return 'lightslategrey';
 		} else if (gameObject.selectedRobot) {
 			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'head');
 			if (part) {
 				return gameObject.selectedRobot.find(partPos => partPos.type === 'head').img;
 			} else {
-				return 'yellow';
+				return 'lightslategrey';
 			}
 		}
 	}
@@ -1088,37 +1088,37 @@ function drawRobotPreviewParts(partType) {
 	}
 	if (partType === 'right-leg') {
 		if (gameObject.selectedRobot.length === 0) {
-			return 'navy';
+			return 'lightslategrey';
 		} else if (gameObject.selectedRobot) {
 			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right');
 			if (part) {
 				return gameObject.selectedRobot.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right').img;
 			} else {
-				return 'navy';
+				return 'lightslategrey';
 			}
 		}
 	}
 	if (partType === 'left-arm') {
 		if (gameObject.selectedRobot.length === 0) {
-			return 'purple';
+			return 'lightslategrey';
 		} else if (gameObject.selectedRobot) {
 			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left');
 			if (part) {
 				return gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left').img;
 			} else {
-				return 'purple';
+				return 'lightslategrey';
 			}
 		}
 	}
 	if (partType === 'right-arm') {
 		if (gameObject.selectedRobot.length === 0) {
-			return 'khaki';
+			return 'lightslategrey';
 		} else if (gameObject.selectedRobot) {
 			const part = gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right');
 			if (part) {
 				return gameObject.selectedRobot.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right').img;
 			} else {
-				return 'khaki';
+				return 'lightslategrey';
 			}
 		}
 	}
@@ -1139,7 +1139,7 @@ function drawRobotPreview() {
         msg: '',
         isFilled: true,
         id: 'robot-body',
-        action: { method: function(id) { selectRobotChassis() }},
+        action: { method: function(id) { selectRobotChassis(); }},
         props: {},
         methodId: id
       });
@@ -1336,6 +1336,9 @@ function selectRobotArms(armPos) {
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
 	drawNextPrevPartList('arms');
+	clearRobotPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
+	highlight.btnColor = 'yellow';
 	gameObject.discoveredArms.forEach((arm, i) => {
 		Game.methodSetup = {
 			method: function(id) {
@@ -1379,6 +1382,9 @@ function selectRobotLegs(legPos) {
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
 	drawNextPrevPartList('legs');
+	clearRobotPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
+	highlight.btnColor = 'yellow';
 	gameObject.discoveredLegs.forEach((leg, i) => {
 		Game.methodSetup = {
 			method: function(id) {
@@ -1421,6 +1427,9 @@ function selectRobotChassis() {
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
 	drawNextPrevPartList('chassis');
+	clearRobotPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
+	highlight.btnColor = 'yellow';
 	gameObject.discoveredChassis.forEach((chassis, i) => {
 		Game.methodSetup = {
 			method: function(id) {
@@ -1461,6 +1470,9 @@ function selectRobotHead() {
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
 	drawNextPrevPartList('head');
+	clearRobotPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
+	highlight.btnColor = 'yellow';
 	// clear the parts from the last selection future Jordan
 	gameObject.discoveredHeads.forEach((head, i) => {
 		Game.methodSetup = {
@@ -1538,6 +1550,21 @@ function drawNextPrevPartList(part) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+}
+
+function clearRobotPreviewHighlight() {
+	const headHighlight = Game.methodObjects.find(item => item.id === 'robot-head');
+	headHighlight.btnColor = drawRobotPreviewParts('head');
+	const chassisHighlight = Game.methodObjects.find(item => item.id === 'robot-body');
+	chassisHighlight.btnColor = drawRobotPreviewParts('chassis');
+	const armRightHighlight = Game.methodObjects.find(x => x.id === 'robot-right-arm');
+	armRightHighlight.btnColor = drawRobotPreviewParts('right-arm');
+	const armLeftHighlight = Game.methodObjects.find(x => x.id === 'robot-left-arm');
+	armLeftHighlight.btnColor = drawRobotPreviewParts('left-arm');
+	const legRightHighlight = Game.methodObjects.find(x => x.id === 'robot-right-leg');
+	legRightHighlight.btnColor = drawRobotPreviewParts('right-leg');
+	const legLeftHighlight = Game.methodObjects.find(x => x.id === 'robot-left-leg');
+	legLeftHighlight.btnColor = drawRobotPreviewParts('left-leg');
 }
 
 function clearSelectedPartStatDetails() {
