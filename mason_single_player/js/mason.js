@@ -1789,10 +1789,16 @@ function displaySelectPart(part, confirmed) {
 					btnColor: 'grey',
 					txtColor: 'white',
 					font: '1.5em serif',
-					msg: gameObject.selectedRobot.length <= 5 ? 'Confirm' : 'Build',
+					msg: confirmed && gameObject.selectedRobot.length === 6 ? 'Build' : 'Confirm',
 					isFilled: true,
 					id: 'confirm-part',
-					action: { method: function(id) { if (gameObject.selectedRobot.length <= 5) {equipPart(part);} else {console.log('Build Robot');} }},
+					action: { method: function(id) {
+						if (confirmed && gameObject.selectedRobot.length === 6) {
+							console.log('build robot');
+						} else {
+							equipPart(part);
+						}
+					}},
 					props: {},
 					methodId: id
 				});
