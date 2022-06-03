@@ -262,6 +262,28 @@ const robotChassis = [
 			exoticScrap: 0,
 		},
 	},
+	{
+		chassisId: 6,
+		type: 'chassis',
+		name: 'Test Chassis-2',
+		img: 'red',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 0,
+			ai: 0,
+			storage: 0,
+		},
+		partsToBuild: {
+			commonScrap: 0,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		},
+	},
 ];
 const robotLegs = [
 	{
@@ -1430,7 +1452,9 @@ function selectRobotChassis() {
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
 	highlight.btnColor = 'yellow';
-	gameObject.discoveredChassis.forEach((chassis, i) => {
+	// future Jordan, the method below will eventually replace all of these part loops
+	// displayDiscoveredParts();
+	for (let i = 0; i < gameObject.discoveredChassis.length; i++) {
 		Game.methodSetup = {
 			method: function(id) {
 				drawButton({
@@ -1439,27 +1463,27 @@ function selectRobotChassis() {
 	        width: (Game.entitySize * 22),
 	        height: (Game.entitySize * 9),
 	        lineWidth: 1,
-	        btnColor: chassis.img,
+	        btnColor: gameObject.discoveredChassis[i].img,
 	        txtColor: 'black',
 	        font: '0.8em serif',
-	        msg: chassis.name,
+	        msg: gameObject.discoveredChassis[i].name,
 	        isFilled: true,
 	        id: 'robot-chassis-part',
 	        action: { method: function(id) {
 						 console.log('select robot chassis-' + i);
-						 const newChassis = Object.assign({}, chassis);
+						 const newChassis = Object.assign({}, gameObject.discoveredChassis[i]);
 						 displaySelectPart(newChassis, false);
 					 }},
 	        props: {
-						chassisId: chassis.chassisId,
-						stats: chassis.stats
+						chassisId: gameObject.discoveredChassis[i].chassisId,
+						stats: gameObject.discoveredChassis[i].stats
 					},
 	        methodId: id
 	      });
 			}
 		};
 		Game.addMethod(Game.methodSetup);
-	});
+	}
 }
 
 function selectRobotHead() {
@@ -1504,6 +1528,12 @@ function selectRobotHead() {
 		};
 		Game.addMethod(Game.methodSetup);
 	});
+}
+
+function displayDiscoveredParts(partsDiscovered, limbPos, listPos) {
+	for (let i = listPos; i < partsDiscovered.length; i++) {
+
+	}
 }
 
 function drawNextPrevPartList(part) {
