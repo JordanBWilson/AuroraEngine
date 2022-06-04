@@ -1358,7 +1358,7 @@ function selectRobotArms(armPos) {
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList('arms');
+	drawNextPrevPartList(gameObject.discoveredArms, armPos);
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
 	highlight.btnColor = 'yellow';
@@ -1373,7 +1373,7 @@ function selectRobotLegs(legPos) {
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList('legs');
+	drawNextPrevPartList(gameObject.discoveredLegs, legPos);
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
 	highlight.btnColor = 'yellow';
@@ -1387,7 +1387,7 @@ function selectRobotChassis() {
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList('chassis');
+	drawNextPrevPartList(gameObject.discoveredChassis, '');
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
 	highlight.btnColor = 'yellow';
@@ -1401,7 +1401,7 @@ function selectRobotHead() {
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList('head');
+	drawNextPrevPartList(gameObject.discoveredHeads, '');
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
 	highlight.btnColor = 'yellow';
@@ -1415,11 +1415,11 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 	} else {
 		displayLimb = limbPos + '-';
 	}
-	if (gameObject.partPageIndex >= partsDiscovered.length) {
+	if (gameObject.partPageIndex > partsDiscovered.length) {
 		gameObject.partPageIndex = 0;
 	}
-	for (let i = gameObject.partPageIndex; i < gameObject.partPageIndex + 4; i++) {
-		if (gameObject.partPageIndex > partsDiscovered.length) {
+	for (let i = gameObject.partPageIndex; i < gameObject.partPageIndex + 5; i++) {
+		if (i >= partsDiscovered.length) {
 			break;
 		}
 			Game.methodSetup = {
@@ -1456,7 +1456,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 	}
 }
 
-function drawNextPrevPartList(part) {
+function drawNextPrevPartList(partList, limbPos) {
 	// the part could be head, chassis, legs or arms
 	Game.methodSetup = {
 		method: function(id) {
@@ -1472,7 +1472,13 @@ function drawNextPrevPartList(part) {
         msg: 'Next',
         isFilled: true,
         id: 'next-part',
-        action: { method: function(id) { console.log('next part'); }},
+        action: {
+					method: function(id) {
+						gameObject.partPageIndex += 1;
+						displayDiscoveredParts(partList, limbPos);
+						console.log('next part');
+				  }
+				},
         props: {},
         methodId: id
       });
@@ -1493,7 +1499,13 @@ function drawNextPrevPartList(part) {
         msg: 'Previous',
         isFilled: true,
         id: 'last-part',
-        action: { method: function(id) { console.log('previous part'); }},
+        action: {
+					method: function(id) {
+						gameObject.partPageIndex--;
+						displayDiscoveredParts(partList, limbPos);
+						console.log('previous part');
+					}
+				},
         props: {},
         methodId: id
       });
