@@ -59,6 +59,7 @@ const gameObject = {
 	selectedRobot: [], // this is the robot currently selected in the shop
 	robotDesigns: [], // this will hold all the different robot design the player has made
 	// a robot design can be made into a robot team
+	partPageIndex: 0, // this value will store where you are in the part list
 };
 
 const robotHeads = [
@@ -1361,38 +1362,7 @@ function selectRobotArms(armPos) {
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
 	highlight.btnColor = 'yellow';
-	gameObject.discoveredArms.forEach((arm, i) => {
-		Game.methodSetup = {
-			method: function(id) {
-				drawButton({
-	        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
-	        posY: Game.placeEntityY(0.24 + (i * 0.135)),
-	        width: (Game.entitySize * 22),
-	        height: (Game.entitySize * 9),
-	        lineWidth: 1,
-	        btnColor: arm.img,
-	        txtColor: 'black',
-	        font: '0.8em serif',
-	        msg: arm.name,
-	        isFilled: true,
-	        id: 'robot-'+ armPos +'-arm-part',
-	        action: { method: function(id) {
-						console.log('select robot '+ armPos +' arm-' + i);
-						const newArm = Object.assign({}, arm);
-						newArm.armPos = armPos;
-						displaySelectPart(newArm, false);
-					}},
-	        props: {
-						legId: arm.legId,
-						stats: arm.stats,
-						armPos: armPos,
-					},
-	        methodId: id
-	      });
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-	});
+	displayDiscoveredParts(gameObject.discoveredArms, armPos);
 }
 
 function selectRobotLegs(legPos) {
@@ -1407,38 +1377,7 @@ function selectRobotLegs(legPos) {
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
 	highlight.btnColor = 'yellow';
-	gameObject.discoveredLegs.forEach((leg, i) => {
-		Game.methodSetup = {
-			method: function(id) {
-				drawButton({
-	        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
-	        posY: Game.placeEntityY(0.24 + (i * 0.135)),
-	        width: (Game.entitySize * 22),
-	        height: (Game.entitySize * 9),
-	        lineWidth: 1,
-	        btnColor: leg.img,
-	        txtColor: 'black',
-	        font: '0.8em serif',
-	        msg: leg.name,
-	        isFilled: true,
-	        id: 'robot-'+ legPos +'-leg-part',
-	        action: { method: function(id) {
-						console.log('select robot '+ legPos +' leg-' + i);
-						const newLeg = Object.assign({}, leg);
-						newLeg.legPos = legPos;
-						displaySelectPart(newLeg, false);
-					}},
-	        props: {
-						legId: leg.legId,
-						stats: leg.stats,
-						legPos: legPos,
-					},
-	        methodId: id
-	      });
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-	});
+	displayDiscoveredParts(gameObject.discoveredLegs, legPos);
 }
 
 function selectRobotChassis() {
@@ -1452,38 +1391,7 @@ function selectRobotChassis() {
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
 	highlight.btnColor = 'yellow';
-	// future Jordan, the method below will eventually replace all of these part loops
-	// displayDiscoveredParts();
-	for (let i = 0; i < gameObject.discoveredChassis.length; i++) {
-		Game.methodSetup = {
-			method: function(id) {
-				drawButton({
-	        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
-	        posY: Game.placeEntityY(0.24 + (i * 0.135)),
-	        width: (Game.entitySize * 22),
-	        height: (Game.entitySize * 9),
-	        lineWidth: 1,
-	        btnColor: gameObject.discoveredChassis[i].img,
-	        txtColor: 'black',
-	        font: '0.8em serif',
-	        msg: gameObject.discoveredChassis[i].name,
-	        isFilled: true,
-	        id: 'robot-chassis-part',
-	        action: { method: function(id) {
-						 console.log('select robot chassis-' + i);
-						 const newChassis = Object.assign({}, gameObject.discoveredChassis[i]);
-						 displaySelectPart(newChassis, false);
-					 }},
-	        props: {
-						chassisId: gameObject.discoveredChassis[i].chassisId,
-						stats: gameObject.discoveredChassis[i].stats
-					},
-	        methodId: id
-	      });
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-	}
+	displayDiscoveredParts(gameObject.discoveredChassis, '');
 }
 
 function selectRobotHead() {
@@ -1497,42 +1405,54 @@ function selectRobotHead() {
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
 	highlight.btnColor = 'yellow';
-	// clear the parts from the last selection future Jordan
-	gameObject.discoveredHeads.forEach((head, i) => {
-		Game.methodSetup = {
-			method: function(id) {
-				drawButton({
-	        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
-	        posY: Game.placeEntityY(0.24 + (i * 0.135)),
-	        width: (Game.entitySize * 22),
-	        height: (Game.entitySize * 9),
-	        lineWidth: 1,
-	        btnColor: head.img,
-	        txtColor: 'black',
-	        font: '0.8em serif',
-	        msg: head.name,
-	        isFilled: true,
-	        id: 'robot-head-part',
-	        action: { method: function(id) {
-						 console.log('select robot head-' + i);
-						 const newHead = Object.assign({}, head);
-						 displaySelectPart(newHead, false);
-					  }},
-	        props: {
-						chassisId: head.chassisId,
-						stats: head.stats
-					},
-	        methodId: id
-	      });
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-	});
+	displayDiscoveredParts(gameObject.discoveredHeads, '');
 }
 
-function displayDiscoveredParts(partsDiscovered, limbPos, listPos) {
-	for (let i = listPos; i < partsDiscovered.length; i++) {
-
+function displayDiscoveredParts(partsDiscovered, limbPos) {
+	let displayLimb = '';
+	if (!limbPos) {
+		displayLimb = '';
+	} else {
+		displayLimb = limbPos + '-';
+	}
+	if (gameObject.partPageIndex >= partsDiscovered.length) {
+		gameObject.partPageIndex = 0;
+	}
+	for (let i = gameObject.partPageIndex; i < gameObject.partPageIndex + 4; i++) {
+		if (gameObject.partPageIndex > partsDiscovered.length) {
+			break;
+		}
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+		        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+		        posY: Game.placeEntityY(0.24 + (i * 0.135)),
+		        width: (Game.entitySize * 22),
+		        height: (Game.entitySize * 9),
+		        lineWidth: 1,
+		        btnColor: partsDiscovered[i].img,
+		        txtColor: 'black',
+		        font: '0.8em serif',
+		        msg: partsDiscovered[i].name,
+		        isFilled: true,
+		        id: 'robot-' + displayLimb + partsDiscovered[i].type + '-part',
+		        action: { method: function(id) {
+							console.log('robot-'+ limbPos +'-leg-part');
+							const newPart = Object.assign({}, partsDiscovered[i]);
+							if (partsDiscovered[i].type === 'leg') {
+								newPart.legPos = limbPos;
+							}
+							if (partsDiscovered[i].type === 'arm') {
+								newPart.armPos = limbPos;
+							}
+							displaySelectPart(newPart, false);
+						}},
+		        props: {},
+		        methodId: id
+		      });
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 	}
 }
 
