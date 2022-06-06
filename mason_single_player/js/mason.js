@@ -1366,11 +1366,9 @@ function selectRobotArms(armPos) {
 	// the armPos could be left or right
 	console.log('selecting the ' + armPos + ' arm...');
 	// load up the robot parts the player has discovered...
-	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList(gameObject.discoveredArms, armPos);
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
 	highlight.btnColor = 'yellow';
@@ -1381,11 +1379,9 @@ function selectRobotLegs(legPos) {
 	// the legPos could be left or right
 	console.log('selecting the ' + legPos + ' leg...');
 	// load up the robot parts the player has discovered...
-	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList(gameObject.discoveredLegs, legPos);
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
 	highlight.btnColor = 'yellow';
@@ -1395,11 +1391,9 @@ function selectRobotLegs(legPos) {
 function selectRobotChassis() {
 	console.log('selecting the body...');
 	// load up the robot parts the player has discovered...
-	// future Jordan only show the next and previous buttons if the number of parts is greater than 5
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList(gameObject.discoveredChassis, '');
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
 	highlight.btnColor = 'yellow';
@@ -1409,11 +1403,9 @@ function selectRobotChassis() {
 function selectRobotHead() {
 	console.log('selecting the head...');
 	// load up the robot parts the player has discovered...
-	// only show the next and previous buttons if the number of parts is greater than 5
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
 	refreshFactoryBackgrounds(); // refresh the background
-	drawNextPrevPartList(gameObject.discoveredHeads, '');
 	clearRobotPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
 	highlight.btnColor = 'yellow';
@@ -1446,11 +1438,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 	if (gameObject.partPageIndex >= gameObject.discoveredPartsList.length) {
 		gameObject.partPageIndex = 0;
 	}
-	// if (gameObject.partPageIndex < discoveredPartsList.length) {
-	// 	gameObject.partPageIndex = discoveredPartsList.length - 1;
-	// }
 	// display all the parts on each page
-	console.log(gameObject.discoveredPartsList);
 	for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 			Game.methodSetup = {
 				method: function(id) {
@@ -1467,7 +1455,6 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 		        isFilled: true,
 		        id: 'robot-' + displayLimb + gameObject.discoveredPartsList[gameObject.partPageIndex][i].type + '-part',
 		        action: { method: function(id) {
-							console.log('robot-'+ limbPos +'-leg-part');
 							const newPart = Object.assign({}, gameObject.discoveredPartsList[gameObject.partPageIndex][i]);
 							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'leg') {
 								newPart.legPos = limbPos;
@@ -1491,13 +1478,13 @@ function drawNextPrevPartList(partList, limbPos) {
 	// the part could be head, chassis, legs or arms
 	Game.methodSetup = {
 		method: function(id) {
-			drawButton({
+			drawButton({ // the btnColor is css grey
         posX: Game.placeEntityX(0.78, (Game.entitySize * 23.5)),
         posY: Game.placeEntityY(0.135),
         width: (Game.entitySize * 22),
         height: (Game.entitySize * 7),
         lineWidth: 1,
-        btnColor: 'grey',
+        btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
         txtColor: 'white',
         font: '1.5em serif',
         msg: 'Next',
@@ -1518,13 +1505,13 @@ function drawNextPrevPartList(partList, limbPos) {
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
-			drawButton({
+			drawButton({ // the btnColor is css grey
         posX: Game.placeEntityX(0.78, (Game.entitySize * 23.5)),
         posY: Game.placeEntityY(0.90),
         width: (Game.entitySize * 22),
         height: (Game.entitySize * 7),
         lineWidth: 1,
-        btnColor: 'grey',
+        btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
         txtColor: 'white',
         font: '1.5em serif',
         msg: 'Previous',
