@@ -59,6 +59,7 @@ const gameObject = {
 	selectedRobot: [], // this is the robot currently selected in the shop
 	robotDesigns: [], // this will hold all the different robot design the player has made
 	// a robot design can be made into a robot team
+	discoveredPartsList: [], // holds all the organized parts into 5 items per page
 	partPageIndex: 0, // this value will store where you are in the part list
 };
 
@@ -511,7 +512,6 @@ function playGame() {
 		};
 	  Game.addMethod(Game.methodSetup);
 	}
-
 	// Game.methodSetup = {
 	// 	method: function(id) {
 	// 		drawImage({
@@ -1315,6 +1315,8 @@ function clearRobotParts() {
 	const legRightParts = Game.methodObjects.filter(x => x.id === 'robot-right-leg-part');
 	const armRightParts = Game.methodObjects.filter(x => x.id === 'robot-right-arm-part');
 	const armLeftParts = Game.methodObjects.filter(x => x.id === 'robot-left-arm-part');
+	const nextBtn = Game.methodObjects.filter(x => x.id === 'next-part');
+	const prevBtn = Game.methodObjects.filter(x => x.id === 'last-part');
 	if (chassisParts.length > 0) {
 		chassisParts.forEach((item, i) => {
 			Game.deleteEntity(chassisParts[i].methodId);
@@ -1343,6 +1345,16 @@ function clearRobotParts() {
 	if (armLeftParts.length > 0) {
 		armLeftParts.forEach((item, i) => {
 			Game.deleteEntity(armLeftParts[i].methodId);
+		});
+	}
+	if (nextBtn.length > 0) {
+		nextBtn.forEach((item, i) => {
+			Game.deleteEntity(nextBtn[i].methodId);
+		});
+	}
+	if (prevBtn.length > 0) {
+		prevBtn.forEach((item, i) => {
+			Game.deleteEntity(prevBtn[i].methodId);
 		});
 	}
 	setTimeout(function() {
@@ -1409,19 +1421,37 @@ function selectRobotHead() {
 }
 
 function displayDiscoveredParts(partsDiscovered, limbPos) {
+	gameObject.discoveredPartsList = [];
+	let partCount = 0;
+	let currentList = [];
+
 	let displayLimb = '';
 	if (!limbPos) {
 		displayLimb = '';
 	} else {
 		displayLimb = limbPos + '-';
 	}
-	if (gameObject.partPageIndex > partsDiscovered.length) {
+	partsDiscovered.forEach((item, i) => { // this will organize all the parts
+		if (partCount === 5) { // into five items per page
+			gameObject.discoveredPartsList.push(currentList);
+			partCount = 0;
+			currentList = [];
+		}
+		currentList.push(item);
+		partCount++;
+		if (i === (partsDiscovered.length - 1)) {
+			gameObject.discoveredPartsList.push(currentList);
+		}
+	});
+	if (gameObject.partPageIndex >= gameObject.discoveredPartsList.length) {
 		gameObject.partPageIndex = 0;
 	}
-	for (let i = gameObject.partPageIndex; i < gameObject.partPageIndex + 5; i++) {
-		if (i >= partsDiscovered.length) {
-			break;
-		}
+	// if (gameObject.partPageIndex < discoveredPartsList.length) {
+	// 	gameObject.partPageIndex = discoveredPartsList.length - 1;
+	// }
+	// display all the parts on each page
+	console.log(gameObject.discoveredPartsList);
+	for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({
@@ -1430,19 +1460,19 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 		        width: (Game.entitySize * 22),
 		        height: (Game.entitySize * 9),
 		        lineWidth: 1,
-		        btnColor: partsDiscovered[i].img,
+		        btnColor: gameObject.discoveredPartsList[gameObject.partPageIndex][i].img,
 		        txtColor: 'black',
 		        font: '0.8em serif',
-		        msg: partsDiscovered[i].name,
+		        msg: gameObject.discoveredPartsList[gameObject.partPageIndex][i].name,
 		        isFilled: true,
-		        id: 'robot-' + displayLimb + partsDiscovered[i].type + '-part',
+		        id: 'robot-' + displayLimb + gameObject.discoveredPartsList[gameObject.partPageIndex][i].type + '-part',
 		        action: { method: function(id) {
 							console.log('robot-'+ limbPos +'-leg-part');
-							const newPart = Object.assign({}, partsDiscovered[i]);
-							if (partsDiscovered[i].type === 'leg') {
+							const newPart = Object.assign({}, gameObject.discoveredPartsList[gameObject.partPageIndex][i]);
+							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'leg') {
 								newPart.legPos = limbPos;
 							}
-							if (partsDiscovered[i].type === 'arm') {
+							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'arm') {
 								newPart.armPos = limbPos;
 							}
 							displaySelectPart(newPart, false);
@@ -1454,6 +1484,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 			};
 			Game.addMethod(Game.methodSetup);
 	}
+	drawNextPrevPartList(partsDiscovered, limbPos);
 }
 
 function drawNextPrevPartList(partList, limbPos) {
@@ -1474,9 +1505,9 @@ function drawNextPrevPartList(partList, limbPos) {
         id: 'next-part',
         action: {
 					method: function(id) {
-						gameObject.partPageIndex += 1;
+						gameObject.partPageIndex++; // go to the next part page
+						clearRobotParts(); // clear the previous parts
 						displayDiscoveredParts(partList, limbPos);
-						console.log('next part');
 				  }
 				},
         props: {},
@@ -1501,9 +1532,13 @@ function drawNextPrevPartList(partList, limbPos) {
         id: 'last-part',
         action: {
 					method: function(id) {
-						gameObject.partPageIndex--;
+						gameObject.partPageIndex--; // go back a page
+						if (gameObject.partPageIndex < 0) { // if the page is at the beginning
+							// go to the last page
+							gameObject.partPageIndex = (gameObject.discoveredPartsList.length - 1);
+						}
+						clearRobotParts(); // clear the previous parts
 						displayDiscoveredParts(partList, limbPos);
-						console.log('previous part');
 					}
 				},
         props: {},
