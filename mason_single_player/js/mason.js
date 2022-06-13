@@ -918,7 +918,112 @@ function openFactory() {
 	// robot screen. We will need to make some tabs at the top to show the robot
 	// selection screen and then the robot part screen where the player can make
 	// different heads, bodys, arms and legs
-	factoryRobotDetails();
+
+	// factoryRobotDetails();
+	factoryRobotSelect();
+}
+
+function factoryRobotSelect() {
+	Game.clearStage();
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height),
+				lineWidth: 1,
+				color: 'grey',
+				isFilled: true,
+				id: 'factory-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.03),
+        posY: Game.placeEntityY(0.03),
+        width: (Game.entitySize * 12),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'darkgrey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Back',
+        isFilled: true,
+        id: 'factory-back-game',
+        action: { method: function(id) { playGame(); }},
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
+        posY: Game.placeEntityY(0.03),
+        width: (Game.entitySize * 15),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'darkgrey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: 'Parts',
+        isFilled: true,
+        id: 'part-view',
+        action: { method: function(id) { playGame(); }}, // this needs to go to the parts screen
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.95),
+				height: (Game.canvas.height * 0.855),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'robot-select-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+        posX: Game.placeEntityX(0.05),
+        posY: Game.placeEntityY(0.15),
+        width: (Game.entitySize * 15),
+        height: (Game.entitySize * 20),
+        lineWidth: 1,
+        btnColor: 'darkgrey',
+        txtColor: 'white',
+        font: '1.5em serif',
+        msg: '',
+        isFilled: true,
+        id: 'factory-back-game',
+        action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
+        props: {},
+        methodId: id
+      });
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
 
 function factoryRobotDetails() {
@@ -1010,7 +1115,7 @@ function factoryRobotDetails() {
         msg: 'Back',
         isFilled: true,
         id: 'factory-back-game',
-        action: { method: function(id) { playGame(); }},
+        action: { method: function(id) { factoryRobotSelect(); }},
         props: {},
         methodId: id
       });
@@ -1060,10 +1165,10 @@ function factoryRobotDetails() {
         btnColor: 'darkgrey',
         txtColor: 'white',
         font: '1.5em serif',
-        msg: 'Factory',
+        msg: 'Parts',
         isFilled: true,
         id: 'factory-view',
-        action: { method: function(id) { playGame(); }}, // this needs to go to the robot list view
+        action: { method: function(id) { factoryRobotSelect(); }}, // this needs to go to the parts screen
         props: {},
         methodId: id
       });
