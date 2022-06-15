@@ -1548,7 +1548,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({
-		        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.6)),
+		        posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
 		        posY: Game.placeEntityY(0.24 + (i * 0.135)),
 		        width: (Game.entitySize * 22),
 		        height: (Game.entitySize * 9),
@@ -1584,7 +1584,7 @@ function drawNextPrevPartList(partList, limbPos) {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({ // the btnColor is css grey
-        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.5)),
+        posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
         posY: Game.placeEntityY(0.135),
         width: (Game.entitySize * 22),
         height: (Game.entitySize * 7),
@@ -1611,7 +1611,7 @@ function drawNextPrevPartList(partList, limbPos) {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({ // the btnColor is css grey
-        posX: Game.placeEntityX(0.78, (Game.entitySize * 23.5)),
+        posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
         posY: Game.placeEntityY(0.90),
         width: (Game.entitySize * 22),
         height: (Game.entitySize * 7),
