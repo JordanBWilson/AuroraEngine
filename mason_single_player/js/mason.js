@@ -1006,21 +1006,63 @@ function factoryRobotSelect() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.05),
-        posY: Game.placeEntityY(0.15),
-        width: (Game.entitySize * 15),
-        height: (Game.entitySize * 20),
-        lineWidth: 1,
-        btnColor: 'darkgrey',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: '',
-        isFilled: true,
-        id: 'factory-back-game',
-        action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.07, (Game.entitySize * -0.01)),
+				posY: Game.placeEntityY(0.15, (Game.entitySize * 0.017)),
+				width: (Game.canvas.width * 0.25),
+				height: (Game.entitySize * 20),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: '',
+				isFilled: true,
+				id: 'factory-details-btn',
+				action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.39, (Game.entitySize * 1.5)),
+				posY: Game.placeEntityY(0.15, (Game.entitySize * 0.017)),
+				width: (Game.canvas.width * 0.25),
+				height: (Game.entitySize * 20),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: '',
+				isFilled: true,
+				id: 'factory-details-btn',
+				action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.59, (Game.entityWidth * -19)),
+				posY: Game.placeEntityY(0.15, (Game.entitySize * 0.017)),
+				width: (Game.canvas.width * 0.25),
+				height: (Game.entitySize * 20),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: '',
+				isFilled: true,
+				id: 'factory-details-btn',
+				action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
