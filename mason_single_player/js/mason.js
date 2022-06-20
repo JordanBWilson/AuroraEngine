@@ -592,63 +592,63 @@ function playGame() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
-        posY: Game.placeEntityY(0.90, (Game.entitySize * 15)),
-        width: (Game.entitySize * 15),
-        height: (Game.entitySize * 15),
-        lineWidth: 1,
-        btnColor: 'green',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Home',
-        isFilled: true,
-        id: 'home',
-        action: { method: function(id) { openHome(); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
+				posY: Game.placeEntityY(0.90, (Game.entitySize * 15)),
+				width: (Game.entitySize * 15),
+				height: (Game.entitySize * 15),
+				lineWidth: 1,
+				btnColor: 'green',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Home',
+				isFilled: true,
+				id: 'home',
+				action: { method: function(id) { openHome(); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
-        posY: Game.placeEntityY(0.60, (Game.entitySize * 15)),
-        width: (Game.entitySize * 15),
-        height: (Game.entitySize * 15),
-        lineWidth: 1,
-        btnColor: 'grey',
-        txtColor: 'black',
-        font: '1.5em serif',
-        msg: 'Factory',
-        isFilled: true,
-        id: 'factory',
-        action: { method: function(id) { openFactory(); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
+				posY: Game.placeEntityY(0.60, (Game.entitySize * 15)),
+				width: (Game.entitySize * 15),
+				height: (Game.entitySize * 15),
+				lineWidth: 1,
+				btnColor: 'grey',
+				txtColor: 'black',
+				font: '1.5em serif',
+				msg: 'Factory',
+				isFilled: true,
+				id: 'factory',
+				action: { method: function(id) { openFactory(); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.165, (Game.entitySize * 15)),
-        posY: Game.placeEntityY(0.75, (Game.entitySize * 15)),
-        width: (Game.entitySize * 15),
-        height: (Game.entitySize * 15),
-        lineWidth: 1,
-        btnColor: 'brown',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Arena',
-        isFilled: true,
-        id: 'arena',
-        action: { method: function(id) { openArena(); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.165, (Game.entitySize * 15)),
+				posY: Game.placeEntityY(0.75, (Game.entitySize * 15)),
+				width: (Game.entitySize * 15),
+				height: (Game.entitySize * 15),
+				lineWidth: 1,
+				btnColor: 'brown',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Arena',
+				isFilled: true,
+				id: 'arena',
+				action: { method: function(id) { openArena(); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
@@ -946,42 +946,42 @@ function factoryRobotSelect() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.03),
-        posY: Game.placeEntityY(0.03),
-        width: (Game.entitySize * 12),
-        height: (Game.entitySize * 7),
-        lineWidth: 1,
-        btnColor: 'darkgrey',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Back',
-        isFilled: true,
-        id: 'factory-back-game',
-        action: { method: function(id) { playGame(); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Back',
+				isFilled: true,
+				id: 'factory-back-game',
+				action: { method: function(id) { playGame(); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
-        posY: Game.placeEntityY(0.03),
-        width: (Game.entitySize * 15),
-        height: (Game.entitySize * 7),
-        lineWidth: 1,
-        btnColor: 'darkgrey',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Parts',
-        isFilled: true,
-        id: 'part-view',
-        action: { method: function(id) { playGame(); }}, // this needs to go to the parts screen
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 15),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Parts',
+				isFilled: true,
+				id: 'part-view',
+				action: { method: function(id) { playGame(); }}, // this needs to go to the parts screen
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
@@ -1146,21 +1146,21 @@ function factoryRobotDetails() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.03),
-        posY: Game.placeEntityY(0.03),
-        width: (Game.entitySize * 12),
-        height: (Game.entitySize * 7),
-        lineWidth: 1,
-        btnColor: 'darkgrey',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Back',
-        isFilled: true,
-        id: 'factory-back-game',
-        action: { method: function(id) { factoryRobotSelect(); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Back',
+				isFilled: true,
+				id: 'factory-back-game',
+				action: { method: function(id) { factoryRobotSelect(); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
@@ -1199,21 +1199,21 @@ function factoryRobotDetails() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.97, (Game.entitySize * 30)),
-        posY: Game.placeEntityY(0.03),
-        width: (Game.entitySize * 15),
-        height: (Game.entitySize * 7),
-        lineWidth: 1,
-        btnColor: 'darkgrey',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Parts',
-        isFilled: true,
-        id: 'factory-view',
-        action: { method: function(id) { factoryRobotSelect(); }}, // this needs to go to the parts screen
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.97, (Game.entitySize * 30)),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 15),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Parts',
+				isFilled: true,
+				id: 'factory-view',
+				action: { method: function(id) { factoryRobotSelect(); }}, // this needs to go to the parts screen
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
@@ -1298,126 +1298,126 @@ function drawRobotPreview() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.25, (Game.entitySize * 12)),
-        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-        width: (Game.entitySize * 12),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: drawRobotPreviewParts('chassis'),
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-body',
-        action: { method: function(id) { selectRobotChassis(); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.25, (Game.entitySize * 12)),
+				posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 12),
+				lineWidth: 1,
+				btnColor: drawRobotPreviewParts('chassis'),
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: '',
+				isFilled: true,
+				id: 'robot-body',
+				action: { method: function(id) { selectRobotChassis(); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.249, (Game.entitySize * 10)),
-        posY: Game.placeEntityY(0.22, (Game.entitySize * 10)),
-        width: (Game.entitySize * 10),
-        height: (Game.entitySize * 10),
-        lineWidth: 1,
-        btnColor: drawRobotPreviewParts('head'),
-        txtColor: 'black',
-        font: '1.5em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-head',
-        action: { method: function(id) { selectRobotHead() }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.249, (Game.entitySize * 10)),
+				posY: Game.placeEntityY(0.22, (Game.entitySize * 10)),
+				width: (Game.entitySize * 10),
+				height: (Game.entitySize * 10),
+				lineWidth: 1,
+				btnColor: drawRobotPreviewParts('head'),
+				txtColor: 'black',
+				font: '1.5em serif',
+				msg: '',
+				isFilled: true,
+				id: 'robot-head',
+				action: { method: function(id) { selectRobotHead() }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
-        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: drawRobotPreviewParts('left-arm'),
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-left-arm',
-        action: { method: function(id) { selectRobotArms('left'); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
+				posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+				width: (Game.entitySize * 3),
+				height: (Game.entitySize * 12),
+				lineWidth: 1,
+				btnColor: drawRobotPreviewParts('left-arm'),
+				txtColor: 'black',
+				font: '1em serif',
+				msg: '',
+				isFilled: true,
+				id: 'robot-left-arm',
+				action: { method: function(id) { selectRobotArms('left'); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.31, (Game.entitySize * -8.3)),
-        posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: drawRobotPreviewParts('right-arm'),
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-right-arm',
-        action: { method: function(id) { selectRobotArms('right'); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.31, (Game.entitySize * -8.3)),
+				posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+				width: (Game.entitySize * 3),
+				height: (Game.entitySize * 12),
+				lineWidth: 1,
+				btnColor: drawRobotPreviewParts('right-arm'),
+				txtColor: 'black',
+				font: '1em serif',
+				msg: '',
+				isFilled: true,
+				id: 'robot-right-arm',
+				action: { method: function(id) { selectRobotArms('right'); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.246, (Game.entitySize * 9)),
-        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: drawRobotPreviewParts('left-leg'),
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-left-leg',
-        action: { method: function(id) { selectRobotLegs('left'); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.246, (Game.entitySize * 9)),
+				posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+				width: (Game.entitySize * 3),
+				height: (Game.entitySize * 12),
+				lineWidth: 1,
+				btnColor: drawRobotPreviewParts('left-leg'),
+				txtColor: 'black',
+				font: '1em serif',
+				msg: '',
+				isFilled: true,
+				id: 'robot-left-leg',
+				action: { method: function(id) { selectRobotLegs('left'); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-        posX: Game.placeEntityX(0.247, (Game.entitySize * -4.3)),
-        posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
-        width: (Game.entitySize * 3),
-        height: (Game.entitySize * 12),
-        lineWidth: 1,
-        btnColor: drawRobotPreviewParts('right-leg'),
-        txtColor: 'black',
-        font: '1em serif',
-        msg: '',
-        isFilled: true,
-        id: 'robot-right-leg',
-        action: { method: function(id) { selectRobotLegs('right'); }},
-        props: {},
-        methodId: id
-      });
+				posX: Game.placeEntityX(0.247, (Game.entitySize * -4.3)),
+				posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+				width: (Game.entitySize * 3),
+				height: (Game.entitySize * 12),
+				lineWidth: 1,
+				btnColor: drawRobotPreviewParts('right-leg'),
+				txtColor: 'black',
+				font: '1em serif',
+				msg: '',
+				isFilled: true,
+				id: 'robot-right-leg',
+				action: { method: function(id) { selectRobotLegs('right'); }},
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
@@ -1601,16 +1601,18 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 		        msg: gameObject.discoveredPartsList[gameObject.partPageIndex][i].name,
 		        isFilled: true,
 		        id: 'robot-' + displayLimb + gameObject.discoveredPartsList[gameObject.partPageIndex][i].type + '-part',
-		        action: { method: function(id) {
-							const newPart = Object.assign({}, gameObject.discoveredPartsList[gameObject.partPageIndex][i]);
-							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'leg') {
-								newPart.legPos = limbPos;
-							}
-							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'arm') {
-								newPart.armPos = limbPos;
-							}
-							displaySelectPart(newPart, false);
-						}},
+		        action: { 
+					method: function(id) {
+						const newPart = Object.assign({}, gameObject.discoveredPartsList[gameObject.partPageIndex][i]);
+						if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'leg') {
+							newPart.legPos = limbPos;
+						}
+						if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'arm') {
+							newPart.armPos = limbPos;
+						}
+						displaySelectPart(newPart, false);
+					}
+				},
 		        props: {},
 		        methodId: id
 		      });
@@ -1626,45 +1628,45 @@ function drawNextPrevPartList(partList, limbPos) {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({ // the btnColor is css grey
-        posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-        posY: Game.placeEntityY(0.135),
-        width: (Game.entitySize * 22),
-        height: (Game.entitySize * 7),
-        lineWidth: 1,
-        btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Next',
-        isFilled: true,
-        id: 'next-part',
-        action: {
+				posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+				posY: Game.placeEntityY(0.135),
+				width: (Game.entitySize * 22),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Next',
+				isFilled: true,
+				id: 'next-part',
+				action: {
 					method: function(id) {
 						gameObject.partPageIndex++; // go to the next part page
 						clearRobotParts(); // clear the previous parts
 						displayDiscoveredParts(partList, limbPos);
-				  }
+					}
 				},
-        props: {},
-        methodId: id
-      });
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({ // the btnColor is css grey
-        posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-        posY: Game.placeEntityY(0.90),
-        width: (Game.entitySize * 22),
-        height: (Game.entitySize * 7),
-        lineWidth: 1,
-        btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
-        txtColor: 'white',
-        font: '1.5em serif',
-        msg: 'Previous',
-        isFilled: true,
-        id: 'last-part',
-        action: {
+				posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+				posY: Game.placeEntityY(0.90),
+				width: (Game.entitySize * 22),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Previous',
+				isFilled: true,
+				id: 'last-part',
+				action: {
 					method: function(id) {
 						gameObject.partPageIndex--; // go back a page
 						if (gameObject.partPageIndex < 0) { // if the page is at the beginning
@@ -1675,9 +1677,9 @@ function drawNextPrevPartList(partList, limbPos) {
 						displayDiscoveredParts(partList, limbPos);
 					}
 				},
-        props: {},
-        methodId: id
-      });
+				props: {},
+				methodId: id
+			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
