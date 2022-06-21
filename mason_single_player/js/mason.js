@@ -59,6 +59,7 @@ const gameObject = {
 	selectedRobot: [], // this is the robot currently selected in the shop
 	robotDesigns: [], // this will hold all the different robot design the player has made
 	// a robot design can be made into a robot team
+	robotDesignCount: 9, // this is how many robots the player can design right now
 	discoveredPartsList: [], // holds all the organized parts into 5 items per page
 	partPageIndex: 0, // this value will store where you are in the part list
 };
@@ -967,7 +968,7 @@ function factoryRobotSelect() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.98, (Game.entitySize * 30)),
+				posX: Game.placeEntityX(0.97, (Game.entitySize * 30)),
 				posY: Game.placeEntityY(0.03),
 				width: (Game.entitySize * 15),
 				height: (Game.entitySize * 7),
@@ -990,7 +991,7 @@ function factoryRobotSelect() {
 			drawRect({
 				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
 				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-				width: (Game.canvas.width * 0.95),
+				width: (Game.canvas.width * 0.94),
 				height: (Game.canvas.height * 0.855),
 				lineWidth: 1,
 				color: 'lightgrey',
@@ -1003,69 +1004,73 @@ function factoryRobotSelect() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-				posX: Game.placeEntityX(0.07, (Game.entitySize * -0.01)),
-				posY: Game.placeEntityY(0.15, (Game.entitySize * 0.017)),
-				width: (Game.canvas.width * 0.25),
-				height: (Game.entitySize * 20),
-				lineWidth: 1,
-				btnColor: 'darkgrey',
-				txtColor: 'white',
-				font: '1.5em serif',
-				msg: '',
-				isFilled: true,
-				id: 'factory-details-btn',
-				action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
-				props: {},
-				methodId: id
-			});
+	let robotCount = 1;
+	let robotSelectRow = 1;
+	for (let i = 0; i < gameObject.robotDesignCount; i++) {
+		robotCount++;
+		let posY = 0
+		let posYoffset = 0;
+		let posX = 0;
+		let posXoffset = 0;
+		if (robotSelectRow === 1) {
+			posY = 0.14;
+			posYoffset = -11;
 		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-				posX: Game.placeEntityX(0.39, (Game.entitySize * 1.5)),
-				posY: Game.placeEntityY(0.15, (Game.entitySize * 0.017)),
-				width: (Game.canvas.width * 0.25),
-				height: (Game.entitySize * 20),
-				lineWidth: 1,
-				btnColor: 'darkgrey',
-				txtColor: 'white',
-				font: '1.5em serif',
-				msg: '',
-				isFilled: true,
-				id: 'factory-details-btn',
-				action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
-				props: {},
-				methodId: id
-			});
+		if (robotSelectRow === 2) {
+			posY = 0.34;
+			posYoffset = -22;
 		}
-	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
-		method: function(id) {
-			drawButton({
-				posX: Game.placeEntityX(0.59, (Game.entityWidth * -19)),
-				posY: Game.placeEntityY(0.15, (Game.entitySize * 0.017)),
-				width: (Game.canvas.width * 0.25),
-				height: (Game.entitySize * 20),
-				lineWidth: 1,
-				btnColor: 'darkgrey',
-				txtColor: 'white',
-				font: '1.5em serif',
-				msg: '',
-				isFilled: true,
-				id: 'factory-details-btn',
-				action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
-				props: {},
-				methodId: id
-			});
+		if (robotSelectRow === 3) {
+			posY = 0.54;
+			posYoffset = -33;
 		}
-	};
-	Game.addMethod(Game.methodSetup);
+		if (robotCount === 1) {
+			posX = 0.07;
+			posXoffset = -0.01;
+		}
+		if (robotCount === 2) {
+			posX = 0.39;
+			posXoffset = 1.99;
+		}
+		if (robotCount === 3) {
+			posX = 0.689;
+			posXoffset = 1;
+		}
+			
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+					posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					width: (Game.canvas.width * 0.25),
+					height: (Game.entitySize * 20),
+					lineWidth: 1,
+					btnColor: 'darkgrey',
+					txtColor: 'white',
+					font: '1.5em serif',
+					msg: '',
+					isFilled: true,
+					id: 'factory-details-btn',
+					action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
+					props: {
+						robotDesignPos: i,
+					},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		if (i === 2) {
+			robotSelectRow++;
+		}
+		if (i === 5) {
+			robotSelectRow++;
+		}
+		if (robotCount === 3) {
+			robotCount = 0;
+		}
+		
+	}
 }
 
 function factoryRobotDetails() {
@@ -1217,6 +1222,7 @@ function factoryRobotDetails() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	
 }
 
 function drawRobotPreviewParts(partType) {
