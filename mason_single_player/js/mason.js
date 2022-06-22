@@ -52,6 +52,7 @@ const gameObject = {
 	robotStorage: 5, // these robots can be sold on the grand exchange
 	robotsMade: 0, // or go on adventures to find riches
 	robotTeams: [], // the different number of robot teams going out to find riches
+	robotTeamIndex: -1, // when editing robots, this is where we are in the list
 	discoveredHeads: [], // all the robot heads discovered by the player
 	discoveredChassis: [], // all the robot chassis discovered by the player
 	discoveredLegs: [], // all the robot legs discovered by the player
@@ -62,6 +63,7 @@ const gameObject = {
 	robotDesignCount: 9, // this is how many robots the player can design right now
 	discoveredPartsList: [], // holds all the organized parts into 5 items per page
 	partPageIndex: 0, // this value will store where you are in the part list
+	partsDisplayed: '', // can be 'chassis', 'head', 'arm-' + armPos, 'leg-' + legPos
 };
 
 const robotHeads = [
@@ -1209,7 +1211,11 @@ function factoryRobotDetails() {
 				msg: 'Back',
 				isFilled: true,
 				id: 'factory-back-game',
-				action: { method: function(id) { factoryRobotSelect(); }},
+				action: { method: function(id) {
+					 factoryRobotSelect(); 
+					 gameObject.partsDisplayed = ''; 
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1383,7 +1389,7 @@ function drawRobotPreview() {
 				msg: '',
 				isFilled: true,
 				id: 'robot-head',
-				action: { method: function(id) { selectRobotHead() }},
+				action: { method: function(id) { selectRobotHead(); }},
 				props: {},
 				methodId: id
 			});
@@ -1538,6 +1544,7 @@ function clearRobotParts() {
 function selectRobotArms(armPos) {
 	// the armPos could be left or right
 	console.log('selecting the ' + armPos + ' arm...');
+	gameObject.partsDisplayed = 'arm-' + armPos;
 	// load up the robot parts the player has discovered...
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
@@ -1551,6 +1558,7 @@ function selectRobotArms(armPos) {
 function selectRobotLegs(legPos) {
 	// the legPos could be left or right
 	console.log('selecting the ' + legPos + ' leg...');
+	gameObject.partsDisplayed = 'leg-' + legPos;
 	// load up the robot parts the player has discovered...
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
@@ -1563,6 +1571,7 @@ function selectRobotLegs(legPos) {
 
 function selectRobotChassis() {
 	console.log('selecting the body...');
+	gameObject.partsDisplayed = 'chassis';
 	// load up the robot parts the player has discovered...
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
@@ -1575,6 +1584,7 @@ function selectRobotChassis() {
 
 function selectRobotHead() {
 	console.log('selecting the head...');
+	gameObject.partsDisplayed = 'head';
 	// load up the robot parts the player has discovered...
 	clearRobotParts(); // clear the previous parts
 	clearSelectedPartStatDetails(); // clear the stats
@@ -1586,6 +1596,8 @@ function selectRobotHead() {
 }
 
 function displayDiscoveredParts(partsDiscovered, limbPos) {
+	// future Jordan, we are going to want to put a circle graphic next
+	// to the parts with the total count of that part
 	gameObject.discoveredPartsList = [];
 	let partCount = 0;
 	let currentList = [];
@@ -1613,6 +1625,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 	}
 	// display all the parts on each page
 	for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
+		const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
 		Game.methodSetup = {
 			method: function(id) {
 				drawButton({
@@ -1621,19 +1634,19 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 					width: (Game.entitySize * 22),
 					height: (Game.entitySize * 9),
 					lineWidth: 1,
-					btnColor: drawActiveParts(gameObject.discoveredPartsList[gameObject.partPageIndex][i].img, gameObject.discoveredPartsList[gameObject.partPageIndex][i].count),
+					btnColor: drawActiveParts(discoveredPart.img, discoveredPart.count),
 					txtColor: 'black',
 					font: '0.8em serif',
-					msg: gameObject.discoveredPartsList[gameObject.partPageIndex][i].name,
+					msg: discoveredPart.name,
 					isFilled: true,
-					id: 'robot-' + displayLimb + gameObject.discoveredPartsList[gameObject.partPageIndex][i].type + '-part',
+					id: 'robot-' + displayLimb + discoveredPart.type + '-part',
 					action: { 
 						method: function(id) {
-							const newPart = Object.assign({}, gameObject.discoveredPartsList[gameObject.partPageIndex][i]);
-							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'leg') {
+							const newPart = Object.assign({}, discoveredPart);
+							if (discoveredPart.type === 'leg') {
 								newPart.legPos = limbPos;
 							}
-							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'arm') {
+							if (discoveredPart.type === 'arm') {
 								newPart.armPos = limbPos;
 							}
 							displaySelectPart(newPart, false);
@@ -2098,26 +2111,64 @@ function drawActiveParts(activeColor, count) {
 
 function buildRobot() {
 	let problems = 0;
-	// future Jordan make sure to refresh the parts that are currently displayed
-	gameObject.selectedRobot.forEach(item => {
-		// item.count--
+		gameObject.selectedRobot.forEach(item => {
 		if (item.headId) {
-			const robotHead = robotHeads.find(part => part.headId === item.headId);
-			if (robotHead.count >= 1) {
-				robotHead.count -= 1;
+			const head = robotHeads.find(part => part.headId === item.headId);
+			if (head.count >= 1) {
+				head.count -= 1;
 			} else {
 				problems++;
 			}
 		}
 		if (item.chassisId) {
-			const robotChassis = robotChassis.find(part => part.chassisId === item.chassisId);
-			if (robotChassis.count >= 1) {
-				robotChassis.count -= 1;
+			const chassis = robotChassis.find(part => part.chassisId === item.chassisId);
+			if (chassis.count >= 1) {
+				chassis.count -= 1;
+			} else {
+				problems++;
+			}
+		}
+		if (item.legId) {
+			leg = robotLegs.find(part => part.legId === item.legId);
+			if (leg.count >= 1) {
+				leg.count -= 1;
+			} else {
+				problems++;
+			}
+		}
+		if (item.armId) {
+			arm = robotArms.find(part => part.armId === item.armId);
+			if (arm.count >= 1) {
+				arm.count -= 1;
 			} else {
 				problems++;
 			}
 		}
 		
 	});
+	if (problems === 0) {
+		if (gameObject.robotsMade <= gameObject.robotStorage) {
+			// add the robot to the list
+			gameObject.robotsMade++;
+			const completedRobot = {
+				robotMade: gameObject.robotsMade,
+				parts: gameObject.selectedRobot
+			}
+			// future Jordan, find a better way to save robots.
+			// we may want to prepopulate the robot reams with blank 
+			// robots if we keep going down this road
+			gameObject.robotTeamIndex++;
+			gameObject.robotTeams.push(completedRobot);
+			// refresh the parts that are displayed
+			clearRobotParts();
+		} else {
+			console.log('display a modal for full robot storage');
+		}
+		
+	} else {
+		// only display the modal if the button isn't dimmed
+		console.log('display a modal for missing parts');
+		// dim the confirm button
+	}
 	console.log('build robot', gameObject.selectedRobot);
 }
