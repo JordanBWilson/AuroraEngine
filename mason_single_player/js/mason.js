@@ -70,6 +70,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'New World Head',
 		img: 'orange',
+		count: 1, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 1,
@@ -77,7 +78,7 @@ const robotHeads = [
 			ai: 1,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 3,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -92,6 +93,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Scrapper Head',
 		img: 'coral',
+		count: 1,
 		stats: {
 			att: 0,
 			def: 1,
@@ -99,7 +101,7 @@ const robotHeads = [
 			ai: 1,
 			storage: 1,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 5,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -114,6 +116,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Scout Head',
 		img: 'darkgoldenrod',
+		count: 1,
 		stats: {
 			att: 0,
 			def: 1,
@@ -121,7 +124,7 @@ const robotHeads = [
 			ai: 2,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 4,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -136,6 +139,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Harvester Head',
 		img: 'cornflowerblue',
+		count: 1,
 		stats: {
 			att: 1,
 			def: 1,
@@ -143,7 +147,7 @@ const robotHeads = [
 			ai: 1,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 6,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -160,6 +164,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'New World Chassis',
 		img: 'orange',
+		count: 1,
 		stats: {
 			att: 0,
 			def: 1,
@@ -167,7 +172,7 @@ const robotChassis = [
 			ai: 0,
 			storage: 1,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 7,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -182,6 +187,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scrapper Chassis',
 		img: 'coral',
+		count: 1,
 		stats: {
 			att: 0,
 			def: 1,
@@ -189,7 +195,7 @@ const robotChassis = [
 			ai: 0,
 			storage: 2,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 10,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -204,6 +210,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scout Chassis',
 		img: 'darkgoldenrod',
+		count: 1,
 		stats: {
 			att: 0,
 			def: 1,
@@ -211,7 +218,7 @@ const robotChassis = [
 			ai: 2,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 9,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -226,6 +233,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Harvester Chassis',
 		img: 'cornflowerblue',
+		count: 1,
 		stats: {
 			att: 1,
 			def: 1,
@@ -233,7 +241,7 @@ const robotChassis = [
 			ai: 0,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 10,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -248,6 +256,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'Test Chassis-1',
 		img: 'red',
+		count: 1,
 		stats: {
 			att: 0,
 			def: 1,
@@ -255,7 +264,7 @@ const robotChassis = [
 			ai: 0,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 0,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -270,6 +279,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'Test Chassis-2',
 		img: 'red',
+		count: 1,
 		stats: {
 			att: 0,
 			def: 1,
@@ -277,7 +287,7 @@ const robotChassis = [
 			ai: 0,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 0,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -295,6 +305,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'New World Leg',
 		img: 'orange',
+		count: 2,
 		stats: {
 			att: 0,
 			def: 1,
@@ -302,7 +313,7 @@ const robotLegs = [
 			ai: 0,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 5,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -318,6 +329,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Leg',
 		img: 'coral',
+		count: 2,
 		stats: {
 			att: 0,
 			def: 1,
@@ -325,7 +337,7 @@ const robotLegs = [
 			ai: 1,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 7,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -341,6 +353,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
+		count: 2,
 		stats: {
 			att: 0,
 			def: 1,
@@ -348,7 +361,7 @@ const robotLegs = [
 			ai: 1,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 6,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -364,6 +377,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Leg',
 		img: 'cornflowerblue',
+		count: 2,
 		stats: {
 			att: 1,
 			def: 1,
@@ -371,7 +385,7 @@ const robotLegs = [
 			ai: 0,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 7,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -389,6 +403,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'New World Arm',
 		img: 'orange',
+		count: 2,
 		stats: {
 			att: 1,
 			def: 1,
@@ -396,7 +411,7 @@ const robotArms = [
 			ai: 0,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 5,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -412,6 +427,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Arm',
 		img: 'coral',
+		count: 2,
 		stats: {
 			att: 1,
 			def: 1,
@@ -419,7 +435,7 @@ const robotArms = [
 			ai: 0,
 			storage: 1,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 7,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -435,6 +451,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Arm',
 		img: 'darkgoldenrod',
+		count: 2,
 		stats: {
 			att: 1,
 			def: 1,
@@ -442,7 +459,7 @@ const robotArms = [
 			ai: 1,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 6,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -458,6 +475,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Arm',
 		img: 'cornflowerblue',
+		count: 2,
 		stats: {
 			att: 1,
 			def: 1,
@@ -465,7 +483,7 @@ const robotArms = [
 			ai: 0,
 			storage: 0,
 		},
-		partsToBuild: {
+		scrapToBuild: {
 			commonScrap: 7,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
@@ -911,6 +929,35 @@ function mineScrap() {
 function openHome() {
 	console.log('open Home');
 }
+
+function openArena() {
+	console.log('open Arena');
+}
+
+function moveMasonWorker() {
+	const masonWorkers = Game.methodObjects.filter(x => x.id === 'mason-worker');
+	// move the mason worker
+	masonWorkers.forEach((worker, i) => {
+		if (worker.props.direction === 'right') {
+			masonWorkers[i].posX += Game.moveEntity(0.15, Game.enumDirections.leftRight);
+		}
+		if (worker.props.direction === 'left') {
+			masonWorkers[i].posX -= Game.moveEntity(0.15, Game.enumDirections.leftRight);
+		}
+	});
+}
+
+function masonRockCollision(methodId) {
+	const masonWorker = Game.methodObjects.find(x => x.methodId === methodId);
+	if (masonWorker.props.direction === 'left') {
+		masonWorker.props.direction = 'right';
+	}
+	if (masonWorker.props.direction === 'right') {
+		masonWorker.props.direction = 'left';
+	}
+}
+
+//  below is the factory display
 
 function openFactory() {
 	console.log('open Factory');
@@ -1434,33 +1481,6 @@ function drawRobotPreview() {
 
 }
 
-function openArena() {
-	console.log('open Arena');
-}
-
-function moveMasonWorker() {
-	const masonWorkers = Game.methodObjects.filter(x => x.id === 'mason-worker');
-	// move the mason worker
-	masonWorkers.forEach((worker, i) => {
-		if (worker.props.direction === 'right') {
-			masonWorkers[i].posX += Game.moveEntity(0.15, Game.enumDirections.leftRight);
-		}
-		if (worker.props.direction === 'left') {
-			masonWorkers[i].posX -= Game.moveEntity(0.15, Game.enumDirections.leftRight);
-		}
-	});
-}
-
-function masonRockCollision(methodId) {
-	const masonWorker = Game.methodObjects.find(x => x.methodId === methodId);
-	if (masonWorker.props.direction === 'left') {
-		masonWorker.props.direction = 'right';
-	}
-	if (masonWorker.props.direction === 'right') {
-		masonWorker.props.direction = 'left';
-	}
-}
-
 function clearRobotParts() {
 	const chassisParts = Game.methodObjects.filter(x => x.id === 'robot-chassis-part');
 	const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
@@ -1593,38 +1613,38 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 	}
 	// display all the parts on each page
 	for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-		        posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-		        posY: Game.placeEntityY(0.24 + (i * 0.135)),
-		        width: (Game.entitySize * 22),
-		        height: (Game.entitySize * 9),
-		        lineWidth: 1,
-		        btnColor: gameObject.discoveredPartsList[gameObject.partPageIndex][i].img,
-		        txtColor: 'black',
-		        font: '0.8em serif',
-		        msg: gameObject.discoveredPartsList[gameObject.partPageIndex][i].name,
-		        isFilled: true,
-		        id: 'robot-' + displayLimb + gameObject.discoveredPartsList[gameObject.partPageIndex][i].type + '-part',
-		        action: { 
-					method: function(id) {
-						const newPart = Object.assign({}, gameObject.discoveredPartsList[gameObject.partPageIndex][i]);
-						if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'leg') {
-							newPart.legPos = limbPos;
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+					posY: Game.placeEntityY(0.24 + (i * 0.135)),
+					width: (Game.entitySize * 22),
+					height: (Game.entitySize * 9),
+					lineWidth: 1,
+					btnColor: drawActiveParts(gameObject.discoveredPartsList[gameObject.partPageIndex][i].img, gameObject.discoveredPartsList[gameObject.partPageIndex][i].count),
+					txtColor: 'black',
+					font: '0.8em serif',
+					msg: gameObject.discoveredPartsList[gameObject.partPageIndex][i].name,
+					isFilled: true,
+					id: 'robot-' + displayLimb + gameObject.discoveredPartsList[gameObject.partPageIndex][i].type + '-part',
+					action: { 
+						method: function(id) {
+							const newPart = Object.assign({}, gameObject.discoveredPartsList[gameObject.partPageIndex][i]);
+							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'leg') {
+								newPart.legPos = limbPos;
+							}
+							if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'arm') {
+								newPart.armPos = limbPos;
+							}
+							displaySelectPart(newPart, false);
 						}
-						if (gameObject.discoveredPartsList[gameObject.partPageIndex][i].type === 'arm') {
-							newPart.armPos = limbPos;
-						}
-						displaySelectPart(newPart, false);
-					}
-				},
-		        props: {},
-		        methodId: id
-		      });
-				}
-			};
-			Game.addMethod(Game.methodSetup);
+					},
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
 	}
 	drawNextPrevPartList(partsDiscovered, limbPos);
 }
@@ -1933,7 +1953,7 @@ function displaySelectPart(part, confirmed) {
 					id: 'confirm-part',
 					action: { method: function(id) {
 						if (confirmed && gameObject.selectedRobot.length === 6) {
-							console.log('build robot');
+							buildRobot();
 						} else {
 							equipPart(part);
 						}
@@ -2065,5 +2085,39 @@ function equipPart(part) {
 	}
 	displaySelectPart(part, true);
 
-	console.log(gameObject.selectedRobot);
+	// console.log(gameObject.selectedRobot);
+}
+
+function drawActiveParts(activeColor, count) {
+	if (count > 0) {
+		return activeColor;
+	} else {
+		return '#C0C0C0'
+	}
+}
+
+function buildRobot() {
+	let problems = 0;
+	// future Jordan make sure to refresh the parts that are currently displayed
+	gameObject.selectedRobot.forEach(item => {
+		// item.count--
+		if (item.headId) {
+			const robotHead = robotHeads.find(part => part.headId === item.headId);
+			if (robotHead.count >= 1) {
+				robotHead.count -= 1;
+			} else {
+				problems++;
+			}
+		}
+		if (item.chassisId) {
+			const robotChassis = robotChassis.find(part => part.chassisId === item.chassisId);
+			if (robotChassis.count >= 1) {
+				robotChassis.count -= 1;
+			} else {
+				problems++;
+			}
+		}
+		
+	});
+	console.log('build robot', gameObject.selectedRobot);
 }
