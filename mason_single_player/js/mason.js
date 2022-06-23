@@ -1496,6 +1496,7 @@ function clearRobotParts() {
 	const armLeftParts = Game.methodObjects.filter(x => x.id === 'robot-left-arm-part');
 	const nextBtn = Game.methodObjects.filter(x => x.id === 'next-part');
 	const prevBtn = Game.methodObjects.filter(x => x.id === 'last-part');
+	const partCount = Game.methodObjects.filter(x => x.id === 'part-count');
 	if (chassisParts.length > 0) {
 		chassisParts.forEach((item, i) => {
 			Game.deleteEntity(chassisParts[i].methodId);
@@ -1534,6 +1535,11 @@ function clearRobotParts() {
 	if (prevBtn.length > 0) {
 		prevBtn.forEach((item, i) => {
 			Game.deleteEntity(prevBtn[i].methodId);
+		});
+	}
+	if (partCount.length > 0) {
+		partCount.forEach((item, i) => {
+			Game.deleteEntity(partCount[i].methodId);
 		});
 	}
 	setTimeout(function() {
@@ -1596,8 +1602,6 @@ function selectRobotHead() {
 }
 
 function displayDiscoveredParts(partsDiscovered, limbPos) {
-	// future Jordan, we are going to want to put a circle graphic next
-	// to the parts with the total count of that part
 	gameObject.discoveredPartsList = [];
 	let partCount = 0;
 	let currentList = [];
@@ -1630,7 +1634,39 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 			method: function(id) {
 				drawButton({
 					posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-					posY: Game.placeEntityY(0.24 + (i * 0.135)),
+					posY: Game.placeEntityY(0.328 + (i * 0.125)),
+					width: (Game.entitySize * 22),
+					height: (Game.entitySize * 3),
+					lineWidth: 1,
+					btnColor: drawActiveParts(discoveredPart.img, discoveredPart.count),
+					txtColor: 'black',
+					font: '0.8em serif',
+					msg: discoveredPart.count,
+					isFilled: true,
+					id: 'part-count',
+					action: { 
+						method: function(id) {
+							const newPart = Object.assign({}, discoveredPart);
+							if (discoveredPart.type === 'leg') {
+								newPart.legPos = limbPos;
+							}
+							if (discoveredPart.type === 'arm') {
+								newPart.armPos = limbPos;
+							}
+							displaySelectPart(newPart, false);
+						}
+					},
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+					posY: Game.placeEntityY(0.24 + (i * 0.125)),
 					width: (Game.entitySize * 22),
 					height: (Game.entitySize * 9),
 					lineWidth: 1,
