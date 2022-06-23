@@ -1634,7 +1634,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 			method: function(id) {
 				drawButton({
 					posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-					posY: Game.placeEntityY(0.328 + (i * 0.125)),
+					posY: Game.placeEntityY(0.330 + (i * 0.125)),
 					width: (Game.entitySize * 22),
 					height: (Game.entitySize * 3),
 					lineWidth: 1,
@@ -1666,7 +1666,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 			method: function(id) {
 				drawButton({
 					posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-					posY: Game.placeEntityY(0.24 + (i * 0.125)),
+					posY: Game.placeEntityY(0.241 + (i * 0.125)),
 					width: (Game.entitySize * 22),
 					height: (Game.entitySize * 9),
 					lineWidth: 1,
