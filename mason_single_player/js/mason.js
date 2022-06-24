@@ -764,7 +764,8 @@ function drawBackground() {
 	};
 	Game.addMethod(Game.methodSetup);
 }
-
+// future Jordan, apply something like this to the robot select screen
+// so we can easily see the robot that was built
 function drawRobot() {
 	Game.methodSetup = {
 		method: function(id) {
