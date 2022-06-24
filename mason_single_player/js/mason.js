@@ -23,7 +23,7 @@ let robot = {};
 
 // this will keep track of the game
 const gameObject = {
-	// types of scrap matirials
+	// ---types of scrap matirials---
 	commonScrap: 0,
 	unCommonScrap: 0,
 	uniqueScrap: 0, // rare
@@ -36,23 +36,22 @@ const gameObject = {
 	roboticSkill: 0, // ability to put together robots with higher tiered parts
 	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts
 	barterSkill: 0, // sell for more on the grand exchange
-	// different tiers of money
+	// ---different tiers of money---
 	copper: 0, // 1000 copper = 1 bronze
 	bronze: 0, // 1000 bronze = 1 silver
 	silver: 0, // 1000 silver = 1 gold
 	gold: 0, // 1000 gold = 1 platinum
 	platinum: 0, // 1000 platinum = 1 mythryl
 	mythryl: 0, // mythryl is the highest tier
-	// types of buildings
+	// ---types of buildings---
 	factoryBuilt: false, // this building is where the player can make and automate robot production
 	factoryLevel: 0, // the factory level will determine how many different robots can be qued and saved
 	arenaBuild: false, // this is where multiplayer will come in. assign and build battle bots and buildings
 	arenaLevel: 0, // this will determine what type of buildings are availiable in multiplayer
-	// robot adventuring
+	// ---robot adventuring---
 	robotStorage: 5, // these robots can be sold on the grand exchange
 	robotsMade: 0, // or go on adventures to find riches
-	robotTeams: [], // the different number of robot teams going out to find riches
-	robotTeamIndex: -1, // when editing robots, this is where we are in the list
+	robotTeams: [], // the different robots who are going out to find riches
 	discoveredHeads: [], // all the robot heads discovered by the player
 	discoveredChassis: [], // all the robot chassis discovered by the player
 	discoveredLegs: [], // all the robot legs discovered by the player
@@ -61,6 +60,7 @@ const gameObject = {
 	robotDesigns: [], // this will hold all the different robot design the player has made
 	// a robot design can be made into a robot team
 	robotDesignCount: 9, // this is how many robots the player can design right now
+	selectedRobotDesign: -1, // this is the design that's currently selected
 	discoveredPartsList: [], // holds all the organized parts into 5 items per page
 	partPageIndex: 0, // this value will store where you are in the part list
 	partsDisplayed: '', // can be 'chassis', 'head', 'arm-' + armPos, 'leg-' + legPos
@@ -503,8 +503,20 @@ const robotArms = [
 	rockImg.src = rock1Path;
 	grassImg.src = grassPath;
 	Game.setSettingsHigh();
+	seedRobotDesigns()
 	playGame();
 })();
+
+function seedRobotDesigns() {
+	for (let i = 0; i < gameObject.robotDesignCount; i++) {
+		const robotDesign = {
+			robotId: i,
+			robotParts: [],
+		};
+		gameObject.robotDesigns.push(robotDesign);
+	}
+	console.log(gameObject.robotDesigns);
+}
 
 function playGame() {
 	robot = {};
@@ -1100,10 +1112,14 @@ function factoryRobotSelect() {
 					msg: '',
 					isFilled: true,
 					id: 'factory-details-btn',
-					action: { method: function(id) { factoryRobotDetails(); }}, // go to the robot details
-					props: {
-						robotDesignPos: i,
+					action: { 
+						method: function(id) {
+							gameObject.selectedRobot = gameObject.robotDesigns[i].robotParts;
+							gameObject.selectedRobotDesign = i;
+							factoryRobotDetails(); 
+						}
 					},
+					props: {},
 					methodId: id
 				});
 			}
@@ -1214,6 +1230,7 @@ function factoryRobotDetails() {
 				action: { method: function(id) {
 					 factoryRobotSelect(); 
 					 gameObject.partsDisplayed = ''; 
+					 gameObject.selectedRobotDesign = -1;
 					}
 				},
 				props: {},
@@ -1268,7 +1285,13 @@ function factoryRobotDetails() {
 				msg: 'Parts',
 				isFilled: true,
 				id: 'factory-view',
-				action: { method: function(id) { factoryRobotSelect(); }}, // this needs to go to the parts screen
+				action: { 
+					method: function(id) {
+						factoryRobotSelect(); // this needs to go to the parts screen
+						gameObject.partsDisplayed = ''; 
+						gameObject.selectedRobotDesign = -1;
+					 }
+				}, 
 				props: {},
 				methodId: id
 			});
@@ -2132,8 +2155,9 @@ function equipPart(part) {
 			Game.methodObjects.find(x => x.id === 'robot-right-arm').btnColor = part.img; // change this to the actual image when availiable
 		}
 	}
+	gameObject.robotDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
 	displaySelectPart(part, true);
-
+	console.log(gameObject.robotDesigns);
 	// console.log(gameObject.selectedRobot);
 }
 
@@ -2186,15 +2210,8 @@ function buildRobot() {
 		if (gameObject.robotsMade <= gameObject.robotStorage) {
 			// add the robot to the list
 			gameObject.robotsMade++;
-			const completedRobot = {
-				robotMade: gameObject.robotsMade,
-				parts: gameObject.selectedRobot
-			}
-			// future Jordan, find a better way to save robots.
-			// we may want to prepopulate the robot reams with blank 
-			// robots if we keep going down this road
 			gameObject.robotTeamIndex++;
-			gameObject.robotTeams.push(completedRobot);
+			gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
 			// refresh the parts that are displayed
 			clearRobotParts();
 		} else {
@@ -2206,5 +2223,5 @@ function buildRobot() {
 		console.log('display a modal for missing parts');
 		// dim the confirm button
 	}
-	console.log('build robot', gameObject.selectedRobot);
+	console.log('build robot', gameObject.robotTeams);
 }
