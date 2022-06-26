@@ -1097,8 +1097,7 @@ function factoryRobotSelect() {
 		if (robotCount === 3) {
 			posX = 0.689;
 			posXoffset = 1;
-		}
-			
+		}	
 		Game.methodSetup = {
 			method: function(id) {
 				drawButton({
@@ -1126,6 +1125,8 @@ function factoryRobotSelect() {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
+		// draw robot select preview here
+		// make sure to call this: drawRobotSelectPreview(partType, robotDesign)
 		if (i === 2) {
 			robotSelectRow++;
 		}
@@ -1300,6 +1301,81 @@ function factoryRobotDetails() {
 	};
 	Game.addMethod(Game.methodSetup);
 	
+}
+
+function drawRobotSelectPreview(partType, robotDesign) {
+	if (partType === 'chassis') {
+		if (robotDesign.length === 0) {
+			return '';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'chassis');
+			if (part) {
+				return robotDesign.find(partPos => partPos.type === 'chassis').img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'head') {
+		if (robotDesign.length === 0) {
+			return '';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'head');
+			if (part) {
+				return robotDesign.find(partPos => partPos.type === 'head').img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'left-leg') {
+		if (robotDesign.length === 0) {
+			return '';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left');
+			if (part) {
+				return robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left').img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'right-leg') {
+		if (robotDesign.length === 0) {
+			return '';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right');
+			if (part) {
+				return robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right').img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'left-arm') {
+		if (robotDesign.length === 0) {
+			return '';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left');
+			if (part) {
+				return robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left').img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'right-arm') {
+		if (robotDesign.length === 0) {
+			return '';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right');
+			if (part) {
+				return robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right').img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
 }
 
 function drawRobotPreviewParts(partType) {
