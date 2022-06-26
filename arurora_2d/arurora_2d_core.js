@@ -21,7 +21,7 @@ function drawText(incomingText) {
   drawTextMethod(incomingText);
 }
 // this will draw a rectangle to the screen
-function drawRect(incomingRect) {
+function drawRect(incomingRect) { // other objects can be drawn on top
   drawRectMethod(incomingRect);
 }
 // this will draw a circle to the screen
@@ -37,7 +37,7 @@ function drawImagePattern(incomingImgPat) {
   drawImagePatternMethod(incomingImgPat);
 }
 // this will draw a button to the screen
-function drawButton(incomingButton) {
+function drawButton(incomingButton) { // other objects can't be layered
   drawButtonMethod(incomingButton);
 }
 // this will draw a clickable/tappable image to the screen
