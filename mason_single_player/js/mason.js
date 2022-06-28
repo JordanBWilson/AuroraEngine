@@ -1128,6 +1128,13 @@ function factoryRobotSelect() {
 		
 	}
 	drawRobotSelectParts();
+	
+	Game.pageResized = {
+		section: 'factory-robot-select',
+		method: function() {
+			factoryRobotSelect();
+		}
+	}
 }
 
 function drawRobotSelectParts() {
@@ -1320,9 +1327,7 @@ function drawRobotSelect(posX, posY, robotDesign, index) {
 	};
 	Game.addMethod(Game.methodSetup);
 }
- // future Jordan, we are going to need to make that build button stay put
- // consider making an api method that can be used to fire custom resizing events
- // like redrawing the screen
+
 function factoryRobotDetails() {
 	Game.clearStage();
 	Game.methodSetup = {
@@ -1486,10 +1491,14 @@ function factoryRobotDetails() {
 	};
 	Game.addMethod(Game.methodSetup);
 	if (gameObject.selectedRobot.length === 6) {
+		// future Jordan, we may have to redraw the stats
+		// they are ever so slightly blury
 		displaySelectPart(gameObject.selectedRobot, true);
 	}
 	
 }
+
+// future Jordan, we need to make the parts view now
 
 function drawRobotSelectPreviewParts(partType, robotDesign) {
 	if (partType === 'chassis') {

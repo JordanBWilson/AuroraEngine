@@ -60,6 +60,9 @@ function mainLoop() {
           }
         }
         collisionCheck();
+        if (Main.isResizing && Game.pageResized.section.length > 0) {
+			Game.pageResized.method();
+		}
       } else {
         // stop the game
         console.log('The game has stopped. No more methods to listen to.');

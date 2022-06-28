@@ -26,6 +26,7 @@ const Game = { // the user will want to use this object
     Main.collisions = [];
     Main.methodsToRun = [];
     this.methodObjects = [];
+    this.pageResized.section = '';
     Main.methodObjectShadows = [];
     Main.globalId = 0;
   },
@@ -198,6 +199,10 @@ const Game = { // the user will want to use this object
   },
   loadingId: 'loading-message',
   isLoaded: false, // wait for assets to load before starting the game
+  pageResized: { // this is used when the screen resizes
+	section: '', // this is the page you're on. Has to be filled out
+	method: function() {/*put the methods you want fired here*/}
+  },
 };
 
 const Main = { // global variables to keep the game running nicely
