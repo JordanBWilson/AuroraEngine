@@ -64,6 +64,7 @@ const gameObject = {
 	discoveredPartsList: [], // holds all the organized parts into 5 items per page
 	partPageIndex: 0, // this value will store where you are in the part list
 	partsDisplayed: '', // can be 'chassis', 'head', 'arm-' + armPos, 'leg-' + legPos
+	buildButtonDisabled: false, // if there are no parts or no room for robots, disable the button
 };
 
 const robotHeads = [
@@ -72,7 +73,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'New World Head',
 		img: 'orange',
-		count: 1, // how many parts have been made
+		count: 5, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 1,
@@ -189,7 +190,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scrapper Chassis',
 		img: 'coral',
-		count: 1,
+		count: 5,
 		stats: {
 			att: 0,
 			def: 1,
@@ -355,7 +356,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
-		count: 2,
+		count: 10,
 		stats: {
 			att: 0,
 			def: 1,
@@ -477,7 +478,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Arm',
 		img: 'cornflowerblue',
-		count: 2,
+		count: 10,
 		stats: {
 			att: 1,
 			def: 1,
@@ -1113,9 +1114,7 @@ function factoryRobotSelect() {
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		
-		
+		Game.addMethod(Game.methodSetup);	
 		
 		if (i === 2) {
 			robotSelectRow++;
@@ -1417,6 +1416,7 @@ function factoryRobotDetails() {
 					 factoryRobotSelect(); 
 					 gameObject.partsDisplayed = ''; 
 					 gameObject.selectedRobotDesign = -1;
+					 gameObject.buildButtonDisabled = false;
 					}
 				},
 				props: {},
@@ -1476,6 +1476,7 @@ function factoryRobotDetails() {
 						factoryRobotSelect(); // this needs to go to the parts screen
 						gameObject.partsDisplayed = ''; 
 						gameObject.selectedRobotDesign = -1;
+						gameObject.buildButtonDisabled = false;
 					 }
 				}, 
 				props: {},
@@ -1484,6 +1485,9 @@ function factoryRobotDetails() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	if (gameObject.selectedRobot.length === 6) {
+		displaySelectPart(gameObject.selectedRobot, true);
+	}
 	
 }
 
@@ -2278,7 +2282,7 @@ function displaySelectPart(part, confirmed) {
 					width: (Game.entitySize * 23),
 					height: (Game.entitySize * 7),
 					lineWidth: 1,
-					btnColor: 'grey',
+					btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 					txtColor: 'white',
 					font: '1.5em serif',
 					msg: confirmed && gameObject.selectedRobot.length === 6 ? 'Build' : 'Confirm',
@@ -2286,7 +2290,10 @@ function displaySelectPart(part, confirmed) {
 					id: 'confirm-part',
 					action: { method: function(id) {
 						if (confirmed && gameObject.selectedRobot.length === 6) {
-							buildRobot();
+							if (!gameObject.buildButtonDisabled) {
+								buildRobot();
+							}
+							
 						} else {
 							equipPart(part);
 						}
@@ -2419,7 +2426,6 @@ function equipPart(part) {
 	gameObject.robotDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
 	displaySelectPart(part, true);
 	console.log(gameObject.robotDesigns);
-	// console.log(gameObject.selectedRobot);
 }
 
 function drawActiveParts(activeColor, count) {
@@ -2468,20 +2474,25 @@ function buildRobot() {
 		
 	});
 	if (problems === 0) {
-		if (gameObject.robotsMade <= gameObject.robotStorage) {
+		if (gameObject.robotsMade < gameObject.robotStorage) {
 			// add the robot to the list
 			gameObject.robotsMade++;
 			gameObject.robotTeamIndex++;
 			gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
 			// refresh the parts that are displayed
 			clearRobotParts();
+			displaySelectPart(gameObject.selectedRobot, true);
 		} else {
 			console.log('display a modal for full robot storage');
+			gameObject.buildButtonDisabled = true;
+			displaySelectPart(gameObject.selectedRobot, true);
 		}
 		
 	} else {
 		// only display the modal if the button isn't dimmed
 		console.log('display a modal for missing parts');
+		gameObject.buildButtonDisabled = true;
+		displaySelectPart(gameObject.selectedRobot, true);
 		// dim the confirm button
 	}
 	console.log('build robot', gameObject.robotTeams);
