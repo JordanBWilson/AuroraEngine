@@ -1013,7 +1013,14 @@ function factoryRobotSelect() {
 				msg: 'Back',
 				isFilled: true,
 				id: 'factory-back-game',
-				action: { method: function(id) { playGame(); }},
+				action: { 
+					method: function(id) { 
+						playGame();
+						gameObject.partsDisplayed = ''; 
+						gameObject.selectedRobotDesign = -1;
+						gameObject.buildButtonDisabled = false;
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1034,8 +1041,31 @@ function factoryRobotSelect() {
 				msg: 'Parts',
 				isFilled: true,
 				id: 'part-view',
-				action: { method: function(id) { playGame(); }}, // this needs to go to the parts screen
+				action: { 
+					method: function(id) { 
+						factoryRobotParts();
+						gameObject.partsDisplayed = ''; 
+						gameObject.selectedRobotDesign = -1;
+						gameObject.buildButtonDisabled = false;
+					}
+				}, // this needs to go to the parts screen
 				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Select',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'factory-title',
 				methodId: id
 			});
 		}
@@ -1418,7 +1448,7 @@ function factoryRobotDetails() {
 				isFilled: true,
 				id: 'factory-back-game',
 				action: { method: function(id) {
-					 factoryRobotSelect(); 
+					 factoryRobotSelect();
 					 gameObject.partsDisplayed = ''; 
 					 gameObject.selectedRobotDesign = -1;
 					 gameObject.buildButtonDisabled = false;
@@ -1478,7 +1508,7 @@ function factoryRobotDetails() {
 				id: 'factory-view',
 				action: { 
 					method: function(id) {
-						factoryRobotSelect(); // this needs to go to the parts screen
+						factoryRobotParts(); // this needs to go to the parts screen
 						gameObject.partsDisplayed = ''; 
 						gameObject.selectedRobotDesign = -1;
 						gameObject.buildButtonDisabled = false;
@@ -1491,14 +1521,129 @@ function factoryRobotDetails() {
 	};
 	Game.addMethod(Game.methodSetup);
 	if (gameObject.selectedRobot.length === 6) {
-		// future Jordan, we may have to redraw the stats
-		// they are ever so slightly blury
-		displaySelectPart(gameObject.selectedRobot, true);
+		displaySelectPart({}, true);
 	}
 	
 }
 
-// future Jordan, we need to make the parts view now
+function factoryRobotParts() {
+	Game.clearStage();
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height),
+				lineWidth: 1,
+				color: 'grey',
+				isFilled: true,
+				id: 'factory-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.45),
+				height: (Game.canvas.height * 0.45),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'robot-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.43),
+				height: (Game.canvas.height * 0.855),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'part-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.45),
+				height: (Game.canvas.height * 0.39),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'robot-stat-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Back',
+				isFilled: true,
+				id: 'factory-back-game',
+				action: { method: function(id) {
+					 factoryRobotSelect();
+					 gameObject.partsDisplayed = ''; 
+					 gameObject.selectedRobotDesign = -1;
+					 gameObject.buildButtonDisabled = false;
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Parts',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'factory-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}
 
 function drawRobotSelectPreviewParts(partType, robotDesign) {
 	if (partType === 'chassis') {
@@ -2326,7 +2471,9 @@ function displaySelectPart(part, confirmed) {
 		if (part.type === 'arm') {
 			existingPart = gameObject.selectedRobot.find(build => build.type === 'arm' && build.armPos === part.armPos);
 		}
-		createFactoryTitleStats(existingPart, part, confirmed, partChanged);
+		if (part.type) {
+			createFactoryTitleStats(existingPart, part, confirmed, partChanged);
+		}
 	}, 0);
 }
 
@@ -2489,19 +2636,18 @@ function buildRobot() {
 			gameObject.robotTeamIndex++;
 			gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
 			// refresh the parts that are displayed
-			clearRobotParts();
-			displaySelectPart(gameObject.selectedRobot, true);
+			displaySelectPart({}, true);
 		} else {
 			console.log('display a modal for full robot storage');
 			gameObject.buildButtonDisabled = true;
-			displaySelectPart(gameObject.selectedRobot, true);
+			displaySelectPart({}, true);
 		}
 		
 	} else {
 		// only display the modal if the button isn't dimmed
 		console.log('display a modal for missing parts');
 		gameObject.buildButtonDisabled = true;
-		displaySelectPart(gameObject.selectedRobot, true);
+		displaySelectPart({}, true);
 		// dim the confirm button
 	}
 	console.log('build robot', gameObject.robotTeams);
