@@ -1432,7 +1432,7 @@ function factoryRobotDetails() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	drawRobotPreview();
+	drawRobotPreview(); // draw the robot in the top left
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1520,6 +1520,7 @@ function factoryRobotDetails() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	// display the build button when the robot parts are complete
 	if (gameObject.selectedRobot.length === 6) {
 		displaySelectPart({}, true);
 	}
@@ -1602,6 +1603,7 @@ function factoryRobotParts() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	drawRobotPartButtons(); // draw the buttons in the top left
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1929,6 +1931,93 @@ function drawRobotPreview() {
 		createFactoryTitleStats(undefined, undefined, undefined, undefined);
 	}
 
+}
+
+function drawRobotPartButtons() {
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.36, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Chassis',
+				isFilled: true,
+				id: 'robot-body-parts',
+				action: { method: function(id) { selectRobotChassis(); }}, // this needs to select this button
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.47, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Heads',
+				isFilled: true,
+				id: 'robot-head-parts',
+				action: { method: function(id) { selectRobotHead(); }}, // this needs to select this button
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.58, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Arms',
+				isFilled: true,
+				id: 'robot-arm-parts',
+				action: { method: function(id) { selectRobotArms(); }}, // this needs to select this button
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.69, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Legs',
+				isFilled: true,
+				id: 'robot-leg-parts',
+				action: { method: function(id) { selectRobotLegs(); }}, // this needs to select this button
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
 
 function clearRobotParts() {
