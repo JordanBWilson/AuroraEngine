@@ -1525,7 +1525,9 @@ function factoryRobotDetails() {
 	}
 	
 }
-
+ // future Jordan when you make the parts, make sure you include the name
+ // and count in the "stats" section. Also, only show up to 3 different scrap
+ // types under it. If the scrap count is 0, don't show it
 function factoryRobotParts() {
 	Game.clearStage();
 	Game.methodSetup = {
