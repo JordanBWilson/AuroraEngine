@@ -31,6 +31,7 @@ const gameObject = {
 	facinatingScrap: 0, // legendary
 	mythicScrap: 0,
 	exoticScrap: 0, // I'm thinking this scrap type could be used to make special items
+	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
 	scrapperSkill: 0, // ability to find more rare scrap
 	roboticSkill: 0, // ability to put together robots with higher tiered parts
@@ -1508,7 +1509,7 @@ function factoryRobotDetails() {
 				id: 'factory-view',
 				action: { 
 					method: function(id) {
-						factoryRobotParts(); // this needs to go to the parts screen
+						factoryRobotParts();
 						gameObject.partsDisplayed = ''; 
 						gameObject.selectedRobotDesign = -1;
 						gameObject.buildButtonDisabled = false;
@@ -1948,7 +1949,7 @@ function drawRobotPartButtons() {
 				msg: 'Chassis',
 				isFilled: true,
 				id: 'robot-body-parts',
-				action: { method: function(id) { selectRobotChassis(); }}, // this needs to select this button
+				action: { method: function(id) { selectRobotPartChassis(); }}, // this needs to select this button
 				props: {},
 				methodId: id
 			});
@@ -2078,6 +2079,22 @@ function clearRobotParts() {
 	setTimeout(function() {
 		createFactoryTitleStats(undefined, undefined, undefined, undefined);
 	}, 0);
+}
+ // future Jordan, we need to finish this up and then apply it to the rest
+ // of the part buttons
+function selectRobotPartChassis() {
+	console.log('selecting the chassis parts...');
+	gameObject.partsDisplayed = 'chassis';
+	// load up the robot parts the player has discovered...
+	// clearRobotParts(); // Going to need something like this
+	// clearSelectedPartStatDetails(); // need to set this up
+	refreshFactoryBackgrounds();
+	clearRobotPartPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-body-parts');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	// need to make a parts screen equivelant to below
+	displayDiscoveredParts(gameObject.discoveredChassis, '');
 }
 
 function selectRobotArms(armPos) {
@@ -2306,6 +2323,17 @@ function clearRobotPreviewHighlight() {
 	legRightHighlight.btnColor = drawRobotPreviewParts('right-leg');
 	const legLeftHighlight = Game.methodObjects.find(x => x.id === 'robot-left-leg');
 	legLeftHighlight.btnColor = drawRobotPreviewParts('left-leg');
+}
+
+function clearRobotPartPreviewHighlight() {
+	const headHighlight = Game.methodObjects.find(item => item.id === 'robot-head-parts');
+	headHighlight.btnColor = 'lightslategrey';
+	const chassisHighlight = Game.methodObjects.find(item => item.id === 'robot-body-parts');
+	chassisHighlight.btnColor = 'lightslategrey';
+	const armRightHighlight = Game.methodObjects.find(x => x.id === 'robot-arm-parts');
+	armRightHighlight.btnColor = 'lightslategrey';
+	const legRightHighlight = Game.methodObjects.find(x => x.id === 'robot-leg-parts');
+	legRightHighlight.btnColor = 'lightslategrey';
 }
 
 function clearSelectedPartStatDetails() {
