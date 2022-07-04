@@ -2721,7 +2721,8 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 	clearSelectedPartStatDetails();
 	refreshFactoryBackgrounds();
 }
-
+ // future Jordan, continue making the the scrap cost menu. Make sure to
+ // show how much scrap the player has and how much it costs
 function createFactoryTitleScraps(part) {
 	if (part) {
 		// draw the scrap cost in here
