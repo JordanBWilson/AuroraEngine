@@ -1527,9 +1527,7 @@ function factoryRobotDetails() {
 	}
 	
 }
- // future Jordan when you make the parts, make sure you include the name
- // and count in the "stats" section. Also, only show up to 3 different scrap
- // types under it. If the scrap count is 0, don't show it
+
 function factoryRobotParts() {
 	Game.clearStage();
 	Game.methodSetup = {
@@ -2135,8 +2133,8 @@ function selectRobotPartChassis() {
 	console.log('selecting the chassis parts...');
 	gameObject.partsDisplayed = 'chassis';
 	// load up the robot parts the player has discovered...
-	clearRobotPartParts(); // Going to need something like this
-	// clearSelectedPartStatDetails(); // need to set this up
+	clearRobotPartParts();
+	clearSelectedPartScrapDetails();
 	refreshFactoryBackgrounds();
 	clearRobotPartPreviewHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-body-parts');
@@ -2362,7 +2360,6 @@ function displayDiscoveredPartParts(partsDiscovered) {
 					action: { 
 						method: function(id) {
 							const newPart = Object.assign({}, discoveredPart);
-							console.log(newPart);
 							displaySelectPartParts(newPart);
 						}
 					},
@@ -2374,6 +2371,7 @@ function displayDiscoveredPartParts(partsDiscovered) {
 		Game.addMethod(Game.methodSetup);
 	}
 	drawNextPrevPartPartsList(partsDiscovered);
+	
 }
 
 function drawNextPrevPartList(partList, limbPos) {
@@ -2498,6 +2496,7 @@ function drawNextPrevPartPartsList(partList) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	
 }
 
 function clearRobotPreviewHighlight() {
@@ -2577,6 +2576,106 @@ function clearSelectedPartStatDetails() {
 			Game.deleteEntity(item.methodId);
 		});
 	}
+}
+
+function clearSelectedPartScrapDetails() {
+	// clear the stats and the buttons
+	const selectPartBtn = Game.methodObjects.filter(x => x.id === 'confirm-part');
+	if (selectPartBtn) {
+		selectPartBtn.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectCommonScrap = Game.methodObjects.filter(x => x.id === 'commonScrap');
+	if (selectCommonScrap) {
+		selectCommonScrap.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectUnCommonScrap = Game.methodObjects.filter(x => x.id === 'unCommonScrap');
+	if (selectUnCommonScrap) {
+		selectUnCommonScrap.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectUniqueScrap = Game.methodObjects.filter(x => x.id === 'uniqueScrap');
+	if (selectUniqueScrap) {
+		selectUniqueScrap.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectIntriguingScrap = Game.methodObjects.filter(x => x.id === 'intriguingScrap');
+	if (selectIntriguingScrap) {
+		selectIntriguingScrap.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectFacinatingScrap = Game.methodObjects.filter(x => x.id === 'facinatingScrap');
+	if (selectFacinatingScrap) {
+		selectFacinatingScrap.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectMythicScrap = Game.methodObjects.filter(x => x.id === 'mythicScrap');
+	if (selectMythicScrap) {
+		selectMythicScrap.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectExoticScrap = Game.methodObjects.filter(x => x.id === 'exoticScrap');
+	if (selectExoticScrap) {
+		selectExoticScrap.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	// clear the titles
+	const factoryTitle = Game.methodObjects.filter(x => x.id === 'factory-title');
+	if (factoryTitle) {
+		factoryTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
+	if (statTitle) {
+		statTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectAttStat = Game.methodObjects.filter(x => x.id === 'part-title');
+	if (selectAttStat) {
+		selectAttStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectDefStat = Game.methodObjects.filter(x => x.id === 'count-title');
+	if (selectDefStat) {
+		selectDefStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	const selectSpdStat = Game.methodObjects.filter(x => x.id === 'scrap-title');
+	if (selectSpdStat) {
+		selectSpdStat.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	// redraw the title here
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Parts',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'factory-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
 
 function totalSelectedRobotStats() {
@@ -2721,11 +2820,21 @@ function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 	clearSelectedPartStatDetails();
 	refreshFactoryBackgrounds();
 }
- // future Jordan, continue making the the scrap cost menu. Make sure to
- // show how much scrap the player has and how much it costs
+
 function createFactoryTitleScraps(part) {
 	if (part) {
-		// draw the scrap cost in here
+		const scrapCosts = [];
+		for (const scrap in part.scrapToBuild) {
+			
+			if (part.scrapToBuild[scrap] > 0) {
+				const scrapObj = { 
+					type: scrap, 
+					cost: part.scrapToBuild[scrap]
+				};
+				scrapCosts.push(scrapObj);
+			}
+		}
+		console.log(scrapCosts);
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
@@ -2763,8 +2872,8 @@ function createFactoryTitleScraps(part) {
 				drawText({
 					font: '2em serif',
 					msg: 'Scrap',
-					posX: Game.placeEntityX(0.247),
-					posY: Game.placeEntityY(0.70),
+					posX: Game.placeEntityX(0.25),
+					posY: Game.placeEntityY(0.705),
 					color: 'grey',
 					align: 'center',
 					props: {},
@@ -2774,106 +2883,56 @@ function createFactoryTitleScraps(part) {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
+		
+		scrapCosts.forEach((scrap, i) => {
+			let scrapType = '';
+			let scrapCost = 0;
+			let totalScrap = 0;
+			if (scrap.type === 'commonScrap') {
+				scrapType = 'Common';
+				totalScrap = gameObject.commonScrap;
+			} else if (scrap.type === 'unCommonScrap') {
+				scrapType = 'Uncommon';
+				totalScrap = gameObject.unCommonScrap;
+			} else if (scrap.type === 'uniqueScrap') {
+				scrapType = 'Unique';
+				totalScrap = gameObject.uniqueScrap;
+			} else if (scrap.type === 'intriguingScrap') {
+				scrapType = 'Intriguing';
+				totalScrap = gameObject.intriguingScrap;
+			} else if (scrap.type === 'facinatingScrap') {
+				scrapType = 'Facinating';
+				totalScrap = gameObject.facinatingScrap;
+			} else if (scrap.type === 'mythicScrap') {
+				scrapType = 'Mythic';
+				totalScrap = gameObject.mythicScrap;
+			} else if (scrap.type === 'exoticScrap') {
+				scrapType = 'Exotic';
+				totalScrap = gameObject.exoticScrap;
+			}
+			scrapCost = scrap.cost;
+			// future Jordan just under 10,000 scrapCost would fit nicely in
+			// this spot
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '0.9em serif',
+						msg: scrapType + ': ' + scrapCost + ' (' + totalScrap + ')',
+						posX: Game.placeEntityX(0.08),
+						posY: Game.placeEntityY(0.75 + (i * 0.055)),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: scrap.type,
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		});
 	}
 
-	//Game.addMethod(Game.methodSetup);
-	//Game.methodSetup = {
-		//method: function(id) {
-			//drawText({
-				//font: '2.3em serif',
-				//msg: 'Details',
-				//posX: Game.placeEntityX(0.50),
-				//posY: Game.placeEntityY(0.085),
-				//color: 'darkgrey',
-				//align: 'center',
-				//props: {},
-				//id: 'factory-title',
-				//methodId: id
-			//});
-		//}
-	//};
-	//Game.addMethod(Game.methodSetup);
-	//Game.methodSetup = {
-		//method: function(id) {
-			//drawText({
-				//font: '1em serif',
-				//msg: 'Attack: ' + returnStatValue(selectedPart?.stats?.att, 'att', confirmed, partChanged, existingPart?.stats?.att),
-				//posX: Game.placeEntityX(0.09),
-				//posY: Game.placeEntityY(0.69),
-				//color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att', partChanged, confirmed),
-				//align: 'left',
-				//props: {},
-				//id: 'att-stat',
-				//methodId: id
-			//});
-		//}
-	//};
-	//Game.addMethod(Game.methodSetup);
-	//Game.methodSetup = {
-		//method: function(id) {
-			//drawText({
-				//font: '1em serif',
-				//msg: 'Defense: ' + returnStatValue(selectedPart?.stats?.def, 'def', confirmed, partChanged, existingPart?.stats?.def),
-				//posX: Game.placeEntityX(0.09),
-				//posY: Game.placeEntityY(0.74),
-				//color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def', partChanged, confirmed),
-				//align: 'left',
-				//props: {},
-				//id: 'def-stat',
-				//methodId: id
-			//});
-		//}
-	//};
-	//Game.addMethod(Game.methodSetup);
-	//Game.methodSetup = {
-		//method: function(id) {
-			//drawText({
-				//font: '1em serif',
-				//msg: 'Speed: ' + returnStatValue(selectedPart?.stats?.spd, 'spd', confirmed, partChanged, existingPart?.stats?.spd),
-				//posX: Game.placeEntityX(0.09),
-				//posY: Game.placeEntityY(0.79),
-				//color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd', partChanged, confirmed),
-				//align: 'left',
-				//props: {},
-				//id: 'spd-stat',
-				//methodId: id
-			//});
-		//}
-	//};
-	//Game.addMethod(Game.methodSetup);
-	//Game.methodSetup = {
-		//method: function(id) {
-			//drawText({
-				//font: '1em serif',
-				//msg: 'AI: ' + returnStatValue(selectedPart?.stats?.ai, 'ai', confirmed, partChanged, existingPart?.stats?.ai),
-				//posX: Game.placeEntityX(0.09),
-				//posY: Game.placeEntityY(0.84),
-				//color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai', partChanged, confirmed),
-				//align: 'left',
-				//props: {},
-				//id: 'ai-stat',
-				//methodId: id
-			//});
-		//}
-	//};
-	//Game.addMethod(Game.methodSetup);
-	//Game.methodSetup = {
-		//method: function(id) {
-			//drawText({
-				//font: '1em serif',
-				//msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged, existingPart?.stats?.storage),
-				//posX: Game.placeEntityX(0.09),
-				//posY: Game.placeEntityY(0.88),
-				//color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage', partChanged, confirmed),
-				//align: 'left',
-				//props: {},
-				//id: 'storage-stat',
-				//methodId: id
-			//});
-		//}
-	//};
-	//Game.addMethod(Game.methodSetup);
-	//clearSelectedPartStatDetails();
+	clearSelectedPartScrapDetails();
 	refreshFactoryBackgrounds();
 }
 
