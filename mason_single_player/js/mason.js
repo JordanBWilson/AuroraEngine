@@ -1947,7 +1947,7 @@ function drawRobotPartButtons() {
 				msg: 'Chassis',
 				isFilled: true,
 				id: 'robot-body-parts',
-				action: { method: function(id) { selectRobotPartChassis(); }}, // this needs to select this button
+				action: { method: function(id) { selectRobotPartChassis(); }},
 				props: {},
 				methodId: id
 			});
@@ -1968,7 +1968,7 @@ function drawRobotPartButtons() {
 				msg: 'Heads',
 				isFilled: true,
 				id: 'robot-head-parts',
-				action: { method: function(id) { selectRobotHead(); }}, // this needs to select this button
+				action: { method: function(id) { selectRobotPartHead(); }},
 				props: {},
 				methodId: id
 			});
@@ -1989,7 +1989,7 @@ function drawRobotPartButtons() {
 				msg: 'Arms',
 				isFilled: true,
 				id: 'robot-arm-parts',
-				action: { method: function(id) { selectRobotArms(); }}, // this needs to select this button
+				action: { method: function(id) { selectRobotPartArms(); }},
 				props: {},
 				methodId: id
 			});
@@ -2010,7 +2010,7 @@ function drawRobotPartButtons() {
 				msg: 'Legs',
 				isFilled: true,
 				id: 'robot-leg-parts',
-				action: { method: function(id) { selectRobotLegs(); }}, // this needs to select this button
+				action: { method: function(id) { selectRobotPartLegs(); }},
 				props: {},
 				methodId: id
 			});
@@ -2141,6 +2141,50 @@ function selectRobotPartChassis() {
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
 	displayDiscoveredPartParts(gameObject.discoveredChassis);
+}
+
+function selectRobotPartHead() {
+	console.log('selecting the head parts...');
+	gameObject.partsDisplayed = 'head';
+	// load up the robot parts the player has discovered...
+	clearRobotPartParts();
+	clearSelectedPartScrapDetails();
+	refreshFactoryBackgrounds();
+	clearRobotPartPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-head-parts');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	displayDiscoveredPartParts(gameObject.discoveredHeads);
+}
+
+function selectRobotPartArms() {
+	// the armPos could be left or right
+	console.log('selecting the arms parts...');
+	gameObject.partsDisplayed = 'arm';
+	// load up the robot parts the player has discovered...
+	clearRobotPartParts();
+	clearSelectedPartScrapDetails();
+	refreshFactoryBackgrounds();
+	clearRobotPartPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-arm-parts');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	displayDiscoveredPartParts(gameObject.discoveredArms);
+}
+
+function selectRobotPartLegs() {
+	// the legPos could be left or right
+	console.log('selecting the legs parts...');
+	gameObject.partsDisplayed = 'leg';
+	// load up the robot parts the player has discovered...
+	clearRobotPartParts();
+	clearSelectedPartScrapDetails();
+	refreshFactoryBackgrounds();
+	clearRobotPartPreviewHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'robot-leg-parts');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	displayDiscoveredPartParts(gameObject.discoveredLegs);
 }
 
 function selectRobotArms(armPos) {
@@ -2332,8 +2376,7 @@ function displayDiscoveredPartParts(partsDiscovered) {
 					id: 'part-count',
 					action: { 
 						method: function(id) {
-							const newPart = Object.assign({}, discoveredPart);
-							displaySelectPartParts(newPart);
+							displaySelectPartParts(discoveredPart);
 						}
 					},
 					props: {},
@@ -2359,8 +2402,7 @@ function displayDiscoveredPartParts(partsDiscovered) {
 					id: 'robot-' + discoveredPart.type + '-part',
 					action: { 
 						method: function(id) {
-							const newPart = Object.assign({}, discoveredPart);
-							displaySelectPartParts(newPart);
+							displaySelectPartParts(discoveredPart);
 						}
 					},
 					props: {},
@@ -2454,9 +2496,11 @@ function drawNextPrevPartPartsList(partList) {
 				id: 'next-part',
 				action: {
 					method: function(id) {
-						gameObject.partPageIndex++; // go to the next part page
-						clearRobotPartParts(); // clear the previous parts
-						displayDiscoveredPartParts(partList);
+						if (partList.length > 5) {
+							gameObject.partPageIndex++; // go to the next part page
+							clearRobotPartParts(); // clear the previous parts
+							displayDiscoveredPartParts(partList);
+						}
 					}
 				},
 				props: {},
@@ -2481,13 +2525,15 @@ function drawNextPrevPartPartsList(partList) {
 				id: 'last-part',
 				action: {
 					method: function(id) {
-						gameObject.partPageIndex--; // go back a page
-						if (gameObject.partPageIndex < 0) { // if the page is at the beginning
-							// go to the last page
-							gameObject.partPageIndex = (gameObject.discoveredPartsList.length - 1);
+						if (partList.length > 5) {
+							gameObject.partPageIndex--; // go back a page
+							if (gameObject.partPageIndex < 0) { // if the page is at the beginning
+								// go to the last page
+								gameObject.partPageIndex = (gameObject.discoveredPartsList.length - 1);
+							}
+							clearRobotPartParts(); // clear the previous parts
+							displayDiscoveredPartParts(partList);
 						}
-						clearRobotPartParts(); // clear the previous parts
-						displayDiscoveredPartParts(partList);
 					}
 				},
 				props: {},
@@ -2514,15 +2560,19 @@ function clearRobotPreviewHighlight() {
 	legLeftHighlight.btnColor = drawRobotPreviewParts('left-leg');
 }
 
-function clearRobotPartPreviewHighlight() {
+function clearRobotPartPreviewHighlight() { // txtColor
 	const headHighlight = Game.methodObjects.find(item => item.id === 'robot-head-parts');
 	headHighlight.btnColor = 'lightslategrey';
+	headHighlight.txtColor = 'white';
 	const chassisHighlight = Game.methodObjects.find(item => item.id === 'robot-body-parts');
 	chassisHighlight.btnColor = 'lightslategrey';
+	chassisHighlight.txtColor = 'white';
 	const armRightHighlight = Game.methodObjects.find(x => x.id === 'robot-arm-parts');
 	armRightHighlight.btnColor = 'lightslategrey';
+	armRightHighlight.txtColor = 'white';
 	const legRightHighlight = Game.methodObjects.find(x => x.id === 'robot-leg-parts');
 	legRightHighlight.btnColor = 'lightslategrey';
+	legRightHighlight.txtColor = 'white';
 }
 
 function clearSelectedPartStatDetails() {
@@ -3019,6 +3069,25 @@ function displaySelectPartParts(part) {
 					id: 'confirm-part',
 					action: { method: function(id) {
 						// future Jordan build the selected part
+						part.count++;
+						console.log(part);
+						if (gameObject.partsDisplayed === 'chassis') {
+							selectRobotPartChassis();
+						} else if (gameObject.partsDisplayed === 'head') {
+							selectRobotPartHead();
+						} else if (gameObject.partsDisplayed === 'arm') {
+							selectRobotPartArms();
+						} else if (gameObject.partsDisplayed === 'leg') {
+							selectRobotPartLegs();
+						}
+						
+						setTimeout(function() {
+							
+							// createFactoryTitleScraps(part);
+						}, 0);
+						clearSelectedPartScrapDetails();
+						displaySelectPartParts(part);
+						
 					}},
 					props: {},
 					methodId: id
