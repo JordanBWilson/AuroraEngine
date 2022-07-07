@@ -48,6 +48,10 @@ function drawButtonImage(incomingButtonImage) {
 function drawLoadingScreen(incomingLoadingScreen) {
   drawLoadingScreenMethod(incomingLoadingScreen);
 }
+// this will draw a modal and display a message to the screen
+function drawModal(incomingModal) {
+  drawButtonMethod(incomingModal);
+}
 
 // this is where all the work happens for the methods above
 
@@ -735,4 +739,117 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
       Game.methodObjects[index].isAnim = false;
    }
+}
+function drawModalMethod(incomingButton) {
+  let doesExist = doesMethodParamExist(incomingButton.methodId);
+  let index = -1;
+  if (doesExist) {
+    index = findMethodParamIndex(incomingButton.methodId);
+  }
+  if (!doesExist) {
+    let button = {
+      posX: incomingButton.posX,
+      posY: incomingButton.posY,
+      width: incomingButton.width,
+      height: incomingButton.height,
+      lineWidth: incomingButton.lineWidth,
+      btnColor: incomingButton.btnColor,
+      txtColor: incomingButton.txtColor,
+      font: incomingButton.font,
+      msg: incomingButton.msg,
+      isFilled: incomingButton.isFilled,
+      id: incomingButton.id,
+      action: incomingButton.action,
+      isBtn: true,
+      isAnim: false,
+      props: incomingButton.props,
+      methodId: incomingButton.methodId,
+    }
+    Game.methodObjects.push(button);
+    redrawButton(incomingButton);
+    const shadowButton = Object.assign({}, button);
+    Main.methodObjectShadows.push(shadowButton);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = incomingButton.posX;
+    Game.methodObjects[index].posY = incomingButton.posY;
+    Game.methodObjects[index].width = incomingButton.width;
+    Game.methodObjects[index].height = incomingButton.height;
+    Game.methodObjects[index].lineWidth = incomingButton.lineWidth;
+    Game.methodObjects[index].btnColor = incomingButton.btnColor;
+    Game.methodObjects[index].txtColor = incomingButton.txtColor;
+    Game.methodObjects[index].font = incomingButton.font;
+    Game.methodObjects[index].msg = incomingButton.msg;
+    Game.methodObjects[index].isFilled = incomingButton.isFilled;
+    Game.methodObjects[index].action = incomingButton.action;
+    Game.methodObjects[index].isAnim = false;
+    Game.methodObjects[index].props = incomingButton.props;
+    Main.methodObjectShadows[index].posX = incomingButton.posX;
+    Main.methodObjectShadows[index].posY = incomingButton.posY;
+    Main.methodObjectShadows[index].width = incomingButton.width;
+    Main.methodObjectShadows[index].height = incomingButton.height;
+    Main.methodObjectShadows[index].lineWidth = incomingButton.lineWidth;
+    Main.methodObjectShadows[index].btnColor = incomingButton.btnColor;
+    Main.methodObjectShadows[index].txtColor = incomingButton.txtColor;
+    Main.methodObjectShadows[index].font = incomingButton.font;
+    Main.methodObjectShadows[index].msg = incomingButton.msg;
+    Main.methodObjectShadows[index].isFilled = incomingButton.isFilled;
+    Main.methodObjectShadows[index].action = incomingButton.action;
+    Main.methodObjectShadows[index].isAnim = false;
+    Main.methodObjectShadows[index].props = incomingButton.props;
+    redrawButton(incomingButton);
+  }
+  // checking for animations
+  if (doesExist &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
+   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
+   Game.methodObjects[index].btnColor !== Main.methodObjectShadows[index].btnColor ||
+   Game.methodObjects[index].txtColor !== Main.methodObjectShadows[index].txtColor ||
+   Game.methodObjects[index].font !== Main.methodObjectShadows[index].font ||
+   Game.methodObjects[index].msg !== Main.methodObjectShadows[index].font ||
+   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   ) {
+     redrawButton(Game.methodObjects[index]);
+      const shadowButton = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowButton;
+      Game.methodObjects[index].isAnim = true;
+   } else if (doesExist && Game.methodObjects[index].isAnim) {
+      redrawButton(Game.methodObjects[index]);
+      Game.methodObjects[index].isAnim = false;
+   } else if (doesExist &&
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
+    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
+    Game.methodObjects[index].btnColor === Main.methodObjectShadows[index].btnColor ||
+    Game.methodObjects[index].txtColor === Main.methodObjectShadows[index].txtColor ||
+    Game.methodObjects[index].font === Main.methodObjectShadows[index].font ||
+    Game.methodObjects[index].msg === Main.methodObjectShadows[index].font ||
+    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+      Game.methodObjects[index].isAnim = false;
+   }
+}
+function redrawModal(incomingButton) {
+  Main.stage.beginPath();
+  if (!incomingButton.lineWidth) {
+    Main.stage.lineWidth = '1';
+  } else {
+    Main.stage.lineWidth = incomingButton.lineWidth;
+  }
+  Main.stage.rect(incomingButton.posX, incomingButton.posY, incomingButton.width, incomingButton.height);
+  if (incomingButton.isFilled) {
+    Main.stage.fillStyle = incomingButton.btnColor;
+    Main.stage.fill();
+  } else {
+    Main.stage.strokeStyle = incomingButton.btnColor;
+    Main.stage.stroke();
+  }
+  Main.stage.fillStyle = incomingButton.txtColor;
+  Main.stage.font = incomingButton.font;
+  Main.stage.textAlign = 'center';
+  Main.stage.fillText(incomingButton.msg, (incomingButton.posX + (incomingButton.width * 0.5)), (incomingButton.posY + (incomingButton.height * 0.65)));
 }

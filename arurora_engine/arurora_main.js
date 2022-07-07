@@ -209,9 +209,13 @@ function assignImages(pngs, methodId) {
   Game.isLoaded = true;
 }
 function removeLoadingScreen() {
-  const loading = Game.methodObjects.find(x => x.id === 'loading-message')?.methodId;
-  if (loading) {
-    // remove the loading message
-    Game.deleteEntity(loading);
-  }
+	const checkLoad = setInterval(function() {
+		const loading = Game.methodObjects.find(x => x.id === 'loading-message')?.methodId;
+		if (loading) {
+			// remove the loading message
+			clearInterval(checkLoad);
+			Game.deleteEntity(loading);
+		}
+	}, 300);
+  
 }

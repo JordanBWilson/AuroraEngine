@@ -922,9 +922,16 @@ function animateObjects() {
 	}
 	if (robot?.methodId) {
 		const roboParts = Game.methodObjects.filter(x => x.id === 'robot');
-		roboParts.forEach((item, i) => {
-			item.posX -= Game.moveEntity(0.1, Game.enumDirections.leftRight);
-		});
+		if (roboParts.length === 6) {
+			setTimeout(function() {
+				for (let i = 0; i < roboParts.length; i++) {
+					roboParts[i].posX -= Game.moveEntity(0.1, Game.enumDirections.leftRight);
+					if (i === roboParts.length -1) {
+						break;
+					}
+				}
+			}, 0);
+		}
 	}
 }
 
