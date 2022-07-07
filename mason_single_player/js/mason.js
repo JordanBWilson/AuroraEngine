@@ -3071,23 +3071,17 @@ function displaySelectPartParts(part) {
 						// future Jordan build the selected part
 						part.count++;
 						console.log(part);
+
 						if (gameObject.partsDisplayed === 'chassis') {
-							selectRobotPartChassis();
+							displayDiscoveredPartParts(gameObject.discoveredChassis);
 						} else if (gameObject.partsDisplayed === 'head') {
-							selectRobotPartHead();
+							displayDiscoveredPartParts(gameObject.discoveredHeads);
 						} else if (gameObject.partsDisplayed === 'arm') {
-							selectRobotPartArms();
+							displayDiscoveredPartParts(gameObject.discoveredArms);
 						} else if (gameObject.partsDisplayed === 'leg') {
-							selectRobotPartLegs();
+							displayDiscoveredPartParts(gameObject.discoveredLegs);
 						}
-						
-						setTimeout(function() {
-							
-							// createFactoryTitleScraps(part);
-						}, 0);
-						clearSelectedPartScrapDetails();
 						displaySelectPartParts(part);
-						
 					}},
 					props: {},
 					methodId: id
