@@ -1159,7 +1159,10 @@ function factoryRobotSelect() {
 		
 	}
 	drawRobotSelectParts();
-	
+	// future Jordan, to be completely done with the factory (other than the graphics)
+	// we need to make some Game.pageResised in the details and the parts pages
+	// when the page is resized, the selected part no longer appears selected
+	// we also have to make a modal
 	Game.pageResized = {
 		section: 'factory-robot-select',
 		method: function() {
@@ -2123,7 +2126,6 @@ function clearRobotPartParts() {
 		});
 	}
 	setTimeout(function() {
-		// future Jordan, this needs to display scrap costs
 		createFactoryTitleScraps(undefined);
 	}, 0);
 }
@@ -3090,90 +3092,125 @@ function displaySelectPartParts(part) {
 					msg: 'Build',
 					isFilled: true,
 					id: 'confirm-part',
-					action: { method: function(id) {
-						const scrapCosts = [];
-						for (const scrap in part.scrapToBuild) {
-							if (part.scrapToBuild[scrap] > 0) {
-								const scrapObj = {
-									type: scrap, 
-									cost: part.scrapToBuild[scrap]
-								};
-								scrapCosts.push(scrapObj);
+					action: {
+						method: function(id) {
+							if (!gameObject.buildButtonDisabled) {
+								const scrapCosts = [];
+								for (const scrap in part.scrapToBuild) {
+									if (part.scrapToBuild[scrap] > 0) {
+										const scrapObj = {
+											type: scrap, 
+											cost: part.scrapToBuild[scrap]
+										};
+										scrapCosts.push(scrapObj);
+									}
+								}
+								// check to see if we have all the scrap we need
+								let problems = 0;
+								scrapCosts.forEach((scrap, i) => {
+									if (scrap.type === 'commonScrap') {
+										if (gameObject.commonScrap >= scrap.cost) {
+											// got the scrap
+										} else {
+											problems++;
+										}
+									} else if (scrap.type === 'unCommonScrap') {
+										if (gameObject.unCommonScrap >= scrap.cost) {
+											// got the scrap
+										} else {
+											problems++;
+										}
+									} else if (scrap.type === 'uniqueScrap') {
+										if (gameObject.uniqueScrap >= scrap.cost) {
+											// got the scrap
+										} else {
+											problems++;
+										}
+									} else if (scrap.type === 'intriguingScrap') {
+										if (gameObject.intriguingScrap >= scrap.cost) {
+											// got the scrap
+										} else {
+											problems++;
+										}
+									} else if (scrap.type === 'facinatingScrap') {
+										if (gameObject.facinatingScrap >= scrap.cost) {
+											// got the scrap
+										} else {
+											problems++;
+										}
+									} else if (scrap.type === 'mythicScrap') {
+										if (gameObject.mythicScrap >= scrap.cost) {
+											// got the scrap
+										} else {
+											problems++;
+										}
+									} else if (scrap.type === 'exoticScrap') {
+										if (gameObject.exoticScrap >= scrap.cost) {
+											// got the scrap
+										} else {
+											problems++;
+										}
+									}
+								});
+							// if we don't, display a message
+							if (problems > 0) {
+								gameObject.buildButtonDisabled = true;
+								console.log('in a modal say there is not enough scrap');
+							} else {
+								// if we do, go over the list again and subtract the scrap
+								scrapCosts.forEach((scrap, i) => {
+									if (scrap.type === 'commonScrap') {
+										if (gameObject.commonScrap >= scrap.cost) {
+											gameObject.commonScrap -= scrap.cost;
+											part.count++;
+										}
+									} else if (scrap.type === 'unCommonScrap') {
+										if (gameObject.unCommonScrap >= scrap.cost) {
+												gameObject.unCommonScrap -= scrap.cost;
+												part.count++;
+										}
+									} else if (scrap.type === 'uniqueScrap') {
+										if (gameObject.uniqueScrap >= scrap.cost) {
+											gameObject.uniqueScrap -= scrap.cost;
+											part.count++;
+										}
+									} else if (scrap.type === 'intriguingScrap') {
+										if (gameObject.intriguingScrap >= scrap.cost) {
+											gameObject.intriguingScrap -= scrap.cost;
+											part.count++;
+										}
+									} else if (scrap.type === 'facinatingScrap') {
+										if (gameObject.facinatingScrap >= scrap.cost) {
+											gameObject.facinatingScrap -= scrap.cost;
+											part.count++;
+										}
+									} else if (scrap.type === 'mythicScrap') {
+										if (gameObject.mythicScrap >= scrap.cost) {
+											gameObject.mythicScrap -= scrap.cost;
+											part.count++;
+										}
+									} else if (scrap.type === 'exoticScrap') {
+										if (gameObject.exoticScrap >= scrap.cost) {
+											gameObject.exoticScrap -= scrap.cost;
+											part.count++;
+										}
+									}
+								});
 							}
-						}
-						// future Jordan, we need to fix this so we can 
-						// compare multiple types of scrap before we start
-						// subtracting
-						scrapCosts.forEach((scrap, i) => {
-							if (scrap.type === 'commonScrap') {
-								if (gameObject.commonScrap >= scrap.cost) {
-									gameObject.commonScrap -= scrap.cost;
-									part.count++;
-								} else {
-									gameObject.buildButtonDisabled = true;
-									console.log('in a modal say there is not enough scrap');
-								}
-							} else if (scrap.type === 'unCommonScrap') {
-								if (gameObject.unCommonScrap >= scrap.cost) {
-									gameObject.unCommonScrap -= scrap.cost;
-									part.count++;
-								} else {
-									gameObject.buildButtonDisabled = true;
-									console.log('in a modal say there is not enough scrap');
-								}
-							} else if (scrap.type === 'uniqueScrap') {
-								if (gameObject.uniqueScrap >= scrap.cost) {
-									gameObject.uniqueScrap -= scrap.cost;
-									part.count++;
-								} else {
-									gameObject.buildButtonDisabled = true;
-									console.log('in a modal say there is not enough scrap');
-								}
-							} else if (scrap.type === 'intriguingScrap') {
-								if (gameObject.intriguingScrap >= scrap.cost) {
-									gameObject.intriguingScrap -= scrap.cost;
-									part.count++;
-								} else {
-									gameObject.buildButtonDisabled = true;
-									console.log('in a modal say there is not enough scrap');
-								}
-							} else if (scrap.type === 'facinatingScrap') {
-								if (gameObject.facinatingScrap >= scrap.cost) {
-									gameObject.facinatingScrap -= scrap.cost;
-									part.count++;
-								} else {
-									gameObject.buildButtonDisabled = true;
-									console.log('in a modal say there is not enough scrap');
-								}
-							} else if (scrap.type === 'mythicScrap') {
-								if (gameObject.mythicScrap >= scrap.cost) {
-									gameObject.mythicScrap -= scrap.cost;
-									part.count++;
-								} else {
-									gameObject.buildButtonDisabled = true;
-									console.log('in a modal say there is not enough scrap');
-								}
-							} else if (scrap.type === 'exoticScrap') {
-								if (gameObject.exoticScrap >= scrap.cost) {
-									gameObject.exoticScrap -= scrap.cost;
-									part.count++;
-								} else {
-									gameObject.buildButtonDisabled = true;
-									console.log('in a modal say there is not enough scrap');
-								}
+							if (gameObject.partsDisplayed === 'chassis') {
+								displayDiscoveredPartParts(gameObject.discoveredChassis);
+							} else if (gameObject.partsDisplayed === 'head') {
+								displayDiscoveredPartParts(gameObject.discoveredHeads);
+							} else if (gameObject.partsDisplayed === 'arm') {
+								displayDiscoveredPartParts(gameObject.discoveredArms);
+							} else if (gameObject.partsDisplayed === 'leg') {
+								displayDiscoveredPartParts(gameObject.discoveredLegs);
 							}
-						});
-						if (gameObject.partsDisplayed === 'chassis') {
-							displayDiscoveredPartParts(gameObject.discoveredChassis);
-						} else if (gameObject.partsDisplayed === 'head') {
-							displayDiscoveredPartParts(gameObject.discoveredHeads);
-						} else if (gameObject.partsDisplayed === 'arm') {
-							displayDiscoveredPartParts(gameObject.discoveredArms);
-						} else if (gameObject.partsDisplayed === 'leg') {
-							displayDiscoveredPartParts(gameObject.discoveredLegs);
+							displaySelectPartParts(part);
+							}
+							
 						}
-						displaySelectPartParts(part);
-					}},
+					},
 					props: {},
 					methodId: id
 				});
