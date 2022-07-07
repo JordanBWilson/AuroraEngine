@@ -481,7 +481,7 @@ const robotArms = [
 		img: 'cornflowerblue',
 		count: 10,
 		stats: {
-			att: 1,
+			att: 2,
 			def: 1,
 			spd: 0,
 			ai: 0,
@@ -2127,8 +2127,7 @@ function clearRobotPartParts() {
 		createFactoryTitleScraps(undefined);
 	}, 0);
 }
- // future Jordan, we need to finish this up and then apply it to the rest
- // of the part buttons
+
 function selectRobotPartChassis() {
 	console.log('selecting the chassis parts...');
 	gameObject.partsDisplayed = 'chassis';
@@ -2199,6 +2198,10 @@ function selectRobotArms(armPos) {
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
 	highlight.btnColor = 'yellow';
 	displayDiscoveredParts(gameObject.discoveredArms, armPos);
+	if (gameObject.selectedRobot.length === 6) {
+		gameObject.buildButtonDisabled = false;
+		displaySelectPart({}, true);
+	}
 }
 
 function selectRobotLegs(legPos) {
@@ -2213,6 +2216,10 @@ function selectRobotLegs(legPos) {
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
 	highlight.btnColor = 'yellow';
 	displayDiscoveredParts(gameObject.discoveredLegs, legPos);
+	if (gameObject.selectedRobot.length === 6) {
+		gameObject.buildButtonDisabled = false;
+		displaySelectPart({}, true);
+	}
 }
 
 function selectRobotChassis() {
@@ -2226,6 +2233,10 @@ function selectRobotChassis() {
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
 	highlight.btnColor = 'yellow';
 	displayDiscoveredParts(gameObject.discoveredChassis, '');
+	if (gameObject.selectedRobot.length === 6) {
+		gameObject.buildButtonDisabled = false;
+		displaySelectPart({}, true);
+	}
 }
 
 function selectRobotHead() {
@@ -2239,6 +2250,10 @@ function selectRobotHead() {
 	const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
 	highlight.btnColor = 'yellow';
 	displayDiscoveredParts(gameObject.discoveredHeads, '');
+	if (gameObject.selectedRobot.length === 6) {
+		gameObject.buildButtonDisabled = false;
+		displaySelectPart({}, true);
+	}
 }
 
 function displayDiscoveredParts(partsDiscovered, limbPos) {
@@ -2293,6 +2308,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 							if (discoveredPart.type === 'arm') {
 								newPart.armPos = limbPos;
 							}
+							gameObject.buildButtonDisabled = false;
 							displaySelectPart(newPart, false);
 						}
 					},
@@ -2325,6 +2341,7 @@ function displayDiscoveredParts(partsDiscovered, limbPos) {
 							if (discoveredPart.type === 'arm') {
 								newPart.armPos = limbPos;
 							}
+							gameObject.buildButtonDisabled = false;
 							displaySelectPart(newPart, false);
 						}
 					},
@@ -2376,6 +2393,7 @@ function displayDiscoveredPartParts(partsDiscovered) {
 					id: 'part-count',
 					action: { 
 						method: function(id) {
+							gameObject.buildButtonDisabled = false;
 							displaySelectPartParts(discoveredPart);
 						}
 					},
@@ -2385,7 +2403,6 @@ function displayDiscoveredPartParts(partsDiscovered) {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
-		console.log('robot-' + discoveredPart.type + '-part');
 		Game.methodSetup = {
 			method: function(id) {
 				drawButton({
@@ -2402,6 +2419,7 @@ function displayDiscoveredPartParts(partsDiscovered) {
 					id: 'robot-' + discoveredPart.type + '-part',
 					action: { 
 						method: function(id) {
+							gameObject.buildButtonDisabled = false;
 							displaySelectPartParts(discoveredPart);
 						}
 					},
@@ -2437,6 +2455,9 @@ function drawNextPrevPartList(partList, limbPos) {
 						gameObject.partPageIndex++; // go to the next part page
 						clearRobotParts(); // clear the previous parts
 						displayDiscoveredParts(partList, limbPos);
+						if (gameObject.selectedRobot.length === 6) {
+							displaySelectPart({}, true);
+						}
 					}
 				},
 				props: {},
@@ -2468,6 +2489,9 @@ function drawNextPrevPartList(partList, limbPos) {
 						}
 						clearRobotParts(); // clear the previous parts
 						displayDiscoveredParts(partList, limbPos);
+						if (gameObject.selectedRobot.length === 6) {
+							displaySelectPart({}, true);
+						}
 					}
 				},
 				props: {},
@@ -2884,7 +2908,6 @@ function createFactoryTitleScraps(part) {
 				scrapCosts.push(scrapObj);
 			}
 		}
-		console.log(scrapCosts);
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
@@ -3068,10 +3091,78 @@ function displaySelectPartParts(part) {
 					isFilled: true,
 					id: 'confirm-part',
 					action: { method: function(id) {
-						// future Jordan build the selected part
-						part.count++;
-						console.log(part);
-
+						const scrapCosts = [];
+						for (const scrap in part.scrapToBuild) {
+							if (part.scrapToBuild[scrap] > 0) {
+								const scrapObj = {
+									type: scrap, 
+									cost: part.scrapToBuild[scrap]
+								};
+								scrapCosts.push(scrapObj);
+							}
+						}
+						// future Jordan, we need to fix this so we can 
+						// compare multiple types of scrap before we start
+						// subtracting
+						scrapCosts.forEach((scrap, i) => {
+							if (scrap.type === 'commonScrap') {
+								if (gameObject.commonScrap >= scrap.cost) {
+									gameObject.commonScrap -= scrap.cost;
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									console.log('in a modal say there is not enough scrap');
+								}
+							} else if (scrap.type === 'unCommonScrap') {
+								if (gameObject.unCommonScrap >= scrap.cost) {
+									gameObject.unCommonScrap -= scrap.cost;
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									console.log('in a modal say there is not enough scrap');
+								}
+							} else if (scrap.type === 'uniqueScrap') {
+								if (gameObject.uniqueScrap >= scrap.cost) {
+									gameObject.uniqueScrap -= scrap.cost;
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									console.log('in a modal say there is not enough scrap');
+								}
+							} else if (scrap.type === 'intriguingScrap') {
+								if (gameObject.intriguingScrap >= scrap.cost) {
+									gameObject.intriguingScrap -= scrap.cost;
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									console.log('in a modal say there is not enough scrap');
+								}
+							} else if (scrap.type === 'facinatingScrap') {
+								if (gameObject.facinatingScrap >= scrap.cost) {
+									gameObject.facinatingScrap -= scrap.cost;
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									console.log('in a modal say there is not enough scrap');
+								}
+							} else if (scrap.type === 'mythicScrap') {
+								if (gameObject.mythicScrap >= scrap.cost) {
+									gameObject.mythicScrap -= scrap.cost;
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									console.log('in a modal say there is not enough scrap');
+								}
+							} else if (scrap.type === 'exoticScrap') {
+								if (gameObject.exoticScrap >= scrap.cost) {
+									gameObject.exoticScrap -= scrap.cost;
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									console.log('in a modal say there is not enough scrap');
+								}
+							}
+						});
 						if (gameObject.partsDisplayed === 'chassis') {
 							displayDiscoveredPartParts(gameObject.discoveredChassis);
 						} else if (gameObject.partsDisplayed === 'head') {
@@ -3197,7 +3288,6 @@ function equipPart(part) {
 	}
 	gameObject.robotDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
 	displaySelectPart(part, true);
-	console.log(gameObject.robotDesigns);
 }
 
 function drawActiveParts(activeColor, count) {
@@ -3210,41 +3300,44 @@ function drawActiveParts(activeColor, count) {
 
 function buildRobot() {
 	let problems = 0;
-		gameObject.selectedRobot.forEach(item => {
+	let head;
+	let chassis;
+	let leg1;
+	let leg2;
+	let arm1;
+	let arm2;
+	gameObject.selectedRobot.forEach(item => {
 		if (item.headId) {
-			const head = robotHeads.find(part => part.headId === item.headId);
-			if (head.count >= 1) {
-				head.count -= 1;
-			} else {
-				problems++;
-			}
+			head = robotHeads.find(part => part.headId === item.headId);	
 		}
 		if (item.chassisId) {
-			const chassis = robotChassis.find(part => part.chassisId === item.chassisId);
-			if (chassis.count >= 1) {
-				chassis.count -= 1;
-			} else {
-				problems++;
-			}
+			chassis = robotChassis.find(part => part.chassisId === item.chassisId);
 		}
-		if (item.legId) {
-			leg = robotLegs.find(part => part.legId === item.legId);
-			if (leg.count >= 1) {
-				leg.count -= 1;
-			} else {
-				problems++;
-			}
+		if (item.legId && !leg1) {
+			leg1 = robotLegs.find(part => part.legId === item.legId);
 		}
-		if (item.armId) {
-			arm = robotArms.find(part => part.armId === item.armId);
-			if (arm.count >= 1) {
-				arm.count -= 1;
-			} else {
-				problems++;
-			}
+		if (item.legId && leg1) {
+			leg2 = robotLegs.find(part => part.legId === item.legId);
 		}
-		
+		if (item.armId && !arm1) {
+			arm1 = robotArms.find(part => part.armId === item.armId);
+		}
+		if (item.armId && arm1) {
+			arm2 = robotArms.find(part => part.armId === item.armId);
+		}
 	});
+	if (head.count >= 1 && chassis.count >= 1 && 
+		leg1.count >= 1 && leg2.count >= 1 && 
+		arm1.count >= 1 && arm2.count >= 1) {
+			head.count -= 1;
+			chassis.count -= 1;
+			leg1.count -= 1;
+			leg2.count -= 1;
+			arm1.count -= 1;
+			arm2.count -= 1;
+	} else {
+		problems++;
+	}
 	if (problems === 0) {
 		if (gameObject.robotsMade < gameObject.robotStorage) {
 			// add the robot to the list
@@ -3252,10 +3345,12 @@ function buildRobot() {
 			gameObject.robotTeamIndex++;
 			gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
 			// refresh the parts that are displayed
+			clearSelectedPartStatDetails();
 			displaySelectPart({}, true);
 		} else {
 			console.log('display a modal for full robot storage');
 			gameObject.buildButtonDisabled = true;
+			clearSelectedPartStatDetails();
 			displaySelectPart({}, true);
 		}
 		
@@ -3263,8 +3358,28 @@ function buildRobot() {
 		// only display the modal if the button isn't dimmed
 		console.log('display a modal for missing parts');
 		gameObject.buildButtonDisabled = true;
+		clearSelectedPartStatDetails();
 		displaySelectPart({}, true);
 		// dim the confirm button
+	}
+	clearRobotParts();
+	if (gameObject.partsDisplayed === 'leg-right') {
+		displayDiscoveredParts(gameObject.discoveredLegs, 'right');
+	}
+	if (gameObject.partsDisplayed === 'leg-left') {
+		displayDiscoveredParts(gameObject.discoveredLegs, 'left');
+	}
+	if (gameObject.partsDisplayed === 'arm-left') {
+		displayDiscoveredParts(gameObject.discoveredArms, 'left');
+	}
+	if (gameObject.partsDisplayed === 'arm-right') {
+		displayDiscoveredParts(gameObject.discoveredArms, 'right');
+	}
+	if (gameObject.partsDisplayed === 'chassis') {
+		displayDiscoveredParts(gameObject.discoveredChassis, '');
+	}
+	if (gameObject.partsDisplayed === 'head') {
+		displayDiscoveredParts(gameObject.discoveredHeads, '');
 	}
 	console.log('build robot', gameObject.robotTeams);
 }
