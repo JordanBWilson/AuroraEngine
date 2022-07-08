@@ -73,6 +73,9 @@ const Game = { // the user will want to use this object
       if (this.methodObjects[i].methodId === id) {
         for (let j = 0; j < Main.methodsToRun.length; j++) {
           if (this.methodObjects[i]?.methodId === Main.methodsToRun[j]?.methodId) {
+			  if (this.methodObjects[i].isModal) {
+				  Main.isModalVisible = false;
+			  }
             this.methodObjects.splice(i, 1);
             Main.methodObjectShadows.splice(i, 1);
             Main.methodsToRun.splice(j, 1);
@@ -198,6 +201,7 @@ const Game = { // the user will want to use this object
     return entity;
   },
   loadingId: 'loading-message',
+  modalId: 'modal-view',
   isLoaded: false, // wait for assets to load before starting the game
   pageResized: { // this is used when the screen resizes
 	section: '', // this is the page you're on. Has to be filled out
@@ -220,4 +224,5 @@ const Main = { // global variables to keep the game running nicely
   clearStage: false,
   collisions: [], // all the collisions in the game to look for
   methodsToRun: [], // all the methods to make the game run
+  isModalVisible: false,
 };

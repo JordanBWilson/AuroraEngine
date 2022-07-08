@@ -3167,40 +3167,39 @@ function displaySelectPartParts(part) {
 							// if we don't, display a message
 							if (problems > 0) {
 								gameObject.buildButtonDisabled = true;
-								console.log('in a modal say there is not enough scrap');
-								// *** future Jordan, finish up making the modal ***
+								// *** future Jordan, apply these modals where needed ***
 								setTimeout(function() {
-									Game.clearStage(); // clear the stage so the user can't
-									Game.methodSetup = { // click anything under the modal
+									Game.methodSetup = {
 										method: function(id) {
 											drawModal({
-												posX: Game.placeEntityX(0.50, (Game.entitySize * 15)),
-												posY: Game.placeEntityY(0.50, (Game.entitySize * 15)),
-												width: (Game.entitySize * 15),
-												height: (Game.entitySize * 15),
+												posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+												width: (Game.entitySize * 40),
+												height: (Game.entitySize * 30),
 												lineWidth: 1,
-												mdlColor: 'grey',
-												txtColor: 'black',
-												msgFont: '1.5em serif',
-												msg: 'Modal',
-												isFilled: true,
-												id: 'modal',
+												modalColor: 'lightslategrey',
+												msgColor: 'black',
+												msgFont: '1.3em serif',
+												msg: 'Not Enough Scrap',
+												footerColor: 'black',
+												footerFont: '1em serif',
+												footerMsg: 'Tap here to continue',
+												bgColor: 'darkgrey',
+												isModalFilled: true,
+												id: Game.modalId,
 												action: { 
 													method: function(id) {
-														const modal = Game.methodObjects.find(build => build.id === 'modal');
+														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 														Game.deleteEntity(modal.methodId); 
-														factoryRobotParts(); // redraw the page
-														setTimeout(function() { // make the last selection
-															if (gameObject.partsDisplayed === 'chassis') {
-																selectRobotPartChassis();
-															} else if (gameObject.partsDisplayed === 'head') {
-																selectRobotPartHead();
-															} else if (gameObject.partsDisplayed === 'arm') {
-																selectRobotPartArms();
-															} else if (gameObject.partsDisplayed === 'leg') {
-																selectRobotPartLegs();
-															}
-														}, 100);
+														if (gameObject.partsDisplayed === 'chassis') {
+															selectRobotPartChassis();
+														} else if (gameObject.partsDisplayed === 'head') {
+															selectRobotPartHead();
+														} else if (gameObject.partsDisplayed === 'arm') {
+															selectRobotPartArms();
+														} else if (gameObject.partsDisplayed === 'leg') {
+															selectRobotPartLegs();
+														}
 													 }
 												},
 												props: {},

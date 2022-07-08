@@ -753,14 +753,19 @@ function drawModalMethod(incomingModal) {
       width: incomingModal.width,
       height: incomingModal.height,
       lineWidth: incomingModal.lineWidth,
-      mdlColor: incomingModal.mdlColor,
-      txtColor: incomingModal.txtColor,
+      modalColor: incomingModal.modalColor,
+      msgColor: incomingModal.msgColor,
       msgFont: incomingModal.msgFont,
       msg: incomingModal.msg,
-      isFilled: incomingModal.isFilled,
+      footerColor: incomingModal.footerColor,
+      footerFont: incomingModal.footerFont,
+      footerMsg: incomingModal.footerMsg,
+      bgColor: incomingModal.bgColor,
+      isModalFilled: incomingModal.isModalFilled,
       id: incomingModal.id,
       action: incomingModal.action,
       isBtn: true,
+      isModal: true,
       isAnim: false,
       props: incomingModal.props,
       methodId: incomingModal.methodId,
@@ -776,11 +781,15 @@ function drawModalMethod(incomingModal) {
     Game.methodObjects[index].width = incomingModal.width;
     Game.methodObjects[index].height = incomingModal.height;
     Game.methodObjects[index].lineWidth = incomingModal.lineWidth;
-    Game.methodObjects[index].mdlColor = incomingModal.mdlColor;
-    Game.methodObjects[index].txtColor = incomingModal.txtColor;
+    Game.methodObjects[index].modalColor = incomingModal.modalColor;
+    Game.methodObjects[index].msgColor = incomingModal.msgColor;
     Game.methodObjects[index].msgFont = incomingModal.msgFont;
     Game.methodObjects[index].msg = incomingModal.msg;
-    Game.methodObjects[index].isFilled = incomingModal.isFilled;
+    Game.methodObjects[index].footerColor = incomingModal.footerColor;
+    Game.methodObjects[index].footerFont = incomingModal.footerFont;
+    Game.methodObjects[index].footerMsg = incomingModal.footerMsg;
+    Game.methodObjects[index].bgColor = incomingModal.bgColor;
+    Game.methodObjects[index].isModalFilled = incomingModal.isModalFilled;
     Game.methodObjects[index].action = incomingModal.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingModal.props;
@@ -789,11 +798,15 @@ function drawModalMethod(incomingModal) {
     Main.methodObjectShadows[index].width = incomingModal.width;
     Main.methodObjectShadows[index].height = incomingModal.height;
     Main.methodObjectShadows[index].lineWidth = incomingModal.lineWidth;
-    Main.methodObjectShadows[index].mdlColor = incomingModal.mdlColor;
-    Main.methodObjectShadows[index].txtColor = incomingModal.txtColor;
+    Main.methodObjectShadows[index].modalColor = incomingModal.modalColor;
+    Main.methodObjectShadows[index].msgColor = incomingModal.msgColor;
     Main.methodObjectShadows[index].msgFont = incomingModal.msgFont;
     Main.methodObjectShadows[index].msg = incomingModal.msg;
-    Main.methodObjectShadows[index].isFilled = incomingModal.isFilled;
+    Main.methodObjectShadows[index].footerColor = incomingModal.footerColor;
+    Main.methodObjectShadows[index].footerFont = incomingModal.footerFont;
+    Main.methodObjectShadows[index].footerMsg = incomingModal.footerMsg;
+    Main.methodObjectShadows[index].bgColor = incomingModal.bgColor;
+    Main.methodObjectShadows[index].isModalFilled = incomingModal.isModalFilled;
     Main.methodObjectShadows[index].action = incomingModal.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModal.props;
@@ -806,11 +819,15 @@ function drawModalMethod(incomingModal) {
    Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
    Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
-   Game.methodObjects[index].mdlColor !== Main.methodObjectShadows[index].mdlColor ||
-   Game.methodObjects[index].txtColor !== Main.methodObjectShadows[index].txtColor ||
+   Game.methodObjects[index].modalColor !== Main.methodObjectShadows[index].modalColor ||
+   Game.methodObjects[index].msgColor !== Main.methodObjectShadows[index].msgColor ||
    Game.methodObjects[index].msgFont !== Main.methodObjectShadows[index].msgFont ||
    Game.methodObjects[index].msg !== Main.methodObjectShadows[index].msg ||
-   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   Game.methodObjects[index].footerColor !== Main.methodObjectShadows[index].footerColor ||
+   Game.methodObjects[index].footerFont !== Main.methodObjectShadows[index].footerFont ||
+   Game.methodObjects[index].footerMsg !== Main.methodObjectShadows[index].footerMsg ||
+   Game.methodObjects[index].bgColor !== Main.methodObjectShadows[index].bgColor ||
+   Game.methodObjects[index].isModalFilled !== Main.methodObjectShadows[index].isModalFilled)
    ) {
      redrawModal(Game.methodObjects[index]);
       const shadowModal = Object.assign({}, Game.methodObjects[index]);
@@ -825,18 +842,22 @@ function drawModalMethod(incomingModal) {
     Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
     Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
-    Game.methodObjects[index].mdlColor === Main.methodObjectShadows[index].mdlColor ||
-    Game.methodObjects[index].txtColor === Main.methodObjectShadows[index].txtColor ||
+    Game.methodObjects[index].modalColor === Main.methodObjectShadows[index].modalColor ||
+    Game.methodObjects[index].msgColor === Main.methodObjectShadows[index].msgColor ||
     Game.methodObjects[index].msgFont === Main.methodObjectShadows[index].msgFont ||
     Game.methodObjects[index].msg === Main.methodObjectShadows[index].msg ||
-    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+    Game.methodObjects[index].footerColor === Main.methodObjectShadows[index].footerColor ||
+    Game.methodObjects[index].footerFont === Main.methodObjectShadows[index].footerFont ||
+    Game.methodObjects[index].footerMsg === Main.methodObjectShadows[index].footerMsg ||
+    Game.methodObjects[index].bgColor === Main.methodObjectShadows[index].bgColor ||
+    Game.methodObjects[index].isModalFilled === Main.methodObjectShadows[index].isModalFilled)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
 function redrawModal(incomingModal) {
 	Main.stage.beginPath();
 	Main.stage.rect(0, 0, Game.canvas.width, Game.canvas.height);
-	Main.stage.fillStyle = '#000000';
+	Main.stage.fillStyle = incomingModal.bgColor;
     Main.stage.fill();
 	Main.stage.beginPath();
 	if (!incomingModal.lineWidth) {
@@ -845,18 +866,18 @@ function redrawModal(incomingModal) {
 		Main.stage.lineWidth = incomingModal.lineWidth;
 	}
 	Main.stage.rect(incomingModal.posX, incomingModal.posY, incomingModal.width, incomingModal.height);
-	if (incomingModal.isFilled) {
-		Main.stage.fillStyle = incomingModal.mdlColor;
+	if (incomingModal.isModalFilled) {
+		Main.stage.fillStyle = incomingModal.modalColor;
 		Main.stage.fill();
 	} else {
-		Main.stage.strokeStyle = incomingModal.mdlColor;
+		Main.stage.strokeStyle = incomingModal.modalColor;
 		Main.stage.stroke();
   }
-	Main.stage.fillStyle = incomingModal.txtColor;
+	Main.stage.fillStyle = incomingModal.msgColor;
 	Main.stage.font = incomingModal.msgFont;
 	Main.stage.textAlign = 'center';
 	Main.stage.fillText(incomingModal.msg, (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.posY + (incomingModal.height * 0.63)));
-	Main.stage.fillStyle = 'blue';
-	Main.stage.font = '1em serif';
-	Main.stage.fillText('footer', (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.posY + (incomingModal.height * 0.99)));
+	Main.stage.fillStyle = incomingModal.footerColor;
+	Main.stage.font = incomingModal.footerFont;
+	Main.stage.fillText(incomingModal.footerMsg, (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.posY + (incomingModal.height * 0.96)));
 }

@@ -58,11 +58,15 @@ function mainLoop() {
               Main.isStageTapped = false;
             }
           }
+			if (Game.methodObjects[i]?.id === Game.modalId) {
+				Main.isModalVisible = true;
+			}
         }
         collisionCheck();
         if (Main.isResizing && Game.pageResized.section.length > 0) {
 			Game.pageResized.method();
 		}
+
       } else {
         // stop the game
         console.log('The game has stopped. No more methods to listen to.');
@@ -101,14 +105,22 @@ function screenTapped(event) {
 }
 
 function isButtonTapped(btnParams) {
-  if (Main.tappedY >= btnParams.posY && Main.tappedY <= btnParams.posY + btnParams.height) {
-    if (Main.tappedX >= btnParams.posX && Main.tappedX <= btnParams.posX + btnParams.width) {
-      btnParams.action.method();
-      Main.isStageTapped = false;
-      Main.tappedX = 0;
-      Main.tappedY = 0;
-    }
-  }
+	if (Main.tappedY >= btnParams.posY && Main.tappedY <= btnParams.posY + btnParams.height) {
+		if (Main.tappedX >= btnParams.posX && Main.tappedX <= btnParams.posX + btnParams.width) {
+			if (!Main.isModalVisible) {
+				btnParams.action.method();
+				Main.isStageTapped = false;
+				Main.tappedX = 0;
+				Main.tappedY = 0;
+			} else if(Main.isModalVisible && btnParams.isModal) {
+				btnParams.action.method();
+				Main.isStageTapped = false;
+				Main.tappedX = 0;
+				Main.tappedY = 0;
+			}
+      
+		}
+	}
 }
 
 function collisionCheck() {
@@ -210,7 +222,7 @@ function assignImages(pngs, methodId) {
 }
 function removeLoadingScreen() {
 	const checkLoad = setInterval(function() {
-		const loading = Game.methodObjects.find(x => x.id === 'loading-message')?.methodId;
+		const loading = Game.methodObjects.find(x => x.id === Game.loadingId)?.methodId;
 		if (loading) {
 			// remove the loading message
 			clearInterval(checkLoad);
