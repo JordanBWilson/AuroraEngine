@@ -2149,6 +2149,8 @@ function selectRobotPartChassis() {
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
 	displayDiscoveredPartParts(gameObject.discoveredChassis);
+	
+
 }
 
 function selectRobotPartHead() {
@@ -3163,6 +3165,49 @@ function displaySelectPartParts(part) {
 							if (problems > 0) {
 								gameObject.buildButtonDisabled = true;
 								console.log('in a modal say there is not enough scrap');
+
+								setTimeout(function() {
+									Game.clearStage(); // clear the stage so the user can't
+									Game.methodSetup = { // click anything under the modal
+										method: function(id) {
+											drawModal({
+												posX: Game.placeEntityX(0.50, (Game.entitySize * 15)),
+												posY: Game.placeEntityY(0.50, (Game.entitySize * 15)),
+												width: (Game.entitySize * 15),
+												height: (Game.entitySize * 15),
+												lineWidth: 1,
+												btnColor: 'grey',
+												txtColor: 'black',
+												font: '1.5em serif',
+												msg: 'Modal',
+												isFilled: true,
+												id: 'modal',
+												action: { 
+													method: function(id) {
+														const modal = Game.methodObjects.find(build => build.id === 'modal');
+														Game.deleteEntity(modal.methodId); 
+														factoryRobotParts(); // redraw the page
+														setTimeout(function() { // make the last selection
+															if (gameObject.partsDisplayed === 'chassis') {
+																selectRobotPartChassis();
+															} else if (gameObject.partsDisplayed === 'head') {
+																selectRobotPartHead();
+															} else if (gameObject.partsDisplayed === 'arm') {
+																selectRobotPartArms();
+															} else if (gameObject.partsDisplayed === 'leg') {
+																selectRobotPartLegs();
+															}
+														}, 100);
+													 }
+												},
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								},100);
+	
 							} else {
 								// if we do, go over the list again and subtract the scrap
 								scrapCosts.forEach((scrap, i) => {
@@ -3225,6 +3270,7 @@ function displaySelectPartParts(part) {
 		};
 		Game.addMethod(Game.methodSetup);
 		createFactoryTitleScraps(part);
+		
 	}, 0);
 }
 

@@ -50,7 +50,7 @@ function drawLoadingScreen(incomingLoadingScreen) {
 }
 // this will draw a modal and display a message to the screen
 function drawModal(incomingModal) {
-  drawButtonMethod(incomingModal);
+  drawModalMethod(incomingModal);
 }
 
 // this is where all the work happens for the methods above
@@ -441,7 +441,7 @@ function redrawButton(incomingButton) {
   Main.stage.fillStyle = incomingButton.txtColor;
   Main.stage.font = incomingButton.font;
   Main.stage.textAlign = 'center';
-  Main.stage.fillText(incomingButton.msg, (incomingButton.posX + (incomingButton.width * 0.5)), (incomingButton.posY + (incomingButton.height * 0.65)));
+  Main.stage.fillText(incomingButton.msg, (incomingButton.posX + (incomingButton.width * 0.5)), (incomingButton.posY + (incomingButton.height * 0.63)));
 }
 function drawImageMethod(incomingImg) {
   let doesExist = doesMethodParamExist(incomingImg.methodId);
@@ -740,64 +740,64 @@ function drawButtonImageMethod(incomingButtonImage) {
       Game.methodObjects[index].isAnim = false;
    }
 }
-function drawModalMethod(incomingButton) {
-  let doesExist = doesMethodParamExist(incomingButton.methodId);
+function drawModalMethod(incomingModal) {
+  let doesExist = doesMethodParamExist(incomingModal.methodId);
   let index = -1;
   if (doesExist) {
-    index = findMethodParamIndex(incomingButton.methodId);
+    index = findMethodParamIndex(incomingModal.methodId);
   }
   if (!doesExist) {
     let button = {
-      posX: incomingButton.posX,
-      posY: incomingButton.posY,
-      width: incomingButton.width,
-      height: incomingButton.height,
-      lineWidth: incomingButton.lineWidth,
-      btnColor: incomingButton.btnColor,
-      txtColor: incomingButton.txtColor,
-      font: incomingButton.font,
-      msg: incomingButton.msg,
-      isFilled: incomingButton.isFilled,
-      id: incomingButton.id,
-      action: incomingButton.action,
+      posX: incomingModal.posX,
+      posY: incomingModal.posY,
+      width: incomingModal.width,
+      height: incomingModal.height,
+      lineWidth: incomingModal.lineWidth,
+      btnColor: incomingModal.btnColor,
+      txtColor: incomingModal.txtColor,
+      font: incomingModal.font,
+      msg: incomingModal.msg,
+      isFilled: incomingModal.isFilled,
+      id: incomingModal.id,
+      action: incomingModal.action,
       isBtn: true,
       isAnim: false,
-      props: incomingButton.props,
-      methodId: incomingButton.methodId,
+      props: incomingModal.props,
+      methodId: incomingModal.methodId,
     }
     Game.methodObjects.push(button);
-    redrawButton(incomingButton);
+    redrawModal(incomingModal);
     const shadowButton = Object.assign({}, button);
     Main.methodObjectShadows.push(shadowButton);
   }
   if (doesExist && Main.isResizing) {
-    Game.methodObjects[index].posX = incomingButton.posX;
-    Game.methodObjects[index].posY = incomingButton.posY;
-    Game.methodObjects[index].width = incomingButton.width;
-    Game.methodObjects[index].height = incomingButton.height;
-    Game.methodObjects[index].lineWidth = incomingButton.lineWidth;
-    Game.methodObjects[index].btnColor = incomingButton.btnColor;
-    Game.methodObjects[index].txtColor = incomingButton.txtColor;
-    Game.methodObjects[index].font = incomingButton.font;
-    Game.methodObjects[index].msg = incomingButton.msg;
-    Game.methodObjects[index].isFilled = incomingButton.isFilled;
-    Game.methodObjects[index].action = incomingButton.action;
+    Game.methodObjects[index].posX = incomingModal.posX;
+    Game.methodObjects[index].posY = incomingModal.posY;
+    Game.methodObjects[index].width = incomingModal.width;
+    Game.methodObjects[index].height = incomingModal.height;
+    Game.methodObjects[index].lineWidth = incomingModal.lineWidth;
+    Game.methodObjects[index].btnColor = incomingModal.btnColor;
+    Game.methodObjects[index].txtColor = incomingModal.txtColor;
+    Game.methodObjects[index].font = incomingModal.font;
+    Game.methodObjects[index].msg = incomingModal.msg;
+    Game.methodObjects[index].isFilled = incomingModal.isFilled;
+    Game.methodObjects[index].action = incomingModal.action;
     Game.methodObjects[index].isAnim = false;
-    Game.methodObjects[index].props = incomingButton.props;
-    Main.methodObjectShadows[index].posX = incomingButton.posX;
-    Main.methodObjectShadows[index].posY = incomingButton.posY;
-    Main.methodObjectShadows[index].width = incomingButton.width;
-    Main.methodObjectShadows[index].height = incomingButton.height;
-    Main.methodObjectShadows[index].lineWidth = incomingButton.lineWidth;
-    Main.methodObjectShadows[index].btnColor = incomingButton.btnColor;
-    Main.methodObjectShadows[index].txtColor = incomingButton.txtColor;
-    Main.methodObjectShadows[index].font = incomingButton.font;
-    Main.methodObjectShadows[index].msg = incomingButton.msg;
-    Main.methodObjectShadows[index].isFilled = incomingButton.isFilled;
-    Main.methodObjectShadows[index].action = incomingButton.action;
+    Game.methodObjects[index].props = incomingModal.props;
+    Main.methodObjectShadows[index].posX = incomingModal.posX;
+    Main.methodObjectShadows[index].posY = incomingModal.posY;
+    Main.methodObjectShadows[index].width = incomingModal.width;
+    Main.methodObjectShadows[index].height = incomingModal.height;
+    Main.methodObjectShadows[index].lineWidth = incomingModal.lineWidth;
+    Main.methodObjectShadows[index].btnColor = incomingModal.btnColor;
+    Main.methodObjectShadows[index].txtColor = incomingModal.txtColor;
+    Main.methodObjectShadows[index].font = incomingModal.font;
+    Main.methodObjectShadows[index].msg = incomingModal.msg;
+    Main.methodObjectShadows[index].isFilled = incomingModal.isFilled;
+    Main.methodObjectShadows[index].action = incomingModal.action;
     Main.methodObjectShadows[index].isAnim = false;
-    Main.methodObjectShadows[index].props = incomingButton.props;
-    redrawButton(incomingButton);
+    Main.methodObjectShadows[index].props = incomingModal.props;
+    redrawModal(incomingModal);
   }
   // checking for animations
   if (doesExist &&
@@ -812,12 +812,12 @@ function drawModalMethod(incomingButton) {
    Game.methodObjects[index].msg !== Main.methodObjectShadows[index].font ||
    Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
    ) {
-     redrawButton(Game.methodObjects[index]);
-      const shadowButton = Object.assign({}, Game.methodObjects[index]);
-      Main.methodObjectShadows[index] = shadowButton;
+     redrawModal(Game.methodObjects[index]);
+      const shadowModal = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowModal;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
-      redrawButton(Game.methodObjects[index]);
+      redrawModal(Game.methodObjects[index]);
       Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
@@ -833,23 +833,29 @@ function drawModalMethod(incomingButton) {
       Game.methodObjects[index].isAnim = false;
    }
 }
-function redrawModal(incomingButton) {
+function redrawModal(incomingModal) {
+	  Main.stage.beginPath();
+	Main.stage.rect(0, 0, Game.canvas.width, Game.canvas.height);
+	Main.stage.fillStyle = '#000000';
+    Main.stage.fill();
   Main.stage.beginPath();
-  if (!incomingButton.lineWidth) {
+  if (!incomingModal.lineWidth) {
     Main.stage.lineWidth = '1';
   } else {
-    Main.stage.lineWidth = incomingButton.lineWidth;
+    Main.stage.lineWidth = incomingModal.lineWidth;
   }
-  Main.stage.rect(incomingButton.posX, incomingButton.posY, incomingButton.width, incomingButton.height);
-  if (incomingButton.isFilled) {
-    Main.stage.fillStyle = incomingButton.btnColor;
+  Main.stage.rect(incomingModal.posX, incomingModal.posY, incomingModal.width, incomingModal.height);
+  if (incomingModal.isFilled) {
+    Main.stage.fillStyle = incomingModal.btnColor;
     Main.stage.fill();
   } else {
-    Main.stage.strokeStyle = incomingButton.btnColor;
+    Main.stage.strokeStyle = incomingModal.btnColor;
     Main.stage.stroke();
   }
-  Main.stage.fillStyle = incomingButton.txtColor;
-  Main.stage.font = incomingButton.font;
+  Main.stage.fillStyle = incomingModal.txtColor;
+  Main.stage.font = incomingModal.font;
   Main.stage.textAlign = 'center';
-  Main.stage.fillText(incomingButton.msg, (incomingButton.posX + (incomingButton.width * 0.5)), (incomingButton.posY + (incomingButton.height * 0.65)));
+  Main.stage.fillText(incomingModal.msg, (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.posY + (incomingModal.height * 0.63)));
+  
+
 }
