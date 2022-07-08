@@ -1129,12 +1129,7 @@ function factoryRobotSelect() {
 			posX = 0.689;
 			posXoffset = 1;
 		}	
-		drawRobotSelect(
-			Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-			Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-			gameObject.robotDesigns[i].robotParts,
-			i
-		);
+		
 		Game.methodSetup = {
 			method: function(id) {
 				drawRect({
@@ -1152,7 +1147,14 @@ function factoryRobotSelect() {
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);	
+		Game.addMethod(Game.methodSetup);
+		
+		drawRobotSelect(
+			Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+			Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+			gameObject.robotDesigns[i].robotParts,
+			i
+		);
 		
 		if (i === 2) {
 			robotSelectRow++;
@@ -1166,6 +1168,7 @@ function factoryRobotSelect() {
 		
 	}
 	drawRobotSelectParts();
+	
 	// future Jordan, to be completely done with the factory (other than the graphics)
 	// we need to make some Game.pageResised in the details and the parts pages
 	// when the page is resized, the selected part no longer appears selected
@@ -1188,7 +1191,7 @@ function drawRobotSelectParts() {
 				robot.props.drawLeftLeg(robot);
 				robot.props.drawRightLeg(robot);
 			});
-		clearInterval(findPreviews);
+			clearInterval(findPreviews);
 		}
 	});
 }
@@ -3165,7 +3168,7 @@ function displaySelectPartParts(part) {
 							if (problems > 0) {
 								gameObject.buildButtonDisabled = true;
 								console.log('in a modal say there is not enough scrap');
-
+								// *** future Jordan, finish up making the modal ***
 								setTimeout(function() {
 									Game.clearStage(); // clear the stage so the user can't
 									Game.methodSetup = { // click anything under the modal
@@ -3176,9 +3179,9 @@ function displaySelectPartParts(part) {
 												width: (Game.entitySize * 15),
 												height: (Game.entitySize * 15),
 												lineWidth: 1,
-												btnColor: 'grey',
+												mdlColor: 'grey',
 												txtColor: 'black',
-												font: '1.5em serif',
+												msgFont: '1.5em serif',
 												msg: 'Modal',
 												isFilled: true,
 												id: 'modal',
