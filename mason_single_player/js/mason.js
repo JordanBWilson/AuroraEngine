@@ -3476,6 +3476,44 @@ function buildRobot() {
 			// refresh the parts that are displayed
 			clearSelectedPartStatDetails();
 			displaySelectPart({}, true);
+			// future Jordan, finish up making the success message for
+			// building a robot. Show the robot storage info next.
+			// hide this message when screen is resized. delete this message
+			// after a few seconds
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+						width: (Game.entitySize * 40),
+						height: (Game.entitySize * 30),
+						lineWidth: 1,
+						color: 'lightslategrey',
+						isFilled: true,
+						id: 'robot-built-background',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Robot Made',
+						posX: Game.placeEntityX(0.50),
+						posY: Game.placeEntityY(0.50),
+						color: 'white',
+						align: 'center',
+						props: {},
+						id: 'robot-built-title',
+						methodId: id
+					});
+				}
+		};
+		Game.addMethod(Game.methodSetup);
 		} else {
 			// add the parts back when storage is full
 			head.count++;
