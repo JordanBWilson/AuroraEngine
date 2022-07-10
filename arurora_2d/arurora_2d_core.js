@@ -52,6 +52,10 @@ function drawLoadingScreen(incomingLoadingScreen) {
 function drawModal(incomingModal) {
   drawModalMethod(incomingModal);
 }
+// this will draw a modal using an image
+function drawModalImage(incomingModalImage) {
+  drawModalImageMethod(incomingModalImage);
+}
 
 // this is where all the work happens for the methods above
 
@@ -855,10 +859,14 @@ function drawModalMethod(incomingModal) {
    }
 }
 function redrawModal(incomingModal) {
-	Main.stage.beginPath();
-	Main.stage.rect(0, 0, Game.canvas.width, Game.canvas.height);
-	Main.stage.fillStyle = incomingModal.bgColor;
-    Main.stage.fill();
+	
+	if (incomingModal.bgColor.length > 0) {
+		Main.stage.beginPath();
+		Main.stage.rect(0, 0, Game.canvas.width, Game.canvas.height);
+		Main.stage.fillStyle = incomingModal.bgColor;
+		Main.stage.fill();
+	}
+	
 	Main.stage.beginPath();
 	if (!incomingModal.lineWidth) {
 		Main.stage.lineWidth = '1';
@@ -880,4 +888,88 @@ function redrawModal(incomingModal) {
 	Main.stage.fillStyle = incomingModal.footerColor;
 	Main.stage.font = incomingModal.footerFont;
 	Main.stage.fillText(incomingModal.footerMsg, (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.posY + (incomingModal.height * 0.96)));
+}
+function drawModalImageMethod(incomingModalImage) {
+  let doesExist = doesMethodParamExist(incomingModalImage.methodId);
+  let index = -1;
+  if (doesExist) {
+    index = findMethodParamIndex(incomingModalImage.methodId);
+  }
+  if (!doesExist) {
+    let buttonImg = {
+      posX: incomingModalImage.posX,
+      posY: incomingModalImage.posY,
+      width: incomingModalImage.width,
+      height: incomingModalImage.height,
+      images: incomingModalImage.images,
+      selectedImage: incomingModalImage.selectedImage,
+      animTicks: incomingModalImage.animTicks,
+      ticks: incomingModalImage.ticks,
+      id: incomingModalImage.id,
+      action: incomingModalImage.action,
+      isBtn: true,
+      isModal: true,
+      isAnim: false,
+      props: incomingModalImage.props,
+      methodId: incomingModalImage.methodId,
+    }
+    Game.methodObjects.push(buttonImg);
+    redrawImage(incomingModalImage);
+    const shadowButtonImg = Object.assign({}, buttonImg);
+    Main.methodObjectShadows.push(shadowButtonImg);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = incomingModalImage.posX;
+    Game.methodObjects[index].posY = incomingModalImage.posY;
+    Game.methodObjects[index].width = incomingModalImage.width;
+    Game.methodObjects[index].height = incomingModalImage.height;
+    Game.methodObjects[index].images = incomingModalImage.images;
+    Game.methodObjects[index].selectedImage = incomingModalImage.selectedImage;
+    Game.methodObjects[index].animTicks = incomingModalImage.animTicks;
+    Game.methodObjects[index].ticks = incomingModalImage.ticks;
+    Game.methodObjects[index].action = incomingModalImage.action;
+    Game.methodObjects[index].isAnim = false;
+    Game.methodObjects[index].props = incomingModalImage.props;
+    Main.methodObjectShadows[index].posX = incomingModalImage.posX;
+    Main.methodObjectShadows[index].posY = incomingModalImage.posY;
+    Main.methodObjectShadows[index].width = incomingModalImage.width;
+    Main.methodObjectShadows[index].height = incomingModalImage.height;
+    Main.methodObjectShadows[index].images = incomingModalImage.images;
+    Main.methodObjectShadows[index].selectedImage = incomingModalImage.selectedImage;
+    Main.methodObjectShadows[index].animTicks = incomingModalImage.animTicks;
+    Main.methodObjectShadows[index].ticks = incomingModalImage.ticks;
+    Main.methodObjectShadows[index].action = incomingModalImage.action;
+    Main.methodObjectShadows[index].isAnim = false;
+    Main.methodObjectShadows[index].props = incomingModalImage.props;
+    redrawImage(incomingModalImage);
+  }
+  // checking for animations
+  if (doesExist &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
+   Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
+   Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
+   Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
+   ) {
+     redrawImage(Game.methodObjects[index]);
+      const shadowButtonImg = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowButtonImg;
+      Game.methodObjects[index].isAnim = true;
+   } else if (doesExist && Game.methodObjects[index].isAnim) {
+      redrawImage(Game.methodObjects[index]);
+      Game.methodObjects[index].isAnim = false;
+   } else if (doesExist &&
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
+    Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
+    Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
+    Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
+      Game.methodObjects[index].isAnim = false;
+   }
 }

@@ -74,7 +74,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'New World Head',
 		img: 'orange',
-		count: 5, // how many parts have been made
+		count: 6, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 1,
@@ -191,7 +191,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scrapper Chassis',
 		img: 'coral',
-		count: 5,
+		count: 6,
 		stats: {
 			att: 0,
 			def: 1,
@@ -357,7 +357,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
-		count: 10,
+		count: 12,
 		stats: {
 			att: 0,
 			def: 1,
@@ -479,7 +479,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Arm',
 		img: 'cornflowerblue',
-		count: 10,
+		count: 12,
 		stats: {
 			att: 2,
 			def: 1,
@@ -3177,14 +3177,14 @@ function displaySelectPartParts(part) {
 												width: (Game.entitySize * 40),
 												height: (Game.entitySize * 30),
 												lineWidth: 1,
-												modalColor: 'lightslategrey',
+												modalColor: 'darkgrey',
 												msgColor: 'white',
 												msgFont: '1.3em serif',
 												msg: 'Not Enough Scrap',
 												footerColor: 'white',
 												footerFont: '1em serif',
 												footerMsg: 'Tap here to continue',
-												bgColor: 'darkgrey',
+												bgColor: '',
 												isModalFilled: true,
 												id: Game.modalId,
 												action: { 
@@ -3440,19 +3440,88 @@ function buildRobot() {
 			clearSelectedPartStatDetails();
 			displaySelectPart({}, true);
 		} else {
-			console.log('display a modal for full robot storage');
-			gameObject.buildButtonDisabled = true;
-			clearSelectedPartStatDetails();
-			displaySelectPart({}, true);
+			// add the parts back when storage is full
+			head.count++;
+			chassis.count++;
+			leg1.count++;
+			leg2.count++;
+			arm1.count++;
+			arm2.count++;
+			Game.methodSetup = {
+				method: function(id) {
+					drawModal({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+						width: (Game.entitySize * 40),
+						height: (Game.entitySize * 30),
+						lineWidth: 1,
+						modalColor: 'darkgrey',
+						msgColor: 'white',
+						msgFont: '1.3em serif',
+						msg: 'Robot Storage Full',
+						footerColor: 'white',
+						footerFont: '1em serif',
+						footerMsg: 'Tap here to continue',
+						bgColor: '',
+						isModalFilled: true,
+						id: Game.modalId,
+						action: { 
+							method: function(id) {
+								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+								Game.deleteEntity(modal.methodId);
+								gameObject.buildButtonDisabled = true;
+								displaySelectPart({}, true);
+								setTimeout(function() {
+									createFactoryTitleStats(undefined, undefined, undefined, undefined);
+								},0);
+								
+							}
+						},
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 		}
 		
 	} else {
-		// only display the modal if the button isn't dimmed
-		console.log('display a modal for missing parts');
-		gameObject.buildButtonDisabled = true;
-		clearSelectedPartStatDetails();
-		displaySelectPart({}, true);
-		// dim the confirm button
+		Game.methodSetup = {
+			method: function(id) {
+				drawModal({
+					posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+					posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+					width: (Game.entitySize * 40),
+					height: (Game.entitySize * 30),
+					lineWidth: 1,
+					modalColor: 'darkgrey',
+					msgColor: 'white',
+					msgFont: '1.3em serif',
+					msg: 'Missing Parts',
+					footerColor: 'white',
+					footerFont: '1em serif',
+					footerMsg: 'Tap here to continue',
+					bgColor: '',
+					isModalFilled: true,
+					id: Game.modalId,
+					action: { 
+						method: function(id) {
+							const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+							Game.deleteEntity(modal.methodId);
+							gameObject.buildButtonDisabled = true;
+							displaySelectPart({}, true);
+							setTimeout(function() {
+								createFactoryTitleStats(undefined, undefined, undefined, undefined);
+							},0);
+							
+						}
+					},
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
 	}
 	clearRobotParts();
 	if (gameObject.partsDisplayed === 'leg-right') {
