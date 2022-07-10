@@ -979,8 +979,8 @@ function masonRockCollision(methodId) {
 		masonWorker.props.direction = 'left';
 	}
 }
-// future Jordan, it's time to break up this file. put the factory
-// view in it's own file.
+// future Jordan, it's time to break up this file. put the factory view in 
+// it's own file. I think it's also time to remove the old comments below
 //  below is the factory display
 function openFactory() {
 	console.log('open Factory');
@@ -1539,6 +1539,7 @@ function factoryRobotDetails() {
 		section: 'factory-robot-details',
 		method: function() {
 			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			clearRobotBuildMessage();
 			if (!modal && gameObject.partsDisplayed === 'leg-right') {
 				selectRobotLegs('right');
 			}
@@ -3475,45 +3476,101 @@ function buildRobot() {
 			gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
 			// refresh the parts that are displayed
 			clearSelectedPartStatDetails();
-			displaySelectPart({}, true);
-			// future Jordan, finish up making the success message for
-			// building a robot. Show the robot storage info next.
-			// hide this message when screen is resized. delete this message
-			// after a few seconds
-			Game.methodSetup = {
-				method: function(id) {
-					drawRect({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-						width: (Game.entitySize * 40),
-						height: (Game.entitySize * 30),
-						lineWidth: 1,
-						color: 'lightslategrey',
-						isFilled: true,
-						id: 'robot-built-background',
-						isBackground: false,
-						props: {},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '2.3em serif',
-						msg: 'Robot Made',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.50),
-						color: 'white',
-						align: 'center',
-						props: {},
-						id: 'robot-built-title',
-						methodId: id
-					});
-				}
-		};
-		Game.addMethod(Game.methodSetup);
+			clearRobotPreviewHighlight();
+
+			setTimeout(function() {
+				Game.methodSetup = {
+					method: function(id) {
+						drawRect({
+							posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+							posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+							width: (Game.entitySize * 40),
+							height: (Game.entitySize * 30),
+							lineWidth: 1,
+							color: 'lightslategrey',
+							isFilled: true,
+							id: 'robot-built-background',
+							isBackground: false,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '2.3em serif',
+							msg: 'Robot Made',
+							posX: Game.placeEntityX(0.50),
+							posY: Game.placeEntityY(0.50),
+							color: 'white',
+							align: 'center',
+							props: {},
+							id: 'robot-built-title',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: 'Robot Storage: ' + gameObject.robotsMade + '/' + gameObject.robotStorage,
+							posX: Game.placeEntityX(0.50),
+							posY: Game.placeEntityY(0.55),
+							color: 'white',
+							align: 'center',
+							props: {},
+							id: 'robot-storage-title',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+				const removeTitles = setInterval(function() {
+					clearInterval(removeTitles);
+					clearRobotBuildMessage();
+					clearSelectedPartStatDetails(); // clear the stats
+					refreshFactoryBackgrounds(); // refresh the background
+					createFactoryTitleStats(undefined, undefined, undefined, undefined);
+					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+					if (!modal) {
+						displaySelectPart({}, true);
+					}
+					if (modal) {
+						Game.deleteEntity(modal.methodId);
+						
+						Game.methodSetup = {
+							method: function(id) {
+								drawModal({
+									posX: modal.posX,
+									posY: modal.posY,
+									width: modal.width,
+									height: modal.height,
+									lineWidth: modal.lineWidth,
+									modalColor: modal.modalColor,
+									msgColor: modal.msgColor,
+									msgFont: modal.msgFont,
+									msg: modal.msg,
+									footerColor: modal.footerColor,
+									footerFont: modal.footerFont,
+									footerMsg: modal.footerMsg,
+									bgColor: modal.bgColor,
+									isModalFilled: modal.isModalFilled,
+									id: Game.modalId,
+									action: modal.action,
+									props: {},
+									methodId: id
+								});
+							}
+						};
+						Game.addMethod(Game.methodSetup);
+					}
+				}, 1000);
+			}, 100);
+			
 		} else {
 			// add the parts back when storage is full
 			head.count++;
@@ -3622,4 +3679,19 @@ function buildRobot() {
 		displayDiscoveredParts(gameObject.discoveredHeads, '');
 	}
 	console.log('build robot', gameObject.robotTeams);
+}
+
+function clearRobotBuildMessage() {
+	const builtBg = Game.methodObjects.find(x => x.id === 'robot-built-background');
+	if (builtBg) {
+		Game.deleteEntity(builtBg.methodId);
+	}
+	const builtTitle = Game.methodObjects.find(x => x.id === 'robot-built-title');
+	if (builtTitle) {
+		Game.deleteEntity(builtTitle.methodId);
+	}
+	const storageTitle = Game.methodObjects.find(x => x.id === 'robot-storage-title');
+	if (storageTitle) {
+		Game.deleteEntity(storageTitle.methodId);
+	}
 }
