@@ -1538,22 +1538,23 @@ function factoryRobotDetails() {
 	Game.pageResized = {
 		section: 'factory-robot-details',
 		method: function() {
-			if (gameObject.partsDisplayed === 'leg-right') {
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (!modal && gameObject.partsDisplayed === 'leg-right') {
 				selectRobotLegs('right');
 			}
-			if (gameObject.partsDisplayed === 'leg-left') {
+			if (!modal && gameObject.partsDisplayed === 'leg-left') {
 				selectRobotLegs('left');
 			}
-			if (gameObject.partsDisplayed === 'arm-left') {
+			if (!modal && gameObject.partsDisplayed === 'arm-left') {
 				selectRobotArms('left');
 			}
-			if (gameObject.partsDisplayed === 'arm-right') {
+			if (!modal && gameObject.partsDisplayed === 'arm-right') {
 				selectRobotArms('right');
 			}
-			if (gameObject.partsDisplayed === 'chassis') {
+			if (!modal && gameObject.partsDisplayed === 'chassis') {
 				selectRobotChassis();
 			}
-			if (gameObject.partsDisplayed === 'head') {
+			if (!modal && gameObject.partsDisplayed === 'head') {
 				selectRobotHead();
 			}
 		}
@@ -3483,6 +3484,48 @@ function buildRobot() {
 			leg2.count++;
 			arm1.count++;
 			arm2.count++;
+			setTimeout(function() {
+				Game.methodSetup = {
+					method: function(id) {
+						drawModal({
+							posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+							posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+							width: (Game.entitySize * 40),
+							height: (Game.entitySize * 30),
+							lineWidth: 1,
+							modalColor: 'darkgrey',
+							msgColor: 'white',
+							msgFont: '1.3em serif',
+							msg: 'Robot Storage Full',
+							footerColor: 'white',
+							footerFont: '1em serif',
+							footerMsg: 'Tap here to continue',
+							bgColor: '',
+							isModalFilled: true,
+							id: Game.modalId,
+							action: { 
+								method: function(id) {
+									const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+									Game.deleteEntity(modal.methodId);
+									gameObject.buildButtonDisabled = true;
+									displaySelectPart({}, true);
+									setTimeout(function() {
+										createFactoryTitleStats(undefined, undefined, undefined, undefined);
+									},0);
+									
+								}
+							},
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}, 100);
+		}
+		
+	} else {
+		setTimeout(function() {
 			Game.methodSetup = {
 				method: function(id) {
 					drawModal({
@@ -3494,7 +3537,7 @@ function buildRobot() {
 						modalColor: 'darkgrey',
 						msgColor: 'white',
 						msgFont: '1.3em serif',
-						msg: 'Robot Storage Full',
+						msg: 'Missing Parts',
 						footerColor: 'white',
 						footerFont: '1em serif',
 						footerMsg: 'Tap here to continue',
@@ -3519,45 +3562,7 @@ function buildRobot() {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-		}
-		
-	} else {
-		Game.methodSetup = {
-			method: function(id) {
-				drawModal({
-					posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-					posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-					width: (Game.entitySize * 40),
-					height: (Game.entitySize * 30),
-					lineWidth: 1,
-					modalColor: 'darkgrey',
-					msgColor: 'white',
-					msgFont: '1.3em serif',
-					msg: 'Missing Parts',
-					footerColor: 'white',
-					footerFont: '1em serif',
-					footerMsg: 'Tap here to continue',
-					bgColor: '',
-					isModalFilled: true,
-					id: Game.modalId,
-					action: { 
-						method: function(id) {
-							const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-							Game.deleteEntity(modal.methodId);
-							gameObject.buildButtonDisabled = true;
-							displaySelectPart({}, true);
-							setTimeout(function() {
-								createFactoryTitleStats(undefined, undefined, undefined, undefined);
-							},0);
-							
-						}
-					},
-					props: {},
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
+		}, 100);
 	}
 	clearRobotParts();
 	if (gameObject.partsDisplayed === 'leg-right') {
