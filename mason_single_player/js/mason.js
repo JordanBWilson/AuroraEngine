@@ -979,9 +979,9 @@ function masonRockCollision(methodId) {
 		masonWorker.props.direction = 'left';
 	}
 }
-
+// future Jordan, it's time to break up this file. put the factory
+// view in it's own file.
 //  below is the factory display
-
 function openFactory() {
 	console.log('open Factory');
 	factoryRobotSelect();
@@ -1168,11 +1168,7 @@ function factoryRobotSelect() {
 		
 	}
 	drawRobotSelectParts();
-	
-	// future Jordan, to be completely done with the factory (other than the graphics)
-	// we need to make some Game.pageResised in the details and the parts pages
-	// when the page is resized, the selected part no longer appears selected
-	// we also have to make a modal
+
 	Game.pageResized = {
 		section: 'factory-robot-select',
 		method: function() {
@@ -1539,6 +1535,29 @@ function factoryRobotDetails() {
 		displaySelectPart({}, true);
 	}
 	
+	Game.pageResized = {
+		section: 'factory-robot-details',
+		method: function() {
+			if (gameObject.partsDisplayed === 'leg-right') {
+				selectRobotLegs('right');
+			}
+			if (gameObject.partsDisplayed === 'leg-left') {
+				selectRobotLegs('left');
+			}
+			if (gameObject.partsDisplayed === 'arm-left') {
+				selectRobotArms('left');
+			}
+			if (gameObject.partsDisplayed === 'arm-right') {
+				selectRobotArms('right');
+			}
+			if (gameObject.partsDisplayed === 'chassis') {
+				selectRobotChassis();
+			}
+			if (gameObject.partsDisplayed === 'head') {
+				selectRobotHead();
+			}
+		}
+	}
 }
 
 function factoryRobotParts() {
@@ -1659,6 +1678,24 @@ function factoryRobotParts() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	
+	Game.pageResized = {
+		section: 'factory-robot-parts',
+		method: function() {
+			if (gameObject.partsDisplayed === 'leg') {
+				selectRobotPartLegs();
+			}
+			if (gameObject.partsDisplayed === 'arm') {
+				selectRobotPartArms();
+			}
+			if (gameObject.partsDisplayed === 'chassis') {
+				selectRobotPartChassis();
+			}
+			if (gameObject.partsDisplayed === 'head') {
+				selectRobotPartHead();
+			}
+		}
+	}
 }
 
 function drawRobotSelectPreviewParts(partType, robotDesign) {
@@ -3167,7 +3204,6 @@ function displaySelectPartParts(part) {
 							// if we don't, display a message
 							if (problems > 0) {
 								gameObject.buildButtonDisabled = true;
-								// *** future Jordan, apply these modals where needed ***
 								setTimeout(function() {
 									Game.methodSetup = {
 										method: function(id) {
