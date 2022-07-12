@@ -459,24 +459,6 @@ function animateObjects() {
 	}
 }
 
-function mineScrap() {
-	Particle.drawSpark({
-		posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
-		posY: Game.placeEntityY(0.78, (Game.entitySize * 0.7)),
-		shape: Particle.enumShapes.rect,
-		color: '#909090',
-		ticks: 11,
-		count: 8,
-		size: (Game.entitySize * 1),
-		speed: 1.3,
-	});
-	console.log('scrapping! ');
-}
-
-function openHome() {
-	console.log('open Home');
-}
-
 function openArena() {
 	console.log('open Arena');
 }
@@ -509,4 +491,178 @@ function openFactory() {
 	factoryRobotSelect();
 }
 
+function mineScrap() {
+	Particle.drawSpark({
+		posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
+		posY: Game.placeEntityY(0.78, (Game.entitySize * 0.7)),
+		shape: Particle.enumShapes.rect,
+		color: '#909090',
+		ticks: 11,
+		count: 8,
+		size: (Game.entitySize * 1),
+		speed: 1.3,
+	});
+	console.log('scrapping! ');
+}
 
+function openHome() {
+	console.log('open Home');
+	homeMenuSelect();
+}
+
+function homeMenuSelect() {
+	Game.clearStage();
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height),
+				lineWidth: 1,
+				color: 'grey',
+				isFilled: true,
+				id: 'home-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Back',
+				isFilled: true,
+				id: 'home-back-game',
+				action: { 
+					method: function(id) { 
+						playGame();
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Home',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'home-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.94),
+				height: (Game.canvas.height * 0.855),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'home-select-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	// future Jordan, position the sell and upgrade button correctly
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.25, (Game.entitySize * 20)),
+				posY: Game.placeEntityY(0.55, (Game.entitySize * 75)),
+				width: (Game.entitySize * 20),
+				height: (Game.entitySize * 75),
+				lineWidth: 1,
+				btnColor: 'brown',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Map',
+				isFilled: true,
+				id: 'home-select-map',
+				action: { 
+					method: function(id) { 
+						console.log('load up the map');
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.60),
+				posY: Game.placeEntityY(0.171),
+				width: (Game.entitySize * 20),
+				height: (Game.entitySize * 37.5),
+				lineWidth: 1,
+				btnColor: 'burlywood',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Sell',
+				isFilled: true,
+				id: 'home-select-sell',
+				action: { 
+					method: function(id) { 
+						console.log('load up the sell menu');
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.60),
+				posY: Game.placeEntityY(0.55),
+				width: (Game.entitySize * 20),
+				height: (Game.entitySize * 37.5),
+				lineWidth: 1,
+				btnColor: 'cadetblue',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Upgrade',
+				isFilled: true,
+				id: 'home-select-upgrade',
+				action: { 
+					method: function(id) { 
+						console.log('load up the upgrade menu');
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}

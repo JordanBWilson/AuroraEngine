@@ -51,7 +51,7 @@ const gameObject = {
 	selectedRobot: [], // this is the robot currently selected in the shop
 	robotDesigns: [], // this will hold all the different robot design the player has made
 	// a robot design can be made into a robot team
-	robotDesignCount: 9, // this is how many robots the player can design right now
+	robotDesignCount: 3, // this is how many robots the player can design right now. Max is 9, go up by 3s
 	selectedRobotDesign: -1, // this is the design that's currently selected
 	discoveredPartsList: [], // holds all the organized parts into 5 items per page
 	partPageIndex: 0, // this value will store where you are in the part list
