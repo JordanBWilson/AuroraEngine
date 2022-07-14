@@ -589,7 +589,6 @@ function homeMenuSelect() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	// future Jordan, position the sell and upgrade button correctly
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -606,7 +605,7 @@ function homeMenuSelect() {
 				id: 'home-select-map',
 				action: { 
 					method: function(id) { 
-						console.log('load up the map');
+						console.log('load up the map menu');
 					}
 				},
 				props: {},
@@ -618,10 +617,10 @@ function homeMenuSelect() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.60),
-				posY: Game.placeEntityY(0.171),
+				posX: Game.placeEntityX(0.75, (Game.entitySize * 20)),
+				posY: Game.placeEntityY(0.36, (Game.entitySize * 37)),
 				width: (Game.entitySize * 20),
-				height: (Game.entitySize * 37.5),
+				height: (Game.entitySize * 37),
 				lineWidth: 1,
 				btnColor: 'burlywood',
 				txtColor: 'white',
@@ -643,10 +642,10 @@ function homeMenuSelect() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.60),
-				posY: Game.placeEntityY(0.55),
+				posX: Game.placeEntityX(0.75, (Game.entitySize * 20)),
+				posY: Game.placeEntityY(0.74, (Game.entitySize * 37)),
 				width: (Game.entitySize * 20),
-				height: (Game.entitySize * 37.5),
+				height: (Game.entitySize * 37),
 				lineWidth: 1,
 				btnColor: 'cadetblue',
 				txtColor: 'white',
