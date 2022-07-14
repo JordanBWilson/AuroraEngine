@@ -509,7 +509,7 @@ function openHome() {
 	console.log('open Home');
 	homeMenuSelect();
 }
-
+// this is the start of the home menus
 function homeMenuSelect() {
 	Game.clearStage();
 	Game.methodSetup = {
@@ -631,6 +631,7 @@ function homeMenuSelect() {
 				action: { 
 					method: function(id) { 
 						console.log('load up the sell menu');
+						homeSellSelect();
 					}
 				},
 				props: {},
@@ -656,6 +657,162 @@ function homeMenuSelect() {
 				action: { 
 					method: function(id) { 
 						console.log('load up the upgrade menu');
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}
+// future Jordan, work on making the scrap, parts and robot sell menus
+function homeSellSelect() {
+	Game.clearStage();
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height),
+				lineWidth: 1,
+				color: 'grey',
+				isFilled: true,
+				id: 'sell-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Back',
+				isFilled: true,
+				id: 'sell-back-game',
+				action: { 
+					method: function(id) { 
+						homeMenuSelect();
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Sell',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'sell-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.94),
+				height: (Game.canvas.height * 0.855),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'sell-select-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
+				posY: Game.placeEntityY(0.27, (Game.entitySize * 20)),
+				width: (Game.entitySize * 45),
+				height: (Game.entitySize * 20),
+				lineWidth: 1,
+				btnColor: 'dodgerblue',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Scrap',
+				isFilled: true,
+				id: 'sell-select-scrap',
+				action: { 
+					method: function(id) { 
+						console.log('load up the sell scrap menu');
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
+				posY: Game.placeEntityY(0.52, (Game.entitySize * 20)),
+				width: (Game.entitySize * 45),
+				height: (Game.entitySize * 20),
+				lineWidth: 1,
+				btnColor: 'goldenrod',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Parts',
+				isFilled: true,
+				id: 'sell-select-parts',
+				action: { 
+					method: function(id) { 
+						console.log('load up the sell parts menu');
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = { 
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
+				posY: Game.placeEntityY(0.77, (Game.entitySize * 20)),
+				width: (Game.entitySize * 45),
+				height: (Game.entitySize * 20),
+				lineWidth: 1,
+				btnColor: 'indigo',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Robots',
+				isFilled: true,
+				id: 'sell-select-robots',
+				action: { 
+					method: function(id) { 
+						console.log('load up the sell robots menu');
 					}
 				},
 				props: {},
