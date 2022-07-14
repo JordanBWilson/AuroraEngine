@@ -35,7 +35,7 @@ const gameObject = {
 	scrapInvintory: 10, // how much scrap can the player hold
 	scrapperSkill: 0, // ability to find more rare scrap
 	roboticSkill: 0, // ability to put together robots with higher tiered parts
-	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts
+	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts; makes robots worth more
 	barterSkill: 0, // sell for more on the grand exchange; use percentages to increase prices
 	// ---different tiers of money---
 	copper: 0, // 1000 copper = 1 bronze
@@ -50,9 +50,9 @@ const gameObject = {
 	arenaBuild: false, // this is where multiplayer will come in. assign and build battle bots and buildings
 	arenaLevel: 0, // this will determine what type of buildings are availiable in multiplayer
 	// ---robot adventuring---
-	robotStorage: 3, // these robots can be sold on the grand exchange
-	robotsMade: 0, // or go on adventures to find riches; ***can be upgraded***
-	robotTeams: [], // the different robots who are going out to find riches
+	robotStorage: 3, // total robots that can be made ***can be upgraded***
+	robotsMade: 0, // current number of robots made
+	robotTeams: [], // the different robots who are going out to find riches or can be sold
 	discoveredHeads: [], // all the robot heads discovered by the player
 	discoveredChassis: [], // all the robot chassis discovered by the player
 	discoveredLegs: [], // all the robot legs discovered by the player
@@ -61,7 +61,7 @@ const gameObject = {
 	robotDesigns: [], // this will hold all the different robot design the player has made
 	// a robot design can be made into a robot team
 	// ---robot menu displaying---
-	robotDesignCount: 3, // this is how many robots the player can design right now. Max is 9, go up by 3s; ***can be upgraded***
+	robotDesignCount: 3, // this is how many robots the player can design right now. Max is 9, go up by 3s; ***upgraded with factory level***
 	selectedRobotDesign: -1, // this is the design that's currently selected
 	discoveredPartsList: [], // holds all the organized parts into 5 items per page
 	partPageIndex: 0, // this value will store where you are in the part list
