@@ -666,7 +666,7 @@ function homeMenuSelect() {
 	};
 	Game.addMethod(Game.methodSetup);
 }
-// future Jordan, work on making the scrap, parts and robot sell menus
+
 function homeSellSelect() {
 	Game.clearStage();
 	Game.methodSetup = {
@@ -750,7 +750,7 @@ function homeSellSelect() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
-				posY: Game.placeEntityY(0.27, (Game.entitySize * 20)),
+				posY: Game.placeEntityY(0.30, (Game.entitySize * 20)),
 				width: (Game.entitySize * 45),
 				height: (Game.entitySize * 20),
 				lineWidth: 1,
@@ -776,7 +776,7 @@ function homeSellSelect() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
-				posY: Game.placeEntityY(0.52, (Game.entitySize * 20)),
+				posY: Game.placeEntityY(0.55, (Game.entitySize * 20)),
 				width: (Game.entitySize * 45),
 				height: (Game.entitySize * 20),
 				lineWidth: 1,
@@ -801,7 +801,7 @@ function homeSellSelect() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
-				posY: Game.placeEntityY(0.77, (Game.entitySize * 20)),
+				posY: Game.placeEntityY(0.80, (Game.entitySize * 20)),
 				width: (Game.entitySize * 45),
 				height: (Game.entitySize * 20),
 				lineWidth: 1,
@@ -849,8 +849,8 @@ function homeSellScrap() {
 			drawRect({
 				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
 				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-				width: (Game.canvas.width * 0.94),
-				height: (Game.canvas.height * 0.45),
+				width: (Game.canvas.width * 0.45),
+				height: (Game.canvas.height * 0.855),
 				lineWidth: 1,
 				color: 'lightgrey',
 				isFilled: true,
@@ -865,10 +865,10 @@ function homeSellScrap() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
-				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-				posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
-				width: (Game.canvas.width * 0.94),
-				height: (Game.canvas.height * 0.39),
+				posX: Game.placeEntityX(0.72, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.715, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.49),
+				height: (Game.canvas.height * 0.49),
 				lineWidth: 1,
 				color: 'lightgrey',
 				isFilled: true,
@@ -880,7 +880,7 @@ function homeSellScrap() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	drawSellScrapButtons(); // draw the buttons in the top left
+	drawSellScrapButtons(); // draw the scrap buttons in the top left
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -923,13 +923,14 @@ function homeSellScrap() {
 	};
 	Game.addMethod(Game.methodSetup);
 }
-
+// future Jordan, make these scrap buttons display how much money it's worth
+// display all money values after the first non-zero money type that is discovered
 function drawSellScrapButtons() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-				posY: Game.placeEntityY(0.36, (Game.canvas.height * 0.45)),
+				posY: Game.placeEntityY(0.395, (Game.canvas.height * 0.45)),
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
@@ -950,7 +951,7 @@ function drawSellScrapButtons() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-				posY: Game.placeEntityY(0.47, (Game.canvas.height * 0.45)),
+				posY: Game.placeEntityY(0.505, (Game.canvas.height * 0.45)),
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
@@ -971,7 +972,7 @@ function drawSellScrapButtons() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-				posY: Game.placeEntityY(0.58, (Game.canvas.height * 0.45)),
+				posY: Game.placeEntityY(0.615, (Game.canvas.height * 0.45)),
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
@@ -992,7 +993,7 @@ function drawSellScrapButtons() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-				posY: Game.placeEntityY(0.69, (Game.canvas.height * 0.45)),
+				posY: Game.placeEntityY(0.725, (Game.canvas.height * 0.45)),
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
@@ -1013,7 +1014,7 @@ function drawSellScrapButtons() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-				posY: Game.placeEntityY(0.80, (Game.canvas.height * 0.45)),
+				posY: Game.placeEntityY(0.835, (Game.canvas.height * 0.45)),
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
@@ -1034,7 +1035,7 @@ function drawSellScrapButtons() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-				posY: Game.placeEntityY(0.91, (Game.canvas.height * 0.45)),
+				posY: Game.placeEntityY(0.945, (Game.canvas.height * 0.45)),
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
@@ -1055,7 +1056,7 @@ function drawSellScrapButtons() {
 		method: function(id) {
 			drawButton({
 				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-				posY: Game.placeEntityY(1.02, (Game.canvas.height * 0.45)),
+				posY: Game.placeEntityY(1.055, (Game.canvas.height * 0.45)),
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,

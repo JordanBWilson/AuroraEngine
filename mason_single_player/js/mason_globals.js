@@ -24,13 +24,62 @@ const gameObject = {
 	exoticScrap: 0, // I'm thinking this scrap type could be used to make special items
 	// ---scrap base prices--- these prices will determine how much parts and robots will cost
 	// when calcing the barter price upgrade, use these numbers
-	commonScrapBase: { money: 'copper', price: 5 },
-	unCommonScrapBase: { money: 'copper', price: 25 },
-	uniqueScrapBase: { money: 'copper', price: 250 },
-	intriguingScrapBase: { money: 'copper', price: 600 },
-	facinatingScrapBase: { money: 'bronze', price: 5 },
-	mythicScrapBase: { money: 'bronze', price: 25 },
-	exoticScrapBase: { money: 'bronze', price: 100 },
+	commonScrapBase: [
+		{ money: 'mythryl', price: 0 },
+		{ money: 'platinum', price: 0 },
+		{ money: 'gold', price: 0 },
+		{ money: 'silver', price: 0 },
+		{ money: 'bronze', price: 0 },
+		{ money: 'copper', price: 5 }
+	],
+	unCommonScrapBase: [
+		{ money: 'mythryl', price: 0 },
+		{ money: 'platinum', price: 0 },
+		{ money: 'gold', price: 0 },
+		{ money: 'silver', price: 0 },
+		{ money: 'bronze', price: 0 },
+		{ money: 'copper', price: 25 }
+	],
+	uniqueScrapBase: [
+		{ money: 'mythryl', price: 0 },
+		{ money: 'platinum', price: 0 },
+		{ money: 'gold', price: 0 },
+		{ money: 'silver', price: 0 },
+		{ money: 'bronze', price: 0 },
+		{ money: 'copper', price: 250 }
+	],
+	intriguingScrapBase: [
+		{ money: 'mythryl', price: 0 },
+		{ money: 'platinum', price: 0 },
+		{ money: 'gold', price: 0 },
+		{ money: 'silver', price: 0 },
+		{ money: 'bronze', price: 0 },
+		{ money: 'copper', price: 600 }
+	],
+	facinatingScrapBase: [
+		{ money: 'mythryl', price: 0 },
+		{ money: 'platinum', price: 0 },
+		{ money: 'gold', price: 0 },
+		{ money: 'silver', price: 0 },
+		{ money: 'bronze', price: 5 },
+		{ money: 'copper', price: 0 }
+	],
+	mythicScrapBase: [
+		{ money: 'mythryl', price: 0 },
+		{ money: 'platinum', price: 0 },
+		{ money: 'gold', price: 0 },
+		{ money: 'silver', price: 0 },
+		{ money: 'bronze', price: 25 },
+		{ money: 'copper', price: 0 }
+	],
+	exoticScrapBase: [
+		{ money: 'mythryl', price: 0 },
+		{ money: 'platinum', price: 0 },
+		{ money: 'gold', price: 0 },
+		{ money: 'silver', price: 0 },
+		{ money: 'bronze', price: 50 }, 
+		{ money: 'copper', price: 0 }
+	],
 	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
 	scrapperSkill: 0, // ability to find more rare scrap
