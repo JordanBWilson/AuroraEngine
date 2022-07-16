@@ -763,6 +763,7 @@ function homeSellSelect() {
 				action: { 
 					method: function(id) { 
 						console.log('load up the sell scrap menu');
+						homeSellScrap();
 					}
 				},
 				props: {},
@@ -815,6 +816,256 @@ function homeSellSelect() {
 						console.log('load up the sell robots menu');
 					}
 				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}
+
+function homeSellScrap() {
+	Game.clearStage();
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height),
+				lineWidth: 1,
+				color: 'grey',
+				isFilled: true,
+				id: 'sell-scrap-main-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.94),
+				height: (Game.canvas.height * 0.45),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'scrap-types-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.94),
+				height: (Game.canvas.height * 0.39),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'scrap-sell-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	drawSellScrapButtons(); // draw the buttons in the top left
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Back',
+				isFilled: true,
+				id: 'scrap-back-game',
+				action: { method: function(id) {
+					 homeSellSelect();
+
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2em serif',
+				msg: 'Sell Scrap',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'sell-scrap-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}
+
+function drawSellScrapButtons() {
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.36, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'Common Scrap',
+				isFilled: true,
+				id: 'sell-common-scrap',
+				action: { method: function(id) { console.log('select common scrap'); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.47, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'UnCommon Scrap',
+				isFilled: true,
+				id: 'sell-uncommon-scrap',
+				action: { method: function(id) { console.log('select uncommon scrap'); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.58, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'Unique Scrap',
+				isFilled: true,
+				id: 'sell-unique-scrap',
+				action: { method: function(id) { console.log('select unique scrap'); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.69, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'Intriguing Scrap',
+				isFilled: true,
+				id: 'sell-intriguing-scrap',
+				action: { method: function(id) { console.log('select intriguing scrap'); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.80, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'Facinating Scrap',
+				isFilled: true,
+				id: 'sell-facinating-scrap',
+				action: { method: function(id) { console.log('select facinating scrap'); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.91, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'Mythic Scrap',
+				isFilled: true,
+				id: 'sell-mythic-scrap',
+				action: { method: function(id) { console.log('select mythic scrap'); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(1.02, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'Exotic Scrap',
+				isFilled: true,
+				id: 'sell-exotic-scrap',
+				action: { method: function(id) { console.log('select exotic scrap'); }},
 				props: {},
 				methodId: id
 			});
