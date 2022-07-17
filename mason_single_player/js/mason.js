@@ -509,6 +509,195 @@ function openHome() {
 	console.log('open Home');
 	homeMenuSelect();
 }
+
+function displayCondensedFunds() {
+	console.log(gameObject.mythryl);
+	if (gameObject.mythryl > 0) {
+		// future Jordan, 99,999 is the max number on mobile display
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Mythryl: ' + gameObject.mythryl,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.245),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Platinum: ' + gameObject.platinum,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.295),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-low',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	} else if (gameObject.platinum > 0) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Platinum: ' + gameObject.platinum,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.245),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Gold: ' + gameObject.gold,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.295),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-low',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	} else if (gameObject.gold > 0) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Gold: ' + gameObject.gold,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.245),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Silver: ' + gameObject.silver,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.295),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-low',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	} else if (gameObject.silver > 0) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Silver: ' + gameObject.silver,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.245),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Bronze: ' + gameObject.bronze,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.295),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-low',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	} else if (gameObject.bronze > 0) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Bronze: ' + gameObject.bronze,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.245),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Copper: ' + gameObject.copper,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.295),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-low',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	} else if (gameObject.copper >= 0) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: 'Copper: ' + gameObject.copper,
+					posX: Game.placeEntityX(0.565),
+					posY: Game.placeEntityY(0.245),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	}
+}
+
 // this is the start of the home menus
 function homeMenuSelect() {
 	Game.clearStage();
@@ -947,7 +1136,7 @@ function homeSellScrap() {
 				msg: 'Total',
 				posX: Game.placeEntityX(0.715),
 				posY: Game.placeEntityY(0.565),
-				color: 'darkgrey',
+				color: 'grey',
 				align: 'center',
 				props: {},
 				id: 'total-scrap-count-title',
@@ -963,7 +1152,7 @@ function homeSellScrap() {
 				msg: 'Funds',
 				posX: Game.placeEntityX(0.715),
 				posY: Game.placeEntityY(0.185),
-				color: 'darkgrey',
+				color: 'grey',
 				align: 'center',
 				props: {},
 				id: 'total-funds-title',
@@ -979,7 +1168,7 @@ function homeSellScrap() {
 				msg: 'Count',
 				posX: Game.placeEntityX(0.715),
 				posY: Game.placeEntityY(0.385),
-				color: 'darkgrey',
+				color: 'grey',
 				align: 'center',
 				props: {},
 				id: 'total-scrap-price-title',
@@ -988,12 +1177,14 @@ function homeSellScrap() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	displayCondensedFunds();
 	// future Jordan, we need to display the players funds. Display them
 	// from the highest currency to the currency right below. If the player
 	// only has copper, only display copper. If the player has 1 bronze and 
 	// 20 copper, display it like: "1 bronze, 20 copper". If the player has
 	// 1 silver, 1 bronze and 20 copper, display it like: "1 silver, 1 bronze"
 }
+
 // future Jordan, make these scrap buttons display how much money it's worth
 // display all money values after the first non-zero money type that is discovered
 function drawSellScrapButtons() {
