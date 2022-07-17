@@ -1215,8 +1215,6 @@ function selectRobotPartChassis() {
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
 	displayDiscoveredPartParts(gameObject.discoveredChassis);
-	
-
 }
 
 function selectRobotPartHead() {

@@ -880,6 +880,24 @@ function homeSellScrap() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.775, (Game.canvas.width * 0.57)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.48),
+				height: (Game.canvas.height * 0.365),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'scrap-count-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 	drawSellScrapButtons(); // draw the scrap buttons in the top left
 	Game.methodSetup = {
 		method: function(id) {
@@ -932,12 +950,29 @@ function homeSellScrap() {
 				color: 'darkgrey',
 				align: 'center',
 				props: {},
-				id: 'total-scrap-title',
+				id: 'total-scrap-count-title',
 				methodId: id
 			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2em serif',
+				msg: 'Count',
+				posX: Game.placeEntityX(0.715),
+				posY: Game.placeEntityY(0.185),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'total-scrap-price-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	// future Jordan, under the scrap count, add the players funds
 }
 // future Jordan, make these scrap buttons display how much money it's worth
 // display all money values after the first non-zero money type that is discovered
@@ -956,7 +991,7 @@ function drawSellScrapButtons() {
 				msg: 'Common Scrap',
 				isFilled: true,
 				id: 'sell-common-scrap',
-				action: { method: function(id) { console.log('select common scrap'); }},
+				action: { method: function(id) { selectCommonScrap(); }},
 				props: {},
 				methodId: id
 			});
@@ -1089,4 +1124,39 @@ function drawSellScrapButtons() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+}
+
+function selectCommonScrap() {
+	gameObject.scrapToSell = 'common';
+	// clearRobotPartParts(); // we need something like this
+	// refreshFactoryBackgrounds(); // need to refresh the totals
+	// clearRobotPartPreviewHighlight(); // need to clear the highlights
+	const highlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	selectScrapPrice('common');
+}
+
+function selectScrapPrice(scrapType) {
+	if (scrapType === 'common') {
+		gameObject.commonScrapBase.forEach((scrap, i) => {
+			console.log(scrap);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.1em serif',
+						msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
+						posX: Game.placeEntityX(0.515),
+						posY: Game.placeEntityY(0.635 + (i * 0.045)),
+						color: 'darkgrey',
+						align: 'left',
+						props: {},
+						id: 'scrap-price',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		});
+	}
 }

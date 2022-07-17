@@ -80,6 +80,7 @@ const gameObject = {
 		{ money: 'bronze', price: 50 }, 
 		{ money: 'copper', price: 0 }
 	],
+	scrapToSell: '', // this can be common, uncommon, unique, etc.
 	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
 	scrapperSkill: 0, // ability to find more rare scrap
