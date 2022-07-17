@@ -812,7 +812,7 @@ function homeSellSelect() {
 				isFilled: true,
 				id: 'sell-select-robots',
 				action: { 
-					method: function(id) { 
+					method: function(id) {
 						console.log('load up the sell robots menu');
 					}
 				},
@@ -865,10 +865,10 @@ function homeSellScrap() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
-				posX: Game.placeEntityX(0.72, (Game.canvas.width * 0.45)),
-				posY: Game.placeEntityY(0.715, (Game.canvas.height * 0.45)),
-				width: (Game.canvas.width * 0.49),
-				height: (Game.canvas.height * 0.49),
+				posX: Game.placeEntityX(0.775, (Game.canvas.width * 0.57)),
+				posY: Game.placeEntityY(0.725, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.48),
+				height: (Game.canvas.height * 0.48),
 				lineWidth: 1,
 				color: 'lightgrey',
 				isFilled: true,
@@ -917,6 +917,22 @@ function homeSellScrap() {
 				align: 'center',
 				props: {},
 				id: 'sell-scrap-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2em serif',
+				msg: 'Total',
+				posX: Game.placeEntityX(0.715),
+				posY: Game.placeEntityY(0.565),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'total-scrap-title',
 				methodId: id
 			});
 		}
