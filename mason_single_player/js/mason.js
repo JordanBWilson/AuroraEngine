@@ -960,9 +960,25 @@ function homeSellScrap() {
 		method: function(id) {
 			drawText({
 				font: '2em serif',
-				msg: 'Count',
+				msg: 'Funds',
 				posX: Game.placeEntityX(0.715),
 				posY: Game.placeEntityY(0.185),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'total-funds-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2em serif',
+				msg: 'Count',
+				posX: Game.placeEntityX(0.715),
+				posY: Game.placeEntityY(0.385),
 				color: 'darkgrey',
 				align: 'center',
 				props: {},
@@ -972,7 +988,11 @@ function homeSellScrap() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	// future Jordan, under the scrap count, add the players funds
+	// future Jordan, we need to display the players funds. Display them
+	// from the highest currency to the currency right below. If the player
+	// only has copper, only display copper. If the player has 1 bronze and 
+	// 20 copper, display it like: "1 bronze, 20 copper". If the player has
+	// 1 silver, 1 bronze and 20 copper, display it like: "1 silver, 1 bronze"
 }
 // future Jordan, make these scrap buttons display how much money it's worth
 // display all money values after the first non-zero money type that is discovered
