@@ -1114,11 +1114,6 @@ function homeSellScrap() {
 	Game.addMethod(Game.methodSetup);
 	createSellScrapTitles();
 	displayCondensedFunds();
-	// future Jordan, we need to display the players funds. Display them
-	// from the highest currency to the currency right below. If the player
-	// only has copper, only display copper. If the player has 1 bronze and 
-	// 20 copper, display it like: "1 bronze, 20 copper". If the player has
-	// 1 silver, 1 bronze and 20 copper, display it like: "1 silver, 1 bronze"
 }
 
 function createSellScrapTitles() {
@@ -1188,8 +1183,6 @@ function createSellScrapTitles() {
 	Game.addMethod(Game.methodSetup);
 }
 
-// future Jordan, make these scrap buttons display how much money it's worth
-// display all money values after the first non-zero money type that is discovered
 function drawSellScrapButtons() {
 	Game.methodSetup = {
 		method: function(id) {
@@ -1247,7 +1240,7 @@ function drawSellScrapButtons() {
 				msg: 'Unique Scrap',
 				isFilled: true,
 				id: 'sell-unique-scrap',
-				action: { method: function(id) { console.log('select unique scrap'); }},
+				action: { method: function(id) { selectUniqueScrap(); }},
 				props: {},
 				methodId: id
 			});
@@ -1268,7 +1261,7 @@ function drawSellScrapButtons() {
 				msg: 'Intriguing Scrap',
 				isFilled: true,
 				id: 'sell-intriguing-scrap',
-				action: { method: function(id) { console.log('select intriguing scrap'); }},
+				action: { method: function(id) { selectIntriguingScrap(); }},
 				props: {},
 				methodId: id
 			});
@@ -1289,7 +1282,7 @@ function drawSellScrapButtons() {
 				msg: 'Facinating Scrap',
 				isFilled: true,
 				id: 'sell-facinating-scrap',
-				action: { method: function(id) { console.log('select facinating scrap'); }},
+				action: { method: function(id) { selectFacinatingScrap(); }},
 				props: {},
 				methodId: id
 			});
@@ -1310,7 +1303,7 @@ function drawSellScrapButtons() {
 				msg: 'Mythic Scrap',
 				isFilled: true,
 				id: 'sell-mythic-scrap',
-				action: { method: function(id) { console.log('select mythic scrap'); }},
+				action: { method: function(id) { selectMythicScrap(); }},
 				props: {},
 				methodId: id
 			});
@@ -1331,7 +1324,7 @@ function drawSellScrapButtons() {
 				msg: 'Exotic Scrap',
 				isFilled: true,
 				id: 'sell-exotic-scrap',
-				action: { method: function(id) { console.log('select exotic scrap'); }},
+				action: { method: function(id) { selectExoticScrap(); }},
 				props: {},
 				methodId: id
 			});
@@ -1360,6 +1353,71 @@ function selectUnCommonScrap() {
 	refreshSellScrapBackgrounds();
 	clearSellScrapHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	setTimeout(function() {
+		selectScrapPrice(gameObject.scrapToSell);
+	}, 0);
+}
+
+function selectUniqueScrap() {
+	gameObject.scrapToSell = 'unique';
+	clearSellScrapScreen();
+	refreshSellScrapBackgrounds();
+	clearSellScrapHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'sell-unique-scrap');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	setTimeout(function() {
+		selectScrapPrice(gameObject.scrapToSell);
+	}, 0);
+}
+
+function selectIntriguingScrap() {
+	gameObject.scrapToSell = 'intriguing';
+	clearSellScrapScreen();
+	refreshSellScrapBackgrounds();
+	clearSellScrapHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'sell-intriguing-scrap');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	setTimeout(function() {
+		selectScrapPrice(gameObject.scrapToSell);
+	}, 0);
+}
+
+function selectFacinatingScrap() {
+	gameObject.scrapToSell = 'facinating';
+	clearSellScrapScreen();
+	refreshSellScrapBackgrounds();
+	clearSellScrapHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'sell-facinating-scrap');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	setTimeout(function() {
+		selectScrapPrice(gameObject.scrapToSell);
+	}, 0);
+}
+
+function selectMythicScrap() {
+	gameObject.scrapToSell = 'mythic';
+	clearSellScrapScreen();
+	refreshSellScrapBackgrounds();
+	clearSellScrapHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'sell-mythic-scrap');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	setTimeout(function() {
+		selectScrapPrice(gameObject.scrapToSell);
+	}, 0);
+}
+
+function selectExoticScrap() {
+	gameObject.scrapToSell = 'exotic';
+	clearSellScrapScreen();
+	refreshSellScrapBackgrounds();
+	clearSellScrapHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'sell-exotic-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
 	setTimeout(function() {
@@ -1472,6 +1530,10 @@ function selectScrapPrice(scrapType) {
 		};
 		Game.addMethod(Game.methodSetup);
 	});
+	// future Jordan, make the sell button do something. make methods that will
+	// add to your funds in regards to the exchange rates and also a subtract method.
+	// make the sell scrap buttons only selectable if the player has one or more of that scrap.
+	// grey out the sell button and display a modal once the player has sold all of that scrap.
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
