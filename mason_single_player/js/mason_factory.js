@@ -1650,7 +1650,7 @@ function clearRobotPreviewHighlight() {
 	legLeftHighlight.btnColor = drawRobotPreviewParts('left-leg');
 }
 
-function clearRobotPartPreviewHighlight() { // txtColor
+function clearRobotPartPreviewHighlight() {
 	const headHighlight = Game.methodObjects.find(item => item.id === 'robot-head-parts');
 	headHighlight.btnColor = 'lightslategrey';
 	headHighlight.txtColor = 'white';

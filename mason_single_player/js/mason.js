@@ -511,7 +511,6 @@ function openHome() {
 }
 
 function displayCondensedFunds() {
-	console.log(gameObject.mythryl);
 	if (gameObject.mythryl > 0) {
 		// future Jordan, 99,999 is the max number on mobile display
 		Game.methodSetup = {
@@ -1341,7 +1340,7 @@ function selectCommonScrap() {
 	gameObject.scrapToSell = 'common';
 	// clearRobotPartParts(); // we need something like this
 	// refreshFactoryBackgrounds(); // need to refresh the totals
-	// clearRobotPartPreviewHighlight(); // need to clear the highlights
+	clearSellScrapHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
@@ -1350,16 +1349,41 @@ function selectCommonScrap() {
 
 function selectScrapPrice(scrapType) {
 	if (scrapType === 'common') {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.5em serif',
+					msg: gameObject.commonScrap,
+					posX: Game.placeEntityX(0.715),
+					posY: Game.placeEntityY(0.445),
+					color: 'grey',
+					align: 'center',
+					props: {},
+					id: 'scrap-count',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		let maxValue = false;
+		const pricesToDisplay = [];
 		gameObject.commonScrapBase.forEach((scrap, i) => {
-			console.log(scrap);
+			if (scrap.price > 0) {
+				maxValue = true;
+			}
+			if (maxValue) {
+				pricesToDisplay.push(scrap);
+			}
+		});
+		pricesToDisplay.forEach((scrap, i) => {
 			Game.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.1em serif',
+						font: '1.2em serif',
 						msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
 						posX: Game.placeEntityX(0.515),
 						posY: Game.placeEntityY(0.635 + (i * 0.045)),
-						color: 'darkgrey',
+						color: 'grey',
 						align: 'left',
 						props: {},
 						id: 'scrap-price',
@@ -1370,4 +1394,49 @@ function selectScrapPrice(scrapType) {
 			Game.addMethod(Game.methodSetup);
 		});
 	}
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.73, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(1.111, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.08),
+				lineWidth: 1,
+				btnColor: 'grey',
+				txtColor: 'white',
+				font: '1.1em serif',
+				msg: 'Sell',
+				isFilled: true,
+				id: 'sell-scrap-btn',
+				action: { method: function(id) { console.log('sell ' + gameObject.scrapToSell + ' scrap'); }},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+}
+
+function clearSellScrapHighlight() {
+	const commonHighlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
+	commonHighlight.btnColor = 'lightslategrey';
+	commonHighlight.txtColor = 'white';
+	const unCommonHighlight = Game.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
+	unCommonHighlight.btnColor = 'lightslategrey';
+	unCommonHighlight.txtColor = 'white';
+	const uniqueHighlight = Game.methodObjects.find(x => x.id === 'sell-unique-scrap');
+	uniqueHighlight.btnColor = 'lightslategrey';
+	uniqueHighlight.txtColor = 'white';
+	const intriguingHighlight = Game.methodObjects.find(x => x.id === 'sell-intriguing-scrap');
+	intriguingHighlight.btnColor = 'lightslategrey';
+	intriguingHighlight.txtColor = 'white';
+	const facinatingHighlight = Game.methodObjects.find(x => x.id === 'sell-facinating-scrap');
+	facinatingHighlight.btnColor = 'lightslategrey';
+	facinatingHighlight.txtColor = 'white';
+	const mythicHighlight = Game.methodObjects.find(x => x.id === 'sell-mythic-scrap');
+	mythicHighlight.btnColor = 'lightslategrey';
+	mythicHighlight.txtColor = 'white';
+	const exoticHighlight = Game.methodObjects.find(x => x.id === 'sell-exotic-scrap');
+	exoticHighlight.btnColor = 'lightslategrey';
+	exoticHighlight.txtColor = 'white';
 }
