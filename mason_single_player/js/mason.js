@@ -1112,6 +1112,16 @@ function homeSellScrap() {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+	createSellScrapTitles();
+	displayCondensedFunds();
+	// future Jordan, we need to display the players funds. Display them
+	// from the highest currency to the currency right below. If the player
+	// only has copper, only display copper. If the player has 1 bronze and 
+	// 20 copper, display it like: "1 bronze, 20 copper". If the player has
+	// 1 silver, 1 bronze and 20 copper, display it like: "1 silver, 1 bronze"
+}
+
+function createSellScrapTitles() {
 	Game.methodSetup = {
 		method: function(id) {
 			drawText({
@@ -1138,7 +1148,7 @@ function homeSellScrap() {
 				color: 'grey',
 				align: 'center',
 				props: {},
-				id: 'total-scrap-count-title',
+				id: 'total-scrap-price-title',
 				methodId: id
 			});
 		}
@@ -1170,18 +1180,12 @@ function homeSellScrap() {
 				color: 'grey',
 				align: 'center',
 				props: {},
-				id: 'total-scrap-price-title',
+				id: 'total-scrap-count-title',
 				methodId: id
 			});
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-	displayCondensedFunds();
-	// future Jordan, we need to display the players funds. Display them
-	// from the highest currency to the currency right below. If the player
-	// only has copper, only display copper. If the player has 1 bronze and 
-	// 20 copper, display it like: "1 bronze, 20 copper". If the player has
-	// 1 silver, 1 bronze and 20 copper, display it like: "1 silver, 1 bronze"
 }
 
 // future Jordan, make these scrap buttons display how much money it's worth
@@ -1222,7 +1226,7 @@ function drawSellScrapButtons() {
 				msg: 'UnCommon Scrap',
 				isFilled: true,
 				id: 'sell-uncommon-scrap',
-				action: { method: function(id) { console.log('select uncommon scrap'); }},
+				action: { method: function(id) { selectUnCommonScrap(); }},
 				props: {},
 				methodId: id
 			});
@@ -1338,35 +1342,54 @@ function drawSellScrapButtons() {
 
 function selectCommonScrap() {
 	gameObject.scrapToSell = 'common';
-	// clearRobotPartParts(); // we need something like this
-	// refreshFactoryBackgrounds(); // need to refresh the totals
+	clearSellScrapScreen();
+	refreshSellScrapBackgrounds();
 	clearSellScrapHighlight();
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
-	selectScrapPrice('common');
+	setTimeout(function() {
+		selectScrapPrice(gameObject.scrapToSell);
+	}, 0);
+	
+}
+
+function selectUnCommonScrap() {
+	gameObject.scrapToSell = 'unCommon';
+	clearSellScrapScreen();
+	refreshSellScrapBackgrounds();
+	clearSellScrapHighlight();
+	const highlight = Game.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
+	highlight.btnColor = 'yellow';
+	highlight.txtColor = 'black';
+	setTimeout(function() {
+		selectScrapPrice(gameObject.scrapToSell);
+	}, 0);
 }
 
 function selectScrapPrice(scrapType) {
+	createSellScrapTitles();
+	displayCondensedFunds();
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '1.5em serif',
+				msg: displayScrapCount(scrapType),
+				posX: Game.placeEntityX(0.715),
+				posY: Game.placeEntityY(0.445),
+				color: 'grey',
+				align: 'center',
+				props: {},
+				id: 'scrap-count',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	let maxValue = false;
+	const pricesToDisplay = [];
+	
 	if (scrapType === 'common') {
-		Game.methodSetup = {
-			method: function(id) {
-				drawText({
-					font: '1.5em serif',
-					msg: gameObject.commonScrap,
-					posX: Game.placeEntityX(0.715),
-					posY: Game.placeEntityY(0.445),
-					color: 'grey',
-					align: 'center',
-					props: {},
-					id: 'scrap-count',
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		let maxValue = false;
-		const pricesToDisplay = [];
 		gameObject.commonScrapBase.forEach((scrap, i) => {
 			if (scrap.price > 0) {
 				maxValue = true;
@@ -1375,25 +1398,80 @@ function selectScrapPrice(scrapType) {
 				pricesToDisplay.push(scrap);
 			}
 		});
-		pricesToDisplay.forEach((scrap, i) => {
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '1.2em serif',
-						msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
-						posX: Game.placeEntityX(0.515),
-						posY: Game.placeEntityY(0.635 + (i * 0.045)),
-						color: 'grey',
-						align: 'left',
-						props: {},
-						id: 'scrap-price',
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
+	} else if (scrapType === 'unCommon') {
+		gameObject.unCommonScrapBase.forEach((scrap, i) => {
+			if (scrap.price > 0) {
+				maxValue = true;
+			}
+			if (maxValue) {
+				pricesToDisplay.push(scrap);
+			}
+		});
+	} else if (scrapType === 'unique') {
+		gameObject.uniqueScrapBase.forEach((scrap, i) => {
+			if (scrap.price > 0) {
+				maxValue = true;
+			}
+			if (maxValue) {
+				pricesToDisplay.push(scrap);
+			}
+		});
+	} else if (scrapType === 'intriguing') {
+		gameObject.intriguingScrapBase.forEach((scrap, i) => {
+			if (scrap.price > 0) {
+				maxValue = true;
+			}
+			if (maxValue) {
+				pricesToDisplay.push(scrap);
+			}
+		});
+	} else if (scrapType === 'facinating') {
+		gameObject.facinatingScrapBase.forEach((scrap, i) => {
+			if (scrap.price > 0) {
+				maxValue = true;
+			}
+			if (maxValue) {
+				pricesToDisplay.push(scrap);
+			}
+		});
+	} else if (scrapType === 'mythic') {
+		gameObject.mythicScrapBase.forEach((scrap, i) => {
+			if (scrap.price > 0) {
+				maxValue = true;
+			}
+			if (maxValue) {
+				pricesToDisplay.push(scrap);
+			}
+		});
+	} else if (scrapType === 'exotic') {
+		gameObject.exoticScrapBase.forEach((scrap, i) => {
+			if (scrap.price > 0) {
+				maxValue = true;
+			}
+			if (maxValue) {
+				pricesToDisplay.push(scrap);
+			}
 		});
 	}
+	
+	pricesToDisplay.forEach((scrap, i) => {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.2em serif',
+					msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
+					posX: Game.placeEntityX(0.515),
+					posY: Game.placeEntityY(0.635 + (i * 0.045)),
+					color: 'grey',
+					align: 'left',
+					props: {},
+					id: 'scrap-price',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	});
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1415,6 +1493,24 @@ function selectScrapPrice(scrapType) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+}
+
+function displayScrapCount(scrapType) {
+	if (scrapType === 'common') {
+		return gameObject.commonScrap;
+	} else if (scrapType === 'unCommon') {
+		return gameObject.unCommonScrap;
+	} else if (scrapType === 'unique') {
+		return gameObject.uniqueScrap;
+	} else if (scrapType === 'intriguing') {
+		return gameObject.intriguingScrap;
+	} else if (scrapType === 'facinating') {
+		return gameObject.facinatingScrap;
+	} else if (scrapType === 'mythic') {
+		return gameObject.mythicScrap;
+	} else if (scrapType === 'exotic') {
+		return gameObject.exoticScrap;
+	}
 }
 
 function clearSellScrapHighlight() {
@@ -1439,4 +1535,76 @@ function clearSellScrapHighlight() {
 	const exoticHighlight = Game.methodObjects.find(x => x.id === 'sell-exotic-scrap');
 	exoticHighlight.btnColor = 'lightslategrey';
 	exoticHighlight.txtColor = 'white';
+}
+
+function clearSellScrapScreen() {
+	const scrapCount = Game.methodObjects.filter(x => x.id === 'scrap-count');
+	const scrapPrice = Game.methodObjects.filter(x => x.id === 'scrap-price');
+	const sellScrapBtn = Game.methodObjects.filter(x => x.id === 'sell-scrap-btn');
+	const sellScrapTitle = Game.methodObjects.filter(x => x.id === 'sell-scrap-title');
+	const scrapPriceTitle = Game.methodObjects.filter(x => x.id === 'total-scrap-price-title');
+	const fundsTitle = Game.methodObjects.filter(x => x.id === 'total-funds-title');
+	const scrapCountTitle = Game.methodObjects.filter(x => x.id === 'total-scrap-count-title');
+	const fundsHigh = Game.methodObjects.filter(x => x.id === 'player-funds-high');
+	const fundsLow = Game.methodObjects.filter(x => x.id === 'player-funds-low');
+	if (scrapCount.length > 0) {
+		scrapCount.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (scrapPrice.length > 0) {
+		scrapPrice.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (sellScrapBtn.length > 0) {
+		sellScrapBtn.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (sellScrapTitle.length > 0) {
+		sellScrapTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (scrapPriceTitle.length > 0) {
+		scrapPriceTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (fundsTitle.length > 0) {
+		fundsTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (scrapCountTitle.length > 0) {
+		scrapCountTitle.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (fundsHigh.length > 0) {
+		fundsHigh.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+	if (fundsLow.length > 0) {
+		fundsLow.forEach((item, i) => {
+			Game.deleteEntity(item.methodId);
+		});
+	}
+}
+
+function refreshSellScrapBackgrounds() {
+	if (Game.methodObjects.find(x => x.id === 'sell-scrap-main-background')) {
+		Game.methodObjects.find(x => x.id === 'sell-scrap-main-background').isAnim = true;
+	}
+	if (Game.methodObjects.find(x => x.id === 'scrap-types-background')) {
+		Game.methodObjects.find(x => x.id === 'scrap-types-background').isAnim = true;
+	}
+	if (Game.methodObjects.find(x => x.id === 'scrap-sell-background')) {
+		Game.methodObjects.find(x => x.id === 'scrap-sell-background').isAnim = true;
+	}
+	if (Game.methodObjects.find(x => x.id === 'scrap-count-background')) {
+		Game.methodObjects.find(x => x.id === 'scrap-count-background').isAnim = true;
+	}
 }
