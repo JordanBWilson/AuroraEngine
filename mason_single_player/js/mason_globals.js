@@ -15,9 +15,9 @@
 // this will keep track of the game
 const gameObject = {
 	// ---types of scrap matirials---
-	commonScrap: 10,
-	unCommonScrap: 0,
-	uniqueScrap: 0, // rare
+	commonScrap: 20,
+	unCommonScrap: 20,
+	uniqueScrap: 20, // rare
 	intriguingScrap: 0, // epic
 	facinatingScrap: 0, // legendary
 	mythicScrap: 0,
@@ -84,9 +84,10 @@ const gameObject = {
 	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
 	scrapperSkill: 0, // ability to find more rare scrap
-	roboticSkill: 0, // ability to put together robots with higher tiered parts
-	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts; makes robots worth more
+	roboticSkill: 0, // ability to put together robots with higher tiered parts.
+	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts. makes robots worth more
 	barterSkill: 0, // sell for more on the grand exchange; use percentages to increase prices
+	partStorage: 6, // how many of each part can be stored at once. ***upgraded with factory level***
 	// ---different tiers of money---
 	copper: 0, // 1000 copper = 1 bronze
 	bronze: 0, // 1000 bronze = 1 silver
@@ -138,8 +139,8 @@ const robotHeads = [
 		},
 		scrapToBuild: {
 			commonScrap: 3,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
+			unCommonScrap: 3,
+			uniqueScrap: 3,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,

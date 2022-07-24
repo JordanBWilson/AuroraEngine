@@ -709,6 +709,8 @@ function factoryRobotParts() {
 	Game.pageResized = {
 		section: 'factory-robot-parts',
 		method: function() {
+			// future Jordan, the modals are getting drawn over when
+			// resizing the screen
 			if (gameObject.partsDisplayed === 'leg') {
 				selectRobotPartLegs();
 			}
@@ -2262,45 +2264,85 @@ function displaySelectPartParts(part) {
 								},100);
 	
 							} else {
-								// if we do, go over the list again and subtract the scrap
-								scrapCosts.forEach((scrap, i) => {
-									if (scrap.type === 'commonScrap') {
-										if (gameObject.commonScrap >= scrap.cost) {
-											gameObject.commonScrap -= scrap.cost;
-											part.count++;
+								// see if there is enough storage for the part first
+								if (part.count < gameObject.partStorage) {
+									// if we have enough scrap, go over the list again and subtract the scrap
+									scrapCosts.forEach((scrap, i) => {
+										if (scrap.type === 'commonScrap') {
+											if (gameObject.commonScrap >= scrap.cost) {
+												gameObject.commonScrap -= scrap.cost;
+											}
+										} else if (scrap.type === 'unCommonScrap') {
+											if (gameObject.unCommonScrap >= scrap.cost) {
+													gameObject.unCommonScrap -= scrap.cost;
+											}
+										} else if (scrap.type === 'uniqueScrap') {
+											if (gameObject.uniqueScrap >= scrap.cost) {
+												gameObject.uniqueScrap -= scrap.cost;
+											}
+										} else if (scrap.type === 'intriguingScrap') {
+											if (gameObject.intriguingScrap >= scrap.cost) {
+												gameObject.intriguingScrap -= scrap.cost;
+											}
+										} else if (scrap.type === 'facinatingScrap') {
+											if (gameObject.facinatingScrap >= scrap.cost) {
+												gameObject.facinatingScrap -= scrap.cost;
+											}
+										} else if (scrap.type === 'mythicScrap') {
+											if (gameObject.mythicScrap >= scrap.cost) {
+												gameObject.mythicScrap -= scrap.cost;
+											}
+										} else if (scrap.type === 'exoticScrap') {
+											if (gameObject.exoticScrap >= scrap.cost) {
+												gameObject.exoticScrap -= scrap.cost;
+											}
 										}
-									} else if (scrap.type === 'unCommonScrap') {
-										if (gameObject.unCommonScrap >= scrap.cost) {
-												gameObject.unCommonScrap -= scrap.cost;
-												part.count++;
-										}
-									} else if (scrap.type === 'uniqueScrap') {
-										if (gameObject.uniqueScrap >= scrap.cost) {
-											gameObject.uniqueScrap -= scrap.cost;
-											part.count++;
-										}
-									} else if (scrap.type === 'intriguingScrap') {
-										if (gameObject.intriguingScrap >= scrap.cost) {
-											gameObject.intriguingScrap -= scrap.cost;
-											part.count++;
-										}
-									} else if (scrap.type === 'facinatingScrap') {
-										if (gameObject.facinatingScrap >= scrap.cost) {
-											gameObject.facinatingScrap -= scrap.cost;
-											part.count++;
-										}
-									} else if (scrap.type === 'mythicScrap') {
-										if (gameObject.mythicScrap >= scrap.cost) {
-											gameObject.mythicScrap -= scrap.cost;
-											part.count++;
-										}
-									} else if (scrap.type === 'exoticScrap') {
-										if (gameObject.exoticScrap >= scrap.cost) {
-											gameObject.exoticScrap -= scrap.cost;
-											part.count++;
-										}
-									}
-								});
+									});
+									part.count++;
+								} else {
+									gameObject.buildButtonDisabled = true;
+									setTimeout(function() {
+										Game.methodSetup = {
+											method: function(id) {
+												drawModal({
+													posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+													posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+													width: (Game.entitySize * 40),
+													height: (Game.entitySize * 30),
+													lineWidth: 1,
+													modalColor: 'darkgrey',
+													msgColor: 'white',
+													msgFont: '1.3em serif',
+													msg: 'Not Enough Storage',
+													footerColor: 'white',
+													footerFont: '1em serif',
+													footerMsg: 'Tap here to continue',
+													bgColor: '',
+													isModalFilled: true,
+													id: Game.modalId,
+													action: { 
+														method: function(id) {
+															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+															Game.deleteEntity(modal.methodId); 
+															if (gameObject.partsDisplayed === 'chassis') {
+																selectRobotPartChassis();
+															} else if (gameObject.partsDisplayed === 'head') {
+																selectRobotPartHead();
+															} else if (gameObject.partsDisplayed === 'arm') {
+																selectRobotPartArms();
+															} else if (gameObject.partsDisplayed === 'leg') {
+																selectRobotPartLegs();
+															}
+														 }
+													},
+													props: {},
+													methodId: id
+												});
+											}
+										};
+										Game.addMethod(Game.methodSetup);
+									},100);
+								}
 							}
 							if (gameObject.partsDisplayed === 'chassis') {
 								displayDiscoveredPartParts(gameObject.discoveredChassis);
