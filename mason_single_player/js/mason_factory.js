@@ -709,8 +709,6 @@ function factoryRobotParts() {
 	Game.pageResized = {
 		section: 'factory-robot-parts',
 		method: function() {
-			// future Jordan, the modals are getting drawn over when
-			// resizing the screen
 			if (gameObject.partsDisplayed === 'leg') {
 				selectRobotPartLegs();
 			}
@@ -722,6 +720,37 @@ function factoryRobotParts() {
 			}
 			if (gameObject.partsDisplayed === 'head') {
 				selectRobotPartHead();
+			}
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (modal) {
+				Game.deleteEntity(modal.methodId);
+				setTimeout(function() {
+					Game.methodSetup = {
+						method: function(id) {
+							drawModal({
+								posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+								posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+								width: (Game.entitySize * 40),
+								height: (Game.entitySize * 30),
+								lineWidth: modal.lineWidth,
+								modalColor: modal.modalColor,
+								msgColor: modal.msgColor,
+								msgFont: modal.msgFont,
+								msg: modal.msg,
+								footerColor: modal.footerColor,
+								footerFont: modal.footerFont,
+								footerMsg: modal.footerMsg,
+								bgColor: modal.bgColor,
+								isModalFilled: modal.isModalFilled,
+								id: Game.modalId,
+								action: modal.action,
+								props: {},
+								methodId: id
+							});
+						}
+					};
+					Game.addMethod(Game.methodSetup);
+				}, 100);
 			}
 		}
 	}
@@ -2525,6 +2554,7 @@ function buildRobot() {
 	}
 	if (problems === 0) {
 		if (gameObject.robotsMade < gameObject.robotStorage) {
+			gameObject.partsDisplayed = '';
 			// add the robot to the list
 			gameObject.robotsMade++;
 			gameObject.robotTeamIndex++;
@@ -2599,10 +2629,10 @@ function buildRobot() {
 						Game.methodSetup = {
 							method: function(id) {
 								drawModal({
-									posX: modal.posX,
-									posY: modal.posY,
-									width: modal.width,
-									height: modal.height,
+									posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+									posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+									width: (Game.entitySize * 40),
+									height: (Game.entitySize * 30),
 									lineWidth: modal.lineWidth,
 									modalColor: modal.modalColor,
 									msgColor: modal.msgColor,
