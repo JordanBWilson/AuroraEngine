@@ -1616,6 +1616,30 @@ function selectScrapPrice(scrapType) {
 							if (gameObject.commonScrap >= 0) {
 								// future Jordan, add more to addFunds()
 								addFunds(gameObject.commonScrapBase);
+								
+								// future Jordan, whatever happens when the common scrap button is pressed,
+								// needs to happen here.
+								
+								//const scrapCountBg = Game.methodObjects.find(x => x.id === 'scrap-sell-background');
+								//if (scrapCountBg) {
+									//scrapCountBg.isAnim = true;
+								//}
+								
+								// Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
+								// clearSellScrapScreen();
+								//const fundsHigh = Game.methodObjects.filter(x => x.id === 'player-funds-high');
+								//const fundsLow = Game.methodObjects.filter(x => x.id === 'player-funds-low');
+								//if (fundsHigh.length > 0) {
+									//fundsHigh.forEach((item, i) => {
+										//Game.deleteEntity(item.methodId);
+									//});
+								//}
+								//if (fundsLow.length > 0) {
+									//fundsLow.forEach((item, i) => {
+										//Game.deleteEntity(item.methodId);
+									//});
+								//}
+								displayCondensedFunds();
 							} else {
 								gameObject.commonScrap = 0;
 							}
