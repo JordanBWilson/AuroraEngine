@@ -708,11 +708,51 @@ function addFunds(addFund) {
 				}
 			}
 		}
+		if (fund.money === 'bronze') {
+			for (let i = 0; i < fund.price; i++) {
+				gameObject.bronze++;
+				if (gameObject.bronze >= 1000) {
+					gameObject.bronze = 0;
+					gameObject.silver++;
+				}
+			}
+		}
+		if (fund.money === 'silver') {
+			for (let i = 0; i < fund.price; i++) {
+				gameObject.silver++;
+				if (gameObject.silver >= 1000) {
+					gameObject.silver = 0;
+					gameObject.gold++;
+				}
+			}
+		}
+		if (fund.money === 'gold') {
+			for (let i = 0; i < fund.price; i++) {
+				gameObject.gold++;
+				if (gameObject.gold >= 1000) {
+					gameObject.gold = 0;
+					gameObject.platinum++;
+				}
+			}
+		}
+		if (fund.money === 'platinum') {
+			for (let i = 0; i < fund.price; i++) {
+				gameObject.platinum++;
+				if (gameObject.platinum >= 1000) {
+					gameObject.platinum = 0;
+					gameObject.mythryl++;
+				}
+			}
+		}
+		if (fund.money === 'mythryl') {
+			gameObject.mythryl += fund.price;
+		}
 	});
 	
 	console.log(gameObject.copper);
-	
 }
+
+// future Jordan, make the subtractFunds function
 
 // this is the start of the home menus
 function homeMenuSelect() {
@@ -1609,20 +1649,20 @@ function selectScrapPrice(scrapType) {
 				id: 'sell-scrap-btn',
 				action: { 
 					method: function(id) {
+						// future Jordan, finish up the different scrap types
 						console.log('sell ' + gameObject.scrapToSell + ' scrap');
 						if (gameObject.scrapToSell === 'common') {
 							gameObject.commonScrap--;
 							if (gameObject.commonScrap >= 0) {
-								// future Jordan, add more to addFunds()
 								addFunds(gameObject.commonScrapBase);
-								clearSellScrapScreen();
-								refreshSellScrapBackgrounds();
 							} else {
 								gameObject.commonScrap = 0;
 							}
 						}
-						displayCondensedFunds();
+						clearSellScrapScreen();
+						refreshSellScrapBackgrounds();
 						setTimeout(function() {
+							displayCondensedFunds();
 							selectScrapPrice(gameObject.scrapToSell);
 						}, 0);
 					}
