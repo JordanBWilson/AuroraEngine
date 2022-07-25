@@ -15,9 +15,9 @@
 // this will keep track of the game
 const gameObject = {
 	// ---types of scrap matirials---
-	commonScrap: 20,
-	unCommonScrap: 20,
-	uniqueScrap: 20, // rare
+	commonScrap: 10,
+	unCommonScrap: 0,
+	uniqueScrap: 0, // rare
 	intriguingScrap: 0, // epic
 	facinatingScrap: 0, // legendary
 	mythicScrap: 0,
@@ -139,8 +139,8 @@ const robotHeads = [
 		},
 		scrapToBuild: {
 			commonScrap: 3,
-			unCommonScrap: 3,
-			uniqueScrap: 3,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,

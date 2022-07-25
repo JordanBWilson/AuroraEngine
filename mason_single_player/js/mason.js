@@ -1192,13 +1192,20 @@ function drawSellScrapButtons() {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
-				btnColor: 'lightslategrey',
+				btnColor: gameObject.commonScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'Common Scrap',
 				isFilled: true,
 				id: 'sell-common-scrap',
-				action: { method: function(id) { selectCommonScrap(); }},
+				action: { 
+					method: function(id) {
+						if (gameObject.commonScrap > 0) {
+							selectCommonScrap(); 
+						}
+						
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1213,13 +1220,19 @@ function drawSellScrapButtons() {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
-				btnColor: 'lightslategrey',
+				btnColor: gameObject.unCommonScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'UnCommon Scrap',
 				isFilled: true,
 				id: 'sell-uncommon-scrap',
-				action: { method: function(id) { selectUnCommonScrap(); }},
+				action: { 
+					method: function(id) { 
+						if (gameObject.unCommonScrap > 0) {
+							selectUnCommonScrap(); 
+						}
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1234,13 +1247,19 @@ function drawSellScrapButtons() {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
-				btnColor: 'lightslategrey',
+				btnColor: gameObject.uniqueScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'Unique Scrap',
 				isFilled: true,
 				id: 'sell-unique-scrap',
-				action: { method: function(id) { selectUniqueScrap(); }},
+				action: { 
+					method: function(id) {
+						if (gameObject.uniqueScrap > 0) {
+							selectUniqueScrap(); 
+						}
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1255,13 +1274,19 @@ function drawSellScrapButtons() {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
-				btnColor: 'lightslategrey',
+				btnColor: gameObject.intriguingScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'Intriguing Scrap',
 				isFilled: true,
 				id: 'sell-intriguing-scrap',
-				action: { method: function(id) { selectIntriguingScrap(); }},
+				action: { 
+					method: function(id) {
+						if (gameObject.intriguingScrap > 0) {
+							selectIntriguingScrap();
+						}
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1276,13 +1301,19 @@ function drawSellScrapButtons() {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
-				btnColor: 'lightslategrey',
+				btnColor: gameObject.facinatingScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'Facinating Scrap',
 				isFilled: true,
 				id: 'sell-facinating-scrap',
-				action: { method: function(id) { selectFacinatingScrap(); }},
+				action: { 
+					method: function(id) { 
+						if (gameObject.facinatingScrap > 0) {
+							selectFacinatingScrap(); 
+						}
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1297,13 +1328,19 @@ function drawSellScrapButtons() {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
-				btnColor: 'lightslategrey',
+				btnColor: gameObject.mythicScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'Mythic Scrap',
 				isFilled: true,
 				id: 'sell-mythic-scrap',
-				action: { method: function(id) { selectMythicScrap(); }},
+				action: { 
+					method: function(id) {
+						if (gameObject.mythicScrap > 0) {
+							selectMythicScrap(); 
+						}
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1318,13 +1355,19 @@ function drawSellScrapButtons() {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.1),
 				lineWidth: 1,
-				btnColor: 'lightslategrey',
+				btnColor: gameObject.exoticScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'Exotic Scrap',
 				isFilled: true,
 				id: 'sell-exotic-scrap',
-				action: { method: function(id) { selectExoticScrap(); }},
+				action: { 
+					method: function(id) { 
+						if (gameObject.exoticScrap > 0) {
+							selectExoticScrap();
+						}
+					}
+				},
 				props: {},
 				methodId: id
 			});
@@ -1532,7 +1575,6 @@ function selectScrapPrice(scrapType) {
 	});
 	// future Jordan, make the sell button do something. make methods that will
 	// add to your funds in regards to the exchange rates and also a subtract method.
-	// make the sell scrap buttons only selectable if the player has one or more of that scrap.
 	// grey out the sell button and display a modal once the player has sold all of that scrap.
 	Game.methodSetup = {
 		method: function(id) {
@@ -1577,25 +1619,25 @@ function displayScrapCount(scrapType) {
 
 function clearSellScrapHighlight() {
 	const commonHighlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
-	commonHighlight.btnColor = 'lightslategrey';
+	commonHighlight.btnColor = gameObject.commonScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 	commonHighlight.txtColor = 'white';
 	const unCommonHighlight = Game.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
-	unCommonHighlight.btnColor = 'lightslategrey';
+	unCommonHighlight.btnColor = gameObject.unCommonScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 	unCommonHighlight.txtColor = 'white';
 	const uniqueHighlight = Game.methodObjects.find(x => x.id === 'sell-unique-scrap');
-	uniqueHighlight.btnColor = 'lightslategrey';
+	uniqueHighlight.btnColor = gameObject.uniqueScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 	uniqueHighlight.txtColor = 'white';
 	const intriguingHighlight = Game.methodObjects.find(x => x.id === 'sell-intriguing-scrap');
-	intriguingHighlight.btnColor = 'lightslategrey';
+	intriguingHighlight.btnColor = gameObject.intriguingScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 	intriguingHighlight.txtColor = 'white';
 	const facinatingHighlight = Game.methodObjects.find(x => x.id === 'sell-facinating-scrap');
-	facinatingHighlight.btnColor = 'lightslategrey';
+	facinatingHighlight.btnColor = gameObject.facinatingScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 	facinatingHighlight.txtColor = 'white';
 	const mythicHighlight = Game.methodObjects.find(x => x.id === 'sell-mythic-scrap');
-	mythicHighlight.btnColor = 'lightslategrey';
+	mythicHighlight.btnColor = gameObject.mythicScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 	mythicHighlight.txtColor = 'white';
 	const exoticHighlight = Game.methodObjects.find(x => x.id === 'sell-exotic-scrap');
-	exoticHighlight.btnColor = 'lightslategrey';
+	exoticHighlight.btnColor = gameObject.exoticScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 	exoticHighlight.txtColor = 'white';
 }
 
