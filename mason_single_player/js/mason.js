@@ -697,6 +697,23 @@ function displayCondensedFunds() {
 	}
 }
 
+function addFunds(addFund) {
+	addFund.forEach(fund => {
+		if (fund.money === 'copper') {
+			for (let i = 0; i < fund.price; i++) {
+				gameObject.copper++;
+				if (gameObject.copper >= 1000) {
+					gameObject.copper = 0;
+					gameObject.bronze++;
+				}
+			}
+		}
+	});
+	
+	console.log(gameObject.copper);
+	
+}
+
 // this is the start of the home menus
 function homeMenuSelect() {
 	Game.clearStage();
@@ -1590,7 +1607,21 @@ function selectScrapPrice(scrapType) {
 				msg: 'Sell',
 				isFilled: true,
 				id: 'sell-scrap-btn',
-				action: { method: function(id) { console.log('sell ' + gameObject.scrapToSell + ' scrap'); }},
+				action: { 
+					method: function(id) {
+						console.log('sell ' + gameObject.scrapToSell + ' scrap');
+						if (gameObject.scrapToSell === 'common') {
+							// future Jordan, update the funds on the screen
+							gameObject.commonScrap--;
+							if (gameObject.commonScrap >= 0) {
+								// future Jordan, add more to addFunds()
+								addFunds(gameObject.commonScrapBase);
+							} else {
+								gameObject.commonScrap = 0;
+							}
+						}
+					}
+				},
 				props: {},
 				methodId: id
 			});
