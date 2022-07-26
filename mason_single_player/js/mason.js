@@ -1632,7 +1632,6 @@ function selectScrapPrice(scrapType) {
 	});
 	// future Jordan, make the sell button do something. make methods that will
 	// add to your funds in regards to the exchange rates and also a subtract method.
-	// grey out the sell button and display a modal once the player has sold all of that scrap.
 	Game.methodSetup = {
 		method: function(id) {
 			drawButton({
@@ -1641,7 +1640,7 @@ function selectScrapPrice(scrapType) {
 				width: (Game.canvas.width * 0.44),
 				height: (Game.canvas.height * 0.08),
 				lineWidth: 1,
-				btnColor: 'grey',
+				btnColor: sellScrapBtnActivity(),
 				txtColor: 'white',
 				font: '1.1em serif',
 				msg: 'Sell',
@@ -1657,6 +1656,54 @@ function selectScrapPrice(scrapType) {
 								addFunds(gameObject.commonScrapBase);
 							} else {
 								gameObject.commonScrap = 0;
+							}
+						}
+						if (gameObject.scrapToSell === 'unCommon') {
+							gameObject.unCommonScrap--;
+							if (gameObject.unCommonScrap >= 0) {
+								addFunds(gameObject.unCommonScrapBase);
+							} else {
+								gameObject.unCommonScrap = 0;
+							}
+						}
+						if (gameObject.scrapToSell === 'unique') {
+							gameObject.uniqueScrap--;
+							if (gameObject.uniqueScrap >= 0) {
+								addFunds(gameObject.uniqueScrapBase);
+							} else {
+								gameObject.uniqueScrap = 0;
+							}
+						}
+						if (gameObject.scrapToSell === 'intriguing') {
+							gameObject.intriguingScrap--;
+							if (gameObject.intriguingScrap >= 0) {
+								addFunds(gameObject.intriguingScrapBase);
+							} else {
+								gameObject.intriguingScrap = 0;
+							}
+						}
+						if (gameObject.scrapToSell === 'facinating') {
+							gameObject.facinatingScrap--;
+							if (gameObject.facinatingScrap >= 0) {
+								addFunds(gameObject.facinatingScrapBase);
+							} else {
+								gameObject.facinatingScrap = 0;
+							}
+						}
+						if (gameObject.scrapToSell === 'mythic') {
+							gameObject.mythicScrap--;
+							if (gameObject.mythicScrap >= 0) {
+								addFunds(gameObject.mythicScrapBase);
+							} else {
+								gameObject.mythicScrap = 0;
+							}
+						}
+						if (gameObject.scrapToSell === 'exotic') {
+							gameObject.exoticScrap--;
+							if (gameObject.exoticScrap >= 0) {
+								addFunds(gameObject.exoticScrapBase);
+							} else {
+								gameObject.exoticScrap = 0;
 							}
 						}
 						clearSellScrapScreen();
@@ -1690,6 +1737,30 @@ function displayScrapCount(scrapType) {
 		return gameObject.mythicScrap;
 	} else if (scrapType === 'exotic') {
 		return gameObject.exoticScrap;
+	}
+}
+
+function sellScrapBtnActivity() {
+	if (gameObject.scrapToSell === 'common') {
+		return gameObject.commonScrap <= 0 ? '#C0C0C0' : 'grey';
+	}
+	if (gameObject.scrapToSell === 'unCommon') {
+		return gameObject.unCommonScrap <= 0 ? '#C0C0C0' : 'grey';
+	}
+	if (gameObject.scrapToSell === 'unique') {
+		return gameObject.uniqueScrap <= 0 ? '#C0C0C0' : 'grey';
+	}
+	if (gameObject.scrapToSell === 'intriguing') {
+		return gameObject.intriguingScrap <= 0 ? '#C0C0C0' : 'grey';
+	}
+	if (gameObject.scrapToSell === 'facinating') {
+		return gameObject.facinatingScrap <= 0 ? '#C0C0C0' : 'grey';
+	}
+	if (gameObject.scrapToSell === 'mythic') {
+		return gameObject.mythicScrap <= 0 ? '#C0C0C0' : 'grey';
+	}
+	if (gameObject.scrapToSell === 'exotic') {
+		return gameObject.exoticScrap <= 0 ? '#C0C0C0' : 'grey';
 	}
 }
 
