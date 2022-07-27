@@ -667,7 +667,7 @@ function homeMenuSelect() {
 	};
 	Game.addMethod(Game.methodSetup);
 }
-
+ // start of the sell menus
 function homeSellSelect() {
 	Game.clearStage();
 	Game.methodSetup = {
@@ -763,7 +763,6 @@ function homeSellSelect() {
 				id: 'sell-select-scrap',
 				action: { 
 					method: function(id) { 
-						console.log('load up the sell scrap menu');
 						homeSellScrap();
 					}
 				},
@@ -788,7 +787,8 @@ function homeSellSelect() {
 				isFilled: true,
 				id: 'sell-select-parts',
 				action: { 
-					method: function(id) { 
+					method: function(id) {
+						// future Jordan, it's time to work on the sell parts menu
 						console.log('load up the sell parts menu');
 					}
 				},
