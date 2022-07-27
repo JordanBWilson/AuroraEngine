@@ -89,8 +89,8 @@ const gameObject = {
 	barterSkill: 0, // sell for more on the grand exchange; use percentages to increase prices
 	partStorage: 6, // how many of each part can be stored at once. ***upgraded with factory level***
 	// ---different tiers of money---
-	copper: 0, // 1000 copper = 1 bronze
-	bronze: 0, // 1000 bronze = 1 silver
+	copper: 4, // 1000 copper = 1 bronze
+	bronze: 1, // 1000 bronze = 1 silver
 	silver: 0, // 1000 silver = 1 gold
 	gold: 0, // 1000 gold = 1 platinum
 	platinum: 0, // 1000 platinum = 1 mythryl

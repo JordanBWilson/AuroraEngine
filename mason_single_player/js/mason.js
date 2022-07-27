@@ -752,7 +752,229 @@ function addFunds(addFund) {
 	console.log(gameObject.copper);
 }
 
-// future Jordan, make the subtractFunds function
+function checkSubtractFunds(subFunds) {
+	let problems = 0;
+	subFunds.forEach(fund => {
+		if (fund.money === 'copper') {
+			if (fund.price > gameObject.copper) {
+				let noProblems = 0;
+				if (gameObject.bronze > 0) {
+					noProblems++;
+				} 
+				if (gameObject.silver > 0) {
+					noProblems++;
+				}
+				if (gameObject.gold > 0) {
+					noProblems++;
+				}
+				if (gameObject.platinum > 0) {
+					noProblems++;
+				}
+				if (gameObject.mythryl > 0) {
+					noProblems++;
+				}
+				if (noProblems === 0) {
+					problems++;
+				}
+			}
+		}
+		if (fund.money === 'bronze') {
+			if (fund.price > gameObject.bronze) {
+				let noProblems = 0;
+				if (gameObject.silver > 0) {
+					noProblems++;
+				}
+				if (gameObject.gold > 0) {
+					noProblems++;
+				}
+				if (gameObject.platinum > 0) {
+					noProblems++;
+				}
+				if (gameObject.mythryl > 0) {
+					noProblems++;
+				}
+				if (noProblems === 0) {
+					problems++;
+				}
+			}
+		}
+		if (fund.money === 'silver') {
+			if (fund.price > gameObject.silver) {
+				let noProblems = 0;
+				if (gameObject.gold > 0) {
+					noProblems++;
+				}
+				if (gameObject.platinum > 0) {
+					noProblems++;
+				}
+				if (gameObject.mythryl > 0) {
+					noProblems++;
+				}
+				if (noProblems === 0) {
+					problems++;
+				}
+			}
+		}
+		if (fund.money === 'gold') {
+			if (fund.price > gameObject.gold) {
+				let noProblems = 0;
+				if (gameObject.platinum > 0) {
+					noProblems++;
+				}
+				if (gameObject.mythryl > 0) {
+					noProblems++;
+				}
+				if (noProblems === 0) {
+					problems++;
+				}
+			}
+		}
+		if (fund.money === 'platinum') {
+			if (fund.price > gameObject.platinum) {
+				let noProblems = 0;
+				if (gameObject.mythryl > 0) {
+					noProblems++;
+				}
+				if (noProblems === 0) {
+					problems++;
+				}
+			}
+		}
+		if (fund.money === 'mythryl') {
+			if (fund.price > gameObject.mythryl) {
+				problems++;
+			}
+		}
+	});
+	if (problems === 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function subtractFunds(subFunds) {
+	const plentyFunds = checkSubtractFunds(subFunds);
+	console.log(plentyFunds);
+	if (plentyFunds) {
+		subFunds.forEach(fund => {
+			if (fund.money === 'copper') {
+				if (fund.price > gameObject.copper) {
+					let converted = false;
+					if (!converted && gameObject.bronze > 0) {
+						gameObject.bronze--;
+						gameObject.copper += 1000;
+						gameObject.copper -= fund.price;
+						converted = true;
+					} 
+					if (!converted && gameObject.silver > 0) {
+						gameObject.silver--;
+						gameObject.bronze = 999;
+						gameObject.copper += 1000;
+						gameObject.copper -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.gold > 0) {
+						gameObject.gold--;
+						gameObject.silver = 999;
+						gameObject.bronze = 999;
+						gameObject.copper += 1000;
+						gameObject.copper -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.platinum > 0) {
+						gameObject.platinum--;
+						gameObject.gold = 999;
+						gameObject.silver = 999;
+						gameObject.bronze = 999;
+						gameObject.copper += 1000;
+						gameObject.copper -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.mythryl > 0) {
+						gameObject.mythryl--;
+						gameObject.platinum = 999;
+						gameObject.gold = 999;
+						gameObject.silver = 999;
+						gameObject.bronze = 999;
+						gameObject.copper += 1000;
+						gameObject.copper -= fund.price;
+						converted = true;
+					}
+				} else {
+					gameObject.copper -= fund.price;
+				}
+			}
+			//if (fund.money === 'bronze') {
+				//if (fund.price > gameObject.bronze) {
+					//let noProblems = 0;
+					//if (gameObject.silver > 0) {
+						//noProblems++;
+					//}
+					//if (gameObject.gold > 0) {
+						//noProblems++;
+					//}
+					//if (gameObject.platinum > 0) {
+						//noProblems++;
+					//}
+					//if (gameObject.mythryl > 0) {
+						//noProblems++;
+					//}
+					//if (noProblems === 0) {
+						//problems++;
+					//}
+				//}
+			//}
+			//if (fund.money === 'silver') {
+				//if (fund.price > gameObject.silver) {
+					//let noProblems = 0;
+					//if (gameObject.gold > 0) {
+						//noProblems++;
+					//}
+					//if (gameObject.platinum > 0) {
+						//noProblems++;
+					//}
+					//if (gameObject.mythryl > 0) {
+						//noProblems++;
+					//}
+					//if (noProblems === 0) {
+						//problems++;
+					//}
+				//}
+			//}
+			//if (fund.money === 'gold') {
+				//if (fund.price > gameObject.gold) {
+					//let noProblems = 0;
+					//if (gameObject.platinum > 0) {
+						//noProblems++;
+					//}
+					//if (gameObject.mythryl > 0) {
+						//noProblems++;
+					//}
+					//if (noProblems === 0) {
+						//problems++;
+					//}
+				//}
+			//}
+			//if (fund.money === 'platinum') {
+				//if (fund.price > gameObject.platinum) {
+					//let noProblems = 0;
+					//if (gameObject.mythryl > 0) {
+						//noProblems++;
+					//}
+					//if (noProblems === 0) {
+						//problems++;
+					//}
+				//}
+			//}
+			//if (fund.money === 'mythryl') {
+				//if (fund.price > gameObject.mythryl) {
+					//problems++;
+				//}
+			//}
+		});
+	}
+}
 
 // this is the start of the home menus
 function homeMenuSelect() {
