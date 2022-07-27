@@ -927,6 +927,64 @@ function homeSellScrap() {
 	Game.addMethod(Game.methodSetup);
 	createSellScrapTitles();
 	displayCondensedFunds();
+	
+	Game.pageResized = {
+		section: 'home-sell-scrap',
+		method: function() {
+			if (gameObject.scrapToSell === 'common') {
+				selectCommonScrap();
+			}
+			if (gameObject.scrapToSell === 'unCommon') {
+				selectUnCommonScrap();
+			}
+			if (gameObject.scrapToSell === 'unique') {
+				selectUniqueScrap();
+			}
+			if (gameObject.scrapToSell === 'intriguing') {
+				selectIntriguingScrap();
+			}
+			if (gameObject.scrapToSell === 'facinating') {
+				selectFacinatingScrap();
+			}
+			if (gameObject.scrapToSell === 'mythic') {
+				selectMythicScrap();
+			}
+			if (gameObject.scrapToSell === 'exotic') {
+				selectExoticScrap();
+			}
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (modal) {
+				Game.deleteEntity(modal.methodId);
+				setTimeout(function() {
+					Game.methodSetup = {
+						method: function(id) {
+							drawModal({
+								posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+								posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+								width: (Game.entitySize * 40),
+								height: (Game.entitySize * 30),
+								lineWidth: modal.lineWidth,
+								modalColor: modal.modalColor,
+								msgColor: modal.msgColor,
+								msgFont: modal.msgFont,
+								msg: modal.msg,
+								footerColor: modal.footerColor,
+								footerFont: modal.footerFont,
+								footerMsg: modal.footerMsg,
+								bgColor: modal.bgColor,
+								isModalFilled: modal.isModalFilled,
+								id: Game.modalId,
+								action: modal.action,
+								props: {},
+								methodId: id
+							});
+						}
+					};
+					Game.addMethod(Game.methodSetup);
+				}, 100);
+			}
+		}
+	}
 }
 
 function createSellScrapTitles() {
@@ -1407,6 +1465,9 @@ function selectScrapPrice(scrapType) {
 							gameObject.commonScrap--;
 							if (gameObject.commonScrap >= 0) {
 								addFunds(gameObject.commonScrapBase);
+								if (gameObject.commonScrap === 0) {
+									displayNotEnoughScrapModal();
+								}
 							} else {
 								gameObject.commonScrap = 0;
 							}
@@ -1415,6 +1476,9 @@ function selectScrapPrice(scrapType) {
 							gameObject.unCommonScrap--;
 							if (gameObject.unCommonScrap >= 0) {
 								addFunds(gameObject.unCommonScrapBase);
+								if (gameObject.unCommonScrap === 0) {
+									displayNotEnoughScrapModal();
+								}
 							} else {
 								gameObject.unCommonScrap = 0;
 							}
@@ -1423,6 +1487,9 @@ function selectScrapPrice(scrapType) {
 							gameObject.uniqueScrap--;
 							if (gameObject.uniqueScrap >= 0) {
 								addFunds(gameObject.uniqueScrapBase);
+								if (gameObject.uniqueScrap === 0) {
+									displayNotEnoughScrapModal();
+								}
 							} else {
 								gameObject.uniqueScrap = 0;
 							}
@@ -1431,6 +1498,9 @@ function selectScrapPrice(scrapType) {
 							gameObject.intriguingScrap--;
 							if (gameObject.intriguingScrap >= 0) {
 								addFunds(gameObject.intriguingScrapBase);
+								if (gameObject.intriguingScrap === 0) {
+									displayNotEnoughScrapModal();
+								}
 							} else {
 								gameObject.intriguingScrap = 0;
 							}
@@ -1439,6 +1509,9 @@ function selectScrapPrice(scrapType) {
 							gameObject.facinatingScrap--;
 							if (gameObject.facinatingScrap >= 0) {
 								addFunds(gameObject.facinatingScrapBase);
+								if (gameObject.facinatingScrap === 0) {
+									displayNotEnoughScrapModal();
+								}
 							} else {
 								gameObject.facinatingScrap = 0;
 							}
@@ -1447,6 +1520,9 @@ function selectScrapPrice(scrapType) {
 							gameObject.mythicScrap--;
 							if (gameObject.mythicScrap >= 0) {
 								addFunds(gameObject.mythicScrapBase);
+								if (gameObject.mythicScrap === 0) {
+									displayNotEnoughScrapModal();
+								}
 							} else {
 								gameObject.mythicScrap = 0;
 							}
@@ -1455,6 +1531,9 @@ function selectScrapPrice(scrapType) {
 							gameObject.exoticScrap--;
 							if (gameObject.exoticScrap >= 0) {
 								addFunds(gameObject.exoticScrapBase);
+								if (gameObject.exoticScrap === 0) {
+									displayNotEnoughScrapModal();
+								}
 							} else {
 								gameObject.exoticScrap = 0;
 							}
@@ -1611,4 +1690,45 @@ function refreshSellScrapBackgrounds() {
 	if (Game.methodObjects.find(x => x.id === 'scrap-count-background')) {
 		Game.methodObjects.find(x => x.id === 'scrap-count-background').isAnim = true;
 	}
+}
+
+function displayNotEnoughScrapModal() {
+	setTimeout(function() {
+		Game.methodSetup = {
+			method: function(id) {
+				drawModal({
+					posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+					posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+					width: (Game.entitySize * 40),
+					height: (Game.entitySize * 30),
+					lineWidth: 1,
+					modalColor: 'darkgrey',
+					msgColor: 'white',
+					msgFont: '1.3em serif',
+					msg: 'Not Enough Scrap',
+					footerColor: 'white',
+					footerFont: '1em serif',
+					footerMsg: 'Tap here to continue',
+					bgColor: '',
+					isModalFilled: true,
+					id: Game.modalId,
+					action: { 
+						method: function(id) {
+							const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+							Game.deleteEntity(modal.methodId);
+							clearSellScrapScreen();
+							refreshSellScrapBackgrounds();
+							setTimeout(function() {
+								displayCondensedFunds();
+								selectScrapPrice(gameObject.scrapToSell);
+							}, 0);
+						}
+					},
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	}, 110);
 }
