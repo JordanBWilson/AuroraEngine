@@ -29,6 +29,9 @@ const Game = { // the user will want to use this object
     this.pageResized.section = '';
     Main.methodObjectShadows = [];
     Main.globalId = 0;
+    Particle.animComplete = {
+		method: function() {}
+	};
   },
   collisionSetup: { // use this to create collisions
     primary: '', // the id that's waiting for a collision

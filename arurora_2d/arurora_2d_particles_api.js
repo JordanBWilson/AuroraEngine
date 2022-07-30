@@ -17,6 +17,9 @@ const Particle = {
     Game.methodSetup = { method: function(id) { moveParticles(); }};
     Game.addMethod(Game.methodSetup);
   },
+  animComplete: {
+	method: function() {}, 
+  },
   drawSpark: function(drawParticle) {
     // const particle = {
     //   posX:0,
@@ -73,11 +76,11 @@ const Particle = {
         				id: 'particle-effect',
         				isBackground: false,
         				props: {
-                  direction: direction,
-                  collision: false,
-                  ticks: drawParticle.ticks,
-                  speed: drawParticle.speed,
-                },
+						  direction: direction,
+						  collision: false,
+						  ticks: drawParticle.ticks,
+						  speed: drawParticle.speed,
+						},
         				methodId: id
         			});
         		}
@@ -90,6 +93,42 @@ const Particle = {
       arc: 0,
       rect: 1,
     },
+    floatingText: function(floatText) {
+		
+		// const text = {
+		//   font: '1rem serif',
+		//	 msg: 'here',
+		//   posX:0,
+		//   posY:0,
+		//   speed:0,
+		//	 direction: 'top',
+		//   color:'#fff',
+		//	 align: 'center',
+		//   ticks: 0, // in milliseconds,
+		// }
+		Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: floatText.font,
+				msg: floatText.msg,
+				posX: floatText.posX,
+				posY: floatText.posY,
+				color: floatText.color,
+				align: floatText.align,
+				props: {
+					direction: floatText.direction,
+					collision: false,
+					ticks: floatText.ticks,
+					speed: floatText.speed,
+				},
+				id: 'particle-effect',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+		
+	},
     drawStars: function() {
       // this is from the original Mason. Convert this
       // export interface StarModel {
@@ -162,10 +201,10 @@ function moveParticles() {
       particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
     }
     if (particles[i].props.direction === 'top') {
-      particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
+      particles[i].posY -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
     }
     if (particles[i].props.direction === 'bot') {
-      particles[i].posX += Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
+      particles[i].posY += Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
     }
     if (particles[i].props.direction === 'toprt') {
       particles[i].posY -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
@@ -185,6 +224,7 @@ function moveParticles() {
     }
     if (particles[i].props.ticks <= 1) {
       Game.deleteEntity(particles[i].methodId);
+      Particle.animComplete.method();
     }
 
     if (Game.selectedSetting === Game.enumSettings.high) {
@@ -196,6 +236,14 @@ function moveParticles() {
   	} else {
       particles[i].props.ticks--;
     }
+    
+    // refresh backgrounds
+    const backgrounds = Game.methodObjects.filter(x => x.isBackground === true);
+    if (backgrounds.length > 0) {
+		backgrounds.forEach(item => {
+			item.isAnim = true;
+		});
+	}
 
   }
 }
