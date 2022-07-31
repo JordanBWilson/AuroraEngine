@@ -1341,17 +1341,7 @@ function selectExoticScrap() {
 }
 
 function selectScrapPrice(scrapType) {
-	
-	
-	
-	//setTimeout(function() {
-		
-	//}, 200);
-	// clearSellScrapScreen();
-	// refreshSellScrapBackgrounds();
-	//setTimeout(function() {
-		
-	//}, 0);
+
 	createSellScrapTitles();
 	displayCondensedFunds();
 	
@@ -1474,35 +1464,26 @@ function selectScrapPrice(scrapType) {
 				action: { 
 					method: function(id) {
 						console.log('sell ' + gameObject.scrapToSell + ' scrap');
+						let displayModal = false;
 						if (gameObject.scrapToSell === 'common') {
 							if (gameObject.commonScrap > 0) {
 								gameObject.commonScrap--;
 								
 								Particle.floatingText({
 									font: '2rem serif',
-									msg: '+',
+									msg: '+          +',
 									align: 'center',
-									posX: Game.placeEntityX(0.55, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.19, (Game.entitySize * 0.7)),
+									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
 									direction: 'top',
 									color: 'green',
-									ticks: 50,
-									speed: 0.1,
+									ticks: 13,
+									speed: 0.8,
 								});
-								//Particle.floatingText({
-									//font: '2rem serif',
-									//msg: '+',
-									//align: 'center',
-									//posX: Game.placeEntityX(0.90, (Game.entitySize * 0.7)),
-									//posY: Game.placeEntityY(0.19, (Game.entitySize * 0.7)),
-									//direction: 'top',
-									//color: 'green',
-									//ticks: 50,
-									//speed: 0.1,
-								//});
+								
 								addFunds(gameObject.commonScrapBase);
 								if (gameObject.commonScrap === 0) {
-									displayNotEnoughScrapModal();
+									displayModal = true;
 								}
 							} else {
 								gameObject.commonScrap = 0;
@@ -1511,9 +1492,20 @@ function selectScrapPrice(scrapType) {
 						if (gameObject.scrapToSell === 'unCommon') {
 							if (gameObject.unCommonScrap > 0) {
 								gameObject.unCommonScrap--;
+								Particle.floatingText({
+									font: '2rem serif',
+									msg: '+          +',
+									align: 'center',
+									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+									direction: 'top',
+									color: 'green',
+									ticks: 13,
+									speed: 0.8,
+								});
 								addFunds(gameObject.unCommonScrapBase);
 								if (gameObject.unCommonScrap === 0) {
-									displayNotEnoughScrapModal();
+									displayModal = true;
 								}
 							} else {
 								gameObject.unCommonScrap = 0;
@@ -1522,9 +1514,20 @@ function selectScrapPrice(scrapType) {
 						if (gameObject.scrapToSell === 'unique') {
 							if (gameObject.uniqueScrap > 0) {
 								gameObject.uniqueScrap--;
+								Particle.floatingText({
+									font: '2rem serif',
+									msg: '+          +',
+									align: 'center',
+									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+									direction: 'top',
+									color: 'green',
+									ticks: 13,
+									speed: 0.8,
+								});
 								addFunds(gameObject.uniqueScrapBase);
 								if (gameObject.uniqueScrap === 0) {
-									displayNotEnoughScrapModal();
+									displayModal = true;
 								}
 							} else {
 								gameObject.uniqueScrap = 0;
@@ -1533,9 +1536,20 @@ function selectScrapPrice(scrapType) {
 						if (gameObject.scrapToSell === 'intriguing') {
 							if (gameObject.intriguingScrap > 0) {
 								gameObject.intriguingScrap--;
+								Particle.floatingText({
+									font: '2rem serif',
+									msg: '+          +',
+									align: 'center',
+									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+									direction: 'top',
+									color: 'green',
+									ticks: 13,
+									speed: 0.8,
+								});
 								addFunds(gameObject.intriguingScrapBase);
 								if (gameObject.intriguingScrap === 0) {
-									displayNotEnoughScrapModal();
+									displayModal = true;
 								}
 							} else {
 								gameObject.intriguingScrap = 0;
@@ -1544,9 +1558,20 @@ function selectScrapPrice(scrapType) {
 						if (gameObject.scrapToSell === 'facinating') {
 							if (gameObject.facinatingScrap > 0) {
 								gameObject.facinatingScrap--;
+								Particle.floatingText({
+									font: '2rem serif',
+									msg: '+          +',
+									align: 'center',
+									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+									direction: 'top',
+									color: 'green',
+									ticks: 13,
+									speed: 0.8,
+								});
 								addFunds(gameObject.facinatingScrapBase);
 								if (gameObject.facinatingScrap === 0) {
-									displayNotEnoughScrapModal();
+									displayModal = true;
 								}
 							} else {
 								gameObject.facinatingScrap = 0;
@@ -1555,9 +1580,20 @@ function selectScrapPrice(scrapType) {
 						if (gameObject.scrapToSell === 'mythic') {
 							if (gameObject.mythicScrap > 0) {
 								gameObject.mythicScrap--;
+								Particle.floatingText({
+									font: '2rem serif',
+									msg: '+          +',
+									align: 'center',
+									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+									direction: 'top',
+									color: 'green',
+									ticks: 13,
+									speed: 0.8,
+								});
 								addFunds(gameObject.mythicScrapBase);
 								if (gameObject.mythicScrap === 0) {
-									displayNotEnoughScrapModal();
+									displayModal = true;
 								}
 							} else {
 								gameObject.mythicScrap = 0;
@@ -1566,9 +1602,20 @@ function selectScrapPrice(scrapType) {
 						if (gameObject.scrapToSell === 'exotic') {
 							if (gameObject.exoticScrap > 0) {
 								gameObject.exoticScrap--;
+								Particle.floatingText({
+									font: '2rem serif',
+									msg: '+          +',
+									align: 'center',
+									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+									direction: 'top',
+									color: 'green',
+									ticks: 13,
+									speed: 0.8,
+								});
 								addFunds(gameObject.exoticScrapBase);
 								if (gameObject.exoticScrap === 0) {
-									displayNotEnoughScrapModal();
+									displayModal = true;
 								}
 							} else {
 								gameObject.exoticScrap = 0;
@@ -1577,22 +1624,40 @@ function selectScrapPrice(scrapType) {
 						clearSellScrapScreen();
 						refreshSellScrapBackgrounds();
 						setTimeout(function() {
-							// displayCondensedFunds();
 							selectScrapPrice(gameObject.scrapToSell);
 						}, 0);
 						Particle.animComplete = {
 							method: function() {
 								setTimeout(function() {
 									console.log('here');
-									// clearSellScrapScreen();
-									// refreshSellScrapBackgrounds();
-									selectCommonScrap();
-									// selectScrapPrice(gameObject.scrapToSell);
-									//setTimeout(function() {
-										//selectCommonScrap();
-										//// displayCondensedFunds();
-										//// selectScrapPrice(gameObject.scrapToSell);
-									//}, 0);
+									if (gameObject.scrapToSell === 'common') {
+										selectCommonScrap();
+									}
+									if (gameObject.scrapToSell === 'unCommon') {
+										selectUnCommonScrap();
+									}
+									if (gameObject.scrapToSell === 'unique') {
+										selectUniqueScrap();
+									}
+									if (gameObject.scrapToSell === 'intriguing') {
+										selectIntriguingScrap();
+									}
+									if (gameObject.scrapToSell === 'facinating') {
+										selectFacinatingScrap();
+									}
+									if (gameObject.scrapToSell === 'mythic') {
+										selectMythicScrap();
+									}
+									if (gameObject.scrapToSell === 'exotic') {
+										selectExoticScrap();
+									}
+									if (displayModal) {
+										setTimeout(function() {
+											displayNotEnoughScrapModal();
+										}, 0);
+										
+										// displayModal = false;
+									}
 								}, 0);
 								
 							}
@@ -1773,7 +1838,6 @@ function displayNotEnoughScrapModal() {
 							clearSellScrapScreen();
 							refreshSellScrapBackgrounds();
 							setTimeout(function() {
-								// displayCondensedFunds();
 								selectScrapPrice(gameObject.scrapToSell);
 							}, 0);
 						}

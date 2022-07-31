@@ -194,6 +194,13 @@ function moveParticles() {
 	const particles = Game.methodObjects.filter(x => x.id === 'particle-effect');
 	// move the particles
   for (let i = 0; i < particles.length; i++) {
+	  // refresh backgrounds
+    const backgrounds = Game.methodObjects.filter(x => x.isBackground === true);
+    if (backgrounds.length > 0) {
+		backgrounds.forEach(item => {
+			item.isAnim = true;
+		});
+	}
     if (particles[i].props.direction === 'rt') {
       particles[i].posX += Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
     }
@@ -236,15 +243,6 @@ function moveParticles() {
   	} else {
       particles[i].props.ticks--;
     }
-    
-    // refresh backgrounds
-    const backgrounds = Game.methodObjects.filter(x => x.isBackground === true);
-    if (backgrounds.length > 0) {
-		backgrounds.forEach(item => {
-			item.isAnim = true;
-		});
-	}
-
   }
 }
 
