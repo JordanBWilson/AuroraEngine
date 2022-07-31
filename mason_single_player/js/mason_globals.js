@@ -15,7 +15,7 @@
 // this will keep track of the game
 const gameObject = {
 	// ---types of scrap matirials---
-	commonScrap: 10,
+	commonScrap: 50,
 	unCommonScrap: 10,
 	uniqueScrap: 10, // rare
 	intriguingScrap: 10, // epic

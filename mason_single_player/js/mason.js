@@ -982,7 +982,7 @@ function homeSellScrap() {
 						}
 					};
 					Game.addMethod(Game.methodSetup);
-				}, 100);
+				}, 150);
 			}
 		}
 	}
@@ -1835,5 +1835,5 @@ function displayNotEnoughScrapModal() {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
-	}, 0); // 700
+	}, 0);
 }
