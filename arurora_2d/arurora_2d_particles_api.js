@@ -192,6 +192,13 @@ const Particle = {
 
 function moveParticles() {
 	const particles = Game.methodObjects.filter(x => x.id === 'particle-effect');
+	// remove expired particles
+	for (let i = 0; i < particles.length; i++) {
+	  if (particles[i].props.ticks <= 1) {
+			Particle.animComplete.method();
+			Game.deleteEntity(particles[i].methodId);
+		}
+	}
 	// move the particles
   for (let i = 0; i < particles.length; i++) {
 	  // refresh backgrounds
@@ -228,10 +235,6 @@ function moveParticles() {
     if (particles[i].props.direction === 'botlt') {
       particles[i].posY += Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
       particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
-    }
-    if (particles[i].props.ticks <= 1) {
-		Particle.animComplete.method();
-		Game.deleteEntity(particles[i].methodId);
     }
 
     if (Game.selectedSetting === Game.enumSettings.high) {

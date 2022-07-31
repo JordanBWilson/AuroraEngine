@@ -1463,188 +1463,155 @@ function selectScrapPrice(scrapType) {
 				id: 'sell-scrap-btn',
 				action: { 
 					method: function(id) {
-						console.log('sell ' + gameObject.scrapToSell + ' scrap');
-						if (gameObject.scrapToSell === 'common') {
-							if (gameObject.commonScrap > 0) {
-								gameObject.commonScrap--;
-								
-								Particle.floatingText({
-									font: '2rem serif',
-									msg: '+          +',
-									align: 'center',
-									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-									direction: 'top',
-									color: 'green',
-									ticks: 13,
-									speed: 0.8,
-								});
-								
-								addFunds(gameObject.commonScrapBase);
-								if (gameObject.commonScrap === 0) {
-									displayNotEnoughScrapModal();
-								}
-							} else {
-								gameObject.commonScrap = 0;
+						
+						let displayModal = false;
+						const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+						console.log('sell ' + gameObject.scrapToSell + ' scrap', modal);
+						if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !modal) {
+							gameObject.commonScrap--;
+							Particle.floatingText({
+								font: '2rem serif',
+								msg: '+          +',
+								align: 'center',
+								posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+								posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+								direction: 'top',
+								color: 'green',
+								ticks: 13,
+								speed: 0.8,
+							});
+							addFunds(gameObject.commonScrapBase);
+							if (gameObject.commonScrap === 0) {
+								displayNotEnoughScrapModal();
+								displayModal = true;
 							}
+							particleAnimationOver();
 						}
-						if (gameObject.scrapToSell === 'unCommon') {
-							if (gameObject.unCommonScrap > 0) {
-								gameObject.unCommonScrap--;
-								Particle.floatingText({
-									font: '2rem serif',
-									msg: '+          +',
-									align: 'center',
-									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-									direction: 'top',
-									color: 'green',
-									ticks: 13,
-									speed: 0.8,
-								});
-								addFunds(gameObject.unCommonScrapBase);
-								if (gameObject.unCommonScrap === 0) {
-									displayNotEnoughScrapModal();
-								}
-							} else {
-								gameObject.unCommonScrap = 0;
+						if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
+							gameObject.unCommonScrap--;
+							Particle.floatingText({
+								font: '2rem serif',
+								msg: '+          +',
+								align: 'center',
+								posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+								posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+								direction: 'top',
+								color: 'green',
+								ticks: 13,
+								speed: 0.8,
+							});
+							addFunds(gameObject.unCommonScrapBase);
+							if (gameObject.unCommonScrap === 0) {
+								displayNotEnoughScrapModal();
+								displayModal = true;
 							}
+							particleAnimationOver();
 						}
-						if (gameObject.scrapToSell === 'unique') {
-							if (gameObject.uniqueScrap > 0) {
-								gameObject.uniqueScrap--;
-								Particle.floatingText({
-									font: '2rem serif',
-									msg: '+          +',
-									align: 'center',
-									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-									direction: 'top',
-									color: 'green',
-									ticks: 13,
-									speed: 0.8,
-								});
-								addFunds(gameObject.uniqueScrapBase);
-								if (gameObject.uniqueScrap === 0) {
-									displayNotEnoughScrapModal();
-								}
-							} else {
-								gameObject.uniqueScrap = 0;
+						if (gameObject.scrapToSell === 'unique' && gameObject.uniqueScrap > 0 && !modal) {
+							gameObject.uniqueScrap--;
+							Particle.floatingText({
+								font: '2rem serif',
+								msg: '+          +',
+								align: 'center',
+								posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+								posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+								direction: 'top',
+								color: 'green',
+								ticks: 13,
+								speed: 0.8,
+							});
+							addFunds(gameObject.uniqueScrapBase);
+							if (gameObject.uniqueScrap === 0) {
+								displayNotEnoughScrapModal();
+								displayModal = true;
 							}
+							particleAnimationOver();
 						}
-						if (gameObject.scrapToSell === 'intriguing') {
-							if (gameObject.intriguingScrap > 0) {
-								gameObject.intriguingScrap--;
-								Particle.floatingText({
-									font: '2rem serif',
-									msg: '+          +',
-									align: 'center',
-									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-									direction: 'top',
-									color: 'green',
-									ticks: 13,
-									speed: 0.8,
-								});
-								addFunds(gameObject.intriguingScrapBase);
-								if (gameObject.intriguingScrap === 0) {
-									displayNotEnoughScrapModal();
-								}
-							} else {
-								gameObject.intriguingScrap = 0;
+						if (gameObject.scrapToSell === 'intriguing' && gameObject.intriguingScrap > 0 && !modal) {
+							gameObject.intriguingScrap--;
+							Particle.floatingText({
+								font: '2rem serif',
+								msg: '+          +',
+								align: 'center',
+								posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+								posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+								direction: 'top',
+								color: 'green',
+								ticks: 13,
+								speed: 0.8,
+							});
+							addFunds(gameObject.intriguingScrapBase);
+							if (gameObject.intriguingScrap === 0) {
+								displayNotEnoughScrapModal();
+								displayModal = true;
 							}
+							particleAnimationOver();
 						}
-						if (gameObject.scrapToSell === 'facinating') {
-							if (gameObject.facinatingScrap > 0) {
-								gameObject.facinatingScrap--;
-								Particle.floatingText({
-									font: '2rem serif',
-									msg: '+          +',
-									align: 'center',
-									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-									direction: 'top',
-									color: 'green',
-									ticks: 13,
-									speed: 0.8,
-								});
-								addFunds(gameObject.facinatingScrapBase);
-								if (gameObject.facinatingScrap === 0) {
-									displayNotEnoughScrapModal();
-								}
-							} else {
-								gameObject.facinatingScrap = 0;
+						if (gameObject.scrapToSell === 'facinating' && gameObject.facinatingScrap > 0 && !modal) {
+							gameObject.facinatingScrap--;
+							Particle.floatingText({
+								font: '2rem serif',
+								msg: '+          +',
+								align: 'center',
+								posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+								posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+								direction: 'top',
+								color: 'green',
+								ticks: 13,
+								speed: 0.8,
+							});
+							addFunds(gameObject.facinatingScrapBase);
+							if (gameObject.facinatingScrap === 0) {
+								displayNotEnoughScrapModal();
+								displayModal = true;
 							}
+							particleAnimationOver();
 						}
-						if (gameObject.scrapToSell === 'mythic') {
-							if (gameObject.mythicScrap > 0) {
-								gameObject.mythicScrap--;
-								Particle.floatingText({
-									font: '2rem serif',
-									msg: '+          +',
-									align: 'center',
-									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-									direction: 'top',
-									color: 'green',
-									ticks: 13,
-									speed: 0.8,
-								});
-								addFunds(gameObject.mythicScrapBase);
-								if (gameObject.mythicScrap === 0) {
-									displayNotEnoughScrapModal();
-								}
-							} else {
-								gameObject.mythicScrap = 0;
+						if (gameObject.scrapToSell === 'mythic' && gameObject.mythicScrap > 0 && !modal) {
+							gameObject.mythicScrap--;
+							Particle.floatingText({
+								font: '2rem serif',
+								msg: '+          +',
+								align: 'center',
+								posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+								posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+								direction: 'top',
+								color: 'green',
+								ticks: 13,
+								speed: 0.8,
+							});
+							addFunds(gameObject.mythicScrapBase);
+							if (gameObject.mythicScrap === 0) {
+								displayNotEnoughScrapModal();
+								displayModal = true;
 							}
+							particleAnimationOver();
 						}
-						if (gameObject.scrapToSell === 'exotic') {
-							if (gameObject.exoticScrap > 0) {
-								gameObject.exoticScrap--;
-								Particle.floatingText({
-									font: '2rem serif',
-									msg: '+          +',
-									align: 'center',
-									posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-									posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-									direction: 'top',
-									color: 'green',
-									ticks: 13,
-									speed: 0.8,
-								});
-								addFunds(gameObject.exoticScrapBase);
-								if (gameObject.exoticScrap === 0) {
-									displayNotEnoughScrapModal();
-								}
-							} else {
-								gameObject.exoticScrap = 0;
+						if (gameObject.scrapToSell === 'exotic' && gameObject.exoticScrap > 0 && !modal) {
+							gameObject.exoticScrap--;
+							Particle.floatingText({
+								font: '2rem serif',
+								msg: '+          +',
+								align: 'center',
+								posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+								posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+								direction: 'top',
+								color: 'green',
+								ticks: 13,
+								speed: 0.8,
+							});
+							addFunds(gameObject.exoticScrapBase);
+							if (gameObject.exoticScrap === 0) {
+								displayNotEnoughScrapModal();
+								displayModal = true;
 							}
+							particleAnimationOver();
 						}
 						clearSellScrapScreen();
 						refreshSellScrapBackgrounds();
 						setTimeout(function() {
 							selectScrapPrice(gameObject.scrapToSell);
 						}, 0);
-						Particle.animComplete = {
-							method: function() {
-								setTimeout(function() {
-									// future Jordan, the reason, the modal
-									// gets drawn over and the animation freezes
-									// at the end might be caused by this method
-									// not running everytime. look into the move particles
-									console.log('animation end');
-									clearSellScrapScreen();
-									refreshSellScrapBackgrounds();
-									setTimeout(function() {
-										selectScrapPrice(gameObject.scrapToSell);
-									}, 0);
-								}, 0);
-								
-							}
-						};
-						
-						
-						
 					}
 				},
 				props: {},
@@ -1653,6 +1620,45 @@ function selectScrapPrice(scrapType) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+}
+
+function particleAnimationOver() {
+	Particle.animComplete = {
+		method: function() {
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (!modal) {
+				setTimeout(function() {
+					clearSellScrapScreen();
+					refreshSellScrapBackgrounds();
+					setTimeout(function() {
+						selectScrapPrice(gameObject.scrapToSell);
+											
+					}, 0);
+				}, 0);
+			} else {
+				clearSellScrapScreen();
+				refreshSellScrapBackgrounds();
+				setTimeout(function() {
+					Game.methodSetup = {
+						method: function(id) {
+							drawText({
+								font: '2em serif',
+								msg: 'Sell Scrap',
+								posX: Game.placeEntityX(0.50),
+								posY: Game.placeEntityY(0.085),
+								color: 'darkgrey',
+								align: 'center',
+								props: {},
+								id: 'sell-scrap-title',
+								methodId: id
+							});
+						}
+					};
+					Game.addMethod(Game.methodSetup);
+				}, 0);
+			}					
+		}
+	};
 }
 
 function displayScrapCount(scrapType) {
@@ -1792,7 +1798,6 @@ function refreshSellScrapBackgrounds() {
 		Game.methodObjects.find(x => x.id === 'scrap-count-background').isAnim = true;
 	}
 }
- // future Jordan, this modal sometimes gets drawn over... keep an eye on this...
 function displayNotEnoughScrapModal() {
 	setTimeout(function() {
 		Game.methodSetup = {
@@ -1830,5 +1835,5 @@ function displayNotEnoughScrapModal() {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
-	}, 700);
+	}, 0); // 700
 }
