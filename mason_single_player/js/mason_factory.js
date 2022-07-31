@@ -751,7 +751,7 @@ function factoryRobotParts() {
 						}
 					};
 					Game.addMethod(Game.methodSetup);
-				}, 100);
+				}, 150);
 			}
 		}
 	}
@@ -2291,7 +2291,7 @@ function displaySelectPartParts(part) {
 										}
 									};
 									Game.addMethod(Game.methodSetup);
-								},100);
+								},200);
 	
 							} else {
 								// see if there is enough storage for the part first
@@ -2340,12 +2340,6 @@ function displaySelectPartParts(part) {
 										ticks: 13,
 										speed: 0.8,
 									});
-									
-									Particle.animComplete = {
-										method: function() {
-											displaySelectPartParts(part);				
-										}
-									};
 								} else {
 									gameObject.buildButtonDisabled = true;
 									setTimeout(function() {
@@ -2388,7 +2382,7 @@ function displaySelectPartParts(part) {
 											}
 										};
 										Game.addMethod(Game.methodSetup);
-									},100);
+									},200);
 								}
 							}
 							if (gameObject.partsDisplayed === 'chassis') {
@@ -2400,18 +2394,23 @@ function displaySelectPartParts(part) {
 							} else if (gameObject.partsDisplayed === 'leg') {
 								displayDiscoveredPartParts(gameObject.discoveredLegs);
 							}
-							displaySelectPartParts(part);
-							}
-							
 						}
-					},
-					props: {},
-					methodId: id
-				});
-			}
-		};
-		Game.addMethod(Game.methodSetup);
-		createFactoryTitleScraps(part);
+							
+						Particle.animComplete = {
+							method: function() {
+								displaySelectPartParts(part);					
+							}
+						};
+							
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	createFactoryTitleScraps(part);
 		
 	}, 0);
 }
