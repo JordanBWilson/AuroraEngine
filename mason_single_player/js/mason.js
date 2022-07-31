@@ -1464,7 +1464,6 @@ function selectScrapPrice(scrapType) {
 				action: { 
 					method: function(id) {
 						console.log('sell ' + gameObject.scrapToSell + ' scrap');
-						let displayModal = false;
 						if (gameObject.scrapToSell === 'common') {
 							if (gameObject.commonScrap > 0) {
 								gameObject.commonScrap--;
@@ -1483,7 +1482,7 @@ function selectScrapPrice(scrapType) {
 								
 								addFunds(gameObject.commonScrapBase);
 								if (gameObject.commonScrap === 0) {
-									displayModal = true;
+									displayNotEnoughScrapModal();
 								}
 							} else {
 								gameObject.commonScrap = 0;
@@ -1505,7 +1504,7 @@ function selectScrapPrice(scrapType) {
 								});
 								addFunds(gameObject.unCommonScrapBase);
 								if (gameObject.unCommonScrap === 0) {
-									displayModal = true;
+									displayNotEnoughScrapModal();
 								}
 							} else {
 								gameObject.unCommonScrap = 0;
@@ -1527,7 +1526,7 @@ function selectScrapPrice(scrapType) {
 								});
 								addFunds(gameObject.uniqueScrapBase);
 								if (gameObject.uniqueScrap === 0) {
-									displayModal = true;
+									displayNotEnoughScrapModal();
 								}
 							} else {
 								gameObject.uniqueScrap = 0;
@@ -1549,7 +1548,7 @@ function selectScrapPrice(scrapType) {
 								});
 								addFunds(gameObject.intriguingScrapBase);
 								if (gameObject.intriguingScrap === 0) {
-									displayModal = true;
+									displayNotEnoughScrapModal();
 								}
 							} else {
 								gameObject.intriguingScrap = 0;
@@ -1571,7 +1570,7 @@ function selectScrapPrice(scrapType) {
 								});
 								addFunds(gameObject.facinatingScrapBase);
 								if (gameObject.facinatingScrap === 0) {
-									displayModal = true;
+									displayNotEnoughScrapModal();
 								}
 							} else {
 								gameObject.facinatingScrap = 0;
@@ -1593,7 +1592,7 @@ function selectScrapPrice(scrapType) {
 								});
 								addFunds(gameObject.mythicScrapBase);
 								if (gameObject.mythicScrap === 0) {
-									displayModal = true;
+									displayNotEnoughScrapModal();
 								}
 							} else {
 								gameObject.mythicScrap = 0;
@@ -1615,7 +1614,7 @@ function selectScrapPrice(scrapType) {
 								});
 								addFunds(gameObject.exoticScrapBase);
 								if (gameObject.exoticScrap === 0) {
-									displayModal = true;
+									displayNotEnoughScrapModal();
 								}
 							} else {
 								gameObject.exoticScrap = 0;
@@ -1629,39 +1628,22 @@ function selectScrapPrice(scrapType) {
 						Particle.animComplete = {
 							method: function() {
 								setTimeout(function() {
-									console.log('here');
-									if (gameObject.scrapToSell === 'common') {
-										selectCommonScrap();
-									}
-									if (gameObject.scrapToSell === 'unCommon') {
-										selectUnCommonScrap();
-									}
-									if (gameObject.scrapToSell === 'unique') {
-										selectUniqueScrap();
-									}
-									if (gameObject.scrapToSell === 'intriguing') {
-										selectIntriguingScrap();
-									}
-									if (gameObject.scrapToSell === 'facinating') {
-										selectFacinatingScrap();
-									}
-									if (gameObject.scrapToSell === 'mythic') {
-										selectMythicScrap();
-									}
-									if (gameObject.scrapToSell === 'exotic') {
-										selectExoticScrap();
-									}
-									if (displayModal) {
-										setTimeout(function() {
-											displayNotEnoughScrapModal();
-										}, 0);
-										
-										// displayModal = false;
-									}
+									// future Jordan, the reason, the modal
+									// gets drawn over and the animation freezes
+									// at the end might be caused by this method
+									// not running everytime. look into the move particles
+									console.log('animation end');
+									clearSellScrapScreen();
+									refreshSellScrapBackgrounds();
+									setTimeout(function() {
+										selectScrapPrice(gameObject.scrapToSell);
+									}, 0);
 								}, 0);
 								
 							}
 						};
+						
+						
 						
 					}
 				},
@@ -1810,7 +1792,7 @@ function refreshSellScrapBackgrounds() {
 		Game.methodObjects.find(x => x.id === 'scrap-count-background').isAnim = true;
 	}
 }
-
+ // future Jordan, this modal sometimes gets drawn over... keep an eye on this...
 function displayNotEnoughScrapModal() {
 	setTimeout(function() {
 		Game.methodSetup = {
@@ -1848,5 +1830,5 @@ function displayNotEnoughScrapModal() {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
-	}, 110);
+	}, 700);
 }

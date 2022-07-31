@@ -230,8 +230,8 @@ function moveParticles() {
       particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
     }
     if (particles[i].props.ticks <= 1) {
-      Game.deleteEntity(particles[i].methodId);
-      Particle.animComplete.method();
+		Particle.animComplete.method();
+		Game.deleteEntity(particles[i].methodId);
     }
 
     if (Game.selectedSetting === Game.enumSettings.high) {
