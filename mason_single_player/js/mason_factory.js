@@ -589,6 +589,7 @@ function factoryRobotDetails() {
 
 function factoryRobotParts() {
 	Game.clearStage();
+	Particle.init();
 	Game.methodSetup = {
 		method: function(id) {
 			drawRect({
@@ -2328,6 +2329,23 @@ function displaySelectPartParts(part) {
 										}
 									});
 									part.count++;
+									Particle.floatingText({
+										font: '2rem serif',
+										msg: '+          +',
+										align: 'center',
+										posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
+										posY: Game.placeEntityY(0.69, (Game.entitySize * 0.7)),
+										direction: 'top',
+										color: 'green',
+										ticks: 13,
+										speed: 0.8,
+									});
+									
+									Particle.animComplete = {
+										method: function() {
+											displaySelectPartParts(part);				
+										}
+									};
 								} else {
 									gameObject.buildButtonDisabled = true;
 									setTimeout(function() {
