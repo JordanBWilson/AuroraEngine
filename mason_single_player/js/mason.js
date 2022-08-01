@@ -1256,6 +1256,7 @@ function selectCommonScrap() {
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
+	gameObject.buildButtonDisabled = false;
 	setTimeout(function() {
 		selectScrapPrice(gameObject.scrapToSell);
 	}, 0);
@@ -1270,6 +1271,7 @@ function selectUnCommonScrap() {
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
+	gameObject.buildButtonDisabled = false;
 	setTimeout(function() {
 		selectScrapPrice(gameObject.scrapToSell);
 	}, 0);
@@ -1283,6 +1285,7 @@ function selectUniqueScrap() {
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-unique-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
+	gameObject.buildButtonDisabled = false;
 	setTimeout(function() {
 		selectScrapPrice(gameObject.scrapToSell);
 	}, 0);
@@ -1296,6 +1299,7 @@ function selectIntriguingScrap() {
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-intriguing-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
+	gameObject.buildButtonDisabled = false;
 	setTimeout(function() {
 		selectScrapPrice(gameObject.scrapToSell);
 	}, 0);
@@ -1309,6 +1313,7 @@ function selectFacinatingScrap() {
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-facinating-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
+	gameObject.buildButtonDisabled = false;
 	setTimeout(function() {
 		selectScrapPrice(gameObject.scrapToSell);
 	}, 0);
@@ -1322,6 +1327,7 @@ function selectMythicScrap() {
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-mythic-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
+	gameObject.buildButtonDisabled = false;
 	setTimeout(function() {
 		selectScrapPrice(gameObject.scrapToSell);
 	}, 0);
@@ -1335,6 +1341,7 @@ function selectExoticScrap() {
 	const highlight = Game.methodObjects.find(item => item.id === 'sell-exotic-scrap');
 	highlight.btnColor = 'yellow';
 	highlight.txtColor = 'black';
+	gameObject.buildButtonDisabled = false;
 	setTimeout(function() {
 		selectScrapPrice(gameObject.scrapToSell);
 	}, 0);
@@ -1463,11 +1470,10 @@ function selectScrapPrice(scrapType) {
 				id: 'sell-scrap-btn',
 				action: { 
 					method: function(id) {
-						
-						let displayModal = false;
 						const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+						let displayModal = false;
 						console.log('sell ' + gameObject.scrapToSell + ' scrap', modal);
-						if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !modal) {
+						if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
 							gameObject.commonScrap--;
 							Particle.floatingText({
 								font: '2rem serif',
@@ -1482,10 +1488,8 @@ function selectScrapPrice(scrapType) {
 							});
 							addFunds(gameObject.commonScrapBase);
 							if (gameObject.commonScrap === 0) {
-								displayNotEnoughScrapModal();
 								displayModal = true;
 							}
-							particleAnimationOver();
 						}
 						if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
 							gameObject.unCommonScrap--;
@@ -1502,10 +1506,8 @@ function selectScrapPrice(scrapType) {
 							});
 							addFunds(gameObject.unCommonScrapBase);
 							if (gameObject.unCommonScrap === 0) {
-								displayNotEnoughScrapModal();
 								displayModal = true;
 							}
-							particleAnimationOver();
 						}
 						if (gameObject.scrapToSell === 'unique' && gameObject.uniqueScrap > 0 && !modal) {
 							gameObject.uniqueScrap--;
@@ -1522,10 +1524,8 @@ function selectScrapPrice(scrapType) {
 							});
 							addFunds(gameObject.uniqueScrapBase);
 							if (gameObject.uniqueScrap === 0) {
-								displayNotEnoughScrapModal();
 								displayModal = true;
 							}
-							particleAnimationOver();
 						}
 						if (gameObject.scrapToSell === 'intriguing' && gameObject.intriguingScrap > 0 && !modal) {
 							gameObject.intriguingScrap--;
@@ -1542,10 +1542,8 @@ function selectScrapPrice(scrapType) {
 							});
 							addFunds(gameObject.intriguingScrapBase);
 							if (gameObject.intriguingScrap === 0) {
-								displayNotEnoughScrapModal();
 								displayModal = true;
 							}
-							particleAnimationOver();
 						}
 						if (gameObject.scrapToSell === 'facinating' && gameObject.facinatingScrap > 0 && !modal) {
 							gameObject.facinatingScrap--;
@@ -1562,10 +1560,8 @@ function selectScrapPrice(scrapType) {
 							});
 							addFunds(gameObject.facinatingScrapBase);
 							if (gameObject.facinatingScrap === 0) {
-								displayNotEnoughScrapModal();
 								displayModal = true;
 							}
-							particleAnimationOver();
 						}
 						if (gameObject.scrapToSell === 'mythic' && gameObject.mythicScrap > 0 && !modal) {
 							gameObject.mythicScrap--;
@@ -1582,10 +1578,8 @@ function selectScrapPrice(scrapType) {
 							});
 							addFunds(gameObject.mythicScrapBase);
 							if (gameObject.mythicScrap === 0) {
-								displayNotEnoughScrapModal();
 								displayModal = true;
 							}
-							particleAnimationOver();
 						}
 						if (gameObject.scrapToSell === 'exotic' && gameObject.exoticScrap > 0 && !modal) {
 							gameObject.exoticScrap--;
@@ -1602,15 +1596,24 @@ function selectScrapPrice(scrapType) {
 							});
 							addFunds(gameObject.exoticScrapBase);
 							if (gameObject.exoticScrap === 0) {
-								displayNotEnoughScrapModal();
 								displayModal = true;
 							}
-							particleAnimationOver();
 						}
+						particleAnimationOver();
+						
 						clearSellScrapScreen();
 						refreshSellScrapBackgrounds();
 						setTimeout(function() {
 							selectScrapPrice(gameObject.scrapToSell);
+							if (gameObject.buildButtonDisabled && !modal) {
+								setTimeout(function() {
+									displayNotEnoughScrapModal();
+								}, 0);
+								
+							}
+							if (displayModal) {
+								gameObject.buildButtonDisabled = true;
+							}
 						}, 0);
 					}
 				},
@@ -1626,37 +1629,21 @@ function particleAnimationOver() {
 	Particle.animComplete = {
 		method: function() {
 			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-			if (!modal) {
-				setTimeout(function() {
-					clearSellScrapScreen();
-					refreshSellScrapBackgrounds();
-					setTimeout(function() {
-						selectScrapPrice(gameObject.scrapToSell);
-											
-					}, 0);
-				}, 0);
-			} else {
+			setTimeout(function() {
 				clearSellScrapScreen();
 				refreshSellScrapBackgrounds();
 				setTimeout(function() {
-					Game.methodSetup = {
-						method: function(id) {
-							drawText({
-								font: '2em serif',
-								msg: 'Sell Scrap',
-								posX: Game.placeEntityX(0.50),
-								posY: Game.placeEntityY(0.085),
-								color: 'darkgrey',
-								align: 'center',
-								props: {},
-								id: 'sell-scrap-title',
-								methodId: id
-							});
-						}
-					};
-					Game.addMethod(Game.methodSetup);
-				}, 0);
-			}					
+					selectScrapPrice(gameObject.scrapToSell);
+					if (modal) {
+						// future Jordan, will this work?
+						// works for now at least
+						setTimeout(function() {
+							modal.modalColor = 'darkgray';
+						}, 0);
+					}
+					console.log(modal);
+					}, 0);
+			}, 0);				
 		}
 	};
 }
@@ -1799,7 +1786,7 @@ function refreshSellScrapBackgrounds() {
 	}
 }
 function displayNotEnoughScrapModal() {
-	setTimeout(function() {
+	// setTimeout(function() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawModal({
@@ -1835,5 +1822,5 @@ function displayNotEnoughScrapModal() {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
-	}, 0);
+	// }, 0);
 }

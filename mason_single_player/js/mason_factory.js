@@ -2138,10 +2138,7 @@ function displaySelectPart(part, confirmed) {
 					id: 'confirm-part',
 					action: { method: function(id) {
 						if (confirmed && gameObject.selectedRobot.length === 6) {
-							if (!gameObject.buildButtonDisabled) {
-								buildRobot();
-							}
-							
+							buildRobot();
 						} else {
 							equipPart(part);
 						}
