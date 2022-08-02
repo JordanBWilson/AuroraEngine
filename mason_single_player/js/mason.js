@@ -915,8 +915,8 @@ function homeSellScrap() {
 				isFilled: true,
 				id: 'scrap-back-game',
 				action: { method: function(id) {
-					 homeSellSelect();
-
+						homeSellSelect();
+						gameObject.buildButtonDisabled = false;
 					}
 				},
 				props: {},
