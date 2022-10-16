@@ -54,16 +54,6 @@ Game.addCanvasEvent(Game.enumEvents.mouseDown, readyPaddle);
 Game.addCanvasEvent(Game.enumEvents.mouseUp, stopPaddle);
 Game.addCanvasEvent(Game.enumEvents.mouseMove, movePaddle);
 
-window.addEventListener('resize', function() {
-  if (!newGame) {
-    setTimeout(function() {
-      Game.clearStage();
-      gameLevel = 0;
-      gamePoints = 0;
-      playGame();
-    }, 300);
-  }
-}, false);
 
 function sortHighScoreList() {
   if (highscoreList && highscoreList.length > 0) {
@@ -545,6 +535,19 @@ function nextGameLevel() { // draw the game
     drawHighScoreMenu();
     drawWinMenu();
   }
+  Game.pageResized = {
+		section: 'resize-bustoot',
+		method: function() {
+			if (!newGame) {
+				setTimeout(function() {
+				  Game.clearStage();
+				  gameLevel = 0;
+				  gamePoints = 0;
+				  playGame();
+				}, 0);
+			 }
+		}
+	}
 }
 function drawHighScoreMenu() {
   if (!highscoreList) {
@@ -611,7 +614,7 @@ function drawLoseMenu() {
         posX: (Game.canvas.width * 0.27),
         posY: (Game.canvas.height * 0.4),
         width: (Game.canvas.width * 0.5),
-        height: (Game.canvas.height * 0.011),
+        height: (Game.canvas.height * 0.11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -632,7 +635,7 @@ function drawLoseMenu() {
         posX: (Game.canvas.width * 0.27),
         posY: (Game.canvas.height * 0.55),
         width: (Game.canvas.width * 0.5),
-        height: (Game.canvas.height * 0.011),
+        height: (Game.canvas.height * 0.11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
@@ -663,7 +666,7 @@ function drawWinMenu() {
         posX: (Game.canvas.width * 0.27),
         posY: (Game.canvas.height * 0.4),
         width: (Game.canvas.width * 0.5),
-        height: (Game.canvas.height * 0.011),
+        height: (Game.canvas.height * 0.11),
         lineWidth: 1,
         btnColor: 'green',
         txtColor: 'white',
