@@ -291,6 +291,7 @@ function homeSellSelect() {
 					method: function(id) {
 						// future Jordan, it's time to work on the sell parts menu
 						console.log('load up the sell parts menu');
+						homeSellParts();
 					}
 				},
 				props: {},
@@ -327,7 +328,271 @@ function homeSellSelect() {
 }
 
 function homeSellParts() {
-	// future Jordan, it's time to work on the sell parts menu
+	// future Jordan, work on selecting the different parts to sell
+	Game.clearStage();
+	Particle.init();
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0),
+				width: Game.canvas.width,
+				height: (Game.canvas.height),
+				lineWidth: 1,
+				color: 'grey',
+				isFilled: true,
+				id: 'factory-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.45),
+				height: (Game.canvas.height * 0.45),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'robot-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
+				posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.43),
+				height: (Game.canvas.height * 0.855),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'part-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawRect({
+				posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+				posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.45),
+				height: (Game.canvas.height * 0.39),
+				lineWidth: 1,
+				color: 'lightgrey',
+				isFilled: true,
+				id: 'robot-stat-background',
+				isBackground: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	drawSellPartButtons(); // draw the buttons in the top left
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.03),
+				posY: Game.placeEntityY(0.03),
+				width: (Game.entitySize * 12),
+				height: (Game.entitySize * 7),
+				lineWidth: 1,
+				btnColor: 'darkgrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Back',
+				isFilled: true,
+				id: 'sell-part-back-game',
+				action: { method: function(id) {
+					 homeSellSelect();
+					 gameObject.buildButtonDisabled = false;
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawText({
+				font: '2.3em serif',
+				msg: 'Sell Parts',
+				posX: Game.placeEntityX(0.50),
+				posY: Game.placeEntityY(0.085),
+				color: 'darkgrey',
+				align: 'center',
+				props: {},
+				id: 'factory-title',
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	
+	Game.pageResized = {
+		section: 'home-sell-parts',
+		method: function() {
+			if (gameObject.partsDisplayed === 'leg') {
+				selectRobotPartLegs();
+			}
+			if (gameObject.partsDisplayed === 'arm') {
+				selectRobotPartArms();
+			}
+			if (gameObject.partsDisplayed === 'chassis') {
+				selectRobotPartChassis();
+			}
+			if (gameObject.partsDisplayed === 'head') {
+				selectRobotPartHead();
+			}
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (modal) {
+				Game.deleteEntity(modal.methodId);
+				setTimeout(function() {
+					Game.methodSetup = {
+						method: function(id) {
+							drawModal({
+								posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+								posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+								width: (Game.entitySize * 40),
+								height: (Game.entitySize * 30),
+								lineWidth: modal.lineWidth,
+								modalColor: modal.modalColor,
+								msgColor: modal.msgColor,
+								msgFont: modal.msgFont,
+								msg: modal.msg,
+								footerColor: modal.footerColor,
+								footerFont: modal.footerFont,
+								footerMsg: modal.footerMsg,
+								bgColor: modal.bgColor,
+								isModalFilled: modal.isModalFilled,
+								id: Game.modalId,
+								action: modal.action,
+								props: {},
+								methodId: id
+							});
+						}
+					};
+					Game.addMethod(Game.methodSetup);
+				}, 150);
+			}
+		}
+	}
+}
+
+function drawSellPartButtons() {
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.36, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Chassis',
+				isFilled: true,
+				id: 'sell-body-parts',
+				action: { method: function(id) {
+					// selectRobotPartChassis();
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.47, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Heads',
+				isFilled: true,
+				id: 'sell-head-parts',
+				action: { method: function(id) {
+					// selectRobotPartHead();
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.58, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Arms',
+				isFilled: true,
+				id: 'sell-arm-parts',
+				action: { method: function(id) {
+					// selectRobotPartArms();
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
+	Game.methodSetup = {
+		method: function(id) {
+			drawButton({
+				posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
+				posY: Game.placeEntityY(0.69, (Game.canvas.height * 0.45)),
+				width: (Game.canvas.width * 0.44),
+				height: (Game.canvas.height * 0.1),
+				lineWidth: 1,
+				btnColor: 'lightslategrey',
+				txtColor: 'white',
+				font: '1.5em serif',
+				msg: 'Legs',
+				isFilled: true,
+				id: 'sell-leg-parts',
+				action: { method: function(id) {
+					// selectRobotPartLegs(); 
+					}
+				},
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Game.addMethod(Game.methodSetup);
 }
 
 function homeSellScrap() {
