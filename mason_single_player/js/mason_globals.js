@@ -870,17 +870,17 @@ function subtractFunds(subFunds) {
 }
 
 // *** Display player funds ***
-function displayCondensedFunds() {
+function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, color) {
 	if (gameObject.mythryl > 0) {
 		// future Jordan, 99,999 is the max number on mobile display
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Mythryl: ' + gameObject.mythryl,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.245),
-					color: 'grey',
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-high',
@@ -892,11 +892,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Platinum: ' + gameObject.platinum,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.295),
-					color: 'grey',
+					posX: Game.placeEntityX(lowFundX),
+					posY: Game.placeEntityY(lowFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-low',
@@ -909,11 +909,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Platinum: ' + gameObject.platinum,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.245),
-					color: 'grey',
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-high',
@@ -925,11 +925,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Gold: ' + gameObject.gold,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.295),
-					color: 'grey',
+					posX: Game.placeEntityX(lowFundX),
+					posY: Game.placeEntityY(lowFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-low',
@@ -942,11 +942,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Gold: ' + gameObject.gold,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.245),
-					color: 'grey',
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-high',
@@ -958,11 +958,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Silver: ' + gameObject.silver,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.295),
-					color: 'grey',
+					posX: Game.placeEntityX(lowFundX),
+					posY: Game.placeEntityY(lowFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-low',
@@ -975,11 +975,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Silver: ' + gameObject.silver,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.245),
-					color: 'grey',
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-high',
@@ -991,11 +991,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Bronze: ' + gameObject.bronze,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.295),
-					color: 'grey',
+					posX: Game.placeEntityX(lowFundX),
+					posY: Game.placeEntityY(lowFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-low',
@@ -1008,11 +1008,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Bronze: ' + gameObject.bronze,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.245),
-					color: 'grey',
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-high',
@@ -1024,11 +1024,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Copper: ' + gameObject.copper,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.295),
-					color: 'grey',
+					posX: Game.placeEntityX(lowFundX),
+					posY: Game.placeEntityY(lowFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-low',
@@ -1041,11 +1041,11 @@ function displayCondensedFunds() {
 		Game.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.2em serif',
+					font: font,
 					msg: 'Copper: ' + gameObject.copper,
-					posX: Game.placeEntityX(0.565),
-					posY: Game.placeEntityY(0.245),
-					color: 'grey',
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
 					align: 'left',
 					props: {},
 					id: 'player-funds-high',

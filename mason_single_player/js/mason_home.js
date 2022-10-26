@@ -12,7 +12,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-const homePage = {
+const homePage = { // displayCondensedFunds // createSellPartTitleScraps
 	description: 'This is where the player can sell, upgrade and quest',
 	loadPage: function() {
 		function homeMenuSelect() {
@@ -777,7 +777,7 @@ const homePage = {
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
 							font: '1.5em serif',
-							msg: 'Build',
+							msg: 'Sell',
 							isFilled: true,
 							id: 'confirm-part',
 							action: {
@@ -793,191 +793,149 @@ const homePage = {
 												scrapCosts.push(scrapObj);
 											}
 										}
-										// check to see if we have all the scrap we need
-										let problems = 0;
-										scrapCosts.forEach((scrap, i) => {
-											if (scrap.type === 'commonScrap') {
-												if (gameObject.commonScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'unCommonScrap') {
-												if (gameObject.unCommonScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'uniqueScrap') {
-												if (gameObject.uniqueScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'intriguingScrap') {
-												if (gameObject.intriguingScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'facinatingScrap') {
-												if (gameObject.facinatingScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'mythicScrap') {
-												if (gameObject.mythicScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'exoticScrap') {
-												if (gameObject.exoticScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											}
-										});
+										console.log(scrapCosts);
+										// calculate how much we can sell the part for
+										// add the funds and subtract the part
+										
+										
 									// if we don't, display a message
-									if (problems > 0) {
-										gameObject.buildButtonDisabled = true;
-										setTimeout(function() {
-											Game.methodSetup = {
-												method: function(id) {
-													drawModal({
-														posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-														posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-														width: (Game.entitySize * 40),
-														height: (Game.entitySize * 30),
-														lineWidth: 1,
-														modalColor: 'darkgrey',
-														msgColor: 'white',
-														msgFont: '1.3em serif',
-														msg: 'Not Enough Scrap',
-														footerColor: 'white',
-														footerFont: '1em serif',
-														footerMsg: 'Tap here to continue',
-														bgColor: '',
-														isModalFilled: true,
-														id: Game.modalId,
-														action: { 
-															method: function(id) {
-																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																Game.deleteEntity(modal.methodId); 
-																if (gameObject.partsDisplayed === 'chassis') {
-																	selectSellPartChassis();
-																} else if (gameObject.partsDisplayed === 'head') {
-																	selectSellPartHead();
-																} else if (gameObject.partsDisplayed === 'arm') {
-																	selectSellPartArms();
-																} else if (gameObject.partsDisplayed === 'leg') {
-																	selectSellPartLegs();
-																}
-															 }
-														},
-														props: {},
-														methodId: id
-													});
-												}
-											};
-											Game.addMethod(Game.methodSetup);
-										},200);
+									//if (problems > 0) {
+										//gameObject.buildButtonDisabled = true;
+										//setTimeout(function() {
+											//Game.methodSetup = {
+												//method: function(id) {
+													//drawModal({
+														//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+														//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+														//width: (Game.entitySize * 40),
+														//height: (Game.entitySize * 30),
+														//lineWidth: 1,
+														//modalColor: 'darkgrey',
+														//msgColor: 'white',
+														//msgFont: '1.3em serif',
+														//msg: 'Not Enough Scrap',
+														//footerColor: 'white',
+														//footerFont: '1em serif',
+														//footerMsg: 'Tap here to continue',
+														//bgColor: '',
+														//isModalFilled: true,
+														//id: Game.modalId,
+														//action: { 
+															//method: function(id) {
+																//const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																//Game.deleteEntity(modal.methodId); 
+																//if (gameObject.partsDisplayed === 'chassis') {
+																	//selectSellPartChassis();
+																//} else if (gameObject.partsDisplayed === 'head') {
+																	//selectSellPartHead();
+																//} else if (gameObject.partsDisplayed === 'arm') {
+																	//selectSellPartArms();
+																//} else if (gameObject.partsDisplayed === 'leg') {
+																	//selectSellPartLegs();
+																//}
+															 //}
+														//},
+														//props: {},
+														//methodId: id
+													//});
+												//}
+											//};
+											//Game.addMethod(Game.methodSetup);
+										//},200);
 			
-									} else {
-										// see if there is enough storage for the part first
-										if (part.count < gameObject.partStorage) {
-											// if we have enough scrap, go over the list again and subtract the scrap
-											scrapCosts.forEach((scrap, i) => {
-												if (scrap.type === 'commonScrap') {
-													if (gameObject.commonScrap >= scrap.cost) {
-														gameObject.commonScrap -= scrap.cost;
-													}
-												} else if (scrap.type === 'unCommonScrap') {
-													if (gameObject.unCommonScrap >= scrap.cost) {
-															gameObject.unCommonScrap -= scrap.cost;
-													}
-												} else if (scrap.type === 'uniqueScrap') {
-													if (gameObject.uniqueScrap >= scrap.cost) {
-														gameObject.uniqueScrap -= scrap.cost;
-													}
-												} else if (scrap.type === 'intriguingScrap') {
-													if (gameObject.intriguingScrap >= scrap.cost) {
-														gameObject.intriguingScrap -= scrap.cost;
-													}
-												} else if (scrap.type === 'facinatingScrap') {
-													if (gameObject.facinatingScrap >= scrap.cost) {
-														gameObject.facinatingScrap -= scrap.cost;
-													}
-												} else if (scrap.type === 'mythicScrap') {
-													if (gameObject.mythicScrap >= scrap.cost) {
-														gameObject.mythicScrap -= scrap.cost;
-													}
-												} else if (scrap.type === 'exoticScrap') {
-													if (gameObject.exoticScrap >= scrap.cost) {
-														gameObject.exoticScrap -= scrap.cost;
-													}
-												}
-											});
-											part.count++;
-											Particle.floatingText({
-												font: '2rem serif',
-												msg: '+          +',
-												align: 'center',
-												posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
-												posY: Game.placeEntityY(0.69, (Game.entitySize * 0.7)),
-												direction: 'top',
-												color: 'green',
-												ticks: 13,
-												speed: 0.8,
-											});
-										} else {
-											// display that there is not enough storage
-											gameObject.buildButtonDisabled = true;
-											setTimeout(function() {
-												Game.methodSetup = {
-													method: function(id) {
-														drawModal({
-															posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-															posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-															width: (Game.entitySize * 40),
-															height: (Game.entitySize * 30),
-															lineWidth: 1,
-															modalColor: 'darkgrey',
-															msgColor: 'white',
-															msgFont: '1.3em serif',
-															msg: 'Not Enough Storage',
-															footerColor: 'white',
-															footerFont: '1em serif',
-															footerMsg: 'Tap here to continue',
-															bgColor: '',
-															isModalFilled: true,
-															id: Game.modalId,
-															action: { 
-																method: function(id) {
-																	const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																	Game.deleteEntity(modal.methodId); 
-																	if (gameObject.partsDisplayed === 'chassis') {
-																		selectSellPartChassis();
-																	} else if (gameObject.partsDisplayed === 'head') {
-																		selectSellPartHead();
-																	} else if (gameObject.partsDisplayed === 'arm') {
-																		selectSellPartArms();
-																	} else if (gameObject.partsDisplayed === 'leg') {
-																		selectSellPartLegs();
-																	}
-																 }
-															},
-															props: {},
-															methodId: id
-														});
-													}
-												};
-												Game.addMethod(Game.methodSetup);
-											},200);
-										}
-									}
+									//} else {
+										//// see if there is enough storage for the part first
+										//if (part.count < gameObject.partStorage) {
+											//// if we have enough scrap, go over the list again and subtract the scrap
+											//scrapCosts.forEach((scrap, i) => {
+												//if (scrap.type === 'commonScrap') {
+													//if (gameObject.commonScrap >= scrap.cost) {
+														//gameObject.commonScrap -= scrap.cost;
+													//}
+												//} else if (scrap.type === 'unCommonScrap') {
+													//if (gameObject.unCommonScrap >= scrap.cost) {
+															//gameObject.unCommonScrap -= scrap.cost;
+													//}
+												//} else if (scrap.type === 'uniqueScrap') {
+													//if (gameObject.uniqueScrap >= scrap.cost) {
+														//gameObject.uniqueScrap -= scrap.cost;
+													//}
+												//} else if (scrap.type === 'intriguingScrap') {
+													//if (gameObject.intriguingScrap >= scrap.cost) {
+														//gameObject.intriguingScrap -= scrap.cost;
+													//}
+												//} else if (scrap.type === 'facinatingScrap') {
+													//if (gameObject.facinatingScrap >= scrap.cost) {
+														//gameObject.facinatingScrap -= scrap.cost;
+													//}
+												//} else if (scrap.type === 'mythicScrap') {
+													//if (gameObject.mythicScrap >= scrap.cost) {
+														//gameObject.mythicScrap -= scrap.cost;
+													//}
+												//} else if (scrap.type === 'exoticScrap') {
+													//if (gameObject.exoticScrap >= scrap.cost) {
+														//gameObject.exoticScrap -= scrap.cost;
+													//}
+												//}
+											//});
+											//part.count++;
+											//Particle.floatingText({
+												//font: '2rem serif',
+												//msg: '+          +',
+												//align: 'center',
+												//posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
+												//posY: Game.placeEntityY(0.69, (Game.entitySize * 0.7)),
+												//direction: 'top',
+												//color: 'green',
+												//ticks: 13,
+												//speed: 0.8,
+											//});
+										//} else {
+											//// display that there is not enough storage
+											//gameObject.buildButtonDisabled = true;
+											//setTimeout(function() {
+												//Game.methodSetup = {
+													//method: function(id) {
+														//drawModal({
+															//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+															//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+															//width: (Game.entitySize * 40),
+															//height: (Game.entitySize * 30),
+															//lineWidth: 1,
+															//modalColor: 'darkgrey',
+															//msgColor: 'white',
+															//msgFont: '1.3em serif',
+															//msg: 'Not Enough Storage',
+															//footerColor: 'white',
+															//footerFont: '1em serif',
+															//footerMsg: 'Tap here to continue',
+															//bgColor: '',
+															//isModalFilled: true,
+															//id: Game.modalId,
+															//action: { 
+																//method: function(id) {
+																	//const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																	//Game.deleteEntity(modal.methodId); 
+																	//if (gameObject.partsDisplayed === 'chassis') {
+																		//selectSellPartChassis();
+																	//} else if (gameObject.partsDisplayed === 'head') {
+																		//selectSellPartHead();
+																	//} else if (gameObject.partsDisplayed === 'arm') {
+																		//selectSellPartArms();
+																	//} else if (gameObject.partsDisplayed === 'leg') {
+																		//selectSellPartLegs();
+																	//}
+																 //}
+															//},
+															//props: {},
+															//methodId: id
+														//});
+													//}
+												//};
+												//Game.addMethod(Game.methodSetup);
+											//},200);
+										//}
+									//}
 									if (gameObject.partsDisplayed === 'chassis') {
 										displayDiscoveredSellPartParts(gameObject.discoveredChassis);
 									} else if (gameObject.partsDisplayed === 'head') {
@@ -1079,21 +1037,39 @@ const homePage = {
 					Game.deleteEntity(item.methodId);
 				});
 			}
-			const selectAttStat = Game.methodObjects.filter(x => x.id === 'part-title');
-			if (selectAttStat) {
-				selectAttStat.forEach((item, i) => {
+			const selectPartTitle = Game.methodObjects.filter(x => x.id === 'part-title');
+			if (selectPartTitle) {
+				selectPartTitle.forEach((item, i) => {
 					Game.deleteEntity(item.methodId);
 				});
 			}
-			const selectDefStat = Game.methodObjects.filter(x => x.id === 'count-title');
-			if (selectDefStat) {
-				selectDefStat.forEach((item, i) => {
+			const selectCountTitle = Game.methodObjects.filter(x => x.id === 'count-title');
+			if (selectCountTitle) {
+				selectCountTitle.forEach((item, i) => {
 					Game.deleteEntity(item.methodId);
 				});
 			}
-			const selectSpdStat = Game.methodObjects.filter(x => x.id === 'scrap-title');
-			if (selectSpdStat) {
-				selectSpdStat.forEach((item, i) => {
+			const selectFundTitle = Game.methodObjects.filter(x => x.id === 'fund-title');
+			if (selectFundTitle) {
+				selectFundTitle.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
+			const selectSellTitle = Game.methodObjects.filter(x => x.id === 'sell-title');
+			if (selectSellTitle) {
+				selectSellTitle.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
+			const selectMoneyHigh = Game.methodObjects.filter(x => x.id === 'player-funds-high');
+			if (selectMoneyHigh) {
+				selectMoneyHigh.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
+			const selectMoneyLow = Game.methodObjects.filter(x => x.id === 'player-funds-low');
+			if (selectMoneyLow) {
+				selectMoneyLow.forEach((item, i) => {
 					Game.deleteEntity(item.methodId);
 				});
 			}
@@ -1227,66 +1203,89 @@ const homePage = {
 				Game.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '2em serif',
-							msg: 'Scrap',
+							font: '1.3em serif',
+							msg: 'Funds',
 							posX: Game.placeEntityX(0.25),
-							posY: Game.placeEntityY(0.705),
+							posY: Game.placeEntityY(0.69),
 							color: 'grey',
 							align: 'center',
 							props: {},
-							id: 'scrap-title',
+							id: 'fund-title',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+				displayCondensedFunds(0.115, 0.72, 0.115, 0.755, '1em serif', 'grey');
+				console.log(scrapCosts);
+				
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1.3em serif',
+							msg: 'Sell Price',
+							posX: Game.placeEntityX(0.25),
+							posY: Game.placeEntityY(0.80),
+							color: 'grey',
+							align: 'center',
+							props: {},
+							id: 'sell-title',
 							methodId: id
 						});
 					}
 				};
 				Game.addMethod(Game.methodSetup);
 				
-				scrapCosts.forEach((scrap, i) => {
-					let scrapType = '';
-					let scrapCost = 0;
-					let totalScrap = 0;
-					if (scrap.type === 'commonScrap') {
-						scrapType = 'Common';
-						totalScrap = gameObject.commonScrap;
-					} else if (scrap.type === 'unCommonScrap') {
-						scrapType = 'Uncommon';
-						totalScrap = gameObject.unCommonScrap;
-					} else if (scrap.type === 'uniqueScrap') {
-						scrapType = 'Unique';
-						totalScrap = gameObject.uniqueScrap;
-					} else if (scrap.type === 'intriguingScrap') {
-						scrapType = 'Intriguing';
-						totalScrap = gameObject.intriguingScrap;
-					} else if (scrap.type === 'facinatingScrap') {
-						scrapType = 'Facinating';
-						totalScrap = gameObject.facinatingScrap;
-					} else if (scrap.type === 'mythicScrap') {
-						scrapType = 'Mythic';
-						totalScrap = gameObject.mythicScrap;
-					} else if (scrap.type === 'exoticScrap') {
-						scrapType = 'Exotic';
-						totalScrap = gameObject.exoticScrap;
-					}
-					scrapCost = scrap.cost;
-					// future Jordan just under 10,000 scrapCost would fit nicely in
-					// this spot
-					Game.methodSetup = {
-						method: function(id) {
-							drawText({
-								font: '0.9em serif',
-								msg: scrapType + ': ' + scrapCost + ' (' + totalScrap + ')',
-								posX: Game.placeEntityX(0.08),
-								posY: Game.placeEntityY(0.75 + (i * 0.055)),
-								color: 'grey',
-								align: 'left',
-								props: {},
-								id: scrap.type,
-								methodId: id
-							});
-						}
-					};
-					Game.addMethod(Game.methodSetup);
-				});
+				// future Jordan, work on displaying the sell price in green
+				// we need to calculate how much scrap it takes to make the part
+				// multiplied by how much it's worth
+				
+				//scrapCosts.forEach((scrap, i) => {
+					//let scrapType = '';
+					//let scrapCost = 0;
+					//let totalScrap = 0;
+					//if (scrap.type === 'commonScrap') {
+						//scrapType = 'Common';
+						//totalScrap = gameObject.commonScrap;
+					//} else if (scrap.type === 'unCommonScrap') {
+						//scrapType = 'Uncommon';
+						//totalScrap = gameObject.unCommonScrap;
+					//} else if (scrap.type === 'uniqueScrap') {
+						//scrapType = 'Unique';
+						//totalScrap = gameObject.uniqueScrap;
+					//} else if (scrap.type === 'intriguingScrap') {
+						//scrapType = 'Intriguing';
+						//totalScrap = gameObject.intriguingScrap;
+					//} else if (scrap.type === 'facinatingScrap') {
+						//scrapType = 'Facinating';
+						//totalScrap = gameObject.facinatingScrap;
+					//} else if (scrap.type === 'mythicScrap') {
+						//scrapType = 'Mythic';
+						//totalScrap = gameObject.mythicScrap;
+					//} else if (scrap.type === 'exoticScrap') {
+						//scrapType = 'Exotic';
+						//totalScrap = gameObject.exoticScrap;
+					//}
+					//scrapCost = scrap.cost;
+					//// future Jordan just under 10,000 scrapCost would fit nicely in
+					//// this spot
+					//Game.methodSetup = {
+						//method: function(id) {
+							//drawText({
+								//font: '0.9em serif',
+								//msg: scrapType + ': ' + scrapCost + ' (' + totalScrap + ')',
+								//posX: Game.placeEntityX(0.08),
+								//posY: Game.placeEntityY(0.75 + (i * 0.055)),
+								//color: 'grey',
+								//align: 'left',
+								//props: {},
+								//id: scrap.type,
+								//methodId: id
+							//});
+						//}
+					//};
+					//Game.addMethod(Game.methodSetup);
+				//});
 			}
 
 			clearSelectedSellPartScrapDetails();
@@ -1407,7 +1406,7 @@ const homePage = {
 			};
 			Game.addMethod(Game.methodSetup);
 			createSellScrapTitles();
-			displayCondensedFunds();
+			displayCondensedFunds(0.565, 0.245, 0.565, 0.295, '1.2em serif', 'grey');
 			Particle.init();
 			
 			Game.pageResized = {
@@ -1831,7 +1830,7 @@ const homePage = {
 		function selectScrapPrice(scrapType) {
 
 			createSellScrapTitles();
-			displayCondensedFunds();
+			displayCondensedFunds(0.565, 0.245, 0.565, 0.295, '1.2em serif', 'grey');
 			
 			Game.methodSetup = {
 				method: function(id) {
@@ -1925,7 +1924,7 @@ const homePage = {
 							msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
 							posX: Game.placeEntityX(0.515),
 							posY: Game.placeEntityY(0.635 + (i * 0.045)),
-							color: 'grey',
+							color: 'green',
 							align: 'left',
 							props: {},
 							id: 'scrap-price',
@@ -2117,9 +2116,10 @@ const homePage = {
 							if (modal) {
 								// future Jordan, will this work?
 								// works for now at least
+								modal.modalColor = 'darkgray';
 								setTimeout(function() {
 									modal.modalColor = 'darkgray';
-								}, 0);
+								}, 150);
 							}
 							console.log(modal);
 							}, 0);
