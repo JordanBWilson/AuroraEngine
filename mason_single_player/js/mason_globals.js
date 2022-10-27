@@ -30,7 +30,7 @@ const gameObject = {
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
 		{ money: 'bronze', price: 0 },
-		{ money: 'copper', price: 5 }
+		{ money: 'copper', price: 500 }
 	],
 	unCommonScrapBase: [
 		{ money: 'mythryl', price: 0 },

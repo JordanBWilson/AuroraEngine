@@ -1055,7 +1055,7 @@ const homePage = { // displayCondensedFunds // createSellPartTitleScraps
 					Game.deleteEntity(item.methodId);
 				});
 			}
-			const selectSellTitle = Game.methodObjects.filter(x => x.id === 'sell-title');
+			const selectSellTitle = Game.methodObjects.filter(x => x.id === 'sell-title'); // sell-part-high
 			if (selectSellTitle) {
 				selectSellTitle.forEach((item, i) => {
 					Game.deleteEntity(item.methodId);
@@ -1070,6 +1070,18 @@ const homePage = { // displayCondensedFunds // createSellPartTitleScraps
 			const selectMoneyLow = Game.methodObjects.filter(x => x.id === 'player-funds-low');
 			if (selectMoneyLow) {
 				selectMoneyLow.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
+			const selectSellPartHigh = Game.methodObjects.filter(x => x.id === 'sell-part-high');
+			if (selectSellPartHigh) {
+				selectSellPartHigh.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
+			const selectSellPartLow = Game.methodObjects.filter(x => x.id === 'sell-part-low');
+			if (selectSellPartLow) {
+				selectSellPartLow.forEach((item, i) => {
 					Game.deleteEntity(item.methodId);
 				});
 			}
@@ -1235,57 +1247,355 @@ const homePage = { // displayCondensedFunds // createSellPartTitleScraps
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				
+				console.log(gameObject.commonScrapBase);
 				// future Jordan, work on displaying the sell price in green
 				// we need to calculate how much scrap it takes to make the part
 				// multiplied by how much it's worth
+				const partCost = {
+					mythryl: 0,
+					platinum: 0,
+					gold: 0,
+					silver: 0,
+					bronze: 0,
+					copper: 0,
+				}
+				// get how much scrap it takes to build a part and
+				// multiply it by how much that scrap is worth
+				scrapCosts.forEach((scrap, i) => {
+					if (scrap.type === 'commonScrap') {
+						gameObject.commonScrapBase.forEach(commonScrap => {
+							if (commonScrap.price > 0) {
+								if (commonScrap.money === 'mythryl') {
+									// how much scrap takes to make the part * the parts worth
+									partCost.mythryl += commonScrap.price * scrap.cost;
+								}
+								if (commonScrap.money === 'platinum') {
+									partCost.platinum += commonScrap.price * scrap.cost;
+								}
+								if (commonScrap.money === 'gold') {
+									partCost.gold += commonScrap.price * scrap.cost;
+								}
+								if (commonScrap.money === 'silver') {
+									partCost.silver += commonScrap.price * scrap.cost;
+								}
+								if (commonScrap.money === 'bronze') {
+									partCost.bronze += commonScrap.price * scrap.cost;
+								}
+								if (commonScrap.money === 'copper') {
+									partCost.copper += commonScrap.price * scrap.cost;
+								}
+							}
+						});
+					} else if (scrap.type === 'unCommonScrap') {
+						gameObject.unCommonScrapBase.forEach(unCommonScrap => {
+							if (unCommonScrap.price > 0) {
+								if (unCommonScrap.money === 'mythryl') {
+									// how much scrap takes to make the part * the parts worth
+									partCost.mythryl += unCommonScrap.price * scrap.cost;
+								}
+								if (unCommonScrap.money === 'platinum') {
+									partCost.platinum += unCommonScrap.price * scrap.cost;
+								}
+								if (unCommonScrap.money === 'gold') {
+									partCost.gold += unCommonScrap.price * scrap.cost;
+								}
+								if (unCommonScrap.money === 'silver') {
+									partCost.silver += unCommonScrap.price * scrap.cost;
+								}
+								if (unCommonScrap.money === 'bronze') {
+									partCost.bronze += unCommonScrap.price * scrap.cost;
+								}
+								if (unCommonScrap.money === 'copper') {
+									partCost.copper += unCommonScrap.price * scrap.cost;
+								}
+							}
+						});
+					} else if (scrap.type === 'uniqueScrap') {
+						gameObject.uniqueScrapBase.forEach(uniqueScrap => {
+							if (uniqueScrap.price > 0) {
+								if (uniqueScrap.money === 'mythryl') {
+									// how much scrap takes to make the part * the parts worth
+									partCost.mythryl += uniqueScrap.price * scrap.cost;
+								}
+								if (uniqueScrap.money === 'platinum') {
+									partCost.platinum += uniqueScrap.price * scrap.cost;
+								}
+								if (uniqueScrap.money === 'gold') {
+									partCost.gold += uniqueScrap.price * scrap.cost;
+								}
+								if (uniqueScrap.money === 'silver') {
+									partCost.silver += uniqueScrap.price * scrap.cost;
+								}
+								if (uniqueScrap.money === 'bronze') {
+									partCost.bronze += uniqueScrap.price * scrap.cost;
+								}
+								if (uniqueScrap.money === 'copper') {
+									partCost.copper += uniqueScrap.price * scrap.cost;
+								}
+							}
+						});
+					} else if (scrap.type === 'intriguingScrap') {
+						gameObject.intriguingScrapBase.forEach(intriguingScrap => {
+							if (intriguingScrap.price > 0) {
+								if (intriguingScrap.money === 'mythryl') {
+									// how much scrap takes to make the part * the parts worth
+									partCost.mythryl += intriguingScrap.price * scrap.cost;
+								}
+								if (intriguingScrap.money === 'platinum') {
+									partCost.platinum += intriguingScrap.price * scrap.cost;
+								}
+								if (intriguingScrap.money === 'gold') {
+									partCost.gold += intriguingScrap.price * scrap.cost;
+								}
+								if (intriguingScrap.money === 'silver') {
+									partCost.silver += intriguingScrap.price * scrap.cost;
+								}
+								if (intriguingScrap.money === 'bronze') {
+									partCost.bronze += intriguingScrap.price * scrap.cost;
+								}
+								if (intriguingScrap.money === 'copper') {
+									partCost.copper += intriguingScrap.price * scrap.cost;
+								}
+							}
+						});
+					} else if (scrap.type === 'facinatingScrap') {
+						gameObject.facinatingScrapBase.forEach(facinatingScrap => {
+							if (facinatingScrap.price > 0) {
+								if (facinatingScrap.money === 'mythryl') {
+									// how much scrap takes to make the part * the parts worth
+									partCost.mythryl += facinatingScrap.price * scrap.cost;
+								}
+								if (facinatingScrap.money === 'platinum') {
+									partCost.platinum += facinatingScrap.price * scrap.cost;
+								}
+								if (facinatingScrap.money === 'gold') {
+									partCost.gold += facinatingScrap.price * scrap.cost;
+								}
+								if (facinatingScrap.money === 'silver') {
+									partCost.silver += facinatingScrap.price * scrap.cost;
+								}
+								if (facinatingScrap.money === 'bronze') {
+									partCost.bronze += facinatingScrap.price * scrap.cost;
+								}
+								if (facinatingScrap.money === 'copper') {
+									partCost.copper += facinatingScrap.price * scrap.cost;
+								}
+							}
+						});
+					} else if (scrap.type === 'mythicScrap') {
+						gameObject.mythicScrapBase.forEach(mythicScrap => {
+							if (mythicScrap.price > 0) {
+								if (mythicScrap.money === 'mythryl') {
+									// how much scrap takes to make the part * the parts worth
+									partCost.mythryl += mythicScrap.price * scrap.cost;
+								}
+								if (mythicScrap.money === 'platinum') {
+									partCost.platinum += mythicScrap.price * scrap.cost;
+								}
+								if (mythicScrap.money === 'gold') {
+									partCost.gold += mythicScrap.price * scrap.cost;
+								}
+								if (mythicScrap.money === 'silver') {
+									partCost.silver += mythicScrap.price * scrap.cost;
+								}
+								if (mythicScrap.money === 'bronze') {
+									partCost.bronze += mythicScrap.price * scrap.cost;
+								}
+								if (mythicScrap.money === 'copper') {
+									partCost.copper += mythicScrap.price * scrap.cost;
+								}
+							}
+						});
+					} else if (scrap.type === 'exoticScrap') {
+						gameObject.exoticScrapBase.forEach(exoticScrap => {
+							if (exoticScrap.price > 0) {
+								if (exoticScrap.money === 'mythryl') {
+									// how much scrap takes to make the part * the parts worth
+									partCost.mythryl += exoticScrap.price * scrap.cost;
+								}
+								if (exoticScrap.money === 'platinum') {
+									partCost.platinum += exoticScrap.price * scrap.cost;
+								}
+								if (exoticScrap.money === 'gold') {
+									partCost.gold += exoticScrap.price * scrap.cost;
+								}
+								if (exoticScrap.money === 'silver') {
+									partCost.silver += exoticScrap.price * scrap.cost;
+								}
+								if (exoticScrap.money === 'bronze') {
+									partCost.bronze += exoticScrap.price * scrap.cost;
+								}
+								if (exoticScrap.money === 'copper') {
+									partCost.copper += exoticScrap.price * scrap.cost;
+								}
+							}
+						});
+					}
+				});
+				console.log(partCost);
+				const formatPartCost = {
+					mythryl: 0,
+					platinum: 0,
+					gold: 0,
+					silver: 0,
+					bronze: 0,
+					copper: 0,
+				}
+				// check and see if we need convert the money to the 
+				// next highest value
+				if (partCost.platinum >= 1000) {
+					for (let i = 0; i < partCost.platinum; i++) {
+						formatPartCost.platinum++;
+						if (formatPartCost.platinum >= 1000) {
+							formatPartCost.platinum = 0;
+							formatPartCost.mythryl++;
+						}
+					}
+				} else {
+					formatPartCost.platinum = partCost.platinum;
+				}
+				if (partCost.gold >= 1000) {
+					for (let i = 0; i < partCost.gold; i++) {
+						formatPartCost.gold++;
+						if (formatPartCost.gold >= 1000) {
+							formatPartCost.gold = 0;
+							formatPartCost.platinum++;
+						}
+					}
+				} else {
+					formatPartCost.gold = partCost.gold;
+				}
+				if (partCost.silver >= 1000) {
+					for (let i = 0; i < partCost.silver; i++) {
+						formatPartCost.silver++;
+						if (formatPartCost.silver >= 1000) {
+							formatPartCost.silver = 0;
+							formatPartCost.gold++;
+						}
+					}
+				} else {
+					formatPartCost.silver = partCost.silver;
+				}
+				if (partCost.bronze >= 1000) {
+					for (let i = 0; i < partCost.bronze; i++) {
+						formatPartCost.bronze++;
+						if (formatPartCost.bronze >= 1000) {
+							formatPartCost.bronze = 0;
+							formatPartCost.silver++;
+						}
+					}
+				} else {
+					formatPartCost.bronze = partCost.bronze;
+				}
+				if (partCost.copper >= 1000) {
+					for (let i = 0; i < partCost.copper; i++) {
+						formatPartCost.copper++;
+						if (formatPartCost.copper >= 1000) {
+							formatPartCost.copper = 0;
+							formatPartCost.bronze++;
+						}
+					}
+				} else {
+					formatPartCost.copper = partCost.copper;
+				}
+				console.log(formatPartCost);
+				// display the top two highest money type
+				const displayPartValue = {
+					highValue: {
+						type: '',
+						value: 0
+					},
+					lowValue: {
+						type: '',
+						value: 0
+					}
+				}
+				if (formatPartCost.mythryl > 0) {
+					displayPartValue.highValue = {
+						type: 'Mythryl', 
+						value: formatPartCost.mythryl
+					}
+					displayPartValue.lowValue = {
+						type: 'Platinum', 
+						value: formatPartCost.platinum
+					}
+				} else if (formatPartCost.platinum > 0) {
+					displayPartValue.highValue = {
+						type: 'Platinum', 
+						value: formatPartCost.platinum
+					}
+					displayPartValue.lowValue = {
+						type: 'Gold', 
+						value: formatPartCost.gold
+					}
+				} else if (formatPartCost.gold > 0) {
+					displayPartValue.highValue = {
+						type: 'Gold', 
+						value: formatPartCost.gold
+					}
+					displayPartValue.lowValue = {
+						type: 'Silver', 
+						value: formatPartCost.silver
+					}
+				} else if (formatPartCost.silver > 0) {
+					displayPartValue.highValue = {
+						type: 'Silver', 
+						value: formatPartCost.silver
+					}
+					displayPartValue.lowValue = {
+						type: 'Bronze', 
+						value: formatPartCost.bronze
+					}
+				} else if (formatPartCost.bronze > 0) {
+					displayPartValue.highValue = {
+						type: 'Bronze', 
+						value: formatPartCost.bronze
+					}
+					displayPartValue.lowValue = {
+						type: 'Copper', 
+						value: formatPartCost.copper
+					}
+				} else if (formatPartCost.copper > 0) {
+					displayPartValue.highValue = {
+						type: 'Copper', 
+						value: formatPartCost.copper
+					}
+				}
 				
-				//scrapCosts.forEach((scrap, i) => {
-					//let scrapType = '';
-					//let scrapCost = 0;
-					//let totalScrap = 0;
-					//if (scrap.type === 'commonScrap') {
-						//scrapType = 'Common';
-						//totalScrap = gameObject.commonScrap;
-					//} else if (scrap.type === 'unCommonScrap') {
-						//scrapType = 'Uncommon';
-						//totalScrap = gameObject.unCommonScrap;
-					//} else if (scrap.type === 'uniqueScrap') {
-						//scrapType = 'Unique';
-						//totalScrap = gameObject.uniqueScrap;
-					//} else if (scrap.type === 'intriguingScrap') {
-						//scrapType = 'Intriguing';
-						//totalScrap = gameObject.intriguingScrap;
-					//} else if (scrap.type === 'facinatingScrap') {
-						//scrapType = 'Facinating';
-						//totalScrap = gameObject.facinatingScrap;
-					//} else if (scrap.type === 'mythicScrap') {
-						//scrapType = 'Mythic';
-						//totalScrap = gameObject.mythicScrap;
-					//} else if (scrap.type === 'exoticScrap') {
-						//scrapType = 'Exotic';
-						//totalScrap = gameObject.exoticScrap;
-					//}
-					//scrapCost = scrap.cost;
-					//// future Jordan just under 10,000 scrapCost would fit nicely in
-					//// this spot
-					//Game.methodSetup = {
-						//method: function(id) {
-							//drawText({
-								//font: '0.9em serif',
-								//msg: scrapType + ': ' + scrapCost + ' (' + totalScrap + ')',
-								//posX: Game.placeEntityX(0.08),
-								//posY: Game.placeEntityY(0.75 + (i * 0.055)),
-								//color: 'grey',
-								//align: 'left',
-								//props: {},
-								//id: scrap.type,
-								//methodId: id
-							//});
-						//}
-					//};
-					//Game.addMethod(Game.methodSetup);
-				//});
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: displayPartValue.highValue.type + ': ' + displayPartValue.highValue.value,
+							posX: Game.placeEntityX(0.115),
+							posY: Game.placeEntityY(0.83),
+							color: 'green',
+							align: 'left',
+							props: {},
+							id: 'sell-part-high',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+				if (displayPartValue.lowValue.value) {
+					Game.methodSetup = {
+						method: function(id) {
+							drawText({
+								font: '1em serif',
+								msg: displayPartValue.lowValue.type + ': ' + displayPartValue.lowValue.value,
+								posX: Game.placeEntityX(0.115),
+								posY: Game.placeEntityY(0.865),
+								color: 'green',
+								align: 'left',
+								props: {},
+								id: 'sell-part-low',
+								methodId: id
+							});
+						}
+					};
+					Game.addMethod(Game.methodSetup);
+				}
 			}
 
 			clearSelectedSellPartScrapDetails();
