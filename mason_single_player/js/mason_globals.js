@@ -1059,252 +1059,252 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 
 function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and amount of scrap
 	const partCost = {
-					mythryl: 0,
-					platinum: 0,
-					gold: 0,
-					silver: 0,
-					bronze: 0,
-					copper: 0,
-				}
-				// get how much scrap it takes to build a part and
-				// multiply it by how much that scrap is worth
-				scrapCosts.forEach((scrap, i) => {
-					if (scrap.type === 'commonScrap') {
-						gameObject.commonScrapBase.forEach(commonScrap => {
-							if (commonScrap.price > 0) {
-								if (commonScrap.money === 'mythryl') {
-									// how much scrap takes to make the part * the parts worth
-									partCost.mythryl += commonScrap.price * scrap.cost;
-								}
-								if (commonScrap.money === 'platinum') {
-									partCost.platinum += commonScrap.price * scrap.cost;
-								}
-								if (commonScrap.money === 'gold') {
-									partCost.gold += commonScrap.price * scrap.cost;
-								}
-								if (commonScrap.money === 'silver') {
-									partCost.silver += commonScrap.price * scrap.cost;
-								}
-								if (commonScrap.money === 'bronze') {
-									partCost.bronze += commonScrap.price * scrap.cost;
-								}
-								if (commonScrap.money === 'copper') {
-									partCost.copper += commonScrap.price * scrap.cost;
-								}
-							}
-						});
-					} else if (scrap.type === 'unCommonScrap') {
-						gameObject.unCommonScrapBase.forEach(unCommonScrap => {
-							if (unCommonScrap.price > 0) {
-								if (unCommonScrap.money === 'mythryl') {
-									// how much scrap takes to make the part * the parts worth
-									partCost.mythryl += unCommonScrap.price * scrap.cost;
-								}
-								if (unCommonScrap.money === 'platinum') {
-									partCost.platinum += unCommonScrap.price * scrap.cost;
-								}
-								if (unCommonScrap.money === 'gold') {
-									partCost.gold += unCommonScrap.price * scrap.cost;
-								}
-								if (unCommonScrap.money === 'silver') {
-									partCost.silver += unCommonScrap.price * scrap.cost;
-								}
-								if (unCommonScrap.money === 'bronze') {
-									partCost.bronze += unCommonScrap.price * scrap.cost;
-								}
-								if (unCommonScrap.money === 'copper') {
-									partCost.copper += unCommonScrap.price * scrap.cost;
-								}
-							}
-						});
-					} else if (scrap.type === 'uniqueScrap') {
-						gameObject.uniqueScrapBase.forEach(uniqueScrap => {
-							if (uniqueScrap.price > 0) {
-								if (uniqueScrap.money === 'mythryl') {
-									// how much scrap takes to make the part * the parts worth
-									partCost.mythryl += uniqueScrap.price * scrap.cost;
-								}
-								if (uniqueScrap.money === 'platinum') {
-									partCost.platinum += uniqueScrap.price * scrap.cost;
-								}
-								if (uniqueScrap.money === 'gold') {
-									partCost.gold += uniqueScrap.price * scrap.cost;
-								}
-								if (uniqueScrap.money === 'silver') {
-									partCost.silver += uniqueScrap.price * scrap.cost;
-								}
-								if (uniqueScrap.money === 'bronze') {
-									partCost.bronze += uniqueScrap.price * scrap.cost;
-								}
-								if (uniqueScrap.money === 'copper') {
-									partCost.copper += uniqueScrap.price * scrap.cost;
-								}
-							}
-						});
-					} else if (scrap.type === 'intriguingScrap') {
-						gameObject.intriguingScrapBase.forEach(intriguingScrap => {
-							if (intriguingScrap.price > 0) {
-								if (intriguingScrap.money === 'mythryl') {
-									// how much scrap takes to make the part * the parts worth
-									partCost.mythryl += intriguingScrap.price * scrap.cost;
-								}
-								if (intriguingScrap.money === 'platinum') {
-									partCost.platinum += intriguingScrap.price * scrap.cost;
-								}
-								if (intriguingScrap.money === 'gold') {
-									partCost.gold += intriguingScrap.price * scrap.cost;
-								}
-								if (intriguingScrap.money === 'silver') {
-									partCost.silver += intriguingScrap.price * scrap.cost;
-								}
-								if (intriguingScrap.money === 'bronze') {
-									partCost.bronze += intriguingScrap.price * scrap.cost;
-								}
-								if (intriguingScrap.money === 'copper') {
-									partCost.copper += intriguingScrap.price * scrap.cost;
-								}
-							}
-						});
-					} else if (scrap.type === 'facinatingScrap') {
-						gameObject.facinatingScrapBase.forEach(facinatingScrap => {
-							if (facinatingScrap.price > 0) {
-								if (facinatingScrap.money === 'mythryl') {
-									// how much scrap takes to make the part * the parts worth
-									partCost.mythryl += facinatingScrap.price * scrap.cost;
-								}
-								if (facinatingScrap.money === 'platinum') {
-									partCost.platinum += facinatingScrap.price * scrap.cost;
-								}
-								if (facinatingScrap.money === 'gold') {
-									partCost.gold += facinatingScrap.price * scrap.cost;
-								}
-								if (facinatingScrap.money === 'silver') {
-									partCost.silver += facinatingScrap.price * scrap.cost;
-								}
-								if (facinatingScrap.money === 'bronze') {
-									partCost.bronze += facinatingScrap.price * scrap.cost;
-								}
-								if (facinatingScrap.money === 'copper') {
-									partCost.copper += facinatingScrap.price * scrap.cost;
-								}
-							}
-						});
-					} else if (scrap.type === 'mythicScrap') {
-						gameObject.mythicScrapBase.forEach(mythicScrap => {
-							if (mythicScrap.price > 0) {
-								if (mythicScrap.money === 'mythryl') {
-									// how much scrap takes to make the part * the parts worth
-									partCost.mythryl += mythicScrap.price * scrap.cost;
-								}
-								if (mythicScrap.money === 'platinum') {
-									partCost.platinum += mythicScrap.price * scrap.cost;
-								}
-								if (mythicScrap.money === 'gold') {
-									partCost.gold += mythicScrap.price * scrap.cost;
-								}
-								if (mythicScrap.money === 'silver') {
-									partCost.silver += mythicScrap.price * scrap.cost;
-								}
-								if (mythicScrap.money === 'bronze') {
-									partCost.bronze += mythicScrap.price * scrap.cost;
-								}
-								if (mythicScrap.money === 'copper') {
-									partCost.copper += mythicScrap.price * scrap.cost;
-								}
-							}
-						});
-					} else if (scrap.type === 'exoticScrap') {
-						gameObject.exoticScrapBase.forEach(exoticScrap => {
-							if (exoticScrap.price > 0) {
-								if (exoticScrap.money === 'mythryl') {
-									// how much scrap takes to make the part * the parts worth
-									partCost.mythryl += exoticScrap.price * scrap.cost;
-								}
-								if (exoticScrap.money === 'platinum') {
-									partCost.platinum += exoticScrap.price * scrap.cost;
-								}
-								if (exoticScrap.money === 'gold') {
-									partCost.gold += exoticScrap.price * scrap.cost;
-								}
-								if (exoticScrap.money === 'silver') {
-									partCost.silver += exoticScrap.price * scrap.cost;
-								}
-								if (exoticScrap.money === 'bronze') {
-									partCost.bronze += exoticScrap.price * scrap.cost;
-								}
-								if (exoticScrap.money === 'copper') {
-									partCost.copper += exoticScrap.price * scrap.cost;
-								}
-							}
-						});
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 0,
+	}
+	// get how much scrap it takes to build a part and
+	// multiply it by how much that scrap is worth
+	scrapCosts.forEach((scrap, i) => {
+		if (scrap.type === 'commonScrap') {
+			gameObject.commonScrapBase.forEach(commonScrap => {
+				if (commonScrap.price > 0) {
+					if (commonScrap.money === 'mythryl') {
+						// how much scrap takes to make the part * the parts worth
+						partCost.mythryl += commonScrap.price * scrap.cost;
 					}
-				});
-				console.log(partCost);
-				const formatPartCost = {
-					mythryl: 0,
-					platinum: 0,
-					gold: 0,
-					silver: 0,
-					bronze: 0,
-					copper: 0,
-				}
-				// check and see if we need convert the money to the 
-				// next highest value
-				if (partCost.platinum >= 1000) {
-					for (let i = 0; i < partCost.platinum; i++) {
-						formatPartCost.platinum++;
-						if (formatPartCost.platinum >= 1000) {
-							formatPartCost.platinum = 0;
-							formatPartCost.mythryl++;
-						}
+					if (commonScrap.money === 'platinum') {
+						partCost.platinum += commonScrap.price * scrap.cost;
 					}
-				} else {
-					formatPartCost.platinum = partCost.platinum;
-				}
-				if (partCost.gold >= 1000) {
-					for (let i = 0; i < partCost.gold; i++) {
-						formatPartCost.gold++;
-						if (formatPartCost.gold >= 1000) {
-							formatPartCost.gold = 0;
-							formatPartCost.platinum++;
-						}
+					if (commonScrap.money === 'gold') {
+						partCost.gold += commonScrap.price * scrap.cost;
 					}
-				} else {
-					formatPartCost.gold = partCost.gold;
-				}
-				if (partCost.silver >= 1000) {
-					for (let i = 0; i < partCost.silver; i++) {
-						formatPartCost.silver++;
-						if (formatPartCost.silver >= 1000) {
-							formatPartCost.silver = 0;
-							formatPartCost.gold++;
-						}
+					if (commonScrap.money === 'silver') {
+						partCost.silver += commonScrap.price * scrap.cost;
 					}
-				} else {
-					formatPartCost.silver = partCost.silver;
-				}
-				if (partCost.bronze >= 1000) {
-					for (let i = 0; i < partCost.bronze; i++) {
-						formatPartCost.bronze++;
-						if (formatPartCost.bronze >= 1000) {
-							formatPartCost.bronze = 0;
-							formatPartCost.silver++;
-						}
+					if (commonScrap.money === 'bronze') {
+						partCost.bronze += commonScrap.price * scrap.cost;
 					}
-				} else {
-					formatPartCost.bronze = partCost.bronze;
-				}
-				if (partCost.copper >= 1000) {
-					for (let i = 0; i < partCost.copper; i++) {
-						formatPartCost.copper++;
-						if (formatPartCost.copper >= 1000) {
-							formatPartCost.copper = 0;
-							formatPartCost.bronze++;
-						}
+					if (commonScrap.money === 'copper') {
+						partCost.copper += commonScrap.price * scrap.cost;
 					}
-				} else {
-					formatPartCost.copper = partCost.copper;
 				}
-				console.log(formatPartCost);
-				return formatPartCost;
+			});
+		} else if (scrap.type === 'unCommonScrap') {
+			gameObject.unCommonScrapBase.forEach(unCommonScrap => {
+				if (unCommonScrap.price > 0) {
+					if (unCommonScrap.money === 'mythryl') {
+						// how much scrap takes to make the part * the parts worth
+						partCost.mythryl += unCommonScrap.price * scrap.cost;
+					}
+					if (unCommonScrap.money === 'platinum') {
+						partCost.platinum += unCommonScrap.price * scrap.cost;
+					}
+					if (unCommonScrap.money === 'gold') {
+						partCost.gold += unCommonScrap.price * scrap.cost;
+					}
+					if (unCommonScrap.money === 'silver') {
+						partCost.silver += unCommonScrap.price * scrap.cost;
+					}
+					if (unCommonScrap.money === 'bronze') {
+						partCost.bronze += unCommonScrap.price * scrap.cost;
+					}
+					if (unCommonScrap.money === 'copper') {
+						partCost.copper += unCommonScrap.price * scrap.cost;
+					}
+				}
+			});
+		} else if (scrap.type === 'uniqueScrap') {
+			gameObject.uniqueScrapBase.forEach(uniqueScrap => {
+				if (uniqueScrap.price > 0) {
+					if (uniqueScrap.money === 'mythryl') {
+						// how much scrap takes to make the part * the parts worth
+						partCost.mythryl += uniqueScrap.price * scrap.cost;
+					}
+					if (uniqueScrap.money === 'platinum') {
+						partCost.platinum += uniqueScrap.price * scrap.cost;
+					}
+					if (uniqueScrap.money === 'gold') {
+						partCost.gold += uniqueScrap.price * scrap.cost;
+					}
+					if (uniqueScrap.money === 'silver') {
+						partCost.silver += uniqueScrap.price * scrap.cost;
+					}
+					if (uniqueScrap.money === 'bronze') {
+						partCost.bronze += uniqueScrap.price * scrap.cost;
+					}
+					if (uniqueScrap.money === 'copper') {
+						partCost.copper += uniqueScrap.price * scrap.cost;
+					}
+				}
+			});
+		} else if (scrap.type === 'intriguingScrap') {
+			gameObject.intriguingScrapBase.forEach(intriguingScrap => {
+				if (intriguingScrap.price > 0) {
+					if (intriguingScrap.money === 'mythryl') {
+						// how much scrap takes to make the part * the parts worth
+						partCost.mythryl += intriguingScrap.price * scrap.cost;
+					}
+					if (intriguingScrap.money === 'platinum') {
+						partCost.platinum += intriguingScrap.price * scrap.cost;
+					}
+					if (intriguingScrap.money === 'gold') {
+						partCost.gold += intriguingScrap.price * scrap.cost;
+					}
+					if (intriguingScrap.money === 'silver') {
+						partCost.silver += intriguingScrap.price * scrap.cost;
+					}
+					if (intriguingScrap.money === 'bronze') {
+						partCost.bronze += intriguingScrap.price * scrap.cost;
+					}
+					if (intriguingScrap.money === 'copper') {
+						partCost.copper += intriguingScrap.price * scrap.cost;
+					}
+				}
+			});
+		} else if (scrap.type === 'facinatingScrap') {
+			gameObject.facinatingScrapBase.forEach(facinatingScrap => {
+				if (facinatingScrap.price > 0) {
+					if (facinatingScrap.money === 'mythryl') {
+						// how much scrap takes to make the part * the parts worth
+						partCost.mythryl += facinatingScrap.price * scrap.cost;
+					}
+					if (facinatingScrap.money === 'platinum') {
+						partCost.platinum += facinatingScrap.price * scrap.cost;
+					}
+					if (facinatingScrap.money === 'gold') {
+						partCost.gold += facinatingScrap.price * scrap.cost;
+					}
+					if (facinatingScrap.money === 'silver') {
+						partCost.silver += facinatingScrap.price * scrap.cost;
+					}
+					if (facinatingScrap.money === 'bronze') {
+						partCost.bronze += facinatingScrap.price * scrap.cost;
+					}
+					if (facinatingScrap.money === 'copper') {
+						partCost.copper += facinatingScrap.price * scrap.cost;
+					}
+				}
+			});
+		} else if (scrap.type === 'mythicScrap') {
+			gameObject.mythicScrapBase.forEach(mythicScrap => {
+				if (mythicScrap.price > 0) {
+					if (mythicScrap.money === 'mythryl') {
+						// how much scrap takes to make the part * the parts worth
+						partCost.mythryl += mythicScrap.price * scrap.cost;
+					}
+					if (mythicScrap.money === 'platinum') {
+						partCost.platinum += mythicScrap.price * scrap.cost;
+					}
+					if (mythicScrap.money === 'gold') {
+						partCost.gold += mythicScrap.price * scrap.cost;
+					}
+					if (mythicScrap.money === 'silver') {
+						partCost.silver += mythicScrap.price * scrap.cost;
+					}
+					if (mythicScrap.money === 'bronze') {
+						partCost.bronze += mythicScrap.price * scrap.cost;
+					}
+					if (mythicScrap.money === 'copper') {
+						partCost.copper += mythicScrap.price * scrap.cost;
+					}
+				}
+			});
+		} else if (scrap.type === 'exoticScrap') {
+			gameObject.exoticScrapBase.forEach(exoticScrap => {
+				if (exoticScrap.price > 0) {
+					if (exoticScrap.money === 'mythryl') {
+						// how much scrap takes to make the part * the parts worth
+						partCost.mythryl += exoticScrap.price * scrap.cost;
+					}
+					if (exoticScrap.money === 'platinum') {
+						partCost.platinum += exoticScrap.price * scrap.cost;
+					}
+					if (exoticScrap.money === 'gold') {
+						partCost.gold += exoticScrap.price * scrap.cost;
+					}
+					if (exoticScrap.money === 'silver') {
+						partCost.silver += exoticScrap.price * scrap.cost;
+					}
+					if (exoticScrap.money === 'bronze') {
+						partCost.bronze += exoticScrap.price * scrap.cost;
+					}
+					if (exoticScrap.money === 'copper') {
+						partCost.copper += exoticScrap.price * scrap.cost;
+					}
+				}
+			});
+		}
+	});
+	console.log(partCost);
+	const formatPartCost = {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 0,
+	}
+	// check and see if we need convert the money to the 
+	// next highest value
+	if (partCost.platinum >= 1000) {
+		for (let i = 0; i < partCost.platinum; i++) {
+			formatPartCost.platinum++;
+			if (formatPartCost.platinum >= 1000) {
+				formatPartCost.platinum = 0;
+				formatPartCost.mythryl++;
+			}
+		}
+	} else {
+		formatPartCost.platinum = partCost.platinum;
+	}
+	if (partCost.gold >= 1000) {
+		for (let i = 0; i < partCost.gold; i++) {
+			formatPartCost.gold++;
+			if (formatPartCost.gold >= 1000) {
+				formatPartCost.gold = 0;
+				formatPartCost.platinum++;
+			}
+		}
+	} else {
+		formatPartCost.gold = partCost.gold;
+	}
+	if (partCost.silver >= 1000) {
+		for (let i = 0; i < partCost.silver; i++) {
+			formatPartCost.silver++;
+			if (formatPartCost.silver >= 1000) {
+				formatPartCost.silver = 0;
+				formatPartCost.gold++;
+			}
+		}
+	} else {
+		formatPartCost.silver = partCost.silver;
+	}
+	if (partCost.bronze >= 1000) {
+		for (let i = 0; i < partCost.bronze; i++) {
+			formatPartCost.bronze++;
+			if (formatPartCost.bronze >= 1000) {
+				formatPartCost.bronze = 0;
+				formatPartCost.silver++;
+			}
+		}
+	} else {
+		formatPartCost.bronze = partCost.bronze;
+	}
+	if (partCost.copper >= 1000) {
+		for (let i = 0; i < partCost.copper; i++) {
+			formatPartCost.copper++;
+			if (formatPartCost.copper >= 1000) {
+				formatPartCost.copper = 0;
+				formatPartCost.bronze++;
+			}
+		}
+	} else {
+		formatPartCost.copper = partCost.copper;
+	}
+	console.log(formatPartCost);
+	return formatPartCost;
 }
