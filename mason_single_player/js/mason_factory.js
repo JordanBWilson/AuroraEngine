@@ -545,7 +545,6 @@ const factoryPage = {
 						id: 'factory-view',
 						action: { 
 							method: function(id) {
-								// factoryRobotParts();
 								factoryParts.loadPage();
 								gameObject.partsDisplayed = ''; 
 								gameObject.selectedRobotDesign = -1;
@@ -1795,7 +1794,7 @@ const factoryPage = {
 	}
 }
 
-// *** Parts Page ***
+// *** Factory Parts Page ***
 const factoryParts = {
 	description: 'This is where the player can build parts for their robots',
 	loadPage: function() {
