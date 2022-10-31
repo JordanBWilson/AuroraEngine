@@ -1250,38 +1250,16 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 	}
 	// check and see if we need convert the money to the 
 	// next highest value
-	if (partCost.platinum >= 1000) {
-		for (let i = 0; i < partCost.platinum; i++) {
-			formatPartCost.platinum++;
-			if (formatPartCost.platinum >= 1000) {
-				formatPartCost.platinum = 0;
-				formatPartCost.mythryl++;
+	if (partCost.copper >= 1000) {
+		for (let i = 0; i < partCost.copper; i++) {
+			formatPartCost.copper++;
+			if (formatPartCost.copper >= 1000) {
+				formatPartCost.copper = 0;
+				formatPartCost.bronze++;
 			}
 		}
 	} else {
-		formatPartCost.platinum = partCost.platinum;
-	}
-	if (partCost.gold >= 1000) {
-		for (let i = 0; i < partCost.gold; i++) {
-			formatPartCost.gold++;
-			if (formatPartCost.gold >= 1000) {
-				formatPartCost.gold = 0;
-				formatPartCost.platinum++;
-			}
-		}
-	} else {
-		formatPartCost.gold = partCost.gold;
-	}
-	if (partCost.silver >= 1000) {
-		for (let i = 0; i < partCost.silver; i++) {
-			formatPartCost.silver++;
-			if (formatPartCost.silver >= 1000) {
-				formatPartCost.silver = 0;
-				formatPartCost.gold++;
-			}
-		}
-	} else {
-		formatPartCost.silver = partCost.silver;
+		formatPartCost.copper = partCost.copper;
 	}
 	if (partCost.bronze >= 1000) {
 		for (let i = 0; i < partCost.bronze; i++) {
@@ -1294,16 +1272,38 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 	} else {
 		formatPartCost.bronze = partCost.bronze;
 	}
-	if (partCost.copper >= 1000) {
-		for (let i = 0; i < partCost.copper; i++) {
-			formatPartCost.copper++;
-			if (formatPartCost.copper >= 1000) {
-				formatPartCost.copper = 0;
-				formatPartCost.bronze++;
+	if (partCost.silver >= 1000) {
+		for (let i = 0; i < partCost.silver; i++) {
+			formatPartCost.silver++;
+			if (formatPartCost.silver >= 1000) {
+				formatPartCost.silver = 0;
+				formatPartCost.gold++;
 			}
 		}
 	} else {
-		formatPartCost.copper = partCost.copper;
+		formatPartCost.silver = partCost.silver;
+	}
+	if (partCost.gold >= 1000) {
+		for (let i = 0; i < partCost.gold; i++) {
+			formatPartCost.gold++;
+			if (formatPartCost.gold >= 1000) {
+				formatPartCost.gold = 0;
+				formatPartCost.platinum++;
+			}
+		}
+	} else {
+		formatPartCost.gold = partCost.gold;
+	}
+	if (partCost.platinum >= 1000) {
+		for (let i = 0; i < partCost.platinum; i++) {
+			formatPartCost.platinum++;
+			if (formatPartCost.platinum >= 1000) {
+				formatPartCost.platinum = 0;
+				formatPartCost.mythryl++;
+			}
+		}
+	} else {
+		formatPartCost.platinum = partCost.platinum;
 	}
 	console.log(formatPartCost);
 	return formatPartCost;
