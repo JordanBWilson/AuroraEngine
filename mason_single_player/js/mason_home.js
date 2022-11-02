@@ -135,7 +135,6 @@ const homePage = {
 						id: 'home-select-sell',
 						action: { 
 							method: function(id) { 
-								console.log('load up the sell menu');
 								homeSellMenus.loadPage();
 							}
 						},
@@ -174,9 +173,11 @@ const homePage = {
 		homeMenuSelect(); // draw the home page
 	}
 }
+
 // *** Home Sell Menus Page ***
+
 const homeSellMenus = {
-	description: 'This is where the player can sell their scrap parts and robots',
+	description: 'This is where the player can sell their scrap, parts and robots',
 	loadPage: function() {
 		// start of the sell menus
 		function homeSellSelect() {
@@ -299,8 +300,6 @@ const homeSellMenus = {
 						id: 'sell-select-parts',
 						action: { 
 							method: function(id) {
-								// future Jordan, it's time to work on the sell parts menu
-								console.log('load up the sell parts menu');
 								homeSellParts.loadPage();
 							}
 						},
@@ -326,7 +325,10 @@ const homeSellMenus = {
 						id: 'sell-select-robots',
 						action: { 
 							method: function(id) {
+								// future Jordan, time to start working on
+								// selling robots
 								console.log('load up the sell robots menu');
+								homeSellRobots.loadPage();
 							}
 						},
 						props: {},
@@ -339,7 +341,9 @@ const homeSellMenus = {
 		homeSellSelect(); // display the sell menu
 	}
 }
+
 // *** Home Sell Scrap Page ***
+
 const homeSellScrap = {
 	description: 'This is where the player can sell their scrap',
 	loadPage: function() {
@@ -1159,8 +1163,7 @@ const homeSellScrap = {
 									modal.modalColor = 'darkgray';
 								}, 150);
 							}
-							console.log(modal);
-							}, 0);
+						}, 0);
 					}, 0);				
 				}
 			};
@@ -1342,7 +1345,9 @@ const homeSellScrap = {
 		}
 	}	
 }
+
 // *** Home Sell Parts Page ***
+
 const homeSellParts = {
 	description: 'This is where the player can sell their parts',
 	loadPage: function() {
@@ -1530,7 +1535,6 @@ const homeSellParts = {
 						isFilled: true,
 						id: 'sell-body-parts',
 						action: { method: function(id) {
-							console.log('select chassis');
 							selectSellPartChassis();
 							}
 						},
@@ -1555,8 +1559,7 @@ const homeSellParts = {
 						isFilled: true,
 						id: 'sell-head-parts',
 						action: { method: function(id) {
-							console.log('select head');
-							// selectRobotPartHead();
+							selectSellPartHead();
 							}
 						},
 						props: {},
@@ -1580,8 +1583,7 @@ const homeSellParts = {
 						isFilled: true,
 						id: 'sell-arm-parts',
 						action: { method: function(id) {
-							console.log('select arms');
-							// selectRobotPartArms();
+							selectSellPartArms();
 							}
 						},
 						props: {},
@@ -1605,8 +1607,7 @@ const homeSellParts = {
 						isFilled: true,
 						id: 'sell-leg-parts',
 						action: { method: function(id) {
-							console.log('select legs');
-							// selectRobotPartLegs(); 
+							selectSellPartLegs();
 							}
 						},
 						props: {},
@@ -1616,9 +1617,7 @@ const homeSellParts = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
-
-		// future Jordan, we can now sell chassis. now it's time to sell
-		// the rest of the parts
+		
 		function selectSellPartChassis() {
 			gameObject.partsDisplayed = 'chassis';
 			// load up the robot parts the player has discovered...
@@ -1630,6 +1629,45 @@ const homeSellParts = {
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredSellPartParts(gameObject.discoveredChassis);
+		}
+		
+		function selectSellPartHead() {
+			gameObject.partsDisplayed = 'head';
+			// load up the robot parts the player has discovered...
+			clearSellRobotPartParts();
+			clearSelectedSellPartScrapDetails();
+			refreshSellPartsBackgrounds();
+			clearSellRobotPartPreviewHighlight();
+			const highlight = Game.methodObjects.find(item => item.id === 'sell-head-parts');
+			highlight.btnColor = 'yellow';
+			highlight.txtColor = 'black';
+			displayDiscoveredSellPartParts(gameObject.discoveredHeads);
+		}
+
+		function selectSellPartArms() {
+			gameObject.partsDisplayed = 'arm';
+			// load up the robot parts the player has discovered...
+			clearSellRobotPartParts();
+			clearSelectedSellPartScrapDetails();
+			refreshSellPartsBackgrounds();
+			clearSellRobotPartPreviewHighlight();
+			const highlight = Game.methodObjects.find(item => item.id === 'sell-arm-parts');
+			highlight.btnColor = 'yellow';
+			highlight.txtColor = 'black';
+			displayDiscoveredSellPartParts(gameObject.discoveredArms);
+		}
+
+		function selectSellPartLegs() {
+			gameObject.partsDisplayed = 'leg';
+			// load up the robot parts the player has discovered...
+			clearSellRobotPartParts();
+			clearSelectedSellPartScrapDetails();
+			refreshSellPartsBackgrounds();
+			clearSellRobotPartPreviewHighlight();
+			const highlight = Game.methodObjects.find(item => item.id === 'sell-leg-parts');
+			highlight.btnColor = 'yellow';
+			highlight.txtColor = 'black';
+			displayDiscoveredSellPartParts(gameObject.discoveredLegs);
 		}
 
 		function displayDiscoveredSellPartParts(partsDiscovered) {
@@ -1805,12 +1843,10 @@ const homeSellParts = {
 												scrapCosts.push(scrapObj);
 											}
 										}
-										console.log(scrapCosts);
 										// calculate how much we can sell the part for
 										// add the funds and subtract the part
 										if (part.count > 0) {
 											const formatPartCost = calculatePartPrice(scrapCosts);
-											// console.log(formatPartCost, part);
 											const addPartCost = [
 												{ money: 'mythryl', price: formatPartCost.mythryl },
 												{ money: 'platinum', price: formatPartCost.platinum },
@@ -1819,7 +1855,6 @@ const homeSellParts = {
 												{ money: 'bronze', price: formatPartCost.bronze },
 												{ money: 'copper', price: formatPartCost.copper }
 											];
-											console.log(addPartCost);
 											addFunds(addPartCost);
 											part.count--;
 											Particle.floatingText({
@@ -1834,7 +1869,6 @@ const homeSellParts = {
 												speed: 0.8,
 											});
 											clearSellRobotPartParts();
-											clearSelectedSellPartScrapDetails();
 											refreshSellPartsBackgrounds();
 											setTimeout(function() {
 												displaySelectSellPartParts(part);
@@ -2167,7 +2201,6 @@ const homeSellParts = {
 				};
 				Game.addMethod(Game.methodSetup);
 				displayCondensedFunds(0.115, 0.72, 0.115, 0.755, '1em serif', 'grey');
-				console.log(scrapCosts);
 				
 				Game.methodSetup = {
 					method: function(id) {
@@ -2185,8 +2218,6 @@ const homeSellParts = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				console.log(gameObject.commonScrapBase);
-				// future Jordan, use calculatePartPrice when clicking on the sell button
 				const formatPartCost = calculatePartPrice(scrapCosts);
 				// display the top two highest money type
 				const displayPartValue = {
@@ -2303,4 +2334,13 @@ const homeSellParts = {
 			}
 		}
 	}
+}
+
+// *** Home Sell Robot Page ***
+
+const homeSellRobots = {
+	description: 'This is where the player can sell their robots',
+	loadPage: function() {
+		
+	}	
 }

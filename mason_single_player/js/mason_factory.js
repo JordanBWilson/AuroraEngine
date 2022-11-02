@@ -1795,6 +1795,7 @@ const factoryPage = {
 }
 
 // *** Factory Parts Page ***
+
 const factoryParts = {
 	description: 'This is where the player can build parts for their robots',
 	loadPage: function() {
