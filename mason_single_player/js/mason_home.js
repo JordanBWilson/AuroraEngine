@@ -2335,7 +2335,12 @@ const homeSellParts = {
 }
 
 // *** Home Sell Robot Page ***
-// future Jordan, load up the robots made in the gameObject.robotTeams
+
+// future Jordan, take away the ability to select the parts in the sell
+// detail screen. break down the costs of each part on the right side
+// of the robot sell details. in the sell robot select screen, we need
+// to add navigation at the bottom for pagination. the sell robot select
+// screen should only display 6 robots made in robotTeams per page
 const homeSellRobots = {
 	description: 'This is where the player can sell their robots',
 	loadPage: function() {
@@ -2477,7 +2482,7 @@ const homeSellRobots = {
 				drawRobotSelect(
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-					gameObject.robotDesigns[i].robotParts,
+					gameObject.robotTeams[i].robotParts,
 					i
 				);
 				
@@ -2534,7 +2539,7 @@ const homeSellRobots = {
 						id: 'preview-robot',
 						action: {
 							method: function(id) {
-								gameObject.selectedRobot = gameObject.robotDesigns[index].robotParts;
+								gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
 								gameObject.selectedRobotDesign = index;
 								factoryRobotDetails(); 
 							}
@@ -2557,7 +2562,7 @@ const homeSellRobots = {
 											id: parent.id,
 											action: {
 												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotDesigns[index].robotParts;
+													gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
 													gameObject.selectedRobotDesign = index;
 													factoryRobotDetails(); 
 												}
@@ -2586,7 +2591,7 @@ const homeSellRobots = {
 											id: parent.id,
 											action: {
 												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotDesigns[index].robotParts;
+													gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
 													gameObject.selectedRobotDesign = index;
 													factoryRobotDetails(); 
 												}
@@ -2615,7 +2620,7 @@ const homeSellRobots = {
 											id: parent.id,
 											action: {
 												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotDesigns[index].robotParts;
+													gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
 													gameObject.selectedRobotDesign = index;
 													factoryRobotDetails(); 
 												}
@@ -2644,7 +2649,7 @@ const homeSellRobots = {
 											id: parent.id,
 											action: {
 												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotDesigns[index].robotParts;
+													gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
 													gameObject.selectedRobotDesign = index;
 													factoryRobotDetails(); 
 												}
@@ -2673,7 +2678,7 @@ const homeSellRobots = {
 											id: parent.id,
 											action: {
 												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotDesigns[index].robotParts;
+													gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
 													gameObject.selectedRobotDesign = index;
 													factoryRobotDetails(); 
 												}
