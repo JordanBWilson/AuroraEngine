@@ -103,7 +103,7 @@ const gameObject = {
 	// ---robot adventuring---
 	robotStorage: 3, // total robots that can be made ***can be upgraded***
 	robotsMade: 0, // current number of robots made
-	robotTeams: [], // the different robots who are going out to find riches or can be sold
+	robotTeams: [], // the different robots who could go out to find riches or to be sold
 	discoveredHeads: [], // all the robot heads discovered by the player
 	discoveredChassis: [], // all the robot chassis discovered by the player
 	discoveredLegs: [], // all the robot legs discovered by the player

@@ -125,7 +125,7 @@ const factoryPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			let robotCount = 1;
+			let robotCount = 0;
 			let robotSelectRow = 1;
 			for (let i = 0; i < gameObject.robotDesignCount; i++) {
 				robotCount++;
@@ -200,7 +200,7 @@ const factoryPage = {
 			Game.pageResized = {
 				section: 'factory-robot-select',
 				method: function() {
-					factoryPage.loadPage()
+					factoryPage.loadPage();
 				}
 			}
 		}
@@ -1570,7 +1570,6 @@ const factoryPage = {
 					gameObject.partsDisplayed = '';
 					// add the robot to the list
 					gameObject.robotsMade++;
-					gameObject.robotTeamIndex++;
 					gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
 					// refresh the parts that are displayed
 					clearSelectedPartStatDetails();
