@@ -2336,8 +2336,7 @@ const homeSellParts = {
 
 // *** Home Sell Robot Page ***
 
-// future Jordan, take away the ability to select the parts in the sell
-// detail screen. break down the costs of each part on the right side
+// future Jordan, break down the costs of each part on the right side
 // of the robot sell details. in the sell robot select screen, we need
 // to add navigation at the bottom for pagination. the sell robot select
 // screen should only display 6 robots made in robotTeams per page
@@ -2819,7 +2818,7 @@ const homeSellRobots = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
-						msg: 'Stats',
+						msg: 'Total',
 						posX: Game.placeEntityX(0.247),
 						posY: Game.placeEntityY(0.65),
 						color: 'grey',
@@ -3027,7 +3026,9 @@ const homeSellRobots = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-body',
-						action: { method: function(id) { selectRobotChassis(); }},
+						action: { method: function(id) { 
+							// selectRobotChassis(); 
+						}},
 						props: {},
 						methodId: id
 					});
@@ -3048,7 +3049,9 @@ const homeSellRobots = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-head',
-						action: { method: function(id) { selectRobotHead(); }},
+						action: { method: function(id) { 
+							// selectRobotHead(); 
+						}},
 						props: {},
 						methodId: id
 					});
@@ -3069,7 +3072,9 @@ const homeSellRobots = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-left-arm',
-						action: { method: function(id) { selectRobotArms('left'); }},
+						action: { method: function(id) { 
+							// selectRobotArms('left'); 
+						}},
 						props: {},
 						methodId: id
 					});
@@ -3090,7 +3095,9 @@ const homeSellRobots = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-right-arm',
-						action: { method: function(id) { selectRobotArms('right'); }},
+						action: { method: function(id) { 
+							// selectRobotArms('right'); 
+						}},
 						props: {},
 						methodId: id
 					});
@@ -3111,7 +3118,9 @@ const homeSellRobots = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-left-leg',
-						action: { method: function(id) { selectRobotLegs('left'); }},
+						action: { method: function(id) { 
+							// selectRobotLegs('left'); 
+						}},
 						props: {},
 						methodId: id
 					});
@@ -3132,7 +3141,9 @@ const homeSellRobots = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-right-leg',
-						action: { method: function(id) { selectRobotLegs('right'); }},
+						action: { method: function(id) { 
+							// selectRobotLegs('right'); 
+						}},
 						props: {},
 						methodId: id
 					});
@@ -3205,71 +3216,71 @@ const homeSellRobots = {
 			}, 0);
 		}
 
-		function selectRobotArms(armPos) {
-			// the armPos could be left or right
-			gameObject.partsDisplayed = 'arm-' + armPos;
-			// load up the robot parts the player has discovered...
-			clearRobotParts(); // clear the previous parts
-			clearSelectedPartStatDetails(); // clear the stats
-			refreshFactoryBackgrounds(); // refresh the background
-			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
-			highlight.btnColor = 'yellow';
-			displayDiscoveredParts(gameObject.discoveredArms, armPos);
-			if (gameObject.selectedRobot.length === 6) {
-				gameObject.buildButtonDisabled = false;
-				displaySelectPart({}, true);
-			}
-		}
+		//function selectRobotArms(armPos) {
+			//// the armPos could be left or right
+			//gameObject.partsDisplayed = 'arm-' + armPos;
+			//// load up the robot parts the player has discovered...
+			//clearRobotParts(); // clear the previous parts
+			//clearSelectedPartStatDetails(); // clear the stats
+			//refreshFactoryBackgrounds(); // refresh the background
+			//clearRobotPreviewHighlight();
+			//const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
+			//highlight.btnColor = 'yellow';
+			//displayDiscoveredParts(gameObject.discoveredArms, armPos);
+			//if (gameObject.selectedRobot.length === 6) {
+				//gameObject.buildButtonDisabled = false;
+				//displaySelectPart({}, true);
+			//}
+		//}
 
-		function selectRobotLegs(legPos) {
-			// the legPos could be left or right
-			gameObject.partsDisplayed = 'leg-' + legPos;
-			// load up the robot parts the player has discovered...
-			clearRobotParts(); // clear the previous parts
-			clearSelectedPartStatDetails(); // clear the stats
-			refreshFactoryBackgrounds(); // refresh the background
-			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
-			highlight.btnColor = 'yellow';
-			displayDiscoveredParts(gameObject.discoveredLegs, legPos);
-			if (gameObject.selectedRobot.length === 6) {
-				gameObject.buildButtonDisabled = false;
-				displaySelectPart({}, true);
-			}
-		}
+		//function selectRobotLegs(legPos) {
+			//// the legPos could be left or right
+			//gameObject.partsDisplayed = 'leg-' + legPos;
+			//// load up the robot parts the player has discovered...
+			//clearRobotParts(); // clear the previous parts
+			//clearSelectedPartStatDetails(); // clear the stats
+			//refreshFactoryBackgrounds(); // refresh the background
+			//clearRobotPreviewHighlight();
+			//const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
+			//highlight.btnColor = 'yellow';
+			//displayDiscoveredParts(gameObject.discoveredLegs, legPos);
+			//if (gameObject.selectedRobot.length === 6) {
+				//gameObject.buildButtonDisabled = false;
+				//displaySelectPart({}, true);
+			//}
+		//}
 
-		function selectRobotChassis() {
-			gameObject.partsDisplayed = 'chassis';
-			// load up the robot parts the player has discovered...
-			clearRobotParts(); // clear the previous parts
-			clearSelectedPartStatDetails(); // clear the stats
-			refreshFactoryBackgrounds(); // refresh the background
-			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
-			highlight.btnColor = 'yellow';
-			displayDiscoveredParts(gameObject.discoveredChassis, '');
-			if (gameObject.selectedRobot.length === 6) {
-				gameObject.buildButtonDisabled = false;
-				displaySelectPart({}, true);
-			}
-		}
+		//function selectRobotChassis() {
+			//gameObject.partsDisplayed = 'chassis';
+			//// load up the robot parts the player has discovered...
+			//clearRobotParts(); // clear the previous parts
+			//clearSelectedPartStatDetails(); // clear the stats
+			//refreshFactoryBackgrounds(); // refresh the background
+			//clearRobotPreviewHighlight();
+			//const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
+			//highlight.btnColor = 'yellow';
+			//displayDiscoveredParts(gameObject.discoveredChassis, '');
+			//if (gameObject.selectedRobot.length === 6) {
+				//gameObject.buildButtonDisabled = false;
+				//displaySelectPart({}, true);
+			//}
+		//}
 
-		function selectRobotHead() {
-			gameObject.partsDisplayed = 'head';
-			// load up the robot parts the player has discovered...
-			clearRobotParts(); // clear the previous parts
-			clearSelectedPartStatDetails(); // clear the stats
-			refreshFactoryBackgrounds(); // refresh the background
-			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
-			highlight.btnColor = 'yellow';
-			displayDiscoveredParts(gameObject.discoveredHeads, '');
-			if (gameObject.selectedRobot.length === 6) {
-				gameObject.buildButtonDisabled = false;
-				displaySelectPart({}, true);
-			}
-		}
+		//function selectRobotHead() {
+			//gameObject.partsDisplayed = 'head';
+			//// load up the robot parts the player has discovered...
+			//clearRobotParts(); // clear the previous parts
+			//clearSelectedPartStatDetails(); // clear the stats
+			//refreshFactoryBackgrounds(); // refresh the background
+			//clearRobotPreviewHighlight();
+			//const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
+			//highlight.btnColor = 'yellow';
+			//displayDiscoveredParts(gameObject.discoveredHeads, '');
+			//if (gameObject.selectedRobot.length === 6) {
+				//gameObject.buildButtonDisabled = false;
+				//displaySelectPart({}, true);
+			//}
+		//}
 
 		function displayDiscoveredParts(partsDiscovered, limbPos) {
 			gameObject.discoveredPartsList = [];
@@ -3536,7 +3547,7 @@ const homeSellRobots = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
-						msg: 'Stats',
+						msg: 'Total',
 						posX: Game.placeEntityX(0.247),
 						posY: Game.placeEntityY(0.65),
 						color: 'grey',
@@ -3661,15 +3672,17 @@ const homeSellRobots = {
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
 							font: '1.5em serif',
-							msg: confirmed && gameObject.selectedRobot.length === 6 ? 'Build' : 'Confirm',
+							msg: 'Sell',
 							isFilled: true,
 							id: 'confirm-part',
 							action: { method: function(id) {
 								if (confirmed && gameObject.selectedRobot.length === 6) {
-									buildRobot();
-								} else {
-									equipPart(part);
-								}
+									// future Jordan, sell robot parts here
+									// buildRobot();
+								} 
+								//else {
+									//equipPart(part);
+								//}
 							}},
 							props: {},
 							methodId: id
@@ -3754,301 +3767,301 @@ const homeSellRobots = {
 				return 'grey';
 			}
 		}
-		function equipPart(part) {
-			// clear the confirm button
-			if (part.type === 'chassis') {
-				const existingChassis = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'chassis');
-				if (existingChassis > -1) {
-					gameObject.selectedRobot.splice(existingChassis, 1);
-				}
-				gameObject.selectedRobot.push(part);
-				Game.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
-			} else if (part.type === 'head') {
-				const existingHead = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'head');
-				if (existingHead > -1) {
-					gameObject.selectedRobot.splice(existingHead, 1);
-				}
-				gameObject.selectedRobot.push(part);
-				Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
-			} else if (part.type === 'leg') {
-				const existingLeg = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'leg' && partPos.legPos === part.legPos);
-				if (existingLeg > -1) {
-					gameObject.selectedRobot.splice(existingLeg, 1);
-				}
-				if (part.legPos === 'left') {
-					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-left-leg').btnColor = part.img; // change this to the actual image when availiable
-				} else if (part.legPos === 'right') {
-					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-right-leg').btnColor = part.img; // change this to the actual image when availiable
-				}
-			} else if (part.type === 'arm') {
-				const existingArm = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'arm' && partPos.armPos === part.armPos);
-				if (existingArm > -1) {
-					gameObject.selectedRobot.splice(existingArm, 1);
-				}
-				if (part.armPos === 'left') {
-					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-left-arm').btnColor = part.img; // change this to the actual image when availiable
-				} else if (part.armPos === 'right') {
-					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-right-arm').btnColor = part.img; // change this to the actual image when availiable
-				}
-			}
-			gameObject.robotDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
-			displaySelectPart(part, true);
-		}
+		//function equipPart(part) {
+			//// clear the confirm button
+			//if (part.type === 'chassis') {
+				//const existingChassis = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'chassis');
+				//if (existingChassis > -1) {
+					//gameObject.selectedRobot.splice(existingChassis, 1);
+				//}
+				//gameObject.selectedRobot.push(part);
+				//Game.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
+			//} else if (part.type === 'head') {
+				//const existingHead = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'head');
+				//if (existingHead > -1) {
+					//gameObject.selectedRobot.splice(existingHead, 1);
+				//}
+				//gameObject.selectedRobot.push(part);
+				//Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
+			//} else if (part.type === 'leg') {
+				//const existingLeg = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'leg' && partPos.legPos === part.legPos);
+				//if (existingLeg > -1) {
+					//gameObject.selectedRobot.splice(existingLeg, 1);
+				//}
+				//if (part.legPos === 'left') {
+					//gameObject.selectedRobot.push(part);
+					//Game.methodObjects.find(x => x.id === 'robot-left-leg').btnColor = part.img; // change this to the actual image when availiable
+				//} else if (part.legPos === 'right') {
+					//gameObject.selectedRobot.push(part);
+					//Game.methodObjects.find(x => x.id === 'robot-right-leg').btnColor = part.img; // change this to the actual image when availiable
+				//}
+			//} else if (part.type === 'arm') {
+				//const existingArm = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'arm' && partPos.armPos === part.armPos);
+				//if (existingArm > -1) {
+					//gameObject.selectedRobot.splice(existingArm, 1);
+				//}
+				//if (part.armPos === 'left') {
+					//gameObject.selectedRobot.push(part);
+					//Game.methodObjects.find(x => x.id === 'robot-left-arm').btnColor = part.img; // change this to the actual image when availiable
+				//} else if (part.armPos === 'right') {
+					//gameObject.selectedRobot.push(part);
+					//Game.methodObjects.find(x => x.id === 'robot-right-arm').btnColor = part.img; // change this to the actual image when availiable
+				//}
+			//}
+			//gameObject.robotDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
+			//displaySelectPart(part, true);
+		//}
 
-		function buildRobot() {
-			let problems = 0;
-			let head;
-			let chassis;
-			let leg1;
-			let leg2;
-			let arm1;
-			let arm2;
-			gameObject.selectedRobot.forEach(item => {
-				if (item.headId) {
-					head = robotHeads.find(part => part.headId === item.headId);	
-				}
-				if (item.chassisId) {
-					chassis = robotChassis.find(part => part.chassisId === item.chassisId);
-				}
-				if (item.legId && !leg1) {
-					leg1 = robotLegs.find(part => part.legId === item.legId);
-				}
-				if (item.legId && leg1) {
-					leg2 = robotLegs.find(part => part.legId === item.legId);
-				}
-				if (item.armId && !arm1) {
-					arm1 = robotArms.find(part => part.armId === item.armId);
-				}
-				if (item.armId && arm1) {
-					arm2 = robotArms.find(part => part.armId === item.armId);
-				}
-			});
-			if (head.count >= 1 && chassis.count >= 1 && 
-				leg1.count >= 1 && leg2.count >= 1 && 
-				arm1.count >= 1 && arm2.count >= 1) {
-					head.count -= 1;
-					chassis.count -= 1;
-					leg1.count -= 1;
-					leg2.count -= 1;
-					arm1.count -= 1;
-					arm2.count -= 1;
-			} else {
-				problems++;
-			}
-			if (problems === 0) {
-				if (gameObject.robotsMade < gameObject.robotStorage) {
-					gameObject.partsDisplayed = '';
-					// add the robot to the list
-					gameObject.robotsMade++;
-					gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
-					// refresh the parts that are displayed
-					clearSelectedPartStatDetails();
-					clearRobotPreviewHighlight();
+		//function buildRobot() {
+			//let problems = 0;
+			//let head;
+			//let chassis;
+			//let leg1;
+			//let leg2;
+			//let arm1;
+			//let arm2;
+			//gameObject.selectedRobot.forEach(item => {
+				//if (item.headId) {
+					//head = robotHeads.find(part => part.headId === item.headId);	
+				//}
+				//if (item.chassisId) {
+					//chassis = robotChassis.find(part => part.chassisId === item.chassisId);
+				//}
+				//if (item.legId && !leg1) {
+					//leg1 = robotLegs.find(part => part.legId === item.legId);
+				//}
+				//if (item.legId && leg1) {
+					//leg2 = robotLegs.find(part => part.legId === item.legId);
+				//}
+				//if (item.armId && !arm1) {
+					//arm1 = robotArms.find(part => part.armId === item.armId);
+				//}
+				//if (item.armId && arm1) {
+					//arm2 = robotArms.find(part => part.armId === item.armId);
+				//}
+			//});
+			//if (head.count >= 1 && chassis.count >= 1 && 
+				//leg1.count >= 1 && leg2.count >= 1 && 
+				//arm1.count >= 1 && arm2.count >= 1) {
+					//head.count -= 1;
+					//chassis.count -= 1;
+					//leg1.count -= 1;
+					//leg2.count -= 1;
+					//arm1.count -= 1;
+					//arm2.count -= 1;
+			//} else {
+				//problems++;
+			//}
+			//if (problems === 0) {
+				//if (gameObject.robotsMade < gameObject.robotStorage) {
+					//gameObject.partsDisplayed = '';
+					//// add the robot to the list
+					//gameObject.robotsMade++;
+					//gameObject.robotTeams.push(gameObject.robotDesigns[gameObject.selectedRobotDesign]);
+					//// refresh the parts that are displayed
+					//clearSelectedPartStatDetails();
+					//clearRobotPreviewHighlight();
 
-					setTimeout(function() {
-						Game.methodSetup = {
-							method: function(id) {
-								drawRect({
-									posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-									posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-									width: (Game.entitySize * 40),
-									height: (Game.entitySize * 30),
-									lineWidth: 1,
-									color: 'lightslategrey',
-									isFilled: true,
-									id: 'robot-built-background',
-									isBackground: false,
-									props: {},
-									methodId: id
-								});
-							}
-						};
-						Game.addMethod(Game.methodSetup);
-						Game.methodSetup = {
-							method: function(id) {
-								drawText({
-									font: '2.3em serif',
-									msg: 'Robot Made',
-									posX: Game.placeEntityX(0.50),
-									posY: Game.placeEntityY(0.50),
-									color: 'white',
-									align: 'center',
-									props: {},
-									id: 'robot-built-title',
-									methodId: id
-								});
-							}
-						};
-						Game.addMethod(Game.methodSetup);
-						Game.methodSetup = {
-							method: function(id) {
-								drawText({
-									font: '1em serif',
-									msg: 'Robot Storage: ' + gameObject.robotsMade + '/' + gameObject.robotStorage,
-									posX: Game.placeEntityX(0.50),
-									posY: Game.placeEntityY(0.55),
-									color: 'white',
-									align: 'center',
-									props: {},
-									id: 'robot-storage-title',
-									methodId: id
-								});
-							}
-						};
-						Game.addMethod(Game.methodSetup);
-						const removeTitles = setInterval(function() {
-							clearInterval(removeTitles);
-							clearRobotBuildMessage();
-							clearSelectedPartStatDetails(); // clear the stats
-							refreshFactoryBackgrounds(); // refresh the background
-							createFactoryTitleStats(undefined, undefined, undefined, undefined);
-							const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-							if (!modal) {
-								displaySelectPart({}, true);
-							}
-							if (modal) {
-								Game.deleteEntity(modal.methodId);
-								Game.methodSetup = {
-									method: function(id) {
-										drawModal({
-											posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-											posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-											width: (Game.entitySize * 40),
-											height: (Game.entitySize * 30),
-											lineWidth: modal.lineWidth,
-											modalColor: modal.modalColor,
-											msgColor: modal.msgColor,
-											msgFont: modal.msgFont,
-											msg: modal.msg,
-											footerColor: modal.footerColor,
-											footerFont: modal.footerFont,
-											footerMsg: modal.footerMsg,
-											bgColor: modal.bgColor,
-											isModalFilled: modal.isModalFilled,
-											id: Game.modalId,
-											action: modal.action,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							}
-						}, 1500);
-					}, 100);
+					//setTimeout(function() {
+						//Game.methodSetup = {
+							//method: function(id) {
+								//drawRect({
+									//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+									//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+									//width: (Game.entitySize * 40),
+									//height: (Game.entitySize * 30),
+									//lineWidth: 1,
+									//color: 'lightslategrey',
+									//isFilled: true,
+									//id: 'robot-built-background',
+									//isBackground: false,
+									//props: {},
+									//methodId: id
+								//});
+							//}
+						//};
+						//Game.addMethod(Game.methodSetup);
+						//Game.methodSetup = {
+							//method: function(id) {
+								//drawText({
+									//font: '2.3em serif',
+									//msg: 'Robot Made',
+									//posX: Game.placeEntityX(0.50),
+									//posY: Game.placeEntityY(0.50),
+									//color: 'white',
+									//align: 'center',
+									//props: {},
+									//id: 'robot-built-title',
+									//methodId: id
+								//});
+							//}
+						//};
+						//Game.addMethod(Game.methodSetup);
+						//Game.methodSetup = {
+							//method: function(id) {
+								//drawText({
+									//font: '1em serif',
+									//msg: 'Robot Storage: ' + gameObject.robotsMade + '/' + gameObject.robotStorage,
+									//posX: Game.placeEntityX(0.50),
+									//posY: Game.placeEntityY(0.55),
+									//color: 'white',
+									//align: 'center',
+									//props: {},
+									//id: 'robot-storage-title',
+									//methodId: id
+								//});
+							//}
+						//};
+						//Game.addMethod(Game.methodSetup);
+						//const removeTitles = setInterval(function() {
+							//clearInterval(removeTitles);
+							//clearRobotBuildMessage();
+							//clearSelectedPartStatDetails(); // clear the stats
+							//refreshFactoryBackgrounds(); // refresh the background
+							//createFactoryTitleStats(undefined, undefined, undefined, undefined);
+							//const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+							//if (!modal) {
+								//displaySelectPart({}, true);
+							//}
+							//if (modal) {
+								//Game.deleteEntity(modal.methodId);
+								//Game.methodSetup = {
+									//method: function(id) {
+										//drawModal({
+											//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+											//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+											//width: (Game.entitySize * 40),
+											//height: (Game.entitySize * 30),
+											//lineWidth: modal.lineWidth,
+											//modalColor: modal.modalColor,
+											//msgColor: modal.msgColor,
+											//msgFont: modal.msgFont,
+											//msg: modal.msg,
+											//footerColor: modal.footerColor,
+											//footerFont: modal.footerFont,
+											//footerMsg: modal.footerMsg,
+											//bgColor: modal.bgColor,
+											//isModalFilled: modal.isModalFilled,
+											//id: Game.modalId,
+											//action: modal.action,
+											//props: {},
+											//methodId: id
+										//});
+									//}
+								//};
+								//Game.addMethod(Game.methodSetup);
+							//}
+						//}, 1500);
+					//}, 100);
 					
-				} else {
-					// add the parts back when storage is full
-					head.count++;
-					chassis.count++;
-					leg1.count++;
-					leg2.count++;
-					arm1.count++;
-					arm2.count++;
-					setTimeout(function() {
-						Game.methodSetup = {
-							method: function(id) {
-								drawModal({
-									posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-									posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-									width: (Game.entitySize * 40),
-									height: (Game.entitySize * 30),
-									lineWidth: 1,
-									modalColor: 'darkgrey',
-									msgColor: 'white',
-									msgFont: '1.3em serif',
-									msg: 'Robot Storage Full',
-									footerColor: 'white',
-									footerFont: '1em serif',
-									footerMsg: 'Tap here to continue',
-									bgColor: '',
-									isModalFilled: true,
-									id: Game.modalId,
-									action: { 
-										method: function(id) {
-											const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-											Game.deleteEntity(modal.methodId);
-											gameObject.buildButtonDisabled = true;
-											displaySelectPart({}, true);
-											setTimeout(function() {
-												createFactoryTitleStats(undefined, undefined, undefined, undefined);
-											},0);
+				//} else {
+					//// add the parts back when storage is full
+					//head.count++;
+					//chassis.count++;
+					//leg1.count++;
+					//leg2.count++;
+					//arm1.count++;
+					//arm2.count++;
+					//setTimeout(function() {
+						//Game.methodSetup = {
+							//method: function(id) {
+								//drawModal({
+									//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+									//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+									//width: (Game.entitySize * 40),
+									//height: (Game.entitySize * 30),
+									//lineWidth: 1,
+									//modalColor: 'darkgrey',
+									//msgColor: 'white',
+									//msgFont: '1.3em serif',
+									//msg: 'Robot Storage Full',
+									//footerColor: 'white',
+									//footerFont: '1em serif',
+									//footerMsg: 'Tap here to continue',
+									//bgColor: '',
+									//isModalFilled: true,
+									//id: Game.modalId,
+									//action: { 
+										//method: function(id) {
+											//const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+											//Game.deleteEntity(modal.methodId);
+											//gameObject.buildButtonDisabled = true;
+											//displaySelectPart({}, true);
+											//setTimeout(function() {
+												//createFactoryTitleStats(undefined, undefined, undefined, undefined);
+											//},0);
 											
-										}
-									},
-									props: {},
-									methodId: id
-								});
-							}
-						};
-						Game.addMethod(Game.methodSetup);
-					}, 100);
-				}
+										//}
+									//},
+									//props: {},
+									//methodId: id
+								//});
+							//}
+						//};
+						//Game.addMethod(Game.methodSetup);
+					//}, 100);
+				//}
 				
-			} else {
-				setTimeout(function() {
-					Game.methodSetup = {
-						method: function(id) {
-							drawModal({
-								posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-								posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-								width: (Game.entitySize * 40),
-								height: (Game.entitySize * 30),
-								lineWidth: 1,
-								modalColor: 'darkgrey',
-								msgColor: 'white',
-								msgFont: '1.3em serif',
-								msg: 'Missing Parts',
-								footerColor: 'white',
-								footerFont: '1em serif',
-								footerMsg: 'Tap here to continue',
-								bgColor: '',
-								isModalFilled: true,
-								id: Game.modalId,
-								action: { 
-									method: function(id) {
-										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-										Game.deleteEntity(modal.methodId);
-										gameObject.buildButtonDisabled = true;
-										displaySelectPart({}, true);
-										setTimeout(function() {
-											createFactoryTitleStats(undefined, undefined, undefined, undefined);
-										},0);
+			//} else {
+				//setTimeout(function() {
+					//Game.methodSetup = {
+						//method: function(id) {
+							//drawModal({
+								//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+								//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+								//width: (Game.entitySize * 40),
+								//height: (Game.entitySize * 30),
+								//lineWidth: 1,
+								//modalColor: 'darkgrey',
+								//msgColor: 'white',
+								//msgFont: '1.3em serif',
+								//msg: 'Missing Parts',
+								//footerColor: 'white',
+								//footerFont: '1em serif',
+								//footerMsg: 'Tap here to continue',
+								//bgColor: '',
+								//isModalFilled: true,
+								//id: Game.modalId,
+								//action: { 
+									//method: function(id) {
+										//const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+										//Game.deleteEntity(modal.methodId);
+										//gameObject.buildButtonDisabled = true;
+										//displaySelectPart({}, true);
+										//setTimeout(function() {
+											//createFactoryTitleStats(undefined, undefined, undefined, undefined);
+										//},0);
 										
-									}
-								},
-								props: {},
-								methodId: id
-							});
-						}
-					};
-					Game.addMethod(Game.methodSetup);
-				}, 100);
-			}
-			clearRobotParts();
-			if (gameObject.partsDisplayed === 'leg-right') {
-				displayDiscoveredParts(gameObject.discoveredLegs, 'right');
-			}
-			if (gameObject.partsDisplayed === 'leg-left') {
-				displayDiscoveredParts(gameObject.discoveredLegs, 'left');
-			}
-			if (gameObject.partsDisplayed === 'arm-left') {
-				displayDiscoveredParts(gameObject.discoveredArms, 'left');
-			}
-			if (gameObject.partsDisplayed === 'arm-right') {
-				displayDiscoveredParts(gameObject.discoveredArms, 'right');
-			}
-			if (gameObject.partsDisplayed === 'chassis') {
-				displayDiscoveredParts(gameObject.discoveredChassis, '');
-			}
-			if (gameObject.partsDisplayed === 'head') {
-				displayDiscoveredParts(gameObject.discoveredHeads, '');
-			}
-		}
+									//}
+								//},
+								//props: {},
+								//methodId: id
+							//});
+						//}
+					//};
+					//Game.addMethod(Game.methodSetup);
+				//}, 100);
+			//}
+			//clearRobotParts();
+			//if (gameObject.partsDisplayed === 'leg-right') {
+				//displayDiscoveredParts(gameObject.discoveredLegs, 'right');
+			//}
+			//if (gameObject.partsDisplayed === 'leg-left') {
+				//displayDiscoveredParts(gameObject.discoveredLegs, 'left');
+			//}
+			//if (gameObject.partsDisplayed === 'arm-left') {
+				//displayDiscoveredParts(gameObject.discoveredArms, 'left');
+			//}
+			//if (gameObject.partsDisplayed === 'arm-right') {
+				//displayDiscoveredParts(gameObject.discoveredArms, 'right');
+			//}
+			//if (gameObject.partsDisplayed === 'chassis') {
+				//displayDiscoveredParts(gameObject.discoveredChassis, '');
+			//}
+			//if (gameObject.partsDisplayed === 'head') {
+				//displayDiscoveredParts(gameObject.discoveredHeads, '');
+			//}
+		//}
 
 		function clearRobotBuildMessage() {
 			const builtBg = Game.methodObjects.find(x => x.id === 'robot-built-background');
