@@ -1057,6 +1057,25 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 	}
 }
 
+function formatDisplayValue() {
+	
+}
+
+function gatherScrapCostFromPart(part) {
+	const scrapCosts = [];
+	for (const scrap in part.scrapToBuild) {
+					
+		if (part.scrapToBuild[scrap] > 0) {
+			const scrapObj = { 
+				type: scrap, 
+				cost: part.scrapToBuild[scrap]
+			};
+			scrapCosts.push(scrapObj);
+		}
+	}
+	return scrapCosts;
+}
+
 function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and amount of scrap
 	const partCost = {
 		mythryl: 0,

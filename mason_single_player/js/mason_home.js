@@ -2139,17 +2139,10 @@ const homeSellParts = {
 
 		function createSellPartTitleScraps(part) {
 			if (part) {
-				const scrapCosts = [];
-				for (const scrap in part.scrapToBuild) {
-					
-					if (part.scrapToBuild[scrap] > 0) {
-						const scrapObj = { 
-							type: scrap, 
-							cost: part.scrapToBuild[scrap]
-						};
-						scrapCosts.push(scrapObj);
-					}
-				}
+				// future Jordan, we might need to make a method that takes
+				// multiple parts in stead of just one. that way a lot of what's
+				// below to sell one part could be used to sell multiple parts(aka robots)
+				const scrapCosts = gatherScrapCostFromPart(part);
 				Game.methodSetup = {
 					method: function(id) {
 						drawText({
