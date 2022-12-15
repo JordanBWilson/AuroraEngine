@@ -447,7 +447,7 @@ const homeSellScrap = {
 			};
 			Game.addMethod(Game.methodSetup);
 			createSellScrapTitles();
-			displayCondensedFunds(0.565, 0.245, 0.565, 0.295, '1.2em serif', 'grey');
+			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em serif', 'grey', 'center');
 			Particle.init();
 			Game.pageResized = {
 				section: 'home-sell-scrap',
@@ -870,7 +870,7 @@ const homeSellScrap = {
 		function selectScrapPrice(scrapType) {
 
 			createSellScrapTitles();
-			displayCondensedFunds(0.565, 0.245, 0.565, 0.295, '1.2em serif', 'grey');
+			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em serif', 'grey', 'center');
 			
 			Game.methodSetup = {
 				method: function(id) {
@@ -962,10 +962,10 @@ const homeSellScrap = {
 						drawText({
 							font: '1.2em serif',
 							msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
-							posX: Game.placeEntityX(0.515),
+							posX: Game.placeEntityX(0.715),
 							posY: Game.placeEntityY(0.635 + (i * 0.045)),
 							color: 'green',
-							align: 'left',
+							align: 'center',
 							props: {},
 							id: 'scrap-price',
 							methodId: id
@@ -2198,7 +2198,7 @@ const homeSellParts = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				displayCondensedFunds(0.115, 0.72, 0.115, 0.755, '1em serif', 'grey');
+				displayCondensedFunds(0.25, 0.72, 0.25, 0.755, '1em serif', 'grey', 'center');
 				
 				Game.methodSetup = {
 					method: function(id) {
@@ -2285,10 +2285,10 @@ const homeSellParts = {
 						drawText({
 							font: '1em serif',
 							msg: displayPartValue.highValue.type + ': ' + displayPartValue.highValue.value,
-							posX: Game.placeEntityX(0.115),
+							posX: Game.placeEntityX(0.25),
 							posY: Game.placeEntityY(0.83),
 							color: 'green',
-							align: 'left',
+							align: 'center',
 							props: {},
 							id: 'sell-part-high',
 							methodId: id
@@ -2302,10 +2302,10 @@ const homeSellParts = {
 							drawText({
 								font: '1em serif',
 								msg: displayPartValue.lowValue.type + ': ' + displayPartValue.lowValue.value,
-								posX: Game.placeEntityX(0.115),
+								posX: Game.placeEntityX(0.25),
 								posY: Game.placeEntityY(0.865),
 								color: 'green',
-								align: 'left',
+								align: 'center',
 								props: {},
 								id: 'sell-part-low',
 								methodId: id
@@ -2840,24 +2840,24 @@ const homeSellRobots = {
 				method: function() {
 					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 					clearRobotBuildMessage();
-					if (!modal && gameObject.partsDisplayed === 'leg-right') {
-						selectRobotLegs('right');
-					}
-					if (!modal && gameObject.partsDisplayed === 'leg-left') {
-						selectRobotLegs('left');
-					}
-					if (!modal && gameObject.partsDisplayed === 'arm-left') {
-						selectRobotArms('left');
-					}
-					if (!modal && gameObject.partsDisplayed === 'arm-right') {
-						selectRobotArms('right');
-					}
-					if (!modal && gameObject.partsDisplayed === 'chassis') {
-						selectRobotChassis();
-					}
-					if (!modal && gameObject.partsDisplayed === 'head') {
-						selectRobotHead();
-					}
+					//if (!modal && gameObject.partsDisplayed === 'leg-right') {
+						//selectRobotLegs('right');
+					//}
+					//if (!modal && gameObject.partsDisplayed === 'leg-left') {
+						//selectRobotLegs('left');
+					//}
+					//if (!modal && gameObject.partsDisplayed === 'arm-left') {
+						//selectRobotArms('left');
+					//}
+					//if (!modal && gameObject.partsDisplayed === 'arm-right') {
+						//selectRobotArms('right');
+					//}
+					//if (!modal && gameObject.partsDisplayed === 'chassis') {
+						//selectRobotChassis();
+					//}
+					//if (!modal && gameObject.partsDisplayed === 'head') {
+						//selectRobotHead();
+					//}
 				}
 			}
 		}
@@ -3539,10 +3539,28 @@ const homeSellRobots = {
 
 		function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 			// when the existingPart and parts come in, then we are selecting different parts
-			let selectedPart = part;
-			if (!selectedPart || confirmed) {
-				selectedPart = totalSelectedRobotStats();
-			}
+			//let selectedPart = part;
+			//if (!selectedPart || confirmed) {
+				//selectedPart = totalSelectedRobotStats();
+			//}
+			console.log(gameObject.selectedRobot);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Funds',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.19),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			displayCondensedFunds(0.76, 0.245, 0.76, 0.295, '1.2em serif', 'grey', 'center');
 			Game.methodSetup = {
 				method: function(id) {
 					drawText({
@@ -3559,102 +3577,102 @@ const homeSellRobots = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '2.1em serif',
-						msg: 'Sell Details',
-						posX: Game.placeEntityX(0.525),
-						posY: Game.placeEntityY(0.085),
-						color: 'darkgrey',
-						align: 'center',
-						props: {},
-						id: 'factory-title',
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '1em serif',
-						msg: 'Attack: ' + returnStatValue(selectedPart?.stats?.att, 'att', confirmed, partChanged, existingPart?.stats?.att),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.69),
-						color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att', partChanged, confirmed),
-						align: 'left',
-						props: {},
-						id: 'att-stat',
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '1em serif',
-						msg: 'Defense: ' + returnStatValue(selectedPart?.stats?.def, 'def', confirmed, partChanged, existingPart?.stats?.def),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.74),
-						color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def', partChanged, confirmed),
-						align: 'left',
-						props: {},
-						id: 'def-stat',
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '1em serif',
-						msg: 'Speed: ' + returnStatValue(selectedPart?.stats?.spd, 'spd', confirmed, partChanged, existingPart?.stats?.spd),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.79),
-						color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd', partChanged, confirmed),
-						align: 'left',
-						props: {},
-						id: 'spd-stat',
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '1em serif',
-						msg: 'AI: ' + returnStatValue(selectedPart?.stats?.ai, 'ai', confirmed, partChanged, existingPart?.stats?.ai),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.84),
-						color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai', partChanged, confirmed),
-						align: 'left',
-						props: {},
-						id: 'ai-stat',
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawText({
-						font: '1em serif',
-						msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged, existingPart?.stats?.storage),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.88),
-						color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage', partChanged, confirmed),
-						align: 'left',
-						props: {},
-						id: 'storage-stat',
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = {
+				//method: function(id) {
+					//drawText({
+						//font: '2.1em serif',
+						//msg: 'Sell Details',
+						//posX: Game.placeEntityX(0.525),
+						//posY: Game.placeEntityY(0.085),
+						//color: 'darkgrey',
+						//align: 'center',
+						//props: {},
+						//id: 'factory-title',
+						//methodId: id
+					//});
+				//}
+			//};
+			//Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = {
+				//method: function(id) {
+					//drawText({
+						//font: '1em serif',
+						//msg: 'Attack: ' + returnStatValue(selectedPart?.stats?.att, 'att', confirmed, partChanged, existingPart?.stats?.att),
+						//posX: Game.placeEntityX(0.09),
+						//posY: Game.placeEntityY(0.69),
+						//color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att', partChanged, confirmed),
+						//align: 'left',
+						//props: {},
+						//id: 'att-stat',
+						//methodId: id
+					//});
+				//}
+			//};
+			//Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = {
+				//method: function(id) {
+					//drawText({
+						//font: '1em serif',
+						//msg: 'Defense: ' + returnStatValue(selectedPart?.stats?.def, 'def', confirmed, partChanged, existingPart?.stats?.def),
+						//posX: Game.placeEntityX(0.09),
+						//posY: Game.placeEntityY(0.74),
+						//color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def', partChanged, confirmed),
+						//align: 'left',
+						//props: {},
+						//id: 'def-stat',
+						//methodId: id
+					//});
+				//}
+			//};
+			//Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = {
+				//method: function(id) {
+					//drawText({
+						//font: '1em serif',
+						//msg: 'Speed: ' + returnStatValue(selectedPart?.stats?.spd, 'spd', confirmed, partChanged, existingPart?.stats?.spd),
+						//posX: Game.placeEntityX(0.09),
+						//posY: Game.placeEntityY(0.79),
+						//color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd', partChanged, confirmed),
+						//align: 'left',
+						//props: {},
+						//id: 'spd-stat',
+						//methodId: id
+					//});
+				//}
+			//};
+			//Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = {
+				//method: function(id) {
+					//drawText({
+						//font: '1em serif',
+						//msg: 'AI: ' + returnStatValue(selectedPart?.stats?.ai, 'ai', confirmed, partChanged, existingPart?.stats?.ai),
+						//posX: Game.placeEntityX(0.09),
+						//posY: Game.placeEntityY(0.84),
+						//color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai', partChanged, confirmed),
+						//align: 'left',
+						//props: {},
+						//id: 'ai-stat',
+						//methodId: id
+					//});
+				//}
+			//};
+			//Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = {
+				//method: function(id) {
+					//drawText({
+						//font: '1em serif',
+						//msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged, existingPart?.stats?.storage),
+						//posX: Game.placeEntityX(0.09),
+						//posY: Game.placeEntityY(0.88),
+						//color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage', partChanged, confirmed),
+						//align: 'left',
+						//props: {},
+						//id: 'storage-stat',
+						//methodId: id
+					//});
+				//}
+			//};
+			//Game.addMethod(Game.methodSetup);
 			clearSelectedPartStatDetails();
 			refreshFactoryBackgrounds();
 		}

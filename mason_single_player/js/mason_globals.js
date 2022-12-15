@@ -870,7 +870,7 @@ function subtractFunds(subFunds) {
 }
 
 // *** Display player funds ***
-function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, color) {
+function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, color, align) {
 	if (gameObject.mythryl > 0) {
 		// future Jordan, 99,999 is the max number on mobile display
 		Game.methodSetup = {
@@ -881,7 +881,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(highFundX),
 					posY: Game.placeEntityY(highFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-high',
 					methodId: id
@@ -897,7 +897,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(lowFundX),
 					posY: Game.placeEntityY(lowFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-low',
 					methodId: id
@@ -914,7 +914,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(highFundX),
 					posY: Game.placeEntityY(highFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-high',
 					methodId: id
@@ -930,7 +930,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(lowFundX),
 					posY: Game.placeEntityY(lowFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-low',
 					methodId: id
@@ -947,7 +947,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(highFundX),
 					posY: Game.placeEntityY(highFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-high',
 					methodId: id
@@ -963,7 +963,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(lowFundX),
 					posY: Game.placeEntityY(lowFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-low',
 					methodId: id
@@ -980,7 +980,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(highFundX),
 					posY: Game.placeEntityY(highFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-high',
 					methodId: id
@@ -996,7 +996,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(lowFundX),
 					posY: Game.placeEntityY(lowFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-low',
 					methodId: id
@@ -1013,7 +1013,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(highFundX),
 					posY: Game.placeEntityY(highFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-high',
 					methodId: id
@@ -1029,7 +1029,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(lowFundX),
 					posY: Game.placeEntityY(lowFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-low',
 					methodId: id
@@ -1046,7 +1046,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 					posX: Game.placeEntityX(highFundX),
 					posY: Game.placeEntityY(highFundY),
 					color: color,
-					align: 'left',
+					align: align ? align : 'left',
 					props: {},
 					id: 'player-funds-high',
 					methodId: id
