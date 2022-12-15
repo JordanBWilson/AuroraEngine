@@ -485,10 +485,13 @@ const factoryPage = {
 						isFilled: true,
 						id: 'factory-back-game',
 						action: { method: function(id) {
-							factoryPage.loadPage();
-							 gameObject.partsDisplayed = ''; 
-							 gameObject.selectedRobotDesign = -1;
-							 gameObject.buildButtonDisabled = false;
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									factoryPage.loadPage();
+									gameObject.partsDisplayed = ''; 
+									gameObject.selectedRobotDesign = -1;
+									gameObject.buildButtonDisabled = false;
+								}
 							}
 						},
 						props: {},
@@ -545,10 +548,13 @@ const factoryPage = {
 						id: 'factory-view',
 						action: { 
 							method: function(id) {
-								factoryParts.loadPage();
-								gameObject.partsDisplayed = ''; 
-								gameObject.selectedRobotDesign = -1;
-								gameObject.buildButtonDisabled = false;
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									factoryParts.loadPage();
+									gameObject.partsDisplayed = ''; 
+									gameObject.selectedRobotDesign = -1;
+									gameObject.buildButtonDisabled = false;
+								}
 							 }
 						}, 
 						props: {},

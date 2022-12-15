@@ -144,7 +144,7 @@ const robotHeads = [
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
-			exoticScrap: 0,
+			exoticScrap: 2,
 		},
 	},
 	{
@@ -1057,8 +1057,97 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 	}
 }
 
-function formatDisplayValue() {
+function formatDisplayValue(formatPartCost) {
 	
+	const displayPartValue = {
+		highValue: {
+			type: '',
+			value: 0
+		},
+		lowValue: {
+			type: '',
+			value: 0
+		}
+	}
+	if (formatPartCost.mythryl > 0) {
+		displayPartValue.highValue = {
+			type: 'Mythryl', 
+			value: formatPartCost.mythryl
+		}
+		displayPartValue.lowValue = {
+			type: 'Platinum', 
+			value: formatPartCost.platinum
+		}
+	} else if (formatPartCost.platinum > 0) {
+		displayPartValue.highValue = {
+			type: 'Platinum', 
+			value: formatPartCost.platinum
+		}
+		displayPartValue.lowValue = {
+			type: 'Gold', 
+			value: formatPartCost.gold
+		}
+	} else if (formatPartCost.gold > 0) {
+		displayPartValue.highValue = {
+			type: 'Gold', 
+			value: formatPartCost.gold
+		}
+		displayPartValue.lowValue = {
+			type: 'Silver', 
+			value: formatPartCost.silver
+		}
+	} else if (formatPartCost.silver > 0) {
+		displayPartValue.highValue = {
+			type: 'Silver', 
+			value: formatPartCost.silver
+		}
+		displayPartValue.lowValue = {
+			type: 'Bronze', 
+			value: formatPartCost.bronze
+		}
+	} else if (formatPartCost.bronze > 0) {
+		displayPartValue.highValue = {
+			type: 'Bronze', 
+			value: formatPartCost.bronze
+		}
+		displayPartValue.lowValue = {
+			type: 'Copper', 
+			value: formatPartCost.copper
+		}
+	} else if (formatPartCost.copper > 0) {
+		displayPartValue.highValue = {
+			type: 'Copper', 
+			value: formatPartCost.copper
+		}
+	}
+	
+	return displayPartValue;
+}
+
+function combineRobotParts(robot) {
+	const parts = {
+		scrapToBuild: {
+			commonScrap: 0,
+			unCommonScrap: 0,
+			uniqueScrap: 0,
+			intriguingScrap: 0,
+			facinatingScrap: 0,
+			mythicScrap: 0,
+			exoticScrap: 0,
+		}
+	}
+	
+	robot.forEach(part => {
+			parts.scrapToBuild.commonScrap += part.scrapToBuild.commonScrap;
+			parts.scrapToBuild.unCommonScrap += part.scrapToBuild.unCommonScrap;
+			parts.scrapToBuild.uniqueScrap += part.scrapToBuild.uniqueScrap;
+			parts.scrapToBuild.intriguingScrap += part.scrapToBuild.intriguingScrap;
+			parts.scrapToBuild.facinatingScrap += part.scrapToBuild.facinatingScrap;
+			parts.scrapToBuild.mythicScrap += part.scrapToBuild.mythicScrap;
+			parts.scrapToBuild.exoticScrap += part.scrapToBuild.exoticScrap;
+	});
+		
+	return parts;
 }
 
 function gatherScrapCostFromPart(part) {

@@ -2139,9 +2139,6 @@ const homeSellParts = {
 
 		function createSellPartTitleScraps(part) {
 			if (part) {
-				// future Jordan, we might need to make a method that takes
-				// multiple parts in stead of just one. that way a lot of what's
-				// below to sell one part could be used to sell multiple parts(aka robots)
 				const scrapCosts = gatherScrapCostFromPart(part);
 				Game.methodSetup = {
 					method: function(id) {
@@ -2211,67 +2208,8 @@ const homeSellParts = {
 				Game.addMethod(Game.methodSetup);
 				const formatPartCost = calculatePartPrice(scrapCosts);
 				// display the top two highest money type
-				const displayPartValue = {
-					highValue: {
-						type: '',
-						value: 0
-					},
-					lowValue: {
-						type: '',
-						value: 0
-					}
-				}
-				if (formatPartCost.mythryl > 0) {
-					displayPartValue.highValue = {
-						type: 'Mythryl', 
-						value: formatPartCost.mythryl
-					}
-					displayPartValue.lowValue = {
-						type: 'Platinum', 
-						value: formatPartCost.platinum
-					}
-				} else if (formatPartCost.platinum > 0) {
-					displayPartValue.highValue = {
-						type: 'Platinum', 
-						value: formatPartCost.platinum
-					}
-					displayPartValue.lowValue = {
-						type: 'Gold', 
-						value: formatPartCost.gold
-					}
-				} else if (formatPartCost.gold > 0) {
-					displayPartValue.highValue = {
-						type: 'Gold', 
-						value: formatPartCost.gold
-					}
-					displayPartValue.lowValue = {
-						type: 'Silver', 
-						value: formatPartCost.silver
-					}
-				} else if (formatPartCost.silver > 0) {
-					displayPartValue.highValue = {
-						type: 'Silver', 
-						value: formatPartCost.silver
-					}
-					displayPartValue.lowValue = {
-						type: 'Bronze', 
-						value: formatPartCost.bronze
-					}
-				} else if (formatPartCost.bronze > 0) {
-					displayPartValue.highValue = {
-						type: 'Bronze', 
-						value: formatPartCost.bronze
-					}
-					displayPartValue.lowValue = {
-						type: 'Copper', 
-						value: formatPartCost.copper
-					}
-				} else if (formatPartCost.copper > 0) {
-					displayPartValue.highValue = {
-						type: 'Copper', 
-						value: formatPartCost.copper
-					}
-				}
+				const displayPartValue = formatDisplayValue(formatPartCost);
+				
 				
 				Game.methodSetup = {
 					method: function(id) {
@@ -2329,8 +2267,8 @@ const homeSellParts = {
 
 // *** Home Sell Robot Page ***
 
-// future Jordan, break down the costs of each part on the right side
-// of the robot sell details. in the sell robot select screen, we need
+// future Jordan, we need to be able to sell a robot. 
+// in the sell robot select screen, we need
 // to add navigation at the bottom for pagination. the sell robot select
 // screen should only display 6 robots made in robotTeams per page
 const homeSellRobots = {
@@ -3553,7 +3491,358 @@ const homeSellRobots = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			displayCondensedFunds(0.76, 0.245, 0.76, 0.295, '1.2em serif', 'grey', 'center');
+			
+			displayCondensedFunds(0.76, 0.235, 0.76, 0.27, '1.2em serif', 'grey', 'center');
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.6em serif',
+						msg: 'Head',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.33),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-head',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			const headPart = gameObject.selectedRobot.find(part => part.type === 'head');
+			const headScrapCosts = gatherScrapCostFromPart(headPart);
+			const formatHeadPartCost = calculatePartPrice(headScrapCosts);
+			// display the top two highest money type
+			const displayHeadPartValue = formatDisplayValue(formatHeadPartCost);	
+				
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: displayHeadPartValue.highValue.type + ': ' + displayHeadPartValue.highValue.value,
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.365),
+						color: 'green',
+						align: 'center',
+						props: {},
+						id: 'sell-part-high',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (displayHeadPartValue.lowValue.value) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: displayHeadPartValue.lowValue.type + ': ' + displayHeadPartValue.lowValue.value,
+							posX: Game.placeEntityX(0.76),
+							posY: Game.placeEntityY(0.40),
+							color: 'green',
+							align: 'center',
+							props: {},
+							id: 'sell-part-low',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.6em serif',
+						msg: 'Chassis',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.445),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-chassis',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			const chassisPart = gameObject.selectedRobot.find(part => part.type === 'chassis');
+			const chassisScrapCosts = gatherScrapCostFromPart(chassisPart);
+			const formatChassisPartCost = calculatePartPrice(chassisScrapCosts);
+			// display the top two highest money type
+			const displayChassisPartValue = formatDisplayValue(formatChassisPartCost);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: displayChassisPartValue.highValue.type + ': ' + displayChassisPartValue.highValue.value,
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.48),
+						color: 'green',
+						align: 'center',
+						props: {},
+						id: 'sell-part-high',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (displayChassisPartValue.lowValue.value) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: displayChassisPartValue.lowValue.type + ': ' + displayChassisPartValue.lowValue.value,
+							posX: Game.placeEntityX(0.76),
+							posY: Game.placeEntityY(0.515),
+							color: 'green',
+							align: 'center',
+							props: {},
+							id: 'sell-part-low',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.6em serif',
+						msg: 'Left Arm',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.555),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-left-arm',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			const leftArmPart = gameObject.selectedRobot.find(part => part.type === 'arm' && part.armPos === 'left');
+			const leftArmScrapCosts = gatherScrapCostFromPart(leftArmPart);
+			const formatLeftArmPartCost = calculatePartPrice(leftArmScrapCosts);
+			// display the top two highest money type
+			const displayLeftArmPartValue = formatDisplayValue(formatLeftArmPartCost);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: displayLeftArmPartValue.highValue.type + ': ' + displayLeftArmPartValue.highValue.value,
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.59),
+						color: 'green',
+						align: 'center',
+						props: {},
+						id: 'sell-part-high',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (displayLeftArmPartValue.lowValue.value) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: displayLeftArmPartValue.lowValue.type + ': ' + displayLeftArmPartValue.lowValue.value,
+							posX: Game.placeEntityX(0.76),
+							posY: Game.placeEntityY(0.625),
+							color: 'green',
+							align: 'center',
+							props: {},
+							id: 'sell-part-low',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.6em serif',
+						msg: 'Right Arm',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.665),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-right-arm',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			const rightArmPart = gameObject.selectedRobot.find(part => part.type === 'arm' && part.armPos === 'right');
+			const rightArmScrapCosts = gatherScrapCostFromPart(rightArmPart);
+			const formatRightArmPartCost = calculatePartPrice(rightArmScrapCosts);
+			// display the top two highest money type
+			const displayRightArmPartValue = formatDisplayValue(formatRightArmPartCost);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: displayRightArmPartValue.highValue.type + ': ' + displayRightArmPartValue.highValue.value,
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.70),
+						color: 'green',
+						align: 'center',
+						props: {},
+						id: 'sell-part-high',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (displayRightArmPartValue.lowValue.value) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: displayRightArmPartValue.lowValue.type + ': ' + displayRightArmPartValue.lowValue.value,
+							posX: Game.placeEntityX(0.76),
+							posY: Game.placeEntityY(0.735),
+							color: 'green',
+							align: 'center',
+							props: {},
+							id: 'sell-part-low',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.6em serif',
+						msg: 'Left Leg',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.775),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-left-leg',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			const leftLegPart = gameObject.selectedRobot.find(part => part.type === 'leg' && part.legPos === 'left');
+			const leftLegScrapCosts = gatherScrapCostFromPart(leftLegPart);
+			const formatLeftLegPartCost = calculatePartPrice(leftLegScrapCosts);
+			// display the top two highest money type
+			const displayLeftLegPartValue = formatDisplayValue(formatLeftLegPartCost);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: displayLeftLegPartValue.highValue.type + ': ' + displayLeftLegPartValue.highValue.value,
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.81),
+						color: 'green',
+						align: 'center',
+						props: {},
+						id: 'sell-part-high',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (displayLeftLegPartValue.lowValue.value) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: displayLeftLegPartValue.lowValue.type + ': ' + displayLeftLegPartValue.lowValue.value,
+							posX: Game.placeEntityX(0.76),
+							posY: Game.placeEntityY(0.845),
+							color: 'green',
+							align: 'center',
+							props: {},
+							id: 'sell-part-low',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.6em serif',
+						msg: 'Right Leg',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.885),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-right-leg',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			const rightLegPart = gameObject.selectedRobot.find(part => part.type === 'leg' && part.legPos === 'right');
+			const rightLegScrapCosts = gatherScrapCostFromPart(rightLegPart);
+			const formatRightLegPartCost = calculatePartPrice(rightLegScrapCosts);
+			// display the top two highest money type
+			const displayRightLegPartValue = formatDisplayValue(formatRightLegPartCost);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: displayRightLegPartValue.highValue.type + ': ' + displayRightLegPartValue.highValue.value,
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.92),
+						color: 'green',
+						align: 'center',
+						props: {},
+						id: 'sell-part-high',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (displayRightLegPartValue.lowValue.value) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1em serif',
+							msg: displayRightLegPartValue.lowValue.type + ': ' + displayRightLegPartValue.lowValue.value,
+							posX: Game.placeEntityX(0.76),
+							posY: Game.placeEntityY(0.955),
+							color: 'green',
+							align: 'center',
+							props: {},
+							id: 'sell-part-low',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			
+			
 			Game.methodSetup = {
 				method: function(id) {
 					drawText({
@@ -3570,6 +3859,50 @@ const homeSellRobots = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+			
+			const totalRobotScrap = combineRobotParts(gameObject.selectedRobot);
+			
+			const totalScrapCosts = gatherScrapCostFromPart(totalRobotScrap);
+			const formatTotalPartCost = calculatePartPrice(totalScrapCosts);
+			// display the top two highest money type
+			const displayTotalPartValue = formatDisplayValue(formatTotalPartCost);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.6em serif',
+						msg: displayTotalPartValue.highValue.type + ': ' + displayTotalPartValue.highValue.value,
+						posX: Game.placeEntityX(0.247),
+						posY: Game.placeEntityY(0.71),
+						color: 'green',
+						align: 'center',
+						props: {},
+						id: 'sell-part-high',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (displayTotalPartValue.lowValue.value) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawText({
+							font: '1.6em serif',
+							msg: displayTotalPartValue.lowValue.type + ': ' + displayTotalPartValue.lowValue.value,
+							posX: Game.placeEntityX(0.247),
+							posY: Game.placeEntityY(0.76),
+							color: 'green',
+							align: 'center',
+							props: {},
+							id: 'sell-part-low',
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			
+			
 			//Game.methodSetup = {
 				//method: function(id) {
 					//drawText({
