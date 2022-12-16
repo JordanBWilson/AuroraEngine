@@ -4020,13 +4020,27 @@ const homeSellRobots = {
 							isFilled: true,
 							id: 'confirm-part',
 							action: { method: function(id) {
-								if (confirmed && gameObject.selectedRobot.length === 6) {
-									// future Jordan, sell robot parts here
-									// buildRobot();
-								} 
-								//else {
-									//equipPart(part);
-								//}
+								// future Jordan, use below to sell the robot
+								
+								// gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
+								// gameObject.selectedRobotDesign = index;
+								
+								if (gameObject.selectedRobotDesign < gameObject.robotTeams.length) {
+									// sell the robot
+									gameObject.selectedRobotDesign++; // iterate to the next robot
+									// drawRobotPreview(); // draw the robot in the top left
+								} else if (gameObject.selectedRobotDesign >= gameObject.robotTeams.length) {
+									// sell the robot
+									gameObject.selectedRobotDesign--;
+									// drawRobotPreview(); // draw the robot in the top left
+									if (gameObject.selectedRobotDesign < 0) {
+										// go to the main sell robot menu
+										// where you pick the robot you want to sell
+										// perhaps put a message there saying "Empty"
+									}
+								}
+								
+								
 							}},
 							props: {},
 							methodId: id
