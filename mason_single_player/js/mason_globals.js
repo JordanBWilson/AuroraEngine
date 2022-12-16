@@ -144,7 +144,7 @@ const robotHeads = [
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
-			exoticScrap: 2,
+			exoticScrap: 0,
 		},
 	},
 	{
