@@ -4024,19 +4024,28 @@ const homeSellRobots = {
 								
 								// gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
 								// gameObject.selectedRobotDesign = index;
+								console.log('Robot: ', gameObject.selectedRobot, 'Index: ', gameObject.selectedRobotDesign);
 								
-								if (gameObject.selectedRobotDesign < gameObject.robotTeams.length) {
-									// sell the robot
-									gameObject.selectedRobotDesign++; // iterate to the next robot
-									// drawRobotPreview(); // draw the robot in the top left
-								} else if (gameObject.selectedRobotDesign >= gameObject.robotTeams.length) {
-									// sell the robot
-									gameObject.selectedRobotDesign--;
-									// drawRobotPreview(); // draw the robot in the top left
-									if (gameObject.selectedRobotDesign < 0) {
-										// go to the main sell robot menu
-										// where you pick the robot you want to sell
-										// perhaps put a message there saying "Empty"
+								if (gameObject.robotTeams.length > 0) {
+									if (gameObject.selectedRobotDesign + 1 <= gameObject.robotTeams.length) {
+										// remove the robot and add to the players funds
+										gameObject.robotTeams.splice(gameObject.selectedRobotDesign, 1);
+										console.log(gameObject.selectedRobotDesign, gameObject.robotTeams.length);
+										if (gameObject.selectedRobotDesign === gameObject.robotTeams.length) {
+											// if we reach the end of the list, load up the last robot
+											gameObject.selectedRobotDesign = gameObject.robotTeams.length - 1;
+											console.log(gameObject.selectedRobotDesign);
+										} else if (gameObject.robotTeams.length === 0) {
+											// no more robots to sell
+											// ***future Jordan, this isn't working quite yet***
+											homeSellRobots.loadPage();
+										}
+										if (gameObject.robotTeams.length > 0) {
+											// assign and load up the next robot to sell
+											gameObject.selectedRobot = gameObject.robotTeams[gameObject.selectedRobotDesign].robotParts;
+											drawRobotPreview();
+											console.log(gameObject.robotTeams);
+										}
 									}
 								}
 								
