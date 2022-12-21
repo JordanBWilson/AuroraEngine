@@ -1831,28 +1831,14 @@ const homeSellParts = {
 							action: {
 								method: function(id) {
 									if (!gameObject.buildButtonDisabled) {
-										const scrapCosts = [];
-										for (const scrap in part.scrapToBuild) {
-											if (part.scrapToBuild[scrap] > 0) {
-												const scrapObj = {
-													type: scrap, 
-													cost: part.scrapToBuild[scrap]
-												};
-												scrapCosts.push(scrapObj);
-											}
-										}
+										
+										const scrapCosts = gatherScrapCostFromPart(part);
 										// calculate how much we can sell the part for
 										// add the funds and subtract the part
 										if (part.count > 0) {
 											const formatPartCost = calculatePartPrice(scrapCosts);
-											const addPartCost = [
-												{ money: 'mythryl', price: formatPartCost.mythryl },
-												{ money: 'platinum', price: formatPartCost.platinum },
-												{ money: 'gold', price: formatPartCost.gold },
-												{ money: 'silver', price: formatPartCost.silver },
-												{ money: 'bronze', price: formatPartCost.bronze },
-												{ money: 'copper', price: formatPartCost.copper }
-											];
+											const addPartCost = formatPartsCostToFunds(formatPartCost);
+											
 											addFunds(addPartCost);
 											part.count--;
 											Particle.floatingText({
@@ -2267,8 +2253,7 @@ const homeSellParts = {
 
 // *** Home Sell Robot Page ***
 
-// future Jordan, we need to be able to sell a robot. 
-// in the sell robot select screen, we need
+// future Jordan, in the sell robot select screen, we need
 // to add navigation at the bottom for pagination. the sell robot select
 // screen should only display 6 robots made in robotTeams per page
 const homeSellRobots = {
@@ -2629,6 +2614,7 @@ const homeSellRobots = {
 		}
 		function factoryRobotDetails() {
 			Game.clearStage();
+			Particle.init();
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -4020,31 +4006,94 @@ const homeSellRobots = {
 							isFilled: true,
 							id: 'confirm-part',
 							action: { method: function(id) {
-								// future Jordan, use below to sell the robot
-								
-								// gameObject.selectedRobot = gameObject.robotTeams[index].robotParts;
-								// gameObject.selectedRobotDesign = index;
 								console.log('Robot: ', gameObject.selectedRobot, 'Index: ', gameObject.selectedRobotDesign);
 								
 								if (gameObject.robotTeams.length > 0) {
 									if (gameObject.selectedRobotDesign + 1 <= gameObject.robotTeams.length) {
 										// remove the robot and add to the players funds
 										gameObject.robotTeams.splice(gameObject.selectedRobotDesign, 1);
-										console.log(gameObject.selectedRobotDesign, gameObject.robotTeams.length);
+										gameObject.robotsMade--;
+										const totalRobotScrap = combineRobotParts(gameObject.selectedRobot);
+			
+										const totalScrapCosts = gatherScrapCostFromPart(totalRobotScrap);
+										const formatTotalPartCost = calculatePartPrice(totalScrapCosts);
+										const addPartCost = formatPartsCostToFunds(formatTotalPartCost);
+										addFunds(addPartCost);
+										
 										if (gameObject.selectedRobotDesign === gameObject.robotTeams.length) {
 											// if we reach the end of the list, load up the last robot
 											gameObject.selectedRobotDesign = gameObject.robotTeams.length - 1;
-											console.log(gameObject.selectedRobotDesign);
-										} else if (gameObject.robotTeams.length === 0) {
+										}
+										if (gameObject.robotTeams.length === 0 && gameObject.selectedRobotDesign === -1) {
 											// no more robots to sell
-											// ***future Jordan, this isn't working quite yet***
-											homeSellRobots.loadPage();
+											Particle.floatingText({
+												font: '2rem serif',
+												msg: '+            +',
+												align: 'center',
+												posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
+												posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
+												direction: 'top',
+												color: 'green',
+												ticks: 13,
+												speed: 0.8,
+											});
+											Particle.animComplete = {
+												method: function() {
+													factoryRobotDetails();
+													Game.methodSetup = {
+														method: function(id) {
+															drawModal({
+																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+																posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+																width: (Game.entitySize * 40),
+																height: (Game.entitySize * 30),
+																lineWidth: 1,
+																modalColor: 'darkgrey',
+																msgColor: 'white',
+																msgFont: '1.3em serif',
+																msg: 'No Robots to Sell',
+																footerColor: 'white',
+																footerFont: '1em serif',
+																footerMsg: 'Tap here to continue',
+																bgColor: '',
+																isModalFilled: true,
+																id: Game.modalId,
+																action: { 
+																	method: function(id) {
+																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																		Game.deleteEntity(modal.methodId);
+																		homeSellRobots.loadPage();
+																	 }
+																},
+																props: {},
+																methodId: id
+															});
+														}
+													};
+													Game.addMethod(Game.methodSetup);
+												}
+											};
 										}
 										if (gameObject.robotTeams.length > 0) {
 											// assign and load up the next robot to sell
 											gameObject.selectedRobot = gameObject.robotTeams[gameObject.selectedRobotDesign].robotParts;
-											drawRobotPreview();
-											console.log(gameObject.robotTeams);
+											Particle.floatingText({
+												font: '2rem serif',
+												msg: '+            +',
+												align: 'center',
+												posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
+												posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
+												direction: 'top',
+												color: 'green',
+												ticks: 13,
+												speed: 0.8,
+											});
+											Particle.animComplete = {
+												method: function() {
+													factoryRobotDetails();					
+												}
+											};
+											
 										}
 									}
 								}

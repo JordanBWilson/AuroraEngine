@@ -712,7 +712,6 @@ function checkSubtractFunds(subFunds) {
 
 function subtractFunds(subFunds) {
 	const plentyFunds = checkSubtractFunds(subFunds);
-	console.log(plentyFunds);
 	if (plentyFunds) {
 		subFunds.forEach(fund => {
 			if (fund.money === 'copper') {
@@ -1150,6 +1149,18 @@ function combineRobotParts(robot) {
 	return parts;
 }
 
+function formatPartsCostToFunds(formatPartCost) {
+	const addPartCost = [
+		{ money: 'mythryl', price: formatPartCost.mythryl },
+		{ money: 'platinum', price: formatPartCost.platinum },
+		{ money: 'gold', price: formatPartCost.gold },
+		{ money: 'silver', price: formatPartCost.silver },
+		{ money: 'bronze', price: formatPartCost.bronze },
+		{ money: 'copper', price: formatPartCost.copper }
+	];
+	return addPartCost;
+}
+
 function gatherScrapCostFromPart(part) {
 	const scrapCosts = [];
 	for (const scrap in part.scrapToBuild) {
@@ -1347,7 +1358,6 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 			});
 		}
 	});
-	console.log(partCost);
 	const formatPartCost = {
 		mythryl: 0,
 		platinum: 0,
@@ -1413,6 +1423,5 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 	} else {
 		formatPartCost.platinum = partCost.platinum;
 	}
-	console.log(formatPartCost);
 	return formatPartCost;
 }
