@@ -2358,8 +2358,11 @@ const homeSellRobots = {
 					posYoffset = -22;
 				}
 				if (robotSelectRow === 3) {
-					posY = 0.54;
-					posYoffset = -33;
+					// future Jordan, stop the robot count here
+					// build in pagination
+					// gameObject.partPageIndex; will hold the page we are on
+					console.log(gameObject.robotTeams);
+					break;
 				}
 				if (robotCount === 1) {
 					posX = 0.07;
