@@ -2296,9 +2296,10 @@ const homeSellRobots = {
 						action: { 
 							method: function(id) { 
 								homeSellMenus.loadPage();
-								gameObject.partsDisplayed = ''; 
+								gameObject.partsDisplayed = '';
 								gameObject.selectedRobotDesign = -1;
 								gameObject.buildButtonDisabled = false;
+								gameObject.partPageIndex = 0;
 							}
 						},
 						props: {},
@@ -2343,7 +2344,8 @@ const homeSellRobots = {
 			Game.addMethod(Game.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
-			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+			console.log(gameObject.partPageIndex);
+			for (let i = gameObject.partPageIndex; i < gameObject.robotTeams.length; i++) {
 				robotCount++;
 				let posY = 0
 				let posYoffset = 0;
@@ -2416,6 +2418,8 @@ const homeSellRobots = {
 				
 			}
 			drawRobotSelectParts();
+			
+			drawNextPrevRobotList(gameObject.robotTeams);
 
 			Game.pageResized = {
 				section: 'factory-robot-select',
@@ -3298,20 +3302,20 @@ const homeSellRobots = {
 				};
 				Game.addMethod(Game.methodSetup);
 			}
-			drawNextPrevPartList(partsDiscovered, limbPos);
+			// drawNextPrevPartList(partsDiscovered, limbPos);
 		}
 
-		function drawNextPrevPartList(partList, limbPos) {
+		function drawNextPrevRobotList(robotList) {
 			// the part could be head, chassis, legs or arms
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.135),
+						posX: Game.placeEntityX(0.245, (Game.entitySize * 22.5)),
+						posY: Game.placeEntityY(0.90),
 						width: (Game.entitySize * 22),
 						height: (Game.entitySize * 7),
 						lineWidth: 1,
-						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
+						btnColor: robotList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
 						font: '1.5em serif',
 						msg: 'Next',
@@ -3319,12 +3323,13 @@ const homeSellRobots = {
 						id: 'next-part',
 						action: {
 							method: function(id) {
-								gameObject.partPageIndex++; // go to the next part page
-								clearRobotParts(); // clear the previous parts
-								displayDiscoveredParts(partList, limbPos);
-								if (gameObject.selectedRobot.length === 6) {
-									displaySelectPart({}, true);
+								// future Jordan, look into pagination. also move the buttons a bit
+								
+								gameObject.partPageIndex += 6; // go to the next part page
+								if (gameObject.partPageIndex > robotList.length) {
+									gameObject.partPageIndex = 0; // back to the beginning
 								}
+								sellRobotSelect(); // draw the sell robot page
 							}
 						},
 						props: {},
@@ -3341,7 +3346,7 @@ const homeSellRobots = {
 						width: (Game.entitySize * 22),
 						height: (Game.entitySize * 7),
 						lineWidth: 1,
-						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
+						btnColor: robotList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
 						font: '1.5em serif',
 						msg: 'Previous',
@@ -3349,16 +3354,13 @@ const homeSellRobots = {
 						id: 'last-part',
 						action: {
 							method: function(id) {
-								gameObject.partPageIndex--; // go back a page
-								if (gameObject.partPageIndex < 0) { // if the page is at the beginning
-									// go to the last page
-									gameObject.partPageIndex = (gameObject.discoveredPartsList.length - 1);
+								gameObject.partPageIndex -= 6; // go to the next part page
+								if (gameObject.partPageIndex < robotList.length) {
+									console.log(robotList.length % 6);
+									gameObject.partPageIndex = robotList.length - (robotList.length % 6); // back to the beginning
+									
 								}
-								clearRobotParts(); // clear the previous parts
-								displayDiscoveredParts(partList, limbPos);
-								if (gameObject.selectedRobot.length === 6) {
-									displaySelectPart({}, true);
-								}
+								sellRobotSelect(); // draw the sell robot page
 							}
 						},
 						props: {},
