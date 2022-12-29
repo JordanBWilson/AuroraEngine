@@ -3306,16 +3306,15 @@ const homeSellRobots = {
 		}
 
 		function drawNextPrevRobotList(robotList) {
-			// the part could be head, chassis, legs or arms
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.245, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.90),
+						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+						posY: Game.placeEntityY(0.80),
 						width: (Game.entitySize * 22),
 						height: (Game.entitySize * 7),
 						lineWidth: 1,
-						btnColor: robotList.length < 5 ? '#C0C0C0' : '#808080',
+						btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
 						font: '1.5em serif',
 						msg: 'Next',
@@ -3323,8 +3322,8 @@ const homeSellRobots = {
 						id: 'next-part',
 						action: {
 							method: function(id) {
-								// future Jordan, look into pagination. also move the buttons a bit
-								
+								// future Jordan, when selling the last robot on page 2 for instance,
+								// it should take you back to page 1 so you're not looking at a blank page
 								gameObject.partPageIndex += 6; // go to the next part page
 								if (gameObject.partPageIndex > robotList.length) {
 									gameObject.partPageIndex = 0; // back to the beginning
@@ -3341,12 +3340,12 @@ const homeSellRobots = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.90),
+						posX: Game.placeEntityX(0.245, (Game.entitySize * 22.5)),
+						posY: Game.placeEntityY(0.80),
 						width: (Game.entitySize * 22),
 						height: (Game.entitySize * 7),
 						lineWidth: 1,
-						btnColor: robotList.length < 5 ? '#C0C0C0' : '#808080',
+						btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
 						font: '1.5em serif',
 						msg: 'Previous',
@@ -3356,9 +3355,11 @@ const homeSellRobots = {
 							method: function(id) {
 								gameObject.partPageIndex -= 6; // go to the next part page
 								if (gameObject.partPageIndex < robotList.length) {
-									console.log(robotList.length % 6);
-									gameObject.partPageIndex = robotList.length - (robotList.length % 6); // back to the beginning
-									
+									if (gameObject.partPageIndex < 0) {
+										gameObject.partPageIndex = robotList.length - (robotList.length % 6); // back to the beginning
+									} else {
+										gameObject.partPageIndex = 0;
+									}
 								}
 								sellRobotSelect(); // draw the sell robot page
 							}
