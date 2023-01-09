@@ -2278,11 +2278,6 @@ const homeSellParts = {
 }
 
 // *** Home Sell Robot Page ***
-
-// future Jordan, it's time to build the upgrade menu.
-// the upgrade menu will need a dialog box that can support 3 
-// rows of text and a button at the bottom.
-// have 3 rows by 2 columns of buttons to display the upgrades and level
 const homeSellRobots = {
 	description: 'This is where the player can sell their robots',
 	loadPage: function() {
@@ -3757,6 +3752,11 @@ const homeSellRobots = {
 		}
 	}	
 }
+// *** Home Player Upgrades Page ***
+// future Jordan, make the modal width just a little bit wider
+// for the text to fit on smaller screens. make the upgrades work.
+// don't forget to setup the parts. the player should only be able to
+// work on parts and robots within their level
 const homePlayerUpgrades = {
 	description: 'This is where the player can upgrade their stats',
 	loadPage: function() {
@@ -3845,90 +3845,217 @@ const homePlayerUpgrades = {
 			};
 			Game.addMethod(Game.methodSetup);
 			
-			Game.methodSetup = {
-				method: function(id) {
-					drawDialogueModal({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-						width: (Game.entitySize * 40),
-						height: (Game.entitySize * 40),
-						lineWidth: 1,
-						modalColor: 'darkgrey',
-						msgColor: 'white',
-						msgFont: '1em serif',
-						msgs: ['Level 1', 'Engineering', 'Build better parts and robots'],
-						msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
-						msgDistance: (Game.entitySize * 5),
-						bgColor: '',
-						isModalFilled: true,
-						id: Game.modalId,
-						action: {
-							method: function(id) {}
-						},
-						isModalBtn: false,
-						props: {},
-						methodId: id
-					});
+			let upgradeCount = 0;
+			let upgradeSelectRow = 1;
+			for (let i = 0; i < 9; i++) {
+				upgradeCount++;
+				let posY = 0
+				let posYoffset = 0;
+				let posX = 0;
+				let posXoffset = 0;
+				if (upgradeSelectRow === 1) {
+					posY = 0.14;
+					posYoffset = -11;
 				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-						posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
-						width: (Game.entitySize * 40) - (Game.canvas.width * 0.04),
-						height: (Game.entitySize * 7),
-						lineWidth: 1,
-						btnColor: 'grey',
-						txtColor: 'white',
-						font: '1.3em serif',
-						msg: 'Upgrade',
-						isFilled: true,
-						id: 'upgrade-stat',
-						action: { 
-							method: function(id) { 
-								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-								Game.deleteEntity(modal.methodId);
-								homePlayerUpgrades.loadPage();
-							}
-						},
-						isModalBtn: true,
-						props: {},
-						methodId: id
-					});
+				if (upgradeSelectRow === 2) {
+					posY = 0.34;
+					posYoffset = -22;
 				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-						posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
-						width:(Game.entitySize * 40) - (Game.canvas.width * 0.04),
-						height: (Game.entitySize * 7),
-						lineWidth: 1,
-						btnColor: 'grey',
-						txtColor: 'white',
-						font: '1.3em serif',
-						msg: 'Cancel',
-						isFilled: true,
-						id: 'cancel-upgrade',
-						action: { 
-							method: function(id) { 
-								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-								Game.deleteEntity(modal.methodId);
-								homePlayerUpgrades.loadPage();
-							}
-						},
-						isModalBtn: true,
-						props: {},
-						methodId: id
-					});
+				if (upgradeSelectRow === 3) {
+					posY = 0.54;
+					posYoffset = -33;
 				}
-			};
-			Game.addMethod(Game.methodSetup);
-			
+				if (upgradeCount === 1) {
+					posX = 0.0365;
+					posXoffset = -0.01;
+				}
+				if (upgradeCount === 2) {
+					posX = 0.36;
+					posXoffset = -0.05;
+				}
+				if (upgradeCount === 3) {
+					posX = 0.68;
+					posXoffset = -0.4;
+				}	
+				
+				Game.methodSetup = {
+					method: function(id) {
+						const upgradeIndex = i;
+						let upgradeTitle = '';
+						if (upgradeIndex === 0) {
+							upgradeTitle = 'Factory';
+						}
+						if (upgradeIndex === 1) {
+							upgradeTitle = 'Engineering';
+						}
+						if (upgradeIndex === 2) {
+							upgradeTitle = 'Robotics';
+						}
+						if (upgradeIndex === 3) {
+							upgradeTitle = 'Scrapping';
+						}
+						if (upgradeIndex === 4) {
+							upgradeTitle = 'Bartering';
+						}
+						if (upgradeIndex === 5) {
+							upgradeTitle = 'Arena';
+						}
+						if (upgradeIndex === 6) {
+							upgradeTitle = 'Scrap Space';
+						}
+						if (upgradeIndex === 7) {
+							upgradeTitle = 'Part Space';
+						}
+						if (upgradeIndex === 8) {
+							upgradeTitle = 'Robot Space';
+						}
+						drawButton({
+							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+							width: (Game.canvas.width * 0.28),
+							height: (Game.entitySize * 20),
+							lineWidth: 1,
+							btnColor: 'darkgrey',
+							txtColor: 'white',
+							font: '1em serif',
+							msg: upgradeTitle,
+							isFilled: true,
+							id: 'upgrade-stat-' + upgradeIndex,
+							action: { 
+								method: function(id) {
+									console.log(upgradeIndex);
+									let msgs = [];
+									if (upgradeIndex === 0) {
+										msgs = ['Level ' + gameObject.factoryLevel, 'Factory', 'Create Powerful Parts and Robots'];
+									}
+									if (upgradeIndex === 1) {
+										msgs = ['Level ' + gameObject.engineeringSkill, 'Engineering', 'Build Better Parts'];
+									}
+									if (upgradeIndex === 2) {
+										msgs = ['Level ' + gameObject.roboticSkill, 'Robotics', 'Build Better Robots'];
+									}
+									if (upgradeIndex === 3) {
+										msgs = ['Level ' + gameObject.scrapperSkill, 'Scrapping', 'Find Better Scrap Faster'];
+									}
+									if (upgradeIndex === 4) {
+										msgs = ['Level ' + gameObject.barterSkill, 'Bartering', 'Trade For Better Prices'];
+									}
+									if (upgradeIndex === 5) {
+										msgs = ['Level ' + gameObject.arenaLevel, 'Arena', 'Unlock Better Towers and Prizes'];
+									}
+									if (upgradeIndex === 6) {
+										msgs = ['Level ' + gameObject.scrapInvintory, 'Scrap Space', 'Total Scrap Storage'];
+									}
+									if (upgradeIndex === 7) {
+										msgs = ['Level ' + gameObject.partStorage, 'Part Space', 'Total Unique Robot Part Storage'];
+									}
+									if (upgradeIndex === 8) {
+										msgs = ['Level ' + gameObject.robotStorage, 'Robot Space', 'Total Robot Storage'];
+									}
+									
+									Game.methodSetup = {
+										method: function(id) {
+											drawDialogueModal({
+												posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+												width: (Game.entitySize * 40),
+												height: (Game.entitySize * 40),
+												lineWidth: 1,
+												modalColor: 'darkgrey',
+												msgColor: 'white',
+												msgFont: '1em serif',
+												msgs: msgs,
+												msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
+												msgDistance: (Game.entitySize * 5),
+												bgColor: 'grey',
+												isModalFilled: true,
+												id: Game.modalId,
+												action: {
+													method: function(id) {}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
+												width: (Game.entitySize * 40) - (Game.canvas.width * 0.04),
+												height: (Game.entitySize * 7),
+												lineWidth: 1,
+												btnColor: 'grey',
+												txtColor: 'white',
+												font: '1.3em serif',
+												msg: 'Upgrade',
+												isFilled: true,
+												id: 'upgrade-stat',
+												action: { 
+													method: function(id) { 
+														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+														Game.deleteEntity(modal.methodId);
+														homePlayerUpgrades.loadPage();
+													}
+												},
+												isModalBtn: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
+												width:(Game.entitySize * 40) - (Game.canvas.width * 0.04),
+												height: (Game.entitySize * 7),
+												lineWidth: 1,
+												btnColor: 'grey',
+												txtColor: 'white',
+												font: '1.3em serif',
+												msg: 'Cancel',
+												isFilled: true,
+												id: 'cancel-upgrade',
+												action: { 
+													method: function(id) { 
+														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+														Game.deleteEntity(modal.methodId);
+														homePlayerUpgrades.loadPage();
+													}
+												},
+												isModalBtn: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								}
+							},
+							isModalBtn: false,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+				
+				if (i === 2) {
+					upgradeSelectRow++;
+				}
+				if (i === 5) {
+					upgradeSelectRow++;
+				}
+				if (upgradeCount === 3) {
+					upgradeCount = 0;
+				}
+			}
 		}
 		upgradePlayer(); // draw the upgrade menu
 	}

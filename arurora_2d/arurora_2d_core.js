@@ -53,8 +53,8 @@ function drawSimpleModal(incomingModal) {
   drawSimpleModalMethod(incomingModal);
 }
 // this will draw a modal using an image
-function drawSimpleModalImage(incomingModalImage) {
-  drawSimpleModalImageMethod(incomingModalImage);
+function drawModalImage(incomingModalImage) {
+  drawModalImageMethod(incomingModalImage);
 }
 // this will draw a dialogue modal with two buttons and display
 // multiple messages to the screen
@@ -897,7 +897,7 @@ function redrawSimpleModal(incomingModal) {
 	Main.stage.font = incomingModal.footerFont;
 	Main.stage.fillText(incomingModal.footerMsg, (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.posY + (incomingModal.height * 0.96)));
 }
-function drawSimpleModalImageMethod(incomingModalImage) {
+function drawModalImageMethod(incomingModalImage) {
   let doesExist = doesMethodParamExist(incomingModalImage.methodId);
   let index = -1;
   if (doesExist) {
@@ -916,7 +916,7 @@ function drawSimpleModalImageMethod(incomingModalImage) {
       id: incomingModalImage.id,
       action: incomingModalImage.action,
       isBtn: true,
-      isModalBtn: true,
+      isModalBtn: incomingModalImage.incomingModalImage,
       isAnim: false,
       props: incomingModalImage.props,
       methodId: incomingModalImage.methodId,
