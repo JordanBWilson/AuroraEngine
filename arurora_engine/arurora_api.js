@@ -29,6 +29,7 @@ const Game = { // the user will want to use this object
     this.pageResized.section = '';
     Main.methodObjectShadows = [];
     Main.globalId = 0;
+    Main.isModalVisible = false;
     if (typeof Particle !== 'undefined') {
 		Particle.animComplete = {
 			method: function() {}
@@ -78,7 +79,7 @@ const Game = { // the user will want to use this object
       if (this.methodObjects[i].methodId === id) {
         for (let j = 0; j < Main.methodsToRun.length; j++) {
           if (this.methodObjects[i]?.methodId === Main.methodsToRun[j]?.methodId) {
-			  if (this.methodObjects[i].isModal) {
+			  if (this.methodObjects[i].isModalBtn) {
 				  Main.isModalVisible = false;
 			  }
             this.methodObjects.splice(i, 1);

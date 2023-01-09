@@ -54,6 +54,7 @@ const homePage = {
 								mainPage.loadPage();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -113,6 +114,7 @@ const homePage = {
 								console.log('load up the map menu');
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -138,6 +140,7 @@ const homePage = {
 								homeSellMenus.loadPage();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -160,9 +163,10 @@ const homePage = {
 						id: 'home-select-upgrade',
 						action: { 
 							method: function(id) { 
-								console.log('load up the upgrade menu');
+								homePlayerUpgrades.loadPage();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -219,6 +223,7 @@ const homeSellMenus = {
 								homePage.loadPage();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -278,6 +283,7 @@ const homeSellMenus = {
 								homeSellScrap.loadPage();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -303,6 +309,7 @@ const homeSellMenus = {
 								homeSellParts.loadPage();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -328,6 +335,7 @@ const homeSellMenus = {
 								homeSellRobots.loadPage();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -439,6 +447,7 @@ const homeSellScrap = {
 								gameObject.buildButtonDisabled = false;
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -478,7 +487,7 @@ const homeSellScrap = {
 						setTimeout(function() {
 							Game.methodSetup = {
 								method: function(id) {
-									drawModal({
+									drawSimpleModal({
 										posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 										posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 										width: (Game.entitySize * 40),
@@ -597,6 +606,7 @@ const homeSellScrap = {
 								
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -624,6 +634,7 @@ const homeSellScrap = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -651,6 +662,7 @@ const homeSellScrap = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -678,6 +690,7 @@ const homeSellScrap = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -705,6 +718,7 @@ const homeSellScrap = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -732,6 +746,7 @@ const homeSellScrap = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -759,6 +774,7 @@ const homeSellScrap = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1135,6 +1151,7 @@ const homeSellScrap = {
 								}, 0);
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1306,7 +1323,7 @@ const homeSellScrap = {
 		function displayNotEnoughScrapModal() {
 			Game.methodSetup = {
 				method: function(id) {
-					drawModal({
+					drawSimpleModal({
 						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 						width: (Game.entitySize * 40),
@@ -1443,6 +1460,7 @@ const homeSellParts = {
 							 gameObject.buildButtonDisabled = false;
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1487,7 +1505,7 @@ const homeSellParts = {
 						setTimeout(function() {
 							Game.methodSetup = {
 								method: function(id) {
-									drawModal({
+									drawSimpleModal({
 										posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 										posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 										width: (Game.entitySize * 40),
@@ -1535,6 +1553,7 @@ const homeSellParts = {
 							selectSellPartChassis();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1559,6 +1578,7 @@ const homeSellParts = {
 							selectSellPartHead();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1583,6 +1603,7 @@ const homeSellParts = {
 							selectSellPartArms();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1607,6 +1628,7 @@ const homeSellParts = {
 							selectSellPartLegs();
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1709,6 +1731,7 @@ const homeSellParts = {
 									displaySelectSellPartParts(discoveredPart);
 								}
 							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -1735,6 +1758,7 @@ const homeSellParts = {
 									displaySelectSellPartParts(discoveredPart);
 								}
 							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -1769,6 +1793,7 @@ const homeSellParts = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1802,6 +1827,7 @@ const homeSellParts = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1861,7 +1887,7 @@ const homeSellParts = {
 											setTimeout(function() {
 												Game.methodSetup = {
 													method: function(id) {
-														drawModal({
+														drawSimpleModal({
 															posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 															posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 															width: (Game.entitySize * 40),
@@ -1911,6 +1937,7 @@ const homeSellParts = {
 										
 								}
 							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -2302,6 +2329,7 @@ const homeSellRobots = {
 								gameObject.partPageIndex = 0;
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2461,6 +2489,7 @@ const homeSellRobots = {
 								factoryRobotDetails(); 
 							}
 						},
+						isModalBtn: false,
 						props: {
 							drawHead: function(parent) {
 								Game.methodSetup = {
@@ -2484,6 +2513,7 @@ const homeSellRobots = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -2513,6 +2543,7 @@ const homeSellRobots = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -2542,6 +2573,7 @@ const homeSellRobots = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -2571,6 +2603,7 @@ const homeSellRobots = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -2600,6 +2633,7 @@ const homeSellRobots = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -2712,6 +2746,7 @@ const homeSellRobots = {
 								gameObject.buildButtonDisabled = false;
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2930,6 +2965,7 @@ const homeSellRobots = {
 						action: { method: function(id) { 
 							
 						}},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2953,6 +2989,7 @@ const homeSellRobots = {
 						action: { method: function(id) { 
 							
 						}},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2976,6 +3013,7 @@ const homeSellRobots = {
 						action: { method: function(id) { 
 							
 						}},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2999,6 +3037,7 @@ const homeSellRobots = {
 						action: { method: function(id) { 
 							
 						}},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -3022,6 +3061,7 @@ const homeSellRobots = {
 						action: { method: function(id) { 
 							
 						}},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -3045,6 +3085,7 @@ const homeSellRobots = {
 						action: { method: function(id) { 
 							
 						}},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -3084,6 +3125,7 @@ const homeSellRobots = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -3119,6 +3161,7 @@ const homeSellRobots = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -3629,7 +3672,7 @@ const homeSellRobots = {
 													factoryRobotDetails();
 													Game.methodSetup = {
 														method: function(id) {
-															drawModal({
+															drawSimpleModal({
 																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 																posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 																width: (Game.entitySize * 40),
@@ -3687,6 +3730,7 @@ const homeSellRobots = {
 								
 								
 							}},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -3712,4 +3756,180 @@ const homeSellRobots = {
 			}, 0);
 		}
 	}	
+}
+const homePlayerUpgrades = {
+	description: 'This is where the player can upgrade their stats',
+	loadPage: function() {
+		function upgradePlayer() {
+			Game.clearStage();
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0),
+						posY: Game.placeEntityY(0),
+						width: Game.canvas.width,
+						height: (Game.canvas.height),
+						lineWidth: 1,
+						color: 'grey',
+						isFilled: true,
+						id: 'upgrade-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.03),
+						posY: Game.placeEntityY(0.03),
+						width: (Game.entitySize * 12),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: 'Back',
+						isFilled: true,
+						id: 'upgrade-back-game',
+						action: { 
+							method: function(id) { 
+								homePage.loadPage();
+								// gameObject.partsDisplayed = '';
+								// gameObject.selectedRobotDesign = -1;
+								// gameObject.buildButtonDisabled = false;
+								// gameObject.partPageIndex = 0;
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.1em serif',
+						msg: 'Upgrades',
+						posX: Game.placeEntityX(0.525),
+						posY: Game.placeEntityY(0.085),
+						color: 'darkgrey',
+						align: 'center',
+						props: {},
+						id: 'upgrade-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.94),
+						height: (Game.canvas.height * 0.855),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'upgrade-select-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawDialogueModal({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+						width: (Game.entitySize * 40),
+						height: (Game.entitySize * 40),
+						lineWidth: 1,
+						modalColor: 'darkgrey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: ['Level 1', 'Engineering', 'Build better parts and robots'],
+						msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
+						msgDistance: (Game.entitySize * 5),
+						bgColor: '',
+						isModalFilled: true,
+						id: Game.modalId,
+						action: {
+							method: function(id) {}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
+						width: (Game.entitySize * 40) - (Game.canvas.width * 0.04),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'grey',
+						txtColor: 'white',
+						font: '1.3em serif',
+						msg: 'Upgrade',
+						isFilled: true,
+						id: 'upgrade-stat',
+						action: { 
+							method: function(id) { 
+								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+								Game.deleteEntity(modal.methodId);
+								homePlayerUpgrades.loadPage();
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
+						width:(Game.entitySize * 40) - (Game.canvas.width * 0.04),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'grey',
+						txtColor: 'white',
+						font: '1.3em serif',
+						msg: 'Cancel',
+						isFilled: true,
+						id: 'cancel-upgrade',
+						action: { 
+							method: function(id) { 
+								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+								Game.deleteEntity(modal.methodId);
+								homePlayerUpgrades.loadPage();
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+		}
+		upgradePlayer(); // draw the upgrade menu
+	}
 }

@@ -129,10 +129,11 @@ const mainPage = {
 					// 	ticks: 0,
 			  //   id: 'rock',
 			  //   action: { method: function(id) { mineScrap(); }},
+			  //   isModalBtn: false,
 			  //   props: {},
 			  //   methodId: id
 			  // });
-					drawButton({
+			drawButton({
 				posX: Game.placeEntityX(0.50, (Game.entitySize * 15)),
 				posY: Game.placeEntityY(0.75, (Game.entitySize * 15)),
 				width: (Game.entitySize * 15),
@@ -145,6 +146,7 @@ const mainPage = {
 				isFilled: true,
 				id: 'scrap',
 				action: { method: function(id) { mineScrap(); }},
+				isModalBtn: false,
 				props: {},
 				methodId: id
 			  });
@@ -166,6 +168,7 @@ const mainPage = {
 						isFilled: true,
 						id: 'home',
 						action: { method: function(id) { openHome(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -187,6 +190,7 @@ const mainPage = {
 						isFilled: true,
 						id: 'factory',
 						action: { method: function(id) { openFactory(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -208,6 +212,7 @@ const mainPage = {
 						isFilled: true,
 						id: 'arena',
 						action: { method: function(id) { openArena(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});

@@ -623,6 +623,7 @@ function drawLoseMenu() {
         isFilled: true,
         id: 'restart',
         action: { method: function(id) { playGame(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -644,6 +645,7 @@ function drawLoseMenu() {
         isFilled: true,
         id: 'exit',
         action: { method: function(id) { drawMainMenu(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -675,6 +677,7 @@ function drawWinMenu() {
         isFilled: true,
         id: 'main-menu',
         action: { method: function(id) { drawMainMenu(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -743,6 +746,7 @@ function drawMainMenu() { // draw the main menu
         isFilled: true,
         id: 'play',
         action: { method: function(id) { playGame(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -764,6 +768,7 @@ function drawMainMenu() { // draw the main menu
         isFilled: true,
         id: 'highscores',
         action: { method: function(id) { highscoreMenu(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -785,6 +790,7 @@ function drawMainMenu() { // draw the main menu
         isFilled: true,
         id: 'settings',
         action: { method: function(id) { settingsMenu(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -819,6 +825,7 @@ function settingsMenu() {
         isFilled: true,
         id: 'high-quality',
         action: { method: function(id) { Game.setSettingsHigh(); selectSetting(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -840,6 +847,7 @@ function settingsMenu() {
         isFilled: true,
         id: 'med-quality',
         action: { method: function(id) { Game.setSettingsMed(); selectSetting(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -861,6 +869,7 @@ function settingsMenu() {
         isFilled: true,
         id: 'low-quality',
         action: { method: function(id) { Game.setSettingsLow(); selectSetting(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -882,6 +891,7 @@ function settingsMenu() {
         isFilled: true,
         id: 'back',
         action: { method: function(id) { drawMainMenu(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -921,6 +931,7 @@ function highscoreMenu() {
         isFilled: true,
         id: 'back',
         action: { method: function(id) { drawMainMenu(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });
@@ -945,6 +956,7 @@ function drawToolbar() {
         isFilled: true,
         id: 'exit',
         action: { method: function(id) { drawMainMenu(); }},
+        isModalBtn: false,
         props: {},
         methodId: id
       });

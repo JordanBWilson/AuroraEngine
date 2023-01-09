@@ -146,6 +146,11 @@ const robotHeads = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		headId: 2,
@@ -168,6 +173,11 @@ const robotHeads = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 	{
@@ -192,6 +202,11 @@ const robotHeads = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		headId: 4,
@@ -214,6 +229,11 @@ const robotHeads = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 ];
@@ -240,6 +260,11 @@ const robotChassis = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		chassisId: 2,
@@ -262,6 +287,11 @@ const robotChassis = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 	{
@@ -286,6 +316,11 @@ const robotChassis = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		chassisId: 4,
@@ -308,6 +343,11 @@ const robotChassis = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 	{
@@ -332,6 +372,11 @@ const robotChassis = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		chassisId: 6,
@@ -354,6 +399,11 @@ const robotChassis = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 ];
@@ -381,6 +431,11 @@ const robotLegs = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		legId: 2,
@@ -404,6 +459,11 @@ const robotLegs = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 	{
@@ -429,6 +489,11 @@ const robotLegs = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		legId: 4,
@@ -452,6 +517,11 @@ const robotLegs = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 ];
@@ -479,6 +549,11 @@ const robotArms = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		armId: 2,
@@ -502,6 +577,11 @@ const robotArms = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 	{
@@ -527,6 +607,11 @@ const robotArms = [
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
+		},
 	},
 	{
 		armId: 4,
@@ -550,6 +635,11 @@ const robotArms = [
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
+		},
+		requires: {
+			factoryLevel: 0,
+			roboticSkill: 0,
+			engineeringSkill: 0,
 		},
 	},
 ];

@@ -48,14 +48,20 @@ function drawButtonImage(incomingButtonImage) {
 function drawLoadingScreen(incomingLoadingScreen) {
   drawLoadingScreenMethod(incomingLoadingScreen);
 }
-// this will draw a modal and display a message to the screen
-function drawModal(incomingModal) {
-  drawModalMethod(incomingModal);
+// this will draw a simple modal and display a message to the screen
+function drawSimpleModal(incomingModal) {
+  drawSimpleModalMethod(incomingModal);
 }
 // this will draw a modal using an image
-function drawModalImage(incomingModalImage) {
-  drawModalImageMethod(incomingModalImage);
+function drawSimpleModalImage(incomingModalImage) {
+  drawSimpleModalImageMethod(incomingModalImage);
 }
+// this will draw a dialogue modal with two buttons and display
+// multiple messages to the screen
+function drawDialogueModal(incomingModal) {
+  drawDialogueModalMethod(incomingModal);
+}
+// future Jordan, we'll probably will want a dialogue modal image as well
 
 // this is where all the work happens for the methods above
 
@@ -354,6 +360,7 @@ function drawButtonMethod(incomingButton) {
       isFilled: incomingButton.isFilled,
       id: incomingButton.id,
       action: incomingButton.action,
+      isModalBtn: incomingButton.isModalBtn,
       isBtn: true,
       isAnim: false,
       props: incomingButton.props,
@@ -679,6 +686,7 @@ function drawButtonImageMethod(incomingButtonImage) {
       ticks: incomingButtonImage.ticks,
       id: incomingButtonImage.id,
       action: incomingButtonImage.action,
+      isModalBtn: incomingButtonImage.isModalBtn,
       isBtn: true,
       isAnim: false,
       props: incomingButtonImage.props,
@@ -744,7 +752,7 @@ function drawButtonImageMethod(incomingButtonImage) {
       Game.methodObjects[index].isAnim = false;
    }
 }
-function drawModalMethod(incomingModal) {
+function drawSimpleModalMethod(incomingModal) {
   let doesExist = doesMethodParamExist(incomingModal.methodId);
   let index = -1;
   if (doesExist) {
@@ -769,13 +777,13 @@ function drawModalMethod(incomingModal) {
       id: incomingModal.id,
       action: incomingModal.action,
       isBtn: true,
-      isModal: true,
+      isModalBtn: true,
       isAnim: false,
       props: incomingModal.props,
       methodId: incomingModal.methodId,
     }
     Game.methodObjects.push(modal);
-    redrawModal(incomingModal);
+    redrawSimpleModal(incomingModal);
     const shadowModal = Object.assign({}, modal);
     Main.methodObjectShadows.push(shadowModal);
   }
@@ -814,7 +822,7 @@ function drawModalMethod(incomingModal) {
     Main.methodObjectShadows[index].action = incomingModal.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModal.props;
-    redrawModal(incomingModal);
+    redrawSimpleModal(incomingModal);
   }
   // checking for animations
   if (doesExist &&
@@ -833,12 +841,12 @@ function drawModalMethod(incomingModal) {
    Game.methodObjects[index].bgColor !== Main.methodObjectShadows[index].bgColor ||
    Game.methodObjects[index].isModalFilled !== Main.methodObjectShadows[index].isModalFilled)
    ) {
-     redrawModal(Game.methodObjects[index]);
+     redrawSimpleModal(Game.methodObjects[index]);
       const shadowModal = Object.assign({}, Game.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowModal;
       Game.methodObjects[index].isAnim = true;
    } else if (doesExist && Game.methodObjects[index].isAnim) {
-      redrawModal(Game.methodObjects[index]);
+      redrawSimpleModal(Game.methodObjects[index]);
       Game.methodObjects[index].isAnim = false;
    } else if (doesExist &&
     (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
@@ -858,7 +866,7 @@ function drawModalMethod(incomingModal) {
       Game.methodObjects[index].isAnim = false;
    }
 }
-function redrawModal(incomingModal) {
+function redrawSimpleModal(incomingModal) {
 	
 	if (incomingModal.bgColor.length > 0) {
 		Main.stage.beginPath();
@@ -889,7 +897,7 @@ function redrawModal(incomingModal) {
 	Main.stage.font = incomingModal.footerFont;
 	Main.stage.fillText(incomingModal.footerMsg, (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.posY + (incomingModal.height * 0.96)));
 }
-function drawModalImageMethod(incomingModalImage) {
+function drawSimpleModalImageMethod(incomingModalImage) {
   let doesExist = doesMethodParamExist(incomingModalImage.methodId);
   let index = -1;
   if (doesExist) {
@@ -908,7 +916,7 @@ function drawModalImageMethod(incomingModalImage) {
       id: incomingModalImage.id,
       action: incomingModalImage.action,
       isBtn: true,
-      isModal: true,
+      isModalBtn: true,
       isAnim: false,
       props: incomingModalImage.props,
       methodId: incomingModalImage.methodId,
@@ -972,4 +980,143 @@ function drawModalImageMethod(incomingModalImage) {
     Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
       Game.methodObjects[index].isAnim = false;
    }
+}
+function drawDialogueModalMethod(incomingModal) {
+  let doesExist = doesMethodParamExist(incomingModal.methodId);
+  let index = -1;
+  if (doesExist) {
+    index = findMethodParamIndex(incomingModal.methodId);
+  }
+  if (!doesExist) {
+    let modal = {
+      posX: incomingModal.posX,
+      posY: incomingModal.posY,
+      width: incomingModal.width,
+      height: incomingModal.height,
+      lineWidth: incomingModal.lineWidth,
+      modalColor: incomingModal.modalColor,
+      msgColor: incomingModal.msgColor,
+      msgFont: incomingModal.msgFont,
+      msgs: incomingModal.msgs,
+      msgStart: incomingModal.msgStart,
+      msgDistance: incomingModal.msgDistance,
+      bgColor: incomingModal.bgColor,
+      isModalFilled: incomingModal.isModalFilled,
+      id: incomingModal.id,
+      action: incomingModal.action,
+      isBtn: true,
+      isModalBtn: incomingModal.isModalBtn,
+      isAnim: false,
+      props: incomingModal.props,
+      methodId: incomingModal.methodId,
+    }
+    Game.methodObjects.push(modal);
+    redrawDialogueModal(incomingModal);
+    const shadowModal = Object.assign({}, modal);
+    Main.methodObjectShadows.push(shadowModal);
+  }
+  if (doesExist && Main.isResizing) {
+    Game.methodObjects[index].posX = incomingModal.posX;
+    Game.methodObjects[index].posY = incomingModal.posY;
+    Game.methodObjects[index].width = incomingModal.width;
+    Game.methodObjects[index].height = incomingModal.height;
+    Game.methodObjects[index].lineWidth = incomingModal.lineWidth;
+    Game.methodObjects[index].modalColor = incomingModal.modalColor;
+    Game.methodObjects[index].msgColor = incomingModal.msgColor;
+    Game.methodObjects[index].msgFont = incomingModal.msgFont;
+    Game.methodObjects[index].msgs = incomingModal.msgs;
+    Game.methodObjects[index].msgStart = incomingModal.msgStart;
+    Game.methodObjects[index].msgDistance = incomingModal.msgDistance;
+    Game.methodObjects[index].bgColor = incomingModal.bgColor;
+    Game.methodObjects[index].isModalFilled = incomingModal.isModalFilled;
+    Game.methodObjects[index].action = incomingModal.action;
+    Game.methodObjects[index].isAnim = false;
+    Game.methodObjects[index].props = incomingModal.props;
+    Main.methodObjectShadows[index].posX = incomingModal.posX;
+    Main.methodObjectShadows[index].posY = incomingModal.posY;
+    Main.methodObjectShadows[index].width = incomingModal.width;
+    Main.methodObjectShadows[index].height = incomingModal.height;
+    Main.methodObjectShadows[index].lineWidth = incomingModal.lineWidth;
+    Main.methodObjectShadows[index].modalColor = incomingModal.modalColor;
+    Main.methodObjectShadows[index].msgColor = incomingModal.msgColor;
+    Main.methodObjectShadows[index].msgFont = incomingModal.msgFont;
+    Main.methodObjectShadows[index].msgs = incomingModal.msgs;
+    Main.methodObjectShadows[index].msgStart = incomingModal.msgStart;
+    Main.methodObjectShadows[index].msgDistance = incomingModal.msgDistance;
+    Main.methodObjectShadows[index].bgColor = incomingModal.bgColor;
+    Main.methodObjectShadows[index].isModalFilled = incomingModal.isModalFilled;
+    Main.methodObjectShadows[index].action = incomingModal.action;
+    Main.methodObjectShadows[index].isAnim = false;
+    Main.methodObjectShadows[index].props = incomingModal.props;
+    redrawDialogueModal(incomingModal);
+  }
+  // checking for animations
+  if (doesExist &&
+   (Game.methodObjects[index].posY !== Main.methodObjectShadows[index].posY ||
+   Game.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
+   Game.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
+   Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
+   Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
+   Game.methodObjects[index].modalColor !== Main.methodObjectShadows[index].modalColor ||
+   Game.methodObjects[index].msgColor !== Main.methodObjectShadows[index].msgColor ||
+   Game.methodObjects[index].msgFont !== Main.methodObjectShadows[index].msgFont ||
+   Game.methodObjects[index].msgs !== Main.methodObjectShadows[index].msgs ||
+   Game.methodObjects[index].msgStart !== Main.methodObjectShadows[index].msgStart ||
+   Game.methodObjects[index].msgDistance !== Main.methodObjectShadows[index].msgDistance ||
+   Game.methodObjects[index].bgColor !== Main.methodObjectShadows[index].bgColor ||
+   Game.methodObjects[index].isModalFilled !== Main.methodObjectShadows[index].isModalFilled)
+   ) {
+     redrawDialogueModal(Game.methodObjects[index]);
+      const shadowModal = Object.assign({}, Game.methodObjects[index]);
+      Main.methodObjectShadows[index] = shadowModal;
+      Game.methodObjects[index].isAnim = true;
+   } else if (doesExist && Game.methodObjects[index].isAnim) {
+      redrawDialogueModal(Game.methodObjects[index]);
+      Game.methodObjects[index].isAnim = false;
+   } else if (doesExist &&
+    (Game.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
+    Game.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
+    Game.methodObjects[index].width === Main.methodObjectShadows[index].width ||
+    Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
+    Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
+    Game.methodObjects[index].modalColor === Main.methodObjectShadows[index].modalColor ||
+    Game.methodObjects[index].msgColor === Main.methodObjectShadows[index].msgColor ||
+    Game.methodObjects[index].msgFont === Main.methodObjectShadows[index].msgFont ||
+    Game.methodObjects[index].msgs === Main.methodObjectShadows[index].msgs ||
+    Game.methodObjects[index].msgStart === Main.methodObjectShadows[index].msgStart ||
+    Game.methodObjects[index].msgDistance === Main.methodObjectShadows[index].msgDistance ||
+    Game.methodObjects[index].bgColor === Main.methodObjectShadows[index].bgColor ||
+    Game.methodObjects[index].isModalFilled === Main.methodObjectShadows[index].isModalFilled)) {
+      Game.methodObjects[index].isAnim = false;
+   }
+}
+function redrawDialogueModal(incomingModal) {
+	
+	if (incomingModal.bgColor.length > 0) {
+		Main.stage.beginPath();
+		Main.stage.rect(0, 0, Game.canvas.width, Game.canvas.height);
+		Main.stage.fillStyle = incomingModal.bgColor;
+		Main.stage.fill();
+	}
+	
+	Main.stage.beginPath();
+	if (!incomingModal.lineWidth) {
+		Main.stage.lineWidth = '1';
+	} else {
+		Main.stage.lineWidth = incomingModal.lineWidth;
+	}
+	Main.stage.rect(incomingModal.posX, incomingModal.posY, incomingModal.width, incomingModal.height);
+	if (incomingModal.isModalFilled) {
+		Main.stage.fillStyle = incomingModal.modalColor;
+		Main.stage.fill();
+	} else {
+		Main.stage.strokeStyle = incomingModal.modalColor;
+		Main.stage.stroke();
+  }
+	Main.stage.fillStyle = incomingModal.msgColor;
+	Main.stage.font = incomingModal.msgFont;
+	Main.stage.textAlign = 'center';
+	incomingModal.msgs.forEach((msg, i) => {
+		Main.stage.fillText(msg, (incomingModal.posX + (incomingModal.width * 0.5)), (incomingModal.msgStart + (incomingModal.msgDistance * i)));
+	});
 }

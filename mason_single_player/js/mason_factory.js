@@ -57,6 +57,7 @@ const factoryPage = {
 								gameObject.buildButtonDisabled = false;
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -85,6 +86,7 @@ const factoryPage = {
 								gameObject.buildButtonDisabled = false;
 							}
 						}, // this needs to go to the parts screen
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -242,6 +244,7 @@ const factoryPage = {
 								factoryRobotDetails(); 
 							}
 						},
+						isModalBtn: false,
 						props: {
 							drawHead: function(parent) {
 								Game.methodSetup = {
@@ -265,6 +268,7 @@ const factoryPage = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -294,6 +298,7 @@ const factoryPage = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -323,6 +328,7 @@ const factoryPage = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -352,6 +358,7 @@ const factoryPage = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -381,6 +388,7 @@ const factoryPage = {
 													factoryRobotDetails(); 
 												}
 											},
+											isModalBtn: false,
 											props: {},
 											methodId: id
 										});
@@ -494,6 +502,7 @@ const factoryPage = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -557,6 +566,7 @@ const factoryPage = {
 								}
 							 }
 						}, 
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -760,6 +770,7 @@ const factoryPage = {
 						isFilled: true,
 						id: 'robot-body',
 						action: { method: function(id) { selectRobotChassis(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -781,6 +792,7 @@ const factoryPage = {
 						isFilled: true,
 						id: 'robot-head',
 						action: { method: function(id) { selectRobotHead(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -802,6 +814,7 @@ const factoryPage = {
 						isFilled: true,
 						id: 'robot-left-arm',
 						action: { method: function(id) { selectRobotArms('left'); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -823,6 +836,7 @@ const factoryPage = {
 						isFilled: true,
 						id: 'robot-right-arm',
 						action: { method: function(id) { selectRobotArms('right'); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -844,6 +858,7 @@ const factoryPage = {
 						isFilled: true,
 						id: 'robot-left-leg',
 						action: { method: function(id) { selectRobotLegs('left'); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -865,6 +880,7 @@ const factoryPage = {
 						isFilled: true,
 						id: 'robot-right-leg',
 						action: { method: function(id) { selectRobotLegs('right'); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1059,6 +1075,7 @@ const factoryPage = {
 									displaySelectPart(newPart, false);
 								}
 							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -1092,6 +1109,7 @@ const factoryPage = {
 									displaySelectPart(newPart, false);
 								}
 							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -1128,6 +1146,7 @@ const factoryPage = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1162,6 +1181,7 @@ const factoryPage = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1403,6 +1423,7 @@ const factoryPage = {
 									equipPart(part);
 								}
 							}},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -1646,7 +1667,7 @@ const factoryPage = {
 								Game.deleteEntity(modal.methodId);
 								Game.methodSetup = {
 									method: function(id) {
-										drawModal({
+										drawSimpleModal({
 											posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 											posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 											width: (Game.entitySize * 40),
@@ -1684,7 +1705,7 @@ const factoryPage = {
 					setTimeout(function() {
 						Game.methodSetup = {
 							method: function(id) {
-								drawModal({
+								drawSimpleModal({
 									posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 									posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 									width: (Game.entitySize * 40),
@@ -1725,7 +1746,7 @@ const factoryPage = {
 				setTimeout(function() {
 					Game.methodSetup = {
 						method: function(id) {
-							drawModal({
+							drawSimpleModal({
 								posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 								posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 								width: (Game.entitySize * 40),
@@ -1901,6 +1922,7 @@ const factoryParts = {
 							 gameObject.buildButtonDisabled = false;
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -1945,7 +1967,7 @@ const factoryParts = {
 						setTimeout(function() {
 							Game.methodSetup = {
 								method: function(id) {
-									drawModal({
+									drawSimpleModal({
 										posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 										posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 										width: (Game.entitySize * 40),
@@ -1990,6 +2012,7 @@ const factoryParts = {
 						isFilled: true,
 						id: 'robot-body-parts',
 						action: { method: function(id) { selectRobotPartChassis(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2011,6 +2034,7 @@ const factoryParts = {
 						isFilled: true,
 						id: 'robot-head-parts',
 						action: { method: function(id) { selectRobotPartHead(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2032,6 +2056,7 @@ const factoryParts = {
 						isFilled: true,
 						id: 'robot-arm-parts',
 						action: { method: function(id) { selectRobotPartArms(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2053,6 +2078,7 @@ const factoryParts = {
 						isFilled: true,
 						id: 'robot-leg-parts',
 						action: { method: function(id) { selectRobotPartLegs(); }},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2426,6 +2452,7 @@ const factoryParts = {
 									displaySelectPartParts(discoveredPart);
 								}
 							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -2452,6 +2479,7 @@ const factoryParts = {
 									displaySelectPartParts(discoveredPart);
 								}
 							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -2487,6 +2515,7 @@ const factoryParts = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2520,6 +2549,7 @@ const factoryParts = {
 								}
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
@@ -2611,7 +2641,7 @@ const factoryParts = {
 										setTimeout(function() {
 											Game.methodSetup = {
 												method: function(id) {
-													drawModal({
+													drawSimpleModal({
 														posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 														posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 														width: (Game.entitySize * 40),
@@ -2702,7 +2732,7 @@ const factoryParts = {
 											setTimeout(function() {
 												Game.methodSetup = {
 													method: function(id) {
-														drawModal({
+														drawSimpleModal({
 															posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 															posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 															width: (Game.entitySize * 40),
@@ -2761,6 +2791,7 @@ const factoryParts = {
 									
 							}
 						},
+						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
