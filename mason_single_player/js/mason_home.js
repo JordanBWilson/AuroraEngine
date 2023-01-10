@@ -3753,9 +3753,8 @@ const homeSellRobots = {
 	}	
 }
 // *** Home Player Upgrades Page ***
-// future Jordan, make the modal width just a little bit wider
-// for the text to fit on smaller screens. make the upgrades work.
-// don't forget to setup the parts. the player should only be able to
+// future Jordan, make the upgrades work. Display the players funds on top of the modal
+// don't forget to setup the parts/robots screen. the player should only be able to
 // work on parts and robots within their level
 const homePlayerUpgrades = {
 	description: 'This is where the player can upgrade their stats',
@@ -3921,51 +3920,78 @@ const homePlayerUpgrades = {
 							msg: upgradeTitle,
 							isFilled: true,
 							id: 'upgrade-stat-' + upgradeIndex,
-							action: { 
+							action: {
 								method: function(id) {
 									console.log(upgradeIndex);
 									let msgs = [];
 									if (upgradeIndex === 0) {
-										msgs = ['Level ' + gameObject.factoryLevel, 'Factory', 'Create Powerful Parts and Robots'];
+										const upgrade = formatDisplayValue(gameObject.factoryUpgradeCost);
+										msgs = ['Level ' + gameObject.factoryLevel, 'Factory', 'Create Powerful Parts and Robots',
+										 '- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 1) {
-										msgs = ['Level ' + gameObject.engineeringSkill, 'Engineering', 'Build Better Parts'];
+										const upgrade = formatDisplayValue(gameObject.engineeringUpgradeCost);
+										msgs = ['Level ' + gameObject.engineeringSkill, 'Engineering', 'Build Better Parts',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 2) {
-										msgs = ['Level ' + gameObject.roboticSkill, 'Robotics', 'Build Better Robots'];
+										const upgrade = formatDisplayValue(gameObject.roboticsUpgradeCost);
+										msgs = ['Level ' + gameObject.roboticSkill, 'Robotics', 'Build Better Robots',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 3) {
-										msgs = ['Level ' + gameObject.scrapperSkill, 'Scrapping', 'Find Better Scrap Faster'];
+										const upgrade = formatDisplayValue(gameObject.scrappingUpgradeCost);
+										msgs = ['Level ' + gameObject.scrapperSkill, 'Scrapping', 'Find Better Scrap Faster',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 4) {
-										msgs = ['Level ' + gameObject.barterSkill, 'Bartering', 'Trade For Better Prices'];
+										const upgrade = formatDisplayValue(gameObject.barteringUpgradeCost);
+										msgs = ['Level ' + gameObject.barterSkill, 'Bartering', 'Trade For Better Prices',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 5) {
-										msgs = ['Level ' + gameObject.arenaLevel, 'Arena', 'Unlock Better Towers and Prizes'];
+										const upgrade = formatDisplayValue(gameObject.arenaUpgradeCost);
+										msgs = ['Level ' + gameObject.arenaLevel, 'Arena', 'Unlock Better Towers and Prizes',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 6) {
-										msgs = ['Level ' + gameObject.scrapInvintory, 'Scrap Space', 'Total Scrap Storage'];
+										const upgrade = formatDisplayValue(gameObject.scrapInvUpgradeCost);
+										msgs = ['Level ' + gameObject.scrapInvintoryLevel, 'Scrap Space', 'Increase Scrap Storage By 5',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 7) {
-										msgs = ['Level ' + gameObject.partStorage, 'Part Space', 'Total Unique Robot Part Storage'];
+										const upgrade = formatDisplayValue(gameObject.partInvUpgradeCost);
+										msgs = ['Level ' + gameObject.partStorageLevel, 'Part Space', 'Increase Robot Part Storage By 5',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 8) {
-										msgs = ['Level ' + gameObject.robotStorage, 'Robot Space', 'Total Robot Storage'];
+										const upgrade = formatDisplayValue(gameObject.robotInvUpgradeCost);
+										msgs = ['Level ' + gameObject.robotStorageLevel, 'Robot Space', 'Increase Robot Storage By 5',
+										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
+										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									
 									Game.methodSetup = {
 										method: function(id) {
 											drawDialogueModal({
-												posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-												posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-												width: (Game.entitySize * 40),
-												height: (Game.entitySize * 40),
+												posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+												width: (Game.entitySize * 45),
+												height: (Game.entitySize * 50),
 												lineWidth: 1,
 												modalColor: 'darkgrey',
 												msgColor: 'white',
 												msgFont: '1em serif',
 												msgs: msgs,
-												msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
+												msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
 												msgDistance: (Game.entitySize * 5),
 												bgColor: 'grey',
 												isModalFilled: true,
@@ -3980,12 +4006,15 @@ const homePlayerUpgrades = {
 										}
 									};
 									Game.addMethod(Game.methodSetup);
+									
+									// displayCondensedFunds(0.76, 0.245, 0.76, 0.28, '1.2em serif', 'white', 'center');
+									
 									Game.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
-												posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
-												width: (Game.entitySize * 40) - (Game.canvas.width * 0.04),
+												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
+												width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
 												height: (Game.entitySize * 7),
 												lineWidth: 1,
 												btnColor: 'grey',
@@ -4011,9 +4040,9 @@ const homePlayerUpgrades = {
 									Game.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: Game.placeEntityX(0.52, (Game.entitySize * 40)),
-												posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
-												width:(Game.entitySize * 40) - (Game.canvas.width * 0.04),
+												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+												width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
 												height: (Game.entitySize * 7),
 												lineWidth: 1,
 												btnColor: 'grey',

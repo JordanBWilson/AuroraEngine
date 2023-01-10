@@ -81,13 +81,88 @@ const gameObject = {
 		{ money: 'copper', price: 0 }
 	],
 	scrapToSell: '', // this can be common, uncommon, unique, etc.
+	// --- upgrade costs
+	factoryUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 1,
+		copper: 5
+	},
+	engineeringUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
+	roboticsUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
+	scrappingUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
+	barteringUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
+	arenaUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
+	scrapInvUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
+	partInvUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
+	robotInvUpgradeCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 5
+	},
 	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
+	scrapInvintoryLevel: 0,
 	scrapperSkill: 0, // ability to find more rare scrap
 	roboticSkill: 0, // ability to put together robots with higher tiered parts.
 	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts. makes robots worth more
 	barterSkill: 0, // sell for more on the grand exchange; use percentages to increase prices
 	partStorage: 6, // how many of each part can be stored at once. ***upgraded with factory level***
+	partStorageLevel: 0,
 	// ---different tiers of money---
 	copper: 0, // 1000 copper = 1 bronze
 	bronze: 0, // 1000 bronze = 1 silver
@@ -102,6 +177,7 @@ const gameObject = {
 	arenaLevel: 0, // this will determine what type of buildings are availiable in multiplayer
 	// ---robot adventuring---
 	robotStorage: 3, // total robots that can be made ***can be upgraded***
+	robotStorageLevel: 0,
 	robotsMade: 0, // current number of robots made
 	robotTeams: [], // the different robots who could go out to find riches or to be sold
 	discoveredHeads: [], // all the robot heads discovered by the player
