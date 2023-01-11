@@ -178,7 +178,6 @@ const factoryPage = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				
 				drawRobotSelect(
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),

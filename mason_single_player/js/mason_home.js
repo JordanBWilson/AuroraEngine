@@ -3753,7 +3753,7 @@ const homeSellRobots = {
 	}	
 }
 // *** Home Player Upgrades Page ***
-// future Jordan, make the upgrades work. Display the players funds on top of the modal
+// future Jordan, make sure the price of the upgrade increases every level.
 // don't forget to setup the parts/robots screen. the player should only be able to
 // work on parts and robots within their level
 const homePlayerUpgrades = {
@@ -3761,6 +3761,7 @@ const homePlayerUpgrades = {
 	loadPage: function() {
 		function upgradePlayer() {
 			Game.clearStage();
+			Particle.init();
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -3796,10 +3797,6 @@ const homePlayerUpgrades = {
 						action: { 
 							method: function(id) { 
 								homePage.loadPage();
-								// gameObject.partsDisplayed = '';
-								// gameObject.selectedRobotDesign = -1;
-								// gameObject.buildButtonDisabled = false;
-								// gameObject.partPageIndex = 0;
 							}
 						},
 						isModalBtn: false,
@@ -3981,6 +3978,25 @@ const homePlayerUpgrades = {
 									
 									Game.methodSetup = {
 										method: function(id) {
+											drawRect({
+												posX: Game.placeEntityX(0),
+												posY: Game.placeEntityY(0),
+												width: Game.canvas.width,
+												height: (Game.canvas.height),
+												lineWidth: 1,
+												color: 'grey',
+												isFilled: true,
+												id: 'modal-background',
+												isBackground: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									
+									Game.methodSetup = {
+										method: function(id) {
 											drawDialogueModal({
 												posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
 												posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
@@ -3993,7 +4009,7 @@ const homePlayerUpgrades = {
 												msgs: msgs,
 												msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
 												msgDistance: (Game.entitySize * 5),
-												bgColor: 'grey',
+												bgColor: '',
 												isModalFilled: true,
 												id: Game.modalId,
 												action: {
@@ -4007,8 +4023,56 @@ const homePlayerUpgrades = {
 									};
 									Game.addMethod(Game.methodSetup);
 									
-									// displayCondensedFunds(0.76, 0.245, 0.76, 0.28, '1.2em serif', 'white', 'center');
+									Game.methodSetup = {
+										method: function(id) {
+											drawText({
+												font: '2.1em serif',
+												msg: 'Funds',
+												posX: Game.placeEntityX(0.466),
+												posY: Game.placeEntityY(0.14),
+												color: 'darkgrey',
+												align: 'center',
+												props: {},
+												id: 'upgrade-fund-title',
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
 									
+									displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em serif', 'white', 'center');
+
+									let formatUpgradeCost;
+									if (upgradeIndex === 0) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.factoryUpgradeCost);
+									}
+									if (upgradeIndex === 1) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.engineeringUpgradeCost);
+									}
+									if (upgradeIndex === 2) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.roboticsUpgradeCost);
+									}
+									if (upgradeIndex === 3) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.scrappingUpgradeCost);
+									}
+									if (upgradeIndex === 4) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.barteringUpgradeCost);
+									}
+									if (upgradeIndex === 5) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.arenaUpgradeCost);
+									}
+									if (upgradeIndex === 6) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.scrapInvUpgradeCost);
+									}
+									if (upgradeIndex === 7) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.partInvUpgradeCost);
+									}
+									if (upgradeIndex === 8) {
+										formatUpgradeCost = formatPartsCostToFunds(gameObject.robotInvUpgradeCost);
+									}
+
+									const checkFunds = checkSubtractFunds(formatUpgradeCost);
+
 									Game.methodSetup = {
 										method: function(id) {
 											drawButton({
@@ -4017,17 +4081,184 @@ const homePlayerUpgrades = {
 												width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
 												height: (Game.entitySize * 7),
 												lineWidth: 1,
-												btnColor: 'grey',
+												btnColor: checkFunds ? 'grey' : '#C0C0C0',
 												txtColor: 'white',
 												font: '1.3em serif',
 												msg: 'Upgrade',
 												isFilled: true,
 												id: 'upgrade-stat',
 												action: { 
-													method: function(id) { 
-														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-														Game.deleteEntity(modal.methodId);
-														homePlayerUpgrades.loadPage();
+													method: function(id) {
+														let upgradeMsgs = [];
+														if (checkFunds) {
+															if (upgradeIndex === 0) {
+																
+																gameObject.factoryLevel++;
+																let designIncrease = false;
+																
+																if (gameObject.factoryLevel === 3 || gameObject.factoryLevel === 6 || gameObject.factoryLevel === 9) {
+																	
+																	gameObject.robotDesignCount += 3;
+																	for (let i = 0; i < 3; i++) {
+																		const robotDesign = {
+																			robotId: gameObject.robotDesigns.length,
+																			robotParts: [],
+																		};
+																		gameObject.robotDesigns.push(robotDesign);
+																	}
+																	
+																	designIncrease = true;
+																}
+																upgradeMsgs = ['Level ' + gameObject.factoryLevel, gameObject.factoryLevel === 1 ? 'Factory Built' : 'Factory Upgraded', 
+																designIncrease ? 'Robot Designs Upgraded +3' : ''];
+															}
+															if (upgradeIndex === 1) {
+																gameObject.engineeringSkill++;
+																upgradeMsgs = ['Level ' + gameObject.engineeringSkill, 'Engineering Upgraded'];
+															}
+															if (upgradeIndex === 2) {
+																gameObject.roboticSkill++;
+																upgradeMsgs = ['Level ' + gameObject.roboticSkill, 'Robotics Upgraded'];
+															}
+															if (upgradeIndex === 3) {
+																gameObject.scrapperSkill++;
+																upgradeMsgs = ['Level ' + gameObject.scrapperSkill, 'Scrapping Upgraded'];
+															}
+															if (upgradeIndex === 4) {
+																gameObject.barterSkill++;
+																upgradeMsgs = ['Level ' + gameObject.barterSkill, 'Bartering Upgraded'];
+															}
+															if (upgradeIndex === 5) {
+																gameObject.arenaLevel++;
+																upgradeMsgs = ['Level ' + gameObject.arenaLevel, gameObject.arenaLevel === 1 ? 'Arena Built' : 'Arena Upgraded'];
+															}
+															if (upgradeIndex === 6) {
+																gameObject.scrapInvintoryLevel++;
+																gameObject.scrapInvintory += 5;
+																upgradeMsgs = ['Level ' + gameObject.scrapInvintoryLevel, 'Scrap Space Upgraded +5'];
+															}
+															if (upgradeIndex === 7) {
+																gameObject.partStorageLevel++;
+																gameObject.partStorage += 3
+																upgradeMsgs = ['Level ' + gameObject.partStorageLevel, 'Part Space Upgraded +3'];
+															}
+															if (upgradeIndex === 8) {
+																gameObject.robotStorageLevel++;
+																upgradeMsgs = ['Level ' + gameObject.robotStorageLevel, 'Robot Space Upgraded + 1'];
+															}
+															
+															subtractFunds(formatUpgradeCost);
+
+															Particle.floatingText({
+																font: '2rem serif',
+																msg: '+        +',
+																align: 'center',
+																posX: Game.placeEntityX(0.51, (Game.entitySize * 0.7)),
+																posY: Game.placeEntityY(0.29, (Game.entitySize * 0.7)),
+																direction: 'top',
+																color: 'green',
+																ticks: 13,
+																speed: 0.8,
+															});
+															
+															Particle.animComplete = {
+																method: function() {
+																	homePlayerUpgrades.loadPage();
+																	Game.methodSetup = {
+																		method: function(id) {
+																			drawRect({
+																				posX: Game.placeEntityX(0),
+																				posY: Game.placeEntityY(0),
+																				width: Game.canvas.width,
+																				height: (Game.canvas.height),
+																				lineWidth: 1,
+																				color: 'grey',
+																				isFilled: true,
+																				id: 'modal-background',
+																				isBackground: true,
+																				props: {},
+																				methodId: id
+																			});
+																		}
+																	};
+																	Game.addMethod(Game.methodSetup);
+																	Game.methodSetup = {
+																		method: function(id) {
+																			drawDialogueModal({
+																				posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+																				posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+																				width: (Game.entitySize * 45),
+																				height: (Game.entitySize * 50),
+																				lineWidth: 1,
+																				modalColor: 'darkgrey',
+																				msgColor: 'white',
+																				msgFont: '1em serif',
+																				msgs: upgradeMsgs,
+																				msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+																				msgDistance: (Game.entitySize * 10),
+																				bgColor: 'grey',
+																				isModalFilled: true,
+																				id: Game.modalId,
+																				action: {
+																					method: function(id) {}
+																				},
+																				isModalBtn: false,
+																				props: {},
+																				methodId: id
+																			});
+																		}
+																	};
+																	Game.addMethod(Game.methodSetup);
+															
+																	Game.methodSetup = {
+																		method: function(id) {
+																			drawText({
+																				font: '2.1em serif',
+																				msg: 'Funds',
+																				posX: Game.placeEntityX(0.466),
+																				posY: Game.placeEntityY(0.14),
+																				color: 'darkgrey',
+																				align: 'center',
+																				props: {},
+																				id: 'upgrade-fund-title',
+																				methodId: id
+																			});
+																		}
+																	};
+																	Game.addMethod(Game.methodSetup);
+																	displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em serif', 'white', 'center');
+																	Game.methodSetup = {
+																		method: function(id) {
+																			drawButton({
+																				posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+																				posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+																				width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
+																				height: (Game.entitySize * 7),
+																				lineWidth: 1,
+																				btnColor: 'grey',
+																				txtColor: 'white',
+																				font: '1.3em serif',
+																				msg: 'Nice',
+																				isFilled: true,
+																				id: 'upgraded',
+																				action: { 
+																					method: function(id) { 
+																						const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																						Game.deleteEntity(modal.methodId);
+																						homePlayerUpgrades.loadPage();
+																					}
+																				},
+																				isModalBtn: true,
+																				props: {},
+																				methodId: id
+																			});
+																		}
+																	};
+																	Game.addMethod(Game.methodSetup);
+																}
+															};
+														}
+														
 													}
 												},
 												isModalBtn: true,

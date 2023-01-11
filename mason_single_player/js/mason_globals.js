@@ -87,7 +87,7 @@ const gameObject = {
 		platinum: 0,
 		gold: 0,
 		silver: 0,
-		bronze: 1,
+		bronze: 0,
 		copper: 5
 	},
 	engineeringUpgradeCost: {
@@ -1524,6 +1524,10 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 			});
 		}
 	});
+	return formatPartCost(partCost);
+}
+
+function formatPartCost(partCost) {
 	const formatPartCost = {
 		mythryl: 0,
 		platinum: 0,

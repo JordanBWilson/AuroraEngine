@@ -26,7 +26,6 @@ function seedRobotDesigns() {
 		};
 		gameObject.robotDesigns.push(robotDesign);
 	}
-	console.log(gameObject.robotDesigns);
 }
 
 const mainPage = {
