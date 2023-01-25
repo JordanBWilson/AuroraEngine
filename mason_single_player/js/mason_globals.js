@@ -1538,60 +1538,40 @@ function formatPartCost(partCost) {
 	}
 	// check and see if we need convert the money to the 
 	// next highest value
-	if (partCost.copper >= 1000) {
-		for (let i = 0; i < partCost.copper; i++) {
-			formatPartCost.copper++;
-			if (formatPartCost.copper >= 1000) {
-				formatPartCost.copper = 0;
-				formatPartCost.bronze++;
-			}
-		}
-	} else {
-		formatPartCost.copper = partCost.copper;
-	}
-	if (partCost.bronze >= 1000) {
-		for (let i = 0; i < partCost.bronze; i++) {
+	for (let i = 0; i < partCost.copper; i++) {
+		formatPartCost.copper++;
+		if (formatPartCost.copper >= 1000) {
+			formatPartCost.copper = 0;
 			formatPartCost.bronze++;
-			if (formatPartCost.bronze >= 1000) {
-				formatPartCost.bronze = 0;
-				formatPartCost.silver++;
-			}
 		}
-	} else {
-		formatPartCost.bronze = partCost.bronze;
 	}
-	if (partCost.silver >= 1000) {
-		for (let i = 0; i < partCost.silver; i++) {
+	for (let i = 0; i < partCost.bronze; i++) {
+		formatPartCost.bronze++;
+		if (formatPartCost.bronze >= 1000) {
+			formatPartCost.bronze = 0;
 			formatPartCost.silver++;
-			if (formatPartCost.silver >= 1000) {
-				formatPartCost.silver = 0;
-				formatPartCost.gold++;
-			}
 		}
-	} else {
-		formatPartCost.silver = partCost.silver;
 	}
-	if (partCost.gold >= 1000) {
-		for (let i = 0; i < partCost.gold; i++) {
+	for (let i = 0; i < partCost.silver; i++) {
+		formatPartCost.silver++;
+		if (formatPartCost.silver >= 1000) {
+			formatPartCost.silver = 0;
 			formatPartCost.gold++;
-			if (formatPartCost.gold >= 1000) {
-				formatPartCost.gold = 0;
-				formatPartCost.platinum++;
-			}
 		}
-	} else {
-		formatPartCost.gold = partCost.gold;
 	}
-	if (partCost.platinum >= 1000) {
-		for (let i = 0; i < partCost.platinum; i++) {
+	for (let i = 0; i < partCost.gold; i++) {
+		formatPartCost.gold++;
+		if (formatPartCost.gold >= 1000) {
+			formatPartCost.gold = 0;
 			formatPartCost.platinum++;
-			if (formatPartCost.platinum >= 1000) {
-				formatPartCost.platinum = 0;
-				formatPartCost.mythryl++;
-			}
 		}
-	} else {
-		formatPartCost.platinum = partCost.platinum;
+	}
+	for (let i = 0; i < partCost.platinum; i++) {
+		formatPartCost.platinum++;
+		if (formatPartCost.platinum >= 1000) {
+			formatPartCost.platinum = 0;
+			formatPartCost.mythryl++;
+		}
 	}
 	return formatPartCost;
 }

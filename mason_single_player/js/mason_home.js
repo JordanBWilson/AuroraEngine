@@ -3935,6 +3935,7 @@ const homePlayerUpgrades = {
 									}
 									if (upgradeIndex === 2) {
 										const upgrade = formatDisplayValue(gameObject.roboticsUpgradeCost);
+										console.log(upgrade);
 										msgs = ['Level ' + gameObject.roboticSkill, 'Robotics', 'Build Better Robots',
 										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
 										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
@@ -4109,52 +4110,57 @@ const homePlayerUpgrades = {
 																	
 																	designIncrease = true;
 																}
-																upgradeMsgs = ['Level ' + gameObject.factoryLevel, gameObject.factoryLevel === 1 ? 'Factory Built' : 'Factory Upgraded', 
-																designIncrease ? 'Robot Designs Upgraded +3' : ''];
+																upgradeMsgs = ['Level ' + gameObject.factoryLevel, gameObject.factoryLevel === 1 ? 'Factory Built' : 'Factory Upgraded!', 
+																designIncrease ? 'Robot Designs Upgraded +3!' : ''];
 															}
 															if (upgradeIndex === 1) {
 																gameObject.engineeringSkill++;
-																upgradeMsgs = ['Level ' + gameObject.engineeringSkill, 'Engineering Upgraded'];
+																upgradeMsgs = ['Level ' + gameObject.engineeringSkill, 'Engineering Upgraded!'];
 															}
 															if (upgradeIndex === 2) {
 																gameObject.roboticSkill++;
-																upgradeMsgs = ['Level ' + gameObject.roboticSkill, 'Robotics Upgraded'];
+																// future Jordan, work on the upgrade cost some more
+																gameObject.roboticsUpgradeCost.copper *= 2;
+																console.log(gameObject.roboticsUpgradeCost.copper);
+																const formatUpgradeCost = formatPartCost(gameObject.roboticsUpgradeCost);
+																gameObject.roboticsUpgradeCost = formatUpgradeCost;
+																upgradeMsgs = ['Level ' + gameObject.roboticSkill, 'Robotics Upgraded!'];
 															}
 															if (upgradeIndex === 3) {
 																gameObject.scrapperSkill++;
-																upgradeMsgs = ['Level ' + gameObject.scrapperSkill, 'Scrapping Upgraded'];
+																upgradeMsgs = ['Level ' + gameObject.scrapperSkill, 'Scrapping Upgraded!'];
 															}
 															if (upgradeIndex === 4) {
 																gameObject.barterSkill++;
-																upgradeMsgs = ['Level ' + gameObject.barterSkill, 'Bartering Upgraded'];
+																upgradeMsgs = ['Level ' + gameObject.barterSkill, 'Bartering Upgraded!'];
 															}
 															if (upgradeIndex === 5) {
 																gameObject.arenaLevel++;
-																upgradeMsgs = ['Level ' + gameObject.arenaLevel, gameObject.arenaLevel === 1 ? 'Arena Built' : 'Arena Upgraded'];
+																upgradeMsgs = ['Level ' + gameObject.arenaLevel, gameObject.arenaLevel === 1 ? 'Arena Built' : 'Arena Upgraded!'];
 															}
 															if (upgradeIndex === 6) {
 																gameObject.scrapInvintoryLevel++;
 																gameObject.scrapInvintory += 5;
-																upgradeMsgs = ['Level ' + gameObject.scrapInvintoryLevel, 'Scrap Space Upgraded +5'];
+																upgradeMsgs = ['Level ' + gameObject.scrapInvintoryLevel, 'Scrap Space Upgraded +5!'];
 															}
 															if (upgradeIndex === 7) {
 																gameObject.partStorageLevel++;
 																gameObject.partStorage += 3
-																upgradeMsgs = ['Level ' + gameObject.partStorageLevel, 'Part Space Upgraded +3'];
+																upgradeMsgs = ['Level ' + gameObject.partStorageLevel, 'Part Space Upgraded +3!'];
 															}
 															if (upgradeIndex === 8) {
 																gameObject.robotStorageLevel++;
-																upgradeMsgs = ['Level ' + gameObject.robotStorageLevel, 'Robot Space Upgraded + 1'];
+																upgradeMsgs = ['Level ' + gameObject.robotStorageLevel, 'Robot Space Upgraded +1!'];
 															}
 															
 															subtractFunds(formatUpgradeCost);
 
 															Particle.floatingText({
 																font: '2rem serif',
-																msg: '+        +',
+																msg: '+         +',
 																align: 'center',
-																posX: Game.placeEntityX(0.51, (Game.entitySize * 0.7)),
-																posY: Game.placeEntityY(0.29, (Game.entitySize * 0.7)),
+																posX: Game.placeEntityX(0.472),
+																posY: Game.placeEntityY(0.29),
 																direction: 'top',
 																color: 'green',
 																ticks: 13,
