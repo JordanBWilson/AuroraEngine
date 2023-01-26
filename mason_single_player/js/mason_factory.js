@@ -1055,7 +1055,7 @@ const factoryPage = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart.img, discoveredPart.count),
+							btnColor: drawActiveParts(discoveredPart),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.count,
@@ -1089,7 +1089,7 @@ const factoryPage = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart.img, discoveredPart.count),
+							btnColor: drawActiveParts(discoveredPart),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.name,
@@ -1419,7 +1419,76 @@ const factoryPage = {
 								if (confirmed && gameObject.selectedRobot.length === 6) {
 									buildRobot();
 								} else {
-									equipPart(part);
+									if (part.requires !== undefined && part.requires.roboticSkill <= gameObject.roboticSkill) {
+										equipPart(part);
+									} else {
+										// display modal
+										if (part.requires !== undefined) {
+											const msgs = ['Part Requires', 'Robotics Level: ' + part.requires.roboticSkill];
+											Game.methodSetup = {
+												method: function(id) {
+													drawDialogueModal({
+														posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+														posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+														width: (Game.entitySize * 45),
+														height: (Game.entitySize * 50),
+														lineWidth: 1,
+														modalColor: 'darkgrey',
+														msgColor: 'white',
+														msgFont: '1em serif',
+														msgs: msgs,
+														msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+														msgDistance: (Game.entitySize * 10),
+														bgColor: '',
+														isModalFilled: true,
+														id: Game.modalId,
+														action: {
+															method: function(id) {}
+														},
+														isModalBtn: false,
+														props: {},
+														methodId: id
+													});
+												}
+											};
+											Game.addMethod(Game.methodSetup);
+											Game.methodSetup = {
+												method: function(id) {
+													drawButton({
+														posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+														posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+														width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
+														height: (Game.entitySize * 7),
+														lineWidth: 1,
+														btnColor: 'grey',
+														txtColor: 'white',
+														font: '1.3em serif',
+														msg: 'Ok...',
+														isFilled: true,
+														id: 'requires-robot',
+														action: { 
+															method: function(id) { 
+																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																Game.deleteEntity(modal.methodId);
+																const btn = Game.methodObjects.find(build => build.id === 'requires-robot');
+																Game.deleteEntity(btn.methodId);
+																gameObject.buildButtonDisabled = true;
+																displaySelectPart({}, true);
+																setTimeout(function() {
+																	createFactoryTitleStats(undefined, undefined, undefined, undefined);
+																},0);
+															}
+														},
+														isModalBtn: true,
+														props: {},
+														methodId: id
+													});
+												}
+											};
+											Game.addMethod(Game.methodSetup);
+										}
+									}
+									
 								}
 							}},
 							isModalBtn: false,
@@ -1961,7 +2030,8 @@ const factoryParts = {
 						selectRobotPartHead();
 					}
 					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-					if (modal) {
+					console.log(modal);
+					if (modal?.isModalBtn !== undefined && modal.isModalBtn === true) {
 						Game.deleteEntity(modal.methodId);
 						setTimeout(function() {
 							Game.methodSetup = {
@@ -1990,6 +2060,79 @@ const factoryParts = {
 							};
 							Game.addMethod(Game.methodSetup);
 						}, 150);
+					} else {
+						if (modal?.methodId !== undefined && modal.isModalBtn === false) {
+							Game.deleteEntity(modal.methodId);
+							const btn = Game.methodObjects.find(build => build.id === 'requires-parts');
+							Game.deleteEntity(btn.methodId);
+							setTimeout(function() {
+								Game.methodSetup = {
+									method: function(id) {
+										drawDialogueModal({
+											posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+											posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+											width: (Game.entitySize * 45),
+											height: (Game.entitySize * 50),
+											lineWidth: modal.lineWidth,
+											modalColor: modal.modalColor,
+											msgColor: modal.msgColor,
+											msgFont: modal.msgFont,
+											msgs: modal.msgs,
+											msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+											msgDistance: (Game.entitySize * 10),
+											bgColor: modal.bgColor,
+											isModalFilled: modal.isModalFilled,
+											id: Game.modalId,
+											action: modal.action,
+											isModalBtn: false,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+								Game.methodSetup = {
+									method: function(id) {
+										drawButton({
+											posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+											posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+											width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
+											height: (Game.entitySize * 7),
+											lineWidth: 1,
+											btnColor: 'grey',
+											txtColor: 'white',
+											font: '1.3em serif',
+											msg: 'Ok...',
+											isFilled: true,
+											id: 'requires-parts',
+											action: { 
+												method: function(id) { 
+													const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+													Game.deleteEntity(modal.methodId);
+													const btn = Game.methodObjects.find(build => build.id === 'requires-parts');
+													Game.deleteEntity(btn.methodId);
+													if (gameObject.partsDisplayed === 'chassis') {
+														selectRobotPartChassis();
+													} else if (gameObject.partsDisplayed === 'head') {
+														selectRobotPartHead();
+													} else if (gameObject.partsDisplayed === 'arm') {
+														selectRobotPartArms();
+													} else if (gameObject.partsDisplayed === 'leg') {
+														selectRobotPartLegs();
+													}
+												}
+											},
+											isModalBtn: true,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+								
+							}, 150);
+						}
+						
 					}
 				}
 			}
@@ -2439,7 +2582,7 @@ const factoryParts = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart.img, discoveredPart.count),
+							btnColor: drawActiveParts(discoveredPart),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.count,
@@ -2466,7 +2609,7 @@ const factoryParts = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart.img, discoveredPart.count),
+							btnColor: drawActiveParts(discoveredPart),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.name,
@@ -2576,211 +2719,285 @@ const factoryParts = {
 							id: 'confirm-part',
 							action: {
 								method: function(id) {
-									if (!gameObject.buildButtonDisabled) {
-										const scrapCosts = [];
-										for (const scrap in part.scrapToBuild) {
-											if (part.scrapToBuild[scrap] > 0) {
-												const scrapObj = {
-													type: scrap, 
-													cost: part.scrapToBuild[scrap]
-												};
-												scrapCosts.push(scrapObj);
-											}
-										}
-										// check to see if we have all the scrap we need
-										let problems = 0;
-										scrapCosts.forEach((scrap, i) => {
-											if (scrap.type === 'commonScrap') {
-												if (gameObject.commonScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'unCommonScrap') {
-												if (gameObject.unCommonScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'uniqueScrap') {
-												if (gameObject.uniqueScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'intriguingScrap') {
-												if (gameObject.intriguingScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'facinatingScrap') {
-												if (gameObject.facinatingScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'mythicScrap') {
-												if (gameObject.mythicScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
-												}
-											} else if (scrap.type === 'exoticScrap') {
-												if (gameObject.exoticScrap >= scrap.cost) {
-													// got the scrap
-												} else {
-													problems++;
+									
+									if (part.requires !== undefined && 
+									part.requires.factoryLevel <= gameObject.factoryLevel && 
+									part.requires.engineeringSkill <= gameObject.engineeringSkill) {
+										if (!gameObject.buildButtonDisabled) {
+											const scrapCosts = [];
+											for (const scrap in part.scrapToBuild) {
+												if (part.scrapToBuild[scrap] > 0) {
+													const scrapObj = {
+														type: scrap, 
+														cost: part.scrapToBuild[scrap]
+													};
+													scrapCosts.push(scrapObj);
 												}
 											}
-										});
-									// if we don't, display a message
-									if (problems > 0) {
-										gameObject.buildButtonDisabled = true;
-										setTimeout(function() {
-											Game.methodSetup = {
-												method: function(id) {
-													drawSimpleModal({
-														posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-														posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-														width: (Game.entitySize * 40),
-														height: (Game.entitySize * 30),
-														lineWidth: 1,
-														modalColor: 'darkgrey',
-														msgColor: 'white',
-														msgFont: '1.3em serif',
-														msg: 'Not Enough Scrap',
-														footerColor: 'white',
-														footerFont: '1em serif',
-														footerMsg: 'Tap here to continue',
-														bgColor: '',
-														isModalFilled: true,
-														id: Game.modalId,
-														action: { 
-															method: function(id) {
-																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																Game.deleteEntity(modal.methodId); 
-																if (gameObject.partsDisplayed === 'chassis') {
-																	selectRobotPartChassis();
-																} else if (gameObject.partsDisplayed === 'head') {
-																	selectRobotPartHead();
-																} else if (gameObject.partsDisplayed === 'arm') {
-																	selectRobotPartArms();
-																} else if (gameObject.partsDisplayed === 'leg') {
-																	selectRobotPartLegs();
-																}
-															 }
-														},
-														props: {},
-														methodId: id
-													});
-												}
-											};
-											Game.addMethod(Game.methodSetup);
-										},200);
-			
-									} else {
-										// see if there is enough storage for the part first
-										if (part.count < gameObject.partStorage) {
-											// if we have enough scrap, go over the list again and subtract the scrap
+											// check to see if we have all the scrap we need
+											let problems = 0;
 											scrapCosts.forEach((scrap, i) => {
 												if (scrap.type === 'commonScrap') {
 													if (gameObject.commonScrap >= scrap.cost) {
-														gameObject.commonScrap -= scrap.cost;
+														// got the scrap
+													} else {
+														problems++;
 													}
 												} else if (scrap.type === 'unCommonScrap') {
 													if (gameObject.unCommonScrap >= scrap.cost) {
-															gameObject.unCommonScrap -= scrap.cost;
+														// got the scrap
+													} else {
+														problems++;
 													}
 												} else if (scrap.type === 'uniqueScrap') {
 													if (gameObject.uniqueScrap >= scrap.cost) {
-														gameObject.uniqueScrap -= scrap.cost;
+														// got the scrap
+													} else {
+														problems++;
 													}
 												} else if (scrap.type === 'intriguingScrap') {
 													if (gameObject.intriguingScrap >= scrap.cost) {
-														gameObject.intriguingScrap -= scrap.cost;
+														// got the scrap
+													} else {
+														problems++;
 													}
 												} else if (scrap.type === 'facinatingScrap') {
 													if (gameObject.facinatingScrap >= scrap.cost) {
-														gameObject.facinatingScrap -= scrap.cost;
+														// got the scrap
+													} else {
+														problems++;
 													}
 												} else if (scrap.type === 'mythicScrap') {
 													if (gameObject.mythicScrap >= scrap.cost) {
-														gameObject.mythicScrap -= scrap.cost;
+														// got the scrap
+													} else {
+														problems++;
 													}
 												} else if (scrap.type === 'exoticScrap') {
 													if (gameObject.exoticScrap >= scrap.cost) {
-														gameObject.exoticScrap -= scrap.cost;
+														// got the scrap
+													} else {
+														problems++;
 													}
 												}
 											});
-											part.count++;
-											Particle.floatingText({
-												font: '2rem serif',
-												msg: '+          +',
-												align: 'center',
-												posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
-												posY: Game.placeEntityY(0.69, (Game.entitySize * 0.7)),
-												direction: 'top',
-												color: 'green',
-												ticks: 13,
-												speed: 0.8,
-											});
-										} else {
-											gameObject.buildButtonDisabled = true;
-											setTimeout(function() {
-												Game.methodSetup = {
-													method: function(id) {
-														drawSimpleModal({
-															posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-															posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-															width: (Game.entitySize * 40),
-															height: (Game.entitySize * 30),
-															lineWidth: 1,
-															modalColor: 'darkgrey',
-															msgColor: 'white',
-															msgFont: '1.3em serif',
-															msg: 'Not Enough Storage',
-															footerColor: 'white',
-															footerFont: '1em serif',
-															footerMsg: 'Tap here to continue',
-															bgColor: '',
-															isModalFilled: true,
-															id: Game.modalId,
-															action: { 
-																method: function(id) {
-																	const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																	Game.deleteEntity(modal.methodId); 
-																	if (gameObject.partsDisplayed === 'chassis') {
-																		selectRobotPartChassis();
-																	} else if (gameObject.partsDisplayed === 'head') {
-																		selectRobotPartHead();
-																	} else if (gameObject.partsDisplayed === 'arm') {
-																		selectRobotPartArms();
-																	} else if (gameObject.partsDisplayed === 'leg') {
-																		selectRobotPartLegs();
-																	}
-																 }
-															},
-															props: {},
-															methodId: id
-														});
-													}
-												};
-												Game.addMethod(Game.methodSetup);
-											},200);
+											// if we don't, display a message
+											if (problems > 0) {
+												gameObject.buildButtonDisabled = true;
+												setTimeout(function() {
+													Game.methodSetup = {
+														method: function(id) {
+															drawSimpleModal({
+																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+																posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+																width: (Game.entitySize * 40),
+																height: (Game.entitySize * 30),
+																lineWidth: 1,
+																modalColor: 'darkgrey',
+																msgColor: 'white',
+																msgFont: '1.3em serif',
+																msg: 'Not Enough Scrap',
+																footerColor: 'white',
+																footerFont: '1em serif',
+																footerMsg: 'Tap here to continue',
+																bgColor: '',
+																isModalFilled: true,
+																id: Game.modalId,
+																action: { 
+																	method: function(id) {
+																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																		Game.deleteEntity(modal.methodId); 
+																		if (gameObject.partsDisplayed === 'chassis') {
+																			selectRobotPartChassis();
+																		} else if (gameObject.partsDisplayed === 'head') {
+																			selectRobotPartHead();
+																		} else if (gameObject.partsDisplayed === 'arm') {
+																			selectRobotPartArms();
+																		} else if (gameObject.partsDisplayed === 'leg') {
+																			selectRobotPartLegs();
+																		}
+																	 }
+																},
+																props: {},
+																methodId: id
+															});
+														}
+													};
+													Game.addMethod(Game.methodSetup);
+												},200);
+					
+											} else {
+												// see if there is enough storage for the part first
+												if (part.count < gameObject.partStorage) {
+													// if we have enough scrap, go over the list again and subtract the scrap
+													scrapCosts.forEach((scrap, i) => {
+														if (scrap.type === 'commonScrap') {
+															if (gameObject.commonScrap >= scrap.cost) {
+																gameObject.commonScrap -= scrap.cost;
+															}
+														} else if (scrap.type === 'unCommonScrap') {
+															if (gameObject.unCommonScrap >= scrap.cost) {
+																	gameObject.unCommonScrap -= scrap.cost;
+															}
+														} else if (scrap.type === 'uniqueScrap') {
+															if (gameObject.uniqueScrap >= scrap.cost) {
+																gameObject.uniqueScrap -= scrap.cost;
+															}
+														} else if (scrap.type === 'intriguingScrap') {
+															if (gameObject.intriguingScrap >= scrap.cost) {
+																gameObject.intriguingScrap -= scrap.cost;
+															}
+														} else if (scrap.type === 'facinatingScrap') {
+															if (gameObject.facinatingScrap >= scrap.cost) {
+																gameObject.facinatingScrap -= scrap.cost;
+															}
+														} else if (scrap.type === 'mythicScrap') {
+															if (gameObject.mythicScrap >= scrap.cost) {
+																gameObject.mythicScrap -= scrap.cost;
+															}
+														} else if (scrap.type === 'exoticScrap') {
+															if (gameObject.exoticScrap >= scrap.cost) {
+																gameObject.exoticScrap -= scrap.cost;
+															}
+														}
+													});
+													part.count++;
+													Particle.floatingText({
+														font: '2rem serif',
+														msg: '+          +',
+														align: 'center',
+														posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
+														posY: Game.placeEntityY(0.69, (Game.entitySize * 0.7)),
+														direction: 'top',
+														color: 'green',
+														ticks: 13,
+														speed: 0.8,
+													});
+												} else {
+													gameObject.buildButtonDisabled = true;
+													setTimeout(function() {
+														Game.methodSetup = {
+															method: function(id) {
+																drawSimpleModal({
+																	posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+																	posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+																	width: (Game.entitySize * 40),
+																	height: (Game.entitySize * 30),
+																	lineWidth: 1,
+																	modalColor: 'darkgrey',
+																	msgColor: 'white',
+																	msgFont: '1.3em serif',
+																	msg: 'Not Enough Storage',
+																	footerColor: 'white',
+																	footerFont: '1em serif',
+																	footerMsg: 'Tap here to continue',
+																	bgColor: '',
+																	isModalFilled: true,
+																	id: Game.modalId,
+																	action: { 
+																		method: function(id) {
+																			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																			Game.deleteEntity(modal.methodId); 
+																			if (gameObject.partsDisplayed === 'chassis') {
+																				selectRobotPartChassis();
+																			} else if (gameObject.partsDisplayed === 'head') {
+																				selectRobotPartHead();
+																			} else if (gameObject.partsDisplayed === 'arm') {
+																				selectRobotPartArms();
+																			} else if (gameObject.partsDisplayed === 'leg') {
+																				selectRobotPartLegs();
+																			}
+																		 }
+																	},
+																	props: {},
+																	methodId: id
+																});
+															}
+														};
+														Game.addMethod(Game.methodSetup);
+													},200);
+												}
+											}
+											if (gameObject.partsDisplayed === 'chassis') {
+												displayDiscoveredPartParts(gameObject.discoveredChassis);
+											} else if (gameObject.partsDisplayed === 'head') {
+												displayDiscoveredPartParts(gameObject.discoveredHeads);
+											} else if (gameObject.partsDisplayed === 'arm') {
+												displayDiscoveredPartParts(gameObject.discoveredArms);
+											} else if (gameObject.partsDisplayed === 'leg') {
+												displayDiscoveredPartParts(gameObject.discoveredLegs);
+											}
 										}
+									} else {
+										// display modal
+										const msgs = ['Part Requires', 'Factory Level: ' + part.requires.factoryLevel, 'Engineering Level: ' + part.requires.engineeringSkill];
+										Game.methodSetup = {
+											method: function(id) {
+												drawDialogueModal({
+													posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+													posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+													width: (Game.entitySize * 45),
+													height: (Game.entitySize * 50),
+													lineWidth: 1,
+													modalColor: 'darkgrey',
+													msgColor: 'white',
+													msgFont: '1em serif',
+													msgs: msgs,
+													msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+													msgDistance: (Game.entitySize * 10),
+													bgColor: '',
+													isModalFilled: true,
+													id: Game.modalId,
+													action: {
+														method: function(id) {}
+													},
+													isModalBtn: false,
+													props: {},
+													methodId: id
+												});
+											}
+										};
+										Game.addMethod(Game.methodSetup);
+										Game.methodSetup = {
+											method: function(id) {
+												drawButton({
+													posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+													posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+													width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
+													height: (Game.entitySize * 7),
+													lineWidth: 1,
+													btnColor: 'grey',
+													txtColor: 'white',
+													font: '1.3em serif',
+													msg: 'Ok...',
+													isFilled: true,
+													id: 'requires-parts',
+													action: { 
+														method: function(id) { 
+															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+															Game.deleteEntity(modal.methodId);
+															const btn = Game.methodObjects.find(build => build.id === 'requires-parts');
+															Game.deleteEntity(btn.methodId);
+															if (gameObject.partsDisplayed === 'chassis') {
+																selectRobotPartChassis();
+															} else if (gameObject.partsDisplayed === 'head') {
+																selectRobotPartHead();
+															} else if (gameObject.partsDisplayed === 'arm') {
+																selectRobotPartArms();
+															} else if (gameObject.partsDisplayed === 'leg') {
+																selectRobotPartLegs();
+															}
+														}
+													},
+													isModalBtn: true,
+													props: {},
+													methodId: id
+												});
+											}
+										};
+										Game.addMethod(Game.methodSetup);
 									}
-									if (gameObject.partsDisplayed === 'chassis') {
-										displayDiscoveredPartParts(gameObject.discoveredChassis);
-									} else if (gameObject.partsDisplayed === 'head') {
-										displayDiscoveredPartParts(gameObject.discoveredHeads);
-									} else if (gameObject.partsDisplayed === 'arm') {
-										displayDiscoveredPartParts(gameObject.discoveredArms);
-									} else if (gameObject.partsDisplayed === 'leg') {
-										displayDiscoveredPartParts(gameObject.discoveredLegs);
-									}
-								}
+									
 									
 								Particle.animComplete = {
 									method: function() {
@@ -2816,9 +3033,12 @@ function refreshFactoryBackgrounds() {
 		Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
 	}
 }
-function drawActiveParts(activeColor, count) {
-	if (count > 0) {
-		return activeColor;
+function drawActiveParts(discoveredPart) {
+	if (discoveredPart.count > 0 && 
+	discoveredPart.requires.factoryLevel <= gameObject.factoryLevel && 
+	discoveredPart.requires.roboticSkill <= gameObject.roboticSkill &&
+	discoveredPart.requires.engineeringSkill <= gameObject.engineeringSkill) {
+		return discoveredPart.img;
 	} else {
 		return '#C0C0C0'
 	}

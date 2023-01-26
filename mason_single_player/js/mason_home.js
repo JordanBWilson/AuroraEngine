@@ -348,7 +348,6 @@ const homeSellMenus = {
 }
 
 // *** Home Sell Scrap Page ***
-
 const homeSellScrap = {
 	description: 'This is where the player can sell their scrap',
 	loadPage: function() {
@@ -883,7 +882,10 @@ const homeSellScrap = {
 		}
 
 		function selectScrapPrice(scrapType) {
-
+			
+			clearSellScrapScreen();
+			refreshSellScrapBackgrounds();
+			
 			createSellScrapTitles();
 			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em serif', 'grey', 'center');
 			
@@ -1361,7 +1363,6 @@ const homeSellScrap = {
 }
 
 // *** Home Sell Parts Page ***
-
 const homeSellParts = {
 	description: 'This is where the player can sell their parts',
 	loadPage: function() {
@@ -3753,9 +3754,8 @@ const homeSellRobots = {
 	}	
 }
 // *** Home Player Upgrades Page ***
-// future Jordan, make sure the price of the upgrade increases every level.
-// don't forget to setup the parts/robots screen. the player should only be able to
-// work on parts and robots within their level
+// future Jordan, time to work on scrapping and what kinds of scrap can be found per level.
+// then it's time to work on the arena at last...
 const homePlayerUpgrades = {
 	description: 'This is where the player can upgrade their stats',
 	loadPage: function() {
@@ -3919,7 +3919,6 @@ const homePlayerUpgrades = {
 							id: 'upgrade-stat-' + upgradeIndex,
 							action: {
 								method: function(id) {
-									console.log(upgradeIndex);
 									let msgs = [];
 									if (upgradeIndex === 0) {
 										const upgrade = formatDisplayValue(gameObject.factoryUpgradeCost);
@@ -3935,7 +3934,6 @@ const homePlayerUpgrades = {
 									}
 									if (upgradeIndex === 2) {
 										const upgrade = formatDisplayValue(gameObject.roboticsUpgradeCost);
-										console.log(upgrade);
 										msgs = ['Level ' + gameObject.roboticSkill, 'Robotics', 'Build Better Robots',
 										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
 										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
@@ -3966,13 +3964,13 @@ const homePlayerUpgrades = {
 									}
 									if (upgradeIndex === 7) {
 										const upgrade = formatDisplayValue(gameObject.partInvUpgradeCost);
-										msgs = ['Level ' + gameObject.partStorageLevel, 'Part Space', 'Increase Robot Part Storage By 5',
+										msgs = ['Level ' + gameObject.partStorageLevel, 'Part Space', 'Increase Robot Part Storage By 3',
 										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
 										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									if (upgradeIndex === 8) {
 										const upgrade = formatDisplayValue(gameObject.robotInvUpgradeCost);
-										msgs = ['Level ' + gameObject.robotStorageLevel, 'Robot Space', 'Increase Robot Storage By 5',
+										msgs = ['Level ' + gameObject.robotStorageLevel, 'Robot Space', 'Increase Robot Storage By 1',
 										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
 										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
@@ -4110,54 +4108,274 @@ const homePlayerUpgrades = {
 																	
 																	designIncrease = true;
 																}
-																upgradeMsgs = ['Level ' + gameObject.factoryLevel, gameObject.factoryLevel === 1 ? 'Factory Built' : 'Factory Upgraded!', 
+																
+																if (!gameObject.factoryUpgradeCost.bronze && 
+																!gameObject.factoryUpgradeCost.silver && 
+																!gameObject.factoryUpgradeCost.gold && 
+																!gameObject.factoryUpgradeCost.platinum &&
+																!gameObject.factoryUpgradeCost.mythryl) {
+																	gameObject.factoryUpgradeCost.copper *= 2;
+																} else if (gameObject.factoryUpgradeCost.bronze) {
+																	gameObject.factoryUpgradeCost.copper = 0;
+																	gameObject.factoryUpgradeCost.bronze *= 2;
+																} else if (gameObject.factoryUpgradeCost.silver) {
+																	gameObject.factoryUpgradeCost.bronze = 0;
+																	gameObject.factoryUpgradeCost.silver *= 2;
+																} else if (gameObject.factoryUpgradeCost.gold) {
+																	gameObject.factoryUpgradeCost.silver = 0;
+																	gameObject.factoryUpgradeCost.gold *= 2;
+																} else if (gameObject.factoryUpgradeCost.platinum) {
+																	gameObject.factoryUpgradeCost.gold = 0;
+																	gameObject.factoryUpgradeCost.platinum *= 2;
+																} else if (gameObject.factoryUpgradeCost.mythryl) {
+																	gameObject.factoryUpgradeCost.platinum = 0;
+																	gameObject.factoryUpgradeCost.mythryl *= 2;
+																}																
+																const formatUpgradeCost = formatPartCost(gameObject.factoryUpgradeCost);
+																gameObject.factoryUpgradeCost = formatUpgradeCost;
+																if (gameObject.factoryLevel === 1) {
+																	gameObject.factoryBuilt = true;
+																}
+																upgradeMsgs = ['Level ' + gameObject.factoryLevel, gameObject.factoryLevel === 1 ? 'Factory Built!' : 'Factory Upgraded!', 
 																designIncrease ? 'Robot Designs Upgraded +3!' : ''];
 															}
 															if (upgradeIndex === 1) {
 																gameObject.engineeringSkill++;
+																if (!gameObject.engineeringUpgradeCost.bronze && 
+																!gameObject.engineeringUpgradeCost.silver && 
+																!gameObject.engineeringUpgradeCost.gold && 
+																!gameObject.engineeringUpgradeCost.platinum &&
+																!gameObject.engineeringUpgradeCost.mythryl) {
+																	gameObject.engineeringUpgradeCost.copper *= 2;
+																} else if (gameObject.engineeringUpgradeCost.bronze) {
+																	gameObject.engineeringUpgradeCost.copper = 0;
+																	gameObject.engineeringUpgradeCost.bronze *= 2;
+																} else if (gameObject.engineeringUpgradeCost.silver) {
+																	gameObject.engineeringUpgradeCost.bronze = 0;
+																	gameObject.engineeringUpgradeCost.silver *= 2;
+																} else if (gameObject.engineeringUpgradeCost.gold) {
+																	gameObject.engineeringUpgradeCost.silver = 0;
+																	gameObject.engineeringUpgradeCost.gold *= 2;
+																} else if (gameObject.engineeringUpgradeCost.platinum) {
+																	gameObject.engineeringUpgradeCost.gold = 0;
+																	gameObject.engineeringUpgradeCost.platinum *= 2;
+																} else if (gameObject.engineeringUpgradeCost.mythryl) {
+																	gameObject.engineeringUpgradeCost.platinum = 0;
+																	gameObject.engineeringUpgradeCost.mythryl *= 2;
+																}
+																const formatUpgradeCost = formatPartCost(gameObject.engineeringUpgradeCost);
+																gameObject.engineeringUpgradeCost = formatUpgradeCost;
 																upgradeMsgs = ['Level ' + gameObject.engineeringSkill, 'Engineering Upgraded!'];
 															}
 															if (upgradeIndex === 2) {
 																gameObject.roboticSkill++;
-																// future Jordan, work on the upgrade cost some more
-																gameObject.roboticsUpgradeCost.copper *= 2;
-																console.log(gameObject.roboticsUpgradeCost.copper);
+																if (!gameObject.roboticsUpgradeCost.bronze && 
+																!gameObject.roboticsUpgradeCost.silver && 
+																!gameObject.roboticsUpgradeCost.gold && 
+																!gameObject.roboticsUpgradeCost.platinum &&
+																!gameObject.roboticsUpgradeCost.mythryl) {
+																	gameObject.roboticsUpgradeCost.copper *= 2;
+																} else if (gameObject.roboticsUpgradeCost.bronze) {
+																	gameObject.roboticsUpgradeCost.copper = 0;
+																	gameObject.roboticsUpgradeCost.bronze *= 2;
+																} else if (gameObject.roboticsUpgradeCost.silver) {
+																	gameObject.roboticsUpgradeCost.bronze = 0;
+																	gameObject.roboticsUpgradeCost.silver *= 2;
+																} else if (gameObject.roboticsUpgradeCost.gold) {
+																	gameObject.roboticsUpgradeCost.silver = 0;
+																	gameObject.roboticsUpgradeCost.gold *= 2;
+																} else if (gameObject.roboticsUpgradeCost.platinum) {
+																	gameObject.roboticsUpgradeCost.gold = 0;
+																	gameObject.roboticsUpgradeCost.platinum *= 2;
+																} else if (gameObject.roboticsUpgradeCost.mythryl) {
+																	gameObject.roboticsUpgradeCost.platinum = 0;
+																	gameObject.roboticsUpgradeCost.mythryl *= 2;
+																}
 																const formatUpgradeCost = formatPartCost(gameObject.roboticsUpgradeCost);
 																gameObject.roboticsUpgradeCost = formatUpgradeCost;
 																upgradeMsgs = ['Level ' + gameObject.roboticSkill, 'Robotics Upgraded!'];
 															}
 															if (upgradeIndex === 3) {
 																gameObject.scrapperSkill++;
+																if (!gameObject.scrappingUpgradeCost.bronze && 
+																!gameObject.scrappingUpgradeCost.silver && 
+																!gameObject.scrappingUpgradeCost.gold && 
+																!gameObject.scrappingUpgradeCost.platinum &&
+																!gameObject.scrappingUpgradeCost.mythryl) {
+																	gameObject.scrappingUpgradeCost.copper *= 2;
+																} else if (gameObject.scrappingUpgradeCost.bronze) {
+																	gameObject.scrappingUpgradeCost.copper = 0;
+																	gameObject.scrappingUpgradeCost.bronze *= 2;
+																} else if (gameObject.scrappingUpgradeCost.silver) {
+																	gameObject.scrappingUpgradeCost.bronze = 0;
+																	gameObject.scrappingUpgradeCost.silver *= 2;
+																} else if (gameObject.scrappingUpgradeCost.gold) {
+																	gameObject.scrappingUpgradeCost.silver = 0;
+																	gameObject.scrappingUpgradeCost.gold *= 2;
+																} else if (gameObject.scrappingUpgradeCost.platinum) {
+																	gameObject.scrappingUpgradeCost.gold = 0;
+																	gameObject.scrappingUpgradeCost.platinum *= 2;
+																} else if (gameObject.scrappingUpgradeCost.mythryl) {
+																	gameObject.scrappingUpgradeCost.platinum = 0;
+																	gameObject.scrappingUpgradeCost.mythryl *= 2;
+																}
+																const formatUpgradeCost = formatPartCost(gameObject.scrappingUpgradeCost);
+																gameObject.scrappingUpgradeCost = formatUpgradeCost;
 																upgradeMsgs = ['Level ' + gameObject.scrapperSkill, 'Scrapping Upgraded!'];
 															}
 															if (upgradeIndex === 4) {
 																gameObject.barterSkill++;
+																if (!gameObject.barteringUpgradeCost.bronze && 
+																!gameObject.barteringUpgradeCost.silver && 
+																!gameObject.barteringUpgradeCost.gold && 
+																!gameObject.barteringUpgradeCost.platinum &&
+																!gameObject.barteringUpgradeCost.mythryl) {
+																	gameObject.barteringUpgradeCost.copper *= 2;
+																} else if (gameObject.barteringUpgradeCost.bronze) {
+																	gameObject.barteringUpgradeCost.copper = 0;
+																	gameObject.barteringUpgradeCost.bronze *= 2;
+																} else if (gameObject.barteringUpgradeCost.silver) {
+																	gameObject.barteringUpgradeCost.bronze = 0;
+																	gameObject.barteringUpgradeCost.silver *= 2;
+																} else if (gameObject.barteringUpgradeCost.gold) {
+																	gameObject.barteringUpgradeCost.silver = 0;
+																	gameObject.barteringUpgradeCost.gold *= 2;
+																} else if (gameObject.barteringUpgradeCost.platinum) {
+																	gameObject.barteringUpgradeCost.gold = 0;
+																	gameObject.barteringUpgradeCost.platinum *= 2;
+																} else if (gameObject.barteringUpgradeCost.mythryl) {
+																	gameObject.barteringUpgradeCost.platinum = 0;
+																	gameObject.barteringUpgradeCost.mythryl *= 2;
+																}
+																const formatUpgradeCost = formatPartCost(gameObject.barteringUpgradeCost);
+																gameObject.barteringUpgradeCost = formatUpgradeCost;
 																upgradeMsgs = ['Level ' + gameObject.barterSkill, 'Bartering Upgraded!'];
 															}
 															if (upgradeIndex === 5) {
 																gameObject.arenaLevel++;
-																upgradeMsgs = ['Level ' + gameObject.arenaLevel, gameObject.arenaLevel === 1 ? 'Arena Built' : 'Arena Upgraded!'];
+																if (!gameObject.arenaUpgradeCost.bronze && 
+																!gameObject.arenaUpgradeCost.silver && 
+																!gameObject.arenaUpgradeCost.gold && 
+																!gameObject.arenaUpgradeCost.platinum &&
+																!gameObject.arenaUpgradeCost.mythryl) {
+																	gameObject.arenaUpgradeCost.copper *= 2;
+																} else if (gameObject.arenaUpgradeCost.bronze) {
+																	gameObject.arenaUpgradeCost.copper = 0;
+																	gameObject.arenaUpgradeCost.bronze *= 2;
+																} else if (gameObject.arenaUpgradeCost.silver) {
+																	gameObject.arenaUpgradeCost.bronze = 0;
+																	gameObject.arenaUpgradeCost.silver *= 2;
+																} else if (gameObject.arenaUpgradeCost.gold) {
+																	gameObject.arenaUpgradeCost.silver = 0;
+																	gameObject.arenaUpgradeCost.gold *= 2;
+																} else if (gameObject.arenaUpgradeCost.platinum) {
+																	gameObject.arenaUpgradeCost.gold = 0;
+																	gameObject.arenaUpgradeCost.platinum *= 2;
+																} else if (gameObject.arenaUpgradeCost.mythryl) {
+																	gameObject.arenaUpgradeCost.platinum = 0;
+																	gameObject.arenaUpgradeCost.mythryl *= 2;
+																}
+																const formatUpgradeCost = formatPartCost(gameObject.arenaUpgradeCost);
+																gameObject.arenaUpgradeCost = formatUpgradeCost;
+																
+																if (gameObject.arenaLevel === 1) {
+																	gameObject.arenaBuild = true;
+																}
+																upgradeMsgs = ['Level ' + gameObject.arenaLevel, gameObject.arenaLevel === 1 ? 'Arena Built!' : 'Arena Upgraded!'];
 															}
 															if (upgradeIndex === 6) {
 																gameObject.scrapInvintoryLevel++;
 																gameObject.scrapInvintory += 5;
+																if (!gameObject.scrapInvUpgradeCost.bronze && 
+																!gameObject.scrapInvUpgradeCost.silver && 
+																!gameObject.scrapInvUpgradeCost.gold && 
+																!gameObject.scrapInvUpgradeCost.platinum &&
+																!gameObject.scrapInvUpgradeCost.mythryl) {
+																	gameObject.scrapInvUpgradeCost.copper *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.bronze) {
+																	gameObject.scrapInvUpgradeCost.copper = 0;
+																	gameObject.scrapInvUpgradeCost.bronze *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.silver) {
+																	gameObject.scrapInvUpgradeCost.bronze = 0;
+																	gameObject.scrapInvUpgradeCost.silver *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.gold) {
+																	gameObject.scrapInvUpgradeCost.silver = 0;
+																	gameObject.scrapInvUpgradeCost.gold *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.platinum) {
+																	gameObject.scrapInvUpgradeCost.gold = 0;
+																	gameObject.scrapInvUpgradeCost.platinum *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.mythryl) {
+																	gameObject.scrapInvUpgradeCost.platinum = 0;
+																	gameObject.scrapInvUpgradeCost.mythryl *= 2;
+																}
+																const formatUpgradeCost = formatPartCost(gameObject.scrapInvUpgradeCost);
+																gameObject.scrapInvUpgradeCost = formatUpgradeCost;
 																upgradeMsgs = ['Level ' + gameObject.scrapInvintoryLevel, 'Scrap Space Upgraded +5!'];
 															}
 															if (upgradeIndex === 7) {
 																gameObject.partStorageLevel++;
-																gameObject.partStorage += 3
+																gameObject.partStorage += 3;
+																if (!gameObject.partInvUpgradeCost.bronze && 
+																!gameObject.partInvUpgradeCost.silver && 
+																!gameObject.partInvUpgradeCost.gold && 
+																!gameObject.partInvUpgradeCost.platinum &&
+																!gameObject.partInvUpgradeCost.mythryl) {
+																	gameObject.partInvUpgradeCost.copper *= 2;
+																} else if (gameObject.partInvUpgradeCost.bronze) {
+																	gameObject.partInvUpgradeCost.copper = 0;
+																	gameObject.partInvUpgradeCost.bronze *= 2;
+																} else if (gameObject.partInvUpgradeCost.silver) {
+																	gameObject.partInvUpgradeCost.bronze = 0;
+																	gameObject.partInvUpgradeCost.silver *= 2;
+																} else if (gameObject.partInvUpgradeCost.gold) {
+																	gameObject.partInvUpgradeCost.silver = 0;
+																	gameObject.partInvUpgradeCost.gold *= 2;
+																} else if (gameObject.partInvUpgradeCost.platinum) {
+																	gameObject.partInvUpgradeCost.gold = 0;
+																	gameObject.partInvUpgradeCost.platinum *= 2;
+																} else if (gameObject.partInvUpgradeCost.mythryl) {
+																	gameObject.partInvUpgradeCost.platinum = 0;
+																	gameObject.partInvUpgradeCost.mythryl *= 2;
+																}
+																const formatUpgradeCost = formatPartCost(gameObject.partInvUpgradeCost);
+																gameObject.partInvUpgradeCost = formatUpgradeCost;
 																upgradeMsgs = ['Level ' + gameObject.partStorageLevel, 'Part Space Upgraded +3!'];
 															}
 															if (upgradeIndex === 8) {
 																gameObject.robotStorageLevel++;
+																gameObject.robotStorage++;
+																if (!gameObject.robotInvUpgradeCost.bronze && 
+																!gameObject.robotInvUpgradeCost.silver && 
+																!gameObject.robotInvUpgradeCost.gold && 
+																!gameObject.robotInvUpgradeCost.platinum &&
+																!gameObject.robotInvUpgradeCost.mythryl) {
+																	gameObject.robotInvUpgradeCost.copper *= 2;
+																} else if (gameObject.robotInvUpgradeCost.bronze) {
+																	gameObject.robotInvUpgradeCost.copper = 0;
+																	gameObject.robotInvUpgradeCost.bronze *= 2;
+																} else if (gameObject.robotInvUpgradeCost.silver) {
+																	gameObject.robotInvUpgradeCost.bronze = 0;
+																	gameObject.robotInvUpgradeCost.silver *= 2;
+																} else if (gameObject.robotInvUpgradeCost.gold) {
+																	gameObject.robotInvUpgradeCost.silver = 0;
+																	gameObject.robotInvUpgradeCost.gold *= 2;
+																} else if (gameObject.robotInvUpgradeCost.platinum) {
+																	gameObject.robotInvUpgradeCost.gold = 0;
+																	gameObject.robotInvUpgradeCost.platinum *= 2;
+																} else if (gameObject.robotInvUpgradeCost.mythryl) {
+																	gameObject.robotInvUpgradeCost.platinum = 0;
+																	gameObject.robotInvUpgradeCost.mythryl *= 2;
+																}
+																const formatUpgradeCost = formatPartCost(gameObject.robotInvUpgradeCost);
+																gameObject.robotInvUpgradeCost = formatUpgradeCost;
 																upgradeMsgs = ['Level ' + gameObject.robotStorageLevel, 'Robot Space Upgraded +1!'];
 															}
 															
 															subtractFunds(formatUpgradeCost);
 
 															Particle.floatingText({
-																font: '2rem serif',
-																msg: '+         +',
+																font: '2.3rem serif',
+																msg: '+',
 																align: 'center',
 																posX: Game.placeEntityX(0.472),
 																posY: Game.placeEntityY(0.29),

@@ -223,9 +223,9 @@ const robotHeads = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 1,
+			roboticSkill: 1,
+			engineeringSkill: 1,
 		},
 	},
 	{

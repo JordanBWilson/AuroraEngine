@@ -104,7 +104,11 @@ const Game = { // the user will want to use this object
     setTimeout(function() {
       clearInterval(Main.interval);
       cancelAnimationFrame(Main.intervalAnimateId);
-      Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
+      Main.intervalAnimateId = requestAnimationFrame(function() {
+		  if (typeof mainLoop !== 'undefined') {
+			  mainLoop();
+		  }
+		});
     },0);
   },
   setSettingsMed: function() {
@@ -113,7 +117,11 @@ const Game = { // the user will want to use this object
     setTimeout(function() {
       clearInterval(Main.interval);
       cancelAnimationFrame(Main.intervalAnimateId);
-      Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
+      Main.intervalAnimateId = requestAnimationFrame(function() {
+		  if (typeof mainLoop !== 'undefined') {
+			  mainLoop();
+		  }
+		 });
     },0);
   },
   setSettingsHigh: function() {
@@ -122,7 +130,11 @@ const Game = { // the user will want to use this object
     setTimeout(function() {
       clearInterval(Main.interval);
       cancelAnimationFrame(Main.intervalAnimateId);
-      Main.intervalAnimateId = requestAnimationFrame(function() {mainLoop()});
+      Main.intervalAnimateId = requestAnimationFrame(function() {
+		  if (typeof mainLoop !== 'undefined') {
+			  mainLoop();
+		  }
+		 });
     },0);
 
   }, // give your game a default setting for the smoothest frames
