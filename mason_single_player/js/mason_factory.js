@@ -2030,7 +2030,6 @@ const factoryParts = {
 						selectRobotPartHead();
 					}
 					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-					console.log(modal);
 					if (modal?.isModalBtn !== undefined && modal.isModalBtn === true) {
 						Game.deleteEntity(modal.methodId);
 						setTimeout(function() {
