@@ -1055,7 +1055,7 @@ const factoryPage = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart),
+							btnColor: drawActiveParts(discoveredPart, true),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.count,
@@ -1089,7 +1089,7 @@ const factoryPage = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart),
+							btnColor: drawActiveParts(discoveredPart, true),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.name,
@@ -2581,7 +2581,7 @@ const factoryParts = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart),
+							btnColor: drawActiveParts(discoveredPart, false),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.count,
@@ -2608,7 +2608,7 @@ const factoryParts = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart),
+							btnColor: drawActiveParts(discoveredPart, false),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: discoveredPart.name,
@@ -3032,14 +3032,22 @@ function refreshFactoryBackgrounds() {
 		Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
 	}
 }
-function drawActiveParts(discoveredPart) {
-	if (discoveredPart.count > 0 && 
-	discoveredPart.requires.factoryLevel <= gameObject.factoryLevel && 
-	discoveredPart.requires.roboticSkill <= gameObject.roboticSkill &&
-	discoveredPart.requires.engineeringSkill <= gameObject.engineeringSkill) {
-		return discoveredPart.img;
+function drawActiveParts(discoveredPart, isRobotPage) {
+	if (isRobotPage) {
+		if (discoveredPart.count > 0 && 
+		discoveredPart.requires.roboticSkill <= gameObject.roboticSkill) {
+			return discoveredPart.img;
+		} else {
+			return '#C0C0C0'
+		}
 	} else {
-		return '#C0C0C0'
+		if (discoveredPart.count > 0 && 
+		discoveredPart.requires.factoryLevel <= gameObject.factoryLevel &&
+		discoveredPart.requires.engineeringSkill <= gameObject.engineeringSkill) {
+			return discoveredPart.img;
+		} else {
+			return '#C0C0C0'
+		}
 	}
 }
 

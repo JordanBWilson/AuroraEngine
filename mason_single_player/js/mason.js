@@ -174,50 +174,54 @@ const mainPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-						posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
-						posY: Game.placeEntityY(0.60, (Game.entitySize * 15)),
-						width: (Game.entitySize * 15),
-						height: (Game.entitySize * 15),
-						lineWidth: 1,
-						btnColor: 'grey',
-						txtColor: 'black',
-						font: '1.5em serif',
-						msg: 'Factory',
-						isFilled: true,
-						id: 'factory',
-						action: { method: function(id) { openFactory(); }},
-						isModalBtn: false,
-						props: {},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-						posX: Game.placeEntityX(0.165, (Game.entitySize * 15)),
-						posY: Game.placeEntityY(0.75, (Game.entitySize * 15)),
-						width: (Game.entitySize * 15),
-						height: (Game.entitySize * 15),
-						lineWidth: 1,
-						btnColor: 'brown',
-						txtColor: 'white',
-						font: '1.5em serif',
-						msg: 'Arena',
-						isFilled: true,
-						id: 'arena',
-						action: { method: function(id) { openArena(); }},
-						isModalBtn: false,
-						props: {},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
+			if (gameObject.factoryBuilt) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawButton({
+							posX: Game.placeEntityX(0.82, (Game.entitySize * 15)),
+							posY: Game.placeEntityY(0.60, (Game.entitySize * 15)),
+							width: (Game.entitySize * 15),
+							height: (Game.entitySize * 15),
+							lineWidth: 1,
+							btnColor: 'grey',
+							txtColor: 'black',
+							font: '1.5em serif',
+							msg: 'Factory',
+							isFilled: true,
+							id: 'factory',
+							action: { method: function(id) { openFactory(); }},
+							isModalBtn: false,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			if (gameObject.arenaBuild) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawButton({
+							posX: Game.placeEntityX(0.165, (Game.entitySize * 15)),
+							posY: Game.placeEntityY(0.75, (Game.entitySize * 15)),
+							width: (Game.entitySize * 15),
+							height: (Game.entitySize * 15),
+							lineWidth: 1,
+							btnColor: 'brown',
+							txtColor: 'white',
+							font: '1.5em serif',
+							msg: 'Arena',
+							isFilled: true,
+							id: 'arena',
+							action: { method: function(id) { openArena(); }},
+							isModalBtn: false,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
 			drawRobot();
 		  // Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
 		  // Game.addMethod(Game.methodSetup);
@@ -499,17 +503,108 @@ const mainPage = {
 		}
 
 		function mineScrap() {
-			Particle.drawSpark({
-				posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
-				posY: Game.placeEntityY(0.78, (Game.entitySize * 0.7)),
-				shape: Particle.enumShapes.rect,
-				color: '#909090',
-				ticks: 11,
-				count: 8,
-				size: (Game.entitySize * 1),
-				speed: 1.3,
-			});
-			console.log('scrapping! ');
+			let scrapFoundText = '';
+			let scrapFoundCount = 0;
+			let totalScrap = 
+				gameObject.commonScrap + 
+				gameObject.unCommonScrap + 
+				gameObject.uniqueScrap + 
+				gameObject.intriguingScrap + 
+				gameObject.facinatingScrap + 
+				gameObject.mythicScrap + 
+				gameObject.exoticScrap;
+			if (totalScrap < gameObject.scrapInvintory) {
+				Particle.drawSpark({
+					posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
+					posY: Game.placeEntityY(0.78, (Game.entitySize * 0.7)),
+					shape: Particle.enumShapes.rect,
+					color: '#909090',
+					ticks: 11,
+					count: 8,
+					size: (Game.entitySize * 1),
+					speed: 1.3,
+				});
+				const scrapRoll =  Math.round(Math.random() * (gameObject.scrapperSkill + 40));
+				if (gameObject.scrapperSkill === 0) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 1) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 2) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 3) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 4) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				}
+				// future Jordan, continue the levels. Level the uncommon scrap like the common scrap.
+				// perhaps lower the number/ raise the chances of common scrap by 1 so 32 next level in this case 
+				Particle.floatingText({
+					font: '1.5rem serif',
+					msg: scrapFoundText,
+					align: 'center',
+					posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
+					posY: Game.placeEntityY(0.72, (Game.entitySize * 0.7)),
+					direction: 'top',
+					color: 'darkgrey',
+					ticks: 100,
+					speed: 0.5,
+				});
+			} else {
+				Game.methodSetup = {
+					method: function(id) {
+						drawSimpleModal({
+							posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+							posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+							width: (Game.entitySize * 40),
+							height: (Game.entitySize * 30),
+							lineWidth: 1,
+							modalColor: 'darkgrey',
+							msgColor: 'white',
+							msgFont: '1.1em serif',
+							msg: 'Not Enough Scrap Space',
+							footerColor: 'white',
+							footerFont: '1em serif',
+							footerMsg: 'Tap here to continue',
+							bgColor: '',
+							isModalFilled: true,
+							id: Game.modalId,
+							action: { 
+								method: function(id) {
+									const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+									Game.deleteEntity(modal.methodId);
+								}
+							},
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
 		}
 
 		function openHome() {

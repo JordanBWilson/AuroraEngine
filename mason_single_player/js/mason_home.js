@@ -3754,8 +3754,6 @@ const homeSellRobots = {
 	}	
 }
 // *** Home Player Upgrades Page ***
-// future Jordan, time to work on scrapping and what kinds of scrap can be found per level.
-// then it's time to work on the arena at last...
 const homePlayerUpgrades = {
 	description: 'This is where the player can upgrade their stats',
 	loadPage: function() {

@@ -15,13 +15,13 @@
 // this will keep track of the game
 const gameObject = {
 	// ---types of scrap matirials---
-	commonScrap: 50,
-	unCommonScrap: 10,
-	uniqueScrap: 10, // rare
-	intriguingScrap: 10, // epic
-	facinatingScrap: 10, // legendary
-	mythicScrap: 10,
-	exoticScrap: 10, // I'm thinking this scrap type could be used to make special items
+	commonScrap: 0,
+	unCommonScrap: 0,
+	uniqueScrap: 0, // rare
+	intriguingScrap: 0, // epic
+	facinatingScrap: 0, // legendary
+	mythicScrap: 0,
+	exoticScrap: 0, // I'm thinking this scrap type could be used to make special items
 	// ---scrap base prices--- these prices will determine how much parts and robots will cost
 	// when calcing the barter price upgrade, use these numbers
 	commonScrapBase: [
