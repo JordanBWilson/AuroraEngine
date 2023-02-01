@@ -1007,150 +1007,77 @@ const homeSellScrap = {
 						id: 'sell-scrap-btn',
 						action: { 
 							method: function(id) {
-								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-								let displayModal = false;
-								if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
-									gameObject.commonScrap--;
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									addFunds(gameObject.commonScrapBase);
-									if (gameObject.commonScrap === 0) {
-										displayModal = true;
-									}
-								}
-								if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
-									gameObject.unCommonScrap--;
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									addFunds(gameObject.unCommonScrapBase);
-									if (gameObject.unCommonScrap === 0) {
-										displayModal = true;
-									}
-								}
-								if (gameObject.scrapToSell === 'unique' && gameObject.uniqueScrap > 0 && !modal) {
-									gameObject.uniqueScrap--;
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									addFunds(gameObject.uniqueScrapBase);
-									if (gameObject.uniqueScrap === 0) {
-										displayModal = true;
-									}
-								}
-								if (gameObject.scrapToSell === 'intriguing' && gameObject.intriguingScrap > 0 && !modal) {
-									gameObject.intriguingScrap--;
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									addFunds(gameObject.intriguingScrapBase);
-									if (gameObject.intriguingScrap === 0) {
-										displayModal = true;
-									}
-								}
-								if (gameObject.scrapToSell === 'facinating' && gameObject.facinatingScrap > 0 && !modal) {
-									gameObject.facinatingScrap--;
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									addFunds(gameObject.facinatingScrapBase);
-									if (gameObject.facinatingScrap === 0) {
-										displayModal = true;
-									}
-								}
-								if (gameObject.scrapToSell === 'mythic' && gameObject.mythicScrap > 0 && !modal) {
-									gameObject.mythicScrap--;
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									addFunds(gameObject.mythicScrapBase);
-									if (gameObject.mythicScrap === 0) {
-										displayModal = true;
-									}
-								}
-								if (gameObject.scrapToSell === 'exotic' && gameObject.exoticScrap > 0 && !modal) {
-									gameObject.exoticScrap--;
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									addFunds(gameObject.exoticScrapBase);
-									if (gameObject.exoticScrap === 0) {
-										displayModal = true;
-									}
-								}
-								particleAnimationOver();
-								
-								clearSellScrapScreen();
-								refreshSellScrapBackgrounds();
-								setTimeout(function() {
-									selectScrapPrice(gameObject.scrapToSell);
-									if (gameObject.buildButtonDisabled && !modal) {
-										setTimeout(function() {
-											displayNotEnoughScrapModal();
-										}, 0);
+								if (!gameObject.buildButtonDisabled) {
+									const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+									if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
+										gameObject.commonScrap--;
 										
+										addFunds(gameObject.commonScrapBase);
+										if (gameObject.commonScrap === 0) {
+											gameObject.buildButtonDisabled = true;
+										}
 									}
-									if (displayModal) {
-										gameObject.buildButtonDisabled = true;
+									if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
+										gameObject.unCommonScrap--;
+										
+										addFunds(gameObject.unCommonScrapBase);
+										if (gameObject.unCommonScrap === 0) {
+											gameObject.buildButtonDisabled = true;
+										}
 									}
-								}, 0);
+									if (gameObject.scrapToSell === 'unique' && gameObject.uniqueScrap > 0 && !modal) {
+										gameObject.uniqueScrap--;
+										
+										addFunds(gameObject.uniqueScrapBase);
+										if (gameObject.uniqueScrap === 0) {
+											gameObject.buildButtonDisabled = true;
+										}
+									}
+									if (gameObject.scrapToSell === 'intriguing' && gameObject.intriguingScrap > 0 && !modal) {
+										gameObject.intriguingScrap--;
+										
+										addFunds(gameObject.intriguingScrapBase);
+										if (gameObject.intriguingScrap === 0) {
+											gameObject.buildButtonDisabled = true;
+										}
+									}
+									if (gameObject.scrapToSell === 'facinating' && gameObject.facinatingScrap > 0 && !modal) {
+										gameObject.facinatingScrap--;
+										
+										addFunds(gameObject.facinatingScrapBase);
+										if (gameObject.facinatingScrap === 0) {
+											gameObject.buildButtonDisabled = true;
+										}
+									}
+									if (gameObject.scrapToSell === 'mythic' && gameObject.mythicScrap > 0 && !modal) {
+										gameObject.mythicScrap--;
+										
+										addFunds(gameObject.mythicScrapBase);
+										if (gameObject.mythicScrap === 0) {
+											gameObject.buildButtonDisabled = true;
+										}
+									}
+									if (gameObject.scrapToSell === 'exotic' && gameObject.exoticScrap > 0 && !modal) {
+										gameObject.exoticScrap--;
+										
+										addFunds(gameObject.exoticScrapBase);
+										if (gameObject.exoticScrap === 0) {
+											gameObject.buildButtonDisabled = true;
+										}
+									}
+									Particle.floatingText({
+										font: '2rem serif',
+										msg: '+          +',
+										align: 'center',
+										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+										direction: 'top',
+										color: 'green',
+										ticks: 13,
+										speed: 0.8,
+									});
+									particleAnimationOver();
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1165,22 +1092,16 @@ const homeSellScrap = {
 		function particleAnimationOver() {
 			Particle.animComplete = {
 				method: function() {
-					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 					setTimeout(function() {
 						clearSellScrapScreen();
 						refreshSellScrapBackgrounds();
+						selectScrapPrice(gameObject.scrapToSell);
 						setTimeout(function() {
-							selectScrapPrice(gameObject.scrapToSell);
-							if (modal) {
-								// future Jordan, will this work?
-								// works for now at least
-								modal.modalColor = 'darkgray';
-								setTimeout(function() {
-									modal.modalColor = 'darkgray';
-								}, 150);
+							if (gameObject.buildButtonDisabled) {
+								displayNotEnoughScrapModal();
 							}
-						}, 0);
-					}, 0);				
+						},0);
+					},0);			
 				}
 			};
 		}
@@ -1323,6 +1244,10 @@ const homeSellScrap = {
 			}
 		}
 		function displayNotEnoughScrapModal() {
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (modal) {
+				Game.deleteEntity(modal.methodId);
+			}
 			Game.methodSetup = {
 				method: function(id) {
 					drawSimpleModal({
@@ -2768,8 +2693,8 @@ const homeSellRobots = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
-						msg: 'Total',
+						font: '1.6em serif',
+						msg: 'Barter Total',
 						posX: Game.placeEntityX(0.247),
 						posY: Game.placeEntityY(0.65),
 						color: 'grey',
@@ -3559,8 +3484,8 @@ const homeSellRobots = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
-						msg: 'Total',
+						font: '1.6em serif',
+						msg: 'Barter Total',
 						posX: Game.placeEntityX(0.247),
 						posY: Game.placeEntityY(0.65),
 						color: 'grey',
@@ -3577,6 +3502,15 @@ const homeSellRobots = {
 			
 			const totalScrapCosts = gatherScrapCostFromPart(totalRobotScrap);
 			const formatTotalPartCost = calculatePartPrice(totalScrapCosts);
+			
+			// add the barter bonus
+			formatTotalPartCost.copper += gameObject.barterBonusCost.copper;
+			formatTotalPartCost.bronze += gameObject.barterBonusCost.bronze;
+			formatTotalPartCost.silver += gameObject.barterBonusCost.silver;
+			formatTotalPartCost.gold += gameObject.barterBonusCost.gold;
+			formatTotalPartCost.platinum += gameObject.barterBonusCost.platinum;
+			formatTotalPartCost.mythryl += gameObject.barterBonusCost.mythryl;
+			
 			// display the top two highest money type
 			const displayTotalPartValue = formatDisplayValue(formatTotalPartCost);
 			
@@ -3640,9 +3574,15 @@ const homeSellRobots = {
 										gameObject.robotTeams.splice(gameObject.selectedRobotDesign, 1);
 										gameObject.robotsMade--;
 										const totalRobotScrap = combineRobotParts(gameObject.selectedRobot);
-			
 										const totalScrapCosts = gatherScrapCostFromPart(totalRobotScrap);
 										const formatTotalPartCost = calculatePartPrice(totalScrapCosts);
+										// add the barter bonus
+										formatTotalPartCost.copper += gameObject.barterBonusCost.copper;
+										formatTotalPartCost.bronze += gameObject.barterBonusCost.bronze;
+										formatTotalPartCost.silver += gameObject.barterBonusCost.silver;
+										formatTotalPartCost.gold += gameObject.barterBonusCost.gold;
+										formatTotalPartCost.platinum += gameObject.barterBonusCost.platinum;
+										formatTotalPartCost.mythryl += gameObject.barterBonusCost.mythryl;
 										const addPartCost = formatPartsCostToFunds(formatTotalPartCost);
 										addFunds(addPartCost);
 										
@@ -3944,7 +3884,7 @@ const homePlayerUpgrades = {
 									}
 									if (upgradeIndex === 4) {
 										const upgrade = formatDisplayValue(gameObject.barteringUpgradeCost);
-										msgs = ['Level ' + gameObject.barterSkill, 'Bartering', 'Trade For Better Prices',
+										msgs = ['Level ' + gameObject.barterSkill, 'Bartering', 'Trade Robots For Better Prices',
 										'- Cost -', upgrade.highValue.type + ': ' + upgrade.highValue.value, 
 										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
@@ -4247,7 +4187,37 @@ const homePlayerUpgrades = {
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.barteringUpgradeCost);
 																gameObject.barteringUpgradeCost = formatUpgradeCost;
-																upgradeMsgs = ['Level ' + gameObject.barterSkill, 'Bartering Upgraded!'];
+																// calculate the barter bonus
+																if (!gameObject.barterBonusCost.bronze && 
+																!gameObject.barterBonusCost.silver && 
+																!gameObject.barterBonusCost.gold && 
+																!gameObject.barterBonusCost.platinum &&
+																!gameObject.barterBonusCost.mythryl) {
+																	if (gameObject.barterBonusCost.copper === 0) {
+																		gameObject.barterBonusCost.copper += 2;
+																	}
+																	gameObject.barterBonusCost.copper *= 2;
+																} else if (gameObject.barterBonusCost.bronze) {
+																	gameObject.barterBonusCost.copper = 0;
+																	gameObject.barterBonusCost.bronze *= 2;
+																} else if (gameObject.barterBonusCost.silver) {
+																	gameObject.barterBonusCost.bronze = 0;
+																	gameObject.barterBonusCost.silver *= 2;
+																} else if (gameObject.barterBonusCost.gold) {
+																	gameObject.barterBonusCost.silver = 0;
+																	gameObject.barterBonusCost.gold *= 2;
+																} else if (gameObject.barterBonusCost.platinum) {
+																	gameObject.barterBonusCost.gold = 0;
+																	gameObject.barterBonusCost.platinum *= 2;
+																} else if (gameObject.barterBonusCost.mythryl) {
+																	gameObject.barterBonusCost.platinum = 0;
+																	gameObject.barterBonusCost.mythryl *= 2;
+																}
+																
+																const barterBonus = formatDisplayValue(gameObject.barterBonusCost);
+																upgradeMsgs = ['Level ' + gameObject.barterSkill,
+																 'Bartering Upgraded!', '-Barter Bonus-', barterBonus.highValue.type + ': ' + barterBonus.highValue.value, 
+																 barterBonus.lowValue.type ? barterBonus.lowValue.type + ': ' + barterBonus.lowValue.value : ''];
 															}
 															if (upgradeIndex === 5) {
 																gameObject.arenaLevel++;
@@ -4417,7 +4387,7 @@ const homePlayerUpgrades = {
 																				msgFont: '1em serif',
 																				msgs: upgradeMsgs,
 																				msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-																				msgDistance: (Game.entitySize * 10),
+																				msgDistance: (Game.entitySize * 8),
 																				bgColor: 'grey',
 																				isModalFilled: true,
 																				id: Game.modalId,

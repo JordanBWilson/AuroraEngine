@@ -559,9 +559,114 @@ const mainPage = {
 						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
 						gameObject.commonScrap += scrapFoundCount;
 					}
+				} else if (gameObject.scrapperSkill === 5) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 6) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 7) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 8) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+						gameObject.uniqueScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 9) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+						gameObject.uniqueScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 10) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+						gameObject.uniqueScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 11) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+						gameObject.uniqueScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
+				} else if (gameObject.scrapperSkill === 12) {
+					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+						gameObject.intriguingScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+						gameObject.uniqueScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+						gameObject.unCommonScrap += scrapFoundCount;
+					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+						scrapFoundCount = 1;
+						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+						gameObject.commonScrap += scrapFoundCount;
+					}
 				}
-				// future Jordan, continue the levels. Level the uncommon scrap like the common scrap.
-				// perhaps lower the number/ raise the chances of common scrap by 1 so 32 next level in this case 
+				// future Jordan, continue following this pattern
+				// when upgrading the factory and arena from lvl 0 to 1,
+				// use the word 'Build' instead of 'Upgrade' for the button text
 				Particle.floatingText({
 					font: '1.5rem serif',
 					msg: scrapFoundText,

@@ -154,6 +154,14 @@ const gameObject = {
 		bronze: 0,
 		copper: 5
 	},
+	barterBonusCost: {
+		mythryl: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		bronze: 0,
+		copper: 0
+	},
 	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
 	scrapInvintoryLevel: 0,
