@@ -3978,10 +3978,15 @@ const homePlayerUpgrades = {
 									Game.addMethod(Game.methodSetup);
 									
 									displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em serif', 'white', 'center');
-
+									
+									let upgradeMsg = 'Upgrade';
+									
 									let formatUpgradeCost;
 									if (upgradeIndex === 0) {
 										formatUpgradeCost = formatPartsCostToFunds(gameObject.factoryUpgradeCost);
+										if (gameObject.factoryLevel === 0) {
+											upgradeMsg = 'Build';
+										}
 									}
 									if (upgradeIndex === 1) {
 										formatUpgradeCost = formatPartsCostToFunds(gameObject.engineeringUpgradeCost);
@@ -3997,6 +4002,9 @@ const homePlayerUpgrades = {
 									}
 									if (upgradeIndex === 5) {
 										formatUpgradeCost = formatPartsCostToFunds(gameObject.arenaUpgradeCost);
+										if (gameObject.arenaLevel === 0) {
+											upgradeMsg = 'Build';
+										}
 									}
 									if (upgradeIndex === 6) {
 										formatUpgradeCost = formatPartsCostToFunds(gameObject.scrapInvUpgradeCost);
@@ -4021,7 +4029,7 @@ const homePlayerUpgrades = {
 												btnColor: checkFunds ? 'grey' : '#C0C0C0',
 												txtColor: 'white',
 												font: '1.3em serif',
-												msg: 'Upgrade',
+												msg: upgradeMsg,
 												isFilled: true,
 												id: 'upgrade-stat',
 												action: { 
@@ -4430,7 +4438,7 @@ const homePlayerUpgrades = {
 																				btnColor: 'grey',
 																				txtColor: 'white',
 																				font: '1.3em serif',
-																				msg: 'Nice',
+																				msg: 'Nice!',
 																				isFilled: true,
 																				id: 'upgraded',
 																				action: { 
