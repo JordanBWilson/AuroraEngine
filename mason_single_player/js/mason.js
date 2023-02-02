@@ -40,7 +40,6 @@ const mainPage = {
 		let knight = {};
 		let robot = {};
 
-
 		masonWorkerImg.src = masonWorkerPath;
 		rockImg.src = rock1Path;
 		grassImg.src = grassPath;
@@ -471,7 +470,8 @@ const mainPage = {
 		}
 
 		function openArena() {
-			console.log('open Arena');
+			// this is in mason_arena
+			arenaPage.loadPage();
 		}
 
 		function moveMasonWorker() {
@@ -528,7 +528,6 @@ const mainPage = {
 				
 				// future Jordan, consider reversing the scrap order. later levels makes common scrap look rare
 				// other than testing the scrapping skill completely, it's time to work on the arena
-				console.log('level: ', gameObject.scrapperSkill, 'roll: ', scrapRoll);
 				if (gameObject.scrapperSkill === 0) {
 					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
 						scrapFoundCount = 1;
@@ -1080,7 +1079,7 @@ const mainPage = {
 		}
 
 		function openHome() {
-			console.log('open Home');
+			// this method is in mason
 			homePage.loadPage();
 		}
 	}

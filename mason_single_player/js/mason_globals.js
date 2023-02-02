@@ -202,6 +202,8 @@ const gameObject = {
 	partPageIndex: 0, // this value will store where you are in the part list
 	partsDisplayed: '', // can be 'chassis', 'head', 'arm-' + armPos, 'leg-' + legPos
 	buildButtonDisabled: false, // if there are no parts or no room for robots, disable the button
+	robotArenaDesigns: [],
+	robotArenaDesignCount: 4,
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
