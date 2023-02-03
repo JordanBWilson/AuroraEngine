@@ -15,6 +15,7 @@
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	seedRobotDesigns();
+	seedArenaTowers();
 	Game.setSettingsHigh();
 })();
 
@@ -25,6 +26,17 @@ function seedRobotDesigns() {
 			robotParts: [],
 		};
 		gameObject.robotDesigns.push(robotDesign);
+		gameObject.robotArenaDesigns.push(robotDesign);
+	}
+}
+
+function seedArenaTowers() {
+	for (let i = 0; i < gameObject.towerArenaDesignCount; i++) {
+		const towerDesign = {
+			arenaTowerId: i,
+			arenaTower: {}
+		}
+		gameObject.towerArenaDesigns.push(towerDesign);
 	}
 }
 

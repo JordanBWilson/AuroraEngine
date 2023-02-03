@@ -1077,6 +1077,8 @@ const homeSellScrap = {
 										speed: 0.8,
 									});
 									particleAnimationOver();
+								} else {
+									displayNotEnoughScrapModal();
 								}
 							}
 						},

@@ -202,8 +202,10 @@ const gameObject = {
 	partPageIndex: 0, // this value will store where you are in the part list
 	partsDisplayed: '', // can be 'chassis', 'head', 'arm-' + armPos, 'leg-' + legPos
 	buildButtonDisabled: false, // if there are no parts or no room for robots, disable the button
-	robotArenaDesigns: [],
-	robotArenaDesignCount: 4,
+	robotArenaDesigns: [], // these are the robots that will compete in the arena
+	robotArenaDesignCount: 3, // max number of robots that can be on a team
+	towerArenaDesigns: [], // these are the towers that will compete in the arena
+	towerArenaDesignCount: 3, // max number of towers that can be on a team
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
@@ -726,6 +728,27 @@ const robotArms = [
 			factoryLevel: 0,
 			roboticSkill: 0,
 			engineeringSkill: 0,
+		},
+	},
+];
+
+// ** Arena Towers ***
+const arenaTowers = [
+	{
+		towerId: 1,
+		type: 'single-shot',
+		name: 'Simple Tower',
+		img: 'pink',
+		stats: {
+			att: 1,
+			def: 1,
+			spd: 1,
+			hp: 20,
+			lvl: 1,
+		},
+		requires: {
+			arenaLvlToBuild: 0,
+			arenaLvlToUpgrade: 0,
 		},
 	},
 ];

@@ -218,7 +218,7 @@ const factoryPage = {
 					});
 					clearInterval(findPreviews);
 				}
-			});
+			}, Game.frameRate);
 		}
 
 		function drawRobotSelect(posX, posY, robotDesign, index) {
