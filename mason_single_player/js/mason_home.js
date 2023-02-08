@@ -1099,7 +1099,8 @@ const homeSellScrap = {
 						refreshSellScrapBackgrounds();
 						selectScrapPrice(gameObject.scrapToSell);
 						setTimeout(function() {
-							if (gameObject.buildButtonDisabled) {
+							const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+							if (modal) {
 								displayNotEnoughScrapModal();
 							}
 						},0);

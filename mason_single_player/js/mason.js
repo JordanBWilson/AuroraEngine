@@ -15,6 +15,7 @@
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	seedRobotDesigns();
+	seedArenaRobotDesigns();
 	seedArenaTowers();
 	Game.setSettingsHigh();
 })();
@@ -26,6 +27,16 @@ function seedRobotDesigns() {
 			robotParts: [],
 		};
 		gameObject.robotDesigns.push(robotDesign);
+	}
+}
+
+function seedArenaRobotDesigns() {
+	for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
+		const robotDesign = {
+			robotId: i,
+			robotParts: [],
+			directive: 0, // will the robot be a tank, warrior, support or lee-roy
+		};
 		gameObject.robotArenaDesigns.push(robotDesign);
 	}
 }
@@ -34,7 +45,8 @@ function seedArenaTowers() {
 	for (let i = 0; i < gameObject.towerArenaDesignCount; i++) {
 		const towerDesign = {
 			arenaTowerId: i,
-			arenaTower: {}
+			arenaTower: {},
+			robotParts: [],
 		}
 		gameObject.towerArenaDesigns.push(towerDesign);
 	}
