@@ -182,7 +182,7 @@ const factoryPage = {
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
 					gameObject.robotDesigns[i].robotParts,
-					i
+					i,
 				);
 				
 				if (i === 2) {
@@ -206,6 +206,12 @@ const factoryPage = {
 			}
 		}
 		factoryRobotSelect(); // draw the factory page
+		function robotSelectAction(index) {
+			console.log(index);
+					gameObject.selectedRobot = gameObject.robotDesigns[index].robotParts;
+					gameObject.selectedRobotDesign = index;
+					//factoryRobotDetails(); 
+				}
 		function drawRobotSelectParts() {
 			const findPreviews = setInterval(function() {
 				if (Game.methodObjects.filter(x => x.id === 'preview-robot').length > 0) {
@@ -599,80 +605,6 @@ const factoryPage = {
 					}
 					if (!modal && gameObject.partsDisplayed === 'head') {
 						selectRobotHead();
-					}
-				}
-			}
-		}
-		function drawRobotSelectPreviewParts(partType, robotDesign) {
-			if (partType === 'chassis') {
-				if (robotDesign.length === 0) {
-					return 'lightslategrey';
-				} else {
-					const part = robotDesign.find(partPos => partPos.type === 'chassis');
-					if (part) {
-						return part.img;
-					} else {
-						return 'lightslategrey';
-					}
-				}
-			}
-			if (partType === 'head') {
-				if (robotDesign.length === 0) {
-					return 'lightslategrey';
-				} else {
-					const part = robotDesign.find(partPos => partPos.type === 'head');
-					if (part) {
-						return part.img;
-					} else {
-						return 'lightslategrey';
-					}
-				}
-			}
-			if (partType === 'left-leg') {
-				if (robotDesign.length === 0) {
-					return 'lightslategrey';
-				} else {
-					const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left');
-					if (part) {
-						return part.img;
-					} else {
-						return 'lightslategrey';
-					}
-				}
-			}
-			if (partType === 'right-leg') {
-				if (robotDesign.length === 0) {
-					return 'lightslategrey';
-				} else {
-					const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right');
-					if (part) {
-						return part.img;
-					} else {
-						return 'lightslategrey';
-					}
-				}
-			}
-			if (partType === 'left-arm') {
-				if (robotDesign.length === 0) {
-					return 'lightslategrey';
-				} else {
-					const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left');
-					if (part) {
-						return part.img;
-					} else {
-						return 'lightslategrey';
-					}
-				}
-			}
-			if (partType === 'right-arm') {
-				if (robotDesign.length === 0) {
-					return 'lightslategrey';
-				} else {
-					const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right');
-					if (part) {
-						return part.img;
-					} else {
-						return 'lightslategrey';
 					}
 				}
 			}

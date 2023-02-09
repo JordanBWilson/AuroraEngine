@@ -1608,3 +1608,78 @@ function formatPartCost(partCost) {
 	}
 	return formatPartCost;
 }
+
+function drawRobotSelectPreviewParts(partType, robotDesign) {
+	if (partType === 'chassis') {
+		if (robotDesign.length === 0) {
+			return 'lightslategrey';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'chassis');
+			if (part) {
+				return part.img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'head') {
+		if (robotDesign.length === 0) {
+			return 'lightslategrey';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'head');
+			if (part) {
+				return part.img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'left-leg') {
+		if (robotDesign.length === 0) {
+			return 'lightslategrey';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left');
+			if (part) {
+				return part.img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'right-leg') {
+		if (robotDesign.length === 0) {
+			return 'lightslategrey';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right');
+			if (part) {
+				return part.img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'left-arm') {
+		if (robotDesign.length === 0) {
+			return 'lightslategrey';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left');
+			if (part) {
+				return part.img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+	if (partType === 'right-arm') {
+		if (robotDesign.length === 0) {
+			return 'lightslategrey';
+		} else {
+			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right');
+			if (part) {
+				return part.img;
+			} else {
+				return 'lightslategrey';
+			}
+		}
+	}
+}
