@@ -184,7 +184,7 @@ const gameObject = {
 	arenaBuild: false, // this is where multiplayer will come in. assign and build battle bots and buildings
 	arenaLevel: 0, // this will determine what type of buildings are availiable in multiplayer
 	// ---robot adventuring---
-	robotStorage: 3, // total robots that can be made ***can be upgraded***
+	robotStorage: 9, // total robots that can be made ***can be upgraded*** // 3
 	robotStorageLevel: 0,
 	robotsMade: 0, // current number of robots made
 	robotTeams: [], // the different robots who could go out to find riches or to be sold

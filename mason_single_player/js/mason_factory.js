@@ -768,7 +768,15 @@ const factoryPage = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-body',
-						action: { method: function(id) { selectRobotChassis(); }},
+						action: { 
+							method: function(id) {
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									selectRobotChassis(); 
+								}
+								
+							}
+						},
 						isModalBtn: false,
 						props: {},
 						methodId: id
@@ -790,7 +798,14 @@ const factoryPage = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-head',
-						action: { method: function(id) { selectRobotHead(); }},
+						action: {
+							method: function(id) {
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									selectRobotHead(); 
+								}
+							 }
+						},
 						isModalBtn: false,
 						props: {},
 						methodId: id
@@ -812,7 +827,14 @@ const factoryPage = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-left-arm',
-						action: { method: function(id) { selectRobotArms('left'); }},
+						action: { 
+							method: function(id) {
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									selectRobotArms('left');
+								}
+							}
+						},
 						isModalBtn: false,
 						props: {},
 						methodId: id
@@ -834,7 +856,15 @@ const factoryPage = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-right-arm',
-						action: { method: function(id) { selectRobotArms('right'); }},
+						action: { 
+							method: function(id) {
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									selectRobotArms('right');
+								}
+								
+							}
+						},
 						isModalBtn: false,
 						props: {},
 						methodId: id
@@ -856,7 +886,14 @@ const factoryPage = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-left-leg',
-						action: { method: function(id) { selectRobotLegs('left'); }},
+						action: {
+							method: function(id) {
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									selectRobotLegs('left'); 
+								}
+							}
+						},
 						isModalBtn: false,
 						props: {},
 						methodId: id
@@ -878,7 +915,14 @@ const factoryPage = {
 						msg: '',
 						isFilled: true,
 						id: 'robot-right-leg',
-						action: { method: function(id) { selectRobotLegs('right'); }},
+						action: {
+							method: function(id) {
+								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								if (!robotMade) {
+									selectRobotLegs('right'); 
+								}
+							}
+						},
 						isModalBtn: false,
 						props: {},
 						methodId: id

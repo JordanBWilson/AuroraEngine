@@ -240,6 +240,37 @@ const arenaPage = {
 			Game.pageResized = {
 				section: 'arena-robot-select',
 				method: function() {
+					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+					if (modal) {
+						Game.deleteEntity(modal.methodId);
+						setTimeout(function() {
+							Game.methodSetup = {
+								method: function(id) {
+									drawDialogueModal({
+										posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+										posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+										width: (Game.entitySize * 45),
+										height: (Game.entitySize * 25),
+										lineWidth: modal.lineWidth,
+										modalColor: modal.modalColor,
+										msgColor: modal.msgColor,
+										msgFont: modal.msgFont,
+										msgs: modal.msgs,
+										msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+										msgDistance: (Game.entitySize * 8),
+										bgColor: modal.bgColor,
+										isModalFilled: modal.isModalFilled,
+										id: Game.modalId,
+										action: modal.action,
+										isModalBtn: modal.isModalBtn,
+										props: {},
+										methodId: id
+									});
+								}
+							};
+							Game.addMethod(Game.methodSetup);
+						}, 150);
+					}
 					arenaPage.loadPage();
 				}
 			}
@@ -265,12 +296,11 @@ const arenaPage = {
 							method: function(id) {
 								gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 								gameObject.selectedRobotDesign = index;
-								// future Jordan, finish this up and apply the design check to the rest of the robot parts.
-								// also finish up the robot design selection
-								const designReady = arenaRobotDesignCheck();
-								console.log(designReady);
-								if (designReady) {
+								const robotReady = arenaRobotBuiltCheck();
+								if (robotReady) {
 									arenaRobotSelect();
+								} else {
+									noRobotDesignModal();
 								}
 							}
 						},
@@ -295,7 +325,12 @@ const arenaPage = {
 												method: function(id) {
 													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 													gameObject.selectedRobotDesign = index;
-													arenaRobotSelect();
+													const robotReady = arenaRobotBuiltCheck();
+													if (robotReady) {
+														arenaRobotSelect();
+													} else {
+														noRobotDesignModal();
+													}
 												}
 											},
 											isModalBtn: false,
@@ -325,7 +360,12 @@ const arenaPage = {
 												method: function(id) {
 													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 													gameObject.selectedRobotDesign = index;
-													arenaRobotSelect();
+													const robotReady = arenaRobotBuiltCheck();
+													if (robotReady) {
+														arenaRobotSelect();
+													} else {
+														noRobotDesignModal();
+													}
 												}
 											},
 											isModalBtn: false,
@@ -355,7 +395,12 @@ const arenaPage = {
 												method: function(id) {
 													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 													gameObject.selectedRobotDesign = index;
-													arenaRobotSelect();
+													const robotReady = arenaRobotBuiltCheck();
+													if (robotReady) {
+														arenaRobotSelect();
+													} else {
+														noRobotDesignModal();
+													}
 												}
 											},
 											isModalBtn: false,
@@ -385,7 +430,12 @@ const arenaPage = {
 												method: function(id) {
 													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 													gameObject.selectedRobotDesign = index;
-													arenaRobotSelect();
+													const robotReady = arenaRobotBuiltCheck();
+													if (robotReady) {
+														arenaRobotSelect();
+													} else {
+														noRobotDesignModal();
+													}
 												}
 											},
 											isModalBtn: false,
@@ -415,7 +465,12 @@ const arenaPage = {
 												method: function(id) {
 													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 													gameObject.selectedRobotDesign = index;
-													arenaRobotSelect(); 
+													const robotReady = arenaRobotBuiltCheck();
+													if (robotReady) {
+														arenaRobotSelect();
+													} else {
+														noRobotDesignModal();
+													}
 												}
 											},
 											isModalBtn: false,
@@ -522,8 +577,9 @@ const arenaPage = {
 			}, Game.frameRate);
 		}
 		function arenaRobotSelect() {
-			// draw a menu of gameObject.robotDesigns
+			// draw a menu of gameObject.robotTeams
 			// when the player selects one, load it in gameObject.robotArenaDesigns
+			// we only want robots the player can make
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -605,7 +661,7 @@ const arenaPage = {
 			Game.addMethod(Game.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
-			for (let i = 0; i < gameObject.robotDesignCount; i++) {
+			for (let i = gameObject.partPageIndex; i < gameObject.robotTeams.length; i++) {
 				robotCount++;
 				let posY = 0
 				let posYoffset = 0;
@@ -620,8 +676,7 @@ const arenaPage = {
 					posYoffset = -22;
 				}
 				if (robotSelectRow === 3) {
-					posY = 0.54;
-					posYoffset = -33;
+					break;
 				}
 				if (robotCount === 1) {
 					posX = 0.07;
@@ -631,10 +686,11 @@ const arenaPage = {
 					posX = 0.39;
 					posXoffset = 1.99;
 				}
-				if (robotCount === 3) {
+				if (robotCount === 3 &&
+				gameObject.robotTeams.length >= 3) {
 					posX = 0.689;
 					posXoffset = 1;
-				}	
+				} 	
 				
 				Game.methodSetup = {
 					method: function(id) {
@@ -654,12 +710,14 @@ const arenaPage = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				drawRobotSelect(
-					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-					gameObject.robotDesigns[i].robotParts,
-					i
-				);
+				// future Jordan, we need something very sililar to this method but instead it will open
+				// robot details that will allow you to select that robot or go back
+				//drawRobotSelect(
+					//Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+					//Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					//gameObject.robotTeams[i].robotParts,
+					//i
+				//);
 				
 				if (i === 2) {
 					robotSelectRow++;
@@ -673,19 +731,123 @@ const arenaPage = {
 				
 			}
 			drawRobotSelectParts();
+			drawNextPrevRobotList(gameObject.robotTeams);
 		}
-		function arenaRobotDesignCheck() {
-			let robotsDesigned = false;
-			let robotDesignCount = 0;
-			for (let i = 0; i < gameObject.robotDesignCount; i++) {
-				if (gameObject.robotDesigns[i].robotParts.length === 6) {
-					robotDesignCount++;
+		function arenaRobotBuiltCheck() {
+			let robotsBuilt = false;
+			let robotsBuiltCount = 0;
+			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+				if (gameObject.robotTeams[i].robotParts.length === 6) {
+					robotsBuiltCount++;
 				}
 			}
-			if (robotDesignCount > 0) {
-				robotsDesigned = true;
+			if (robotsBuiltCount > 0) {
+				robotsBuilt = true;
 			}
-			return robotsDesigned;
+			return robotsBuilt;
+		}
+		
+		function noRobotDesignModal() {
+			const msg = ['In the Factory, Design', 'a Robot and Build it!', 'Tap here to continue'];
+			Game.methodSetup = {
+				method: function(id) {
+					drawDialogueModal({
+						posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+						width: (Game.entitySize * 45),
+						height: (Game.entitySize * 25),
+						lineWidth: 1,
+						modalColor: 'grey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: msg,
+						msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+						msgDistance: (Game.entitySize * 8),
+						bgColor: '',
+						isModalFilled: true,
+						id: Game.modalId,
+						action: {
+							method: function(id) {
+								arenaPage.loadPage();
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function drawNextPrevRobotList(robotList) {
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({ // the btnColor is css grey
+						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+						posY: Game.placeEntityY(0.80),
+						width: (Game.entitySize * 22),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: 'Next',
+						isFilled: true,
+						id: 'next-part',
+						action: {
+							method: function(id) {
+								if (robotList.length > 6) {
+									gameObject.partPageIndex += 6; // go to the next part page
+									if (gameObject.partPageIndex > robotList.length) {
+										gameObject.partPageIndex = 0; // back to the beginning
+									}
+									arenaRobotSelect(); // draw the sell robot page
+								}
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({ // the btnColor is css grey
+						posX: Game.placeEntityX(0.245, (Game.entitySize * 22.5)),
+						posY: Game.placeEntityY(0.80),
+						width: (Game.entitySize * 22),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: 'Previous',
+						isFilled: true,
+						id: 'last-part',
+						action: {
+							method: function(id) {
+								if (robotList.length > 6) {
+									gameObject.partPageIndex -= 6; // go to the next part page
+									if (gameObject.partPageIndex < robotList.length) {
+										if (gameObject.partPageIndex < 0) {
+											gameObject.partPageIndex = robotList.length - (robotList.length % 6); // back to the beginning
+										} else {
+											gameObject.partPageIndex = 0;
+										}
+									}
+									arenaRobotSelect(); // draw the sell robot page
+								}
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 		}
 	}
 	

@@ -4020,7 +4020,7 @@ const homePlayerUpgrades = {
 									}
 
 									const checkFunds = checkSubtractFunds(formatUpgradeCost);
-
+									let upgrading = true;
 									Game.methodSetup = {
 										method: function(id) {
 											drawButton({
@@ -4038,9 +4038,9 @@ const homePlayerUpgrades = {
 												action: { 
 													method: function(id) {
 														let upgradeMsgs = [];
-														if (checkFunds) {
+														if (checkFunds && upgrading) {
+															upgrading = false;
 															if (upgradeIndex === 0) {
-																
 																gameObject.factoryLevel++;
 																let designIncrease = false;
 																
@@ -4282,7 +4282,7 @@ const homePlayerUpgrades = {
 																	gameObject.scrapInvUpgradeCost.gold *= 2;
 																} else if (gameObject.scrapInvUpgradeCost.platinum) {
 																	gameObject.scrapInvUpgradeCost.gold = 0;
-																	gameObject.scrapInvUpgradeCost.platinum *= 2;
+																	gameObject.scrapInvUpgrupgradeIndexadeCost.platinum *= 2;
 																} else if (gameObject.scrapInvUpgradeCost.mythryl) {
 																	gameObject.scrapInvUpgradeCost.platinum = 0;
 																	gameObject.scrapInvUpgradeCost.mythryl *= 2;
