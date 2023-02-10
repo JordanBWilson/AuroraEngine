@@ -139,12 +139,21 @@ const arenaPage = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				// future Jordan, look into making this method and drawRobotSelect global. It's used in the factory as well
 				drawRobotSelect(
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
 					gameObject.robotArenaDesigns[i].robotParts,
-					i
+					i,
+					function() {
+						gameObject.selectedRobot = gameObject.robotArenaDesigns[i].robotParts;
+						gameObject.selectedRobotDesign = i;
+						const robotReady = arenaRobotBuiltCheck();
+						if (robotReady) {
+							arenaRobotSelect();
+						} else {
+							noRobotDesignModal();
+						}
+					}
 				);
 				
 			}
@@ -276,232 +285,6 @@ const arenaPage = {
 			}
 		}
 		arenaMenuSelect();
-		
-		function drawRobotSelect(posX, posY, robotDesign, index) {
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-						posX: posX + (Game.entityWidth * 12.6) - (Game.entitySize * 3),
-						posY: posY + (Game.canvas.height * 0.065),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
-						lineWidth: 1,
-						btnColor: drawRobotSelectPreviewParts('chassis', robotDesign),
-						txtColor: 'white',
-						font: '1.5em serif',
-						msg: '',
-						isFilled: true,
-						id: 'preview-robot',
-						action: {
-							method: function(id) {
-								gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
-								gameObject.selectedRobotDesign = index;
-								const robotReady = arenaRobotBuiltCheck();
-								if (robotReady) {
-									arenaRobotSelect();
-								} else {
-									noRobotDesignModal();
-								}
-							}
-						},
-						isModalBtn: false,
-						props: {
-							drawHead: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 0.5),
-											posY: parent.posY - (Game.entitySize * 5),
-											width: (Game.entitySize * 5),
-											height: (Game.entitySize * 5),
-											lineWidth: 1,
-											btnColor: drawRobotSelectPreviewParts('head', robotDesign),
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
-													gameObject.selectedRobotDesign = index;
-													const robotReady = arenaRobotBuiltCheck();
-													if (robotReady) {
-														arenaRobotSelect();
-													} else {
-														noRobotDesignModal();
-													}
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-							drawLeftArm: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX - (Game.entitySize * 1.5),
-											posY: parent.posY,
-											width: (Game.entitySize * 1.5),
-											height: (Game.entitySize * 6),
-											lineWidth: 1,
-											btnColor: drawRobotSelectPreviewParts('left-arm', robotDesign),
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
-													gameObject.selectedRobotDesign = index;
-													const robotReady = arenaRobotBuiltCheck();
-													if (robotReady) {
-														arenaRobotSelect();
-													} else {
-														noRobotDesignModal();
-													}
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-							drawRightArm: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 6),
-											posY: parent.posY,
-											width: (Game.entitySize * 1.5),
-											height: (Game.entitySize * 6),
-											lineWidth: 1,
-											btnColor: drawRobotSelectPreviewParts('right-arm', robotDesign),
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
-													gameObject.selectedRobotDesign = index;
-													const robotReady = arenaRobotBuiltCheck();
-													if (robotReady) {
-														arenaRobotSelect();
-													} else {
-														noRobotDesignModal();
-													}
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-							drawLeftLeg: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 0.25),
-											posY: parent.posY + (Game.entitySize * 6),
-											width: (Game.entitySize * 1.5),
-											height: (Game.entitySize * 6),
-											lineWidth: 1,
-											btnColor: drawRobotSelectPreviewParts('left-leg', robotDesign),
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
-													gameObject.selectedRobotDesign = index;
-													const robotReady = arenaRobotBuiltCheck();
-													if (robotReady) {
-														arenaRobotSelect();
-													} else {
-														noRobotDesignModal();
-													}
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-							drawRightLeg: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 4.3),
-											posY: parent.posY + (Game.entitySize * 6),
-											width: (Game.entitySize * 1.5),
-											height: (Game.entitySize * 6),
-											lineWidth: 1,
-											btnColor: drawRobotSelectPreviewParts('right-leg', robotDesign),
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
-													gameObject.selectedRobotDesign = index;
-													const robotReady = arenaRobotBuiltCheck();
-													if (robotReady) {
-														arenaRobotSelect();
-													} else {
-														noRobotDesignModal();
-													}
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-						},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-		}
-		function drawRobotSelectParts() {
-			const findPreviews = setInterval(function() {
-				if (Game.methodObjects.filter(x => x.id === 'preview-robot').length > 0) {
-					Game.methodObjects.filter(x => x.id === 'preview-robot').forEach(robot => {
-						robot.props.drawHead(robot);
-						robot.props.drawLeftArm(robot);
-						robot.props.drawRightArm(robot);
-						robot.props.drawLeftLeg(robot);
-						robot.props.drawRightLeg(robot);
-					});
-					clearInterval(findPreviews);
-				}
-			}, Game.frameRate);
-		}
 		function arenaRobotSelect() {
 			// draw a menu of gameObject.robotTeams
 			// when the player selects one, load it in gameObject.robotArenaDesigns
@@ -636,14 +419,19 @@ const arenaPage = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				// future Jordan, we need something very sililar to this method but instead it will open
-				// robot details that will allow you to select that robot or go back
-				//drawRobotSelect(
-					//Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					//Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-					//gameObject.robotTeams[i].robotParts,
-					//i
-				//);
+				drawRobotSelect(
+					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					gameObject.robotTeams[i].robotParts,
+					i,
+					function() {
+						gameObject.selectedRobot = gameObject.robotTeams[i].robotParts;
+						gameObject.selectedRobotDesign = i;
+						// future Jordan, we need to make the robot details
+						// and show the robot directives to the right
+						//arenaRobotDetails();
+					},
+				);
 				
 				if (i === 2) {
 					robotSelectRow++;
@@ -657,7 +445,7 @@ const arenaPage = {
 				
 			}
 			drawRobotSelectParts();
-			drawNextPrevRobotList(gameObject.robotTeams);
+			drawNextPrevRobotList(gameObject.robotTeams, arenaRobotSelect);
 		}
 		function arenaRobotBuiltCheck() {
 			let robotsBuilt = false;
@@ -698,76 +486,6 @@ const arenaPage = {
 							}
 						},
 						isModalBtn: true,
-						props: {},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-		}
-		function drawNextPrevRobotList(robotList) {
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.80),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
-						lineWidth: 1,
-						btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
-						txtColor: 'white',
-						font: '1.5em serif',
-						msg: 'Next',
-						isFilled: true,
-						id: 'next-part',
-						action: {
-							method: function(id) {
-								if (robotList.length > 6) {
-									gameObject.partPageIndex += 6; // go to the next part page
-									if (gameObject.partPageIndex > robotList.length) {
-										gameObject.partPageIndex = 0; // back to the beginning
-									}
-									arenaRobotSelect(); // draw the sell robot page
-								}
-							}
-						},
-						isModalBtn: false,
-						props: {},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.245, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.80),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
-						lineWidth: 1,
-						btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
-						txtColor: 'white',
-						font: '1.5em serif',
-						msg: 'Previous',
-						isFilled: true,
-						id: 'last-part',
-						action: {
-							method: function(id) {
-								if (robotList.length > 6) {
-									gameObject.partPageIndex -= 6; // go to the next part page
-									if (gameObject.partPageIndex < robotList.length) {
-										if (gameObject.partPageIndex < 0) {
-											gameObject.partPageIndex = robotList.length - (robotList.length % 6); // back to the beginning
-										} else {
-											gameObject.partPageIndex = 0;
-										}
-									}
-									arenaRobotSelect(); // draw the sell robot page
-								}
-							}
-						},
-						isModalBtn: false,
 						props: {},
 						methodId: id
 					});
