@@ -209,6 +209,8 @@ const gameObject = {
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
+	// arenaRobotIndex: -1, // which arena robot is selected
+	// arenaTowerIndex: -1, // which arena tower is selected
 };
 // ** Robot Parts ***
 const robotHeads = [
@@ -2170,4 +2172,24 @@ function drawNextPrevRobotList(robotList, refreshMethod) {
 		}
 	};
 	Game.addMethod(Game.methodSetup);
+}
+function totalSelectedRobotStats() {
+	const stat = {
+		stats: {
+			att: 0,
+			def: 0,
+			spd: 0,
+			ai: 0,
+			storage: 0,
+		}
+	};
+	gameObject.selectedRobot.forEach((part, i) => {
+		stat.stats.att += part.stats.att;
+		stat.stats.def += part.stats.def;
+		stat.stats.spd += part.stats.spd;
+		stat.stats.ai += part.stats.ai;
+		stat.stats.storage += part.stats.storage;
+	});
+
+	return stat;
 }

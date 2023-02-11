@@ -818,28 +818,6 @@ const factoryPage = {
 				});
 			}
 		}
-
-		function totalSelectedRobotStats() {
-			const stat = {
-				stats: {
-					att: 0,
-					def: 0,
-					spd: 0,
-					ai: 0,
-					storage: 0,
-				}
-			};
-			gameObject.selectedRobot.forEach((part, i) => {
-				stat.stats.att += part.stats.att;
-				stat.stats.def += part.stats.def;
-				stat.stats.spd += part.stats.spd;
-				stat.stats.ai += part.stats.ai;
-				stat.stats.storage += part.stats.storage;
-			});
-
-			return stat;
-		}
-
 		function createFactoryTitleStats(existingPart, part, confirmed, partChanged) {
 			// when the existingPart and parts come in, then we are selecting different parts
 			let selectedPart = part;

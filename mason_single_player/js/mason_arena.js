@@ -149,7 +149,16 @@ const arenaPage = {
 						gameObject.selectedRobotDesign = i;
 						const robotReady = arenaRobotBuiltCheck();
 						if (robotReady) {
-							arenaRobotSelect();
+							if (gameObject.selectedRobot.length === 0) {
+								arenaRobotSelect();
+							} else {
+								// future Jordan, we need to work on the robot directives
+								// we also need to work on the reselect if a robot was already selected
+								// the player may want to swap out that robot for a higher level robot
+								// put the reselect button under the directives
+								arenaRobotDetails(true);
+							}
+							
 						} else {
 							noRobotDesignModal();
 						}
@@ -323,7 +332,9 @@ const arenaPage = {
 						isFilled: true,
 						id: 'arena-robot-select-back-game',
 						action: { 
-							method: function(id) { 
+							method: function(id) {
+								gameObject.selectedRobot = [];
+								gameObject.selectedRobotDesign = -1;
 								arenaPage.loadPage();
 							}
 						},
@@ -426,10 +437,7 @@ const arenaPage = {
 					i,
 					function() {
 						gameObject.selectedRobot = gameObject.robotTeams[i].robotParts;
-						gameObject.selectedRobotDesign = i;
-						// future Jordan, we need to make the robot details
-						// and show the robot directives to the right
-						//arenaRobotDetails();
+						arenaRobotDetails();
 					},
 				);
 				
@@ -492,6 +500,339 @@ const arenaPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+		}
+		
+		function arenaRobotDetails(reselect = false) {
+			console.log(reselect);
+			Game.clearStage();
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0),
+						posY: Game.placeEntityY(0),
+						width: Game.canvas.width,
+						height: (Game.canvas.height),
+						lineWidth: 1,
+						color: 'grey',
+						isFilled: true,
+						id: 'arena-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.45),
+						height: (Game.canvas.height * 0.45),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'robot-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
+						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.43),
+						height: (Game.canvas.height * 0.855),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'directive-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.45),
+						height: (Game.canvas.height * 0.39),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'robot-stat-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			drawRobotPreview(
+				function() {},
+				function() {},
+				function() {},
+				function() {},
+				function() {},
+				function() {},
+				function() {
+					if (gameObject.selectedRobot.length > 0) {
+						createRobotTitleStats(undefined, undefined, undefined, undefined);
+					}
+				}
+			);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.03),
+						posY: Game.placeEntityY(0.03),
+						width: (Game.entitySize * 12),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: 'Back',
+						isFilled: true,
+						id: 'robot-detail-back-game',
+						action: { 
+							method: function(id) {
+								if (reselect === true) {
+									arenaPage.loadPage();
+								} else {
+									arenaRobotSelect();
+								}
+								
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Details',
+						posX: Game.placeEntityX(0.50),
+						posY: Game.placeEntityY(0.085),
+						color: 'darkgrey',
+						align: 'center',
+						props: {},
+						id: 'robot-detail-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Stats',
+						posX: Game.placeEntityX(0.247),
+						posY: Game.placeEntityY(0.65),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			const robotStats = totalSelectedRobotStats();
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Attack: ' + robotStats.stats.att,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.69),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'att-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Defense: ' + robotStats.stats.def,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.74),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'def-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Speed: ' + robotStats.stats.spd,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.79),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'spd-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'AI: ' + robotStats.stats.ai,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.84),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'ai-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Storage: ' + robotStats.stats.storage,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.88),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'storage-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+					method: function(id) {
+						drawButton({
+							posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
+							posY: Game.placeEntityY(0.90),
+							width: (Game.entitySize * 23),
+							height: (Game.entitySize * 7),
+							lineWidth: 1,
+							btnColor: 'grey',
+							txtColor: 'white',
+							font: '1.5em serif',
+							msg: 'Select',
+							isFilled: true,
+							id: 'select-robot',
+							action: { method: function(id) {
+								gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
+								arenaPage.loadPage();
+							}},
+							isModalBtn: false,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+		}
+		function createRobotTitleStats(existingPart, part, confirmed, partChanged) {
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2em serif',
+						msg: 'Directive',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.20),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'directive-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Details',
+						posX: Game.placeEntityX(0.50),
+						posY: Game.placeEntityY(0.085),
+						color: 'darkgrey',
+						align: 'center',
+						props: {},
+						id: 'robot-detail-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Stats',
+						posX: Game.placeEntityX(0.247),
+						posY: Game.placeEntityY(0.65),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			clearSelectedRobotDetails();
+		}
+		
+		function clearSelectedRobotDetails() {
+			// clear the titles
+			const directiveTitle = Game.methodObjects.filter(x => x.id === 'directive-title');
+			if (directiveTitle) {
+				directiveTitle.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
+			const detailTitle = Game.methodObjects.filter(x => x.id === 'robot-detail-title');
+			if (detailTitle) {
+				detailTitle.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
+			const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
+			if (statTitle) {
+				statTitle.forEach((item, i) => {
+					Game.deleteEntity(item.methodId);
+				});
+			}
 		}
 	}
 	
