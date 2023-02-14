@@ -155,7 +155,7 @@ const arenaPage = {
 								// future Jordan, we need to work on the robot directives
 								// we also need to work on the reselect if a robot was already selected
 								// the player may want to swap out that robot for a higher level robot
-								// put the reselect button under the directives
+								// put the reselect button where the select button is
 								arenaRobotDetails(true);
 							}
 							

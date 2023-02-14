@@ -26,57 +26,71 @@ const gameObject = {
 	// when calcing the barter price upgrade, use these numbers
 	commonScrapBase: [
 		{ money: 'mythryl', price: 0 },
+		{ money: 'iridium', price: 0 },
 		{ money: 'platinum', price: 0 },
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
+		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 0 },
 		{ money: 'copper', price: 5 }
 	],
 	unCommonScrapBase: [
 		{ money: 'mythryl', price: 0 },
+		{ money: 'iridium', price: 0 },
 		{ money: 'platinum', price: 0 },
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
+		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 0 },
 		{ money: 'copper', price: 25 }
 	],
 	uniqueScrapBase: [
 		{ money: 'mythryl', price: 0 },
+		{ money: 'iridium', price: 0 },
 		{ money: 'platinum', price: 0 },
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
+		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 0 },
 		{ money: 'copper', price: 250 }
 	],
 	intriguingScrapBase: [
 		{ money: 'mythryl', price: 0 },
+		{ money: 'iridium', price: 0 },
 		{ money: 'platinum', price: 0 },
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
+		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 0 },
 		{ money: 'copper', price: 600 }
 	],
 	facinatingScrapBase: [
 		{ money: 'mythryl', price: 0 },
+		{ money: 'iridium', price: 0 },
 		{ money: 'platinum', price: 0 },
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
+		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 5 },
 		{ money: 'copper', price: 0 }
 	],
 	mythicScrapBase: [
 		{ money: 'mythryl', price: 0 },
+		{ money: 'iridium', price: 0 },
 		{ money: 'platinum', price: 0 },
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
+		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 25 },
 		{ money: 'copper', price: 0 }
 	],
 	exoticScrapBase: [
 		{ money: 'mythryl', price: 0 },
+		{ money: 'iridium', price: 0 },
 		{ money: 'platinum', price: 0 },
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
+		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 50 }, 
 		{ money: 'copper', price: 0 }
 	],
@@ -84,83 +98,103 @@ const gameObject = {
 	// --- upgrade costs
 	factoryUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	engineeringUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	roboticsUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	scrappingUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	barteringUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	arenaUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	scrapInvUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	partInvUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	robotInvUpgradeCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 5
 	},
 	barterBonusCost: {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
-		copper: 0
+		copper: 5
 	},
 	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
@@ -173,10 +207,12 @@ const gameObject = {
 	partStorageLevel: 0,
 	// ---different tiers of money---
 	copper: 0, // 1000 copper = 1 bronze
-	bronze: 0, // 1000 bronze = 1 silver
+	bronze: 0, // 1000 bronze = 1 nickel
+	nickel: 0, // 1000 nickel = 1 silver
 	silver: 0, // 1000 silver = 1 gold
 	gold: 0, // 1000 gold = 1 platinum
-	platinum: 0, // 1000 platinum = 1 mythryl
+	platinum: 0, // 1000 platinum = 1 iridium
+	iridium: 0, // 1000 iridium = 1 mythryl
 	mythryl: 0, // mythryl is the highest tier
 	// ---types of buildings---
 	factoryBuilt: false, // this building is where the player can make and automate robot production
@@ -772,6 +808,15 @@ function addFunds(addFund) {
 				gameObject.bronze++;
 				if (gameObject.bronze >= 1000) {
 					gameObject.bronze = 0;
+					gameObject.nickel++;
+				}
+			}
+		}
+		if (fund.money === 'nickel') {
+			for (let i = 0; i < fund.price; i++) {
+				gameObject.nickel++;
+				if (gameObject.nickel >= 1000) {
+					gameObject.nickel = 0;
 					gameObject.silver++;
 				}
 			}
@@ -799,6 +844,15 @@ function addFunds(addFund) {
 				gameObject.platinum++;
 				if (gameObject.platinum >= 1000) {
 					gameObject.platinum = 0;
+					gameObject.iridium++;
+				}
+			}
+		}
+		if (fund.money === 'iridium') {
+			for (let i = 0; i < fund.price; i++) {
+				gameObject.iridium++;
+				if (gameObject.iridium >= 1000) {
+					gameObject.iridium = 0;
 					gameObject.mythryl++;
 				}
 			}
@@ -818,7 +872,10 @@ function checkSubtractFunds(subFunds) {
 				let noProblems = 0;
 				if (gameObject.bronze > 0) {
 					noProblems++;
-				} 
+				}
+				if (gameObject.nickel > 0) {
+					noProblems++;
+				}
 				if (gameObject.silver > 0) {
 					noProblems++;
 				}
@@ -826,6 +883,9 @@ function checkSubtractFunds(subFunds) {
 					noProblems++;
 				}
 				if (gameObject.platinum > 0) {
+					noProblems++;
+				}
+				if (gameObject.iridium > 0) {
 					noProblems++;
 				}
 				if (gameObject.mythryl > 0) {
@@ -839,6 +899,9 @@ function checkSubtractFunds(subFunds) {
 		if (fund.money === 'bronze') {
 			if (fund.price > gameObject.bronze) {
 				let noProblems = 0;
+				if (gameObject.nickel > 0) {
+					noProblems++;
+				}
 				if (gameObject.silver > 0) {
 					noProblems++;
 				}
@@ -846,6 +909,32 @@ function checkSubtractFunds(subFunds) {
 					noProblems++;
 				}
 				if (gameObject.platinum > 0) {
+					noProblems++;
+				}
+				if (gameObject.iridium > 0) {
+					noProblems++;
+				}
+				if (gameObject.mythryl > 0) {
+					noProblems++;
+				}
+				if (noProblems === 0) {
+					problems++;
+				}
+			}
+		}
+		if (fund.money === 'nickel') {
+			if (fund.price > gameObject.nickel) {
+				let noProblems = 0;
+				if (gameObject.silver > 0) {
+					noProblems++;
+				}
+				if (gameObject.gold > 0) {
+					noProblems++;
+				}
+				if (gameObject.platinum > 0) {
+					noProblems++;
+				}
+				if (gameObject.iridium > 0) {
 					noProblems++;
 				}
 				if (gameObject.mythryl > 0) {
@@ -865,6 +954,9 @@ function checkSubtractFunds(subFunds) {
 				if (gameObject.platinum > 0) {
 					noProblems++;
 				}
+				if (gameObject.iridium > 0) {
+					noProblems++;
+				}
 				if (gameObject.mythryl > 0) {
 					noProblems++;
 				}
@@ -879,6 +971,9 @@ function checkSubtractFunds(subFunds) {
 				if (gameObject.platinum > 0) {
 					noProblems++;
 				}
+				if (gameObject.iridium > 0) {
+					noProblems++;
+				}
 				if (gameObject.mythryl > 0) {
 					noProblems++;
 				}
@@ -889,6 +984,20 @@ function checkSubtractFunds(subFunds) {
 		}
 		if (fund.money === 'platinum') {
 			if (fund.price > gameObject.platinum) {
+				let noProblems = 0;
+				if (gameObject.iridium > 0) {
+					noProblems++;
+				}
+				if (gameObject.mythryl > 0) {
+					noProblems++;
+				}
+				if (noProblems === 0) {
+					problems++;
+				}
+			}
+		}
+		if (fund.money === 'iridium') {
+			if (fund.price > gameObject.iridium) {
 				let noProblems = 0;
 				if (gameObject.mythryl > 0) {
 					noProblems++;
@@ -923,9 +1032,17 @@ function subtractFunds(subFunds) {
 						gameObject.copper += 1000;
 						gameObject.copper -= fund.price;
 						converted = true;
-					} 
+					}
+					if (!converted && gameObject.nickel > 0) {
+						gameObject.nickel--;
+						gameObject.bronze = 999;
+						gameObject.copper += 1000;
+						gameObject.copper -= fund.price;
+						converted = true;
+					}
 					if (!converted && gameObject.silver > 0) {
 						gameObject.silver--;
+						gameObject.nickel = 999;
 						gameObject.bronze = 999;
 						gameObject.copper += 1000;
 						gameObject.copper -= fund.price;
@@ -934,6 +1051,7 @@ function subtractFunds(subFunds) {
 					if (!converted && gameObject.gold > 0) {
 						gameObject.gold--;
 						gameObject.silver = 999;
+						gameObject.nickel = 999;
 						gameObject.bronze = 999;
 						gameObject.copper += 1000;
 						gameObject.copper -= fund.price;
@@ -943,6 +1061,18 @@ function subtractFunds(subFunds) {
 						gameObject.platinum--;
 						gameObject.gold = 999;
 						gameObject.silver = 999;
+						gameObject.nickel = 999;
+						gameObject.bronze = 999;
+						gameObject.copper += 1000;
+						gameObject.copper -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.iridium > 0) {
+						gameObject.iridium--;
+						gameObject.platinum = 999;
+						gameObject.gold = 999;
+						gameObject.silver = 999;
+						gameObject.nickel = 999;
 						gameObject.bronze = 999;
 						gameObject.copper += 1000;
 						gameObject.copper -= fund.price;
@@ -950,9 +1080,11 @@ function subtractFunds(subFunds) {
 					}
 					if (!converted && gameObject.mythryl > 0) {
 						gameObject.mythryl--;
+						gameObject.iridium = 999;
 						gameObject.platinum = 999;
 						gameObject.gold = 999;
 						gameObject.silver = 999;
+						gameObject.nickel = 999;
 						gameObject.bronze = 999;
 						gameObject.copper += 1000;
 						gameObject.copper -= fund.price;
@@ -965,8 +1097,15 @@ function subtractFunds(subFunds) {
 			if (fund.money === 'bronze') {
 				if (fund.price > gameObject.bronze) {
 					let converted = false;
+					if (!converted && gameObject.nickel > 0) {
+						gameObject.nickel--;
+						gameObject.bronze += 1000;
+						gameObject.bronze -= fund.price;
+						converted = true;
+					}
 					if (!converted && gameObject.silver > 0) {
 						gameObject.silver--;
+						gameObject.nickel = 999;
 						gameObject.bronze += 1000;
 						gameObject.bronze -= fund.price;
 						converted = true;
@@ -974,6 +1113,7 @@ function subtractFunds(subFunds) {
 					if (!converted && gameObject.gold > 0) {
 						gameObject.gold--;
 						gameObject.silver = 999;
+						gameObject.nickel = 999;
 						gameObject.bronze += 1000;
 						gameObject.bronze -= fund.price;
 						converted = true;
@@ -982,21 +1122,81 @@ function subtractFunds(subFunds) {
 						gameObject.platinum--;
 						gameObject.gold = 999;
 						gameObject.silver = 999;
+						gameObject.nickel = 999;
+						gameObject.bronze += 1000;
+						gameObject.bronze -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.iridium > 0) {
+						gameObject.iridium--;
+						gameObject.platinum = 999;
+						gameObject.gold = 999;
+						gameObject.silver = 999;
+						gameObject.nickel = 999;
 						gameObject.bronze += 1000;
 						gameObject.bronze -= fund.price;
 						converted = true;
 					}
 					if (!converted && gameObject.mythryl > 0) {
 						gameObject.mythryl--;
+						gameObject.iridium = 999;
 						gameObject.platinum = 999;
 						gameObject.gold = 999;
 						gameObject.silver = 999;
+						gameObject.nickel = 999;
 						gameObject.bronze += 1000;
 						gameObject.bronze -= fund.price;
 						converted = true;
 					}
 				} else {
 					gameObject.bronze -= fund.price;
+				}
+			}
+			if (fund.money === 'nickel') {
+				if (fund.price > gameObject.nickel) {
+					let converted = false;
+					if (!converted && gameObject.silver > 0) {
+						gameObject.silver--;
+						gameObject.nickel += 1000;
+						gameObject.nickel -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.gold > 0) {
+						gameObject.gold--;
+						gameObject.silver = 999;
+						gameObject.nickel += 1000;
+						gameObject.nickel -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.platinum > 0) {
+						gameObject.platinum--;
+						gameObject.gold = 999;
+						gameObject.silver = 999;
+						gameObject.nickel += 1000;
+						gameObject.nickel -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.iridium > 0) {
+						gameObject.iridium--;
+						gameObject.platinum = 999;
+						gameObject.gold = 999;
+						gameObject.silver = 999;
+						gameObject.nickel += 1000;
+						gameObject.nickel -= fund.price;
+						converted = true;
+					}
+					if (!converted && gameObject.mythryl > 0) {
+						gameObject.mythryl--;
+						gameObject.iridium = 999;
+						gameObject.platinum = 999;
+						gameObject.gold = 999;
+						gameObject.silver = 999;
+						gameObject.nickel += 1000;
+						gameObject.nickel -= fund.price;
+						converted = true;
+					}
+				} else {
+					gameObject.silver -= fund.price;
 				}
 			}
 			if (fund.money === 'silver') {
@@ -1015,8 +1215,17 @@ function subtractFunds(subFunds) {
 						gameObject.silver -= fund.price;
 						converted = true;
 					}
+					if (!converted && gameObject.iridium > 0) {
+						gameObject.iridium--;
+						gameObject.platinum = 999;
+						gameObject.gold = 999;
+						gameObject.silver += 1000;
+						gameObject.silver -= fund.price;
+						converted = true;
+					}
 					if (!converted && gameObject.mythryl > 0) {
 						gameObject.mythryl--;
+						gameObject.iridium = 999;
 						gameObject.platinum = 999;
 						gameObject.gold = 999;
 						gameObject.silver += 1000;
@@ -1036,8 +1245,16 @@ function subtractFunds(subFunds) {
 						gameObject.gold -= fund.price;
 						converted = true;
 					}
+					if (!converted && gameObject.iridium > 0) {
+						gameObject.iridium--;
+						gameObject.platinum = 999;
+						gameObject.gold += 1000;
+						gameObject.gold -= fund.price;
+						converted = true;
+					}
 					if (!converted && gameObject.mythryl > 0) {
 						gameObject.mythryl--;
+						gameObject.iridium = 999;
 						gameObject.platinum = 999;
 						gameObject.gold += 1000;
 						gameObject.gold -= fund.price;
@@ -1050,8 +1267,15 @@ function subtractFunds(subFunds) {
 			if (fund.money === 'platinum') {
 				if (fund.price > gameObject.platinum) {
 					let converted = false;
+					if (!converted && gameObject.iridium > 0) {
+						gameObject.iridium--;
+						gameObject.platinum += 1000;
+						gameObject.platinum -= fund.price;
+						converted = true;
+					}
 					if (!converted && gameObject.mythryl > 0) {
 						gameObject.mythryl--;
+						gameObject.iridium = 999;
 						gameObject.platinum += 1000;
 						gameObject.platinum -= fund.price;
 						converted = true;
@@ -1060,8 +1284,21 @@ function subtractFunds(subFunds) {
 					gameObject.platinum -= fund.price;
 				}
 			}
+			if (fund.money === 'iridium') {
+				if (fund.price > gameObject.iridium) {
+					let converted = false;
+					if (!converted && gameObject.mythryl > 0) {
+						gameObject.mythryl--;
+						gameObject.iridium += 1000;
+						gameObject.iridium -= fund.price;
+						converted = true;
+					}
+				} else {
+					gameObject.iridium -= fund.price;
+				}
+			}
 			if (fund.money === 'mythryl') {
-				if (gameObject.mythryl > fund.price) {
+				if (gameObject.mythryl >= fund.price) {
 					gameObject.mythryl -= fund.price;
 				}
 			}
@@ -1078,6 +1315,39 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				drawText({
 					font: font,
 					msg: 'Mythryl: ' + gameObject.mythryl,
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
+					align: align ? align : 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: font,
+					msg: 'Iridium: ' + gameObject.iridium,
+					posX: Game.placeEntityX(lowFundX),
+					posY: Game.placeEntityY(lowFundY),
+					color: color,
+					align: align ? align : 'left',
+					props: {},
+					id: 'player-funds-low',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	} else if (gameObject.iridium > 0) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: font,
+					msg: 'Iridium: ' + gameObject.iridium,
 					posX: Game.placeEntityX(highFundX),
 					posY: Game.placeEntityY(highFundY),
 					color: color,
@@ -1192,6 +1462,39 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 			method: function(id) {
 				drawText({
 					font: font,
+					msg: 'Nickel: ' + gameObject.nickel,
+					posX: Game.placeEntityX(lowFundX),
+					posY: Game.placeEntityY(lowFundY),
+					color: color,
+					align: align ? align : 'left',
+					props: {},
+					id: 'player-funds-low',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	} else if (gameObject.nickel > 0) {
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: font,
+					msg: 'Nickel: ' + gameObject.nickel,
+					posX: Game.placeEntityX(highFundX),
+					posY: Game.placeEntityY(highFundY),
+					color: color,
+					align: align ? align : 'left',
+					props: {},
+					id: 'player-funds-high',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: font,
 					msg: 'Bronze: ' + gameObject.bronze,
 					posX: Game.placeEntityX(lowFundX),
 					posY: Game.placeEntityY(lowFundY),
@@ -1275,6 +1578,15 @@ function formatDisplayValue(formatPartCost) {
 			value: formatPartCost.mythryl
 		}
 		displayPartValue.lowValue = {
+			type: 'Iridium', 
+			value: formatPartCost.iridium
+		}
+	} else if (formatPartCost.iridium > 0) {
+		displayPartValue.highValue = {
+			type: 'Iridium', 
+			value: formatPartCost.iridium
+		}
+		displayPartValue.lowValue = {
 			type: 'Platinum', 
 			value: formatPartCost.platinum
 		}
@@ -1300,6 +1612,15 @@ function formatDisplayValue(formatPartCost) {
 		displayPartValue.highValue = {
 			type: 'Silver', 
 			value: formatPartCost.silver
+		}
+		displayPartValue.lowValue = {
+			type: 'Nickel', 
+			value: formatPartCost.nickel
+		}
+	} else if (formatPartCost.nickel > 0) {
+		displayPartValue.highValue = {
+			type: 'Nickel', 
+			value: formatPartCost.nickel
 		}
 		displayPartValue.lowValue = {
 			type: 'Bronze', 
@@ -1353,9 +1674,11 @@ function combineRobotParts(robot) {
 function formatPartsCostToFunds(formatPartCost) {
 	const addPartCost = [
 		{ money: 'mythryl', price: formatPartCost.mythryl },
+		{ money: 'iridium', price: formatPartCost.iridium },
 		{ money: 'platinum', price: formatPartCost.platinum },
 		{ money: 'gold', price: formatPartCost.gold },
 		{ money: 'silver', price: formatPartCost.silver },
+		{ money: 'nickel', price: formatPartCost.nickel },
 		{ money: 'bronze', price: formatPartCost.bronze },
 		{ money: 'copper', price: formatPartCost.copper }
 	];
@@ -1380,9 +1703,11 @@ function gatherScrapCostFromPart(part) {
 function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and amount of scrap
 	const partCost = {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 0,
 	}
@@ -1396,6 +1721,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += commonScrap.price * scrap.cost;
 					}
+					if (commonScrap.money === 'iridium') {
+						partCost.iridium += commonScrap.price * scrap.cost;
+					}
 					if (commonScrap.money === 'platinum') {
 						partCost.platinum += commonScrap.price * scrap.cost;
 					}
@@ -1404,6 +1732,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					}
 					if (commonScrap.money === 'silver') {
 						partCost.silver += commonScrap.price * scrap.cost;
+					}
+					if (commonScrap.money === 'nickel') {
+						partCost.nickel += commonScrap.price * scrap.cost;
 					}
 					if (commonScrap.money === 'bronze') {
 						partCost.bronze += commonScrap.price * scrap.cost;
@@ -1420,6 +1751,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += unCommonScrap.price * scrap.cost;
 					}
+					if (commonScrap.money === 'iridium') {
+						partCost.iridium += unCommonScrap.price * scrap.cost;
+					}
 					if (unCommonScrap.money === 'platinum') {
 						partCost.platinum += unCommonScrap.price * scrap.cost;
 					}
@@ -1428,6 +1762,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					}
 					if (unCommonScrap.money === 'silver') {
 						partCost.silver += unCommonScrap.price * scrap.cost;
+					}
+					if (commonScrap.money === 'nickel') {
+						partCost.nickel += unCommonScrap.price * scrap.cost;
 					}
 					if (unCommonScrap.money === 'bronze') {
 						partCost.bronze += unCommonScrap.price * scrap.cost;
@@ -1444,6 +1781,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += uniqueScrap.price * scrap.cost;
 					}
+					if (commonScrap.money === 'iridium') {
+						partCost.iridium += uniqueScrap.price * scrap.cost;
+					}
 					if (uniqueScrap.money === 'platinum') {
 						partCost.platinum += uniqueScrap.price * scrap.cost;
 					}
@@ -1452,6 +1792,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					}
 					if (uniqueScrap.money === 'silver') {
 						partCost.silver += uniqueScrap.price * scrap.cost;
+					}
+					if (commonScrap.money === 'nickel') {
+						partCost.nickel += uniqueScrap.price * scrap.cost;
 					}
 					if (uniqueScrap.money === 'bronze') {
 						partCost.bronze += uniqueScrap.price * scrap.cost;
@@ -1468,6 +1811,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += intriguingScrap.price * scrap.cost;
 					}
+					if (commonScrap.money === 'iridium') {
+						partCost.iridium += intriguingScrap.price * scrap.cost;
+					}
 					if (intriguingScrap.money === 'platinum') {
 						partCost.platinum += intriguingScrap.price * scrap.cost;
 					}
@@ -1476,6 +1822,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					}
 					if (intriguingScrap.money === 'silver') {
 						partCost.silver += intriguingScrap.price * scrap.cost;
+					}
+					if (commonScrap.money === 'nickel') {
+						partCost.nickel += intriguingScrap.price * scrap.cost;
 					}
 					if (intriguingScrap.money === 'bronze') {
 						partCost.bronze += intriguingScrap.price * scrap.cost;
@@ -1492,6 +1841,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += facinatingScrap.price * scrap.cost;
 					}
+					if (commonScrap.money === 'iridium') {
+						partCost.iridium += facinatingScrap.price * scrap.cost;
+					}
 					if (facinatingScrap.money === 'platinum') {
 						partCost.platinum += facinatingScrap.price * scrap.cost;
 					}
@@ -1500,6 +1852,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					}
 					if (facinatingScrap.money === 'silver') {
 						partCost.silver += facinatingScrap.price * scrap.cost;
+					}
+					if (commonScrap.money === 'nickel') {
+						partCost.nickel += facinatingScrap.price * scrap.cost;
 					}
 					if (facinatingScrap.money === 'bronze') {
 						partCost.bronze += facinatingScrap.price * scrap.cost;
@@ -1516,6 +1871,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += mythicScrap.price * scrap.cost;
 					}
+					if (commonScrap.money === 'iridium') {
+						partCost.iridium += mythicScrap.price * scrap.cost;
+					}
 					if (mythicScrap.money === 'platinum') {
 						partCost.platinum += mythicScrap.price * scrap.cost;
 					}
@@ -1524,6 +1882,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					}
 					if (mythicScrap.money === 'silver') {
 						partCost.silver += mythicScrap.price * scrap.cost;
+					}
+					if (commonScrap.money === 'nickel') {
+						partCost.nickel += mythicScrap.price * scrap.cost;
 					}
 					if (mythicScrap.money === 'bronze') {
 						partCost.bronze += mythicScrap.price * scrap.cost;
@@ -1540,6 +1901,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += exoticScrap.price * scrap.cost;
 					}
+					if (commonScrap.money === 'iridium') {
+						partCost.iridium += exoticScrap.price * scrap.cost;
+					}
 					if (exoticScrap.money === 'platinum') {
 						partCost.platinum += exoticScrap.price * scrap.cost;
 					}
@@ -1548,6 +1912,9 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					}
 					if (exoticScrap.money === 'silver') {
 						partCost.silver += exoticScrap.price * scrap.cost;
+					}
+					if (commonScrap.money === 'nickel') {
+						partCost.nickel += exoticScrap.price * scrap.cost;
 					}
 					if (exoticScrap.money === 'bronze') {
 						partCost.bronze += exoticScrap.price * scrap.cost;
@@ -1565,9 +1932,11 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 function formatPartCost(partCost) {
 	const formatPartCost = {
 		mythryl: 0,
+		iridium: 0,
 		platinum: 0,
 		gold: 0,
 		silver: 0,
+		nickel: 0,
 		bronze: 0,
 		copper: 0,
 	}
@@ -1584,6 +1953,13 @@ function formatPartCost(partCost) {
 		formatPartCost.bronze++;
 		if (formatPartCost.bronze >= 1000) {
 			formatPartCost.bronze = 0;
+			formatPartCost.nickel++;
+		}
+	}
+	for (let i = 0; i < partCost.nickel; i++) {
+		formatPartCost.nickel++;
+		if (formatPartCost.nickel >= 1000) {
+			formatPartCost.nickel = 0;
 			formatPartCost.silver++;
 		}
 	}
@@ -1605,6 +1981,13 @@ function formatPartCost(partCost) {
 		formatPartCost.platinum++;
 		if (formatPartCost.platinum >= 1000) {
 			formatPartCost.platinum = 0;
+			formatPartCost.iridium++;
+		}
+	}
+	for (let i = 0; i < partCost.iridium; i++) {
+		formatPartCost.iridium++;
+		if (formatPartCost.iridium >= 1000) {
+			formatPartCost.iridium = 0;
 			formatPartCost.mythryl++;
 		}
 	}

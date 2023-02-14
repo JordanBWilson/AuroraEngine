@@ -2954,12 +2954,14 @@ const homeSellRobots = {
 			const totalScrapCosts = gatherScrapCostFromPart(totalRobotScrap);
 			const formatTotalPartCost = calculatePartPrice(totalScrapCosts);
 			
-			// add the barter bonus
+			// add the barter bonus // future Jordan, consolidate the barter costs
 			formatTotalPartCost.copper += gameObject.barterBonusCost.copper;
 			formatTotalPartCost.bronze += gameObject.barterBonusCost.bronze;
+			formatTotalPartCost.nickel += gameObject.barterBonusCost.nickel;
 			formatTotalPartCost.silver += gameObject.barterBonusCost.silver;
 			formatTotalPartCost.gold += gameObject.barterBonusCost.gold;
 			formatTotalPartCost.platinum += gameObject.barterBonusCost.platinum;
+			formatTotalPartCost.iridium += gameObject.barterBonusCost.iridium;
 			formatTotalPartCost.mythryl += gameObject.barterBonusCost.mythryl;
 			
 			// display the top two highest money type
@@ -3030,9 +3032,11 @@ const homeSellRobots = {
 										// add the barter bonus
 										formatTotalPartCost.copper += gameObject.barterBonusCost.copper;
 										formatTotalPartCost.bronze += gameObject.barterBonusCost.bronze;
+										formatTotalPartCost.nickel += gameObject.barterBonusCost.nickel;
 										formatTotalPartCost.silver += gameObject.barterBonusCost.silver;
 										formatTotalPartCost.gold += gameObject.barterBonusCost.gold;
 										formatTotalPartCost.platinum += gameObject.barterBonusCost.platinum;
+										formatTotalPartCost.iridium += gameObject.barterBonusCost.iridium;
 										formatTotalPartCost.mythryl += gameObject.barterBonusCost.mythryl;
 										const addPartCost = formatPartsCostToFunds(formatTotalPartCost);
 										addFunds(addPartCost);
@@ -3505,18 +3509,23 @@ const homePlayerUpgrades = {
 																	
 																	designIncrease = true;
 																}
-																
+																// future Jordan, look into consolidating upgrade methods
 																if (!gameObject.factoryUpgradeCost.bronze && 
+																!gameObject.factoryUpgradeCost.nickel && 
 																!gameObject.factoryUpgradeCost.silver && 
 																!gameObject.factoryUpgradeCost.gold && 
 																!gameObject.factoryUpgradeCost.platinum &&
+																!gameObject.factoryUpgradeCost.iridium &&
 																!gameObject.factoryUpgradeCost.mythryl) {
 																	gameObject.factoryUpgradeCost.copper *= 2;
 																} else if (gameObject.factoryUpgradeCost.bronze) {
 																	gameObject.factoryUpgradeCost.copper = 0;
 																	gameObject.factoryUpgradeCost.bronze *= 2;
-																} else if (gameObject.factoryUpgradeCost.silver) {
+																} else if (gameObject.factoryUpgradeCost.nickel) {
 																	gameObject.factoryUpgradeCost.bronze = 0;
+																	gameObject.factoryUpgradeCost.nickel *= 2;
+																} else if (gameObject.factoryUpgradeCost.silver) {
+																	gameObject.factoryUpgradeCost.nickel = 0;
 																	gameObject.factoryUpgradeCost.silver *= 2;
 																} else if (gameObject.factoryUpgradeCost.gold) {
 																	gameObject.factoryUpgradeCost.silver = 0;
@@ -3524,8 +3533,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.factoryUpgradeCost.platinum) {
 																	gameObject.factoryUpgradeCost.gold = 0;
 																	gameObject.factoryUpgradeCost.platinum *= 2;
-																} else if (gameObject.factoryUpgradeCost.mythryl) {
+																} else if (gameObject.factoryUpgradeCost.iridium) {
 																	gameObject.factoryUpgradeCost.platinum = 0;
+																	gameObject.factoryUpgradeCost.iridium *= 2;
+																} else if (gameObject.factoryUpgradeCost.mythryl) {
+																	gameObject.factoryUpgradeCost.iridium = 0;
 																	gameObject.factoryUpgradeCost.mythryl *= 2;
 																}																
 																const formatUpgradeCost = formatPartCost(gameObject.factoryUpgradeCost);
@@ -3539,16 +3551,21 @@ const homePlayerUpgrades = {
 															if (upgradeIndex === 1) {
 																gameObject.engineeringSkill++;
 																if (!gameObject.engineeringUpgradeCost.bronze && 
+																!gameObject.engineeringUpgradeCost.nickel && 
 																!gameObject.engineeringUpgradeCost.silver && 
 																!gameObject.engineeringUpgradeCost.gold && 
 																!gameObject.engineeringUpgradeCost.platinum &&
+																!gameObject.engineeringUpgradeCost.iridium &&
 																!gameObject.engineeringUpgradeCost.mythryl) {
 																	gameObject.engineeringUpgradeCost.copper *= 2;
 																} else if (gameObject.engineeringUpgradeCost.bronze) {
 																	gameObject.engineeringUpgradeCost.copper = 0;
 																	gameObject.engineeringUpgradeCost.bronze *= 2;
-																} else if (gameObject.engineeringUpgradeCost.silver) {
+																} else if (gameObject.engineeringUpgradeCost.nickel) {
 																	gameObject.engineeringUpgradeCost.bronze = 0;
+																	gameObject.engineeringUpgradeCost.nickel *= 2;
+																} else if (gameObject.engineeringUpgradeCost.silver) {
+																	gameObject.engineeringUpgradeCost.nickel = 0;
 																	gameObject.engineeringUpgradeCost.silver *= 2;
 																} else if (gameObject.engineeringUpgradeCost.gold) {
 																	gameObject.engineeringUpgradeCost.silver = 0;
@@ -3556,8 +3573,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.engineeringUpgradeCost.platinum) {
 																	gameObject.engineeringUpgradeCost.gold = 0;
 																	gameObject.engineeringUpgradeCost.platinum *= 2;
-																} else if (gameObject.engineeringUpgradeCost.mythryl) {
+																} else if (gameObject.engineeringUpgradeCost.iridium) {
 																	gameObject.engineeringUpgradeCost.platinum = 0;
+																	gameObject.engineeringUpgradeCost.iridium *= 2;
+																} else if (gameObject.engineeringUpgradeCost.mythryl) {
+																	gameObject.engineeringUpgradeCost.iridium = 0;
 																	gameObject.engineeringUpgradeCost.mythryl *= 2;
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.engineeringUpgradeCost);
@@ -3567,16 +3587,21 @@ const homePlayerUpgrades = {
 															if (upgradeIndex === 2) {
 																gameObject.roboticSkill++;
 																if (!gameObject.roboticsUpgradeCost.bronze && 
+																!gameObject.roboticsUpgradeCost.nickel && 
 																!gameObject.roboticsUpgradeCost.silver && 
 																!gameObject.roboticsUpgradeCost.gold && 
 																!gameObject.roboticsUpgradeCost.platinum &&
+																!gameObject.roboticsUpgradeCost.iridium &&
 																!gameObject.roboticsUpgradeCost.mythryl) {
 																	gameObject.roboticsUpgradeCost.copper *= 2;
 																} else if (gameObject.roboticsUpgradeCost.bronze) {
 																	gameObject.roboticsUpgradeCost.copper = 0;
 																	gameObject.roboticsUpgradeCost.bronze *= 2;
-																} else if (gameObject.roboticsUpgradeCost.silver) {
+																} else if (gameObject.roboticsUpgradeCost.nickel) {
 																	gameObject.roboticsUpgradeCost.bronze = 0;
+																	gameObject.roboticsUpgradeCost.nickel *= 2;
+																} else if (gameObject.roboticsUpgradeCost.silver) {
+																	gameObject.roboticsUpgradeCost.nickel = 0;
 																	gameObject.roboticsUpgradeCost.silver *= 2;
 																} else if (gameObject.roboticsUpgradeCost.gold) {
 																	gameObject.roboticsUpgradeCost.silver = 0;
@@ -3584,6 +3609,9 @@ const homePlayerUpgrades = {
 																} else if (gameObject.roboticsUpgradeCost.platinum) {
 																	gameObject.roboticsUpgradeCost.gold = 0;
 																	gameObject.roboticsUpgradeCost.platinum *= 2;
+																} else if (gameObject.roboticsUpgradeCost.iridium) {
+																	gameObject.roboticsUpgradeCost.platinum = 0;
+																	gameObject.roboticsUpgradeCost.iridium *= 2;
 																} else if (gameObject.roboticsUpgradeCost.mythryl) {
 																	gameObject.roboticsUpgradeCost.platinum = 0;
 																	gameObject.roboticsUpgradeCost.mythryl *= 2;
@@ -3595,16 +3623,21 @@ const homePlayerUpgrades = {
 															if (upgradeIndex === 3) {
 																gameObject.scrapperSkill++;
 																if (!gameObject.scrappingUpgradeCost.bronze && 
+																!gameObject.scrappingUpgradeCost.nickel &&
 																!gameObject.scrappingUpgradeCost.silver && 
 																!gameObject.scrappingUpgradeCost.gold && 
 																!gameObject.scrappingUpgradeCost.platinum &&
+																!gameObject.scrappingUpgradeCost.iridium &&
 																!gameObject.scrappingUpgradeCost.mythryl) {
 																	gameObject.scrappingUpgradeCost.copper *= 2;
 																} else if (gameObject.scrappingUpgradeCost.bronze) {
 																	gameObject.scrappingUpgradeCost.copper = 0;
 																	gameObject.scrappingUpgradeCost.bronze *= 2;
-																} else if (gameObject.scrappingUpgradeCost.silver) {
+																} else if (gameObject.scrappingUpgradeCost.nickel) {
 																	gameObject.scrappingUpgradeCost.bronze = 0;
+																	gameObject.scrappingUpgradeCost.nickel *= 2;
+																} else if (gameObject.scrappingUpgradeCost.silver) {
+																	gameObject.scrappingUpgradeCost.nickel = 0;
 																	gameObject.scrappingUpgradeCost.silver *= 2;
 																} else if (gameObject.scrappingUpgradeCost.gold) {
 																	gameObject.scrappingUpgradeCost.silver = 0;
@@ -3612,8 +3645,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.scrappingUpgradeCost.platinum) {
 																	gameObject.scrappingUpgradeCost.gold = 0;
 																	gameObject.scrappingUpgradeCost.platinum *= 2;
-																} else if (gameObject.scrappingUpgradeCost.mythryl) {
+																} else if (gameObject.scrappingUpgradeCost.iridium) {
 																	gameObject.scrappingUpgradeCost.platinum = 0;
+																	gameObject.scrappingUpgradeCost.iridium *= 2;
+																} else if (gameObject.scrappingUpgradeCost.mythryl) {
+																	gameObject.scrappingUpgradeCost.iridium = 0;
 																	gameObject.scrappingUpgradeCost.mythryl *= 2;
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.scrappingUpgradeCost);
@@ -3623,16 +3659,21 @@ const homePlayerUpgrades = {
 															if (upgradeIndex === 4) {
 																gameObject.barterSkill++;
 																if (!gameObject.barteringUpgradeCost.bronze && 
+																!gameObject.barteringUpgradeCost.nickel &&
 																!gameObject.barteringUpgradeCost.silver && 
 																!gameObject.barteringUpgradeCost.gold && 
 																!gameObject.barteringUpgradeCost.platinum &&
+																!gameObject.barteringUpgradeCost.iridium &&
 																!gameObject.barteringUpgradeCost.mythryl) {
 																	gameObject.barteringUpgradeCost.copper *= 2;
 																} else if (gameObject.barteringUpgradeCost.bronze) {
 																	gameObject.barteringUpgradeCost.copper = 0;
 																	gameObject.barteringUpgradeCost.bronze *= 2;
-																} else if (gameObject.barteringUpgradeCost.silver) {
+																} else if (gameObject.barteringUpgradeCost.nickel) {
 																	gameObject.barteringUpgradeCost.bronze = 0;
+																	gameObject.barteringUpgradeCost.nickel *= 2;
+																} else if (gameObject.barteringUpgradeCost.silver) {
+																	gameObject.barteringUpgradeCost.nickel = 0;
 																	gameObject.barteringUpgradeCost.silver *= 2;
 																} else if (gameObject.barteringUpgradeCost.gold) {
 																	gameObject.barteringUpgradeCost.silver = 0;
@@ -3640,17 +3681,22 @@ const homePlayerUpgrades = {
 																} else if (gameObject.barteringUpgradeCost.platinum) {
 																	gameObject.barteringUpgradeCost.gold = 0;
 																	gameObject.barteringUpgradeCost.platinum *= 2;
-																} else if (gameObject.barteringUpgradeCost.mythryl) {
+																} else if (gameObject.barteringUpgradeCost.iridium) {
 																	gameObject.barteringUpgradeCost.platinum = 0;
+																	gameObject.barteringUpgradeCost.iridium *= 2;
+																} else if (gameObject.barteringUpgradeCost.mythryl) {
+																	gameObject.barteringUpgradeCost.iridium = 0;
 																	gameObject.barteringUpgradeCost.mythryl *= 2;
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.barteringUpgradeCost);
 																gameObject.barteringUpgradeCost = formatUpgradeCost;
 																// calculate the barter bonus
 																if (!gameObject.barterBonusCost.bronze && 
+																!gameObject.barterBonusCost.nickel && 
 																!gameObject.barterBonusCost.silver && 
 																!gameObject.barterBonusCost.gold && 
 																!gameObject.barterBonusCost.platinum &&
+																!gameObject.barterBonusCost.iridium &&
 																!gameObject.barterBonusCost.mythryl) {
 																	if (gameObject.barterBonusCost.copper === 0) {
 																		gameObject.barterBonusCost.copper += 2;
@@ -3659,8 +3705,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.barterBonusCost.bronze) {
 																	gameObject.barterBonusCost.copper = 0;
 																	gameObject.barterBonusCost.bronze *= 2;
-																} else if (gameObject.barterBonusCost.silver) {
+																} else if (gameObject.barterBonusCost.nickel) {
 																	gameObject.barterBonusCost.bronze = 0;
+																	gameObject.barterBonusCost.nickel *= 2;
+																} else if (gameObject.barterBonusCost.silver) {
+																	gameObject.barterBonusCost.nickel = 0;
 																	gameObject.barterBonusCost.silver *= 2;
 																} else if (gameObject.barterBonusCost.gold) {
 																	gameObject.barterBonusCost.silver = 0;
@@ -3668,8 +3717,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.barterBonusCost.platinum) {
 																	gameObject.barterBonusCost.gold = 0;
 																	gameObject.barterBonusCost.platinum *= 2;
-																} else if (gameObject.barterBonusCost.mythryl) {
+																} else if (gameObject.barterBonusCost.iridium) {
 																	gameObject.barterBonusCost.platinum = 0;
+																	gameObject.barterBonusCost.iridium *= 2;
+																} else if (gameObject.barterBonusCost.mythryl) {
+																	gameObject.barterBonusCost.iridium = 0;
 																	gameObject.barterBonusCost.mythryl *= 2;
 																}
 																
@@ -3681,16 +3733,21 @@ const homePlayerUpgrades = {
 															if (upgradeIndex === 5) {
 																gameObject.arenaLevel++;
 																if (!gameObject.arenaUpgradeCost.bronze && 
+																!gameObject.arenaUpgradeCost.nickel &&
 																!gameObject.arenaUpgradeCost.silver && 
 																!gameObject.arenaUpgradeCost.gold && 
 																!gameObject.arenaUpgradeCost.platinum &&
+																!gameObject.arenaUpgradeCost.iridium &&
 																!gameObject.arenaUpgradeCost.mythryl) {
 																	gameObject.arenaUpgradeCost.copper *= 2;
 																} else if (gameObject.arenaUpgradeCost.bronze) {
 																	gameObject.arenaUpgradeCost.copper = 0;
 																	gameObject.arenaUpgradeCost.bronze *= 2;
-																} else if (gameObject.arenaUpgradeCost.silver) {
+																} else if (gameObject.arenaUpgradeCost.nickel) {
 																	gameObject.arenaUpgradeCost.bronze = 0;
+																	gameObject.arenaUpgradeCost.nickel *= 2;
+																} else if (gameObject.arenaUpgradeCost.silver) {
+																	gameObject.arenaUpgradeCost.nickel = 0;
 																	gameObject.arenaUpgradeCost.silver *= 2;
 																} else if (gameObject.arenaUpgradeCost.gold) {
 																	gameObject.arenaUpgradeCost.silver = 0;
@@ -3698,8 +3755,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.arenaUpgradeCost.platinum) {
 																	gameObject.arenaUpgradeCost.gold = 0;
 																	gameObject.arenaUpgradeCost.platinum *= 2;
-																} else if (gameObject.arenaUpgradeCost.mythryl) {
+																} else if (gameObject.arenaUpgradeCost.iridium) {
 																	gameObject.arenaUpgradeCost.platinum = 0;
+																	gameObject.arenaUpgradeCost.iridium *= 2;
+																} else if (gameObject.arenaUpgradeCost.mythryl) {
+																	gameObject.arenaUpgradeCost.iridium = 0;
 																	gameObject.arenaUpgradeCost.mythryl *= 2;
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.arenaUpgradeCost);
@@ -3714,25 +3774,33 @@ const homePlayerUpgrades = {
 																gameObject.scrapInvintoryLevel++;
 																gameObject.scrapInvintory += 5;
 																if (!gameObject.scrapInvUpgradeCost.bronze && 
+																!gameObject.scrapInvUpgradeCost.nickel &&
 																!gameObject.scrapInvUpgradeCost.silver && 
 																!gameObject.scrapInvUpgradeCost.gold && 
 																!gameObject.scrapInvUpgradeCost.platinum &&
+																!gameObject.scrapInvUpgradeCost.iridium &&
 																!gameObject.scrapInvUpgradeCost.mythryl) {
 																	gameObject.scrapInvUpgradeCost.copper *= 2;
 																} else if (gameObject.scrapInvUpgradeCost.bronze) {
 																	gameObject.scrapInvUpgradeCost.copper = 0;
 																	gameObject.scrapInvUpgradeCost.bronze *= 2;
-																} else if (gameObject.scrapInvUpgradeCost.silver) {
+																} else if (gameObject.scrapInvUpgradeCost.nickel) {
 																	gameObject.scrapInvUpgradeCost.bronze = 0;
+																	gameObject.scrapInvUpgradeCost.nickel *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.silver) {
+																	gameObject.scrapInvUpgradeCost.nickel = 0;
 																	gameObject.scrapInvUpgradeCost.silver *= 2;
 																} else if (gameObject.scrapInvUpgradeCost.gold) {
 																	gameObject.scrapInvUpgradeCost.silver = 0;
 																	gameObject.scrapInvUpgradeCost.gold *= 2;
 																} else if (gameObject.scrapInvUpgradeCost.platinum) {
 																	gameObject.scrapInvUpgradeCost.gold = 0;
-																	gameObject.scrapInvUpgrupgradeIndexadeCost.platinum *= 2;
-																} else if (gameObject.scrapInvUpgradeCost.mythryl) {
+																	gameObject.scrapInvUpgradeCost.platinum *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.iridium) {
 																	gameObject.scrapInvUpgradeCost.platinum = 0;
+																	gameObject.scrapInvUpgradeCost.iridium *= 2;
+																} else if (gameObject.scrapInvUpgradeCost.mythryl) {
+																	gameObject.scrapInvUpgradeCost.iridium = 0;
 																	gameObject.scrapInvUpgradeCost.mythryl *= 2;
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.scrapInvUpgradeCost);
@@ -3743,16 +3811,21 @@ const homePlayerUpgrades = {
 																gameObject.partStorageLevel++;
 																gameObject.partStorage += 3;
 																if (!gameObject.partInvUpgradeCost.bronze && 
+																!gameObject.partInvUpgradeCost.nickel && 
 																!gameObject.partInvUpgradeCost.silver && 
 																!gameObject.partInvUpgradeCost.gold && 
 																!gameObject.partInvUpgradeCost.platinum &&
+																!gameObject.partInvUpgradeCost.iridium &&
 																!gameObject.partInvUpgradeCost.mythryl) {
 																	gameObject.partInvUpgradeCost.copper *= 2;
 																} else if (gameObject.partInvUpgradeCost.bronze) {
 																	gameObject.partInvUpgradeCost.copper = 0;
 																	gameObject.partInvUpgradeCost.bronze *= 2;
-																} else if (gameObject.partInvUpgradeCost.silver) {
+																} else if (gameObject.partInvUpgradeCost.nickel) {
 																	gameObject.partInvUpgradeCost.bronze = 0;
+																	gameObject.partInvUpgradeCost.nickel *= 2;
+																} else if (gameObject.partInvUpgradeCost.silver) {
+																	gameObject.partInvUpgradeCost.nickel = 0;
 																	gameObject.partInvUpgradeCost.silver *= 2;
 																} else if (gameObject.partInvUpgradeCost.gold) {
 																	gameObject.partInvUpgradeCost.silver = 0;
@@ -3760,8 +3833,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.partInvUpgradeCost.platinum) {
 																	gameObject.partInvUpgradeCost.gold = 0;
 																	gameObject.partInvUpgradeCost.platinum *= 2;
-																} else if (gameObject.partInvUpgradeCost.mythryl) {
+																} else if (gameObject.partInvUpgradeCost.iridium) {
 																	gameObject.partInvUpgradeCost.platinum = 0;
+																	gameObject.partInvUpgradeCost.iridium *= 2;
+																} else if (gameObject.partInvUpgradeCost.mythryl) {
+																	gameObject.partInvUpgradeCost.iridium = 0;
 																	gameObject.partInvUpgradeCost.mythryl *= 2;
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.partInvUpgradeCost);
@@ -3772,16 +3848,21 @@ const homePlayerUpgrades = {
 																gameObject.robotStorageLevel++;
 																gameObject.robotStorage++;
 																if (!gameObject.robotInvUpgradeCost.bronze && 
+																!gameObject.robotInvUpgradeCost.nickel && 
 																!gameObject.robotInvUpgradeCost.silver && 
 																!gameObject.robotInvUpgradeCost.gold && 
 																!gameObject.robotInvUpgradeCost.platinum &&
+																!gameObject.robotInvUpgradeCost.iridium &&
 																!gameObject.robotInvUpgradeCost.mythryl) {
 																	gameObject.robotInvUpgradeCost.copper *= 2;
 																} else if (gameObject.robotInvUpgradeCost.bronze) {
 																	gameObject.robotInvUpgradeCost.copper = 0;
 																	gameObject.robotInvUpgradeCost.bronze *= 2;
-																} else if (gameObject.robotInvUpgradeCost.silver) {
+																} else if (gameObject.robotInvUpgradeCost.nickel) {
 																	gameObject.robotInvUpgradeCost.bronze = 0;
+																	gameObject.robotInvUpgradeCost.nickel *= 2;
+																} else if (gameObject.robotInvUpgradeCost.silver) {
+																	gameObject.robotInvUpgradeCost.nickel = 0;
 																	gameObject.robotInvUpgradeCost.silver *= 2;
 																} else if (gameObject.robotInvUpgradeCost.gold) {
 																	gameObject.robotInvUpgradeCost.silver = 0;
@@ -3789,8 +3870,11 @@ const homePlayerUpgrades = {
 																} else if (gameObject.robotInvUpgradeCost.platinum) {
 																	gameObject.robotInvUpgradeCost.gold = 0;
 																	gameObject.robotInvUpgradeCost.platinum *= 2;
-																} else if (gameObject.robotInvUpgradeCost.mythryl) {
+																} else if (gameObject.robotInvUpgradeCost.iridium) {
 																	gameObject.robotInvUpgradeCost.platinum = 0;
+																	gameObject.robotInvUpgradeCost.iridium *= 2;
+																} else if (gameObject.robotInvUpgradeCost.mythryl) {
+																	gameObject.robotInvUpgradeCost.iridium = 0;
 																	gameObject.robotInvUpgradeCost.mythryl *= 2;
 																}
 																const formatUpgradeCost = formatPartCost(gameObject.robotInvUpgradeCost);
