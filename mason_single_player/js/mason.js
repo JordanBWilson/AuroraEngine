@@ -35,7 +35,7 @@ function seedArenaRobotDesigns() {
 		const robotDesign = {
 			robotId: i,
 			robotParts: [],
-			directive: 0, // will the robot be a tank, warrior, support or lee-roy
+			directive: 4, // will the robot be a tank, warrior, support or lee-roy
 		};
 		gameObject.robotArenaDesigns.push(robotDesign);
 	}
@@ -47,7 +47,7 @@ function seedArenaTowers() {
 			arenaTowerId: i,
 			arenaTower: {},
 			robotParts: [],
-			directive: 0, // will the tower be standard, long-shot, rapid-shot or ram-shot
+			directive: 1, // will the tower be standard, long-shot, rapid-shot or ram-shot
 			// each directive will alter the tower stats. standard will be default
 		}
 		gameObject.towerArenaDesigns.push(towerDesign);

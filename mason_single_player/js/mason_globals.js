@@ -784,6 +784,25 @@ const arenaTowers = [
 			hp: 20,
 			lvl: 1,
 		},
+		robotParts: [],
+		requires: {
+			arenaLvlToBuild: 0,
+			arenaLvlToUpgrade: 0,
+		},
+	},
+	{
+		towerId: 2,
+		type: 'bunker',
+		name: 'Bunker',
+		img: 'indigo',
+		stats: {
+			att: 0,
+			def: 1,
+			spd: 1,
+			hp: 20,
+			lvl: 1,
+		},
+		robotParts: [],
 		requires: {
 			arenaLvlToBuild: 0,
 			arenaLvlToUpgrade: 0,

@@ -152,10 +152,10 @@ const arenaPage = {
 							if (gameObject.selectedRobot.length === 0) {
 								arenaRobotSelect();
 							} else {
-								// future Jordan, we need to work on the robot directives
-								// we also need to work on the reselect if a robot was already selected
-								// the player may want to swap out that robot for a higher level robot
-								// put the reselect button where the select button is
+								// future Jordan, work on the towers next.
+								// set it up similar to the robots but for
+								// bunker types, make a button under the 
+								// directives to select a robot to spawn
 								arenaRobotDetails(true);
 							}
 							
@@ -503,7 +503,6 @@ const arenaPage = {
 		}
 		
 		function arenaRobotDetails(reselect = false) {
-			console.log(reselect);
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -590,6 +589,138 @@ const arenaPage = {
 					}
 				}
 			);
+			for (let i = 0; i < 4; i++) {
+				let directiveMsg = '';
+				if (i === 0) {
+					directiveMsg = 'Tank';
+				} else if (i === 1) {
+					directiveMsg = 'Warrior';
+				} else if (i === 2) {
+					directiveMsg = 'Support';
+				} else if (i === 3) {
+					directiveMsg = 'Lee-Roy';
+				}
+				Game.methodSetup = {
+					method: function(id) {
+						drawButton({
+							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+							posY: Game.placeEntityY(0.330 + (i * 0.125)),
+							width: (Game.entitySize * 22),
+							height: (Game.entitySize * 9),
+							lineWidth: 1,
+							btnColor: 'green',
+							txtColor: 'white',
+							font: '1em serif',
+							msg: directiveMsg,
+							isFilled: true,
+							id: 'directive-' + (i + 1),
+							action: { 
+								method: function(id) {
+									let msgs = [];
+									if (i === 0) {
+										msgs = ['Tank', 'Tanks will target towers before', 'getting to the enemy stronghold'];
+									} else if (i === 1) {
+										msgs = ['Warrior', 'Warriors will target troops before', 'getting to the enemy stronghold'];
+									} else if (i === 2) {
+										msgs = ['Support', 'Supports will target anything', 'before getting to the', 'enemy stronghold'];
+									} else if (i === 3) {
+										directiveMsg = 'Lee-Roy';
+										msgs = ['Support', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy stronghold'];
+									}
+									Game.methodSetup = {
+										method: function(id) {
+											drawDialogueModal({
+												posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+												width: (Game.entitySize * 45),
+												height: (Game.entitySize * 50),
+												lineWidth: 1,
+												modalColor: 'darkgrey',
+												msgColor: 'white',
+												msgFont: '1em serif',
+												msgs: msgs,
+												msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+												msgDistance: (Game.entitySize * 5),
+												bgColor: '',
+												isModalFilled: true,
+												id: Game.modalId,
+												action: {
+													method: function(id) {}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
+												width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+												height: (Game.entitySize * 7),
+												lineWidth: 1,
+												btnColor: 'grey',
+												txtColor: 'white',
+												font: '1.3em serif',
+												msg: 'Program',
+												isFilled: true,
+												id: 'Program-directive',
+												action: { 
+													method: function(id) {
+														gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive = i + 1;
+														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+														Game.deleteEntity(modal.methodId);
+														arenaRobotDetails(reselect);
+													}
+												},
+												isModalBtn: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+												width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
+												height: (Game.entitySize * 7),
+												lineWidth: 1,
+												btnColor: 'grey',
+												txtColor: 'white',
+												font: '1.3em serif',
+												msg: 'Cancel',
+												isFilled: true,
+												id: 'cancel-directive',
+												action: { 
+													method: function(id) { 
+														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+														Game.deleteEntity(modal.methodId);
+														arenaRobotDetails(reselect);
+													}
+												},
+												isModalBtn: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								}
+							},
+							isModalBtn: false,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({
@@ -611,7 +742,6 @@ const arenaPage = {
 								} else {
 									arenaRobotSelect();
 								}
-								
 							}
 						},
 						isModalBtn: false,
@@ -735,30 +865,55 @@ const arenaPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
-					method: function(id) {
-						drawButton({
-							posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-							posY: Game.placeEntityY(0.90),
-							width: (Game.entitySize * 23),
-							height: (Game.entitySize * 7),
-							lineWidth: 1,
-							btnColor: 'grey',
-							txtColor: 'white',
-							font: '1.5em serif',
-							msg: 'Select',
-							isFilled: true,
-							id: 'select-robot',
-							action: { method: function(id) {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
+						posY: Game.placeEntityY(0.90),
+						width: (Game.entitySize * 23),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'grey',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: !reselect ? 'Select' : 'Reselect',
+						isFilled: true,
+						id: 'select-robot',
+						action: { method: function(id) {
+							if (!reselect) {
 								gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
 								arenaPage.loadPage();
-							}},
-							isModalBtn: false,
-							props: {},
-							methodId: id
-						});
-					}
-				};
-				Game.addMethod(Game.methodSetup);
+							} else {
+								arenaRobotSelect();
+							}
+						}},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			selectDirective();
+		}
+		function selectDirective() {
+			setTimeout(function() {
+				clearRobotPreviewHighlight();
+				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive);
+				if (highlight) {
+					highlight.btnColor = 'yellow';
+					highlight.txtColor = 'black';
+				}
+			}, 100);
+		}
+		function clearRobotPreviewHighlight() {
+			for (let i = 1; i <= 4; i++) {
+				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + i);
+				if (highlight) {
+					highlight.btnColor = 'green';
+					highlight.txtColor = 'white';
+				}
+				
+			}
 		}
 		function createRobotTitleStats(existingPart, part, confirmed, partChanged) {
 			Game.methodSetup = {
