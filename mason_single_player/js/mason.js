@@ -57,6 +57,7 @@ function seedArenaTowers() {
 const mainPage = {
 	description: 'The main landing page of Mason',
 	loadPage: function() {
+		gameObject.canClick = true;
 		const masonWorkerImg = new Image();
 		const rockImg = new Image();
 		const grassImg = new Image();
@@ -529,579 +530,587 @@ const mainPage = {
 		}
 
 		function mineScrap() {
-			let scrapFoundText = '';
-			let scrapFoundCount = 0;
-			let totalScrap = 
-				gameObject.commonScrap + 
-				gameObject.unCommonScrap + 
-				gameObject.uniqueScrap + 
-				gameObject.intriguingScrap + 
-				gameObject.facinatingScrap + 
-				gameObject.mythicScrap + 
-				gameObject.exoticScrap;
-			if (totalScrap < gameObject.scrapInvintory) {
-				Particle.drawSpark({
-					posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
-					posY: Game.placeEntityY(0.78, (Game.entitySize * 0.7)),
-					shape: Particle.enumShapes.rect,
-					color: '#909090',
-					ticks: 11,
-					count: 8,
-					size: (Game.entitySize * 1),
-					speed: 1.3,
-				});
-				const scrapRoll =  Math.round(Math.random() * (gameObject.scrapperSkill + 40));
-				
-				// future Jordan, consider reversing the scrap order. later levels makes common scrap look rare
-				// other than testing the scrapping skill completely, it's time to work on the arena
-				if (gameObject.scrapperSkill === 0) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
+			if (gameObject.canClick) {
+				gameObject.canClick = false;
+				let scrapFoundText = '';
+				let scrapFoundCount = 0;
+				let totalScrap = 
+					gameObject.commonScrap + 
+					gameObject.unCommonScrap + 
+					gameObject.uniqueScrap + 
+					gameObject.intriguingScrap + 
+					gameObject.facinatingScrap + 
+					gameObject.mythicScrap + 
+					gameObject.exoticScrap;
+				if (totalScrap < gameObject.scrapInvintory) {
+					Particle.drawSpark({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
+						posY: Game.placeEntityY(0.78, (Game.entitySize * 0.7)),
+						shape: Particle.enumShapes.rect,
+						color: '#909090',
+						ticks: 11,
+						count: 8,
+						size: (Game.entitySize * 1),
+						speed: 1.3,
+					});
+					const scrapRoll =  Math.round(Math.random() * (gameObject.scrapperSkill + 40));
+					
+					// future Jordan, consider reversing the scrap order. later levels makes common scrap look rare
+					// other than testing the scrapping skill completely, it's time to work on the arena
+					if (gameObject.scrapperSkill === 0) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 1) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 2) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 3) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 4) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 5) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 6) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 7) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 8) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 9) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 10) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 11) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 12) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 13) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 14) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 15) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 16) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 17) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 18) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 19) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 20) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 21) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 22) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 23) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 24) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
+							gameObject.exoticScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 25) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
+							gameObject.exoticScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill === 26) {
+						if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
+							gameObject.exoticScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
+					} else if (gameObject.scrapperSkill >= 27) { // max level for now...
+						if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
+							gameObject.exoticScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
+							gameObject.mythicScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
+							gameObject.facinatingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
+							gameObject.intriguingScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
+							gameObject.uniqueScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
+							gameObject.unCommonScrap += scrapFoundCount;
+						} else if (scrapRoll >= (gameObject.scrapperSkill + 15)) {
+							scrapFoundCount = 1;
+							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
+							gameObject.commonScrap += scrapFoundCount;
+						}
 					}
-				} else if (gameObject.scrapperSkill === 1) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 2) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 3) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 4) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 5) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 6) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 7) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 8) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 9) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 10) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 11) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 12) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 13) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 14) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 15) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 16) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 17) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 18) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 19) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 20) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 21) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 22) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 23) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 24) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
-						gameObject.exoticScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 25) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 37)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
-						gameObject.exoticScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill === 26) {
-					if (scrapRoll >= (gameObject.scrapperSkill + 35)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
-						gameObject.exoticScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
-				} else if (gameObject.scrapperSkill >= 27) { // max level for now...
-					if (scrapRoll >= (gameObject.scrapperSkill + 33)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Exotic Scrap +' + scrapFoundCount;
-						gameObject.exoticScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 30)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Mythic Scrap +' + scrapFoundCount;
-						gameObject.mythicScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 27)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Facinating Scrap +' + scrapFoundCount;
-						gameObject.facinatingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 24)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Intriguing Scrap +' + scrapFoundCount;
-						gameObject.intriguingScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 21)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Unique Scrap +' + scrapFoundCount;
-						gameObject.uniqueScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 18)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Uncommon Scrap +' + scrapFoundCount;
-						gameObject.unCommonScrap += scrapFoundCount;
-					} else if (scrapRoll >= (gameObject.scrapperSkill + 15)) {
-						scrapFoundCount = 1;
-						scrapFoundText = 'Common Scrap +' + scrapFoundCount;
-						gameObject.commonScrap += scrapFoundCount;
-					}
+					Particle.floatingText({
+						font: '1.5rem serif',
+						msg: scrapFoundText,
+						align: 'center',
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
+						posY: Game.placeEntityY(0.72, (Game.entitySize * 0.7)),
+						direction: 'top',
+						color: 'darkgrey',
+						ticks: 100,
+						speed: 0.5,
+					});
+				} else {
+					Game.methodSetup = {
+						method: function(id) {
+							drawSimpleModal({
+								posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+								posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+								width: (Game.entitySize * 40),
+								height: (Game.entitySize * 30),
+								lineWidth: 1,
+								modalColor: 'darkgrey',
+								msgColor: 'white',
+								msgFont: '1.1em serif',
+								msg: 'Not Enough Scrap Space',
+								footerColor: 'white',
+								footerFont: '1em serif',
+								footerMsg: 'Tap here to continue',
+								bgColor: '',
+								isModalFilled: true,
+								id: Game.modalId,
+								action: { 
+									method: function(id) {
+										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+										Game.deleteEntity(modal.methodId);
+									}
+								},
+								props: {},
+								methodId: id
+							});
+						}
+					};
+					Game.addMethod(Game.methodSetup);
 				}
-				Particle.floatingText({
-					font: '1.5rem serif',
-					msg: scrapFoundText,
-					align: 'center',
-					posX: Game.placeEntityX(0.50, (Game.entitySize * 0.7)),
-					posY: Game.placeEntityY(0.72, (Game.entitySize * 0.7)),
-					direction: 'top',
-					color: 'darkgrey',
-					ticks: 100,
-					speed: 0.5,
-				});
-			} else {
-				Game.methodSetup = {
-					method: function(id) {
-						drawSimpleModal({
-							posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-							posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-							width: (Game.entitySize * 40),
-							height: (Game.entitySize * 30),
-							lineWidth: 1,
-							modalColor: 'darkgrey',
-							msgColor: 'white',
-							msgFont: '1.1em serif',
-							msg: 'Not Enough Scrap Space',
-							footerColor: 'white',
-							footerFont: '1em serif',
-							footerMsg: 'Tap here to continue',
-							bgColor: '',
-							isModalFilled: true,
-							id: Game.modalId,
-							action: { 
-								method: function(id) {
-									const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-									Game.deleteEntity(modal.methodId);
-								}
-							},
-							props: {},
-							methodId: id
-						});
-					}
-				};
-				Game.addMethod(Game.methodSetup);
+				const scrapRest = setInterval(function() {
+					gameObject.canClick = true;
+					clearInterval(scrapRest);
+				}, gameObject.clickSpeed);
 			}
+			
 		}
 
 		function openHome() {

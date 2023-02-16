@@ -16,6 +16,7 @@ const homePage = {
 	description: 'This is where the player can sell, upgrade and quest',
 	loadPage: function() {
 		function homeMenuSelect() {
+			gameObject.canClick = true;
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -1007,79 +1008,98 @@ const homeSellScrap = {
 						id: 'sell-scrap-btn',
 						action: { 
 							method: function(id) {
-								if (!gameObject.buildButtonDisabled) {
-									const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-									if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
-										gameObject.commonScrap--;
-										
-										addFunds(gameObject.commonScrapBase);
-										if (gameObject.commonScrap === 0) {
-											gameObject.buildButtonDisabled = true;
+								if (gameObject.canClick) {
+									gameObject.canClick = false;
+									if (!gameObject.buildButtonDisabled) {
+										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+										if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
+											gameObject.commonScrap--;
+											
+											addFunds(gameObject.commonScrapBase);
+											if (gameObject.commonScrap === 0) {
+												gameObject.buildButtonDisabled = true;
+												
+											}
 										}
-									}
-									if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
-										gameObject.unCommonScrap--;
-										
-										addFunds(gameObject.unCommonScrapBase);
-										if (gameObject.unCommonScrap === 0) {
-											gameObject.buildButtonDisabled = true;
+										if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
+											gameObject.unCommonScrap--;
+											
+											addFunds(gameObject.unCommonScrapBase);
+											if (gameObject.unCommonScrap === 0) {
+												gameObject.buildButtonDisabled = true;
+											}
 										}
-									}
-									if (gameObject.scrapToSell === 'unique' && gameObject.uniqueScrap > 0 && !modal) {
-										gameObject.uniqueScrap--;
-										
-										addFunds(gameObject.uniqueScrapBase);
-										if (gameObject.uniqueScrap === 0) {
-											gameObject.buildButtonDisabled = true;
+										if (gameObject.scrapToSell === 'unique' && gameObject.uniqueScrap > 0 && !modal) {
+											gameObject.uniqueScrap--;
+											
+											addFunds(gameObject.uniqueScrapBase);
+											if (gameObject.uniqueScrap === 0) {
+												gameObject.buildButtonDisabled = true;
+											}
 										}
-									}
-									if (gameObject.scrapToSell === 'intriguing' && gameObject.intriguingScrap > 0 && !modal) {
-										gameObject.intriguingScrap--;
-										
-										addFunds(gameObject.intriguingScrapBase);
-										if (gameObject.intriguingScrap === 0) {
-											gameObject.buildButtonDisabled = true;
+										if (gameObject.scrapToSell === 'intriguing' && gameObject.intriguingScrap > 0 && !modal) {
+											gameObject.intriguingScrap--;
+											
+											addFunds(gameObject.intriguingScrapBase);
+											if (gameObject.intriguingScrap === 0) {
+												gameObject.buildButtonDisabled = true;
+											}
 										}
-									}
-									if (gameObject.scrapToSell === 'facinating' && gameObject.facinatingScrap > 0 && !modal) {
-										gameObject.facinatingScrap--;
-										
-										addFunds(gameObject.facinatingScrapBase);
-										if (gameObject.facinatingScrap === 0) {
-											gameObject.buildButtonDisabled = true;
+										if (gameObject.scrapToSell === 'facinating' && gameObject.facinatingScrap > 0 && !modal) {
+											gameObject.facinatingScrap--;
+											
+											addFunds(gameObject.facinatingScrapBase);
+											if (gameObject.facinatingScrap === 0) {
+												gameObject.buildButtonDisabled = true;
+											}
 										}
-									}
-									if (gameObject.scrapToSell === 'mythic' && gameObject.mythicScrap > 0 && !modal) {
-										gameObject.mythicScrap--;
-										
-										addFunds(gameObject.mythicScrapBase);
-										if (gameObject.mythicScrap === 0) {
-											gameObject.buildButtonDisabled = true;
+										if (gameObject.scrapToSell === 'mythic' && gameObject.mythicScrap > 0 && !modal) {
+											gameObject.mythicScrap--;
+											
+											addFunds(gameObject.mythicScrapBase);
+											if (gameObject.mythicScrap === 0) {
+												gameObject.buildButtonDisabled = true;
+											}
 										}
-									}
-									if (gameObject.scrapToSell === 'exotic' && gameObject.exoticScrap > 0 && !modal) {
-										gameObject.exoticScrap--;
-										
-										addFunds(gameObject.exoticScrapBase);
-										if (gameObject.exoticScrap === 0) {
-											gameObject.buildButtonDisabled = true;
+										if (gameObject.scrapToSell === 'exotic' && gameObject.exoticScrap > 0 && !modal) {
+											gameObject.exoticScrap--;
+											
+											addFunds(gameObject.exoticScrapBase);
+											if (gameObject.exoticScrap === 0) {
+												gameObject.buildButtonDisabled = true;
+											}
 										}
+										Particle.floatingText({
+											font: '2rem serif',
+											msg: '+          +',
+											align: 'center',
+											posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
+											posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+											direction: 'top',
+											color: 'green',
+											ticks: 13,
+											speed: 0.8,
+										});
+										particleAnimationOver();
+									} else {
+										clearSellScrapScreen();
+										refreshSellScrapBackgrounds();
+										setTimeout(function() {
+											selectScrapPrice(gameObject.scrapToSell);
+											setTimeout(function() {
+												displayNotEnoughScrapModal();
+											}, 0);
+											
+										}, 0);
+										
+										
 									}
-									Particle.floatingText({
-										font: '2rem serif',
-										msg: '+          +',
-										align: 'center',
-										posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-										posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
-										direction: 'top',
-										color: 'green',
-										ticks: 13,
-										speed: 0.8,
-									});
-									particleAnimationOver();
-								} else {
-									displayNotEnoughScrapModal();
 								}
+								
+								const sellRest = setInterval(function() {
+									gameObject.canClick = true;
+									clearInterval(sellRest);
+								}, gameObject.clickSpeed);
 							}
 						},
 						isModalBtn: false,
@@ -1103,7 +1123,7 @@ const homeSellScrap = {
 							if (modal) {
 								displayNotEnoughScrapModal();
 							}
-						},0);
+						}, 0);
 					},0);			
 				}
 			};
@@ -1784,80 +1804,86 @@ const homeSellParts = {
 							id: 'confirm-part',
 							action: {
 								method: function(id) {
-									if (!gameObject.buildButtonDisabled) {
+									if (gameObject.canClick) {
+										gameObject.canClick = false;
+										if (!gameObject.buildButtonDisabled) {
 										
-										const scrapCosts = gatherScrapCostFromPart(part);
-										// calculate how much we can sell the part for
-										// add the funds and subtract the part
-										if (part.count > 0) {
-											const formatPartCost = calculatePartPrice(scrapCosts);
-											const addPartCost = formatPartsCostToFunds(formatPartCost);
-											
-											addFunds(addPartCost);
-											part.count--;
-											Particle.floatingText({
-												font: '2rem serif',
-												msg: '+          +',
-												align: 'center',
-												posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
-												posY: Game.placeEntityY(0.72, (Game.entitySize * 0.7)),
-												direction: 'top',
-												color: 'green',
-												ticks: 13,
-												speed: 0.8,
-											});
-											clearSellRobotPartParts();
-											refreshSellPartsBackgrounds();
-											setTimeout(function() {
-												displaySelectSellPartParts(part);
-											}, 0);
-										} else {
-											gameObject.buildButtonDisabled = true;
-											setTimeout(function() {
-												Game.methodSetup = {
-													method: function(id) {
-														drawSimpleModal({
-															posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-															posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-															width: (Game.entitySize * 40),
-															height: (Game.entitySize * 30),
-															lineWidth: 1,
-															modalColor: 'darkgrey',
-															msgColor: 'white',
-															msgFont: '1.3em serif',
-															msg: 'Not Enough Parts',
-															footerColor: 'white',
-															footerFont: '1em serif',
-															footerMsg: 'Tap here to continue',
-															bgColor: '',
-															isModalFilled: true,
-															id: Game.modalId,
-															action: { 
-																method: function(id) {
-																	const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																	Game.deleteEntity(modal.methodId);
-																	displaySelectSellPartParts(part);
-																 }
-															},
-															props: {},
-															methodId: id
-														});
-													}
-												};
-												Game.addMethod(Game.methodSetup);
-											},200);
-										}
-										if (gameObject.partsDisplayed === 'chassis') {
-											displayDiscoveredSellPartParts(gameObject.discoveredChassis);
-										} else if (gameObject.partsDisplayed === 'head') {
-											displayDiscoveredSellPartParts(gameObject.discoveredHeads);
-										} else if (gameObject.partsDisplayed === 'arm') {
-											displayDiscoveredSellPartParts(gameObject.discoveredArms);
-										} else if (gameObject.partsDisplayed === 'leg') {
-											displayDiscoveredSellPartParts(gameObject.discoveredLegs);
+											const scrapCosts = gatherScrapCostFromPart(part);
+											// calculate how much we can sell the part for
+											// add the funds and subtract the part
+											if (part.count > 0) {
+												const formatPartCost = calculatePartPrice(scrapCosts);
+												const addPartCost = formatPartsCostToFunds(formatPartCost);
+												
+												addFunds(addPartCost);
+												part.count--;
+												Particle.floatingText({
+													font: '2rem serif',
+													msg: '+          +',
+													align: 'center',
+													posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
+													posY: Game.placeEntityY(0.72, (Game.entitySize * 0.7)),
+													direction: 'top',
+													color: 'green',
+													ticks: 13,
+													speed: 0.8,
+												});
+												clearSellRobotPartParts();
+												refreshSellPartsBackgrounds();
+												setTimeout(function() {
+													displaySelectSellPartParts(part);
+												}, 0);
+											} else {
+												gameObject.buildButtonDisabled = true;
+												setTimeout(function() {
+													Game.methodSetup = {
+														method: function(id) {
+															drawSimpleModal({
+																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+																posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+																width: (Game.entitySize * 40),
+																height: (Game.entitySize * 30),
+																lineWidth: 1,
+																modalColor: 'darkgrey',
+																msgColor: 'white',
+																msgFont: '1.3em serif',
+																msg: 'Not Enough Parts',
+																footerColor: 'white',
+																footerFont: '1em serif',
+																footerMsg: 'Tap here to continue',
+																bgColor: '',
+																isModalFilled: true,
+																id: Game.modalId,
+																action: { 
+																	method: function(id) {
+																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																		Game.deleteEntity(modal.methodId);
+																		displaySelectSellPartParts(part);
+																	 }
+																},
+																props: {},
+																methodId: id
+															});
+														}
+													};
+													Game.addMethod(Game.methodSetup);
+												},200);
+											}
+											if (gameObject.partsDisplayed === 'chassis') {
+												displayDiscoveredSellPartParts(gameObject.discoveredChassis);
+											} else if (gameObject.partsDisplayed === 'head') {
+												displayDiscoveredSellPartParts(gameObject.discoveredHeads);
+											} else if (gameObject.partsDisplayed === 'arm') {
+												displayDiscoveredSellPartParts(gameObject.discoveredArms);
+											} else if (gameObject.partsDisplayed === 'leg') {
+												displayDiscoveredSellPartParts(gameObject.discoveredLegs);
+											}
 										}
 									}
-										
+									const sellRest = setInterval(function() {
+										gameObject.canClick = true;
+										clearInterval(sellRest);
+									}, gameObject.clickSpeed);
 									Particle.animComplete = {
 										method: function() {
 											displaySelectSellPartParts(part);					
@@ -3021,104 +3047,110 @@ const homeSellRobots = {
 							isFilled: true,
 							id: 'confirm-part',
 							action: { method: function(id) {
-								if (gameObject.robotTeams.length > 0) {
-									if (gameObject.selectedRobotDesign + 1 <= gameObject.robotTeams.length) {
-										// remove the robot and add to the players funds
-										gameObject.robotTeams.splice(gameObject.selectedRobotDesign, 1);
-										gameObject.robotsMade--;
-										const totalRobotScrap = combineRobotParts(gameObject.selectedRobot);
-										const totalScrapCosts = gatherScrapCostFromPart(totalRobotScrap);
-										const formatTotalPartCost = calculatePartPrice(totalScrapCosts);
-										// add the barter bonus
-										formatTotalPartCost.copper += gameObject.barterBonusCost.copper;
-										formatTotalPartCost.bronze += gameObject.barterBonusCost.bronze;
-										formatTotalPartCost.nickel += gameObject.barterBonusCost.nickel;
-										formatTotalPartCost.silver += gameObject.barterBonusCost.silver;
-										formatTotalPartCost.gold += gameObject.barterBonusCost.gold;
-										formatTotalPartCost.platinum += gameObject.barterBonusCost.platinum;
-										formatTotalPartCost.iridium += gameObject.barterBonusCost.iridium;
-										formatTotalPartCost.mythryl += gameObject.barterBonusCost.mythryl;
-										const addPartCost = formatPartsCostToFunds(formatTotalPartCost);
-										addFunds(addPartCost);
-										
-										if (gameObject.selectedRobotDesign === gameObject.robotTeams.length) {
-											// if we reach the end of the list, load up the last robot
-											gameObject.selectedRobotDesign = gameObject.robotTeams.length - 1;
-										}
-										if (gameObject.robotTeams.length === 0 && gameObject.selectedRobotDesign === -1) {
-											// no more robots to sell
-											Particle.floatingText({
-												font: '2rem serif',
-												msg: '+            +',
-												align: 'center',
-												posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
-												posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
-												direction: 'top',
-												color: 'green',
-												ticks: 13,
-												speed: 0.8,
-											});
-											Particle.animComplete = {
-												method: function() {
-													factoryRobotDetails();
-													Game.methodSetup = {
-														method: function(id) {
-															drawSimpleModal({
-																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-																posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-																width: (Game.entitySize * 40),
-																height: (Game.entitySize * 30),
-																lineWidth: 1,
-																modalColor: 'darkgrey',
-																msgColor: 'white',
-																msgFont: '1.3em serif',
-																msg: 'No Robots to Sell',
-																footerColor: 'white',
-																footerFont: '1em serif',
-																footerMsg: 'Tap here to continue',
-																bgColor: '',
-																isModalFilled: true,
-																id: Game.modalId,
-																action: { 
-																	method: function(id) {
-																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																		Game.deleteEntity(modal.methodId);
-																		homeSellRobots.loadPage();
-																	 }
-																},
-																props: {},
-																methodId: id
-															});
-														}
-													};
-													Game.addMethod(Game.methodSetup);
-												}
-											};
-										}
-										if (gameObject.robotTeams.length > 0) {
-											// assign and load up the next robot to sell
-											gameObject.selectedRobot = gameObject.robotTeams[gameObject.selectedRobotDesign].robotParts;
-											Particle.floatingText({
-												font: '2rem serif',
-												msg: '+            +',
-												align: 'center',
-												posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
-												posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
-												direction: 'top',
-												color: 'green',
-												ticks: 13,
-												speed: 0.8,
-											});
-											Particle.animComplete = {
-												method: function() {
-													factoryRobotDetails();					
-												}
-											};
+								if (gameObject.canClick) {
+									gameObject.canClick = false;
+									if (gameObject.robotTeams.length > 0) {
+										if (gameObject.selectedRobotDesign + 1 <= gameObject.robotTeams.length) {
+											// remove the robot and add to the players funds
+											gameObject.robotTeams.splice(gameObject.selectedRobotDesign, 1);
+											gameObject.robotsMade--;
+											const totalRobotScrap = combineRobotParts(gameObject.selectedRobot);
+											const totalScrapCosts = gatherScrapCostFromPart(totalRobotScrap);
+											const formatTotalPartCost = calculatePartPrice(totalScrapCosts);
+											// add the barter bonus
+											formatTotalPartCost.copper += gameObject.barterBonusCost.copper;
+											formatTotalPartCost.bronze += gameObject.barterBonusCost.bronze;
+											formatTotalPartCost.nickel += gameObject.barterBonusCost.nickel;
+											formatTotalPartCost.silver += gameObject.barterBonusCost.silver;
+											formatTotalPartCost.gold += gameObject.barterBonusCost.gold;
+											formatTotalPartCost.platinum += gameObject.barterBonusCost.platinum;
+											formatTotalPartCost.iridium += gameObject.barterBonusCost.iridium;
+											formatTotalPartCost.mythryl += gameObject.barterBonusCost.mythryl;
+											const addPartCost = formatPartsCostToFunds(formatTotalPartCost);
+											addFunds(addPartCost);
 											
+											if (gameObject.selectedRobotDesign === gameObject.robotTeams.length) {
+												// if we reach the end of the list, load up the last robot
+												gameObject.selectedRobotDesign = gameObject.robotTeams.length - 1;
+											}
+											if (gameObject.robotTeams.length === 0 && gameObject.selectedRobotDesign === -1) {
+												// no more robots to sell
+												Particle.floatingText({
+													font: '2rem serif',
+													msg: '+            +',
+													align: 'center',
+													posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
+													posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
+													direction: 'top',
+													color: 'green',
+													ticks: 13,
+													speed: 0.8,
+												});
+												Particle.animComplete = {
+													method: function() {
+														factoryRobotDetails();
+														Game.methodSetup = {
+															method: function(id) {
+																drawSimpleModal({
+																	posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+																	posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+																	width: (Game.entitySize * 40),
+																	height: (Game.entitySize * 30),
+																	lineWidth: 1,
+																	modalColor: 'darkgrey',
+																	msgColor: 'white',
+																	msgFont: '1.3em serif',
+																	msg: 'No Robots to Sell',
+																	footerColor: 'white',
+																	footerFont: '1em serif',
+																	footerMsg: 'Tap here to continue',
+																	bgColor: '',
+																	isModalFilled: true,
+																	id: Game.modalId,
+																	action: { 
+																		method: function(id) {
+																			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																			Game.deleteEntity(modal.methodId);
+																			homeSellRobots.loadPage();
+																		 }
+																	},
+																	props: {},
+																	methodId: id
+																});
+															}
+														};
+														Game.addMethod(Game.methodSetup);
+													}
+												};
+											}
+											if (gameObject.robotTeams.length > 0) {
+												// assign and load up the next robot to sell
+												gameObject.selectedRobot = gameObject.robotTeams[gameObject.selectedRobotDesign].robotParts;
+												Particle.floatingText({
+													font: '2rem serif',
+													msg: '+            +',
+													align: 'center',
+													posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
+													posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
+													direction: 'top',
+													color: 'green',
+													ticks: 13,
+													speed: 0.8,
+												});
+												Particle.animComplete = {
+													method: function() {
+														factoryRobotDetails();					
+													}
+												};
+												
+											}
 										}
-									}
+									}	
 								}
-								
+								const sellRest = setInterval(function() {
+									gameObject.canClick = true;
+									clearInterval(sellRest);
+								}, gameObject.clickSpeed);
 								
 							}},
 							isModalBtn: false,

@@ -22,6 +22,8 @@ const gameObject = {
 	facinatingScrap: 0, // legendary
 	mythicScrap: 0,
 	exoticScrap: 0, // I'm thinking this scrap type could be used to make special items
+	canClick: true,
+	clickSpeed: 150,
 	// ---scrap base prices--- these prices will determine how much parts and robots will cost
 	// when calcing the barter price upgrade, use these numbers
 	commonScrapBase: [
