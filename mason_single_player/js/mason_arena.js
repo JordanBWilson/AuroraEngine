@@ -152,10 +152,6 @@ const arenaPage = {
 							if (gameObject.selectedRobot.length === 0) {
 								arenaRobotSelect();
 							} else {
-								// future Jordan, work on the towers next.
-								// set it up similar to the robots but for
-								// bunker types, make a button under the 
-								// directives to select a robot to spawn
 								arenaRobotDetails(true);
 							}
 							
@@ -229,12 +225,18 @@ const arenaPage = {
 				};
 				Game.addMethod(Game.methodSetup);
 				// future Jordan, work on drawing all the towers
-				//drawRobotSelect(
-					//Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					//Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-					//gameObject.towerArenaDesigns[i].robotParts,
-					//i
-				//);
+				
+				// future Jordan, work on the towers next.
+				// set it up similar to the robots but for
+				// bunker types, make a button under the 
+				// directives to select a robot to spawn
+				drawTowerSelect(
+					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					gameObject.towerArenaDesigns[i],
+					i,
+					function() {}
+				);
 				
 			}
 			
@@ -988,6 +990,35 @@ const arenaPage = {
 					Game.deleteEntity(item.methodId);
 				});
 			}
+		}
+		
+		function drawTowerSelect(posX, posY, towerDesign, index, action) {
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: posX + (Game.entityWidth * 11.9) - (Game.entitySize * 4),
+						posY: posY + (Game.canvas.height * 0.025),
+						width: (Game.entitySize * 9),
+						height: (Game.entitySize * 15),
+						lineWidth: 1,
+						btnColor: 'lightslategrey', // drawRobotSelectPreviewParts('chassis', robotDesign),
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: '',
+						isFilled: true,
+						id: 'preview-tower',
+						action: {
+							method: function(id) {
+								action();
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 		}
 	}
 	
