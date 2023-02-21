@@ -1019,6 +1019,173 @@ const arenaPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: posX + (Game.entityWidth * 12.15) - (Game.entitySize * 1.3),
+						posY: posY + (Game.canvas.height * 0.11),
+						width: (Game.entitySize * 3),
+						height: (Game.entitySize * 3),
+						lineWidth: 1,
+						btnColor: 'blueviolet',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: '',
+						isFilled: true,
+						id: 'preview-robot',
+						action: {
+							method: function(id) {
+								action();
+							}
+						},
+						isModalBtn: false,
+						props: {
+							drawHead: function(parent) {
+								Game.methodSetup = {
+									method: function(id) {
+										drawButton({
+											posX: parent.posX + (Game.entitySize * 0.3),
+											posY: parent.posY - (Game.entitySize * 2.5),
+											width: (Game.entitySize * 2.5),
+											height: (Game.entitySize * 2.5),
+											lineWidth: 1,
+											btnColor: 'blueviolet',
+											txtColor: 'white',
+											font: '1.5em serif',
+											msg: '',
+											isFilled: true,
+											id: parent.id,
+											action: {
+												method: function(id) {
+													action();
+												}
+											},
+											isModalBtn: false,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+							},
+							drawLeftArm: function(parent) {
+								Game.methodSetup = {
+									method: function(id) {
+										drawButton({
+											posX: parent.posX - (Game.entitySize * 0.75),
+											posY: parent.posY,
+											width: (Game.entitySize * 0.75),
+											height: (Game.entitySize * 3),
+											lineWidth: 1,
+											btnColor: 'blueviolet',
+											txtColor: 'white',
+											font: '1.5em serif',
+											msg: '',
+											isFilled: true,
+											id: parent.id,
+											action: {
+												method: function(id) {
+													action();
+												}
+											},
+											isModalBtn: false,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+							},
+							drawRightArm: function(parent) {
+								Game.methodSetup = {
+									method: function(id) {
+										drawButton({
+											posX: parent.posX + (Game.entitySize * 3),
+											posY: parent.posY,
+											width: (Game.entitySize * 0.75),
+											height: (Game.entitySize * 3),
+											lineWidth: 1,
+											btnColor: 'blueviolet',
+											txtColor: 'white',
+											font: '1.5em serif',
+											msg: '',
+											isFilled: true,
+											id: parent.id,
+											action: {
+												method: function(id) {
+													action();
+												}
+											},
+											isModalBtn: false,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+							},
+							drawLeftLeg: function(parent) {
+								Game.methodSetup = {
+									method: function(id) {
+										drawButton({
+											posX: parent.posX + (Game.entitySize * 0.25),
+											posY: parent.posY + (Game.entitySize * 3),
+											width: (Game.entitySize * 0.75),
+											height: (Game.entitySize * 3),
+											lineWidth: 1,
+											btnColor: 'blueviolet',
+											txtColor: 'white',
+											font: '1.5em serif',
+											msg: '',
+											isFilled: true,
+											id: parent.id,
+											action: {
+												method: function(id) {
+													action();
+												}
+											},
+											isModalBtn: false,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+							},
+							drawRightLeg: function(parent) {
+								Game.methodSetup = {
+									method: function(id) {
+										drawButton({
+											posX: parent.posX + (Game.entitySize * 2.15),
+											posY: parent.posY + (Game.entitySize * 3),
+											width: (Game.entitySize * 0.75),
+											height: (Game.entitySize * 3),
+											lineWidth: 1,
+											btnColor: 'blueviolet',
+											txtColor: 'white',
+											font: '1.5em serif',
+											msg: '',
+											isFilled: true,
+											id: parent.id,
+											action: {
+												method: function(id) {
+													action();
+												}
+											},
+											isModalBtn: false,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+							},
+						},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 		}
 	}
 	
