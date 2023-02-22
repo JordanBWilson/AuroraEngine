@@ -235,7 +235,9 @@ const arenaPage = {
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
 					gameObject.towerArenaDesigns[i],
 					i,
-					function() {}
+					function() {
+						arenaTowerSelect();
+					}
 				);
 				
 			}
@@ -297,9 +299,6 @@ const arenaPage = {
 		}
 		arenaMenuSelect();
 		function arenaRobotSelect() {
-			// draw a menu of gameObject.robotTeams
-			// when the player selects one, load it in gameObject.robotArenaDesigns
-			// we only want robots the player can make
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -457,6 +456,168 @@ const arenaPage = {
 			drawRobotSelectParts();
 			drawNextPrevRobotList(gameObject.robotTeams, arenaRobotSelect);
 		}
+		// future Jordan continue working on the tower design
+		function arenaTowerSelect() {
+			Game.clearStage();
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0),
+						posY: Game.placeEntityY(0),
+						width: Game.canvas.width,
+						height: (Game.canvas.height),
+						lineWidth: 1,
+						color: 'grey',
+						isFilled: true,
+						id: 'arena-tower-select-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.03),
+						posY: Game.placeEntityY(0.03),
+						width: (Game.entitySize * 12),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: 'Back',
+						isFilled: true,
+						id: 'arena-tower-select-back-game',
+						action: { 
+							method: function(id) {
+								// gameObject.selectedRobot = [];
+								// gameObject.selectedRobotDesign = -1;
+								arenaPage.loadPage();
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Select',
+						posX: Game.placeEntityX(0.50),
+						posY: Game.placeEntityY(0.085),
+						color: 'darkgrey',
+						align: 'center',
+						props: {},
+						id: 'arena-tower-select-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.94),
+						height: (Game.canvas.height * 0.855),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'arena-tower-select-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			let robotCount = 0;
+			let robotSelectRow = 1;
+			for (let i = gameObject.partPageIndex; i < arenaTowers.length; i++) {
+				robotCount++;
+				let posY = 0
+				let posYoffset = 0;
+				let posX = 0;
+				let posXoffset = 0;
+				if (robotSelectRow === 1) {
+					posY = 0.14;
+					posYoffset = -11;
+				}
+				if (robotSelectRow === 2) {
+					posY = 0.34;
+					posYoffset = -22;
+				}
+				if (robotSelectRow === 3) {
+					break;
+				}
+				if (robotCount === 1) {
+					posX = 0.07;
+					posXoffset = -0.01;
+				}
+				if (robotCount === 2) {
+					posX = 0.39;
+					posXoffset = 1.99;
+				}
+				if (robotCount === 3 &&
+				arenaTowers.length >= 3) {
+					posX = 0.689;
+					posXoffset = 1;
+				} 	
+				
+				Game.methodSetup = {
+					method: function(id) {
+						drawRect({
+							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+							width: (Game.canvas.width * 0.25),
+							height: (Game.entitySize * 20),
+							lineWidth: 1,
+							color: 'darkgrey',
+							isBackground: false,
+							isFilled: true,
+							id: 'factory-details-btn',
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+				
+				// draw the tower here without the robot. use what we made before but split out the robot part
+				
+				//drawRobotSelect(
+					//Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+					//Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					//gameObject.robotTeams[i].robotParts,
+					//i,
+					//function() {
+						//gameObject.selectedRobot = gameObject.robotTeams[i].robotParts;
+						//arenaRobotDetails();
+					//},
+				//);
+				
+				if (i === 2) {
+					robotSelectRow++;
+				}
+				if (i === 5) {
+					robotSelectRow++;
+				}
+				if (robotCount === 3) {
+					robotCount = 0;
+				}
+				
+			}
+			drawRobotSelectParts();
+			drawNextPrevRobotList(gameObject.robotTeams, arenaRobotSelect);
+		}
 		function arenaRobotBuiltCheck() {
 			let robotsBuilt = false;
 			let robotsBuiltCount = 0;
@@ -470,7 +631,6 @@ const arenaPage = {
 			}
 			return robotsBuilt;
 		}
-		
 		function noRobotDesignModal() {
 			const msg = ['In the Factory, Design', 'a Robot and Build it!', 'Tap here to continue'];
 			Game.methodSetup = {
@@ -503,7 +663,6 @@ const arenaPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
-		
 		function arenaRobotDetails(reselect = false) {
 			Game.clearStage();
 			Game.methodSetup = {
@@ -780,7 +939,9 @@ const arenaPage = {
 						align: 'center',
 						props: {},
 						id: 'stat-title',
-						methodId: id
+						met			// draw a menu of gameObject.robotTeams
+			// when the player selects one, load it in gameObject.robotArenaDesigns
+			// we only want robots the player can makehodId: id
 					});
 				}
 			};
@@ -969,7 +1130,6 @@ const arenaPage = {
 			
 			clearSelectedRobotDetails();
 		}
-		
 		function clearSelectedRobotDetails() {
 			// clear the titles
 			const directiveTitle = Game.methodObjects.filter(x => x.id === 'directive-title');
@@ -991,7 +1151,6 @@ const arenaPage = {
 				});
 			}
 		}
-		
 		function drawTowerSelect(posX, posY, towerDesign, index, action) {
 			Game.methodSetup = {
 				method: function(id) {
@@ -1019,173 +1178,175 @@ const arenaPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-						posX: posX + (Game.entityWidth * 12.15) - (Game.entitySize * 1.3),
-						posY: posY + (Game.canvas.height * 0.11),
-						width: (Game.entitySize * 3),
-						height: (Game.entitySize * 3),
-						lineWidth: 1,
-						btnColor: 'blueviolet',
-						txtColor: 'white',
-						font: '1.5em serif',
-						msg: '',
-						isFilled: true,
-						id: 'preview-robot',
-						action: {
-							method: function(id) {
-								action();
-							}
-						},
-						isModalBtn: false,
-						props: {
-							drawHead: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 0.3),
-											posY: parent.posY - (Game.entitySize * 2.5),
-											width: (Game.entitySize * 2.5),
-											height: (Game.entitySize * 2.5),
-											lineWidth: 1,
-											btnColor: 'blueviolet',
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													action();
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
+			if (gameObject.towerArenaDesigns[index]?.towerId && gameObject.towerArenaDesigns[index].robotParts === 6) {
+				Game.methodSetup = {
+					method: function(id) {
+						drawButton({
+							posX: posX + (Game.entityWidth * 12.15) - (Game.entitySize * 1.3),
+							posY: posY + (Game.canvas.height * 0.11),
+							width: (Game.entitySize * 3),
+							height: (Game.entitySize * 3),
+							lineWidth: 1,
+							btnColor: 'blueviolet',
+							txtColor: 'white',
+							font: '1.5em serif',
+							msg: '',
+							isFilled: true,
+							id: 'preview-robot',
+							action: {
+								method: function(id) {
+									action();
+								}
 							},
-							drawLeftArm: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX - (Game.entitySize * 0.75),
-											posY: parent.posY,
-											width: (Game.entitySize * 0.75),
-											height: (Game.entitySize * 3),
-											lineWidth: 1,
-											btnColor: 'blueviolet',
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													action();
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
+							isModalBtn: false,
+							props: {
+								drawHead: function(parent) {
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: parent.posX + (Game.entitySize * 0.3),
+												posY: parent.posY - (Game.entitySize * 2.5),
+												width: (Game.entitySize * 2.5),
+												height: (Game.entitySize * 2.5),
+												lineWidth: 1,
+												btnColor: 'blueviolet',
+												txtColor: 'white',
+												font: '1.5em serif',
+												msg: '',
+												isFilled: true,
+												id: parent.id,
+												action: {
+													method: function(id) {
+														action();
+													}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								},
+								drawLeftArm: function(parent) {
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: parent.posX - (Game.entitySize * 0.75),
+												posY: parent.posY,
+												width: (Game.entitySize * 0.75),
+												height: (Game.entitySize * 3),
+												lineWidth: 1,
+												btnColor: 'blueviolet',
+												txtColor: 'white',
+												font: '1.5em serif',
+												msg: '',
+												isFilled: true,
+												id: parent.id,
+												action: {
+													method: function(id) {
+														action();
+													}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								},
+								drawRightArm: function(parent) {
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: parent.posX + (Game.entitySize * 3),
+												posY: parent.posY,
+												width: (Game.entitySize * 0.75),
+												height: (Game.entitySize * 3),
+												lineWidth: 1,
+												btnColor: 'blueviolet',
+												txtColor: 'white',
+												font: '1.5em serif',
+												msg: '',
+												isFilled: true,
+												id: parent.id,
+												action: {
+													method: function(id) {
+														action();
+													}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								},
+								drawLeftLeg: function(parent) {
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: parent.posX + (Game.entitySize * 0.25),
+												posY: parent.posY + (Game.entitySize * 3),
+												width: (Game.entitySize * 0.75),
+												height: (Game.entitySize * 3),
+												lineWidth: 1,
+												btnColor: 'blueviolet',
+												txtColor: 'white',
+												font: '1.5em serif',
+												msg: '',
+												isFilled: true,
+												id: parent.id,
+												action: {
+													method: function(id) {
+														action();
+													}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								},
+								drawRightLeg: function(parent) {
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: parent.posX + (Game.entitySize * 2.15),
+												posY: parent.posY + (Game.entitySize * 3),
+												width: (Game.entitySize * 0.75),
+												height: (Game.entitySize * 3),
+												lineWidth: 1,
+												btnColor: 'blueviolet',
+												txtColor: 'white',
+												font: '1.5em serif',
+												msg: '',
+												isFilled: true,
+												id: parent.id,
+												action: {
+													method: function(id) {
+														action();
+													}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								},
 							},
-							drawRightArm: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 3),
-											posY: parent.posY,
-											width: (Game.entitySize * 0.75),
-											height: (Game.entitySize * 3),
-											lineWidth: 1,
-											btnColor: 'blueviolet',
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													action();
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-							drawLeftLeg: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 0.25),
-											posY: parent.posY + (Game.entitySize * 3),
-											width: (Game.entitySize * 0.75),
-											height: (Game.entitySize * 3),
-											lineWidth: 1,
-											btnColor: 'blueviolet',
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													action();
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-							drawRightLeg: function(parent) {
-								Game.methodSetup = {
-									method: function(id) {
-										drawButton({
-											posX: parent.posX + (Game.entitySize * 2.15),
-											posY: parent.posY + (Game.entitySize * 3),
-											width: (Game.entitySize * 0.75),
-											height: (Game.entitySize * 3),
-											lineWidth: 1,
-											btnColor: 'blueviolet',
-											txtColor: 'white',
-											font: '1.5em serif',
-											msg: '',
-											isFilled: true,
-											id: parent.id,
-											action: {
-												method: function(id) {
-													action();
-												}
-											},
-											isModalBtn: false,
-											props: {},
-											methodId: id
-										});
-									}
-								};
-								Game.addMethod(Game.methodSetup);
-							},
-						},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
 		}
 	}
 	
