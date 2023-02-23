@@ -593,16 +593,18 @@ const arenaPage = {
 				
 				// draw the tower here without the robot. use what we made before but split out the robot part
 				
-				//drawRobotSelect(
-					//Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					//Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-					//gameObject.robotTeams[i].robotParts,
-					//i,
-					//function() {
-						//gameObject.selectedRobot = gameObject.robotTeams[i].robotParts;
-						//arenaRobotDetails();
-					//},
-				//);
+				previewTower(
+					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
+					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					arenaTowers,
+					i,
+					function() {
+						console.log('select tower', arenaTowers[i]);
+						// gameObject.selectedRobot = gameObject.robotTeams[i].robotParts;
+						// arenaRobotDetails();
+					},
+					true
+				);
 				
 				if (i === 2) {
 					robotSelectRow++;
@@ -939,9 +941,7 @@ const arenaPage = {
 						align: 'center',
 						props: {},
 						id: 'stat-title',
-						met			// draw a menu of gameObject.robotTeams
-			// when the player selects one, load it in gameObject.robotArenaDesigns
-			// we only want robots the player can makehodId: id
+						methodId: id
 					});
 				}
 			};
@@ -1057,6 +1057,12 @@ const arenaPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 			selectDirective();
+			Game.pageResized = {
+				section: 'arena-robot-details',
+				method: function() {
+					selectDirective();
+				}
+			}
 		}
 		function selectDirective() {
 			setTimeout(function() {
@@ -1152,32 +1158,7 @@ const arenaPage = {
 			}
 		}
 		function drawTowerSelect(posX, posY, towerDesign, index, action) {
-			Game.methodSetup = {
-				method: function(id) {
-					drawButton({
-						posX: posX + (Game.entityWidth * 11.9) - (Game.entitySize * 4),
-						posY: posY + (Game.canvas.height * 0.025),
-						width: (Game.entitySize * 9),
-						height: (Game.entitySize * 15),
-						lineWidth: 1,
-						btnColor: 'lightslategrey', // drawRobotSelectPreviewParts('chassis', robotDesign),
-						txtColor: 'white',
-						font: '1.5em serif',
-						msg: '',
-						isFilled: true,
-						id: 'preview-tower',
-						action: {
-							method: function(id) {
-								action();
-							}
-						},
-						isModalBtn: false,
-						props: {},
-						methodId: id
-					});
-				}
-			};
-			Game.addMethod(Game.methodSetup);
+			previewTower(posX, posY, towerDesign, index, action);
 			if (gameObject.towerArenaDesigns[index]?.towerId && gameObject.towerArenaDesigns[index].robotParts === 6) {
 				Game.methodSetup = {
 					method: function(id) {
@@ -1347,6 +1328,35 @@ const arenaPage = {
 				};
 				Game.addMethod(Game.methodSetup);
 			}
+		}
+		
+		function previewTower(posX, posY, towerDesign, index, action, showImg = false) {
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: posX + (Game.entityWidth * 11.9) - (Game.entitySize * 4),
+						posY: posY + (Game.canvas.height * 0.025),
+						width: (Game.entitySize * 9),
+						height: (Game.entitySize * 15),
+						lineWidth: 1,
+						btnColor: !showImg ? 'lightslategrey' : towerDesign[index].img,
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: '',
+						isFilled: true,
+						id: 'preview-tower',
+						action: {
+							method: function(id) {
+								action();
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 		}
 	}
 	
