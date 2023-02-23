@@ -591,17 +591,13 @@ const arenaPage = {
 				};
 				Game.addMethod(Game.methodSetup);
 				
-				// draw the tower here without the robot. use what we made before but split out the robot part
-				
 				previewTower(
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
 					arenaTowers,
 					i,
 					function() {
-						console.log('select tower', arenaTowers[i]);
-						// gameObject.selectedRobot = gameObject.robotTeams[i].robotParts;
-						// arenaRobotDetails();
+						arenaTowerDetails(arenaTowers[i]);
 					},
 					true
 				);
@@ -1064,6 +1060,211 @@ const arenaPage = {
 				}
 			}
 		}
+		function arenaTowerDetails(selectedTower) {
+			// future Jordan, draw the tower name on top of the tower.
+			// work on the different directives. If the tower isn't a bunker,
+			// use the descriptions when seeding the towers in mason.js else
+			// look in the book. Bunkers should be able to select a robot
+			console.log(selectedTower);
+			Game.clearStage();
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0),
+						posY: Game.placeEntityY(0),
+						width: Game.canvas.width,
+						height: (Game.canvas.height),
+						lineWidth: 1,
+						color: 'grey',
+						isFilled: true,
+						id: 'arena-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.45),
+						height: (Game.canvas.height * 0.45),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'tower-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
+						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.43),
+						height: (Game.canvas.height * 0.855),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'directive-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
+						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
+						width: (Game.canvas.width * 0.45),
+						height: (Game.canvas.height * 0.39),
+						lineWidth: 1,
+						color: 'lightgrey',
+						isFilled: true,
+						id: 'tower-stat-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			drawTowerDetail(selectedTower);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.03),
+						posY: Game.placeEntityY(0.03),
+						width: (Game.entitySize * 12),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: 'Back',
+						isFilled: true,
+						id: 'tower-detail-back-game',
+						action: { 
+							method: function(id) {
+								arenaPage.loadPage();
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Details',
+						posX: Game.placeEntityX(0.50),
+						posY: Game.placeEntityY(0.085),
+						color: 'darkgrey',
+						align: 'center',
+						props: {},
+						id: 'tower-detail-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Stats',
+						posX: Game.placeEntityX(0.247),
+						posY: Game.placeEntityY(0.65),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'stat-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Attack: ' + selectedTower.stats.att,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.69),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'att-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Defense: ' + selectedTower.stats.def,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.74),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'def-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Speed: ' + selectedTower.stats.spd,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.79),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'spd-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'HP: ' + selectedTower.stats.hp,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.84),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'ai-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
 		function selectDirective() {
 			setTimeout(function() {
 				clearRobotPreviewHighlight();
@@ -1349,6 +1550,33 @@ const arenaPage = {
 							method: function(id) {
 								action();
 							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		
+		function drawTowerDetail(selectedTower) {
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.23, (Game.entitySize * 15)),
+						posY: Game.placeEntityY(0.30, (Game.entitySize * 15)),
+						width: (Game.entitySize * 18),
+						height: (Game.entitySize * 30),
+						lineWidth: 1,
+						btnColor: selectedTower.img,
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: '',
+						isFilled: true,
+						id: 'tower-detail',
+						action: { 
+							method: function(id) {}
 						},
 						isModalBtn: false,
 						props: {},
