@@ -233,10 +233,10 @@ const arenaPage = {
 				drawTowerSelect(
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-					gameObject.towerArenaDesigns[i],
+					gameObject.towerArenaDesigns[i].arenaTower,
 					i,
 					function() {
-						arenaTowerSelect();
+						arenaTowerSelect(i);
 					}
 				);
 				
@@ -457,7 +457,7 @@ const arenaPage = {
 			drawNextPrevRobotList(gameObject.robotTeams, arenaRobotSelect);
 		}
 		// future Jordan continue working on the tower design
-		function arenaTowerSelect() {
+		function arenaTowerSelect(arenaTowerIndex) {
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -594,10 +594,10 @@ const arenaPage = {
 				previewTower(
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-					arenaTowers,
+					arenaTowers[i],
 					i,
 					function() {
-						arenaTowerDetails(arenaTowers[i]);
+						arenaTowerDetails(arenaTowers[i], arenaTowerIndex);
 					},
 					true
 				);
@@ -1060,12 +1060,11 @@ const arenaPage = {
 				}
 			}
 		}
-		function arenaTowerDetails(selectedTower) {
+		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false) {
 			// future Jordan, draw the tower name on top of the tower.
 			// work on the different directives. If the tower isn't a bunker,
 			// use the descriptions when seeding the towers in mason.js else
 			// look in the book. Bunkers should be able to select a robot
-			console.log(selectedTower);
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -1187,6 +1186,22 @@ const arenaPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawText({
+						font: '1.1em serif',
+						msg: selectedTower.name,
+						posX: Game.placeEntityX(0.25, (Game.entitySize * 0.5)),
+						posY: Game.placeEntityY(0.185),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'tower-detail-name',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
 						font: '2.3em serif',
 						msg: 'Stats',
 						posX: Game.placeEntityX(0.247),
@@ -1258,7 +1273,36 @@ const arenaPage = {
 						color: 'grey',
 						align: 'left',
 						props: {},
-						id: 'ai-stat',
+						id: 'hp-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
+						posY: Game.placeEntityY(0.90),
+						width: (Game.entitySize * 23),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'grey',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: !reselect ? 'Select' : 'Reselect',
+						isFilled: true,
+						id: 'select-tower',
+						action: { method: function(id) {
+							if (!reselect) {
+								gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower = selectedTower;
+								arenaPage.loadPage();
+							} else {
+								arenaTowerSelect(arenaTowerIndex);
+							}
+						}},
+						isModalBtn: false,
+						props: {},
 						methodId: id
 					});
 				}
@@ -1530,8 +1574,10 @@ const arenaPage = {
 				Game.addMethod(Game.methodSetup);
 			}
 		}
-		
 		function previewTower(posX, posY, towerDesign, index, action, showImg = false) {
+			if (towerDesign?.towerId) {
+				showImg = true;
+			}
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({
@@ -1540,7 +1586,7 @@ const arenaPage = {
 						width: (Game.entitySize * 9),
 						height: (Game.entitySize * 15),
 						lineWidth: 1,
-						btnColor: !showImg ? 'lightslategrey' : towerDesign[index].img,
+						btnColor: !showImg ? 'lightslategrey' : towerDesign.img,
 						txtColor: 'white',
 						font: '1.5em serif',
 						msg: '',
@@ -1559,7 +1605,6 @@ const arenaPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
-		
 		function drawTowerDetail(selectedTower) {
 			Game.methodSetup = {
 				method: function(id) {
