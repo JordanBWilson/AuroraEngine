@@ -783,8 +783,7 @@ const arenaPage = {
 									} else if (i === 2) {
 										msgs = ['Support', 'Supports will target anything', 'before getting to the', 'enemy stronghold'];
 									} else if (i === 3) {
-										directiveMsg = 'Lee-Roy';
-										msgs = ['Support', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy stronghold'];
+										msgs = ['Lee-Roy', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy stronghold'];
 									}
 									Game.methodSetup = {
 										method: function(id) {
@@ -1061,10 +1060,11 @@ const arenaPage = {
 			}
 		}
 		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false) {
-			// future Jordan, draw the tower name on top of the tower.
-			// work on the different directives. If the tower isn't a bunker,
-			// use the descriptions when seeding the towers in mason.js else
-			// look in the book. Bunkers should be able to select a robot
+			// future Jordan, bunkers should be able to select a robot
+			// force the player to select a robot before being able to select the tower
+			// work on highlighting the selected tower directive buttons
+			// auto select the standard directive
+			// make the play button at the bottom to start the game...
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -1308,6 +1308,156 @@ const arenaPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+			console.log('selected tower', selectedTower);
+			for (let i = 0; i < 4; i++) {
+				let directiveMsg = '';
+				if (i === 0) {
+					directiveMsg = selectedTower.type === 'bunker' ? 'Select Robot' : 'Standard';
+				} else if (i === 1) {
+					directiveMsg = selectedTower.type === 'bunker' ? 'Standard' : 'Long-Shot';
+				} else if (i === 2) {
+					directiveMsg = selectedTower.type === 'bunker' ? 'Rapid' : 'Rapid-Shot';
+				} else if (i === 3) {
+					directiveMsg = selectedTower.type === 'bunker' ? 'Defense' : 'Ram-Shot';
+				}
+				Game.methodSetup = {
+					method: function(id) {
+						drawButton({
+							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
+							posY: Game.placeEntityY(0.330 + (i * 0.125)),
+							width: (Game.entitySize * 22),
+							height: (Game.entitySize * 9),
+							lineWidth: 1,
+							btnColor: 'green',
+							txtColor: 'white',
+							font: '1em serif',
+							msg: directiveMsg,
+							isFilled: true,
+							id: 'directive-' + (i + 1),
+							action: { 
+								method: function(id) {
+									let msgs = [];
+									if (i === 0) {
+										if (selectedTower.type === 'bunker') {
+											// future Jordan, we need to be able to select a robot here, or somewhere close to here
+										} else {
+											msgs = ['Standard', 'Tower will attack at', 'a standard rate'];
+										}
+									} else if (i === 1) {
+										if (selectedTower.type === 'bunker') {
+											msgs = ['Standard', 'Bunker will create', ' 2 robots a turn'];
+										} else {
+											msgs = ['Long-Shot', 'Tower will have good range', 'but will attack slower'];
+										}
+									} else if (i === 2) {
+										if (selectedTower.type === 'bunker') {
+											msgs = ['Rapid', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
+										} else {
+											msgs = ['Rapid-Shot', 'Tower will attack faster', 'but will lose some range'];
+										}
+									} else if (i === 3) {
+										if (selectedTower.type === 'bunker') {
+											msgs = ['Defense', 'Bunker will create 1 robot', 'a turn but will gain attack', 'and some range'];
+										} else {
+											msgs = ['Ram-Shot', 'Tower will gain attack', 'but lose some speed'];
+										}
+									}
+									Game.methodSetup = {
+										method: function(id) {
+											drawDialogueModal({
+												posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+												width: (Game.entitySize * 45),
+												height: (Game.entitySize * 50),
+												lineWidth: 1,
+												modalColor: 'darkgrey',
+												msgColor: 'white',
+												msgFont: '1em serif',
+												msgs: msgs,
+												msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+												msgDistance: (Game.entitySize * 5),
+												bgColor: '',
+												isModalFilled: true,
+												id: Game.modalId,
+												action: {
+													method: function(id) {}
+												},
+												isModalBtn: false,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
+												width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+												height: (Game.entitySize * 7),
+												lineWidth: 1,
+												btnColor: 'grey',
+												txtColor: 'white',
+												font: '1.3em serif',
+												msg: 'Program',
+												isFilled: true,
+												id: 'Program-directive',
+												action: { 
+													method: function(id) {
+														console.log(gameObject.towerArenaDesigns, arenaTowerIndex);
+														gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
+														console.log(gameObject.towerArenaDesigns[arenaTowerIndex]);
+														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+														Game.deleteEntity(modal.methodId);
+														arenaTowerDetails(selectedTower, arenaTowerIndex, reselect);
+													}
+												},
+												isModalBtn: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+												width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
+												height: (Game.entitySize * 7),
+												lineWidth: 1,
+												btnColor: 'grey',
+												txtColor: 'white',
+												font: '1.3em serif',
+												msg: 'Cancel',
+												isFilled: true,
+												id: 'cancel-directive',
+												action: { 
+													method: function(id) { 
+														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+														Game.deleteEntity(modal.methodId);
+														arenaTowerDetails(selectedTower, arenaTowerIndex, reselect);
+													}
+												},
+												isModalBtn: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+								}
+							},
+							isModalBtn: false,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
 		}
 		function selectDirective() {
 			setTimeout(function() {
