@@ -1051,19 +1051,17 @@ const arenaPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			selectDirective();
+			selectRobotDirective();
 			Game.pageResized = {
 				section: 'arena-robot-details',
 				method: function() {
-					selectDirective();
+					selectRobotDirective();
 				}
 			}
 		}
 		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false) {
 			// future Jordan, bunkers should be able to select a robot
 			// force the player to select a robot before being able to select the tower
-			// work on highlighting the selected tower directive buttons
-			// auto select the standard directive
 			// make the play button at the bottom to start the game...
 			Game.clearStage();
 			Game.methodSetup = {
@@ -1133,6 +1131,23 @@ const arenaPage = {
 						id: 'tower-stat-background',
 						isBackground: true,
 						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2em serif',
+						msg: 'Directive',
+						posX: Game.placeEntityX(0.76),
+						posY: Game.placeEntityY(0.20),
+						color: 'grey',
+						align: 'center',
+						props: {},
+						id: 'directive-title',
 						methodId: id
 					});
 				}
@@ -1281,6 +1296,22 @@ const arenaPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Range: ' + selectedTower.stats.range,
+						posX: Game.placeEntityX(0.09),
+						posY: Game.placeEntityY(0.88),
+						color: 'grey',
+						align: 'left',
+						props: {},
+						id: 'hp-stat',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
 					drawButton({
 						posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
 						posY: Game.placeEntityY(0.90),
@@ -1328,7 +1359,7 @@ const arenaPage = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 9),
 							lineWidth: 1,
-							btnColor: 'green',
+							btnColor: selectedTower.type === 'bunker' && i === 0 ? 'grey' : 'green',
 							txtColor: 'white',
 							font: '1em serif',
 							msg: directiveMsg,
@@ -1458,8 +1489,26 @@ const arenaPage = {
 				};
 				Game.addMethod(Game.methodSetup);
 			}
+			if (selectedTower.type === 'bunker') {
+				gameObject.towerArenaDesigns[arenaTowerIndex].directive = 2;
+			} else {
+				gameObject.towerArenaDesigns[arenaTowerIndex].directive = 1;
+			}
+			selectTowerDirective(arenaTowerIndex, selectedTower);
+			
+			Game.pageResized = {
+				section: 'arena-tower-details',
+				method: function() {
+					if (selectedTower.type === 'bunker') {
+					gameObject.towerArenaDesigns[arenaTowerIndex].directive = 2;
+					} else {
+						gameObject.towerArenaDesigns[arenaTowerIndex].directive = 1;
+					}
+					selectTowerDirective(arenaTowerIndex, selectedTower);
+				}
+			}
 		}
-		function selectDirective() {
+		function selectRobotDirective() {
 			setTimeout(function() {
 				clearRobotPreviewHighlight();
 				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive);
@@ -1474,6 +1523,26 @@ const arenaPage = {
 				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + i);
 				if (highlight) {
 					highlight.btnColor = 'green';
+					highlight.txtColor = 'white';
+				}
+				
+			}
+		}
+		function selectTowerDirective(arenaTowerIndex, selectedTower) {
+			setTimeout(function() {
+				clearTowerPreviewHighlight(selectedTower);
+				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + gameObject.towerArenaDesigns[arenaTowerIndex].directive);
+				if (highlight) {
+					highlight.btnColor = 'yellow';
+					highlight.txtColor = 'black';
+				}
+			}, 100);
+		}
+		function clearTowerPreviewHighlight(selectedTower) {
+			for (let i = 1; i <= 4; i++) {
+				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + i);
+				if (highlight) {
+					highlight.btnColor = selectedTower.type === 'bunker' && i === 1 ? 'grey' : 'green';
 					highlight.txtColor = 'white';
 				}
 				

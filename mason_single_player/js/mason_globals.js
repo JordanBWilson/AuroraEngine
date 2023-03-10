@@ -785,6 +785,7 @@ const arenaTowers = [
 			spd: 1,
 			hp: 20,
 			lvl: 1,
+			range: 5,
 		},
 		robotParts: [],
 		requires: {
@@ -803,6 +804,7 @@ const arenaTowers = [
 			spd: 1,
 			hp: 20,
 			lvl: 1,
+			range: 0,
 		},
 		robotParts: [],
 		requires: {
