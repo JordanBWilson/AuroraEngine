@@ -236,7 +236,12 @@ const arenaPage = {
 					gameObject.towerArenaDesigns[i].arenaTower,
 					i,
 					function() {
-						arenaTowerSelect(i);
+						console.log('arena tower', gameObject.towerArenaDesigns[i]);
+						if (gameObject.towerArenaDesigns[i]?.arenaTower?.towerId) {
+							arenaTowerDetails(gameObject.towerArenaDesigns[i].arenaTower, i, true, false);
+						} else {
+							arenaTowerSelect(i);
+						}
 					}
 				);
 				
@@ -1059,7 +1064,7 @@ const arenaPage = {
 				}
 			}
 		}
-		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false) {
+		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false, standardDirective = true) {
 			// future Jordan, bunkers should be able to select a robot
 			// force the player to select a robot before being able to select the tower
 			// make the play button at the bottom to start the game...
@@ -1326,7 +1331,8 @@ const arenaPage = {
 						id: 'select-tower',
 						action: { method: function(id) {
 							if (!reselect) {
-								gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower = selectedTower;
+								const cloneTower = Object.assign({}, selectedTower);
+								gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower = cloneTower;
 								arenaPage.loadPage();
 							} else {
 								arenaTowerSelect(arenaTowerIndex);
@@ -1438,10 +1444,51 @@ const arenaPage = {
 													method: function(id) {
 														console.log(gameObject.towerArenaDesigns, arenaTowerIndex);
 														gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
+														// apply the stat changes
+														const cloneTower = Object.assign({}, selectedTower);
+														cloneTower.stats = Object.assign({}, selectedTower.stats);
+														console.log('towers ', arenaTowers.find(x => x.towerId === cloneTower.towerId).stats);
+														if (cloneTower.type === 'bunker') {
+															// find the default tower stats
+															cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
+															// directive 1 is select robot
+															if (i + 1 === 2) { // standard
+																// use the default tower stats
+															} else if (i + 1 === 3) { // rapid
+																cloneTower.stats.hp -= 5;
+															} else if (i + 1 === 4) { // defense
+																cloneTower.stats.att += 2;
+																cloneTower.stats.spd += 1;
+																cloneTower.stats.range += 1;
+															}
+															if (reselect) {
+																gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
+															}
+														} else {
+															// find the default tower stats
+															cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
+															if (i + 1 === 1) { // standard
+																// use the default tower stats
+															} else if (i + 1 === 2) { // long shot
+																cloneTower.stats.spd -= 2;
+																cloneTower.stats.range += 2;
+															} else if (i + 1 === 3) { // rapid shot
+																cloneTower.stats.range -= 3;
+																cloneTower.stats.spd += 3;
+															} else if (i + 1 === 4) { // ram shot
+																cloneTower.stats.att += 2;
+																cloneTower.stats.spd -= 2;
+															}
+															if (reselect) {
+																gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
+															}
+														}
+														
 														console.log(gameObject.towerArenaDesigns[arenaTowerIndex]);
 														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 														Game.deleteEntity(modal.methodId);
-														arenaTowerDetails(selectedTower, arenaTowerIndex, reselect);
+														
+														arenaTowerDetails(cloneTower, arenaTowerIndex, reselect, false);
 													}
 												},
 												isModalBtn: true,
@@ -1469,7 +1516,7 @@ const arenaPage = {
 													method: function(id) { 
 														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 														Game.deleteEntity(modal.methodId);
-														arenaTowerDetails(selectedTower, arenaTowerIndex, reselect);
+														arenaTowerDetails(selectedTower, arenaTowerIndex, reselect, false);
 													}
 												},
 												isModalBtn: true,
@@ -1489,9 +1536,9 @@ const arenaPage = {
 				};
 				Game.addMethod(Game.methodSetup);
 			}
-			if (selectedTower.type === 'bunker') {
+			if (selectedTower.type === 'bunker' && standardDirective) {
 				gameObject.towerArenaDesigns[arenaTowerIndex].directive = 2;
-			} else {
+			} else if (standardDirective) {
 				gameObject.towerArenaDesigns[arenaTowerIndex].directive = 1;
 			}
 			selectTowerDirective(arenaTowerIndex, selectedTower);

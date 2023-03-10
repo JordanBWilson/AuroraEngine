@@ -780,9 +780,9 @@ const arenaTowers = [
 		name: 'Simple Tower',
 		img: 'pink',
 		stats: {
-			att: 1,
-			def: 1,
-			spd: 1,
+			att: 3,
+			def: 2,
+			spd: 3,
 			hp: 20,
 			lvl: 1,
 			range: 5,
@@ -800,8 +800,8 @@ const arenaTowers = [
 		img: 'indigo',
 		stats: {
 			att: 0,
-			def: 1,
-			spd: 1,
+			def: 3,
+			spd: 0,
 			hp: 20,
 			lvl: 1,
 			range: 0,
