@@ -224,12 +224,7 @@ const arenaPage = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
-				// future Jordan, work on drawing all the towers
 				
-				// future Jordan, work on the towers next.
-				// set it up similar to the robots but for
-				// bunker types, make a button under the 
-				// directives to select a robot to spawn
 				drawTowerSelect(
 					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
 					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
@@ -258,6 +253,33 @@ const arenaPage = {
 						align: 'center',
 						props: {},
 						id: 'arena-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.925, (Game.entitySize * 47)),
+						posY: Game.placeEntityY(0.90),
+						width: (Game.entitySize * 25),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'grey',
+						txtColor: 'white',
+						font: '1.5em serif',
+						msg: 'Play',
+						isFilled: true,
+						id: 'play-game',
+						action: { 
+							method: function(id) {
+								console.log('play the game!');
+							}
+						},
+						isModalBtn: false,
+						props: {},
 						methodId: id
 					});
 				}
@@ -1067,7 +1089,6 @@ const arenaPage = {
 		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false, standardDirective = true) {
 			// future Jordan, bunkers should be able to select a robot
 			// force the player to select a robot before being able to select the tower
-			// make the play button at the bottom to start the game...
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -1442,12 +1463,10 @@ const arenaPage = {
 												id: 'Program-directive',
 												action: { 
 													method: function(id) {
-														console.log(gameObject.towerArenaDesigns, arenaTowerIndex);
 														gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
 														// apply the stat changes
 														const cloneTower = Object.assign({}, selectedTower);
 														cloneTower.stats = Object.assign({}, selectedTower.stats);
-														console.log('towers ', arenaTowers.find(x => x.towerId === cloneTower.towerId).stats);
 														if (cloneTower.type === 'bunker') {
 															// find the default tower stats
 															cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
