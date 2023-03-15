@@ -654,7 +654,7 @@ const arenaPage = {
 				}
 				
 			}
-			// drawRobotSelectParts();
+			drawRobotSelectParts();
 			drawNextPrevRobotList(arenaTowers, function(){ arenaTowerSelect(arenaTowerIndex); });
 		}
 		function arenaRobotBuiltCheck() {
@@ -1109,16 +1109,11 @@ const arenaPage = {
 										console.log('robot to tower', gameObject.selectedRobot, gameObject.towerArenaDesigns[arenaTowerIndex]);
 										gameObject.towerArenaDesigns[arenaTowerIndex].robotParts = gameObject.selectedRobot;
 										
-										let reselectTower = false;
-										if (gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower?.towerId) {
-											reselectTower = true;
-										}
 										let standardDirective = false;
 										if (gameObject.towerArenaDesigns[arenaTowerIndex].directive === 2) {
 											standardDirective = true;
 										}
-										 // arenaRobotSelect(selectedTower, arenaTowerIndex);
-										 arenaTowerDetails(selectedTower, arenaTowerIndex, reselectTower, standardDirective);
+										 arenaTowerDetails(selectedTower, arenaTowerIndex, false, standardDirective);
 									} else {
 										arenaRobotSelect();
 									}
@@ -1237,7 +1232,15 @@ const arenaPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 			
-			drawTowerDetail(selectedTower);
+			//selectedTower = Object.assign({}, selectedTower);
+			if (selectedTower.type !== 'bunker') {
+				selectedTower.robotParts = [];
+			} else {
+				selectedTower.robotParts = Object.assign([], gameObject.towerArenaDesigns[arenaTowerIndex].robotParts);
+			}
+			console.log('HERE',selectedTower, gameObject.towerArenaDesigns[arenaTowerIndex]);
+			 //gameObject.towerArenaDesigns[arenaTowerIndex].robotParts;
+			drawTowerDetail(selectedTower);// selectedTower
 			
 			Game.methodSetup = {
 				method: function(id) {
@@ -1255,6 +1258,13 @@ const arenaPage = {
 						id: 'tower-detail-back-game',
 						action: { 
 							method: function(id) {
+								if (gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower?.towerId === undefined) {
+									gameObject.towerArenaDesigns[arenaTowerIndex].robotParts = [];
+								}
+								if (standardDirective && gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.type === 'bunker') {
+									gameObject.towerArenaDesigns[arenaTowerIndex].directive = 2;
+								}
+								console.log('BACK', gameObject.towerArenaDesigns[arenaTowerIndex], standardDirective, reselect);
 								arenaPage.loadPage();
 							}
 						},
@@ -1430,6 +1440,10 @@ const arenaPage = {
 					gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower = cloneTower;
 					arenaPage.loadPage();
 				} else {
+					//if (selectedTower.type === 'bunker') {
+						//gameObject.towerArenaDesigns[arenaTowerIndex].robotParts = [];
+					//}
+					
 					arenaTowerSelect(arenaTowerIndex);
 				}
 			}
@@ -1771,7 +1785,7 @@ const arenaPage = {
 			// future Jordan, get the selected robot to display on the detail view and
 			// on the main arena menu view
 			previewTower(posX, posY, towerDesign, index, action);
-			if (gameObject.towerArenaDesigns[index].robotParts === 6) {
+			if (gameObject.towerArenaDesigns[index].robotParts.length === 6) {
 				Game.methodSetup = {
 					method: function(id) {
 						drawButton({
@@ -1997,12 +2011,15 @@ const arenaPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			if (selectedTower.robotParts === 6) {
+			console.log(selectedTower);
+			if (selectedTower.robotParts.length === 6) {
+				const posX = 0.39;
+				const posY = 0.84;
 				Game.methodSetup = {
 					method: function(id) {
 						drawButton({
 							posX: posX + (Game.entityWidth * 12.15) - (Game.entitySize * 1.3),
-							posY: posY + (Game.canvas.height * 0.11),
+							posY: posY + (Game.canvas.height * 0.21),
 							width: (Game.entitySize * 3),
 							height: (Game.entitySize * 3),
 							lineWidth: 1,
@@ -2165,6 +2182,7 @@ const arenaPage = {
 					}
 				};
 				Game.addMethod(Game.methodSetup);
+				drawRobotSelectParts();
 			}
 		}
 	}
