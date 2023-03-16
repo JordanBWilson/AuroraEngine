@@ -231,7 +231,6 @@ const arenaPage = {
 					gameObject.towerArenaDesigns[i].arenaTower,
 					i,
 					function() {
-						console.log('arena tower', gameObject.towerArenaDesigns[i]);
 						if (gameObject.towerArenaDesigns[i]?.arenaTower?.towerId) {
 							arenaTowerDetails(gameObject.towerArenaDesigns[i].arenaTower, i, true, false);
 						} else {
@@ -275,7 +274,86 @@ const arenaPage = {
 						id: 'play-game',
 						action: { 
 							method: function(id) {
-								console.log('play the game!');
+								let selectedRobots = 0;
+								gameObject.robotArenaDesigns.forEach((design, i) => {
+									if (design.robotParts.length === 6) {
+										selectedRobots++;
+									}
+								});
+								let selectedTower = 0;
+								gameObject.towerArenaDesigns.forEach((design, i) => {
+									if (design.arenaTower?.towerId !== undefined) {
+										selectedTower++;
+									}
+								});
+								
+								if (selectedRobots >= 1 && selectedTower >= 1) {
+									maulPage.loadPage();
+								} else {
+									let msgs = ['Select At Least', 'One Robot and Tower', 'Tap here to continue'];
+									Game.methodSetup = {
+										method: function(id) {
+											drawDialogueModal({
+												posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+												posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+												width: (Game.entitySize * 45),
+												height: (Game.entitySize * 25),
+												lineWidth: 1,
+												modalColor: 'grey',
+												msgColor: 'white',
+												msgFont: '1em serif',
+												msgs: msgs,
+												msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+												msgDistance: (Game.entitySize * 8),
+												bgColor: '',
+												isModalFilled: true,
+												id: Game.modalId,
+												action: {
+													method: function(id) {
+														arenaPage.loadPage();
+													}
+												},
+												isModalBtn: true,
+												props: {},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									//Game.methodSetup = {
+										//method: function(id) {
+											//drawSimpleModal({
+												//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+												//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+												//width: (Game.entitySize * 40),
+												//height: (Game.entitySize * 30),
+												//lineWidth: 1,
+												//modalColor: 'darkgrey',
+												//msgColor: 'white',
+												//msgFont: '1.3em serif',
+												//msg: 'Select At Least One Robot and Tower',
+												//footerColor: 'white',
+												//footerFont: '1em serif',
+												//footerMsg: 'Tap here to continue',
+												//bgColor: '',
+												//isModalFilled: true,
+												//id: Game.modalId,
+												//action: { 
+													//method: function(id) {
+														//const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+														//Game.deleteEntity(modal.methodId);
+														////homeSellRobots.loadPage();
+													//}
+												//},
+												//props: {},
+												//methodId: id
+											//});
+										//}
+									//};
+									//Game.addMethod(Game.methodSetup);
+								}
+								
+								
 							}
 						},
 						isModalBtn: false,
@@ -478,7 +556,6 @@ const arenaPage = {
 					i,
 					function() {
 						gameObject.selectedRobot = gameObject.robotTeams[i].robotParts;
-						// selectedTower, arenaTowerIndex, reselect = false, standardDirective = true
 						arenaRobotDetails(false, arenaTowerIndex, selectedTower);
 					},
 				);
@@ -497,7 +574,6 @@ const arenaPage = {
 			drawRobotSelectParts();
 			drawNextPrevRobotList(gameObject.robotTeams, function() { arenaRobotSelect(selectedTower, arenaTowerIndex, reselect, standardDirective); });
 		}
-		// future Jordan continue working on the tower design
 		function arenaTowerSelect(arenaTowerIndex) {
 			Game.clearStage();
 			Game.methodSetup = {
@@ -534,8 +610,6 @@ const arenaPage = {
 						id: 'arena-tower-select-back-game',
 						action: { 
 							method: function(id) {
-								// gameObject.selectedRobot = [];
-								// gameObject.selectedRobotDesign = -1;
 								arenaPage.loadPage();
 							}
 						},
@@ -938,7 +1012,6 @@ const arenaPage = {
 						id: 'robot-detail-back-game',
 						action: { 
 							method: function(id) {
-								console.log(arenaTowerIndex);
 								gameObject.partPageIndex = 0;
 								if (arenaTowerIndex === undefined || arenaTowerIndex === -1) {
 									if (reselect === true) {
@@ -1106,7 +1179,6 @@ const arenaPage = {
 									}
 								} else {
 									if (!reselect) {
-										console.log('robot to tower', gameObject.selectedRobot, gameObject.towerArenaDesigns[arenaTowerIndex]);
 										gameObject.towerArenaDesigns[arenaTowerIndex].robotParts = gameObject.selectedRobot;
 										
 										let standardDirective = false;
@@ -1139,8 +1211,6 @@ const arenaPage = {
 			}
 		}
 		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false, standardDirective = true) {
-			// future Jordan, bunkers should be able to select a robot
-			// force the player to select a robot before being able to select the tower
 			Game.clearStage();
 			Game.methodSetup = {
 				method: function(id) {
@@ -1232,15 +1302,12 @@ const arenaPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 			
-			//selectedTower = Object.assign({}, selectedTower);
 			if (selectedTower.type !== 'bunker') {
 				selectedTower.robotParts = [];
 			} else {
 				selectedTower.robotParts = Object.assign([], gameObject.towerArenaDesigns[arenaTowerIndex].robotParts);
 			}
-			console.log('HERE',selectedTower, gameObject.towerArenaDesigns[arenaTowerIndex]);
-			 //gameObject.towerArenaDesigns[arenaTowerIndex].robotParts;
-			drawTowerDetail(selectedTower);// selectedTower
+			drawTowerDetail(selectedTower);
 			
 			Game.methodSetup = {
 				method: function(id) {
@@ -1264,7 +1331,6 @@ const arenaPage = {
 								if (standardDirective && gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.type === 'bunker') {
 									gameObject.towerArenaDesigns[arenaTowerIndex].directive = 2;
 								}
-								console.log('BACK', gameObject.towerArenaDesigns[arenaTowerIndex], standardDirective, reselect);
 								arenaPage.loadPage();
 							}
 						},
@@ -1421,6 +1487,7 @@ const arenaPage = {
 							method: function(id) {
 								gameObject.partPageIndex = 0;
 								if (selectedTower.type !== 'bunker') {
+									gameObject.towerArenaDesigns[arenaTowerIndex].robotParts = [];
 									selectTower(reselect, selectedTower, arenaTowerIndex);
 								} else if (selectedTower.type === 'bunker' && gameObject.towerArenaDesigns[arenaTowerIndex].robotParts.length === 6) {
 									selectTower(reselect, selectedTower, arenaTowerIndex);
@@ -1440,14 +1507,9 @@ const arenaPage = {
 					gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower = cloneTower;
 					arenaPage.loadPage();
 				} else {
-					//if (selectedTower.type === 'bunker') {
-						//gameObject.towerArenaDesigns[arenaTowerIndex].robotParts = [];
-					//}
-					
 					arenaTowerSelect(arenaTowerIndex);
 				}
 			}
-			console.log('selected tower', selectedTower,  gameObject.towerArenaDesigns[arenaTowerIndex]);
 			for (let i = 0; i < 4; i++) {
 				let directiveMsg = '';
 				if (i === 0) {
@@ -1479,7 +1541,6 @@ const arenaPage = {
 									let selectRobot = false;
 									if (i === 0) {
 										if (selectedTower.type === 'bunker') {
-											// future Jordan, we need to be able to select a robot here, or somewhere close to here
 											selectRobot = true;
 										} else {
 											msgs = ['Standard', 'Tower will attack at', 'a standard rate'];
@@ -1505,12 +1566,6 @@ const arenaPage = {
 									}
 									if (selectRobot) {
 										// select a robot
-										//let reselectRobot = false;
-										//if (gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower?.towerId) {
-											//reselectRobot = true;
-										//}
-										// arenaRobotDetails(reselectRobot, arenaTowerIndex, selectedTower);
-										console.log('selected tower',selectedTower);
 										arenaRobotSelect(selectedTower, arenaTowerIndex);
 									} else {
 										Game.methodSetup = {
@@ -1595,8 +1650,6 @@ const arenaPage = {
 																	gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
 																}
 															}
-															
-															console.log(gameObject.towerArenaDesigns[arenaTowerIndex]);
 															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 															Game.deleteEntity(modal.methodId);
 															
@@ -1796,7 +1849,7 @@ const arenaPage = {
 							width: (Game.entitySize * 3),
 							height: (Game.entitySize * 3),
 							lineWidth: 1,
-							btnColor: 'blueviolet',
+							btnColor: drawRobotSelectPreviewParts('chassis', gameObject.towerArenaDesigns[index].robotParts),
 							txtColor: 'white',
 							font: '1.5em serif',
 							msg: '',
@@ -1818,7 +1871,7 @@ const arenaPage = {
 												width: (Game.entitySize * 2.5),
 												height: (Game.entitySize * 2.5),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('head', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -1846,7 +1899,7 @@ const arenaPage = {
 												width: (Game.entitySize * 0.75),
 												height: (Game.entitySize * 3),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('left-arm', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -1874,7 +1927,7 @@ const arenaPage = {
 												width: (Game.entitySize * 0.75),
 												height: (Game.entitySize * 3),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('right-arm', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -1902,7 +1955,7 @@ const arenaPage = {
 												width: (Game.entitySize * 0.75),
 												height: (Game.entitySize * 3),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('left-leg', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -1930,7 +1983,7 @@ const arenaPage = {
 												width: (Game.entitySize * 0.75),
 												height: (Game.entitySize * 3),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('right-leg', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -2013,7 +2066,6 @@ const arenaPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			console.log(selectedTower);
 			if (selectedTower.robotParts.length === 6) {
 				const posX = 0.39;
 				const posY = 0.0;
@@ -2025,7 +2077,7 @@ const arenaPage = {
 							width: (Game.entitySize * 6),
 							height: (Game.entitySize * 6),
 							lineWidth: 1,
-							btnColor: 'blueviolet',
+							btnColor: drawRobotSelectPreviewParts('chassis', selectedTower.robotParts),
 							txtColor: 'white',
 							font: '1.5em serif',
 							msg: '',
@@ -2033,7 +2085,7 @@ const arenaPage = {
 							id: 'preview-robot',
 							action: {
 								method: function(id) {
-									//action();
+									
 								}
 							},
 							isModalBtn: false,
@@ -2047,7 +2099,7 @@ const arenaPage = {
 												width: (Game.entitySize * 5),
 												height: (Game.entitySize * 5),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('head', selectedTower.robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -2055,7 +2107,7 @@ const arenaPage = {
 												id: parent.id,
 												action: {
 													method: function(id) {
-														//action();
+														
 													}
 												},
 												isModalBtn: false,
@@ -2075,7 +2127,7 @@ const arenaPage = {
 												width: (Game.entitySize * 1.5),
 												height: (Game.entitySize * 6),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('left-arm', selectedTower.robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -2083,7 +2135,7 @@ const arenaPage = {
 												id: parent.id,
 												action: {
 													method: function(id) {
-														//action();
+														
 													}
 												},
 												isModalBtn: false,
@@ -2103,7 +2155,7 @@ const arenaPage = {
 												width: (Game.entitySize * 1.5),
 												height: (Game.entitySize * 6),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('right-arm', selectedTower.robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -2111,7 +2163,7 @@ const arenaPage = {
 												id: parent.id,
 												action: {
 													method: function(id) {
-														//action();
+														
 													}
 												},
 												isModalBtn: false,
@@ -2131,7 +2183,7 @@ const arenaPage = {
 												width: (Game.entitySize * 1.5),
 												height: (Game.entitySize * 6),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('left-leg', selectedTower.robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -2139,7 +2191,7 @@ const arenaPage = {
 												id: parent.id,
 												action: {
 													method: function(id) {
-														//action();
+														
 													}
 												},
 												isModalBtn: false,
@@ -2159,7 +2211,7 @@ const arenaPage = {
 												width: (Game.entitySize * 1.5),
 												height: (Game.entitySize * 6),
 												lineWidth: 1,
-												btnColor: 'blueviolet',
+												btnColor: drawRobotSelectPreviewParts('right-leg', selectedTower.robotParts),
 												txtColor: 'white',
 												font: '1.5em serif',
 												msg: '',
@@ -2167,7 +2219,7 @@ const arenaPage = {
 												id: parent.id,
 												action: {
 													method: function(id) {
-														//action();
+														
 													}
 												},
 												isModalBtn: false,
