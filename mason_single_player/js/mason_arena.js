@@ -320,37 +320,6 @@ const arenaPage = {
 										}
 									};
 									Game.addMethod(Game.methodSetup);
-									//Game.methodSetup = {
-										//method: function(id) {
-											//drawSimpleModal({
-												//posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-												//posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-												//width: (Game.entitySize * 40),
-												//height: (Game.entitySize * 30),
-												//lineWidth: 1,
-												//modalColor: 'darkgrey',
-												//msgColor: 'white',
-												//msgFont: '1.3em serif',
-												//msg: 'Select At Least One Robot and Tower',
-												//footerColor: 'white',
-												//footerFont: '1em serif',
-												//footerMsg: 'Tap here to continue',
-												//bgColor: '',
-												//isModalFilled: true,
-												//id: Game.modalId,
-												//action: { 
-													//method: function(id) {
-														//const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-														//Game.deleteEntity(modal.methodId);
-														////homeSellRobots.loadPage();
-													//}
-												//},
-												//props: {},
-												//methodId: id
-											//});
-										//}
-									//};
-									//Game.addMethod(Game.methodSetup);
 								}
 								
 								
