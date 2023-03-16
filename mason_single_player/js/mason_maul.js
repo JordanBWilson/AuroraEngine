@@ -16,5 +16,6 @@ const maulPage = {
 	description: 'The multiplayer game',
 	loadPage: function() {
 		Game.clearStage();
+		// future Jordan, start the game
 	}
 }
