@@ -2209,5 +2209,4 @@ const arenaPage = {
 			}
 		}
 	}
-	
 }

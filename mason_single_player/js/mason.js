@@ -170,7 +170,13 @@ const mainPage = {
 				msg: 'Scrap',
 				isFilled: true,
 				id: 'scrap',
-				action: { method: function(id) { mineScrap(); }},
+				action: { 
+					method: function(id) { 
+						mineScrap(); 
+						// remove this later...
+						maulPage.loadPage(); 
+					}
+				},
 				isModalBtn: false,
 				props: {},
 				methodId: id
