@@ -16,7 +16,9 @@ const maulPage = {
 	description: 'The multiplayer game',
 	loadPage: function() {
 		Game.clearStage();
-		// future Jordan, work on the road. perhaps start with a tee shape
+		// future Jordan, work on the enemy tower positions. They do not need to be buttons. COM will be controlling red towers.
+		// then work on double tapping towers. one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
+		// finally the robots will need to be selectable and sendable
 		
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
@@ -152,7 +154,7 @@ const maulPage = {
 						width: (Game.entitySize * 10),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'darkblue',
 						isFilled: true,
 						id: 'blue-base',
 						isBackground: false,
@@ -630,6 +632,110 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-4',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.49, (Game.entitySize * -8.5)),
+						posY: Game.placeEntityY(0.67),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-5',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)),
+						posY: Game.placeEntityY(0.53),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-6',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
+						posY: Game.placeEntityY(0.53),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-7',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.94, (Game.entitySize * 9.6)),
+						posY: Game.placeEntityY(0.66),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-8',
 						action: { 
 							method: function(id) {
 									
