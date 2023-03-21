@@ -27,9 +27,10 @@ const maulPage = {
 		function setupGame() {
 			drawGrassBackGround();
 			drawRobotSelection();
-			drawBlueRoad();
-			drawRedRoad();
+			drawBlueRoads();
+			drawRedRoads();
 			drawBasesAndSends();
+			drawBlueTowerSpawns();
 		}
 		
 		function drawGrassBackGround() {
@@ -237,7 +238,28 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		
-		function drawBlueRoad() {
+		function drawBlueRoads() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Game.placeEntityX(0.11, (Game.entitySize * 6.5)),
+			 			posY: Game.placeEntityY(0.46),
+			 			width: (Game.canvas.width * 0.50),
+			 			height: (Game.entitySize * 7),
+			 			images: [roadImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'blue-left-base-road-1',
+			 			isBackground: false,
+			 			props: {
+			 				
+			 			},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
 					drawImage({
@@ -283,6 +305,27 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawImage({
+			 			posX: Game.placeEntityX(0.05, (Game.entitySize * 24)),
+			 			posY: Game.placeEntityY(0.59),
+			 			width: (Game.entitySize * 20),
+			 			height: (Game.entitySize * 7),
+			 			images: [roadImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'blue-left-road-spawn',
+			 			isBackground: false,
+			 			props: {
+			 				
+			 			},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawImage({
 			 			posX: Game.placeEntityX(0.95, (Game.entitySize * 15)),
 			 			posY: Game.placeEntityY(0.46),
 			 			width: (Game.entitySize * 7),
@@ -292,6 +335,27 @@ const maulPage = {
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-right-base-road-2',
+			 			isBackground: false,
+			 			props: {
+			 				
+			 			},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Game.placeEntityX(0.09, (Game.entitySize * 3)),
+			 			posY: Game.placeEntityY(0.46),
+			 			width: (Game.entitySize * 7),
+			 			height: (Game.entitySize * 20),
+			 			images: [roadImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'blue-left-base-road-2',
 			 			isBackground: false,
 			 			props: {
 			 				
@@ -324,7 +388,28 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		
-		function drawRedRoad() {
+		function drawRedRoads() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Game.placeEntityX(0.11, (Game.entitySize * 6.5)),
+			 			posY: Game.placeEntityY(0.37),
+			 			width: (Game.canvas.width * 0.50),
+			 			height: (Game.entitySize * 7),
+			 			images: [roadImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'red-left-base-road-1',
+			 			isBackground: false,
+			 			props: {
+			 				
+			 			},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
 					drawImage({
@@ -370,6 +455,27 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawImage({
+			 			posX: Game.placeEntityX(0.05, (Game.entitySize * 24)),
+			 			posY: Game.placeEntityY(0.24),
+			 			width: (Game.entitySize * 20),
+			 			height: (Game.entitySize * 7),
+			 			images: [roadImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'red-left-road-spawn',
+			 			isBackground: false,
+			 			props: {
+			 				
+			 			},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawImage({
 			 			posX: Game.placeEntityX(0.95, (Game.entitySize * 15)),
 			 			posY: Game.placeEntityY(0.24),
 			 			width: (Game.entitySize * 7),
@@ -379,6 +485,27 @@ const maulPage = {
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'red-right-base-road-2',
+			 			isBackground: false,
+			 			props: {
+			 				
+			 			},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Game.placeEntityX(0.09, (Game.entitySize * 3)),
+			 			posY: Game.placeEntityY(0.24),
+			 			width: (Game.entitySize * 7),
+			 			height: (Game.entitySize * 20),
+			 			images: [roadImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'red-left-base-road-2',
 			 			isBackground: false,
 			 			props: {
 			 				
@@ -407,6 +534,112 @@ const maulPage = {
 			 			methodId: id
 			 		});
 			 	}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function drawBlueTowerSpawns() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)),
+						posY: Game.placeEntityY(0.66),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-1',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.53),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-2',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.53),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-3',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5)),
+						posY: Game.placeEntityY(0.67),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						btnColor: 'orange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: 'Tower',
+						isFilled: true,
+						id: 'blue-right-tower-spawn-4',
+						action: { 
+							method: function(id) {
+									
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
 			};
 			Game.addMethod(Game.methodSetup);
 		}
