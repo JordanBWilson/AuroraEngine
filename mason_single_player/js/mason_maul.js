@@ -19,6 +19,8 @@ const maulPage = {
 		// future Jordan, work on the enemy tower positions. They do not need to be buttons. COM will be controlling red towers.
 		// then work on double tapping towers. one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
 		// finally the robots will need to be selectable and sendable
+		// draw game money in the top left corner
+		//draw time and round/max-rounds
 		
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
@@ -33,6 +35,7 @@ const maulPage = {
 			drawRedRoads();
 			drawBasesAndSends();
 			drawBlueTowerSpawns();
+			drawRedTowerSpawns();
 		}
 		
 		function drawGrassBackGround() {
@@ -244,7 +247,7 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.11, (Game.entitySize * 6.5)),
+			 			posX: Game.placeEntityX(0.10, (Game.entitySize * 4.3)),
 			 			posY: Game.placeEntityY(0.46),
 			 			width: (Game.canvas.width * 0.50),
 			 			height: (Game.entitySize * 7),
@@ -394,7 +397,7 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.11, (Game.entitySize * 6.5)),
+			 			posX: Game.placeEntityX(0.10, (Game.entitySize * 4.3)),
 			 			posY: Game.placeEntityY(0.37),
 			 			width: (Game.canvas.width * 0.50),
 			 			height: (Game.entitySize * 7),
@@ -742,6 +745,152 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function drawRedTowerSpawns() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)),
+						posY: Game.placeEntityY(0.18),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-1',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.311),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-2',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.311),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-3',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5)),
+						posY: Game.placeEntityY(0.18),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-4',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.49, (Game.entitySize * -8.5)),
+						posY: Game.placeEntityY(0.18),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-5',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)),
+						posY: Game.placeEntityY(0.311),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-6',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
+						posY: Game.placeEntityY(0.311),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-7',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.94, (Game.entitySize * 9.6)),
+						posY: Game.placeEntityY(0.18),
+						width: (Game.entitySize * 6),
+						height: (Game.entitySize * 6),
+						lineWidth: 1,
+						color: 'darkorange',
+						isFilled: true,
+						id: 'red-tower-spawn-8',
+						isBackground: false,
 						props: {},
 						methodId: id
 					});
