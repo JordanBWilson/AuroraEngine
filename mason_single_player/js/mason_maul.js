@@ -16,11 +16,10 @@ const maulPage = {
 	description: 'The multiplayer game',
 	loadPage: function() {
 		Game.clearStage();
-		// future Jordan, work on the enemy tower positions. They do not need to be buttons. COM will be controlling red towers.
-		// then work on double tapping towers. one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
+		// future Jordan, work on double tapping towers.
+		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
 		// finally the robots will need to be selectable and sendable
-		// draw game money in the top left corner
-		//draw time and round/max-rounds
+		// we need a 'ready, set go' thing at the beginning of the game
 		
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
@@ -36,6 +35,8 @@ const maulPage = {
 			drawBasesAndSends();
 			drawBlueTowerSpawns();
 			drawRedTowerSpawns();
+			drawPlayerMoney();
+			drawRoundTime();
 		}
 		
 		function drawGrassBackGround() {
@@ -892,6 +893,110 @@ const maulPage = {
 						id: 'red-tower-spawn-8',
 						isBackground: false,
 						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function drawPlayerMoney() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.05),
+						posY: Game.placeEntityY(0),
+						width: (Game.canvas.width * 0.30),
+						height: (Game.canvas.height * 0.10),
+						lineWidth: 1,
+						color: 'brown',
+						isFilled: true,
+						id: 'money-bar-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Money',
+						posX: Game.placeEntityX(0.08),
+						posY: Game.placeEntityY(0.03),
+						color: 'white',
+						align: 'left',
+						props: {},
+						id: 'player-money-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.5em serif',
+						msg: '$' + gameObject.arenaBlueGameMoney,
+						posX: Game.placeEntityX(0.08),
+						posY: Game.placeEntityY(0.07),
+						color: 'white',
+						align: 'left',
+						props: {},
+						id: 'player-money-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function drawRoundTime() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.65),
+						posY: Game.placeEntityY(0),
+						width: (Game.canvas.width * 0.30),
+						height: (Game.canvas.height * 0.10),
+						lineWidth: 1,
+						color: 'brown',
+						isFilled: true,
+						id: 'round-bar-background',
+						isBackground: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1.5em serif',
+						msg: gameObject.arenaRoundSeconds + 's',
+						posX: Game.placeEntityX(0.68),
+						posY: Game.placeEntityY(0.04),
+						color: 'white',
+						align: 'left',
+						props: {},
+						id: 'player-round-time-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '1em serif',
+						msg: 'Round: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds,
+						posX: Game.placeEntityX(0.655),
+						posY: Game.placeEntityY(0.08),
+						color: 'white',
+						align: 'left',
+						props: {},
+						id: 'player-round-number-title',
 						methodId: id
 					});
 				}

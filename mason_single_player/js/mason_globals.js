@@ -244,6 +244,13 @@ const gameObject = {
 	robotArenaDesignCount: 3, // max number of robots that can be on a team
 	towerArenaDesigns: [], // these are the towers that will compete in the arena
 	towerArenaDesignCount: 3, // max number of towers that can be on a team
+	arenaRoundSeconds: 15, // how many seconds there are between each round // 15 is the default
+	arenaBlueGameMoney: 50, // how much money the player starts with to play the game // 99999 is the max
+	arenaRedGameMoney: 50, // how much money COM starts out with
+	arenaGameRound: 1,
+	arenaGameMaxRounds: 12,
+	arenaBlueSendCound: 0, // how many robots the player has sent
+	arenaRedSendCound: 0, // how many robots COM has sent
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
