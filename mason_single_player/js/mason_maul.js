@@ -1061,7 +1061,6 @@ const maulPage = {
 				Game.deleteEntity(gameStartTitle.methodId);
 				// start the game round timer and round numbers
 				if (!gameObject.arenaGameStarted) {
-					console.log('start');
 					startGameRounds();
 				}
 			}, 5500);
@@ -1069,10 +1068,13 @@ const maulPage = {
 		}
 		function startGameRounds() {
 			gameObject.arenaGameStarted = true;
+			const roundTimer = Game.methodObjects.find(bg => bg.id === 'player-round-time-title');
+			const roundCounter = Game.methodObjects.find(bg => bg.id === 'player-round-number-title');
 			const gameTimer = setInterval(function() {
 				if (gameObject.arenaRoundSeconds > 0) {
 					gameObject.arenaRoundSeconds--;
-					drawRoundTime();
+					roundTimer.msg = gameObject.arenaRoundSeconds + 's';
+					roundCounter.msg = 'Round: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
 					gameObject.arenaBlueGameMoney += 50;
@@ -1081,22 +1083,24 @@ const maulPage = {
 					gameObject.arenaRedGameMoney += (gameObject.arenaBlueSendCound * 2);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
-					drawPlayerMoney();
-					// future Jordan, fugure out why the particle effects slow down by round 4
-					// perhaps we can update the money directly without reloading the whole thing?
-					// perhaps the interval needs to be replaced with something else?
-					// try displaying just the particle and see if it still slows down
-					Particle.floatingText({
-						font: '2rem serif',
-						msg: '+      +',
-						align: 'left',
-						posX: Game.placeEntityX(0.065),
-						posY: Game.placeEntityY(0.07),
-						direction: 'top',
-						color: 'green',
-						ticks: 33,
-						speed: 0.1,
-					});
+					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
+					if (gameObject.arenaGameRound <= 12) {
+						roundTimer.msg = gameObject.arenaRoundSeconds + 's';
+						roundCounter.msg = 'Round: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
+						blueMoney.msg = '$' + gameObject.arenaBlueGameMoney;
+						Particle.floatingText({
+							font: '2rem serif',
+							msg: '+      +',
+							align: 'left',
+							posX: Game.placeEntityX(0.065),
+							posY: Game.placeEntityY(0.07),
+							direction: 'top',
+							color: 'green',
+							ticks: 33,
+							speed: 0.1,
+						});
+					}
+					
 					if (gameObject.arenaGameRound === 13) {
 						// future Jordan, see who won the game
 						// show a modal showing the winner
