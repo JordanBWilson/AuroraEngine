@@ -19,12 +19,11 @@ const maulPage = {
 		// future Jordan, work on double tapping towers.
 		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
 		// finally the robots will need to be selectable and sendable
-		// we need a 'ready, set go' thing at the beginning of the game
 		
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
 		roadImg.src = roadPath;
-		
+		Particle.init();
 		setupGame();
 		
 		function setupGame() {
@@ -37,6 +36,7 @@ const maulPage = {
 			drawRedTowerSpawns();
 			drawPlayerMoney();
 			drawRoundTime();
+			readySetGoGame();
 		}
 		
 		function drawGrassBackGround() {
@@ -905,7 +905,7 @@ const maulPage = {
 					drawRect({
 						posX: Game.placeEntityX(0.05),
 						posY: Game.placeEntityY(0),
-						width: (Game.canvas.width * 0.30),
+						width: (Game.entitySize * 18),
 						height: (Game.canvas.height * 0.10),
 						lineWidth: 1,
 						color: 'brown',
@@ -944,7 +944,7 @@ const maulPage = {
 						color: 'white',
 						align: 'left',
 						props: {},
-						id: 'player-money-title',
+						id: 'player-money-amount-title',
 						methodId: id
 					});
 				}
@@ -955,9 +955,9 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.65),
+						posX: Game.placeEntityX(0.98, (Game.entitySize * 40.5)),
 						posY: Game.placeEntityY(0),
-						width: (Game.canvas.width * 0.30),
+						width: (Game.entitySize * 18),
 						height: (Game.canvas.height * 0.10),
 						lineWidth: 1,
 						color: 'brown',
@@ -975,7 +975,7 @@ const maulPage = {
 					drawText({
 						font: '1.5em serif',
 						msg: gameObject.arenaRoundSeconds + 's',
-						posX: Game.placeEntityX(0.68),
+						posX: Game.placeEntityX(0.98, (Game.entitySize * 38.5)),
 						posY: Game.placeEntityY(0.04),
 						color: 'white',
 						align: 'left',
@@ -991,7 +991,7 @@ const maulPage = {
 					drawText({
 						font: '1em serif',
 						msg: 'Round: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds,
-						posX: Game.placeEntityX(0.655),
+						posX: Game.placeEntityX(0.98, (Game.entitySize * 38.5)),
 						posY: Game.placeEntityY(0.08),
 						color: 'white',
 						align: 'left',
@@ -1002,6 +1002,115 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+		}
+		function readySetGoGame() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+						width: (Game.entitySize * 40),
+						height: (Game.entitySize * 30),
+						lineWidth: 1,
+						color: 'lightslategrey',
+						isFilled: true,
+						id: 'arena-game-ready-background',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.3em serif',
+						msg: 'Battle Stations!',
+						posX: Game.placeEntityX(0.50),
+						posY: Game.placeEntityY(0.52),
+						color: 'white',
+						align: 'center',
+						props: {},
+						id: 'arena-game-ready-title',
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			setTimeout(function() {
+				const gameStartBackground = Game.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
+				const gameStartTitle = Game.methodObjects.find(title => title.id === 'arena-game-ready-title');
+				if (gameStartTitle) {
+					gameStartBackground.isAnim = true;
+					gameStartTitle.msg = 'Get Ready';
+				}
+			}, 2000);
+			setTimeout(function() {
+				const gameStartBackground = Game.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
+				const gameStartTitle = Game.methodObjects.find(title => title.id === 'arena-game-ready-title');
+				if (gameStartTitle) {
+					gameStartBackground.isAnim = true;
+					gameStartTitle.msg = 'Fight!';
+				}
+			}, 4500);
+			setTimeout(function() {
+				const gameStartBackground = Game.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
+				const gameStartTitle = Game.methodObjects.find(title => title.id === 'arena-game-ready-title');
+				Game.deleteEntity(gameStartBackground.methodId);
+				Game.deleteEntity(gameStartTitle.methodId);
+				// start the game round timer and round numbers
+				if (!gameObject.arenaGameStarted) {
+					console.log('start');
+					startGameRounds();
+				}
+			}, 5500);
+			
+		}
+		function startGameRounds() {
+			gameObject.arenaGameStarted = true;
+			const gameTimer = setInterval(function() {
+				if (gameObject.arenaRoundSeconds > 0) {
+					gameObject.arenaRoundSeconds--;
+					drawRoundTime();
+				} else if(gameObject.arenaRoundSeconds === 0) {
+					// add to the players money
+					gameObject.arenaBlueGameMoney += 50;
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCound * 2);
+					gameObject.arenaRedGameMoney += 50;
+					gameObject.arenaRedGameMoney += (gameObject.arenaBlueSendCound * 2);
+					gameObject.arenaGameRound++;
+					gameObject.arenaRoundSeconds = 15;
+					drawPlayerMoney();
+					// future Jordan, fugure out why the particle effects slow down by round 4
+					// perhaps we can update the money directly without reloading the whole thing?
+					// perhaps the interval needs to be replaced with something else?
+					// try displaying just the particle and see if it still slows down
+					Particle.floatingText({
+						font: '2rem serif',
+						msg: '+      +',
+						align: 'left',
+						posX: Game.placeEntityX(0.065),
+						posY: Game.placeEntityY(0.07),
+						direction: 'top',
+						color: 'green',
+						ticks: 33,
+						speed: 0.1,
+					});
+					if (gameObject.arenaGameRound === 13) {
+						// future Jordan, see who won the game
+						// show a modal showing the winner
+						// go back to the arena page
+						clearInterval(gameTimer);
+						setTimeout(function() {
+							arenaPage.loadPage();
+						}, 2000);
+						
+					}
+					
+				}
+				
+			}, 1000);
 		}
 	}
 }
