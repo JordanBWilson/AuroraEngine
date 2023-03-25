@@ -222,7 +222,7 @@ const gameObject = {
 	arenaBuild: false, // this is where multiplayer will come in. assign and build battle bots and buildings
 	arenaLevel: 0, // this will determine what type of buildings are availiable in multiplayer
 	// ---robot adventuring---
-	robotStorage: 9, // total robots that can be made ***can be upgraded*** // 3
+	robotStorage: 3, // total robots that can be made ***can be upgraded***
 	robotStorageLevel: 0,
 	robotsMade: 0, // current number of robots made
 	robotTeams: [], // the different robots who could go out to find riches or to be sold
@@ -2269,10 +2269,10 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 	};
 	Game.addMethod(Game.methodSetup);
 }
-function drawRobotSelectParts() {
+function drawRobotSelectParts(search = 'preview-robot') {
 	const findPreviews = setInterval(function() {
-		if (Game.methodObjects.filter(x => x.id === 'preview-robot').length > 0) {
-			Game.methodObjects.filter(x => x.id === 'preview-robot').forEach(robot => {
+		if (Game.methodObjects.filter(x => x.id === search).length > 0) {
+			Game.methodObjects.filter(x => x.id === search).forEach(robot => {
 				robot.props.drawHead(robot);
 				robot.props.drawLeftArm(robot);
 				robot.props.drawRightArm(robot);

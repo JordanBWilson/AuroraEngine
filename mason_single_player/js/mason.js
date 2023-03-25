@@ -173,8 +173,6 @@ const mainPage = {
 				action: { 
 					method: function(id) { 
 						mineScrap(); 
-						// remove this later...
-						maulPage.loadPage(); 
 					}
 				},
 				isModalBtn: false,

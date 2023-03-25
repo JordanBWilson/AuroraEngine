@@ -1804,10 +1804,6 @@ const arenaPage = {
 			}
 		}
 		function drawTowerSelect(posX, posY, towerDesign, index, action) {
-			// future Jordan, get the selected robot parts to display on the detail view and
-			// on the main arena menu view. look at the 'drawRobotSelectPreviewParts' method
-			// then clean up all the comments like these...
-			// lastly, start working on the 'play game button'
 			previewTower(posX, posY, towerDesign, index, action);
 			if (gameObject.towerArenaDesigns[index].robotParts.length === 6) {
 				Game.methodSetup = {
