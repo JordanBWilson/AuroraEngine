@@ -19,7 +19,6 @@ const maulPage = {
 		// future Jordan, work on double tapping towers.
 		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
 		// finally the robots will need to be selectable and sendable
-		
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
 		roadImg.src = roadPath;
@@ -45,6 +44,8 @@ const maulPage = {
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
+			Game.methodSetup = { method: function(id) { drawBlueSendRightRobots(); }};
+			Game.addMethod(Game.methodSetup);
 		}
 		
 		function drawGrassBackGround() {
@@ -93,7 +94,7 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function selectArenaRobot(index) {
-			if (gameObject.arenaGameStarted) {
+			if (gameObject.arenaGameStarted && gameObject.robotArenaDesigns[index].robotParts.length === 6) {
 				const allBackgrounds = Game.methodObjects.filter(bg => bg.id.includes('arena-robot-details-btn-'));
 				allBackgrounds.forEach(bg => {
 					bg.color = 'darkgrey';	
@@ -419,7 +420,191 @@ const maulPage = {
 						id: 'send-robots-right',
 						action: { 
 							method: function(id) {
+								if (gameObject.arenaGameStarted && gameObject.selectedRobot.length === 6 && gameObject.arenaBlueGameMoney >= 10) {
+									gameObject.arenaBlueGameMoney-= 10;
+									// future Jordan, update the money objects
+									const blueRobot = {
+										posX: Game.placeEntityX(0.50),
+										posY: Game.placeEntityY(0.50),
+										width: (Game.entitySize * 1.5),
+										height: (Game.entitySize * 1.5),
+										id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCound,
+										hp: 10,
+										robotParts: gameObject.selectedRobot,
+									}
 									
+									Game.methodSetup = {
+										method: function(id) {
+											drawButton({
+												posX: blueRobot.posX,
+												posY: blueRobot.posY,
+												width: blueRobot.width,
+												height: blueRobot.height,
+												lineWidth: 1,
+												btnColor: drawRobotSelectPreviewParts('chassis', blueRobot?.robotParts),
+												txtColor: 'white',
+												font: '1.5em serif',
+												msg: '',
+												isFilled: true,
+												id: blueRobot.id,
+												action: {
+													method: function(id) {
+															
+													}
+												},
+												isModalBtn: false,
+												props: {
+													drawHead: function(parent) {
+														Game.methodSetup = {
+															method: function(id) {
+																drawButton({
+																	posX: parent.posX + (Game.entitySize * 0.15),
+																	posY: parent.posY - (Game.entitySize * 1.25),
+																	width: (Game.entitySize * 1.25),
+																	height: (Game.entitySize * 1.25),
+																	lineWidth: 1,
+																	btnColor: drawRobotSelectPreviewParts('head', blueRobot?.robotParts),
+																	txtColor: 'white',
+																	font: '1.5em serif',
+																	msg: '',
+																	isFilled: true,
+																	id: parent.id,
+																	action: {
+																		method: function(id) {
+																				
+																		}
+																	},
+																	isModalBtn: false,
+																	props: {},
+																	methodId: id
+																});
+															}
+														};
+														Game.addMethod(Game.methodSetup);
+													},
+													drawLeftArm: function(parent) {
+														Game.methodSetup = {
+															method: function(id) {
+																drawButton({
+																	posX: parent.posX - (Game.entitySize * 0.375),
+																	posY: parent.posY,
+																	width: (Game.entitySize * 0.375),
+																	height: (Game.entitySize * 1.5),
+																	lineWidth: 1,
+																	btnColor: drawRobotSelectPreviewParts('left-arm', blueRobot?.robotParts),
+																	txtColor: 'white',
+																	font: '1.5em serif',
+																	msg: '',
+																	isFilled: true,
+																	id: parent.id,
+																	action: {
+																		method: function(id) {
+																				
+																		}
+																	},
+																	isModalBtn: false,
+																	props: {},
+																	methodId: id
+																});
+															}
+														};
+														Game.addMethod(Game.methodSetup);
+													},
+													drawRightArm: function(parent) {
+														Game.methodSetup = {
+															method: function(id) {
+																drawButton({
+																	posX: parent.posX + (Game.entitySize * 1.5),
+																	posY: parent.posY,
+																	width: (Game.entitySize * 0.375),
+																	height: (Game.entitySize * 1.5),
+																	lineWidth: 1,
+																	btnColor: drawRobotSelectPreviewParts('right-arm', blueRobot?.robotParts),
+																	txtColor: 'white',
+																	font: '1.5em serif',
+																	msg: '',
+																	isFilled: true,
+																	id: parent.id,
+																	action: {
+																		method: function(id) {
+																				
+																		}
+																	},
+																	isModalBtn: false,
+																	props: {},
+																	methodId: id
+																});
+															}
+														};
+														Game.addMethod(Game.methodSetup);
+													},
+													drawLeftLeg: function(parent) {
+														Game.methodSetup = {
+															method: function(id) {
+																drawButton({
+																	posX: parent.posX + (Game.entitySize * 0.125),
+																	posY: parent.posY + (Game.entitySize * 1.5),
+																	width: (Game.entitySize * 0.375),
+																	height: (Game.entitySize * 1.5),
+																	lineWidth: 1,
+																	btnColor: drawRobotSelectPreviewParts('left-leg', blueRobot?.robotParts),
+																	txtColor: 'white',
+																	font: '1.5em serif',
+																	msg: '',
+																	isFilled: true,
+																	id: parent.id,
+																	action: {
+																		method: function(id) {
+																				
+																		}
+																	},
+																	isModalBtn: false,
+																	props: {},
+																	methodId: id
+																});
+															}
+														};
+														Game.addMethod(Game.methodSetup);
+													},
+													drawRightLeg: function(parent) {
+														Game.methodSetup = {
+															method: function(id) {
+																drawButton({
+																	posX: parent.posX + (Game.entitySize * 1.075),
+																	posY: parent.posY + (Game.entitySize * 1.5),
+																	width: (Game.entitySize * 0.375),
+																	height: (Game.entitySize * 1.5),
+																	lineWidth: 1,
+																	btnColor: drawRobotSelectPreviewParts('right-leg', blueRobot?.robotParts),
+																	txtColor: 'white',
+																	font: '1.5em serif',
+																	msg: '',
+																	isFilled: true,
+																	id: parent.id,
+																	action: {
+																		method: function(id) {
+																				
+																		}
+																	},
+																	isModalBtn: false,
+																	props: {},
+																	methodId: id
+																});
+															}
+														};
+														Game.addMethod(Game.methodSetup);
+													},
+												},
+												methodId: id
+											});
+										}
+									};
+									Game.addMethod(Game.methodSetup);
+									drawRobotSelectParts(blueRobot.id);
+									console.log(blueRobot);
+									gameObject.arenaBlueAttackers.push(blueRobot);
+									gameObject.arenaBlueSendCound++;
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1296,6 +1481,12 @@ const maulPage = {
 						setTimeout(function() {
 							gameObject.selectedRobot = [];
 							gameObject.selectedRobotDesign = -1;
+							gameObject.arenaGameRound = 1;
+							gameObject.arenaRoundSeconds = 15;
+							gameObject.arenaBlueGameMoney = 50;
+							gameObject.arenaRedGameMoney = 50;
+							gameObject.arenaBlueSendCound = 0;
+							gameObject.arenaRedSendCound = 0;
 							arenaPage.loadPage();
 						}, 2000);
 						
@@ -1303,6 +1494,27 @@ const maulPage = {
 				}
 				roundBackground.isAnim = true;
 			}, 1000);
+		}
+		let test = true;
+		function drawBlueSendRightRobots() {
+			// looks like this is binging back some dups?
+			// check the arenaBlueAttackers array to see if there's a difference there
+			// there's a chance the six records could be part of the rendering
+			const blueRobots = Game.methodObjects.filter(bg => bg.id.includes('arena-blue-att-robot-right-'));
+			
+			if (blueRobots.length > 1 && test) {
+				console.log(blueRobots.length, gameObject.arenaBlueAttackers.length);
+				test = false;
+			}
+			// future Jordan, we need to move these objects next
+			// we also need to loop through the length of blueRobot to find the robots to draw
+			// also, find out why it looks like six robots are being added at a time.
+			// I see one robot being added but a length of 6 blueRobots here
+			
+			// blueRobots.forEach((br, i) => {
+				 
+			// });
+			
 		}
 	}
 }

@@ -252,6 +252,8 @@ const gameObject = {
 	arenaBlueSendCound: 0, // how many robots the player has sent
 	arenaRedSendCound: 0, // how many robots COM has sent
 	arenaGameStarted: false, // has the game started?
+	arenaBlueAttackers: [],
+	arenaRedAttackers: [],
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
@@ -2273,11 +2275,21 @@ function drawRobotSelectParts(search = 'preview-robot') {
 	const findPreviews = setInterval(function() {
 		if (Game.methodObjects.filter(x => x.id === search).length > 0) {
 			Game.methodObjects.filter(x => x.id === search).forEach(robot => {
-				robot.props.drawHead(robot);
-				robot.props.drawLeftArm(robot);
-				robot.props.drawRightArm(robot);
-				robot.props.drawLeftLeg(robot);
-				robot.props.drawRightLeg(robot);
+				if (typeof robot.props.drawHead !== 'undefined') {
+					robot.props.drawHead(robot);
+				}
+				if (typeof robot.props.drawLeftArm !== 'undefined') {
+					robot.props.drawLeftArm(robot);
+				}
+				if (typeof robot.props.drawRightArm !== 'undefined') {
+					robot.props.drawRightArm(robot);
+				}
+				if (typeof robot.props.drawLeftLeg !== 'undefined') {
+					robot.props.drawLeftLeg(robot);
+				}
+				if (typeof robot.props.drawRightLeg !== 'undefined') {
+					robot.props.drawRightLeg(robot);
+				}
 			});
 			clearInterval(findPreviews);
 		}
