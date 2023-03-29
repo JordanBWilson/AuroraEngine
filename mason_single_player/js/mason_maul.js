@@ -35,27 +35,29 @@ const maulPage = {
 				let posY = 0;
 				gameObject.arenaBlueAttackers.forEach((br, i) => {
 					// future Jordan, resize the robots
+					// and figure out what's going on with the x-axis
+					// look at the two different gameCanvasWidth
 					gameCanvasWidth = Game.canvas.width;
 					gameCanvasHeight = Game.canvas.height;
-					if (gameCanvasWidth < br.posX) {
-						posX = gameCanvasWidth / br.posX
-						 console.log('posX ', posX);
-						
-					} 
 					if (gameCanvasWidth > br.posX) {
 						posX = br.posX / gameCanvasWidth;
-						// console.log('posX ', posX);
+						//console.log('posX ', posX);
 						
 					}
+					else if (gameCanvasWidth < br.posX) {
+						posX = gameCanvasWidth / br.posX
+						//console.log('posX ', posX);
+						
+					} 
 					//br.posX = Game.placeEntityX(posX);
 					if (gameCanvasHeight > br.posY) {
 						posY = br.posY / gameCanvasHeight;
-						// console.log('posY ', posY);
+						//console.log('posY ', posY);
 						
 					}
-					if (gameCanvasHeight < br.posY) {
+					else if (gameCanvasHeight < br.posY) {
 						posY = gameCanvasHeight / br.posY;
-						// console.log('posY ', posY);
+						//console.log('posY ', posY);
 						
 					}
 					//br.posY = Game.placeEntityY(posY);
@@ -65,7 +67,7 @@ const maulPage = {
 				// future Jordan, figure out how to center the x-axis
 				setTimeout(function() {
 					resizeRobots(posX, posY);
-				}, 100);
+				}, 200);
 				
 				
 				
