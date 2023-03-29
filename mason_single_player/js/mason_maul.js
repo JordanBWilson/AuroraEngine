@@ -11,7 +11,8 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+let gameCanvasWidth = Game.canvas.width;
+let gameCanvasHeight = Game.canvas.height;
 const maulPage = {
 	description: 'The multiplayer game',
 	loadPage: function() {
@@ -30,9 +31,54 @@ const maulPage = {
 				if (gameObject.selectedRobotDesign !== -1) {
 					selectArenaRobot(gameObject.selectedRobotDesign);
 				}
+				let posX = 0;
+				let posY = 0;
+				gameObject.arenaBlueAttackers.forEach((br, i) => {
+					// future Jordan, resize the robots
+					gameCanvasWidth = Game.canvas.width;
+					gameCanvasHeight = Game.canvas.height;
+					if (gameCanvasWidth < br.posX) {
+						posX = gameCanvasWidth / br.posX
+						 console.log('posX ', posX);
+						
+					} 
+					if (gameCanvasWidth > br.posX) {
+						posX = br.posX / gameCanvasWidth;
+						// console.log('posX ', posX);
+						
+					}
+					//br.posX = Game.placeEntityX(posX);
+					if (gameCanvasHeight > br.posY) {
+						posY = br.posY / gameCanvasHeight;
+						// console.log('posY ', posY);
+						
+					}
+					if (gameCanvasHeight < br.posY) {
+						posY = gameCanvasHeight / br.posY;
+						// console.log('posY ', posY);
+						
+					}
+					//br.posY = Game.placeEntityY(posY);
+					// console.log(gameCanvasWidth / br.posX, gameCanvasHeight / br.posY);
+				});
+				
+				// future Jordan, figure out how to center the x-axis
+				setTimeout(function() {
+					resizeRobots(posX, posY);
+				}, 100);
+				
+				
+				
+				// console.log(Game.canvas.width);
 			}
 		}
-		
+		function resizeRobots(posX, posY) {
+			console.log(posX, posY);
+			gameObject.arenaBlueAttackers.forEach((br, i) => {
+				br.posX = Game.placeEntityX(posX);
+				br.posY = Game.placeEntityY(posY);
+			});
+		}
 		function setupGame() {
 			drawGrassBackGround();
 			drawRobotSelection();
@@ -422,7 +468,12 @@ const maulPage = {
 							method: function(id) {
 								if (gameObject.arenaGameStarted && gameObject.selectedRobot.length === 6 && gameObject.arenaBlueGameMoney >= 10) {
 									gameObject.arenaBlueGameMoney-= 10;
-									// future Jordan, update the money objects
+									const moneyBackground = Game.methodObjects.find(bg => bg.id === 'money-bar-background');
+									const moneyCounter = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
+									if (moneyCounter) {
+										moneyCounter.msg = '$' + gameObject.arenaBlueGameMoney;
+										moneyBackground.isAnim = true;
+									}
 									const blueRobot = {
 										posX: Game.placeEntityX(0.50),
 										posY: Game.placeEntityY(0.50),
@@ -431,6 +482,7 @@ const maulPage = {
 										id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCound,
 										hp: 10,
 										robotParts: gameObject.selectedRobot,
+										direction: 'rt',
 									}
 									
 									Game.methodSetup = {
@@ -601,7 +653,6 @@ const maulPage = {
 									};
 									Game.addMethod(Game.methodSetup);
 									drawRobotSelectParts(blueRobot.id);
-									console.log(blueRobot);
 									gameObject.arenaBlueAttackers.push(blueRobot);
 									gameObject.arenaBlueSendCound++;
 								}
@@ -1487,6 +1538,7 @@ const maulPage = {
 							gameObject.arenaRedGameMoney = 50;
 							gameObject.arenaBlueSendCound = 0;
 							gameObject.arenaRedSendCound = 0;
+							gameObject.arenaGameStarted = false;
 							arenaPage.loadPage();
 						}, 2000);
 						
@@ -1495,25 +1547,10 @@ const maulPage = {
 				roundBackground.isAnim = true;
 			}, 1000);
 		}
-		let test = true;
 		function drawBlueSendRightRobots() {
-			// looks like this is binging back some dups?
-			// check the arenaBlueAttackers array to see if there's a difference there
-			// there's a chance the six records could be part of the rendering
-			const blueRobots = Game.methodObjects.filter(bg => bg.id.includes('arena-blue-att-robot-right-'));
-			
-			if (blueRobots.length > 1 && test) {
-				console.log(blueRobots.length, gameObject.arenaBlueAttackers.length);
-				test = false;
-			}
-			// future Jordan, we need to move these objects next
-			// we also need to loop through the length of blueRobot to find the robots to draw
-			// also, find out why it looks like six robots are being added at a time.
-			// I see one robot being added but a length of 6 blueRobots here
-			
-			// blueRobots.forEach((br, i) => {
-				 
-			// });
+			 gameObject.arenaBlueAttackers.forEach((br, i) => {
+				// future Jordan, make the robots move
+			 });
 			
 		}
 	}
