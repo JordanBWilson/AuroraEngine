@@ -69,18 +69,26 @@ const maulPage = {
 			}
 		}
 		function resizeRobots(robot, posX, posY) {
-			robot.posX = Game.placeEntityX(posX);
+			
+			// this offset is good for robots comming from the right.
+			// this will also need to work for robots coming from the left
+			
+			// console.log(posXOffset);
+			robot.posX = Game.placeEntityX(posX); // (posXOffset * -1)
 			robot.posY = Game.placeEntityY(posY);
 			robot.width = (Game.entitySize * 1.5);
 			robot.height = (Game.entitySize * 1.5);
 		}
 		function resizeRobotCoords(robot, posX, posY) {
-			// condense the resize function for reuse on red
+			// future Jordan look into the proper offset here on resizeRobots() above
+			let posXOffset = gameCanvasHeight * 0.01;
+			posXOffset = posXOffset / 100;
+			
 			if (gameCanvasWidth > robot.posX) {
-				posX = robot.posX / gameCanvasWidth;
+				posX = (robot.posX / gameCanvasWidth); // - posXOffset;
 			}
 			else if (gameCanvasWidth < robot.posX) {
-				posX = gameCanvasWidth / robot.posX
+				posX = (gameCanvasWidth / robot.posX); // - posXOffset;
 			}
 			if (gameCanvasHeight > robot.posY) {
 				posY = robot.posY / gameCanvasHeight;
@@ -88,6 +96,7 @@ const maulPage = {
 			else if (gameCanvasHeight < robot.posY) {
 				posY = gameCanvasHeight / robot.posY;
 			}
+			console.log(posX, posY);
 			resizeRobots(robot, posX, posY);
 			const coords = { x: posX, y: posY };
 			return coords;
@@ -508,7 +517,8 @@ const maulPage = {
 										moneyBackground.isAnim = true;
 									}
 									const blueRobot = {
-										posX: Game.placeEntityX(0.999),
+										// future Jordan, fix this once we find the proper offset
+										posX: Game.placeEntityX(0.90), // 0.999
 										posY: Game.placeEntityY(0.265), // reds bots start position- posY: Game.placeEntityY(0.615),
 										width: (Game.entitySize * 1.5),
 										height: (Game.entitySize * 1.5),
@@ -1544,8 +1554,12 @@ const maulPage = {
 						// future Jordan we are going to need some sort of 'marker' to know where each robot is.
 						// when resizing the screen, using exact percents can cause the robot to jump.
 						// the marker will be a place of reference for when the screen changes preventing the jumps.
-						rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-						gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
+						
+						//rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
+						//gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
+						
+						//rob.posX = Game.placeEntityX(0.90);
+						//gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(0.90);
 					});
 				}
 			 });
