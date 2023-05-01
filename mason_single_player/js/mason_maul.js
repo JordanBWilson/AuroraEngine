@@ -72,7 +72,15 @@ const maulPage = {
 			
 			// this offset is good for robots comming from the right.
 			// this will also need to work for robots coming from the left
-			
+			//let posXOffset = gameCanvasHeight * 0.001;
+			//posXOffset = posXOffset / 100;
+			//console.log(gameCanvasWidth, prevCanvasWidth);
+			//if (gameCanvasWidth < prevCanvasWidth) {
+				//posX = posX - (posXOffset);
+			//} else if (gameCanvasWidth > prevCanvasWidth) {
+				//// posX = posX + (posXOffset);
+			//}
+			// 
 			// console.log(posXOffset);
 			robot.posX = Game.placeEntityX(posX); // (posXOffset * -1)
 			robot.posY = Game.placeEntityY(posY);
@@ -81,22 +89,39 @@ const maulPage = {
 		}
 		function resizeRobotCoords(robot, posX, posY) {
 			// future Jordan look into the proper offset here on resizeRobots() above
-			let posXOffset = gameCanvasHeight * 0.01;
-			posXOffset = posXOffset / 100;
+			// let posXOffset = gameCanvasHeight * 0.45;
+			// posXOffset = posXOffset / 100;
+			
+			//let posXOffsetRaw = gameCanvasHeight * 0.001;
+			//let posXOffset = posXOffsetRaw / 100;
 			
 			if (gameCanvasWidth > robot.posX) {
-				posX = (robot.posX / gameCanvasWidth); // - posXOffset;
+				// console.log(posXOffset, posX, posY);
+				//if (gameCanvasWidth < prevCanvasWidth) {
+					////posX = (robot.posX / gameCanvasWidth) - (posXOffset);
+					//robot.posX = robot.posX - posXOffsetRaw;
+					//console.log('here');
+				//} else if (gameCanvasWidth > prevCanvasWidth) {
+					//robot.posX = robot.posX + posXOffsetRaw;
+					//console.log('there');
+					////posX = (robot.posX / gameCanvasWidth) + (posXOffset);
+				//} else {
+					//// console.log('else');
+					////posX = (robot.posX / gameCanvasWidth) - (posXOffset);
+				//}
+				posX = (robot.posX / gameCanvasWidth); // - (posXOffset); // - posXOffset;
 			}
-			else if (gameCanvasWidth < robot.posX) {
-				posX = (gameCanvasWidth / robot.posX); // - posXOffset;
-			}
+			//else if (gameCanvasWidth < robot.posX) { // may not need this method. Only fires when a robot is all the way right
+				//console.log('here');
+				//posX = (gameCanvasWidth / robot.posX); // - posXOffset; //  + (posXOffset)
+			//}
 			if (gameCanvasHeight > robot.posY) {
 				posY = robot.posY / gameCanvasHeight;
 			}
 			else if (gameCanvasHeight < robot.posY) {
 				posY = gameCanvasHeight / robot.posY;
 			}
-			console.log(posX, posY);
+			// console.log(posX, posY);
 			resizeRobots(robot, posX, posY);
 			const coords = { x: posX, y: posY };
 			return coords;
@@ -109,11 +134,41 @@ const maulPage = {
 			drawBasesAndSends();
 			drawBlueTowerSpawns();
 			drawRedTowerSpawns();
+			drawBlueRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
 			Game.methodSetup = { method: function(id) { moveBlueRobots(); }};
 			Game.addMethod(Game.methodSetup);
+			// future Jordan, just to note, if we go with the 'guard rails' approach, to keep the robots in 
+			// place we will also need a hard pixel stop to make sure robots cant stray off too far,
+			// kind of like how it is now. It's not perfect but it's close enough if a player resizes the
+			// screen at a 'bad time'.
+			Game.collisionSetup = {
+				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+				target: 'blue-stop-1',
+				method: function(id) {
+					// future Jordan, make a method that sets up all the collisions.
+					// make a method for the split shenanigans as well when we're done here
+					// for red and blues guide rails. position the rails in the ideal place
+					const split = this.primary.split('-');
+					const sendCountId = +split[split.length-1]++;
+					let collisionId = '';
+					for (let i = 0; i < split.length; i++) {
+						// console.log(i, split[i]);
+						if (i < (split.length -1)) {
+							collisionId += (split[i] + '-');
+						} else {
+							collisionId += split[i];
+						}
+					}
+					console.log(collisionId);
+					// use the collisionId to find what object was hit
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			console.log(Main.collisions);
 		}
 		
 		function drawGrassBackGround() {
@@ -475,7 +530,7 @@ const maulPage = {
 										posY: Game.placeEntityY(0.265), // reds bots start position- posY: Game.placeEntityY(0.615),
 										width: (Game.entitySize * 1.5),
 										height: (Game.entitySize * 1.5),
-										id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCound,
+										id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 										hp: 10,
 										robotParts: gameObject.selectedRobot,
 										direction: 'lt',
@@ -518,17 +573,38 @@ const maulPage = {
 									}
 									const blueRobot = {
 										// future Jordan, fix this once we find the proper offset
-										posX: Game.placeEntityX(0.90), // 0.999
+										posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
 										posY: Game.placeEntityY(0.265), // reds bots start position- posY: Game.placeEntityY(0.615),
 										width: (Game.entitySize * 1.5),
 										height: (Game.entitySize * 1.5),
-										id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCound,
+										id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 										hp: 10,
 										robotParts: gameObject.selectedRobot,
 										direction: 'rt',
 										stop: 0,
 									}
 									sendBlueRobot(blueRobot);
+									Game.collisionSetup = {
+										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+										target: 'blue-stop-1',
+										method: function(id) {
+											const split = this.primary.split('-');
+											+split[split.length-1]++;
+											let collisionId = '';
+											for (let i = 0; i < split.length; i++) {
+												if (i < (split.length -1)) {
+													collisionId += (split[i] + '-');
+												} else {
+													collisionId += split[i];
+												}
+												
+											}
+											console.log(collisionId);
+										},
+										methodId: undefined,
+									}
+									Game.addCollision(Game.collisionSetup);
+									
 								}
 							}
 						},
@@ -662,7 +738,7 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
-			gameObject.arenaBlueSendCound++;
+			gameObject.arenaBlueSendCount++;
 		}
 		function drawBlueRoads() {
 			Game.methodSetup = {
@@ -977,7 +1053,7 @@ const maulPage = {
 						font: '0.8em serif',
 						msg: 'Tower',
 						isFilled: true,
-						id: 'blue-right-tower-spawn-1',
+						id: 'blue-left-tower-spawn-1',
 						action: { 
 							method: function(id) {
 									
@@ -1003,7 +1079,7 @@ const maulPage = {
 						font: '0.8em serif',
 						msg: 'Tower',
 						isFilled: true,
-						id: 'blue-right-tower-spawn-2',
+						id: 'blue-left-tower-spawn-2',
 						action: { 
 							method: function(id) {
 									
@@ -1029,7 +1105,7 @@ const maulPage = {
 						font: '0.8em serif',
 						msg: 'Tower',
 						isFilled: true,
-						id: 'blue-right-tower-spawn-3',
+						id: 'blue-left-tower-spawn-3',
 						action: { 
 							method: function(id) {
 									
@@ -1055,7 +1131,7 @@ const maulPage = {
 						font: '0.8em serif',
 						msg: 'Tower',
 						isFilled: true,
-						id: 'blue-right-tower-spawn-4',
+						id: 'blue-left-tower-spawn-4',
 						action: { 
 							method: function(id) {
 									
@@ -1184,7 +1260,7 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-1',
+						id: 'red-left-tower-spawn-1',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1202,7 +1278,7 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-2',
+						id: 'red-left-tower-spawn-2',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1220,7 +1296,7 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-3',
+						id: 'red-left-tower-spawn-3',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1238,7 +1314,7 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-4',
+						id: 'red-left-tower-spawn-4',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1256,7 +1332,7 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-5',
+						id: 'red-right-tower-spawn-5',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1274,7 +1350,7 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-6',
+						id: 'red-right-tower-spawn-6',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1292,7 +1368,7 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-7',
+						id: 'red-right-tower-spawn-7',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1310,7 +1386,27 @@ const maulPage = {
 						lineWidth: 1,
 						color: 'darkorange',
 						isFilled: true,
-						id: 'red-tower-spawn-8',
+						id: 'red-right-tower-spawn-8',
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function drawBlueRobotRoadNavigation() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.935, (Game.entitySize * 9.6)),
+						posY: Game.placeEntityY(0.25),
+						width: (Game.entitySize * 4),
+						height: (Game.entitySize * 4),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-stop-1',
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1499,9 +1595,9 @@ const maulPage = {
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
 					gameObject.arenaBlueGameMoney += 50;
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCound * 2);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
 					gameObject.arenaRedGameMoney += 50;
-					gameObject.arenaRedGameMoney += (gameObject.arenaBlueSendCound * 2);
+					gameObject.arenaRedGameMoney += (gameObject.arenaBlueSendCount * 2);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
@@ -1533,8 +1629,8 @@ const maulPage = {
 							gameObject.arenaRoundSeconds = 15;
 							gameObject.arenaBlueGameMoney = 50;
 							gameObject.arenaRedGameMoney = 50;
-							gameObject.arenaBlueSendCound = 0;
-							gameObject.arenaRedSendCound = 0;
+							gameObject.arenaBlueSendCount = 0;
+							gameObject.arenaRedSendCount = 0;
 							gameObject.arenaGameStarted = false;
 							arenaPage.loadPage();
 						}, 2000);
@@ -1554,9 +1650,18 @@ const maulPage = {
 						// future Jordan we are going to need some sort of 'marker' to know where each robot is.
 						// when resizing the screen, using exact percents can cause the robot to jump.
 						// the marker will be a place of reference for when the screen changes preventing the jumps.
+						if (!Main.isResizing) {
+							rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
+							gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
+							const posXPerc = (rob.posX / gameCanvasWidth);
+							// console.log(posXPerc)
+							if (posXPerc <= 0.903) {
+								br.stop++;
+								rob.posX = Game.placeEntityX(posXPerc);
+								gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(posXPerc);
+							}
+						}
 						
-						//rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-						//gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
 						
 						//rob.posX = Game.placeEntityX(0.90);
 						//gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(0.90);

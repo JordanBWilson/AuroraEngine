@@ -249,8 +249,8 @@ const gameObject = {
 	arenaRedGameMoney: 50, // how much money COM starts out with
 	arenaGameRound: 1,
 	arenaGameMaxRounds: 12,
-	arenaBlueSendCound: 0, // how many robots the player has sent
-	arenaRedSendCound: 0, // how many robots COM has sent
+	arenaBlueSendCount: 0, // how many robots the player has sent
+	arenaRedSendCount: 0, // how many robots COM has sent
 	arenaGameStarted: false, // has the game started?
 	arenaBlueAttackers: [],
 	arenaRedAttackers: [],
