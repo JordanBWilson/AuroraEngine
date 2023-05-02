@@ -134,7 +134,7 @@ const maulPage = {
 			drawBasesAndSends();
 			drawBlueTowerSpawns();
 			drawRedTowerSpawns();
-			drawBlueRobotRoadNavigation();
+			// drawBlueRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
@@ -146,7 +146,7 @@ const maulPage = {
 			// screen at a 'bad time'.
 			Game.collisionSetup = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-				target: 'blue-stop-1',
+				target: 'red-right-base-road-2', // red-right-base-road-2 // blue-stop-1
 				method: function(id) {
 					// future Jordan, make a method that sets up all the collisions.
 					// make a method for the split shenanigans as well when we're done here
@@ -586,7 +586,7 @@ const maulPage = {
 									sendBlueRobot(blueRobot);
 									Game.collisionSetup = {
 										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										target: 'blue-stop-1',
+										target: 'red-right-base-road-2', // red-right-base-road-2 // blue-stop-1
 										method: function(id) {
 											const split = this.primary.split('-');
 											+split[split.length-1]++;
@@ -1399,7 +1399,7 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.935, (Game.entitySize * 9.6)),
+						posX: Game.placeEntityX(0.903, (Game.entitySize * 10.6)), // , (Game.entitySize * 9.6)
 						posY: Game.placeEntityY(0.25),
 						width: (Game.entitySize * 4),
 						height: (Game.entitySize * 4),
@@ -1655,7 +1655,7 @@ const maulPage = {
 							gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
 							const posXPerc = (rob.posX / gameCanvasWidth);
 							// console.log(posXPerc)
-							if (posXPerc <= 0.903) {
+							if (posXPerc <= 0.903) { // 903
 								br.stop++;
 								rob.posX = Game.placeEntityX(posXPerc);
 								gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(posXPerc);
