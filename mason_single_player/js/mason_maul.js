@@ -21,8 +21,6 @@ const maulPage = {
 		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
 		// --finish up positioning the blue robots spawn positions and set up red spawn position.
 		// --make the robots move
-		let gameCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
-		let gameCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 		const roadImg = new Image();
@@ -33,95 +31,62 @@ const maulPage = {
 		Game.pageResized = {
 			section: 'arena-game',
 			method: function() {
+				// future Jordan, we are going to have to manually reposition the 'send' buttons, tower positions and blue and red bases
+				// they may look like they are in the correct position but you can't click on them
+				// we no longer need as many markers for the robots to follow. remove the collisions and most of the markers that
+				// don't change the positions (so everything except the second marker) condense this method: drawBlueRobotRoadNavigation();
 				if (gameObject.selectedRobotDesign !== -1) {
+					console.log(gameObject.selectedRobotDesign);
 					selectArenaRobot(gameObject.selectedRobotDesign);
 				}
 				let posX = 0;
 				let posY = 0;
+				Game.canvas.width = prevCanvasWidth;
+				Game.canvas.height = prevCanvasHeight;
+				Game.entitySize = (Game.canvas.height * 0.01);
+				Game.entityWidth = (Game.canvas.width * 0.01);
 				// resize blue's robots
 				gameObject.arenaBlueAttackers.forEach((br, i) => {
-					gameCanvasWidth = JSON.parse(JSON.stringify(prevCanvasWidth));
-					gameCanvasHeight = JSON.parse(JSON.stringify(prevCanvasHeight));
 					let coords = resizeRobotCoords(br, posX, posY);
 					posX = coords.x;
 					posY = coords.y;
-					gameCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
-					gameCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 					resizeRobotCoords(br, posX, posY);
 					posX = 0;
 					posY = 0;
 				});
 				// resize red's robots
 				gameObject.arenaRedAttackers.forEach((rr, i) => {
-					gameCanvasWidth = JSON.parse(JSON.stringify(prevCanvasWidth));
-					gameCanvasHeight = JSON.parse(JSON.stringify(prevCanvasHeight));
 					let coords = resizeRobotCoords(rr, posX, posY);
 					posX = coords.x;
 					posY = coords.y;
-					gameCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
-					gameCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 					resizeRobotCoords(rr, posX, posY);
 					posX = 0;
 					posY = 0;
 				});
-				prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
-				prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 			}
 		}
 		function resizeRobots(robot, posX, posY) {
-			
-			// this offset is good for robots comming from the right.
-			// this will also need to work for robots coming from the left
-			//let posXOffset = gameCanvasHeight * 0.001;
-			//posXOffset = posXOffset / 100;
-			//console.log(gameCanvasWidth, prevCanvasWidth);
-			//if (gameCanvasWidth < prevCanvasWidth) {
-				//posX = posX - (posXOffset);
-			//} else if (gameCanvasWidth > prevCanvasWidth) {
-				//// posX = posX + (posXOffset);
-			//}
-			// 
-			// console.log(posXOffset);
-			robot.posX = Game.placeEntityX(posX); // (posXOffset * -1)
+			robot.posX = Game.placeEntityX(posX);
 			robot.posY = Game.placeEntityY(posY);
 			robot.width = (Game.entitySize * 1.5);
 			robot.height = (Game.entitySize * 1.5);
 		}
 		function resizeRobotCoords(robot, posX, posY) {
-			// future Jordan look into the proper offset here on resizeRobots() above
-			// let posXOffset = gameCanvasHeight * 0.45;
-			// posXOffset = posXOffset / 100;
 			
-			//let posXOffsetRaw = gameCanvasHeight * 0.001;
-			//let posXOffset = posXOffsetRaw / 100;
-			
-			if (gameCanvasWidth > robot.posX) {
-				// console.log(posXOffset, posX, posY);
-				//if (gameCanvasWidth < prevCanvasWidth) {
-					////posX = (robot.posX / gameCanvasWidth) - (posXOffset);
-					//robot.posX = robot.posX - posXOffsetRaw;
-					//console.log('here');
-				//} else if (gameCanvasWidth > prevCanvasWidth) {
-					//robot.posX = robot.posX + posXOffsetRaw;
-					//console.log('there');
-					////posX = (robot.posX / gameCanvasWidth) + (posXOffset);
-				//} else {
-					//// console.log('else');
-					////posX = (robot.posX / gameCanvasWidth) - (posXOffset);
-				//}
-				posX = (robot.posX / gameCanvasWidth); // - (posXOffset); // - posXOffset;
+			if (prevCanvasWidth > robot.posX) {
+				console.log(prevCanvasWidth, robot.posX);
+				posX = (robot.posX / prevCanvasWidth);
 			}
-			//else if (gameCanvasWidth < robot.posX) { // may not need this method. Only fires when a robot is all the way right
-				//console.log('here');
-				//posX = (gameCanvasWidth / robot.posX); // - posXOffset; //  + (posXOffset)
-			//}
-			if (gameCanvasHeight > robot.posY) {
-				posY = robot.posY / gameCanvasHeight;
+			else if (prevCanvasWidth < robot.posX) { // may not need this method. Only fires when a robot is all the way right
+				posX = (prevCanvasWidth / robot.posX);
 			}
-			else if (gameCanvasHeight < robot.posY) {
-				posY = gameCanvasHeight / robot.posY;
+			if (prevCanvasHeight > robot.posY) {
+				posY = robot.posY / prevCanvasHeight;
 			}
-			// console.log(posX, posY);
+			else if (prevCanvasHeight < robot.posY) {
+				posY = prevCanvasHeight / robot.posY;
+			}
+			console.log(posX, posY);
 			resizeRobots(robot, posX, posY);
 			const coords = { x: posX, y: posY };
 			return coords;
@@ -149,24 +114,9 @@ const maulPage = {
 			// continue making the stops and hide them when we're done
 			Game.collisionSetup = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-				target: 'blue-stop-1', // red-right-base-road-2 // blue-stop-1
+				target: 'blue-stop-1',
 				method: function(id) {
-					// future Jordan, make a method that sets up all the collisions.
-					// make a method for the split shenanigans as well when we're done here (perhaps not needed anymore)
-					// for red and blues guide rails. position the rails in the ideal place
-					//const split = this.primary.split('-');
-					//const sendCountId = +split[split.length-1]++;
-					//let collisionId = '';
-					//for (let i = 0; i < split.length; i++) {
-						//// console.log(i, split[i]);
-						//if (i < (split.length -1)) {
-							//collisionId += (split[i] + '-');
-						//} else {
-							//collisionId += split[i];
-						//}
-					//}
-					//console.log(collisionId);
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary); // gameObject.arenaBlueAttackers
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser.stop == 0) {
 						robotPasser.stop++;
@@ -181,18 +131,7 @@ const maulPage = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'blue-stop-2',
 				method: function(id) {
-					//const split = this.primary.split('-');
-					//const sendCountId = +split[split.length-1]++;
-					//let collisionId = '';
-					//for (let i = 0; i < split.length; i++) {
-						//if (i < (split.length -1)) {
-							//collisionId += (split[i] + '-');
-						//} else {
-							//collisionId += split[i];
-						//}
-					//}
-					//console.log(collisionId);
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary); // gameObject.arenaBlueAttackers
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser.stop == 1) { // moving down the road now
 						robotPasser.stop++;
@@ -206,17 +145,6 @@ const maulPage = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'blue-stop-3',
 				method: function(id) {
-					//const split = this.primary.split('-');
-					//const sendCountId = +split[split.length-1]++;
-					//let collisionId = '';
-					//for (let i = 0; i < split.length; i++) {
-						//if (i < (split.length -1)) {
-							//collisionId += (split[i] + '-');
-						//} else {
-							//collisionId += split[i];
-						//}
-					//}
-					//console.log(collisionId);
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary); // gameObject.arenaBlueAttackers
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser.stop == 2) {
@@ -632,9 +560,8 @@ const maulPage = {
 										moneyBackground.isAnim = true;
 									}
 									const blueRobot = {
-										// future Jordan, fix this once we find the proper offset
 										posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
-										posY: Game.placeEntityY(0.265), // reds bots start position- posY: Game.placeEntityY(0.615),
+										posY: Game.placeEntityY(0.265), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
 										width: (Game.entitySize * 1.5),
 										height: (Game.entitySize * 1.5),
 										id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
@@ -646,76 +573,40 @@ const maulPage = {
 									sendBlueRobot(blueRobot);
 									Game.collisionSetup = {
 										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										target: 'blue-stop-1', // red-right-base-road-2 // blue-stop-1
+										target: 'blue-stop-1',
 										method: function(id) {
-											//const split = this.primary.split('-');
-											//+split[split.length-1]++;
-											//let collisionId = '';
-											//for (let i = 0; i < split.length; i++) {
-												//if (i < (split.length -1)) {
-													//collisionId += (split[i] + '-');
-												//} else {
-													//collisionId += split[i];
-												//}
-												
-											//}
-											const robot = Game.methodObjects.find(bg => bg.id === this.primary); // gameObject.arenaBlueAttackers
+											const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 											const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 											if (robotPasser.stop == 0) {
 												robotPasser.stop++;
 											}
-											// console.log(collisionId);
 										},
 										methodId: undefined,
 									}
 									Game.addCollision(Game.collisionSetup);
 									Game.collisionSetup = {
 										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										target: 'blue-stop-2', // red-right-base-road-2 // blue-stop-1
+										target: 'blue-stop-2',
 										method: function(id) {
-											//const split = this.primary.split('-');
-											//+split[split.length-1]++;
-											//let collisionId = '';
-											//for (let i = 0; i < split.length; i++) {
-												//if (i < (split.length -1)) {
-													//collisionId += (split[i] + '-');
-												//} else {
-													//collisionId += split[i];
-												//}
-												
-											//}
-											const robot = Game.methodObjects.find(bg => bg.id === this.primary); // gameObject.arenaBlueAttackers
+											const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 											const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 											if (robotPasser.stop == 1) {
 												robotPasser.stop++;
 											}
-											// console.log(collisionId);
 										},
 										methodId: undefined,
 									}
 									Game.addCollision(Game.collisionSetup);
 									Game.collisionSetup = {
 										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										target: 'blue-stop-3', // red-right-base-road-2 // blue-stop-1
+										target: 'blue-stop-3',
 										method: function(id) {
-											//const split = this.primary.split('-');
-											//+split[split.length-1]++;
-											//let collisionId = '';
-											//for (let i = 0; i < split.length; i++) {
-												//if (i < (split.length -1)) {
-													//collisionId += (split[i] + '-');
-												//} else {
-													//collisionId += split[i];
-												//}
-												
-											//}
-											const robot = Game.methodObjects.find(bg => bg.id === this.primary); // gameObject.arenaBlueAttackers
+											const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 											const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 											if (robotPasser.stop == 2) {
 												robotPasser.stop++;
 												console.log('did it!');
 											}
-											// console.log(collisionId);
 										},
 										methodId: undefined,
 									}
@@ -1784,6 +1675,10 @@ const maulPage = {
 							gameObject.arenaBlueSendCount = 0;
 							gameObject.arenaRedSendCount = 0;
 							gameObject.arenaGameStarted = false;
+							Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
+							Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
+							Game.entitySize = (Game.canvas.height * 0.01);
+							Game.entityWidth = (Game.canvas.width * 0.01);
 							arenaPage.loadPage();
 						}, 2000);
 						
@@ -1793,43 +1688,39 @@ const maulPage = {
 			}, 1000);
 		}
 		function moveBlueRobots() {
-			 gameObject.arenaBlueAttackers.forEach((br, i) => {
+			if (!Main.isResizing) {
+				gameObject.arenaBlueAttackers.forEach((br, i) => {
 				// future Jordan, make the robots move
-				const robot = Game.methodObjects.filter(bg => bg.id === br.id);
-				if (br.direction === 'rt' && br.stop <= 1) {
-					
-					robot.forEach((rob, j) => {
-						// future Jordan base the speed on the robot's stats
-						// future Jordan we are going to need some sort of 'marker' to know where each robot is.
-						// when resizing the screen, using exact percents can cause the robot to jump.
-						// the marker will be a place of reference for when the screen changes preventing the jumps.
-						if (!Main.isResizing) {
-							rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-							gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-							//const posXPerc = (rob.posX / gameCanvasWidth);
-							 //console.log(posXPerc)
-							//if (posXPerc <= 0.903) { // 903
-								//br.stop++;
-								//rob.posX = Game.placeEntityX(posXPerc);
-								//gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(posXPerc);
-							//}
-						}
+					const robot = Game.methodObjects.filter(bg => bg.id === br.id);
+					if (br.direction === 'rt' && br.stop <= 1) {
 						
-						
-						//rob.posX = Game.placeEntityX(0.90);
-						//gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(0.90);
-					});
-				}
-				if (br.direction === 'rt' && br.stop === 2) {
-					robot.forEach((rob, j) => {
-						if (!Main.isResizing) {
-							rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-							gameObject.arenaBlueAttackers[i].posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-						}
-					});
-				}
-			 });
-			
+						robot.forEach((rob, j) => {
+							// future Jordan base the speed on the robot's stats
+							if (!Main.isResizing) {
+								// rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
+								// gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
+								
+								// future Jordan, below is how we will move the robots on the screen
+								const posXPerc = ((rob.posX - (prevCanvasWidth * 0.0001)) / prevCanvasWidth);
+								rob.posX = Game.placeEntityX(posXPerc);
+								gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(posXPerc);
+							}
+							
+							
+							//rob.posX = Game.placeEntityX(0.90);
+							//gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(0.90);
+						});
+					}
+					if (br.direction === 'rt' && br.stop === 2) {
+						robot.forEach((rob, j) => {
+							if (!Main.isResizing) {
+								// rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
+								// gameObject.arenaBlueAttackers[i].posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
+							}
+						});
+					}
+				});
+			}
 		}
 	}
 }
