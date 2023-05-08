@@ -228,6 +228,7 @@ const Game = { // the user will want to use this object
 	section: '', // this is the page you're on. Has to be filled out
 	method: function() {/*put the methods you want fired here*/}
   },
+  keepPreviousSize: false, // whatever the size of the client is, leave it alone when page resizes
 };
 
 const Main = { // global variables to keep the game running nicely

@@ -54,6 +54,7 @@ function mainLoop() {
           }
           Main.methodsToRun[i].method(Main.methodsToRun[i].methodId); // run through all the methods the user sent us
           if (Main.isStageTapped) { // when the stage is tapped
+			  console.log('stage tapped');
             if (Game.methodObjects[i]?.isBtn) { // look to see if the user tapped on a button
               isButtonTapped(Game.methodObjects[i]);
               if (i == Main.methodsToRun.length - 1) {
@@ -89,26 +90,30 @@ function mainLoop() {
 function resizeStage() {
   // don't want to grab the new width and height too many times..
   clearTimeout(Main.resizeWindow);
-  Main.resizeWindow = setTimeout(function() {
-    // resize the game stage and set new base values
-    Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
-    Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
-    Game.entitySize = (Game.canvas.height * 0.01);
-    Game.entityWidth = (Game.canvas.width * 0.01);
-    Main.isResizing = true;
-    Game.isLoaded = true;
-    const doneResizing = setTimeout(function() {
-      Main.isResizing = false;
-      removeLoadingScreen();
-      clearTimeout(doneResizing);
-    }, 100);
-  }, Main.resizeWindowTime);
+  if (!Game.keepPreviousSize) {
+	Main.resizeWindow = setTimeout(function() {
+		// resize the game stage and set new base values
+		Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
+		Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
+		Game.entitySize = (Game.canvas.height * 0.01);
+		Game.entityWidth = (Game.canvas.width * 0.01);
+		Main.isResizing = true;
+		Game.isLoaded = true;
+		const doneResizing = setTimeout(function() {
+		  Main.isResizing = false;
+		  removeLoadingScreen();
+		  clearTimeout(doneResizing);
+		}, 100);
+	  }, Main.resizeWindowTime);
+  }
+  
 }
 
 function screenTapped(event) {
-  Main.isStageTapped = event ? true : false;
-  Main.tappedX = event.clientX;
-  Main.tappedY = event.clientY;
+	const boundingBox = Game.canvas.getBoundingClientRect();
+	Main.isStageTapped = event ? true : false;
+	Main.tappedX = event.clientX - boundingBox.left;
+	Main.tappedY = event.clientY - boundingBox.top;
 }
 
 function isButtonTapped(btnParams) {

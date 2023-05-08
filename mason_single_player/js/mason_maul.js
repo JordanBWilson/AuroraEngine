@@ -16,6 +16,7 @@ const maulPage = {
 	description: 'The multiplayer game',
 	loadPage: function() {
 		gameObject.selectedRobot = [];
+		Game.keepPreviousSize = true;
 		Game.clearStage();
 		// future Jordan, work on double tapping towers.
 		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
@@ -31,12 +32,11 @@ const maulPage = {
 		Game.pageResized = {
 			section: 'arena-game',
 			method: function() {
-				// future Jordan, we are going to have to manually reposition the 'send' buttons, tower positions and blue and red bases
-				// they may look like they are in the correct position but you can't click on them
-				// we no longer need as many markers for the robots to follow. remove the collisions and most of the markers that
+				// future Jordan we no longer need as many markers for the robots to follow. remove the collisions and most of the markers that
 				// don't change the positions (so everything except the second marker) condense this method: drawBlueRobotRoadNavigation();
+				// finish up the path finding back to the red and blue bases
 				if (gameObject.selectedRobotDesign !== -1) {
-					console.log(gameObject.selectedRobotDesign);
+					// console.log(gameObject.selectedRobotDesign);
 					selectArenaRobot(gameObject.selectedRobotDesign);
 				}
 				let posX = 0;
@@ -110,8 +110,7 @@ const maulPage = {
 			// kind of like how it is now. It's not perfect but it's close enough if a player resizes the
 			// screen at a 'bad time'.
 			
-			// future Jordan, when resizing the screen, position the robots to whatever stop they've passed so far
-			// continue making the stops and hide them when we're done
+			// future Jordan continue making the stops and hide them when we're done
 			Game.collisionSetup = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'blue-stop-1',
@@ -145,7 +144,7 @@ const maulPage = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'blue-stop-3',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary); // gameObject.arenaBlueAttackers
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser.stop == 2) {
 						robotPasser.stop++;
@@ -1679,6 +1678,7 @@ const maulPage = {
 							Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
 							Game.entitySize = (Game.canvas.height * 0.01);
 							Game.entityWidth = (Game.canvas.width * 0.01);
+							Game.keepPreviousSize = false;
 							arenaPage.loadPage();
 						}, 2000);
 						
