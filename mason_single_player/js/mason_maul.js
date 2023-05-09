@@ -32,64 +32,13 @@ const maulPage = {
 		Game.pageResized = {
 			section: 'arena-game',
 			method: function() {
-				// future Jordan we no longer need as many markers for the robots to follow. remove the collisions and most of the markers that
-				// don't change the positions (so everything except the second marker) condense this method: drawBlueRobotRoadNavigation();
-				// finish up the path finding back to the red and blue bases
+				// future Jordan work on blues left markers and start on reds markers
+				// make the robots stop when they reach red or blues main base
+				// start thinking about towers range distance...
 				if (gameObject.selectedRobotDesign !== -1) {
-					// console.log(gameObject.selectedRobotDesign);
 					selectArenaRobot(gameObject.selectedRobotDesign);
 				}
-				let posX = 0;
-				let posY = 0;
-				Game.canvas.width = prevCanvasWidth;
-				Game.canvas.height = prevCanvasHeight;
-				Game.entitySize = (Game.canvas.height * 0.01);
-				Game.entityWidth = (Game.canvas.width * 0.01);
-				// resize blue's robots
-				gameObject.arenaBlueAttackers.forEach((br, i) => {
-					let coords = resizeRobotCoords(br, posX, posY);
-					posX = coords.x;
-					posY = coords.y;
-					resizeRobotCoords(br, posX, posY);
-					posX = 0;
-					posY = 0;
-				});
-				// resize red's robots
-				gameObject.arenaRedAttackers.forEach((rr, i) => {
-					let coords = resizeRobotCoords(rr, posX, posY);
-					posX = coords.x;
-					posY = coords.y;
-					resizeRobotCoords(rr, posX, posY);
-					posX = 0;
-					posY = 0;
-				});
 			}
-		}
-		function resizeRobots(robot, posX, posY) {
-			robot.posX = Game.placeEntityX(posX);
-			robot.posY = Game.placeEntityY(posY);
-			robot.width = (Game.entitySize * 1.5);
-			robot.height = (Game.entitySize * 1.5);
-		}
-		function resizeRobotCoords(robot, posX, posY) {
-			
-			if (prevCanvasWidth > robot.posX) {
-				console.log(prevCanvasWidth, robot.posX);
-				posX = (robot.posX / prevCanvasWidth);
-			}
-			else if (prevCanvasWidth < robot.posX) { // may not need this method. Only fires when a robot is all the way right
-				posX = (prevCanvasWidth / robot.posX);
-			}
-			if (prevCanvasHeight > robot.posY) {
-				posY = robot.posY / prevCanvasHeight;
-			}
-			else if (prevCanvasHeight < robot.posY) {
-				posY = prevCanvasHeight / robot.posY;
-			}
-			console.log(posX, posY);
-			resizeRobots(robot, posX, posY);
-			const coords = { x: posX, y: posY };
-			return coords;
 		}
 		function setupGame() {
 			drawGrassBackGround();
@@ -99,65 +48,59 @@ const maulPage = {
 			drawBasesAndSends();
 			drawBlueTowerSpawns();
 			drawRedTowerSpawns();
-			drawBlueRobotRoadNavigation();
+			drawBlueRightRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
 			Game.methodSetup = { method: function(id) { moveBlueRobots(); }};
 			Game.addMethod(Game.methodSetup);
-			// future Jordan, just to note, if we go with the 'guard rails' approach, to keep the robots in 
-			// place we will also need a hard pixel stop to make sure robots cant stray off too far,
-			// kind of like how it is now. It's not perfect but it's close enough if a player resizes the
-			// screen at a 'bad time'.
+			setBlueRightRoadNavCollisions();
 			
-			// future Jordan continue making the stops and hide them when we're done
-			Game.collisionSetup = {
-				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-				target: 'blue-stop-1',
-				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop == 0) {
-						robotPasser.stop++;
-					}
-					// console.log(gameObject.arenaBlueAttackers);
-					// use the collisionId to find what object was hit
-				},
-				methodId: undefined,
-			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
-				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-				target: 'blue-stop-2',
-				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop == 1) { // moving down the road now
-						robotPasser.stop++;
-					}
-					// use the collisionId to find what object was hit
-				},
-				methodId: undefined,
-			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
-				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-				target: 'blue-stop-3',
-				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop == 2) {
-						robotPasser.stop++;
-						console.log('did it!');
-					}
-					// use the collisionId to find what object was hit
-				},
-				methodId: undefined,
-			}
-			Game.addCollision(Game.collisionSetup);
-			console.log(Main.collisions);
 		}
-		
+		function setBlueRightRoadNavCollisions() {
+			Game.collisionSetup = {
+				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+				target: 'blue-right-stop-1',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 0) { // moving down the road now
+						robotPasser.stop++;
+					}
+					// use the collisionId to find what object was hit
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+				target: 'blue-right-stop-2',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 1) { // moving left on the road
+						robotPasser.stop++;
+					}
+					// use the collisionId to find what object was hit
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+				target: 'blue-right-stop-3',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 2) { // moving up the road
+						robotPasser.stop++;
+					}
+					// use the collisionId to find what object was hit
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+		}
 		function drawGrassBackGround() {
 			const grassImg = new Image();
 			const grassPath = './assets/images/grass.png';
@@ -570,47 +513,7 @@ const maulPage = {
 										stop: 0,
 									}
 									sendBlueRobot(blueRobot);
-									Game.collisionSetup = {
-										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										target: 'blue-stop-1',
-										method: function(id) {
-											const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-											const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-											if (robotPasser.stop == 0) {
-												robotPasser.stop++;
-											}
-										},
-										methodId: undefined,
-									}
-									Game.addCollision(Game.collisionSetup);
-									Game.collisionSetup = {
-										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										target: 'blue-stop-2',
-										method: function(id) {
-											const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-											const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-											if (robotPasser.stop == 1) {
-												robotPasser.stop++;
-											}
-										},
-										methodId: undefined,
-									}
-									Game.addCollision(Game.collisionSetup);
-									Game.collisionSetup = {
-										primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										target: 'blue-stop-3',
-										method: function(id) {
-											const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-											const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-											if (robotPasser.stop == 2) {
-												robotPasser.stop++;
-												console.log('did it!');
-											}
-										},
-										methodId: undefined,
-									}
-									Game.addCollision(Game.collisionSetup);
-									
+									setBlueRightRoadNavCollisions();
 								}
 							}
 						},
@@ -1401,18 +1304,18 @@ const maulPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
-		function drawBlueRobotRoadNavigation() {
+		function drawBlueRightRobotRoadNavigation() {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.968, (Game.entitySize * 9.6)),
+						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
 						posY: Game.placeEntityY(0.26),
 						width: (Game.entitySize * 2),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
-						id: 'blue-stop-1',
+						id: 'blue-right-stop-1', // start moving down
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1424,13 +1327,13 @@ const maulPage = {
 				method: function(id) {
 					drawRect({
 						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.26),
-						width: (Game.entitySize * 2),
+						posY: Game.placeEntityY(0.42),
+						width: (Game.entitySize * 4),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
-						id: 'blue-stop-2', // start moving down
+						id: 'blue-right-stop-2', // start moving left
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1441,14 +1344,14 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.30),
-						width: (Game.entitySize * 2),
+						posX: Game.placeEntityX(0.495),
+						posY: Game.placeEntityY(0.42),
+						width: (Game.entitySize * 1),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
-						id: 'blue-stop-3',
+						id: 'blue-right-stop-3', // start moving up
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1688,39 +1591,40 @@ const maulPage = {
 			}, 1000);
 		}
 		function moveBlueRobots() {
-			if (!Main.isResizing) {
-				gameObject.arenaBlueAttackers.forEach((br, i) => {
+			gameObject.arenaBlueAttackers.forEach((br, i) => {
 				// future Jordan, make the robots move
-					const robot = Game.methodObjects.filter(bg => bg.id === br.id);
-					if (br.direction === 'rt' && br.stop <= 1) {
-						
-						robot.forEach((rob, j) => {
-							// future Jordan base the speed on the robot's stats
-							if (!Main.isResizing) {
-								// rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-								// gameObject.arenaBlueAttackers[i].posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-								
-								// future Jordan, below is how we will move the robots on the screen
-								const posXPerc = ((rob.posX - (prevCanvasWidth * 0.0001)) / prevCanvasWidth);
-								rob.posX = Game.placeEntityX(posXPerc);
-								gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(posXPerc);
-							}
-							
-							
-							//rob.posX = Game.placeEntityX(0.90);
-							//gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(0.90);
-						});
-					}
-					if (br.direction === 'rt' && br.stop === 2) {
-						robot.forEach((rob, j) => {
-							if (!Main.isResizing) {
-								// rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-								// gameObject.arenaBlueAttackers[i].posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-							}
-						});
-					}
-				});
-			}
+				const robot = Game.methodObjects.filter(bg => bg.id === br.id);
+				if (br.direction === 'rt' && br.stop === 0) {
+					robot.forEach((rob, j) => {
+						// future Jordan base the speed on the robot's stats
+						const posXPerc = ((rob.posX - (prevCanvasWidth * 0.0001)) / prevCanvasWidth);
+						rob.posX = Game.placeEntityX(posXPerc);
+						gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(posXPerc);
+					});
+				}
+				if (br.direction === 'rt' && br.stop === 1) {
+					robot.forEach((rob, j) => {
+						const posYPerc = ((rob.posY + (prevCanvasHeight * 0.0001)) / prevCanvasHeight);
+						rob.posY = Game.placeEntityY(posYPerc);
+						gameObject.arenaBlueAttackers[i].posY = Game.placeEntityY(posYPerc);
+					});
+				}
+				if (br.direction === 'rt' && br.stop === 2) {
+					robot.forEach((rob, j) => {
+						// future Jordan base the speed on the robot's stats
+						const posXPerc = ((rob.posX - (prevCanvasWidth * 0.0001)) / prevCanvasWidth);
+						rob.posX = Game.placeEntityX(posXPerc);
+						gameObject.arenaBlueAttackers[i].posX = Game.placeEntityX(posXPerc);
+					});
+				}
+				if (br.direction === 'rt' && br.stop === 3) {
+					robot.forEach((rob, j) => {
+						const posYPerc = ((rob.posY - (prevCanvasHeight * 0.0001)) / prevCanvasHeight);
+						rob.posY = Game.placeEntityY(posYPerc);
+						gameObject.arenaBlueAttackers[i].posY = Game.placeEntityY(posYPerc);
+					});
+				}
+			});
 		}
 	}
 }
