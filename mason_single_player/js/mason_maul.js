@@ -32,7 +32,8 @@ const maulPage = {
 		Game.pageResized = {
 			section: 'arena-game',
 			method: function() {
-				// future Jordan work on blues left markers and start on reds markers
+				// future Jordan start on reds markers. don't forget blues left marker collisions.
+				// the center marker where the base is for both left and right coming robots
 				// make the robots stop when they reach red or blues main base
 				// start thinking about towers range distance...
 				if (gameObject.selectedRobotDesign !== -1) {
@@ -48,7 +49,7 @@ const maulPage = {
 			drawBasesAndSends();
 			drawBlueTowerSpawns();
 			drawRedTowerSpawns();
-			drawBlueRightRobotRoadNavigation();
+			drawBlueRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
@@ -1304,7 +1305,7 @@ const maulPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
-		function drawBlueRightRobotRoadNavigation() {
+		function drawBlueRobotRoadNavigation() {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -1326,6 +1327,24 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: Game.placeEntityX(0.08, (Game.entitySize * -9.6)),
+						posY: Game.placeEntityY(0.26),
+						width: (Game.entitySize * 2),
+						height: (Game.entitySize * 2),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-left-stop-1', // start moving down
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
 						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
 						posY: Game.placeEntityY(0.42),
 						width: (Game.entitySize * 4),
@@ -1334,6 +1353,24 @@ const maulPage = {
 						color: 'blue',
 						isFilled: true,
 						id: 'blue-right-stop-2', // start moving left
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.06, (Game.entitySize * -9.6)),
+						posY: Game.placeEntityY(0.42),
+						width: (Game.entitySize * 4),
+						height: (Game.entitySize * 2),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-left-stop-2', // start moving right
 						isBackground: false,
 						props: {},
 						methodId: id
