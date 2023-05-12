@@ -254,6 +254,8 @@ const gameObject = {
 	arenaGameStarted: false, // has the game started?
 	arenaBlueAttackers: [],
 	arenaRedAttackers: [],
+	redRobotArenaDesigns: [],
+	redTowerArenaDesigns: [],
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
@@ -488,62 +490,62 @@ const robotChassis = [
 			engineeringSkill: 0,
 		},
 	},
-	{
-		chassisId: 5,
-		type: 'chassis',
-		name: 'Test Chassis-1',
-		img: 'red',
-		count: 1,
-		stats: {
-			att: 0,
-			def: 1,
-			spd: 0,
-			ai: 0,
-			storage: 0,
-		},
-		scrapToBuild: {
-			commonScrap: 0,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
-			facinatingScrap: 0,
-			mythicScrap: 0,
-			exoticScrap: 0,
-		},
-		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
-		},
-	},
-	{
-		chassisId: 6,
-		type: 'chassis',
-		name: 'Test Chassis-2',
-		img: 'red',
-		count: 1,
-		stats: {
-			att: 0,
-			def: 1,
-			spd: 0,
-			ai: 0,
-			storage: 0,
-		},
-		scrapToBuild: {
-			commonScrap: 0,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
-			facinatingScrap: 0,
-			mythicScrap: 0,
-			exoticScrap: 0,
-		},
-		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
-		},
-	},
+	//{
+		//chassisId: 5,
+		//type: 'chassis',
+		//name: 'Test Chassis-1',
+		//img: 'red',
+		//count: 1,
+		//stats: {
+			//att: 0,
+			//def: 1,
+			//spd: 0,
+			//ai: 0,
+			//storage: 0,
+		//},
+		//scrapToBuild: {
+			//commonScrap: 0,
+			//unCommonScrap: 0,
+			//uniqueScrap: 0,
+			//intriguingScrap: 0,
+			//facinatingScrap: 0,
+			//mythicScrap: 0,
+			//exoticScrap: 0,
+		//},
+		//requires: {
+			//factoryLevel: 0,
+			//roboticSkill: 0,
+			//engineeringSkill: 0,
+		//},
+	//},
+	//{
+		//chassisId: 6,
+		//type: 'chassis',
+		//name: 'Test Chassis-2',
+		//img: 'red',
+		//count: 1,
+		//stats: {
+			//att: 0,
+			//def: 1,
+			//spd: 0,
+			//ai: 0,
+			//storage: 0,
+		//},
+		//scrapToBuild: {
+			//commonScrap: 0,
+			//unCommonScrap: 0,
+			//uniqueScrap: 0,
+			//intriguingScrap: 0,
+			//facinatingScrap: 0,
+			//mythicScrap: 0,
+			//exoticScrap: 0,
+		//},
+		//requires: {
+			//factoryLevel: 0,
+			//roboticSkill: 0,
+			//engineeringSkill: 0,
+		//},
+	//},
 ];
 const robotLegs = [
 	{

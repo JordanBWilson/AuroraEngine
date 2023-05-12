@@ -41,6 +41,7 @@ const maulPage = {
 			}
 		}
 		function setupGame() {
+			generateRedArenaRobots();
 			drawGrassBackGround();
 			drawRobotSelection();
 			drawBlueRoads();
@@ -49,6 +50,7 @@ const maulPage = {
 			drawBlueTowerSpawns();
 			drawRedTowerSpawns();
 			drawBlueRobotRoadNavigation();
+			drawRedRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
@@ -264,7 +266,7 @@ const maulPage = {
 					posX = 0.739;
 					posXoffset = 1;
 				}	
-					
+				console.log(gameObject.robotArenaDesigns[i]); // this is how reds robots should look
 				Game.methodSetup = {
 					method: function(id) {
 						drawRect({
@@ -584,6 +586,24 @@ const maulPage = {
 			if (moneyCounter) {
 				moneyCounter.msg = '$' + gameObject.arenaBlueGameMoney;
 				moneyBackground.isAnim = true;
+			}
+		}
+		function generateRedArenaRobots() {
+			// future Jordan, continue making the red robot list from random parts
+			for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
+				const robotDesign = {
+					robotId: i,
+					robotParts: [],
+					directive: Math.floor((Math.random() * 4) + 1),
+				};
+				const headIndex = Math.floor((Math.random() * robotHeads.length));
+				const randomHead = robotHeads[headIndex];
+				robotDesign.robotParts.push(randomHead);
+				const chassisIndex = Math.floor((Math.random() * robotChassis.length));
+				const randomChassis = robotChassis[chassisIndex];
+				robotDesign.robotParts.push(randomChassis);
+				
+				gameObject.redRobotArenaDesigns.push(robotDesign);
 			}
 		}
 		function sendBlueRobot(blueRobot) {
@@ -1449,6 +1469,98 @@ const maulPage = {
 						color: 'blue',
 						isFilled: true,
 						id: 'blue-stop-3', // start moving up
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function drawRedRobotRoadNavigation() {
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
+						posY: Game.placeEntityY(0.62),
+						width: (Game.entitySize * 2),
+						height: (Game.entitySize * 2),
+						lineWidth: 1,
+						color: 'red',
+						isFilled: true,
+						id: 'red-right-stop-1', // start moving down
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.08, (Game.entitySize * -9.6)),
+						posY: Game.placeEntityY(0.62),
+						width: (Game.entitySize * 2),
+						height: (Game.entitySize * 2),
+						lineWidth: 1,
+						color: 'red',
+						isFilled: true,
+						id: 'red-left-stop-1', // start moving down
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
+						posY: Game.placeEntityY(0.46),
+						width: (Game.entitySize * 4),
+						height: (Game.entitySize * 2),
+						lineWidth: 1,
+						color: 'red',
+						isFilled: true,
+						id: 'red-right-stop-2', // start moving left
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.06, (Game.entitySize * -9.6)),
+						posY: Game.placeEntityY(0.46),
+						width: (Game.entitySize * 4),
+						height: (Game.entitySize * 2),
+						lineWidth: 1,
+						color: 'red',
+						isFilled: true,
+						id: 'red-left-stop-2', // start moving right
+						isBackground: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.495),
+						posY: Game.placeEntityY(0.46),
+						width: (Game.entitySize * 1),
+						height: (Game.entitySize * 2),
+						lineWidth: 1,
+						color: 'red',
+						isFilled: true,
+						id: 'red-stop-3', // start moving up
 						isBackground: false,
 						props: {},
 						methodId: id
