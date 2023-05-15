@@ -589,7 +589,8 @@ const maulPage = {
 			}
 		}
 		function generateRedArenaRobots() {
-			// future Jordan, continue making the red robot list from random parts
+			// future Jordan, the arms and legs are not correct.. perhaps cloning the arm and leg objects will assign the correct values
+			// right now we are getting dups of arms and legs until we get to the last red robot. example: Object.assign({}, robotArms[rightArmIndex]);
 			for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
 				const robotDesign = {
 					robotId: i,
@@ -602,7 +603,23 @@ const maulPage = {
 				const chassisIndex = Math.floor((Math.random() * robotChassis.length));
 				const randomChassis = robotChassis[chassisIndex];
 				robotDesign.robotParts.push(randomChassis);
-				
+				const leftArmIndex = Math.floor((Math.random() * robotArms.length));
+				const randomLeftArm = robotArms[leftArmIndex];
+				randomLeftArm.armPos = 'left';
+				robotDesign.robotParts.push(randomLeftArm);
+				const rightArmIndex = Math.floor((Math.random() * robotArms.length));
+				const randomRightArm = robotArms[rightArmIndex];
+				randomRightArm.armPos = 'right';
+				robotDesign.robotParts.push(randomRightArm);
+				const leftLegIndex = Math.floor((Math.random() * robotLegs.length));
+				const randomLeftLeg = robotLegs[leftLegIndex];
+				randomLeftLeg.legPos = 'left';
+				robotDesign.robotParts.push(randomLeftLeg);
+				const rightLegIndex = Math.floor((Math.random() * robotLegs.length));
+				const randomRightLeg = robotLegs[rightLegIndex];
+				randomRightLeg.legPos = 'right';
+				robotDesign.robotParts.push(randomRightLeg);
+				console.log(robotDesign);
 				gameObject.redRobotArenaDesigns.push(robotDesign);
 			}
 		}
