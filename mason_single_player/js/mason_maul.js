@@ -20,8 +20,6 @@ const maulPage = {
 		Game.clearStage();
 		// future Jordan, work on double tapping towers.
 		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
-		// --finish up positioning the blue robots spawn positions and set up red spawn position.
-		// --make the robots move
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 		const roadImg = new Image();
@@ -55,6 +53,10 @@ const maulPage = {
 			drawRoundTime();
 			readySetGoGame();
 			Game.methodSetup = { method: function(id) { moveBlueRobots(); }};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = { method: function(id) { moveRedRobots(); }};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = { method: function(id) { redAiMind(); }};
 			Game.addMethod(Game.methodSetup);
 			
 		}
@@ -112,6 +114,60 @@ const maulPage = {
 			}
 			Game.addCollision(Game.collisionSetup);
 		}
+		function setRedRightRoadNavCollisions() {
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+				target: 'red-right-stop-1',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 0) { // moving down the road now
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+				target: 'red-right-stop-2',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 1) { // moving left on the road
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+				target: 'red-stop-3',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 2) { // moving up the road
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+				target: 'blue-base',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 3) { // attack the blue base
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+		}
 		function setBlueLeftRoadNavCollisions() {
 			Game.collisionSetup = {
 				primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
@@ -159,6 +215,60 @@ const maulPage = {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser.stop === 3) { // attack the red base
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+		}
+		function setRedLeftRoadNavCollisions() {
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+				target: 'red-left-stop-1',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 0) { // moving down the road now
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+				target: 'red-left-stop-2',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 1) { // moving right on the road
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+				target: 'red-stop-3',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 2) { // moving up the road
+						robotPasser.stop++;
+					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+				target: 'blue-base',
+				method: function(id) {
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
+					if (robotPasser.stop === 3) { // attack the blue base
 						robotPasser.stop++;
 					}
 				},
@@ -265,8 +375,7 @@ const maulPage = {
 				if (robotCount === 3) {
 					posX = 0.739;
 					posXoffset = 1;
-				}	
-				console.log(gameObject.robotArenaDesigns[i]); // this is how reds robots should look
+				}
 				Game.methodSetup = {
 					method: function(id) {
 						drawRect({
@@ -521,7 +630,7 @@ const maulPage = {
 										width: (Game.entitySize * 1.5),
 										height: (Game.entitySize * 1.5),
 										id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
-										hp: 10,
+										hp: 10, // future Jordan, buff this with the robots defense
 										robotParts: gameObject.selectedRobot,
 										direction: 'lt',
 										stop: 0,
@@ -562,7 +671,7 @@ const maulPage = {
 										width: (Game.entitySize * 1.5),
 										height: (Game.entitySize * 1.5),
 										id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										hp: 10,
+										hp: 10, // future Jordan, buff this with the robots defense
 										robotParts: gameObject.selectedRobot,
 										direction: 'rt',
 										stop: 0,
@@ -579,6 +688,38 @@ const maulPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
+		function sendRedRobotLeft(robot) {
+			gameObject.arenaRedGameMoney -= 10;
+			setRedLeftRoadNavCollisions();
+			const redRobot = {
+				posX: Game.placeEntityX(0),
+				posY: Game.placeEntityY(0.615), // reds bots start position- posY: Game.placeEntityY(0.615),
+				width: (Game.entitySize * 1.5),
+				height: (Game.entitySize * 1.5),
+				id: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+				hp: 10, // future Jordan, buff this with the robots defense
+				robotParts: robot.robotParts,
+				direction: 'lt',
+				stop: 0,
+			}
+			sendRedRobot(redRobot);
+		}
+		function sendRedRobotRight(robot) {
+			blueRobotSendMoneyUpdate();
+			setBlueRightRoadNavCollisions();
+			const redRobot = {
+				posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
+				posY: Game.placeEntityY(0.615), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
+				width: (Game.entitySize * 1.5),
+				height: (Game.entitySize * 1.5),
+				id: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+				hp: 10, // future Jordan, buff this with the robots defense
+				robotParts: robot.robotParts,
+				direction: 'rt',
+				stop: 0,
+			}
+			sendRedRobot(redRobot);
+		}
 		function blueRobotSendMoneyUpdate() {
 			gameObject.arenaBlueGameMoney -= 10;
 			const moneyBackground = Game.methodObjects.find(bg => bg.id === 'money-bar-background');
@@ -589,8 +730,6 @@ const maulPage = {
 			}
 		}
 		function generateRedArenaRobots() {
-			// future Jordan, the arms and legs are not correct.. perhaps cloning the arm and leg objects will assign the correct values
-			// right now we are getting dups of arms and legs until we get to the last red robot. example: Object.assign({}, robotArms[rightArmIndex]);
 			for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
 				const robotDesign = {
 					robotId: i,
@@ -598,44 +737,44 @@ const maulPage = {
 					directive: Math.floor((Math.random() * 4) + 1),
 				};
 				const headIndex = Math.floor((Math.random() * robotHeads.length));
-				const randomHead = robotHeads[headIndex];
+				const randomHead = Object.assign({}, robotHeads[headIndex]);
 				robotDesign.robotParts.push(randomHead);
 				const chassisIndex = Math.floor((Math.random() * robotChassis.length));
-				const randomChassis = robotChassis[chassisIndex];
+				const randomChassis = Object.assign({}, robotChassis[chassisIndex]);
 				robotDesign.robotParts.push(randomChassis);
 				const leftArmIndex = Math.floor((Math.random() * robotArms.length));
-				const randomLeftArm = robotArms[leftArmIndex];
+				const randomLeftArm = Object.assign({}, robotArms[leftArmIndex]);
 				randomLeftArm.armPos = 'left';
 				robotDesign.robotParts.push(randomLeftArm);
 				const rightArmIndex = Math.floor((Math.random() * robotArms.length));
-				const randomRightArm = robotArms[rightArmIndex];
+				const randomRightArm = Object.assign({}, robotArms[rightArmIndex]);
 				randomRightArm.armPos = 'right';
 				robotDesign.robotParts.push(randomRightArm);
 				const leftLegIndex = Math.floor((Math.random() * robotLegs.length));
-				const randomLeftLeg = robotLegs[leftLegIndex];
+				const randomLeftLeg = Object.assign({}, robotLegs[leftLegIndex]);
 				randomLeftLeg.legPos = 'left';
 				robotDesign.robotParts.push(randomLeftLeg);
 				const rightLegIndex = Math.floor((Math.random() * robotLegs.length));
-				const randomRightLeg = robotLegs[rightLegIndex];
+				const randomRightLeg = Object.assign({}, robotLegs[rightLegIndex]);
 				randomRightLeg.legPos = 'right';
 				robotDesign.robotParts.push(randomRightLeg);
-				console.log(robotDesign);
+				
 				gameObject.redRobotArenaDesigns.push(robotDesign);
 			}
 		}
-		function sendBlueRobot(blueRobot) {
+		function sendRobot(robot) {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: blueRobot.posX,
-						posY: blueRobot.posY,
-						width: blueRobot.width,
-						height: blueRobot.height,
+						posX: robot.posX,
+						posY: robot.posY,
+						width: robot.width,
+						height: robot.height,
 						lineWidth: 1,
-						color: drawRobotSelectPreviewParts('chassis', blueRobot?.robotParts),
+						color: drawRobotSelectPreviewParts('chassis', robot?.robotParts),
 						isFilled: true,
 						isBackground: false,
-						id: blueRobot.id,
+						id: robot.id,
 						props: {
 							drawHead: function(parent) {
 								Game.methodSetup = {
@@ -646,7 +785,7 @@ const maulPage = {
 											width: (Game.entitySize * 1.25),
 											height: (Game.entitySize * 1.25),
 											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('head', blueRobot?.robotParts),
+											color: drawRobotSelectPreviewParts('head', robot?.robotParts),
 											isFilled: true,
 											isBackground: false,
 											id: parent.id,
@@ -666,7 +805,7 @@ const maulPage = {
 											width: (Game.entitySize * 0.375),
 											height: (Game.entitySize * 1.5),
 											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('left-arm', blueRobot?.robotParts),
+											color: drawRobotSelectPreviewParts('left-arm', robot?.robotParts),
 											isFilled: true,
 											isBackground: false,
 											id: parent.id,
@@ -686,7 +825,7 @@ const maulPage = {
 											width: (Game.entitySize * 0.375),
 											height: (Game.entitySize * 1.5),
 											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('right-arm', blueRobot?.robotParts),
+											color: drawRobotSelectPreviewParts('right-arm', robot?.robotParts),
 											isFilled: true,
 											isBackground: false,
 											id: parent.id,
@@ -706,7 +845,7 @@ const maulPage = {
 											width: (Game.entitySize * 0.375),
 											height: (Game.entitySize * 1.5),
 											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('left-leg', blueRobot?.robotParts),
+											color: drawRobotSelectPreviewParts('left-leg', robot?.robotParts),
 											isFilled: true,
 											isBackground: false,
 											id: parent.id,
@@ -726,7 +865,7 @@ const maulPage = {
 											width: (Game.entitySize * 0.375),
 											height: (Game.entitySize * 1.5),
 											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('right-leg', blueRobot?.robotParts),
+											color: drawRobotSelectPreviewParts('right-leg', robot?.robotParts),
 											isFilled: true,
 											isBackground: false,
 											id: parent.id,
@@ -743,9 +882,18 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+		}
+		function sendBlueRobot(blueRobot) {
+			sendRobot(blueRobot);
 			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
+		}
+		function sendRedRobot(redRobot) {
+			sendRobot(redRobot);
+			drawRobotSelectParts(redRobot.id);
+			gameObject.arenaRedAttackers.push(redRobot);
+			gameObject.arenaRedSendCount++;
 		}
 		function drawBlueRoads() {
 			Game.methodSetup = {
@@ -896,7 +1044,6 @@ const maulPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
-		
 		function drawRedRoads() {
 			Game.methodSetup = {
 				method: function(id) {
@@ -1063,7 +1210,7 @@ const maulPage = {
 						id: 'blue-left-tower-spawn-1',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1089,7 +1236,7 @@ const maulPage = {
 						id: 'blue-left-tower-spawn-2',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1115,7 +1262,7 @@ const maulPage = {
 						id: 'blue-left-tower-spawn-3',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1141,7 +1288,7 @@ const maulPage = {
 						id: 'blue-left-tower-spawn-4',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1167,7 +1314,7 @@ const maulPage = {
 						id: 'blue-right-tower-spawn-5',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1193,7 +1340,7 @@ const maulPage = {
 						id: 'blue-right-tower-spawn-6',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1219,7 +1366,7 @@ const maulPage = {
 						id: 'blue-right-tower-spawn-7',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1245,7 +1392,7 @@ const maulPage = {
 						id: 'blue-right-tower-spawn-8',
 						action: { 
 							method: function(id) {
-									
+								
 							}
 						},
 						isModalBtn: false,
@@ -1762,7 +1909,7 @@ const maulPage = {
 				if (gameObject.arenaRoundSeconds > 0) {
 					gameObject.arenaRoundSeconds--;
 					roundTimer.msg = gameObject.arenaRoundSeconds + 's';
-					roundCounter.msg = 'Round: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
+					roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
 					gameObject.arenaBlueGameMoney += 50;
@@ -1774,7 +1921,7 @@ const maulPage = {
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
 					if (gameObject.arenaGameRound <= 12) {
 						roundTimer.msg = gameObject.arenaRoundSeconds + 's';
-						roundCounter.msg = 'Round: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
+						roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
 						blueMoney.msg = '$' + gameObject.arenaBlueGameMoney;
 						Particle.floatingText({
 							font: '2rem serif',
@@ -1795,6 +1942,10 @@ const maulPage = {
 						clearInterval(gameTimer);
 						setTimeout(function() {
 							gameObject.selectedRobot = [];
+							gameObject.arenaBlueAttackers = [];
+							gameObject.arenaRedAttackers = [];
+							gameObject.redRobotArenaDesigns = [];
+							gameObject.redTowerArenaDesigns = [];
 							gameObject.selectedRobotDesign = -1;
 							gameObject.arenaGameRound = 1;
 							gameObject.arenaRoundSeconds = 15;
@@ -1818,10 +1969,17 @@ const maulPage = {
 		}
 		function moveBlueRobots() {
 			gameObject.arenaBlueAttackers.forEach((battleRobot, i) => {
-				// future Jordan, make the robots move
 				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
 				moveBlueRightRobots(battleRobot, robot, i);
 				moveBlueLeftRobots(battleRobot, robot, i);
+			});
+		}
+		function moveRedRobots() {
+			gameObject.arenaRedAttackers.forEach((battleRobot, i) => {
+				// future Jordan, make the robots move
+				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
+				// moveBlueRightRobots(battleRobot, robot, i);
+				// moveBlueLeftRobots(battleRobot, robot, i);
 			});
 		}
 		function moveBlueRightRobots(br, robot, i) {
@@ -1884,6 +2042,23 @@ const maulPage = {
 			}
 			if (br.direction === 'lt' && br.stop === 4) {
 				// start attacking red base
+			}
+		}
+		function redAiMind() {
+			if (gameObject.arenaGameStarted) {
+				const whatToDo = Math.floor((Math.random() * 2) + 1);
+				// future Jordan, figure out what towers are availiable to build on
+				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= 20) {
+					// build a level 1 tower
+				}
+				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= 10) {
+					// send a robot
+					// future Jordan, when sending a robot, figure out which one you're going to send
+					// with a random number and then figure out if you're going to send them left or right
+					// also with a random number. Methods have been made to send the red robots left or right
+					// sendRedRobotLeft(robot) and sendRedRobotRight(robot)
+					// we still need to make the red robots move...
+				}
 			}
 		}
 	}
