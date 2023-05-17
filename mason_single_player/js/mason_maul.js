@@ -24,6 +24,9 @@ const maulPage = {
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
+		let aiThinking = true;
+		let sendRedLeftCount = 0;
+		let sendRedRightCount = 0;
 		roadImg.src = roadPath;
 		Particle.init();
 		setupGame();
@@ -56,9 +59,21 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = { method: function(id) { moveRedRobots(); }};
 			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = { method: function(id) { redAiMind(); }};
+			Game.methodSetup = { 
+				method: function(id) {
+					if (aiThinking === true) {
+						redAiMind(); 
+					}
+					if (aiThinking === false) {
+						aiThinking = undefined;
+						setTimeout(function() {
+							aiThinking = true;
+						}, 1500);
+					}
+				}
+			};
 			Game.addMethod(Game.methodSetup);
-			
+			gameObject.redMaxTowerLevel = Math.floor((Math.random() * 3) + 1);
 		}
 		function setBlueRightRoadNavCollisions() {
 			Game.collisionSetup = {
@@ -703,10 +718,11 @@ const maulPage = {
 				stop: 0,
 			}
 			sendRedRobot(redRobot);
+			console.log('Red Money: ', gameObject.arenaRedGameMoney);
 		}
 		function sendRedRobotRight(robot) {
-			blueRobotSendMoneyUpdate();
-			setBlueRightRoadNavCollisions();
+			gameObject.arenaRedGameMoney -= 10;
+			setRedRightRoadNavCollisions();
 			const redRobot = {
 				posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
 				posY: Game.placeEntityY(0.615), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
@@ -719,6 +735,7 @@ const maulPage = {
 				stop: 0,
 			}
 			sendRedRobot(redRobot);
+			console.log('Red Money: ', gameObject.arenaRedGameMoney);
 		}
 		function blueRobotSendMoneyUpdate() {
 			gameObject.arenaBlueGameMoney -= 10;
@@ -1558,8 +1575,8 @@ const maulPage = {
 						width: (Game.entitySize * 2),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'blue',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'blue-right-stop-1', // start moving down
 						isBackground: false,
 						props: {},
@@ -1576,8 +1593,8 @@ const maulPage = {
 						width: (Game.entitySize * 2),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'blue',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'blue-left-stop-1', // start moving down
 						isBackground: false,
 						props: {},
@@ -1594,8 +1611,8 @@ const maulPage = {
 						width: (Game.entitySize * 4),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'blue',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'blue-right-stop-2', // start moving left
 						isBackground: false,
 						props: {},
@@ -1612,8 +1629,8 @@ const maulPage = {
 						width: (Game.entitySize * 4),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'blue',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'blue-left-stop-2', // start moving right
 						isBackground: false,
 						props: {},
@@ -1630,8 +1647,8 @@ const maulPage = {
 						width: (Game.entitySize * 1),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'blue',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'blue-stop-3', // start moving up
 						isBackground: false,
 						props: {},
@@ -1650,8 +1667,8 @@ const maulPage = {
 						width: (Game.entitySize * 2),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'red',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'red-right-stop-1', // start moving down
 						isBackground: false,
 						props: {},
@@ -1668,8 +1685,8 @@ const maulPage = {
 						width: (Game.entitySize * 2),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'red',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'red-left-stop-1', // start moving down
 						isBackground: false,
 						props: {},
@@ -1686,8 +1703,8 @@ const maulPage = {
 						width: (Game.entitySize * 4),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'red',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'red-right-stop-2', // start moving left
 						isBackground: false,
 						props: {},
@@ -1704,8 +1721,8 @@ const maulPage = {
 						width: (Game.entitySize * 4),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'red',
-						isFilled: true,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
 						id: 'red-left-stop-2', // start moving right
 						isBackground: false,
 						props: {},
@@ -1722,9 +1739,9 @@ const maulPage = {
 						width: (Game.entitySize * 1),
 						height: (Game.entitySize * 2),
 						lineWidth: 1,
-						color: 'red',
-						isFilled: true,
-						id: 'red-stop-3', // start moving up
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: false,
+						id: 'red-stop-3', // start moving down
 						isBackground: false,
 						props: {},
 						methodId: id
@@ -1915,7 +1932,7 @@ const maulPage = {
 					gameObject.arenaBlueGameMoney += 50;
 					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
 					gameObject.arenaRedGameMoney += 50;
-					gameObject.arenaRedGameMoney += (gameObject.arenaBlueSendCount * 2);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 2);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
@@ -1970,74 +1987,106 @@ const maulPage = {
 		function moveBlueRobots() {
 			gameObject.arenaBlueAttackers.forEach((battleRobot, i) => {
 				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
-				moveBlueRightRobots(battleRobot, robot, i);
-				moveBlueLeftRobots(battleRobot, robot, i);
+				moveRightRobots(battleRobot, robot, gameObject.arenaBlueAttackers[i], 'blue');
+				moveLeftRobots(battleRobot, robot, gameObject.arenaBlueAttackers[i], 'blue');
 			});
 		}
 		function moveRedRobots() {
 			gameObject.arenaRedAttackers.forEach((battleRobot, i) => {
 				// future Jordan, make the robots move
 				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
-				// moveBlueRightRobots(battleRobot, robot, i);
-				// moveBlueLeftRobots(battleRobot, robot, i);
+				moveRightRobots(battleRobot, robot, gameObject.arenaRedAttackers[i], 'red');
+				moveLeftRobots(battleRobot, robot, gameObject.arenaRedAttackers[i], 'red');
 			});
 		}
-		function moveBlueRightRobots(br, robot, i) {
+		function moveRightRobots(br, robot, arenaAttacker, color) {
 			if (br.direction === 'rt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
 					rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					gameObject.arenaBlueAttackers[i].posX = rob.posX;
+					arenaAttacker.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
-					rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-					gameObject.arenaBlueAttackers[i].posY = rob.posY;
+					if (color === 'blue') {
+						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					} else if (color === 'red') {
+						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					}
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
 					rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					gameObject.arenaBlueAttackers[i].posX = rob.posX;
+					arenaAttacker.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
-					rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
-					gameObject.arenaBlueAttackers[i].posY = rob.posY;
+					if (color === 'blue') {
+						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					} else if (color === 'red') {
+						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					}
+					
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 4) {
 				// start attacking red base
+				
+				// future Jordan, start working on blue attacking reds base and
+				// red attacking blue base. display the bases health. perhaps destroy the
+				// robots on contact with the bases. work on establishing a winner and a loser.
+				// if blue wins, create a chance to unlock a new robot part
+				
+				// future Jordan, after all of that is said and done, start to work on reds towers
+				// selection and generation. red should also be able to upgrade towers that they've built
+				// there's a new 'redMaxTowerLevel' to determine what the max level is this game
+				
+				// future Jordan, make some sort of delay for sending out blue robots
 			}
 		}
-		function moveBlueLeftRobots(br, robot, i) {
+		function moveLeftRobots(br, robot, arenaAttacker, color) {
 			if (br.direction === 'lt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
 					rob.posX += Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					gameObject.arenaBlueAttackers[i].posX = rob.posX;
+					arenaAttacker.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
-					rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-					gameObject.arenaBlueAttackers[i].posY = rob.posY;
+					if (color === 'blue') {
+						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					} else if (color === 'red') {
+						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					}
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
 					rob.posX += Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					gameObject.arenaBlueAttackers[i].posX = rob.posX;
+					arenaAttacker.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
-					rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
-					gameObject.arenaBlueAttackers[i].posY = rob.posY;
+					if (color === 'blue') {
+						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					} else if (color === 'red') {
+						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
+						arenaAttacker.posY = rob.posY;
+					}
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 4) {
@@ -2050,15 +2099,24 @@ const maulPage = {
 				// future Jordan, figure out what towers are availiable to build on
 				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= 20) {
 					// build a level 1 tower
+					
 				}
 				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= 10) {
 					// send a robot
-					// future Jordan, when sending a robot, figure out which one you're going to send
-					// with a random number and then figure out if you're going to send them left or right
-					// also with a random number. Methods have been made to send the red robots left or right
-					// sendRedRobotLeft(robot) and sendRedRobotRight(robot)
-					// we still need to make the red robots move...
+					const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
+					const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
+					const whereToSend = Math.floor((Math.random() * 2) + 1);
+					if (whereToSend === 1 && sendRedLeftCount < 3 || sendRedRightCount === 2) {
+						sendRedLeftCount++;
+						sendRedRobotLeft(redBot);
+						sendRedRightCount = 0;
+					} else if (whereToSend === 2 && sendRedRightCount < 3 || sendRedLeftCount == 2) {
+						sendRedRightCount++;
+						sendRedRobotRight(redBot);
+						sendRedLeftCount = 0;
+					}
 				}
+				aiThinking = false;
 			}
 		}
 	}

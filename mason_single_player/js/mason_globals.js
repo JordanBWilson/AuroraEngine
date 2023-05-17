@@ -256,6 +256,7 @@ const gameObject = {
 	arenaRedAttackers: [],
 	redRobotArenaDesigns: [],
 	redTowerArenaDesigns: [],
+	redMaxTowerLevel: 1, // the max level red can level up this game. random every time
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
