@@ -582,16 +582,24 @@ const maulPage = {
 		function drawBasesAndSends() {
 			Game.methodSetup = {
 				method: function(id) {
-					drawRect({
+					drawButton({
 						posX: Game.placeEntityX(0.49, (Game.entitySize * 9)),
 						posY: Game.placeEntityY(0.78),
 						width: (Game.entitySize * 10),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
-						color: 'darkblue',
+						btnColor: 'darkblue',
+						txtColor: 'white',
+						font: '1em serif',
+						msg: 'HP: 20',
 						isFilled: true,
 						id: 'blue-base',
-						isBackground: false,
+						action: { 
+							method: function(id) {
+								
+							}
+						},
+						isModalBtn: false,
 						props: {
 							hp: 20
 						},
@@ -602,16 +610,24 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
-					drawRect({
+					drawButton({
 						posX: Game.placeEntityX(0.49, (Game.entitySize * 9)),
 						posY: Game.placeEntityY(0.03),
 						width: (Game.entitySize * 10),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
-						color: 'darkred',
+						btnColor: 'darkred',
+						txtColor: 'white',
+						font: '1em serif',
+						msg: 'HP: 20',
 						isFilled: true,
 						id: 'red-base',
-						isBackground: false,
+						action: { 
+							method: function(id) {
+								
+							}
+						},
+						isModalBtn: false,
 						props: {
 							hp: 20
 						},
@@ -718,7 +734,6 @@ const maulPage = {
 				stop: 0,
 			}
 			sendRedRobot(redRobot);
-			console.log('Red Money: ', gameObject.arenaRedGameMoney);
 		}
 		function sendRedRobotRight(robot) {
 			gameObject.arenaRedGameMoney -= 10;
@@ -735,7 +750,6 @@ const maulPage = {
 				stop: 0,
 			}
 			sendRedRobot(redRobot);
-			console.log('Red Money: ', gameObject.arenaRedGameMoney);
 		}
 		function blueRobotSendMoneyUpdate() {
 			gameObject.arenaBlueGameMoney -= 10;
@@ -2038,7 +2052,7 @@ const maulPage = {
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 4) {
-				// start attacking red base
+				// start attacking red or blue base
 				
 				// future Jordan, start working on blue attacking reds base and
 				// red attacking blue base. display the bases health. perhaps destroy the
@@ -2050,6 +2064,14 @@ const maulPage = {
 				// there's a new 'redMaxTowerLevel' to determine what the max level is this game
 				
 				// future Jordan, make some sort of delay for sending out blue robots
+				
+				// future Jordan, look into some of the buttons and backrounds that use "Game.entitySize"
+				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
+				if (color === 'blue') {
+					
+				} else if (color === 'red') {
+					
+				}
 			}
 		}
 		function moveLeftRobots(br, robot, arenaAttacker, color) {
@@ -2090,7 +2112,7 @@ const maulPage = {
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 4) {
-				// start attacking red base
+				// start attacking red or blue base
 			}
 		}
 		function redAiMind() {
