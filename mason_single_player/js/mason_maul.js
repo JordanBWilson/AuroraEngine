@@ -121,7 +121,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 3) { // attack the red base
+					if (robotPasser?.stop === 3) { // attack the red base
 						robotPasser.stop++;
 					}
 				},
@@ -175,7 +175,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 3) { // attack the blue base
+					if (robotPasser?.stop === 3) { // attack the blue base
 						robotPasser.stop++;
 					}
 				},
@@ -229,7 +229,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 3) { // attack the red base
+					if (robotPasser?.stop === 3) { // attack the red base
 						robotPasser.stop++;
 					}
 				},
@@ -283,7 +283,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 3) { // attack the blue base
+					if (robotPasser?.stop === 3) { // attack the blue base
 						robotPasser.stop++;
 					}
 				},
@@ -307,7 +307,7 @@ const maulPage = {
 						color: '#3C7521',
 						isFilled: true,
 						id: 'grass-background',
-						isBackground: false,
+						isBackground: true,
 						props: {},
 						methodId: id
 					});
@@ -327,8 +327,8 @@ const maulPage = {
 						selectedImage: 0,
 						animTicks: 0,
 						ticks: 0,
-						id: 'grass-background',
-						isBackground: true,
+						id: 'grass',
+						isBackground: false,
 						props: {},
 						methodId: id
 					});
@@ -2001,52 +2001,52 @@ const maulPage = {
 		function moveBlueRobots() {
 			gameObject.arenaBlueAttackers.forEach((battleRobot, i) => {
 				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
-				moveRightRobots(battleRobot, robot, gameObject.arenaBlueAttackers[i], 'blue');
-				moveLeftRobots(battleRobot, robot, gameObject.arenaBlueAttackers[i], 'blue');
+				moveRightRobots(battleRobot, robot, 'blue', i);
+				moveLeftRobots(battleRobot, robot, 'blue', i);
 			});
 		}
 		function moveRedRobots() {
 			gameObject.arenaRedAttackers.forEach((battleRobot, i) => {
 				// future Jordan, make the robots move
 				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
-				moveRightRobots(battleRobot, robot, gameObject.arenaRedAttackers[i], 'red');
-				moveLeftRobots(battleRobot, robot, gameObject.arenaRedAttackers[i], 'red');
+				moveRightRobots(battleRobot, robot, 'red', i);
+				moveLeftRobots(battleRobot, robot, 'red', i);
 			});
 		}
-		function moveRightRobots(br, robot, arenaAttacker, color) {
+		function moveRightRobots(br, robot, color, i) {
 			if (br.direction === 'rt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
-					rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					arenaAttacker.posX = rob.posX;
+					rob.posX -= Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					}
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
-					rob.posX -= Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					arenaAttacker.posX = rob.posX;
+					rob.posX -= Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					}
 					
 				});
@@ -2068,46 +2068,63 @@ const maulPage = {
 				// future Jordan, look into some of the buttons and backrounds that use "Game.entitySize"
 				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
 				if (color === 'blue') {
-					
+					const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
+					if (redBase) {
+						redBase.props.hp--;
+						redBase.msg = 'HP: ' + redBase.props.hp;
+						// future Jordan, figure out how to remove the robot from the screen
+						Game.deleteEntity(robot.methodId);
+						gameObject.arenaBlueAttackers.splice(i, 1);
+						const background = Game.methodObjects.filter(bg => bg.id === 'grass-background');
+						if (background) {
+							background.isAnim = true;
+						}
+					}
 				} else if (color === 'red') {
-					
+					const blueBase = Game.methodObjects.find(bg => bg.id === 'blue-base');
+					if (blueBase) {
+						blueBase.props.hp--;
+						blueBase.msg = 'HP: ' + blueBase.props.hp;
+						Game.deleteEntity(robot.methodId);
+						gameObject.arenaRedAttackers.splice(i, 1);
+					}
 				}
 			}
 		}
-		function moveLeftRobots(br, robot, arenaAttacker, color) {
+		function moveLeftRobots(br, robot, color, i) {
 			if (br.direction === 'lt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
-					rob.posX += Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					arenaAttacker.posX = rob.posX;
+					rob.posX += Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					}
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
-					rob.posX += Game.moveEntity(0.01, Game.enumDirections.leftRight);
-					arenaAttacker.posX = rob.posX;
+					rob.posX += Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY -= Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY += Game.moveEntity(0.01, Game.enumDirections.topDown);
-						arenaAttacker.posY = rob.posY;
+						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						br.posY = rob.posY;
 					}
 				});
 			}
