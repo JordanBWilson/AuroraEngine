@@ -27,6 +27,7 @@ const maulPage = {
 		let aiThinking = true;
 		let sendRedLeftCount = 0;
 		let sendRedRightCount = 0;
+		let gameTimer;
 		roadImg.src = roadPath;
 		Particle.init();
 		setupGame();
@@ -82,7 +83,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 0) { // moving down the road now
+					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
 					}
 				},
@@ -95,7 +96,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 1) { // moving left on the road
+					if (robotPasser?.stop === 1) { // moving left on the road
 						robotPasser.stop++;
 					}
 				},
@@ -108,7 +109,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 2) { // moving up the road
+					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
 					}
 				},
@@ -136,7 +137,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 0) { // moving down the road now
+					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
 					}
 				},
@@ -149,7 +150,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 1) { // moving left on the road
+					if (robotPasser?.stop === 1) { // moving left on the road
 						robotPasser.stop++;
 					}
 				},
@@ -162,7 +163,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 2) { // moving up the road
+					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
 					}
 				},
@@ -190,7 +191,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 0) { // moving down the road now
+					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
 					}
 				},
@@ -203,7 +204,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 1) { // moving right on the road
+					if (robotPasser?.stop === 1) { // moving right on the road
 						robotPasser.stop++;
 					}
 				},
@@ -216,7 +217,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 2) { // moving up the road
+					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
 					}
 				},
@@ -244,7 +245,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 0) { // moving down the road now
+					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
 					}
 				},
@@ -257,7 +258,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 1) { // moving right on the road
+					if (robotPasser?.stop === 1) { // moving right on the road
 						robotPasser.stop++;
 					}
 				},
@@ -270,7 +271,7 @@ const maulPage = {
 				method: function(id) {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
-					if (robotPasser.stop === 2) { // moving up the road
+					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
 					}
 				},
@@ -667,6 +668,9 @@ const maulPage = {
 										stop: 0,
 									}
 									sendBlueRobot(blueRobot);
+								} else {
+									const sendRobotsLeft = Game.methodObjects.find(bs => bs.id === 'send-robots-left');
+									sendRobotsLeft.btnColor = '#C0C0C0';
 								}
 							}
 						},
@@ -708,6 +712,9 @@ const maulPage = {
 										stop: 0,
 									}
 									sendBlueRobot(blueRobot);
+								} else {
+									const sendRobotsRight = Game.methodObjects.find(bs => bs.id === 'send-robots-right');
+									sendRobotsRight.btnColor = '#C0C0C0';
 								}
 							}
 						},
@@ -1787,7 +1794,7 @@ const maulPage = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
-						msg: 'Money',
+						msg: 'Funds',
 						posX: Game.placeEntityX(0.08),
 						posY: Game.placeEntityY(0.03),
 						color: 'white',
@@ -1936,7 +1943,7 @@ const maulPage = {
 			const roundTimer = Game.methodObjects.find(bg => bg.id === 'player-round-time-title');
 			const roundBackground = Game.methodObjects.find(bg => bg.id === 'round-bar-background');
 			const roundCounter = Game.methodObjects.find(bg => bg.id === 'player-round-number-title');
-			const gameTimer = setInterval(function() {
+			gameTimer = setInterval(function() {
 				if (gameObject.arenaRoundSeconds > 0) {
 					gameObject.arenaRoundSeconds--;
 					roundTimer.msg = gameObject.arenaRoundSeconds + 's';
@@ -1950,6 +1957,12 @@ const maulPage = {
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
+					// reset send robot buttons
+					const sendRobotsLeft = Game.methodObjects.find(bs => bs.id === 'send-robots-left');
+					sendRobotsLeft.btnColor = 'grey';
+					const sendRobotsRight = Game.methodObjects.find(bs => bs.id === 'send-robots-right');
+					sendRobotsRight.btnColor = 'grey';
+					// every turn except the last turn
 					if (gameObject.arenaGameRound <= 12) {
 						roundTimer.msg = gameObject.arenaRoundSeconds + 's';
 						roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
@@ -1966,33 +1979,19 @@ const maulPage = {
 							speed: 0.1,
 						});
 					}
+					// the very last turn. End game
 					if (gameObject.arenaGameRound === 13) {
-						// future Jordan, see who won the game
-						// show a modal showing the winner
-						// go back to the arena page
-						clearInterval(gameTimer);
-						setTimeout(function() {
-							gameObject.selectedRobot = [];
-							gameObject.arenaBlueAttackers = [];
-							gameObject.arenaRedAttackers = [];
-							gameObject.redRobotArenaDesigns = [];
-							gameObject.redTowerArenaDesigns = [];
-							gameObject.selectedRobotDesign = -1;
-							gameObject.arenaGameRound = 1;
-							gameObject.arenaRoundSeconds = 15;
-							gameObject.arenaBlueGameMoney = 50;
-							gameObject.arenaRedGameMoney = 50;
-							gameObject.arenaBlueSendCount = 0;
-							gameObject.arenaRedSendCount = 0;
-							gameObject.arenaGameStarted = false;
-							Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
-							Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
-							Game.entitySize = (Game.canvas.height * 0.01);
-							Game.entityWidth = (Game.canvas.width * 0.01);
-							Game.keepPreviousSize = false;
-							arenaPage.loadPage();
-						}, 2000);
-						
+						const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
+						const blueBase = Game.methodObjects.find(bs => bs.id === 'blue-base');
+						let winningTeam = '';
+						if (redBase.props.hp > blueBase.props.hp) {
+							winningTeam = 'red';
+						} else if (blueBase.props.hp > redBase.props.hp) {
+							winningTeam = 'blue';
+						} else {
+							winningTeam = 'draw';
+						}
+						endGame(winningTeam);
 					}
 				}
 				roundBackground.isAnim = true;
@@ -2012,6 +2011,34 @@ const maulPage = {
 				moveRightRobots(battleRobot, robot, 'red', i);
 				moveLeftRobots(battleRobot, robot, 'red', i);
 			});
+		}
+		function robotAttackBase(base, robot, i, color) {
+			if (base) {
+				base.props.hp--;
+				base.msg = 'HP: ' + base.props.hp;
+				// remove the robot and all of its parts
+				for (let i = 0; i < robot.length; i++) {
+					// make the robot explode where the body is
+					if (i === 0) {
+						Particle.drawSpark({
+							posX: robot[i].posX,
+							posY: robot[i].posY,
+							shape: Particle.enumShapes.rect,
+							color: 'yellow',
+							ticks: 11,
+							count: 8,
+							size: (Game.entitySize * 1),
+							speed: 1.3,
+						});
+					}
+					Game.deleteEntity(robot[i].methodId);
+				}
+				if (color === 'blue') {
+					gameObject.arenaBlueAttackers.splice(i, 1);
+				} else if (color === 'red') {
+					gameObject.arenaRedAttackers.splice(i, 1);
+				}
+			}
 		}
 		function moveRightRobots(br, robot, color, i) {
 			if (br.direction === 'rt' && br.stop === 0) {
@@ -2069,24 +2096,15 @@ const maulPage = {
 				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
 				if (color === 'blue') {
 					const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
-					if (redBase) {
-						redBase.props.hp--;
-						redBase.msg = 'HP: ' + redBase.props.hp;
-						// future Jordan, figure out how to remove the robot from the screen
-						Game.deleteEntity(robot.methodId);
-						gameObject.arenaBlueAttackers.splice(i, 1);
-						const background = Game.methodObjects.filter(bg => bg.id === 'grass-background');
-						if (background) {
-							background.isAnim = true;
-						}
+					robotAttackBase(redBase, robot, i, color);
+					if (redBase.props.hp <= 0) {
+						endGame('blue');
 					}
 				} else if (color === 'red') {
 					const blueBase = Game.methodObjects.find(bg => bg.id === 'blue-base');
-					if (blueBase) {
-						blueBase.props.hp--;
-						blueBase.msg = 'HP: ' + blueBase.props.hp;
-						Game.deleteEntity(robot.methodId);
-						gameObject.arenaRedAttackers.splice(i, 1);
+					robotAttackBase(blueBase, robot, i, color);
+					if (blueBase.props.hp <= 0) {
+						endGame('red');
 					}
 				}
 			}
@@ -2130,6 +2148,19 @@ const maulPage = {
 			}
 			if (br.direction === 'lt' && br.stop === 4) {
 				// start attacking red or blue base
+				if (color === 'blue') {
+					const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
+					robotAttackBase(redBase, robot, i, color);
+					if (redBase.props.hp <= 0) {
+						endGame('blue');
+					}
+				} else if (color === 'red') {
+					const blueBase = Game.methodObjects.find(bg => bg.id === 'blue-base');
+					robotAttackBase(blueBase, robot, i, color);
+					if (blueBase.props.hp <= 0) {
+						endGame('red');
+					}
+				}
 			}
 		}
 		function redAiMind() {
@@ -2157,6 +2188,72 @@ const maulPage = {
 				}
 				aiThinking = false;
 			}
+		}
+		function endGame(winningTeam) {
+			if (gameTimer) {
+				clearInterval(gameTimer);
+			}
+			setTimeout(function() {
+				gameObject.selectedRobot = [];
+				gameObject.arenaBlueAttackers = [];
+				gameObject.arenaRedAttackers = [];
+				gameObject.redRobotArenaDesigns = [];
+				gameObject.redTowerArenaDesigns = [];
+				gameObject.selectedRobotDesign = -1;
+				gameObject.arenaGameRound = 1;
+				gameObject.arenaRoundSeconds = 15;
+				gameObject.arenaBlueGameMoney = 50;
+				gameObject.arenaRedGameMoney = 50;
+				gameObject.arenaBlueSendCount = 0;
+				gameObject.arenaRedSendCount = 0;
+				gameObject.arenaGameStarted = false;
+				Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
+				Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
+				Game.entitySize = (Game.canvas.height * 0.01);
+				Game.entityWidth = (Game.canvas.width * 0.01);
+				drawWinnerModal(winningTeam);
+			}, 0);
+		}
+		function drawWinnerModal(winningTeam) { // winningTeam can be red, blue or draw
+			let msgs = [];
+			if (winningTeam === 'red') {
+				msgs = ['Red Team Wins!', 'Tap here to continue'];
+			} else if (winningTeam === 'draw') {
+				msgs = ['Draw!', 'Tap here to continue'];
+			} else if (winningTeam === 'blue') {
+				// future Jordan, work on randomly unlocking a robot part for blue
+				msgs = ['Blue Team Wins!', 'Tap here to continue'];
+			}
+			Game.methodSetup = {
+				method: function(id) {
+					drawDialogueModal({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+						width: (Game.entitySize * 45),
+						height: (Game.entitySize * 25),
+						lineWidth: 1,
+						modalColor: 'grey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: msgs,
+						msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
+						msgDistance: (Game.entitySize * 8),
+						bgColor: '',
+						isModalFilled: true,
+						id: Game.modalId,
+						action: {
+							method: function(id) {
+								Game.keepPreviousSize = false;
+								arenaPage.loadPage(); 
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 		}
 	}
 }
