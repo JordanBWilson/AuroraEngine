@@ -2178,10 +2178,12 @@ const maulPage = {
 					const whereToSend = Math.floor((Math.random() * 2) + 1);
 					if (whereToSend === 1 && sendRedLeftCount < 3 || sendRedRightCount === 2) {
 						sendRedLeftCount++;
+						console.log(redBot);
 						sendRedRobotLeft(redBot);
 						sendRedRightCount = 0;
 					} else if (whereToSend === 2 && sendRedRightCount < 3 || sendRedLeftCount == 2) {
 						sendRedRightCount++;
+						console.log(redBot);
 						sendRedRobotRight(redBot);
 						sendRedLeftCount = 0;
 					}
@@ -2217,12 +2219,18 @@ const maulPage = {
 		function drawWinnerModal(winningTeam) { // winningTeam can be red, blue or draw
 			let msgs = [];
 			if (winningTeam === 'red') {
-				msgs = ['Red Team Wins!', 'Tap here to continue'];
+				msgs = ['Red Team Wins!', '', 'Tap here to continue'];
 			} else if (winningTeam === 'draw') {
-				msgs = ['Draw!', 'Tap here to continue'];
+				msgs = ['Draw!', '', 'Tap here to continue'];
 			} else if (winningTeam === 'blue') {
 				// future Jordan, work on randomly unlocking a robot part for blue
-				msgs = ['Blue Team Wins!', 'Tap here to continue'];
+				const newPart = Math.floor((Math.random() * 4) + 1);
+				let unlockPart = '';
+				console.log(newPart);
+				if (newPart === 4) {
+					unlockPart = unlockRobotPart();
+				}
+				msgs = ['Blue Team Wins!', unlockPart , 'Tap here to continue'];
 			}
 			Game.methodSetup = {
 				method: function(id) {
@@ -2254,6 +2262,71 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+		}
+		function unlockRobotPart() {
+			let partSelection = '';
+			// check to see if the parts are maxed out
+			if (gameObject.discoveredChassis.length >= robotChassis.length &&
+			gameObject.discoveredHeads.length >= robotHeads.length &&
+			gameObject.discoveredLegs.length >= robotLegs.length &&
+			gameObject.discoveredArms >= robotArms.length) {
+				return partSelection;
+			} else { // find a robot part
+				let foundPart = false;
+				while(!foundPart) {
+					// future Jordan, make sure this works properly. There shouldn't be dup part ids
+					const selectSection = Math.floor((Math.random() * 4) + 1); // chassis, heads, arms or legs
+					if (selectSection === 1 && gameObject.discoveredChassis.length < robotChassis.length) {
+						const findChassis = Math.floor((Math.random() * gameObject.robotChassis.length));
+						console.log(findChassis);
+						if (gameObject.discoveredChassis.find(x => x.chassisId !== findChassis.chassisId)) {
+							const newChassis = robotChassis[findChassis];
+							gameObject.discoveredChassis.push(newChassis);
+							partSelection += 'New Chassis Part Discovered!';
+							foundPart = true;
+							return partSelection;
+						} else {
+							foundPart = false;
+						}
+					} else if (selectSection === 2 && gameObject.discoveredHeads.length < robotHeads.length) {
+						const findHead = Math.floor((Math.random() * gameObject.discoveredHeads.length));
+						console.log(findHead);
+						if (gameObject.discoveredHeads.find(x => x.headId !== findHead.headId)) {
+							const newHead = robotHeads[findHead];
+							gameObject.discoveredHeads.push(newHead);
+							partSelection += 'New Head Part Discovered!';
+							foundPart = true;
+							return partSelection;
+						} else {
+							foundPart = false;
+						}
+					} else if (selectSection === 3 && gameObject.discoveredLegs.length < robotLegs.length) {
+						const findLeg = Math.floor((Math.random() * gameObject.discoveredLegs.length));
+						console.log(findLeg);
+						if (gameObject.discoveredLegs.find(x => x.legId !== findLeg.legId)) {
+							const newLeg = robotLegs[findLeg];
+							gameObject.discoveredLegs.push(newLeg);
+							partSelection += 'New Leg Part Discovered!';
+							foundPart = true;
+							return partSelection;
+						} else {
+							foundPart = false;
+						}
+					} else if (selectSection === 4 && gameObject.discoveredArms.length < robotArms.length) {
+						const findArm = Math.floor((Math.random() * gameObject.discoveredArms.length));
+						console.log(findArm);
+						if (gameObject.discoveredArms.find(x => x.armId !== findArm.armId)) {
+							const newArm = robotArms[findArm];
+							gameObject.discoveredArms.push(newArm);
+							partSelection += 'New Arm Part Discovered!';
+							foundPart = true;
+							return partSelection;
+						} else {
+							foundPart = false;
+						}
+					}
+				}
+			}
 		}
 	}
 }

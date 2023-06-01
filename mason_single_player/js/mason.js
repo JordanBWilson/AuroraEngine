@@ -75,10 +75,23 @@ const mainPage = {
 		function playGame() {
 			robot = {};
 			// below is a test... the player needs to discover these
-			gameObject.discoveredChassis = robotChassis;
-			gameObject.discoveredHeads = robotHeads;
-			gameObject.discoveredLegs = robotLegs;
-			gameObject.discoveredArms = robotArms;
+			//gameObject.discoveredChassis = robotChassis;
+			//gameObject.discoveredHeads = robotHeads;
+			//gameObject.discoveredLegs = robotLegs;
+			//gameObject.discoveredArms = robotArms;
+			if (gameObject.discoveredChassis.length === 0) {
+				gameObject.discoveredChassis.push(robotChassis[0]);
+			}
+			if (gameObject.discoveredHeads.length === 0) {
+				gameObject.discoveredHeads.push(robotHeads[0]);
+			}
+			if (gameObject.discoveredLegs.length === 0 ) {
+				gameObject.discoveredLegs.push(robotLegs[0]);
+			}
+			if (gameObject.discoveredArms.length === 0) {
+				gameObject.discoveredArms.push(robotArms[0]);
+			}
+			
 			Game.clearStage();
 			drawBackground();
 			if (!Game.isLoaded) {
