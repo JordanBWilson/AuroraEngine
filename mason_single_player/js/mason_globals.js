@@ -298,7 +298,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Scrapper Head',
 		img: 'coral',
-		count: 1,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 1,
@@ -326,7 +326,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Scout Head',
 		img: 'darkgoldenrod',
-		count: 1,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 1,
@@ -354,7 +354,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Harvester Head',
 		img: 'cornflowerblue',
-		count: 1,
+		count: 0,
 		stats: {
 			att: 1,
 			def: 1,
@@ -384,7 +384,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'New World Chassis',
 		img: 'orange',
-		count: 1,
+		count: 6,
 		stats: {
 			att: 0,
 			def: 1,
@@ -412,7 +412,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scrapper Chassis',
 		img: 'coral',
-		count: 6,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 1,
@@ -440,7 +440,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scout Chassis',
 		img: 'darkgoldenrod',
-		count: 1,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 1,
@@ -468,7 +468,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Harvester Chassis',
 		img: 'cornflowerblue',
-		count: 1,
+		count: 0,
 		stats: {
 			att: 1,
 			def: 1,
@@ -584,7 +584,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Leg',
 		img: 'coral',
-		count: 2,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 1,
@@ -613,7 +613,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
-		count: 12,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 1,
@@ -642,7 +642,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Leg',
 		img: 'cornflowerblue',
-		count: 2,
+		count: 0,
 		stats: {
 			att: 1,
 			def: 1,
@@ -702,7 +702,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Arm',
 		img: 'coral',
-		count: 2,
+		count: 0,
 		stats: {
 			att: 1,
 			def: 1,
@@ -731,7 +731,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Arm',
 		img: 'darkgoldenrod',
-		count: 2,
+		count: 0,
 		stats: {
 			att: 1,
 			def: 1,
@@ -760,7 +760,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Arm',
 		img: 'cornflowerblue',
-		count: 12,
+		count: 0,
 		stats: {
 			att: 2,
 			def: 1,

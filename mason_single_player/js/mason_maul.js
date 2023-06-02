@@ -34,9 +34,6 @@ const maulPage = {
 		Game.pageResized = {
 			section: 'arena-game',
 			method: function() {
-				// future Jordan start on reds markers and collisions.
-				// make the robots stop when they reach reds main base
-				// start thinking about towers range distance...
 				if (gameObject.selectedRobotDesign !== -1) {
 					selectArenaRobot(gameObject.selectedRobotDesign);
 				}
@@ -347,6 +344,12 @@ const maulPage = {
 				selectRobotBG.color = 'yellow';
 				gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 				gameObject.selectedRobotDesign = index;
+				
+				// reset the send button colors
+				const sendRobotsLeft = Game.methodObjects.find(bs => bs.id === 'send-robots-left');
+				sendRobotsLeft.btnColor = 'grey';
+				const sendRobotsRight = Game.methodObjects.find(bs => bs.id === 'send-robots-right');
+				sendRobotsRight.btnColor = 'grey';
 			}
 		}
 		function drawRobotSelection() {
@@ -653,21 +656,27 @@ const maulPage = {
 						id: 'send-robots-left',
 						action: { 
 							method: function(id) {
-								if (gameObject.arenaGameStarted && gameObject.selectedRobot.length === 6 && gameObject.arenaBlueGameMoney >= 10) {
-									blueRobotSendMoneyUpdate();
-									setBlueLeftRoadNavCollisions();
-									const blueRobot = {
-										posX: Game.placeEntityX(0),
-										posY: Game.placeEntityY(0.265), // reds bots start position- posY: Game.placeEntityY(0.615),
-										width: (Game.entitySize * 1.5),
-										height: (Game.entitySize * 1.5),
-										id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
-										hp: 10, // future Jordan, buff this with the robots defense
-										robotParts: gameObject.selectedRobot,
-										direction: 'lt',
-										stop: 0,
+								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= 10 && gameObject.selectedRobot.length === 6) {
+									if (gameObject.canClick) {
+										gameObject.canClick = false;
+										blueRobotSendMoneyUpdate();
+										setBlueLeftRoadNavCollisions();
+										const blueRobot = {
+											posX: Game.placeEntityX(0),
+											posY: Game.placeEntityY(0.265), // reds bots start position- posY: Game.placeEntityY(0.615),
+											width: (Game.entitySize * 1.5),
+											height: (Game.entitySize * 1.5),
+											id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
+											hp: 10, // future Jordan, buff this with the robots defense
+											robotParts: gameObject.selectedRobot,
+											direction: 'lt',
+											stop: 0,
+										}
+										sendBlueRobot(blueRobot);
+										setTimeout(function() {
+											gameObject.canClick = true;
+										}, 800);
 									}
-									sendBlueRobot(blueRobot);
 								} else {
 									const sendRobotsLeft = Game.methodObjects.find(bs => bs.id === 'send-robots-left');
 									sendRobotsLeft.btnColor = '#C0C0C0';
@@ -697,21 +706,27 @@ const maulPage = {
 						id: 'send-robots-right',
 						action: { 
 							method: function(id) {
-								if (gameObject.arenaGameStarted && gameObject.selectedRobot.length === 6 && gameObject.arenaBlueGameMoney >= 10) {
-									blueRobotSendMoneyUpdate();
-									setBlueRightRoadNavCollisions();
-									const blueRobot = {
-										posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
-										posY: Game.placeEntityY(0.265), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
-										width: (Game.entitySize * 1.5),
-										height: (Game.entitySize * 1.5),
-										id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-										hp: 10, // future Jordan, buff this with the robots defense
-										robotParts: gameObject.selectedRobot,
-										direction: 'rt',
-										stop: 0,
+								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= 10 && gameObject.selectedRobot.length === 6 ) {
+									if (gameObject.canClick) {
+										gameObject.canClick = false;
+										blueRobotSendMoneyUpdate();
+										setBlueRightRoadNavCollisions();
+										const blueRobot = {
+											posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
+											posY: Game.placeEntityY(0.265), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
+											width: (Game.entitySize * 1.5),
+											height: (Game.entitySize * 1.5),
+											id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+											hp: 10, // future Jordan, buff this with the robots defense
+											robotParts: gameObject.selectedRobot,
+											direction: 'rt',
+											stop: 0,
+										}
+										sendBlueRobot(blueRobot);
+										setTimeout(function() {
+											gameObject.canClick = true;
+										}, 800);
 									}
-									sendBlueRobot(blueRobot);
 								} else {
 									const sendRobotsRight = Game.methodObjects.find(bs => bs.id === 'send-robots-right');
 									sendRobotsRight.btnColor = '#C0C0C0';
@@ -2178,12 +2193,10 @@ const maulPage = {
 					const whereToSend = Math.floor((Math.random() * 2) + 1);
 					if (whereToSend === 1 && sendRedLeftCount < 3 || sendRedRightCount === 2) {
 						sendRedLeftCount++;
-						console.log(redBot);
 						sendRedRobotLeft(redBot);
 						sendRedRightCount = 0;
 					} else if (whereToSend === 2 && sendRedRightCount < 3 || sendRedLeftCount == 2) {
 						sendRedRightCount++;
-						console.log(redBot);
 						sendRedRobotRight(redBot);
 						sendRedLeftCount = 0;
 					}
@@ -2209,6 +2222,7 @@ const maulPage = {
 				gameObject.arenaBlueSendCount = 0;
 				gameObject.arenaRedSendCount = 0;
 				gameObject.arenaGameStarted = false;
+				gameObject.canClick = true;
 				Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
 				Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
 				Game.entitySize = (Game.canvas.height * 0.01);
@@ -2226,7 +2240,6 @@ const maulPage = {
 				// future Jordan, work on randomly unlocking a robot part for blue
 				const newPart = Math.floor((Math.random() * 4) + 1);
 				let unlockPart = '';
-				console.log(newPart);
 				if (newPart === 4) {
 					unlockPart = unlockRobotPart();
 				}
@@ -2274,13 +2287,12 @@ const maulPage = {
 			} else { // find a robot part
 				let foundPart = false;
 				while(!foundPart) {
-					// future Jordan, make sure this works properly. There shouldn't be dup part ids
 					const selectSection = Math.floor((Math.random() * 4) + 1); // chassis, heads, arms or legs
 					if (selectSection === 1 && gameObject.discoveredChassis.length < robotChassis.length) {
-						const findChassis = Math.floor((Math.random() * gameObject.robotChassis.length));
-						console.log(findChassis);
-						if (gameObject.discoveredChassis.find(x => x.chassisId !== findChassis.chassisId)) {
-							const newChassis = robotChassis[findChassis];
+						const findChassis = Math.floor((Math.random() * robotChassis.length));
+						const unlockChassis = gameObject.discoveredChassis.find(x => x.chassisId === robotChassis[findChassis].chassisId);
+						if (!unlockChassis) {
+							const newChassis = Object.assign({}, robotChassis[findChassis]);
 							gameObject.discoveredChassis.push(newChassis);
 							partSelection += 'New Chassis Part Discovered!';
 							foundPart = true;
@@ -2289,10 +2301,10 @@ const maulPage = {
 							foundPart = false;
 						}
 					} else if (selectSection === 2 && gameObject.discoveredHeads.length < robotHeads.length) {
-						const findHead = Math.floor((Math.random() * gameObject.discoveredHeads.length));
-						console.log(findHead);
-						if (gameObject.discoveredHeads.find(x => x.headId !== findHead.headId)) {
-							const newHead = robotHeads[findHead];
+						const findHead = Math.floor((Math.random() * robotHeads.length));
+						const unlockHead = gameObject.discoveredHeads.find(x => x.headId === robotHeads[findHead].headId);
+						if (!unlockHead) {
+							const newHead = Object.assign({}, robotHeads[findHead]);
 							gameObject.discoveredHeads.push(newHead);
 							partSelection += 'New Head Part Discovered!';
 							foundPart = true;
@@ -2301,10 +2313,10 @@ const maulPage = {
 							foundPart = false;
 						}
 					} else if (selectSection === 3 && gameObject.discoveredLegs.length < robotLegs.length) {
-						const findLeg = Math.floor((Math.random() * gameObject.discoveredLegs.length));
-						console.log(findLeg);
-						if (gameObject.discoveredLegs.find(x => x.legId !== findLeg.legId)) {
-							const newLeg = robotLegs[findLeg];
+						const findLeg = Math.floor((Math.random() * robotLegs.length));
+						const unlockLeg = gameObject.discoveredLegs.find(x => x.legId === robotLegs[findLeg].legId);
+						if (!unlockLeg) {
+							const newLeg = Object.assign({}, robotLegs[findLeg]);
 							gameObject.discoveredLegs.push(newLeg);
 							partSelection += 'New Leg Part Discovered!';
 							foundPart = true;
@@ -2313,10 +2325,10 @@ const maulPage = {
 							foundPart = false;
 						}
 					} else if (selectSection === 4 && gameObject.discoveredArms.length < robotArms.length) {
-						const findArm = Math.floor((Math.random() * gameObject.discoveredArms.length));
-						console.log(findArm);
-						if (gameObject.discoveredArms.find(x => x.armId !== findArm.armId)) {
-							const newArm = robotArms[findArm];
+						const findArm = Math.floor((Math.random() * robotArms.length));
+						const unlockArm = gameObject.discoveredArms.find(x => x.armId === robotArms[findArm].armId);
+						if (!unlockArm) {
+							const newArm = Object.assign({}, robotArms[findArm]);
 							gameObject.discoveredArms.push(newArm);
 							partSelection += 'New Arm Part Discovered!';
 							foundPart = true;
