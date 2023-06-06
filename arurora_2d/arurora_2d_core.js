@@ -85,6 +85,7 @@ function drawTextMethod(incomingText) {
       isAnim: false,
       props: incomingText.props,
       id: incomingText.id,
+      layer: incomingText.layer === undefined ? 0 : incomingText.layer,
       methodId: incomingText.methodId,
     }
     Game.methodObjects.push(text);
@@ -101,7 +102,7 @@ function drawTextMethod(incomingText) {
     Game.methodObjects[index].align = incomingText.align;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingText.props;
-    Game.methodObjects[index].id = incomingText.id;
+    Game.methodObjects[index].layer = incomingText.layer;
     Main.methodObjectShadows[index].font = incomingText.font;
     Main.methodObjectShadows[index].msg = incomingText.msg;
     Main.methodObjectShadows[index].posX = incomingText.posX;
@@ -111,6 +112,7 @@ function drawTextMethod(incomingText) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingText.props;
     Main.methodObjectShadows[index].id = incomingText.id;
+    Main.methodObjectShadows[index].layer = incomingText.layer;
     redrawText(incomingText);
   }
   // checking for animations
@@ -120,7 +122,8 @@ function drawTextMethod(incomingText) {
    Game.methodObjects[index].font !== Main.methodObjectShadows[index].font ||
    Game.methodObjects[index].msg !== Main.methodObjectShadows[index].msg ||
    Game.methodObjects[index].color !== Main.methodObjectShadows[index].color ||
-   Game.methodObjects[index].align !== Main.methodObjectShadows[index].align)
+   Game.methodObjects[index].align !== Main.methodObjectShadows[index].align || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
       redrawText(Game.methodObjects[index]);
       const shadowText = Object.assign({}, Game.methodObjects[index]);
@@ -134,7 +137,8 @@ function drawTextMethod(incomingText) {
     Game.methodObjects[index].font === Main.methodObjectShadows[index].font ||
     Game.methodObjects[index].msg === Main.methodObjectShadows[index].msg ||
     Game.methodObjects[index].color === Main.methodObjectShadows[index].color ||
-    Game.methodObjects[index].align === Main.methodObjectShadows[index].align)) {
+    Game.methodObjects[index].align === Main.methodObjectShadows[index].align ||
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
     }
 }
@@ -164,6 +168,7 @@ function drawRectMethod(incomingRect) {
       color: incomingRect.color,
       isFilled: incomingRect.isFilled,
       id: incomingRect.id,
+      layer: incomingRect.layer === undefined ? 0 : incomingRect.layer,
       isAnim: false,
       isBackground: incomingRect.isBackground,
       props: incomingRect.props,
@@ -185,6 +190,7 @@ function drawRectMethod(incomingRect) {
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingRect.isBackground;
     Game.methodObjects[index].props = incomingRect.props;
+    Game.methodObjects[index].layer = incomingRect.layer;
     Main.methodObjectShadows[index].posX = incomingRect.posX;
     Main.methodObjectShadows[index].posY = incomingRect.posY;
     Main.methodObjectShadows[index].width = incomingRect.width;
@@ -195,6 +201,7 @@ function drawRectMethod(incomingRect) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingRect.isBackground;
     Main.methodObjectShadows[index].props = incomingRect.props;
+    Main.methodObjectShadows[index].layer = incomingRect.layer;
     redrawRect(incomingRect);
   }
   if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
@@ -209,7 +216,8 @@ function drawRectMethod(incomingRect) {
    Game.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
    Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
    Game.methodObjects[index].color !== Main.methodObjectShadows[index].color ||
-   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled ||
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
       redrawRect(Game.methodObjects[index]);
       const shadowRect = Object.assign({}, Game.methodObjects[index]);
@@ -228,7 +236,8 @@ function drawRectMethod(incomingRect) {
     Game.methodObjects[index].height === Main.methodObjectShadows[index].height ||
     Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
     Game.methodObjects[index].color === Main.methodObjectShadows[index].color ||
-    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -265,6 +274,7 @@ function drawArcMethod(incomingArc) {
       color: incomingArc.color,
       isFilled: incomingArc.isFilled,
       id: incomingArc.id,
+      layer: incomingArc.layer === undefined ? 0 : incomingArc.layer,
       isAnim: false,
       props: incomingArc.props,
       methodId: incomingArc.methodId,
@@ -285,6 +295,7 @@ function drawArcMethod(incomingArc) {
     Game.methodObjects[index].isFilled = incomingArc.isFilled;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingArc.props;
+    Game.methodObjects[index].layer = incomingArc.layer;
     Main.methodObjectShadows[index].posX = incomingArc.posX;
     Main.methodObjectShadows[index].posY = incomingArc.posY;
     Main.methodObjectShadows[index].width = incomingArc.width;
@@ -295,6 +306,7 @@ function drawArcMethod(incomingArc) {
     Main.methodObjectShadows[index].isFilled = incomingArc.isFilled;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingArc.props;
+    Main.methodObjectShadows[index].layer = incomingArc.layer;
     redrawArc(incomingArc);
   }
   // checking for animation
@@ -306,7 +318,8 @@ function drawArcMethod(incomingArc) {
    Game.methodObjects[index].aglEnd !== Main.methodObjectShadows[index].aglEnd ||
    Game.methodObjects[index].lineWidth !== Main.methodObjectShadows[index].lineWidth ||
    Game.methodObjects[index].color !== Main.methodObjectShadows[index].color ||
-   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
      redrawArc(Game.methodObjects[index]);
       const shadowArc = Object.assign({}, Game.methodObjects[index]);
@@ -323,7 +336,8 @@ function drawArcMethod(incomingArc) {
     Game.methodObjects[index].aglEnd === Main.methodObjectShadows[index].aglEnd ||
     Game.methodObjects[index].lineWidth === Main.methodObjectShadows[index].lineWidth ||
     Game.methodObjects[index].color === Main.methodObjectShadows[index].color ||
-    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled ||
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -362,6 +376,7 @@ function drawButtonMethod(incomingButton) {
       msg: incomingButton.msg,
       isFilled: incomingButton.isFilled,
       id: incomingButton.id,
+      layer: incomingButton.layer === undefined ? 0 : incomingButton.layer,
       action: incomingButton.action,
       isModalBtn: incomingButton.isModalBtn,
       isBtn: true,
@@ -388,6 +403,7 @@ function drawButtonMethod(incomingButton) {
     Game.methodObjects[index].action = incomingButton.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingButton.props;
+    Game.methodObjects[index].layer = incomingButton.layer;
     Main.methodObjectShadows[index].posX = incomingButton.posX;
     Main.methodObjectShadows[index].posY = incomingButton.posY;
     Main.methodObjectShadows[index].width = incomingButton.width;
@@ -401,6 +417,7 @@ function drawButtonMethod(incomingButton) {
     Main.methodObjectShadows[index].action = incomingButton.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButton.props;
+    Main.methodObjectShadows[index].layer = incomingButton.layer;
     redrawButton(incomingButton);
   }
   // checking for animations
@@ -414,7 +431,8 @@ function drawButtonMethod(incomingButton) {
    Game.methodObjects[index].txtColor !== Main.methodObjectShadows[index].txtColor ||
    Game.methodObjects[index].font !== Main.methodObjectShadows[index].font ||
    Game.methodObjects[index].msg !== Main.methodObjectShadows[index].msg ||
-   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled)
+   Game.methodObjects[index].isFilled !== Main.methodObjectShadows[index].isFilled || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
      redrawButton(Game.methodObjects[index]);
       const shadowButton = Object.assign({}, Game.methodObjects[index]);
@@ -433,7 +451,8 @@ function drawButtonMethod(incomingButton) {
     Game.methodObjects[index].txtColor === Main.methodObjectShadows[index].txtColor ||
     Game.methodObjects[index].font === Main.methodObjectShadows[index].font ||
     Game.methodObjects[index].msg === Main.methodObjectShadows[index].msg ||
-    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled)) {
+    Game.methodObjects[index].isFilled === Main.methodObjectShadows[index].isFilled || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -478,6 +497,7 @@ function drawImageMethod(incomingImg) {
       animTicks: incomingImg.animTicks,
       ticks: incomingImg.ticks,
       id: incomingImg.id,
+      layer: incomingImg.layer === undefined ? 0 : incomingImg.layer,
       isAnim: false,
       isBackground: incomingImg.isBackground,
       props: incomingImg.props,
@@ -500,6 +520,7 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImg.isBackground;
     Game.methodObjects[index].props = incomingImg.props;
+    Game.methodObjects[index].layer = incomingImg.layer;
     Main.methodObjectShadows[index].posX = incomingImg.posX;
     Main.methodObjectShadows[index].posY = incomingImg.posY;
     Main.methodObjectShadows[index].width = incomingImg.width;
@@ -511,6 +532,7 @@ function drawImageMethod(incomingImg) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImg.isBackground;
     Main.methodObjectShadows[index].props = incomingImg.props;
+    Main.methodObjectShadows[index].layer = incomingImg.layer;
     redrawImage(incomingImg);
   }
   if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
@@ -526,7 +548,8 @@ function drawImageMethod(incomingImg) {
    Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
    Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
-   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
       redrawImage(Game.methodObjects[index]);
       const shadowImage = Object.assign({}, Game.methodObjects[index]);
@@ -546,7 +569,8 @@ function drawImageMethod(incomingImg) {
     Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
     Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
-    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -579,6 +603,7 @@ function drawImagePatternMethod(incomingImgPat) {
       animTicks: incomingImgPat.animTicks,
       ticks: incomingImgPat.ticks,
       id: incomingImgPat.id,
+      layer: incomingImgPat.layer === undefined ? 0 : incomingImgPat.layer,
       isAnim: false,
       isBackground: incomingImgPat.isBackground,
       props: incomingImgPat.props,
@@ -603,6 +628,7 @@ function drawImagePatternMethod(incomingImgPat) {
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].isBackground = incomingImgPat.isBackground;
     Game.methodObjects[index].props = incomingImgPat.props;
+    Game.methodObjects[index].layer = incomingImgPat.layer;
     Main.methodObjectShadows[index].posX = incomingImgPat.posX;
     Main.methodObjectShadows[index].posY = incomingImgPat.posY;
     Main.methodObjectShadows[index].width = incomingImgPat.width;
@@ -616,6 +642,7 @@ function drawImagePatternMethod(incomingImgPat) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImgPat.isBackground;
     Main.methodObjectShadows[index].props = incomingImgPat.props;
+    Main.methodObjectShadows[index].layer = incomingImgPat.layer;
     redrawImagePattern(incomingImgPat);
   }
   if (doesExist && Game.methodObjects[index].isAnim && Game.methodObjects[index].isBackground) {
@@ -633,7 +660,8 @@ function drawImagePatternMethod(incomingImgPat) {
    Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
    Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
-   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
       redrawImagePattern(Game.methodObjects[index]);
       const shadowImagePat = Object.assign({}, Game.methodObjects[index]);
@@ -655,7 +683,8 @@ function drawImagePatternMethod(incomingImgPat) {
     Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
     Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
-    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -688,6 +717,7 @@ function drawButtonImageMethod(incomingButtonImage) {
       animTicks: incomingButtonImage.animTicks,
       ticks: incomingButtonImage.ticks,
       id: incomingButtonImage.id,
+      layer: incomingButtonImage.layer === undefined ? 0 : incomingButtonImage.layer,
       action: incomingButtonImage.action,
       isModalBtn: incomingButtonImage.isModalBtn,
       isBtn: true,
@@ -712,6 +742,7 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].action = incomingButtonImage.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingButtonImage.props;
+    Game.methodObjects[index].layer = incomingButtonImage.layer;
     Main.methodObjectShadows[index].posX = incomingButtonImage.posX;
     Main.methodObjectShadows[index].posY = incomingButtonImage.posY;
     Main.methodObjectShadows[index].width = incomingButtonImage.width;
@@ -723,6 +754,7 @@ function drawButtonImageMethod(incomingButtonImage) {
     Main.methodObjectShadows[index].action = incomingButtonImage.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButtonImage.props;
+    Main.methodObjectShadows[index].layer = incomingButtonImage.layer;
     redrawImage(incomingButtonImage);
   }
   // checking for animations
@@ -734,7 +766,8 @@ function drawButtonImageMethod(incomingButtonImage) {
    Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
    Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
-   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
      redrawImage(Game.methodObjects[index]);
       const shadowButtonImg = Object.assign({}, Game.methodObjects[index]);
@@ -751,7 +784,8 @@ function drawButtonImageMethod(incomingButtonImage) {
     Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
     Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
-    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -778,6 +812,7 @@ function drawSimpleModalMethod(incomingModal) {
       bgColor: incomingModal.bgColor,
       isModalFilled: incomingModal.isModalFilled,
       id: incomingModal.id,
+      layer: incomingModal.layer === undefined ? 0 : incomingModal.layer,
       action: incomingModal.action,
       isBtn: true,
       isModalBtn: true,
@@ -808,6 +843,7 @@ function drawSimpleModalMethod(incomingModal) {
     Game.methodObjects[index].action = incomingModal.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingModal.props;
+    Game.methodObjects[index].layer = incomingModal.layer;
     Main.methodObjectShadows[index].posX = incomingModal.posX;
     Main.methodObjectShadows[index].posY = incomingModal.posY;
     Main.methodObjectShadows[index].width = incomingModal.width;
@@ -825,6 +861,7 @@ function drawSimpleModalMethod(incomingModal) {
     Main.methodObjectShadows[index].action = incomingModal.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModal.props;
+    Main.methodObjectShadows[index].layer = incomingModal.layer;
     redrawSimpleModal(incomingModal);
   }
   // checking for animations
@@ -842,7 +879,8 @@ function drawSimpleModalMethod(incomingModal) {
    Game.methodObjects[index].footerFont !== Main.methodObjectShadows[index].footerFont ||
    Game.methodObjects[index].footerMsg !== Main.methodObjectShadows[index].footerMsg ||
    Game.methodObjects[index].bgColor !== Main.methodObjectShadows[index].bgColor ||
-   Game.methodObjects[index].isModalFilled !== Main.methodObjectShadows[index].isModalFilled)
+   Game.methodObjects[index].isModalFilled !== Main.methodObjectShadows[index].isModalFilled || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
      redrawSimpleModal(Game.methodObjects[index]);
       const shadowModal = Object.assign({}, Game.methodObjects[index]);
@@ -865,12 +903,12 @@ function drawSimpleModalMethod(incomingModal) {
     Game.methodObjects[index].footerFont === Main.methodObjectShadows[index].footerFont ||
     Game.methodObjects[index].footerMsg === Main.methodObjectShadows[index].footerMsg ||
     Game.methodObjects[index].bgColor === Main.methodObjectShadows[index].bgColor ||
-    Game.methodObjects[index].isModalFilled === Main.methodObjectShadows[index].isModalFilled)) {
+    Game.methodObjects[index].isModalFilled === Main.methodObjectShadows[index].isModalFilled || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
 function redrawSimpleModal(incomingModal) {
-	
 	if (incomingModal.bgColor.length > 0) {
 		Main.stage.beginPath();
 		Main.stage.rect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -917,6 +955,7 @@ function drawModalImageMethod(incomingModalImage) {
       animTicks: incomingModalImage.animTicks,
       ticks: incomingModalImage.ticks,
       id: incomingModalImage.id,
+      layer: incomingModalImage.layer === undefined ? 0 : incomingModalImage.layer,
       action: incomingModalImage.action,
       isBtn: true,
       isModalBtn: incomingModalImage.incomingModalImage,
@@ -941,6 +980,7 @@ function drawModalImageMethod(incomingModalImage) {
     Game.methodObjects[index].action = incomingModalImage.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingModalImage.props;
+    Game.methodObjects[index].layer = incomingModalImage.layer;
     Main.methodObjectShadows[index].posX = incomingModalImage.posX;
     Main.methodObjectShadows[index].posY = incomingModalImage.posY;
     Main.methodObjectShadows[index].width = incomingModalImage.width;
@@ -952,6 +992,7 @@ function drawModalImageMethod(incomingModalImage) {
     Main.methodObjectShadows[index].action = incomingModalImage.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModalImage.props;
+    Main.methodObjectShadows[index].layer = incomingModalImage.layer;
     redrawImage(incomingModalImage);
   }
   // checking for animations
@@ -963,7 +1004,8 @@ function drawModalImageMethod(incomingModalImage) {
    Game.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Game.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
    Game.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
-   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks)
+   Game.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks || 
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
      redrawImage(Game.methodObjects[index]);
       const shadowButtonImg = Object.assign({}, Game.methodObjects[index]);
@@ -980,7 +1022,8 @@ function drawModalImageMethod(incomingModalImage) {
     Game.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Game.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
     Game.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
-    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks)) {
+    Game.methodObjects[index].ticks === Main.methodObjectShadows[index].ticks || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
@@ -1006,6 +1049,7 @@ function drawDialogueModalMethod(incomingModal) {
       bgColor: incomingModal.bgColor,
       isModalFilled: incomingModal.isModalFilled,
       id: incomingModal.id,
+      layer: incomingModal.layer === undefined ? 0 : incomingModal.layer,
       action: incomingModal.action,
       isBtn: true,
       isModalBtn: incomingModal.isModalBtn,
@@ -1035,6 +1079,7 @@ function drawDialogueModalMethod(incomingModal) {
     Game.methodObjects[index].action = incomingModal.action;
     Game.methodObjects[index].isAnim = false;
     Game.methodObjects[index].props = incomingModal.props;
+    Game.methodObjects[index].layer = incomingModal.layer;
     Main.methodObjectShadows[index].posX = incomingModal.posX;
     Main.methodObjectShadows[index].posY = incomingModal.posY;
     Main.methodObjectShadows[index].width = incomingModal.width;
@@ -1051,6 +1096,7 @@ function drawDialogueModalMethod(incomingModal) {
     Main.methodObjectShadows[index].action = incomingModal.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModal.props;
+    Main.methodObjectShadows[index].layer = incomingModal.layer;
     redrawDialogueModal(incomingModal);
   }
   // checking for animations
@@ -1067,7 +1113,8 @@ function drawDialogueModalMethod(incomingModal) {
    Game.methodObjects[index].msgStart !== Main.methodObjectShadows[index].msgStart ||
    Game.methodObjects[index].msgDistance !== Main.methodObjectShadows[index].msgDistance ||
    Game.methodObjects[index].bgColor !== Main.methodObjectShadows[index].bgColor ||
-   Game.methodObjects[index].isModalFilled !== Main.methodObjectShadows[index].isModalFilled)
+   Game.methodObjects[index].isModalFilled !== Main.methodObjectShadows[index].isModalFilled ||
+   Game.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
      redrawDialogueModal(Game.methodObjects[index]);
       const shadowModal = Object.assign({}, Game.methodObjects[index]);
@@ -1089,12 +1136,12 @@ function drawDialogueModalMethod(incomingModal) {
     Game.methodObjects[index].msgStart === Main.methodObjectShadows[index].msgStart ||
     Game.methodObjects[index].msgDistance === Main.methodObjectShadows[index].msgDistance ||
     Game.methodObjects[index].bgColor === Main.methodObjectShadows[index].bgColor ||
-    Game.methodObjects[index].isModalFilled === Main.methodObjectShadows[index].isModalFilled)) {
+    Game.methodObjects[index].isModalFilled === Main.methodObjectShadows[index].isModalFilled || 
+    Game.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Game.methodObjects[index].isAnim = false;
    }
 }
 function redrawDialogueModal(incomingModal) {
-	
 	if (incomingModal.bgColor.length > 0) {
 		Main.stage.beginPath();
 		Main.stage.rect(0, 0, Game.canvas.width, Game.canvas.height);

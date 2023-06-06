@@ -20,6 +20,7 @@ const maulPage = {
 		Game.clearStage();
 		// future Jordan, work on double tapping towers.
 		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
+		// if there isn't a tower built, one tap to open the build menu
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 		const roadImg = new Image();
@@ -1261,9 +1262,11 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-1',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 1);
 							}
 						},
 						isModalBtn: false,
@@ -1287,9 +1290,12 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-2',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 2);
+								console.log(tower);
 							}
 						},
 						isModalBtn: false,
@@ -1313,9 +1319,12 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-3',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 3);
+								console.log(tower);
 							}
 						},
 						isModalBtn: false,
@@ -1339,9 +1348,12 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-4',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 4);
+								console.log(tower);
 							}
 						},
 						isModalBtn: false,
@@ -1365,9 +1377,12 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-5',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 5);
+								console.log(tower);
 							}
 						},
 						isModalBtn: false,
@@ -1391,9 +1406,12 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-6',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 6);
+								console.log(tower);
 							}
 						},
 						isModalBtn: false,
@@ -1417,9 +1435,12 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-7',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 7);
+								console.log(tower);
 							}
 						},
 						isModalBtn: false,
@@ -1443,9 +1464,12 @@ const maulPage = {
 						msg: 'Tower',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-8',
-						action: { 
+						action: {
+							methodId: id,
 							method: function(id) {
-								
+								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+								selectBuildTower(tower, 8);
+								console.log(tower);
 							}
 						},
 						isModalBtn: false,
@@ -2237,15 +2261,15 @@ const maulPage = {
 			} else if (winningTeam === 'draw') {
 				msgs = ['Draw!', '', 'Tap here to continue'];
 			} else if (winningTeam === 'blue') {
-				// future Jordan, work on randomly unlocking a robot part for blue
 				const newPart = Math.floor((Math.random() * 4) + 1);
 				let unlockPart = '';
-				if (newPart === 4) {
+				if (newPart === 4) { // 1 and 4 chance to unlock a part
 					unlockPart = unlockRobotPart();
 				}
 				msgs = ['Blue Team Wins!', unlockPart , 'Tap here to continue'];
 			}
 			Game.methodSetup = {
+				layer: 1,
 				method: function(id) {
 					drawDialogueModal({
 						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
@@ -2262,6 +2286,7 @@ const maulPage = {
 						bgColor: '',
 						isModalFilled: true,
 						id: Game.modalId,
+						layer: 1,
 						action: {
 							method: function(id) {
 								Game.keepPreviousSize = false;
@@ -2278,7 +2303,7 @@ const maulPage = {
 		}
 		function unlockRobotPart() {
 			let partSelection = '';
-			// check to see if the parts are maxed out
+			// check to see if all the parts are maxed out
 			if (gameObject.discoveredChassis.length >= robotChassis.length &&
 			gameObject.discoveredHeads.length >= robotHeads.length &&
 			gameObject.discoveredLegs.length >= robotLegs.length &&
@@ -2339,6 +2364,63 @@ const maulPage = {
 					}
 				}
 			}
+		}
+		function selectBuildTower(tower, index) {
+			// future Jordan, work on the build tower modal
+			let msgs = ['test'];
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawDialogueModal({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+						width: (Game.entitySize * 45),
+						height: (Game.entitySize * 25),
+						lineWidth: 1,
+						modalColor: 'grey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: msgs,
+						msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
+						msgDistance: (Game.entitySize * 8),
+						bgColor: '',
+						isModalFilled: true,
+						id: Game.modalId,
+						layer: 1,
+						action: {
+							method: function(id) {
+								// Game.keepPreviousSize = false;
+								// arenaPage.loadPage(); 
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.10),
+						height: (Game.entitySize * 10),
+						lineWidth: 1,
+						color: 'darkgrey',
+						isBackground: false,
+						isFilled: true,
+						id: 'arena-tower-' + index,
+						layer: 1,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			
 		}
 	}
 }

@@ -58,6 +58,9 @@ const Game = { // the user will want to use this object
     method: function(id) {/*put your method here*/}
   },
   addMethod: function(method) {
+	if (method?.layer === undefined) {
+		method.layer = 0;
+	}
     Main.methodsToRun.push(method);
     this.methodSetup = {
       method: function(id) {},
