@@ -42,19 +42,21 @@ function mainLoop() {
   Main.interval = setInterval(function() {
     if (Game.isLoaded) {
       if (Main.methodsToRun.length > 0) {
-		  // layer the methods
-		  Main.methodsToRun.sort(function(a, b) {
-			return a?.layer - b?.layer;
-		  });
-		  Game.methodObjects.sort(function(a, b) {
-			return a?.layer - b?.layer;
-		  });
         // run the game
         for (let i = 0; i < Main.methodsToRun.length; i++) {
           if (Main.clearStage === true) {
             Main.clearStage = false;
             break;
           }
+          if (Main.methodsToRun[i].layer !== 0) {
+			  // layer the methods
+			  Main.methodsToRun.sort(function(a, b) {
+				return a?.layer - b?.layer;
+			  });
+			  Game.methodObjects.sort(function(a, b) {
+				return a?.layer - b?.layer;
+			  });
+		  }
           if (Main.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
             Main.globalId = Math.floor((Math.random() * 9007199254740992) + 1); // max int size
             Main.methodsToRun[i].methodId = Main.globalId;
