@@ -1265,8 +1265,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 1);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 1);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1293,9 +1296,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 2);
-								console.log(tower);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 2);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1322,9 +1327,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 3);
-								console.log(tower);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 3);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1351,9 +1358,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 4);
-								console.log(tower);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 4);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1380,9 +1389,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 5);
-								console.log(tower);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 5);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1409,9 +1420,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 6);
-								console.log(tower);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 6);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1438,9 +1451,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 7);
-								console.log(tower);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 7);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -1467,9 +1482,11 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-								selectBuildTower(tower, 8);
-								console.log(tower);
+								if (gameObject.arenaGameStarted) {
+									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
+									selectBuildTowerMenu(tower, 8);
+									console.log(tower);
+								}
 							}
 						},
 						isModalBtn: false,
@@ -2365,23 +2382,25 @@ const maulPage = {
 				}
 			}
 		}
-		function selectBuildTower(tower, index) {
+		function selectBuildTowerMenu(tower, index) {
 			// future Jordan, work on the build tower modal
+			// draw the towers and draw the currently selected tower in the middle
+			// draw a build and cancel button
 			let msgs = ['test'];
 			Game.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawDialogueModal({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-						width: (Game.entitySize * 45),
-						height: (Game.entitySize * 25),
+						posX: Game.placeEntityX(0.07),
+						posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.85),
+						height: (Game.entitySize * 50),
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
 						msgFont: '1em serif',
 						msgs: msgs,
-						msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
+						msgStart: Game.placeEntityY(0.58, (Game.entitySize * 30)),
 						msgDistance: (Game.entitySize * 8),
 						bgColor: '',
 						isModalFilled: true,
@@ -2404,15 +2423,15 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.10),
+						posX: Game.placeEntityX(0.11, (Game.entitySize * -0.01)),
+						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.15),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
-						color: 'darkgrey',
+						color: 'yellow',
 						isBackground: false,
 						isFilled: true,
-						id: 'arena-tower-' + index,
+						id: 'arena-tower-bg-1-' + index,
 						layer: 1,
 						props: {},
 						methodId: id
@@ -2420,7 +2439,46 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.43, (Game.entitySize * 1.99)),
+						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.15),
+						height: (Game.entitySize * 10),
+						lineWidth: 1,
+						color: 'darkgrey',
+						isBackground: false,
+						isFilled: true,
+						id: 'arena-tower-bg-2-' + index,
+						layer: 1,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawRect({
+						posX: Game.placeEntityX(0.739, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.15),
+						height: (Game.entitySize * 10),
+						lineWidth: 1,
+						color: 'darkgrey',
+						isBackground: false,
+						isFilled: true,
+						id: 'arena-tower-bg-3-' + index,
+						layer: 1,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
 		}
 	}
 }
