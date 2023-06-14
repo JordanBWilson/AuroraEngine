@@ -1273,7 +1273,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1304,7 +1321,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1335,7 +1369,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1366,7 +1417,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1397,7 +1465,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1428,7 +1513,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1459,7 +1561,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1490,7 +1609,24 @@ const maulPage = {
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							name: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+							requires: {
+								arenaLvlToBuild: 0,
+								arenaLvlToUpgrade: 0,
+							},
+						},
 						methodId: id
 					});
 				}
@@ -1510,7 +1646,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-left-tower-spawn-1',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -1528,7 +1676,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-left-tower-spawn-2',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -1546,7 +1706,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-left-tower-spawn-3',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -1564,7 +1736,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-left-tower-spawn-4',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -1582,7 +1766,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-right-tower-spawn-5',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -1600,7 +1796,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-right-tower-spawn-6',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -1618,7 +1826,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-right-tower-spawn-7',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -1636,7 +1856,19 @@ const maulPage = {
 						isFilled: true,
 						id: 'red-right-tower-spawn-8',
 						isBackground: false,
-						props: {},
+						props: {
+							towerId: 0,
+							type: '',
+							stats: {
+								att: 0,
+								def: 0,
+								spd: 0,
+								hp: 0,
+								lvl: 0,
+								range: 0,
+							},
+							robotParts: [],
+						},
 						methodId: id
 					});
 				}
@@ -2382,11 +2614,70 @@ const maulPage = {
 				}
 			}
 		}
+		function findTowerDirectiveName(index) {
+			let directiveName = '';
+			if (gameObject.towerArenaDesigns[index].directive === 1 && gameObject.towerArenaDesigns[index].arenaTower.type !== 'bunker') {
+				directiveName = 'Standard';
+			}
+			if (gameObject.towerArenaDesigns[index].directive === 2 && gameObject.towerArenaDesigns[index].arenaTower.type !== 'bunker') {
+				directiveName = 'Long-Shot';
+			} else if (gameObject.towerArenaDesigns[index].directive === 2 && gameObject.towerArenaDesigns[index].arenaTower.type === 'bunker') {
+				directiveName = 'Standard';
+			}
+			if (gameObject.towerArenaDesigns[index].directive === 3 && gameObject.towerArenaDesigns[index].arenaTower.type !== 'bunker') {
+				directiveName = 'Rapid-Shot';
+			} else if (gameObject.towerArenaDesigns[index].directive === 3 && gameObject.towerArenaDesigns[index].arenaTower.type === 'bunker') {
+				directiveName = 'Rapid';
+			}
+			if (gameObject.towerArenaDesigns[index].directive === 4 && gameObject.towerArenaDesigns[index].arenaTower.type !== 'bunker') {
+				directiveName = 'Ram-Shot';
+			} else if (gameObject.towerArenaDesigns[index].directive === 4 && gameObject.towerArenaDesigns[index].arenaTower.type === 'bunker') {
+				directiveName = 'Defense';
+			} 
+			
+			return directiveName;
+		}
+		function resetTowerSelect() {
+			const towerOne = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-1');
+			if (towerOne) {
+				towerOne.color = 'darkgrey';
+			}
+			const towerTwo = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-2');
+			if (towerTwo) {
+				towerTwo.color = 'darkgrey';
+			}
+			const towerThree = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-3');
+			if (towerThree) {
+				towerThree.color = 'darkgrey';
+			}
+		}
+		function selectBuildTower(tower, index) {
+			console.log('select', index);
+			const directiveName = findTowerDirectiveName(index);
+			const selectedTowerDesign = gameObject.towerArenaDesigns[index];
+			msgs = [selectedTowerDesign.arenaTower.name ? selectedTowerDesign.arenaTower.name : 'Nothing Selected', directiveName];
+			const modal = Game.methodObjects.find(bg => bg.id === Game.modalId);
+			if (modal) {
+				modal.msgs = msgs;
+			}
+			resetTowerSelect();
+			const towerBg = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-' + (index + 1));
+			if (towerBg) {
+				towerBg.color = 'yellow';
+			}
+			const returnTower = {
+				directiveName: directiveName,
+				selectedTowerDesign: selectedTowerDesign
+			}
+			return returnTower;
+		}
 		function selectBuildTowerMenu(tower, index) {
 			// future Jordan, work on the build tower modal
 			// draw the towers and draw the currently selected tower in the middle
 			// draw a build and cancel button
-			let msgs = ['test'];
+			let directiveName = findTowerDirectiveName(0);
+			let selectedTowerDesign = gameObject.towerArenaDesigns[0];
+			let msgs = [selectedTowerDesign.arenaTower.name, directiveName];
 			Game.methodSetup = {
 				layer: 1,
 				method: function(id) {
@@ -2401,15 +2692,14 @@ const maulPage = {
 						msgFont: '1em serif',
 						msgs: msgs,
 						msgStart: Game.placeEntityY(0.58, (Game.entitySize * 30)),
-						msgDistance: (Game.entitySize * 8),
+						msgDistance: (Game.entitySize * 7),
 						bgColor: '',
 						isModalFilled: true,
 						id: Game.modalId,
 						layer: 1,
 						action: {
 							method: function(id) {
-								// Game.keepPreviousSize = false;
-								// arenaPage.loadPage(); 
+								
 							}
 						},
 						isModalBtn: false,
@@ -2431,8 +2721,40 @@ const maulPage = {
 						color: 'yellow',
 						isBackground: false,
 						isFilled: true,
-						id: 'arena-tower-bg-1-' + index,
+						id: 'arena-tower-bg-1',
 						layer: 1,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			console.log('tower', gameObject.towerArenaDesigns[0], gameObject.towerArenaDesigns[1]);
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.159, (Game.entitySize * -0.01)),
+						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.05), // (Game.entitySize * 23)
+						height: (Game.entitySize * 9),
+						lineWidth: 1,
+						btnColor: gameObject.towerArenaDesigns[0].arenaTower.img ? gameObject.towerArenaDesigns[0].arenaTower.img : 'lightslategrey',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
+						isFilled: true,
+						id: 'blue-tower-' + index,
+						layer: 1,
+						action: {
+							methodId: id,
+							method: function(id) {
+								const selectTower = selectBuildTower(tower, 0);
+								directiveName = selectTower.directiveName;
+								selectedTowerDesign = selectTower.selectedTowerDesign;
+							}
+						},
+						isModalBtn: true,
 						props: {},
 						methodId: id
 					});
@@ -2451,8 +2773,39 @@ const maulPage = {
 						color: 'darkgrey',
 						isBackground: false,
 						isFilled: true,
-						id: 'arena-tower-bg-2-' + index,
+						id: 'arena-tower-bg-2',
 						layer: 1,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.479, (Game.entitySize * 1.99)),
+						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.05), // (Game.entitySize * 23)
+						height: (Game.entitySize * 9),
+						lineWidth: 1,
+						btnColor: gameObject.towerArenaDesigns[1].arenaTower.img ? gameObject.towerArenaDesigns[1].arenaTower.img : 'lightslategrey',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
+						isFilled: true,
+						id: 'blue-tower-' + index,
+						layer: 1,
+						action: {
+							methodId: id,
+							method: function(id) {
+								const selectTower = selectBuildTower(tower, 1);
+								directiveName = selectTower.directiveName;
+								selectedTowerDesign = selectTower.selectedTowerDesign;
+							}
+						},
+						isModalBtn: true,
 						props: {},
 						methodId: id
 					});
@@ -2471,8 +2824,79 @@ const maulPage = {
 						color: 'darkgrey',
 						isBackground: false,
 						isFilled: true,
-						id: 'arena-tower-bg-3-' + index,
+						id: 'arena-tower-bg-3',
 						layer: 1,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.788, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.05), // (Game.entitySize * 23)
+						height: (Game.entitySize * 9),
+						lineWidth: 1,
+						btnColor: gameObject.towerArenaDesigns[2].arenaTower.img ? gameObject.towerArenaDesigns[2].arenaTower.img : 'lightslategrey',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
+						isFilled: true,
+						id: 'blue-tower-' + index,
+						layer: 1,
+						action: {
+							methodId: id,
+							method: function(id) {
+								const selectTower = selectBuildTower(tower, 2);
+								directiveName = selectTower.directiveName;
+								selectedTowerDesign = selectTower.selectedTowerDesign;
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
+						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.3em serif',
+						msg: 'Build',
+						isFilled: true,
+						id: 'build-tower',
+						layer: 1,
+						action: { 
+							method: function(id) {
+								tower.btnColor = selectedTowerDesign.arenaTower.img;
+								tower.msg = '';
+								tower.props.name = selectedTowerDesign.arenaTower.name;
+								tower.props.requires = selectedTowerDesign.arenaTower.requires;
+								tower.props.robotParts = selectedTowerDesign.arenaTower.robotParts;
+								tower.props.stats = selectedTowerDesign.arenaTower.stats;
+								tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
+								tower.props.type = selectedTowerDesign.arenaTower.type;
+								console.log(tower);
+								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+								Game.deleteEntity(modal.methodId);
+								// future Jordan, delete the rest of the tower select modal and make a cancel button
+								// also look into redoing the tower selects width using Game.entitySize instead
+							}
+						},
+						isModalBtn: true,
 						props: {},
 						methodId: id
 					});
