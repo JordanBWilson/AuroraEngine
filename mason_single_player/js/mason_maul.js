@@ -2671,7 +2671,7 @@ const maulPage = {
 			}
 			return returnTower;
 		}
-		function selectBuildTowerMenu(tower, index) {
+		function selectBuildTowerMenu(tower, towerIndex) {
 			// future Jordan, work on the build tower modal
 			// draw the towers and draw the currently selected tower in the middle
 			// draw a build and cancel button
@@ -2734,9 +2734,9 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.159, (Game.entitySize * -0.01)),
+						posX: Game.placeEntityX(0.136, (Game.entitySize * -0.01)),
 						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.05), // (Game.entitySize * 23)
+						width: (Game.canvas.width * 0.10),
 						height: (Game.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[0].arenaTower.img ? gameObject.towerArenaDesigns[0].arenaTower.img : 'lightslategrey',
@@ -2744,7 +2744,7 @@ const maulPage = {
 						font: '0.8em serif',
 						msg: '',
 						isFilled: true,
-						id: 'blue-tower-' + index,
+						id: 'blue-tower-1',
 						layer: 1,
 						action: {
 							methodId: id,
@@ -2785,9 +2785,9 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.479, (Game.entitySize * 1.99)),
+						posX: Game.placeEntityX(0.456, (Game.entitySize * 1.99)),
 						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.05), // (Game.entitySize * 23)
+						width: (Game.canvas.width * 0.10),
 						height: (Game.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[1].arenaTower.img ? gameObject.towerArenaDesigns[1].arenaTower.img : 'lightslategrey',
@@ -2795,7 +2795,7 @@ const maulPage = {
 						font: '0.8em serif',
 						msg: '',
 						isFilled: true,
-						id: 'blue-tower-' + index,
+						id: 'blue-tower-2',
 						layer: 1,
 						action: {
 							methodId: id,
@@ -2836,9 +2836,9 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.788, (Game.entitySize * 1)),
+						posX: Game.placeEntityX(0.765, (Game.entitySize * 1)),
 						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.05), // (Game.entitySize * 23)
+						width: (Game.canvas.width * 0.10),
 						height: (Game.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[2].arenaTower.img ? gameObject.towerArenaDesigns[2].arenaTower.img : 'lightslategrey',
@@ -2846,7 +2846,7 @@ const maulPage = {
 						font: '0.8em serif',
 						msg: '',
 						isFilled: true,
-						id: 'blue-tower-' + index,
+						id: 'blue-tower-3',
 						layer: 1,
 						action: {
 							methodId: id,
@@ -2881,19 +2881,36 @@ const maulPage = {
 						layer: 1,
 						action: { 
 							method: function(id) {
-								tower.btnColor = selectedTowerDesign.arenaTower.img;
-								tower.msg = '';
-								tower.props.name = selectedTowerDesign.arenaTower.name;
-								tower.props.requires = selectedTowerDesign.arenaTower.requires;
-								tower.props.robotParts = selectedTowerDesign.arenaTower.robotParts;
-								tower.props.stats = selectedTowerDesign.arenaTower.stats;
-								tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
-								tower.props.type = selectedTowerDesign.arenaTower.type;
-								console.log(tower);
-								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-								Game.deleteEntity(modal.methodId);
-								// future Jordan, delete the rest of the tower select modal and make a cancel button
-								// also look into redoing the tower selects width using Game.entitySize instead
+								if (selectedTowerDesign.arenaTower.towerId) {
+									// future Jordan, add a range circle around the tower when built.
+									// the range circle should be displayed when tapping the tower once
+									// and other range circles should be hidden. tapping a tower with
+									// the range cirlce displayed should bring up the upgrade/rebuild tower menu
+									// for that tower
+									// we also need to work on bullets targeting the robots when the range circle
+									// has been crossed
+									tower.btnColor = selectedTowerDesign.arenaTower.img;
+									tower.msg = '';
+									tower.props.name = selectedTowerDesign.arenaTower.name;
+									tower.props.requires = selectedTowerDesign.arenaTower.requires;
+									tower.props.robotParts = selectedTowerDesign.arenaTower.robotParts;
+									tower.props.stats = selectedTowerDesign.arenaTower.stats;
+									tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
+									tower.props.type = selectedTowerDesign.arenaTower.type;
+									const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+									if (modal) {
+										Game.deleteEntity(modal.methodId);
+									}
+									removeTowerSelect();
+									const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
+									if (buildBtn) {
+										Game.deleteEntity(buildBtn.methodId);
+									}
+									const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
+									if (cancelBtn) {
+										Game.deleteEntity(cancelBtn.methodId);
+									}
+								}
 							}
 						},
 						isModalBtn: true,
@@ -2903,6 +2920,72 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
+						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.3em serif',
+						msg: 'Cancel',
+						isFilled: true,
+						id: 'cancel-build-tower',
+						layer: 1,
+						action: { 
+							method: function(id) {
+								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+								if (modal) {
+									Game.deleteEntity(modal.methodId);
+								}
+								removeTowerSelect();
+								const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
+								if (buildBtn) {
+									Game.deleteEntity(buildBtn.methodId);
+								}
+								const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
+								if (cancelBtn) {
+									Game.deleteEntity(cancelBtn.methodId);
+								}
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function removeTowerSelect() {
+			const towerSelect1 = Game.methodObjects.find(tower => tower.id === 'blue-tower-1');
+			if (towerSelect1) {
+				Game.deleteEntity(towerSelect1.methodId);
+			}
+			const towerSelect2 = Game.methodObjects.find(tower => tower.id === 'blue-tower-2');
+			if (towerSelect2) {
+				Game.deleteEntity(towerSelect2.methodId);
+			}
+			const towerSelect3 = Game.methodObjects.find(tower => tower.id === 'blue-tower-3');
+			if (towerSelect3) {
+				Game.deleteEntity(towerSelect3.methodId);
+			}
+			const towerSelectBg1 = Game.methodObjects.find(tower => tower.id === 'arena-tower-bg-1');
+			if (towerSelectBg1) {
+				Game.deleteEntity(towerSelectBg1.methodId);
+			}
+			const towerSelectBg2 = Game.methodObjects.find(tower => tower.id === 'arena-tower-bg-2');
+			if (towerSelectBg2) {
+				Game.deleteEntity(towerSelectBg2.methodId);
+			}
+			const towerSelectBg3 = Game.methodObjects.find(tower => tower.id === 'arena-tower-bg-3');
+			if (towerSelectBg3) {
+				Game.deleteEntity(towerSelectBg3.methodId);
+			}
 		}
 	}
 }
