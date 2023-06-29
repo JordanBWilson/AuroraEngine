@@ -1248,6 +1248,31 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function drawBlueTowerSpawns() {
+			let arcWidth = 0; // (Game.canvas.width + Game.canvas.height) - (Game.entitySize * 99); //(Game.entitySize * 3);
+			if (Game.canvas.height > Game.canvas.width) { // mobile
+				arcWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.03);
+			} else { // everything else
+				arcWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
+			}
+			console.log(arcWidth);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)) + ((Game.entitySize * 6) / 2),
+						posY: Game.placeEntityY(0.66), //  + ((Game.entitySize * 6) / 2)
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-1',
+						props: {},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({
@@ -1295,6 +1320,24 @@ const maulPage = {
 					});
 				}
 			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
+						posY: Game.placeEntityY(0.53), //  + ((Game.entitySize * 6) / 2)
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-2',
+						props: {},
+						methodId: id
+					});
+				}
+			}
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
@@ -1346,6 +1389,24 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
+						posY: Game.placeEntityY(0.53), //  + ((Game.entitySize * 6) / 2)
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-3',
+						props: {},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
 					drawButton({
 						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)),
 						posY: Game.placeEntityY(0.53),
@@ -1391,6 +1452,26 @@ const maulPage = {
 					});
 				}
 			};
+			Game.addMethod(Game.methodSetup);
+			// future Jordan, finish up the setting the tower range radiuses. make sure the robot movement times through the range is close.
+			// the same thing will have to be done to reds towers
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6), // + ((Game.entitySize * 6) / 2)
+						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2), // - ((Game.entitySize * 6) / 2)
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-4',
+						props: {},
+						methodId: id
+					});
+				}
+			}
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
