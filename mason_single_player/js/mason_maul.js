@@ -65,7 +65,7 @@ const maulPage = {
 					}
 					if (aiThinking === false) {
 						aiThinking = undefined;
-						setTimeout(function() {
+						setTimeout(function() { // this is how fast the ai makes it's moves
 							aiThinking = true;
 						}, 1500);
 					}
@@ -127,6 +127,9 @@ const maulPage = {
 				methodId: undefined,
 			}
 			Game.addCollision(Game.collisionSetup);
+		}
+		function setBlueRightTowerRangeCollisions() {
+			
 		}
 		function setRedRightRoadNavCollisions() {
 			Game.collisionSetup = {
@@ -231,6 +234,44 @@ const maulPage = {
 					if (robotPasser?.stop === 3) { // attack the red base
 						robotPasser.stop++;
 					}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+		}
+		function setBlueLeftTowerRangeCollisions(robotId) {
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-1', 
+				method: function(id) {
+					// future Jordan, figure out how to regulate the towers shooting speed
+					let shootSpeed;
+					const tower = Game.methodObjects.find(x => x.id === 'blue-tower-range-1');
+					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary);
+					console.log(tower.props.canShoot, tower.props.targetId);
+					if (!tower.props.targetId && tower.props.canShoot) {
+						tower.props.targetId = this.primary;
+						
+					}
+					
+					if (tower.props.canShoot && tower.props.targetId) {
+						
+						// console.log(robotPasser, robot);
+						tower.props.canShoot = false;
+						// tower.props.targetId = '';
+						
+						// clearTimeout(shootSpeed);
+					}
+					if (!tower.props.canShoot && tower.props.targetId) {
+						shootSpeed = setTimeout(function() {
+							tower.props.targetId = '';
+							tower.props.canShoot = true;
+							// console.log(tower.props);
+							// clearInterval(shootSpeed);
+						}, 1000); // future Jordan, update this to reflect the tower shoot speed.
+					}
+					
 				},
 				methodId: undefined,
 			}
@@ -757,6 +798,7 @@ const maulPage = {
 				stop: 0,
 			}
 			sendRedRobot(redRobot);
+			setBlueLeftTowerRangeCollisions(redRobot.id);
 		}
 		function sendRedRobotRight(robot) {
 			gameObject.arenaRedGameMoney -= 10;
@@ -1257,17 +1299,22 @@ const maulPage = {
 			console.log(arcWidth);
 			Game.methodSetup = {
 				method: function(id) {
-					drawArc({
+					drawRect({
 						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)) + ((Game.entitySize * 6) / 2),
-						posY: Game.placeEntityY(0.66), //  + ((Game.entitySize * 6) / 2)
+						posY: Game.placeEntityY(0.60), // 0.66 //  + ((Game.entitySize * 6) / 2)
 						width: arcWidth,
-						aglStrt: 0,
-						aglEnd: (2 * Math.PI),
+						height: arcWidth,
+						// aglStrt: 0,
+						// aglEnd: (2 * Math.PI),
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
+						isBackground: false,
 						id: 'blue-tower-range-1',
-						props: {},
+						props: {
+							targetId: '',
+							canShoot: true,
+						},
 						methodId: id
 					});
 				}
@@ -2641,7 +2688,7 @@ const maulPage = {
 				return partSelection;
 			} else { // find a robot part
 				let foundPart = false;
-				while(!foundPart) {
+				while(!foundPart) { // future Jordan, this will need to be looked at again...
 					const selectSection = Math.floor((Math.random() * 4) + 1); // chassis, heads, arms or legs
 					if (selectSection === 1 && gameObject.discoveredChassis.length < robotChassis.length) {
 						const findChassis = Math.floor((Math.random() * robotChassis.length));
@@ -2753,9 +2800,6 @@ const maulPage = {
 			return returnTower;
 		}
 		function selectBuildTowerMenu(tower, towerIndex) {
-			// future Jordan, work on the build tower modal
-			// draw the towers and draw the currently selected tower in the middle
-			// draw a build and cancel button
 			let directiveName = findTowerDirectiveName(0);
 			let selectedTowerDesign = gameObject.towerArenaDesigns[0];
 			let msgs = [selectedTowerDesign.arenaTower.name, directiveName];
@@ -2970,6 +3014,7 @@ const maulPage = {
 									// for that tower
 									// we also need to work on bullets targeting the robots when the range circle
 									// has been crossed
+									gameObject.arenaBlueGameMoney -= 20;
 									tower.btnColor = selectedTowerDesign.arenaTower.img;
 									tower.msg = '';
 									tower.props.name = selectedTowerDesign.arenaTower.name;

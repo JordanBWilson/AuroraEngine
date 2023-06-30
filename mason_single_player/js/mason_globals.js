@@ -204,7 +204,7 @@ const gameObject = {
 	scrapperSkill: 0, // ability to find more rare scrap
 	roboticSkill: 0, // ability to put together robots with higher tiered parts.
 	engineeringSkill: 0, // abiltiy to to turn higher tiered scrap into parts. makes robots worth more
-	barterSkill: 0, // sell for more on the grand exchange; use percentages to increase prices
+	barterSkill: 0, // sell robots for more on the grand exchange; use percentages to increase prices
 	partStorage: 6, // how many of each part can be stored at once. ***upgraded with factory level***
 	partStorageLevel: 0,
 	// ---different tiers of money---
