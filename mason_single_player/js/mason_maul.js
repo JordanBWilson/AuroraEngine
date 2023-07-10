@@ -250,7 +250,7 @@ const maulPage = {
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary);
 					console.log(tower.props.canShoot, tower.props.targetId);
-					if (!tower.props.targetId && tower.props.canShoot) {
+					if (tower.props.targetId === '' && tower.props.canShoot) {
 						tower.props.targetId = this.primary;
 						
 					}
