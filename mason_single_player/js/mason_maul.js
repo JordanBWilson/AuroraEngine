@@ -249,26 +249,16 @@ const maulPage = {
 					const tower = Game.methodObjects.find(x => x.id === 'blue-tower-range-1');
 					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary);
-					console.log(tower.props.canShoot, tower.props.targetId);
 					if (tower.props.targetId === '' && tower.props.canShoot) {
 						tower.props.targetId = this.primary;
-						
-					}
-					
-					if (tower.props.canShoot && tower.props.targetId) {
-						
-						// console.log(robotPasser, robot);
 						tower.props.canShoot = false;
-						// tower.props.targetId = '';
-						
-						// clearTimeout(shootSpeed);
 					}
 					if (!tower.props.canShoot && tower.props.targetId) {
+						tower.props.targetId = '';
+						// future Jordan, shoot the bullet here
+						console.log('Target: ', this.primary);
 						shootSpeed = setTimeout(function() {
-							tower.props.targetId = '';
 							tower.props.canShoot = true;
-							// console.log(tower.props);
-							// clearInterval(shootSpeed);
 						}, 1000); // future Jordan, update this to reflect the tower shoot speed.
 					}
 					
@@ -1290,18 +1280,23 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function drawBlueTowerSpawns() {
+			// future Jordan, base the arc width on the towers range
 			let arcWidth = 0; // (Game.canvas.width + Game.canvas.height) - (Game.entitySize * 99); //(Game.entitySize * 3);
+			let isMobile = false;
 			if (Game.canvas.height > Game.canvas.width) { // mobile
-				arcWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.03);
+				arcWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.025);
+				isMobile = true;
 			} else { // everything else
 				arcWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
+				isMobile = false;
 			}
+			// future Jordan create the rest of the tower ranges and their collisions
 			console.log(arcWidth);
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)) + ((Game.entitySize * 6) / 2),
-						posY: Game.placeEntityY(0.60), // 0.66 //  + ((Game.entitySize * 6) / 2)
+						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)), //  + ((Game.entitySize * 6) / 2)
+						posY: Game.placeEntityY(0.619), // 0.66 //  + ((Game.entitySize * 6) / 2)
 						width: arcWidth,
 						height: arcWidth,
 						// aglStrt: 0,
