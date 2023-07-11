@@ -128,9 +128,6 @@ const maulPage = {
 			}
 			Game.addCollision(Game.collisionSetup);
 		}
-		function setBlueRightTowerRangeCollisions() {
-			
-		}
 		function setRedRightRoadNavCollisions() {
 			Game.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
@@ -239,29 +236,61 @@ const maulPage = {
 			}
 			Game.addCollision(Game.collisionSetup);
 		}
+		function towerTargetRange(primary, target) {
+			let shootSpeed;
+			const tower = Game.methodObjects.find(x => x.id === target);
+			const robot = Game.methodObjects.find(bg => bg.id === primary);
+			const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === primary);
+			if (tower.props.targetId === '' && tower.props.canShoot) {
+				tower.props.targetId = primary;
+				tower.props.canShoot = false;
+			}
+			if (!tower.props.canShoot && tower.props.targetId) {
+				tower.props.targetId = '';
+				// future Jordan, shoot the bullet here
+				console.log('Target: ', primary);
+				shootSpeed = setTimeout(function() {
+					tower.props.canShoot = true;
+				}, 1000); // future Jordan, update this to reflect the tower shoot speed.
+			}
+		}
+		function setBlueRightTowerRangeCollisions(robotId) {
+			// future Jordan, create blues right tower ranges
+			// and then create the tower ranges collisions here
+		}
 		function setBlueLeftTowerRangeCollisions(robotId) {
 			Game.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-1', 
 				method: function(id) {
-					// future Jordan, figure out how to regulate the towers shooting speed
-					let shootSpeed;
-					const tower = Game.methodObjects.find(x => x.id === 'blue-tower-range-1');
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary);
-					if (tower.props.targetId === '' && tower.props.canShoot) {
-						tower.props.targetId = this.primary;
-						tower.props.canShoot = false;
-					}
-					if (!tower.props.canShoot && tower.props.targetId) {
-						tower.props.targetId = '';
-						// future Jordan, shoot the bullet here
-						console.log('Target: ', this.primary);
-						shootSpeed = setTimeout(function() {
-							tower.props.canShoot = true;
-						}, 1000); // future Jordan, update this to reflect the tower shoot speed.
-					}
-					
+					// towerTargetRange(this.primary, this.target);
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-2', 
+				method: function(id) {
+					// towerTargetRange(this.primary, this.target);
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-3', 
+				method: function(id) {
+					// towerTargetRange(this.primary, this.target);
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-4', 
+				method: function(id) {
+					// towerTargetRange(this.primary, this.target);
 				},
 				methodId: undefined,
 			}
@@ -1281,7 +1310,8 @@ const maulPage = {
 		}
 		function drawBlueTowerSpawns() {
 			// future Jordan, base the arc width on the towers range
-			let arcWidth = 0; // (Game.canvas.width + Game.canvas.height) - (Game.entitySize * 99); //(Game.entitySize * 3);
+			// future Jordan, when upgrading towers, figure out the best way to increase the towers range
+			let arcWidth = 0;
 			let isMobile = false;
 			if (Game.canvas.height > Game.canvas.width) { // mobile
 				arcWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.025);
@@ -1295,12 +1325,10 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)), //  + ((Game.entitySize * 6) / 2)
-						posY: Game.placeEntityY(0.619), // 0.66 //  + ((Game.entitySize * 6) / 2)
+						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)),
+						posY: Game.placeEntityY(0.619),
 						width: arcWidth,
 						height: arcWidth,
-						// aglStrt: 0,
-						// aglEnd: (2 * Math.PI),
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
@@ -1365,17 +1393,20 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
-					drawArc({
-						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
-						posY: Game.placeEntityY(0.53), //  + ((Game.entitySize * 6) / 2)
-						width: arcWidth,
-						aglStrt: 0,
-						aglEnd: (2 * Math.PI),
+					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.165, (Game.entitySize * 1)) : Game.placeEntityX(0.195, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.49),
+						width: !isMobile ? arcWidth : arcWidth - (Game.entitySize * 1),
+						height: arcWidth,
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
+						isBackground: false,
 						id: 'blue-tower-range-2',
-						props: {},
+						props: {
+							targetId: '',
+							canShoot: true,
+						},
 						methodId: id
 					});
 				}
@@ -1431,17 +1462,20 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
-					drawArc({
-						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
-						posY: Game.placeEntityY(0.53), //  + ((Game.entitySize * 6) / 2)
-						width: arcWidth,
-						aglStrt: 0,
-						aglEnd: (2 * Math.PI),
+					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.315, (Game.entitySize * 1)) : Game.placeEntityX(0.345, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.49),
+						width: !isMobile ? arcWidth : arcWidth - (Game.entitySize * 1),
+						height: arcWidth,
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
+						isBackground: false,
 						id: 'blue-tower-range-3',
-						props: {},
+						props: {
+							targetId: '',
+							canShoot: true,
+						},
 						methodId: id
 					});
 				}
@@ -1495,21 +1529,22 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			// future Jordan, finish up the setting the tower range radiuses. make sure the robot movement times through the range is close.
-			// the same thing will have to be done to reds towers
 			Game.methodSetup = {
 				method: function(id) {
-					drawArc({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6), // + ((Game.entitySize * 6) / 2)
-						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2), // - ((Game.entitySize * 6) / 2)
+					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.435, (Game.entitySize * 1)) : Game.placeEntityX(0.605, (Game.entitySize * 17.5)),
+						posY: Game.placeEntityY(0.67),
 						width: arcWidth,
-						aglStrt: 0,
-						aglEnd: (2 * Math.PI),
+						height: !isMobile ? arcWidth : arcWidth + (Game.entitySize * 3),
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
+						isBackground: false,
 						id: 'blue-tower-range-4',
-						props: {},
+						props: {
+							targetId: '',
+							canShoot: true,
+						},
 						methodId: id
 					});
 				}
