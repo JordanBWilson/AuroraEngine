@@ -1311,24 +1311,26 @@ const maulPage = {
 		function drawBlueTowerSpawns() {
 			// future Jordan, base the arc width on the towers range
 			// future Jordan, when upgrading towers, figure out the best way to increase the towers range
+			let rangeWidth = 0;
 			let arcWidth = 0;
 			let isMobile = false;
 			if (Game.canvas.height > Game.canvas.width) { // mobile
-				arcWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.025);
+				rangeWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.025);
+				arcWidth = rangeWidth;
 				isMobile = true;
 			} else { // everything else
-				arcWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
+				rangeWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
+				arcWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.04);
 				isMobile = false;
 			}
 			// future Jordan create the rest of the tower ranges and their collisions
-			console.log(arcWidth);
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)),
 						posY: Game.placeEntityY(0.619),
-						width: arcWidth,
-						height: arcWidth,
+						width: rangeWidth,
+						height: rangeWidth,
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
@@ -1338,6 +1340,24 @@ const maulPage = {
 							targetId: '',
 							canShoot: true,
 						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)) + ((Game.entitySize * 6) / 2),
+						posY: Game.placeEntityY(0.66), // future Jordan, move the Y or X position back a little bit for non mobile devices
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-1',
+						props: {},
 						methodId: id
 					});
 				}
@@ -1396,8 +1416,8 @@ const maulPage = {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.165, (Game.entitySize * 1)) : Game.placeEntityX(0.195, (Game.entitySize * 1)),
 						posY: Game.placeEntityY(0.49),
-						width: !isMobile ? arcWidth : arcWidth - (Game.entitySize * 1),
-						height: arcWidth,
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
@@ -1407,6 +1427,24 @@ const maulPage = {
 							targetId: '',
 							canShoot: true,
 						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
+						posY: Game.placeEntityY(0.53),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-2',
+						props: {},
 						methodId: id
 					});
 				}
@@ -1465,8 +1503,8 @@ const maulPage = {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.315, (Game.entitySize * 1)) : Game.placeEntityX(0.345, (Game.entitySize * 1)),
 						posY: Game.placeEntityY(0.49),
-						width: !isMobile ? arcWidth : arcWidth - (Game.entitySize * 1),
-						height: arcWidth,
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
@@ -1476,6 +1514,24 @@ const maulPage = {
 							targetId: '',
 							canShoot: true,
 						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
+						posY: Game.placeEntityY(0.53),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-3',
+						props: {},
 						methodId: id
 					});
 				}
@@ -1534,8 +1590,8 @@ const maulPage = {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.435, (Game.entitySize * 1)) : Game.placeEntityX(0.605, (Game.entitySize * 17.5)),
 						posY: Game.placeEntityY(0.67),
-						width: arcWidth,
-						height: !isMobile ? arcWidth : arcWidth + (Game.entitySize * 3),
+						width: rangeWidth,
+						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
 						lineWidth: 1,
 						color: 'blue',
 						isFilled: true,
@@ -1545,6 +1601,24 @@ const maulPage = {
 							targetId: '',
 							canShoot: true,
 						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
+						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-4',
+						props: {},
 						methodId: id
 					});
 				}
