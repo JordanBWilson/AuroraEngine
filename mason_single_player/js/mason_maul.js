@@ -239,6 +239,7 @@ const maulPage = {
 		function towerTargetRange(primary, target) {
 			let shootSpeed;
 			const tower = Game.methodObjects.find(x => x.id === target);
+			const towerStats = Game.methodObjects.find(x => x.id === tower.props.towerId);
 			const robot = Game.methodObjects.find(bg => bg.id === primary);
 			const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === primary);
 			if (tower.props.targetId === '' && tower.props.canShoot) {
@@ -247,8 +248,10 @@ const maulPage = {
 			}
 			if (!tower.props.canShoot && tower.props.targetId) {
 				tower.props.targetId = '';
-				// future Jordan, shoot the bullet here
-				console.log('Target: ', primary);
+				if (towerStats.props.towerId > 0) {
+					// future Jordan, shoot the bullet here
+					console.log('Tower: ', towerStats);
+				}
 				shootSpeed = setTimeout(function() {
 					tower.props.canShoot = true;
 				}, 1000); // future Jordan, update this to reflect the tower shoot speed.
@@ -1324,6 +1327,8 @@ const maulPage = {
 				isMobile = false;
 			}
 			// future Jordan create the rest of the tower ranges and their collisions
+			// future Jordan display the arc when the tower is first built and if the player taps on a built tower
+			// I'm thinking one tap will show the range an the next tap will bring up the upgrade menu
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -1339,6 +1344,7 @@ const maulPage = {
 						props: {
 							targetId: '',
 							canShoot: true,
+							towerId: 'blue-left-tower-spawn-1',
 						},
 						methodId: id
 					});
@@ -1349,7 +1355,7 @@ const maulPage = {
 				method: function(id) {
 					drawArc({
 						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)) + ((Game.entitySize * 6) / 2),
-						posY: Game.placeEntityY(0.66), // future Jordan, move the Y or X position back a little bit for non mobile devices
+						posY: isMobile ? Game.placeEntityY(0.66) : Game.placeEntityY(0.68), // future Jordan, move the Y or X position back a little bit for non mobile devices
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -1426,6 +1432,7 @@ const maulPage = {
 						props: {
 							targetId: '',
 							canShoot: true,
+							towerId: 'blue-left-tower-spawn-2',
 						},
 						methodId: id
 					});
@@ -1436,7 +1443,7 @@ const maulPage = {
 				method: function(id) {
 					drawArc({
 						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
-						posY: Game.placeEntityY(0.53),
+						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -1513,6 +1520,7 @@ const maulPage = {
 						props: {
 							targetId: '',
 							canShoot: true,
+							towerId: 'blue-left-tower-spawn-3',
 						},
 						methodId: id
 					});
@@ -1523,7 +1531,7 @@ const maulPage = {
 				method: function(id) {
 					drawArc({
 						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
-						posY: Game.placeEntityY(0.53),
+						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -1600,6 +1608,7 @@ const maulPage = {
 						props: {
 							targetId: '',
 							canShoot: true,
+							towerId: 'blue-left-tower-spawn-4',
 						},
 						methodId: id
 					});
@@ -1609,7 +1618,7 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
+						posX: isMobile ? Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
 						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
 						width: arcWidth,
 						aglStrt: 0,
@@ -2553,6 +2562,7 @@ const maulPage = {
 					}
 					Game.deleteEntity(robot[i].methodId);
 				}
+				// future Jordan, remove the robots collisions
 				if (color === 'blue') {
 					gameObject.arenaBlueAttackers.splice(i, 1);
 				} else if (color === 'red') {
