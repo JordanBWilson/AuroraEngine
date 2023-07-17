@@ -1426,7 +1426,7 @@ const arenaPage = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
-						msg: 'Range: ' + selectedTower.stats.range,
+						msg: 'Splash: ' + selectedTower.stats.splash,
 						posX: Game.placeEntityX(0.09),
 						posY: Game.placeEntityY(0.88),
 						color: 'grey',
@@ -1518,19 +1518,19 @@ const arenaPage = {
 										if (selectedTower.type === 'bunker') {
 											msgs = ['Standard', 'Bunker will create', ' 2 robots a turn'];
 										} else {
-											msgs = ['Long-Shot', 'Tower will have good range', 'but will attack slower'];
+											msgs = ['Long-Shot', 'Tower will gain splash', 'but will attack slower'];
 										}
 									} else if (i === 2) {
 										if (selectedTower.type === 'bunker') {
 											msgs = ['Rapid', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
 										} else {
-											msgs = ['Rapid-Shot', 'Tower will attack faster', 'but will lose some range'];
+											msgs = ['Rapid-Shot', 'Tower will attack faster', 'but will lose some damage'];
 										}
 									} else if (i === 3) {
 										if (selectedTower.type === 'bunker') {
-											msgs = ['Defense', 'Bunker will create 1 robot', 'a turn but will gain attack', 'and some range'];
+											msgs = ['Defense', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash'];
 										} else {
-											msgs = ['Ram-Shot', 'Tower will gain attack', 'but lose some speed'];
+											msgs = ['Ram-Shot', 'Tower will get added attack', 'and splash but lose some speed'];
 										}
 									}
 									if (selectRobot) {
@@ -1595,7 +1595,7 @@ const arenaPage = {
 																} else if (i + 1 === 4) { // defense
 																	cloneTower.stats.att += 2;
 																	cloneTower.stats.spd += 1;
-																	cloneTower.stats.range += 1;
+																	cloneTower.stats.splash += 1;
 																}
 																if (reselect) {
 																	gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
@@ -1606,14 +1606,15 @@ const arenaPage = {
 																if (i + 1 === 1) { // standard
 																	// use the default tower stats
 																} else if (i + 1 === 2) { // long shot
-																	cloneTower.stats.spd -= 2;
-																	cloneTower.stats.range += 2;
+																	cloneTower.stats.spd -= 1;
+																	cloneTower.stats.splash += 3;
 																} else if (i + 1 === 3) { // rapid shot
-																	cloneTower.stats.range -= 3;
 																	cloneTower.stats.spd += 3;
+																	cloneTower.stats.att -= 2;
 																} else if (i + 1 === 4) { // ram shot
 																	cloneTower.stats.att += 2;
 																	cloneTower.stats.spd -= 2;
+																	cloneTower.stats.splash += 1;
 																}
 																if (reselect) {
 																	gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);

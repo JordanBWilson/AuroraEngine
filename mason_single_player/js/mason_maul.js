@@ -260,6 +260,15 @@ const maulPage = {
 		function setBlueRightTowerRangeCollisions(robotId) {
 			// future Jordan, create blues right tower ranges
 			// and then create the tower ranges collisions here
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-5', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target);
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
 		}
 		function setBlueLeftTowerRangeCollisions(robotId) {
 			Game.collisionSetup = {
@@ -837,6 +846,7 @@ const maulPage = {
 				stop: 0,
 			}
 			sendRedRobot(redRobot);
+			setBlueRightTowerRangeCollisions(redRobot.id);
 		}
 		function blueRobotSendMoneyUpdate() {
 			gameObject.arenaBlueGameMoney -= 10;
@@ -1355,7 +1365,7 @@ const maulPage = {
 				method: function(id) {
 					drawArc({
 						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)) + ((Game.entitySize * 6) / 2),
-						posY: isMobile ? Game.placeEntityY(0.66) : Game.placeEntityY(0.68), // future Jordan, move the Y or X position back a little bit for non mobile devices
+						posY: isMobile ? Game.placeEntityY(0.66) : Game.placeEntityY(0.68),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -1404,7 +1414,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1492,7 +1502,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1580,7 +1590,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1615,24 +1625,24 @@ const maulPage = {
 				}
 			}
 			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
-				method: function(id) {
-					drawArc({
-						posX: isMobile ? Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
-						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
-						width: arcWidth,
-						aglStrt: 0,
-						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
-						color: 'blue',
-						isFilled: true,
-						id: 'blue-tower-range-arc-4',
-						props: {},
-						methodId: id
-					});
-				}
-			}
-			Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = {
+				//method: function(id) {
+					//drawArc({
+						//posX: isMobile ? Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
+						//posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
+						//width: arcWidth,
+						//aglStrt: 0,
+						//aglEnd: (2 * Math.PI),
+						//lineWidth: 1,
+						//color: 'blue',
+						//isFilled: true,
+						//id: 'blue-tower-range-arc-4',
+						//props: {},
+						//methodId: id
+					//});
+				//}
+			//}
+			//Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({
@@ -1668,7 +1678,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1680,6 +1690,29 @@ const maulPage = {
 					});
 				}
 			};
+			Game.addMethod(Game.methodSetup);
+			// future Jordan continue working on the tower collisions
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.465, (Game.entitySize * -8.5)) : Game.placeEntityX(0.419, (Game.entitySize * -8.5)),
+						posY: Game.placeEntityY(0.67),
+						width: rangeWidth,
+						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						isBackground: false,
+						id: 'blue-tower-range-5',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'blue-right-tower-spawn-5',
+						},
+						methodId: id
+					});
+				}
+			}
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
@@ -1701,7 +1734,7 @@ const maulPage = {
 								if (gameObject.arenaGameStarted) {
 									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
 									selectBuildTowerMenu(tower, 5);
-									console.log(tower);
+									console.log(tower, 5);
 								}
 							}
 						},
@@ -1716,7 +1749,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1764,7 +1797,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1812,7 +1845,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1860,7 +1893,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 							requires: {
@@ -1896,7 +1929,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
@@ -1926,7 +1959,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
@@ -1956,7 +1989,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
@@ -1986,7 +2019,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
@@ -2016,7 +2049,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
@@ -2046,7 +2079,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
@@ -2076,7 +2109,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
@@ -2106,7 +2139,7 @@ const maulPage = {
 								spd: 0,
 								hp: 0,
 								lvl: 0,
-								range: 0,
+								splash: 0,
 							},
 							robotParts: [],
 						},
