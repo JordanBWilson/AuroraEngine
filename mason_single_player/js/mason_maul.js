@@ -269,13 +269,40 @@ const maulPage = {
 				methodId: undefined,
 			}
 			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-6', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target);
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-7', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target);
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'blue-tower-range-8', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target);
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
 		}
 		function setBlueLeftTowerRangeCollisions(robotId) {
 			Game.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-1', 
 				method: function(id) {
-					// towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target);
 				},
 				methodId: undefined,
 			}
@@ -284,7 +311,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-2', 
 				method: function(id) {
-					// towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target);
 				},
 				methodId: undefined,
 			}
@@ -293,7 +320,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-3', 
 				method: function(id) {
-					// towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target);
 				},
 				methodId: undefined,
 			}
@@ -302,7 +329,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-4', 
 				method: function(id) {
-					// towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target);
 				},
 				methodId: undefined,
 			}
@@ -1322,8 +1349,6 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function drawBlueTowerSpawns() {
-			// future Jordan, base the arc width on the towers range
-			// future Jordan, when upgrading towers, figure out the best way to increase the towers range
 			let rangeWidth = 0;
 			let arcWidth = 0;
 			let isMobile = false;
@@ -1336,9 +1361,9 @@ const maulPage = {
 				arcWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.04);
 				isMobile = false;
 			}
-			// future Jordan create the rest of the tower ranges and their collisions
 			// future Jordan display the arc when the tower is first built and if the player taps on a built tower
 			// I'm thinking one tap will show the range an the next tap will bring up the upgrade menu
+			// also hide the tower range collisions
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -1625,24 +1650,24 @@ const maulPage = {
 				}
 			}
 			Game.addMethod(Game.methodSetup);
-			//Game.methodSetup = {
-				//method: function(id) {
-					//drawArc({
-						//posX: isMobile ? Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
-						//posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
-						//width: arcWidth,
-						//aglStrt: 0,
-						//aglEnd: (2 * Math.PI),
-						//lineWidth: 1,
-						//color: 'blue',
-						//isFilled: true,
-						//id: 'blue-tower-range-arc-4',
-						//props: {},
-						//methodId: id
-					//});
-				//}
-			//}
-			//Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: isMobile ? Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
+						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-4',
+						props: {},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
 					drawButton({
@@ -1691,7 +1716,6 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			// future Jordan continue working on the tower collisions
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -1709,6 +1733,24 @@ const maulPage = {
 							canShoot: true,
 							towerId: 'blue-right-tower-spawn-5',
 						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: isMobile ? Game.placeEntityX(0.39, (Game.entitySize * -8.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * -8.5))  + (Game.entitySize * 6),
+						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-5',
+						props: {},
 						methodId: id
 					});
 				}
@@ -1764,6 +1806,46 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
+					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.625, (Game.entitySize * 1)) : Game.placeEntityX(0.579, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.49),
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						isBackground: false,
+						id: 'blue-tower-range-6',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'blue-right-tower-spawn-6',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)) + ((Game.entitySize * 6) / 2),
+						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-6',
+						props: {},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
 					drawButton({
 						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)),
 						posY: Game.placeEntityY(0.53),
@@ -1812,6 +1894,46 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
+					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.82, (Game.entitySize * 15.5)) : Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
+						posY: Game.placeEntityY(0.49),
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						isBackground: false,
+						id: 'blue-tower-range-7',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'blue-right-tower-spawn-7',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)) + ((Game.entitySize * 6) / 2),
+						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-7',
+						props: {},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
 					drawButton({
 						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
 						posY: Game.placeEntityY(0.53),
@@ -1857,6 +1979,46 @@ const maulPage = {
 					});
 				}
 			};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.94, (Game.entitySize * 9.6)) : Game.placeEntityX(0.97, (Game.entitySize * 9.6)),
+						posY: Game.placeEntityY(0.619),
+						width: rangeWidth,
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						isBackground: false,
+						id: 'blue-tower-range-8',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'blue-right-tower-spawn-8',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawArc({
+						posX: Game.placeEntityX(0.94, (Game.entitySize * 9.6)) + ((Game.entitySize * 6) / 2),
+						posY: isMobile ? Game.placeEntityY(0.66) : Game.placeEntityY(0.68),
+						width: arcWidth,
+						aglStrt: 0,
+						aglEnd: (2 * Math.PI),
+						lineWidth: 1,
+						color: 'blue',
+						isFilled: true,
+						id: 'blue-tower-range-arc-8',
+						props: {},
+						methodId: id
+					});
+				}
+			}
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = {
 				method: function(id) {
