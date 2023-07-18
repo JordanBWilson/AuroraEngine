@@ -875,14 +875,17 @@ const maulPage = {
 			sendRedRobot(redRobot);
 			setBlueRightTowerRangeCollisions(redRobot.id);
 		}
-		function blueRobotSendMoneyUpdate() {
-			gameObject.arenaBlueGameMoney -= 10;
+		function updateMoneyBackground() {
 			const moneyBackground = Game.methodObjects.find(bg => bg.id === 'money-bar-background');
 			const moneyCounter = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
 			if (moneyCounter) {
 				moneyCounter.msg = '$' + gameObject.arenaBlueGameMoney;
 				moneyBackground.isAnim = true;
 			}
+		}
+		function blueRobotSendMoneyUpdate() {
+			gameObject.arenaBlueGameMoney -= 10;
+			updateMoneyBackground();
 		}
 		function generateRedArenaRobots() {
 			for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
@@ -1776,7 +1779,7 @@ const maulPage = {
 								if (gameObject.arenaGameStarted) {
 									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
 									selectBuildTowerMenu(tower, 5);
-									console.log(tower, 5);
+									console.log(tower);
 								}
 							}
 						},
@@ -2499,7 +2502,7 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.05),
+						posX: Game.placeEntityX(0.01),
 						posY: Game.placeEntityY(0),
 						width: (Game.entitySize * 18),
 						height: (Game.canvas.height * 0.10),
@@ -2519,7 +2522,7 @@ const maulPage = {
 					drawText({
 						font: '1em serif',
 						msg: 'Funds',
-						posX: Game.placeEntityX(0.08),
+						posX: Game.placeEntityX(0.04),
 						posY: Game.placeEntityY(0.03),
 						color: 'white',
 						align: 'left',
@@ -2535,7 +2538,7 @@ const maulPage = {
 					drawText({
 						font: '1.5em serif',
 						msg: '$' + gameObject.arenaBlueGameMoney,
-						posX: Game.placeEntityX(0.08),
+						posX: Game.placeEntityX(0.04),
 						posY: Game.placeEntityY(0.07),
 						color: 'white',
 						align: 'left',
@@ -2551,7 +2554,7 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.98, (Game.entitySize * 40.5)),
+						posX: Game.placeEntityX(0.99, (Game.entitySize * 36)),
 						posY: Game.placeEntityY(0),
 						width: (Game.entitySize * 18),
 						height: (Game.canvas.height * 0.10),
@@ -2571,7 +2574,7 @@ const maulPage = {
 					drawText({
 						font: '1.5em serif',
 						msg: gameObject.arenaRoundSeconds + 's',
-						posX: Game.placeEntityX(0.98, (Game.entitySize * 38.5)),
+						posX: Game.placeEntityX(0.99, (Game.entitySize * 34)),
 						posY: Game.placeEntityY(0.04),
 						color: 'white',
 						align: 'left',
@@ -2587,7 +2590,7 @@ const maulPage = {
 					drawText({
 						font: '1em serif',
 						msg: 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds,
-						posX: Game.placeEntityX(0.98, (Game.entitySize * 38.5)),
+						posX: Game.placeEntityX(0.99, (Game.entitySize * 34)),
 						posY: Game.placeEntityY(0.08),
 						color: 'white',
 						align: 'left',
@@ -3163,7 +3166,6 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			console.log('tower', gameObject.towerArenaDesigns[0], gameObject.towerArenaDesigns[1]);
 			Game.methodSetup = {
 				layer: 1,
 				method: function(id) {
@@ -3323,27 +3325,35 @@ const maulPage = {
 									// for that tower
 									// we also need to work on bullets targeting the robots when the range circle
 									// has been crossed
-									gameObject.arenaBlueGameMoney -= 20;
-									tower.btnColor = selectedTowerDesign.arenaTower.img;
-									tower.msg = '';
-									tower.props.name = selectedTowerDesign.arenaTower.name;
-									tower.props.requires = selectedTowerDesign.arenaTower.requires;
-									tower.props.robotParts = selectedTowerDesign.arenaTower.robotParts;
-									tower.props.stats = selectedTowerDesign.arenaTower.stats;
-									tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
-									tower.props.type = selectedTowerDesign.arenaTower.type;
-									const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-									if (modal) {
-										Game.deleteEntity(modal.methodId);
-									}
-									removeTowerSelect();
-									const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
-									if (buildBtn) {
-										Game.deleteEntity(buildBtn.methodId);
-									}
-									const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
-									if (cancelBtn) {
-										Game.deleteEntity(cancelBtn.methodId);
+									console.log(tower);
+									if (gameObject.arenaBlueGameMoney >= 20) {
+										gameObject.arenaBlueGameMoney -= 20;
+										updateMoneyBackground();
+										tower.btnColor = selectedTowerDesign.arenaTower.img;
+										tower.props.name = selectedTowerDesign.arenaTower.name;
+										tower.props.requires = selectedTowerDesign.arenaTower.requires;
+										tower.props.robotParts = selectedTowerDesign.arenaTower.robotParts;
+										tower.props.stats = selectedTowerDesign.arenaTower.stats;
+										tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
+										tower.props.type = selectedTowerDesign.arenaTower.type;
+										tower.msg = 'HP: ' + tower.props.stats.hp;
+										tower.font = '0.7em serif';
+										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+										if (modal) {
+											Game.deleteEntity(modal.methodId);
+										}
+										removeTowerSelect();
+										const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
+										if (buildBtn) {
+											Game.deleteEntity(buildBtn.methodId);
+										}
+										const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
+										if (cancelBtn) {
+											Game.deleteEntity(cancelBtn.methodId);
+										}
+									} else {
+										const buildButton = Game.methodObjects.find(bs => bs.id === 'build-tower');
+										buildButton.btnColor = '#C0C0C0';
 									}
 								}
 							}
