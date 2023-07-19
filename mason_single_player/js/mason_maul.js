@@ -1375,7 +1375,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-1',
@@ -1398,7 +1398,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-1',
 						props: {},
@@ -1426,13 +1426,17 @@ const maulPage = {
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
 									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 1);
+									// future Jordan, check the tower to see if anything was built there,
+									// if there isn't, open the build menu. if there is something built there,
+									// display the towers arc radius. the color of the arc should be blue
 									console.log(tower);
+									selectBuildTowerMenu(tower, 1);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-1',
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1463,7 +1467,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-2',
@@ -1486,7 +1490,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-2',
 						props: {},
@@ -1521,6 +1525,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-2',
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1551,7 +1556,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-3',
@@ -1574,7 +1579,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-3',
 						props: {},
@@ -1609,6 +1614,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-3',
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1639,7 +1645,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-4',
@@ -1662,7 +1668,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-4',
 						props: {},
@@ -1697,6 +1703,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-4',
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1727,7 +1734,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-5',
@@ -1750,7 +1757,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-5',
 						props: {},
@@ -1785,6 +1792,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-6',
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1815,7 +1823,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-6',
@@ -1838,7 +1846,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-6',
 						props: {},
@@ -1873,6 +1881,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-6',
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1903,7 +1912,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-7',
@@ -1926,7 +1935,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-7',
 						props: {},
@@ -1961,6 +1970,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-7',
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1991,7 +2001,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'blue-tower-range-8',
@@ -2014,7 +2024,7 @@ const maulPage = {
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
 						lineWidth: 1,
-						color: 'blue',
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						id: 'blue-tower-range-arc-8',
 						props: {},
@@ -2049,6 +2059,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
+							arcId: 'blue-tower-range-arc-8',
 							towerId: 0,
 							type: '',
 							name: '',
