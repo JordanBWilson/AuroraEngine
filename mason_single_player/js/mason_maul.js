@@ -1351,6 +1351,24 @@ const maulPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
+		function selectTower(methodId, towerIndex) {
+			const tower = Game.methodObjects.find(bg => bg.methodId === methodId);
+			const range = Game.methodObjects.find(bg => bg.id === tower.props.arcId);
+			console.log(tower);
+			if (tower.props.towerId === 0) { // no tower built here
+				selectBuildTowerMenu(tower, towerIndex);
+			} else if (tower.props.towerId !== 0 && !tower.props.selected) { // tower is built but not yet selected
+				range.color = 'blue';
+				tower.props.selected = true;
+				tower.msg = 'upgd';
+			} else if (tower.props.towerId !== 0 && tower.props.selected) { // tower is selected ready to upgrade
+				// open up the upgrade menu
+				// future Jordan, make an upgrade menu
+				range.color = 'rgba(0, 0, 200, 0)';
+				tower.props.selected = false;
+				tower.msg = 'HP: ' + tower.props.stats.hp;
+			}
+		}
 		function drawBlueTowerSpawns() {
 			let rangeWidth = 0;
 			let arcWidth = 0;
@@ -1364,9 +1382,6 @@ const maulPage = {
 				arcWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.04);
 				isMobile = false;
 			}
-			// future Jordan display the arc when the tower is first built and if the player taps on a built tower
-			// I'm thinking one tap will show the range an the next tap will bring up the upgrade menu
-			// also hide the tower range collisions
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -1425,18 +1440,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									// future Jordan, check the tower to see if anything was built there,
-									// if there isn't, open the build menu. if there is something built there,
-									// display the towers arc radius. the color of the arc should be blue
-									console.log(tower);
-									selectBuildTowerMenu(tower, 1);
+									selectTower(this.methodId, 1);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
 							arcId: 'blue-tower-range-arc-1',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1517,15 +1528,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 2);
-									console.log(tower);
+									selectTower(this.methodId, 2);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
 							arcId: 'blue-tower-range-arc-2',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1606,15 +1616,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 3);
-									console.log(tower);
+									selectTower(this.methodId, 3);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
 							arcId: 'blue-tower-range-arc-3',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1695,15 +1704,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 4);
-									console.log(tower);
+									selectTower(this.methodId, 4);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
 							arcId: 'blue-tower-range-arc-4',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1784,15 +1792,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 5);
-									console.log(tower);
+									selectTower(this.methodId, 5);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
-							arcId: 'blue-tower-range-arc-6',
+							arcId: 'blue-tower-range-arc-5',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1873,15 +1880,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 6);
-									console.log(tower);
+									selectTower(this.methodId, 6);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
 							arcId: 'blue-tower-range-arc-6',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -1962,15 +1968,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 7);
-									console.log(tower);
+									selectTower(this.methodId, 7);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
 							arcId: 'blue-tower-range-arc-7',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -2051,15 +2056,14 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
-									const tower = Game.methodObjects.find(bg => bg.methodId === this.methodId);
-									selectBuildTowerMenu(tower, 8);
-									console.log(tower);
+									selectTower(this.methodId, 8);
 								}
 							}
 						},
 						isModalBtn: false,
 						props: {
 							arcId: 'blue-tower-range-arc-8',
+							selected: false,
 							towerId: 0,
 							type: '',
 							name: '',
@@ -3349,19 +3353,7 @@ const maulPage = {
 										tower.props.type = selectedTowerDesign.arenaTower.type;
 										tower.msg = 'HP: ' + tower.props.stats.hp;
 										tower.font = '0.7em serif';
-										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-										if (modal) {
-											Game.deleteEntity(modal.methodId);
-										}
-										removeTowerSelect();
-										const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
-										if (buildBtn) {
-											Game.deleteEntity(buildBtn.methodId);
-										}
-										const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
-										if (cancelBtn) {
-											Game.deleteEntity(cancelBtn.methodId);
-										}
+										closeBuildTowerModal(); // future Jordan, test this and use it when the game ends and the winner modal appears
 									} else {
 										const buildButton = Game.methodObjects.find(bs => bs.id === 'build-tower');
 										buildButton.btnColor = '#C0C0C0';
@@ -3416,6 +3408,21 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+		}
+		function closeBuildTowerModal() {
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (modal) {
+				Game.deleteEntity(modal.methodId);
+			}
+			removeTowerSelect();
+			const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
+			if (buildBtn) {
+				Game.deleteEntity(buildBtn.methodId);
+			}
+			const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
+			if (cancelBtn) {
+				Game.deleteEntity(cancelBtn.methodId);
+			}
 		}
 		function removeTowerSelect() {
 			const towerSelect1 = Game.methodObjects.find(tower => tower.id === 'blue-tower-1');
