@@ -3258,6 +3258,7 @@ const maulPage = {
 			// looks like after each upgrade it's saved to the main tower.
 			// try making a clone of the stats -> gameObject.towerArenaDesigns[0].arenaTower.stats
 			// possibly even the 'requires' property as well
+			// also cap the tower levels to 5
 			console.log('selected design ', selectedTowerDesign);
 			let msgs = [selectedTowerDesign.arenaTower.name, directiveName];
 			Game.methodSetup = {
