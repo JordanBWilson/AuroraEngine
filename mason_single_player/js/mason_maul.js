@@ -1352,7 +1352,7 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function selectTower(methodId, towerIndex) {
-			const tower = Game.methodObjects.find(bg => bg.methodId === methodId);
+			let tower = Game.methodObjects.find(bg => bg.methodId === methodId);
 			const range = Game.methodObjects.find(bg => bg.id === tower.props.arcId);
 			console.log(tower);
 			if (tower.props.towerId === 0) { // no tower built here
@@ -1363,7 +1363,7 @@ const maulPage = {
 				tower.msg = 'upgd';
 			} else if (tower.props.towerId !== 0 && tower.props.selected) { // tower is selected ready to upgrade
 				// open up the upgrade menu
-				// future Jordan, make an upgrade menu
+				selectUpgradeTowerMenu(tower, towerIndex);
 				range.color = 'rgba(0, 0, 200, 0)';
 				tower.props.selected = false;
 				tower.msg = 'HP: ' + tower.props.stats.hp;
@@ -2713,7 +2713,7 @@ const maulPage = {
 							font: '2rem serif',
 							msg: '+      +',
 							align: 'left',
-							posX: Game.placeEntityX(0.065),
+							posX: Game.placeEntityX(0.023),
 							posY: Game.placeEntityY(0.07),
 							direction: 'top',
 							color: 'green',
@@ -2959,6 +2959,8 @@ const maulPage = {
 			}, 0);
 		}
 		function drawWinnerModal(winningTeam) { // winningTeam can be red, blue or draw
+			closeBuildTowerModal();
+			closeUpdateTowerModal();
 			let msgs = [];
 			if (winningTeam === 'red') {
 				msgs = ['Red Team Wins!', '', 'Tap here to continue'];
@@ -2994,7 +2996,7 @@ const maulPage = {
 						action: {
 							method: function(id) {
 								Game.keepPreviousSize = false;
-								arenaPage.loadPage(); 
+								arenaPage.loadPage();
 							}
 						},
 						isModalBtn: true,
@@ -3126,9 +3128,137 @@ const maulPage = {
 			}
 			return returnTower;
 		}
+		function selectUpgradeTowerMenu(tower, towerIndex) {
+			let msgs = [];
+			const towerLevel = tower.props.stats.lvl + 1;
+			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
+				msgs = ['Upgrade To Level ' + towerLevel,
+						'Cost: $' + 40 * (towerLevel),
+						'Attack: ' + tower.props.stats.att + '| +2',
+						'Defense: ' + tower.props.stats.def + '| +2',
+						'Health: ' + tower.props.stats.hp + '| +2',
+						'Speed: ' + tower.props.stats.spd + '| +2',
+						'Splash: ' + tower.props.stats.splash + '| 0',
+						];
+			} else {
+				msgs = ['Upgrade To Level ' + towerLevel, 'To upgrade this tower, your arena', 'level needs to be: ' + tower.props.requires.arenaLvlToUpgrade];
+			}
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawDialogueModal({
+						posX: Game.placeEntityX(0.07),
+						posY: Game.placeEntityY(0.25, (Game.entitySize * 30)),
+						width: (Game.canvas.width * 0.85),
+						height: (Game.entitySize * 65),
+						lineWidth: 1,
+						modalColor: 'grey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: msgs,
+						msgStart: Game.placeEntityY(0.30, (Game.entitySize * 30)),
+						msgDistance: (Game.entitySize * 6),
+						bgColor: '',
+						isModalFilled: true,
+						id: Game.modalId,
+						layer: 1,
+						action: {
+							method: function(id) {
+								
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
+				Game.methodSetup = {
+					layer: 1,
+					method: function(id) {
+						drawButton({
+							posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+							posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
+							width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+							height: (Game.entitySize * 7),
+							lineWidth: 1,
+							btnColor: 'darkgrey',
+							txtColor: 'white',
+							font: '1.3em serif',
+							msg: 'Upgrade',
+							isFilled: true,
+							id: 'upgrade-tower',
+							layer: 1,
+							action: { 
+								method: function(id) {
+									console.log(tower, gameObject.arenaBlueGameMoney >= 40 * (towerLevel), gameObject.arenaBlueGameMoney);
+									if (gameObject.arenaBlueGameMoney >= 40 * (towerLevel)) {
+										gameObject.arenaBlueGameMoney -= 40 * (towerLevel);
+										updateMoneyBackground();
+										tower.props.stats.att += 2;
+										tower.props.stats.def += 2;
+										tower.props.stats.hp += 2;
+										tower.props.stats.spd += 2;
+										tower.props.stats.splash += 0;
+										tower.props.stats.lvl += 1;
+										tower.props.requires.arenaLvlToUpgrade += 1;
+										tower.msg = 'HP: ' + tower.props.stats.hp;
+										closeUpdateTowerModal();
+									} else {
+										const upgradeButton = Game.methodObjects.find(bs => bs.id === 'upgrade-tower');
+										upgradeButton.btnColor = '#C0C0C0';
+									}
+								}
+							},
+							isModalBtn: true,
+							props: {},
+							methodId: id
+						});
+					}
+				};
+				Game.addMethod(Game.methodSetup);
+			}
+			Game.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawButton({
+						posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+						posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
+						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+						height: (Game.entitySize * 7),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.3em serif',
+						msg: 'Cancel',
+						isFilled: true,
+						id: 'cancel-upgrade-tower',
+						layer: 1,
+						action: { 
+							method: function(id) {
+								closeUpdateTowerModal();
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
 		function selectBuildTowerMenu(tower, towerIndex) {
 			let directiveName = findTowerDirectiveName(0);
-			let selectedTowerDesign = gameObject.towerArenaDesigns[0];
+			let selectedTowerDesign = Object.assign({}, gameObject.towerArenaDesigns[0]);
+			const arenaTower = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower);
+			selectedTowerDesign.arenaTower = arenaTower;
+			// future Jordan when a new game starts, make sure the selected tower gets reset.
+			// looks like after each upgrade it's saved to the main tower.
+			// try making a clone of the stats -> gameObject.towerArenaDesigns[0].arenaTower.stats
+			// possibly even the 'requires' property as well
+			console.log('selected design ', selectedTowerDesign);
 			let msgs = [selectedTowerDesign.arenaTower.name, directiveName];
 			Game.methodSetup = {
 				layer: 1,
@@ -3340,6 +3470,11 @@ const maulPage = {
 									// for that tower
 									// we also need to work on bullets targeting the robots when the range circle
 									// has been crossed
+									
+									// const selectedTower = Object.assign({}, selectedTowerDesign);
+									// const arenaTower = Object.assign({}, selectedTower.arenaTower);
+									// selectedTower.arenaTower = arenaTower;
+									
 									console.log(tower);
 									if (gameObject.arenaBlueGameMoney >= 20) {
 										gameObject.arenaBlueGameMoney -= 20;
@@ -3353,7 +3488,7 @@ const maulPage = {
 										tower.props.type = selectedTowerDesign.arenaTower.type;
 										tower.msg = 'HP: ' + tower.props.stats.hp;
 										tower.font = '0.7em serif';
-										closeBuildTowerModal(); // future Jordan, test this and use it when the game ends and the winner modal appears
+										closeBuildTowerModal();
 									} else {
 										const buildButton = Game.methodObjects.find(bs => bs.id === 'build-tower');
 										buildButton.btnColor = '#C0C0C0';
@@ -3386,19 +3521,7 @@ const maulPage = {
 						layer: 1,
 						action: { 
 							method: function(id) {
-								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-								if (modal) {
-									Game.deleteEntity(modal.methodId);
-								}
-								removeTowerSelect();
-								const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
-								if (buildBtn) {
-									Game.deleteEntity(buildBtn.methodId);
-								}
-								const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
-								if (cancelBtn) {
-									Game.deleteEntity(cancelBtn.methodId);
-								}
+								closeBuildTowerModal();
 							}
 						},
 						isModalBtn: true,
@@ -3420,6 +3543,21 @@ const maulPage = {
 				Game.deleteEntity(buildBtn.methodId);
 			}
 			const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
+			if (cancelBtn) {
+				Game.deleteEntity(cancelBtn.methodId);
+			}
+		}
+		function closeUpdateTowerModal() {
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (modal) {
+				Game.deleteEntity(modal.methodId);
+			}
+			removeTowerSelect();
+			const buildBtn = Game.methodObjects.find(btn => btn.id === 'upgrade-tower');
+			if (buildBtn) {
+				Game.deleteEntity(buildBtn.methodId);
+			}
+			const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-upgrade-tower');
 			if (cancelBtn) {
 				Game.deleteEntity(cancelBtn.methodId);
 			}
