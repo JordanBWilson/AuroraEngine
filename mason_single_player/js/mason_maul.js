@@ -1370,6 +1370,7 @@ const maulPage = {
 			}
 		}
 		function drawBlueTowerSpawns() {
+			// future Jordan, work on making the tower's bullets target the robot in range
 			let rangeWidth = 0;
 			let arcWidth = 0;
 			let isMobile = false;
@@ -2775,7 +2776,7 @@ const maulPage = {
 					}
 					Game.deleteEntity(robot[i].methodId);
 				}
-				// future Jordan, remove the robots collisions
+				// future Jordan, remove the robots collisions after they're deleted
 				if (color === 'blue') {
 					gameObject.arenaBlueAttackers.splice(i, 1);
 				} else if (color === 'red') {
@@ -2832,8 +2833,6 @@ const maulPage = {
 				// future Jordan, after all of that is said and done, start to work on reds towers
 				// selection and generation. red should also be able to upgrade towers that they've built
 				// there's a new 'redMaxTowerLevel' to determine what the max level is this game
-				
-				// future Jordan, make some sort of delay for sending out blue robots
 				
 				// future Jordan, look into some of the buttons and backrounds that use "Game.entitySize"
 				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
@@ -3131,16 +3130,20 @@ const maulPage = {
 		function selectUpgradeTowerMenu(tower, towerIndex) {
 			let msgs = [];
 			const towerLevel = tower.props.stats.lvl + 1;
+			let maxLevel = false;
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel,
 						'Cost: $' + 40 * (towerLevel),
 						'Attack: ' + tower.props.stats.att + '| +2',
 						'Defense: ' + tower.props.stats.def + '| +2',
-						'Health: ' + tower.props.stats.hp + '| +2',
+						'Health: ' + tower.props.stats.hp + '| +5',
 						'Speed: ' + tower.props.stats.spd + '| +2',
 						'Splash: ' + tower.props.stats.splash + '| 0',
 						];
-			} else {
+			} else if (towerLevel > 5) {
+				msgs = ['This Towers Level is maxed out!', 'No further upgrades can be made'];
+				maxLevel = true;
+			} else if (gameObject.arenaLevel < tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel, 'To upgrade this tower, your arena', 'level needs to be: ' + tower.props.requires.arenaLvlToUpgrade];
 			}
 			Game.methodSetup = {
@@ -3174,7 +3177,7 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
+			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade || maxLevel) {
 				Game.methodSetup = {
 					layer: 1,
 					method: function(id) {
@@ -3199,7 +3202,7 @@ const maulPage = {
 										updateMoneyBackground();
 										tower.props.stats.att += 2;
 										tower.props.stats.def += 2;
-										tower.props.stats.hp += 2;
+										tower.props.stats.hp += 5;
 										tower.props.stats.spd += 2;
 										tower.props.stats.splash += 0;
 										tower.props.stats.lvl += 1;
@@ -3251,15 +3254,13 @@ const maulPage = {
 		}
 		function selectBuildTowerMenu(tower, towerIndex) {
 			let directiveName = findTowerDirectiveName(0);
-			let selectedTowerDesign = Object.assign({}, gameObject.towerArenaDesigns[0]);
+			const selectedTowerDesign = Object.assign({}, gameObject.towerArenaDesigns[0]);
 			const arenaTower = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower);
+			const towerRequires = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower.requires);
+			const towerStats = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower.stats);
+			arenaTower.stats = towerStats;
+			arenaTower.requires = towerRequires;
 			selectedTowerDesign.arenaTower = arenaTower;
-			// future Jordan when a new game starts, make sure the selected tower gets reset.
-			// looks like after each upgrade it's saved to the main tower.
-			// try making a clone of the stats -> gameObject.towerArenaDesigns[0].arenaTower.stats
-			// possibly even the 'requires' property as well
-			// also cap the tower levels to 5
-			console.log('selected design ', selectedTowerDesign);
 			let msgs = [selectedTowerDesign.arenaTower.name, directiveName];
 			Game.methodSetup = {
 				layer: 1,
