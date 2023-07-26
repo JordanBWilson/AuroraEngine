@@ -58,6 +58,8 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = { method: function(id) { moveRedRobots(); }};
 			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = { method: function(id) { blueTowerBulletFindRobot(); }};
+			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = { 
 				method: function(id) {
 					if (aiThinking === true) {
@@ -236,7 +238,53 @@ const maulPage = {
 			}
 			Game.addCollision(Game.collisionSetup);
 		}
-		function towerTargetRange(primary, target) {
+		function blueTowerBulletFindRobot() {
+			const bullets = Game.methodObjects.filter(x => x.id === 'blue-tower-bullet');
+			if (bullets.length > 0) {
+				console.log(bullets);
+				bullets.forEach((bullet, i) => {
+					// future Jordan, work on making the bullets move diagonal
+					const robot = Game.methodObjects.find(x => x.id === bullet.props.target);
+					if (bullet.posY >= robot.posY) {
+						bullet.posY -= Game.moveEntity(0.2, Game.enumDirections.topDown);
+					}
+					if (bullet.posY <= robot.posY) {
+						bullet.posY += Game.moveEntity(0.2, Game.enumDirections.topDown);
+					}
+					if (bullet.posX >= robot.posX) {
+						bullet.posX -= Game.moveEntity(0.2, Game.enumDirections.leftRight);
+					}
+					if (bullet.posX <= robot.posX) {
+						bullet.posX += Game.moveEntity(0.2, Game.enumDirections.leftRight);
+					}
+				});
+			}
+		}
+		function blueTowerShootRobot(towerStats, primaryId) {
+			// const robot = Game.methodObjects.find(x => x.id === primaryId);
+			// console.log('Tower: ', towerStats, 'Robot: ', robot);
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: towerStats.posX + (towerStats.width / 2),
+						posY: towerStats.posY,
+						width: Game.entitySize * 1,
+						height: Game.entitySize * 1,
+						lineWidth: 1,
+						color: 'gold',
+						isFilled: true,
+						id: 'blue-tower-bullet',
+						isBackground: false,
+						props: {
+							target: primaryId,
+						},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
+		function towerTargetRange(primary, target, color) {
 			let shootSpeed;
 			const tower = Game.methodObjects.find(x => x.id === target);
 			const towerStats = Game.methodObjects.find(x => x.id === tower.props.towerId);
@@ -249,8 +297,11 @@ const maulPage = {
 			if (!tower.props.canShoot && tower.props.targetId) {
 				tower.props.targetId = '';
 				if (towerStats.props.towerId > 0) {
-					// future Jordan, shoot the bullet here
-					console.log('Tower: ', towerStats);
+					if (color === 'blue') {
+						blueTowerShootRobot(towerStats, primary);
+					} else if (color === 'red') {
+						// future Jordan, make red tower bullets shoot
+					}
 				}
 				shootSpeed = setTimeout(function() {
 					tower.props.canShoot = true;
@@ -264,7 +315,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-5', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -273,7 +324,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-6', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -282,7 +333,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-7', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -291,7 +342,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-8', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -302,7 +353,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-1', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -311,7 +362,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-2', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -320,7 +371,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-3', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -329,7 +380,7 @@ const maulPage = {
 				primary: robotId, 
 				target: 'blue-tower-range-4', 
 				method: function(id) {
-					towerTargetRange(this.primary, this.target);
+					towerTargetRange(this.primary, this.target, 'blue');
 				},
 				methodId: undefined,
 			}
@@ -822,6 +873,7 @@ const maulPage = {
 											direction: 'rt',
 											stop: 0,
 										}
+										
 										sendBlueRobot(blueRobot);
 										setTimeout(function() {
 											gameObject.canClick = true;
@@ -844,6 +896,25 @@ const maulPage = {
 		function sendRedRobotLeft(robot) {
 			gameObject.arenaRedGameMoney -= 10;
 			setRedLeftRoadNavCollisions();
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+				target: 'blue-tower-bullet', // blueRobot.id
+				method: function(id) {
+					// future Jordan, delete the bullet when it hits the robot
+					// the bullet Id should be the 'id'
+					// remove 3 HP from the robot and check that the health is above 0
+					// do the same on the right robot send as well
+					
+					console.log('HIT! ', id);
+					//const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					//const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
+					//if (robotPasser?.stop === 0) { // moving down the road now
+						//robotPasser.stop++;
+					//}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
 			const redRobot = {
 				posX: Game.placeEntityX(0),
 				posY: Game.placeEntityY(0.615), // reds bots start position- posY: Game.placeEntityY(0.615),
@@ -861,6 +932,20 @@ const maulPage = {
 		function sendRedRobotRight(robot) {
 			gameObject.arenaRedGameMoney -= 10;
 			setRedRightRoadNavCollisions();
+			Game.collisionSetup = {
+				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+				target: 'blue-tower-bullet', // blueRobot.id
+				method: function(id) {
+					console.log('HIT! ', id);
+					//const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					//const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
+					//if (robotPasser?.stop === 0) { // moving down the road now
+						//robotPasser.stop++;
+					//}
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
 			const redRobot = {
 				posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
 				posY: Game.placeEntityY(0.615), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
@@ -874,6 +959,7 @@ const maulPage = {
 			}
 			sendRedRobot(redRobot);
 			setBlueRightTowerRangeCollisions(redRobot.id);
+			
 		}
 		function updateMoneyBackground() {
 			const moneyBackground = Game.methodObjects.find(bg => bg.id === 'money-bar-background');
@@ -1413,9 +1499,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-1',
 						props: {},
 						methodId: id
@@ -1501,9 +1587,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-2',
 						props: {},
 						methodId: id
@@ -1589,9 +1675,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-3',
 						props: {},
 						methodId: id
@@ -1677,9 +1763,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-4',
 						props: {},
 						methodId: id
@@ -1765,9 +1851,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-5',
 						props: {},
 						methodId: id
@@ -1853,9 +1939,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-6',
 						props: {},
 						methodId: id
@@ -1941,9 +2027,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-7',
 						props: {},
 						methodId: id
@@ -2029,9 +2115,9 @@ const maulPage = {
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
-						lineWidth: 1,
+						lineWidth: 3,
 						color: 'rgba(0, 0, 200, 0)', // transparant
-						isFilled: true,
+						isFilled: false,
 						id: 'blue-tower-range-arc-8',
 						props: {},
 						methodId: id

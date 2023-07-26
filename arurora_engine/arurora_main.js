@@ -164,7 +164,7 @@ function collisionCheck() {
         if (primaryMethods[j].posY + (primaryMethods[j].width * 0.94) >= targetMethods[k].posY && primaryMethods[j].posY <= (targetMethods[k].posY + widthOrHeight)) {
           if (primaryMethods[j].posX + (primaryMethods[j].width * 0.94) >= targetMethods[k].posX && primaryMethods[j].posX <= (targetMethods[k].posX + targetMethods[k].width)) {
             Main.collisions[i].methodId = targetMethods[k].methodId;
-            Main.collisions[i].method();
+            Main.collisions[i].method(targetMethods[k].methodId);
             break;
           }
         }
