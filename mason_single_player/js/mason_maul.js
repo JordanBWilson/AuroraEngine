@@ -246,6 +246,26 @@ const maulPage = {
 					if (bullet) {
 						const robot = Game.methodObjects.find(x => x.id === bullet.props.target);
 						if (robot) {
+							// check the left and right of the bullet first
+							if (bullet.posX >= robot.posX) {
+								bullet.posX -= Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								if (bullet.posY >= robot.posY) {
+									bullet.posY -= Game.moveEntity(0.3, Game.enumDirections.topDown);
+								}
+								if (bullet.posY <= robot.posY) {
+									bullet.posY += Game.moveEntity(0.3, Game.enumDirections.topDown);
+								}
+							}
+							if (bullet.posX <= robot.posX) {
+								bullet.posX += Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								if (bullet.posY >= robot.posY) {
+									bullet.posY -= Game.moveEntity(0.3, Game.enumDirections.topDown);
+								}
+								if (bullet.posY <= robot.posY) {
+									bullet.posY += Game.moveEntity(0.3, Game.enumDirections.topDown);
+								}
+							}
+							// check above and below the bullet next
 							if (bullet.posY >= robot.posY) {
 								bullet.posY -= Game.moveEntity(0.3, Game.enumDirections.topDown);
 								if (bullet.posX >= robot.posX) {
@@ -264,6 +284,9 @@ const maulPage = {
 									bullet.posX += Game.moveEntity(0.3, Game.enumDirections.leftRight);
 								}
 							}
+						} else {
+							// if the robot doesn't exist anymore, remove the bullet
+							Game.deleteEntity(bullet.methodId);
 						}
 					}
 				});
@@ -822,16 +845,18 @@ const maulPage = {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate();
 										setBlueLeftRoadNavCollisions();
+										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
 											posX: Game.placeEntityX(0),
 											posY: Game.placeEntityY(0.265), // reds bots start position- posY: Game.placeEntityY(0.615),
 											width: (Game.entitySize * 1.5),
 											height: (Game.entitySize * 1.5),
 											id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
-											hp: 10, // future Jordan, buff this with the robots defense
+											hp: 10 + robotStats.stats.def,
 											robotParts: gameObject.selectedRobot,
 											direction: 'lt',
 											stop: 0,
+											totalStats: robotStats.stats,
 										}
 										sendBlueRobot(blueRobot);
 										setTimeout(function() {
@@ -872,16 +897,18 @@ const maulPage = {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate();
 										setBlueRightRoadNavCollisions();
+										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
 											posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
 											posY: Game.placeEntityY(0.265), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
 											width: (Game.entitySize * 1.5),
 											height: (Game.entitySize * 1.5),
 											id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-											hp: 10, // future Jordan, buff this with the robots defense
+											hp: 10 + robotStats.stats.def,
 											robotParts: gameObject.selectedRobot,
 											direction: 'rt',
 											stop: 0,
+											totalStats: robotStats.stats,
 										}
 										
 										sendBlueRobot(blueRobot);
@@ -904,6 +931,11 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function sendRedRobotLeft(robot) {
+			// future Jordan, work on adding up all the red robot stats.
+			// perhaps make it a global function. apply the total def stat to the health
+			// and add the 'totalStats' property to the red robots
+			// future Jordan, apply the proper stats to the rest of the robots and towers
+			console.log(robot);
 			gameObject.arenaRedGameMoney -= 10;
 			setRedLeftRoadNavCollisions();
 			Game.collisionSetup = {
@@ -2806,9 +2838,9 @@ const maulPage = {
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
 					gameObject.arenaBlueGameMoney += 50;
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 4);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 3);
 					gameObject.arenaRedGameMoney += 50;
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 4);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 3);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
@@ -3022,11 +3054,11 @@ const maulPage = {
 		}
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
-				const whatToDo = Math.floor((Math.random() * 2) + 1);
+				let whatToDo = Math.floor((Math.random() * 2) + 1);
 				// future Jordan, figure out what towers are availiable to build on
 				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= 20) {
 					// build a level 1 tower
-					
+					whatToDo = 2;
 				}
 				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= 10) {
 					// send a robot
@@ -3073,6 +3105,8 @@ const maulPage = {
 			}, 0);
 		}
 		function drawWinnerModal(winningTeam) { // winningTeam can be red, blue or draw
+			// future Jordan, give the blue player their money winnings. perhaps 100 copper to start?
+			// increase their winnings based on their arena level
 			closeBuildTowerModal();
 			closeUpdateTowerModal();
 			let msgs = [];
@@ -3245,13 +3279,12 @@ const maulPage = {
 		function selectUpgradeTowerMenu(tower, towerIndex) {
 			let msgs = [];
 			const towerLevel = tower.props.stats.lvl + 1;
-			// future Jordan, hide the upgrade button when the arena level is under level and
-			// when the tower is upgraded to the max
-			// also look for any small runtime errors with the bullets and the robots
+			// future Jordan,
+			// look for any small runtime errors with the bullets and the robots
 			// future Jordan, apply the robots stats to the base stats like the robots hp
 			// or the towers attack damage. get towers working and building for red
 			// and finally balance the rest of the game like upgrade costs
-			let maxLevel = false;
+			let upgradeIssue = false;
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel,
 						'Cost: $' + 40 * (towerLevel),
@@ -3263,9 +3296,10 @@ const maulPage = {
 						];
 			} else if (towerLevel > 5) {
 				msgs = ['This Towers Level is maxed out!', 'No further upgrades can be made'];
-				maxLevel = true;
+				upgradeIssue = true;
 			} else if (gameObject.arenaLevel < tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel, 'To upgrade this tower, your arena', 'level needs to be: ' + tower.props.requires.arenaLvlToUpgrade];
+				upgradeIssue = true;
 			}
 			Game.methodSetup = {
 				layer: 1,
@@ -3298,7 +3332,7 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade || maxLevel) {
+			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade && towerLevel < 6 && !upgradeIssue) {
 				Game.methodSetup = {
 					layer: 1,
 					method: function(id) {
@@ -3586,19 +3620,6 @@ const maulPage = {
 						action: { 
 							method: function(id) {
 								if (selectedTowerDesign.arenaTower.towerId) {
-									// future Jordan, add a range circle around the tower when built.
-									// the range circle should be displayed when tapping the tower once
-									// and other range circles should be hidden. tapping a tower with
-									// the range cirlce displayed should bring up the upgrade/rebuild tower menu
-									// for that tower
-									// we also need to work on bullets targeting the robots when the range circle
-									// has been crossed
-									
-									// const selectedTower = Object.assign({}, selectedTowerDesign);
-									// const arenaTower = Object.assign({}, selectedTower.arenaTower);
-									// selectedTower.arenaTower = arenaTower;
-									
-									console.log(tower);
 									if (gameObject.arenaBlueGameMoney >= 20) {
 										gameObject.arenaBlueGameMoney -= 20;
 										updateMoneyBackground();
