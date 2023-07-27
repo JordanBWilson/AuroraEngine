@@ -241,21 +241,30 @@ const maulPage = {
 		function blueTowerBulletFindRobot() {
 			const bullets = Game.methodObjects.filter(x => x.id === 'blue-tower-bullet');
 			if (bullets.length > 0) {
-				console.log(bullets);
 				bullets.forEach((bullet, i) => {
 					// future Jordan, work on making the bullets move diagonal
-					const robot = Game.methodObjects.find(x => x.id === bullet.props.target);
-					if (bullet.posY >= robot.posY) {
-						bullet.posY -= Game.moveEntity(0.2, Game.enumDirections.topDown);
-					}
-					if (bullet.posY <= robot.posY) {
-						bullet.posY += Game.moveEntity(0.2, Game.enumDirections.topDown);
-					}
-					if (bullet.posX >= robot.posX) {
-						bullet.posX -= Game.moveEntity(0.2, Game.enumDirections.leftRight);
-					}
-					if (bullet.posX <= robot.posX) {
-						bullet.posX += Game.moveEntity(0.2, Game.enumDirections.leftRight);
+					if (bullet) {
+						const robot = Game.methodObjects.find(x => x.id === bullet.props.target);
+						if (robot) {
+							if (bullet.posY >= robot.posY) {
+								bullet.posY -= Game.moveEntity(0.3, Game.enumDirections.topDown);
+								if (bullet.posX >= robot.posX) {
+									bullet.posX -= Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								}
+								if (bullet.posX <= robot.posX) {
+									bullet.posX += Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								}
+							}
+							if (bullet.posY <= robot.posY) {
+								bullet.posY += Game.moveEntity(0.3, Game.enumDirections.topDown);
+								if (bullet.posX >= robot.posX) {
+									bullet.posX -= Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								}
+								if (bullet.posX <= robot.posX) {
+									bullet.posX += Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								}
+							}
+						}
 					}
 				});
 			}
@@ -277,6 +286,7 @@ const maulPage = {
 						isBackground: false,
 						props: {
 							target: primaryId,
+							tower: towerStats.id,
 						},
 						methodId: id
 					});
@@ -898,19 +908,25 @@ const maulPage = {
 			setRedLeftRoadNavCollisions();
 			Game.collisionSetup = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
-				target: 'blue-tower-bullet', // blueRobot.id
+				target: 'blue-tower-bullet',
 				method: function(id) {
-					// future Jordan, delete the bullet when it hits the robot
-					// the bullet Id should be the 'id'
-					// remove 3 HP from the robot and check that the health is above 0
-					// do the same on the right robot send as well
-					
-					console.log('HIT! ', id);
-					//const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-					//const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					//if (robotPasser?.stop === 0) { // moving down the road now
-						//robotPasser.stop++;
-					//}
+					const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+					if (bullet) {
+						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+						const towerAtt = tower.props.stats.att;
+						const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
+						if (robotHitStats) {
+							// future Jordan, apply the tower damage to the base damage
+							robotHitStats.hp -= 3;
+						}
+						Game.deleteEntity(bullet.methodId);
+						if (robotHitStats?.hp <= 0) {
+							deleteRobotMethodObject(robotHitMethodObject, 1);
+							gameObject.arenaBlueGameMoney += 2;
+							updateMoneyBackground();
+						}
+					}
 				},
 				methodId: undefined,
 			}
@@ -934,14 +950,25 @@ const maulPage = {
 			setRedRightRoadNavCollisions();
 			Game.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
-				target: 'blue-tower-bullet', // blueRobot.id
+				target: 'blue-tower-bullet',
 				method: function(id) {
-					console.log('HIT! ', id);
-					//const robot = Game.methodObjects.find(bg => bg.id === this.primary);
-					//const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
-					//if (robotPasser?.stop === 0) { // moving down the road now
-						//robotPasser.stop++;
-					//}
+					const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+					if (bullet) {
+						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+						const towerAtt = tower.props.stats.att;
+						const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
+						if (robotHitStats) {
+							// future Jordan, apply the tower damage to the base damage
+							robotHitStats.hp -= 3;
+						}
+						Game.deleteEntity(bullet.methodId);
+						if (robotHitStats?.hp <= 0) {
+							deleteRobotMethodObject(robotHitMethodObject, 1);
+							gameObject.arenaBlueGameMoney += 2;
+							updateMoneyBackground();
+						}
+					}
 				},
 				methodId: undefined,
 			}
@@ -1440,7 +1467,6 @@ const maulPage = {
 		function selectTower(methodId, towerIndex) {
 			let tower = Game.methodObjects.find(bg => bg.methodId === methodId);
 			const range = Game.methodObjects.find(bg => bg.id === tower.props.arcId);
-			console.log(tower);
 			if (tower.props.towerId === 0) { // no tower built here
 				selectBuildTowerMenu(tower, towerIndex);
 			} else if (tower.props.towerId !== 0 && !tower.props.selected) { // tower is built but not yet selected
@@ -2780,9 +2806,9 @@ const maulPage = {
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
 					gameObject.arenaBlueGameMoney += 50;
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 4);
 					gameObject.arenaRedGameMoney += 50;
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 2);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 4);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
@@ -2841,27 +2867,30 @@ const maulPage = {
 				moveLeftRobots(battleRobot, robot, 'red', i);
 			});
 		}
+		function deleteRobotMethodObject(robot, entitySize) {
+			for (let i = 0; i < robot.length; i++) {
+				// make the robot explode where the body is
+				if (i === 0) {
+					Particle.drawSpark({
+						posX: robot[i].posX,
+						posY: robot[i].posY,
+						shape: Particle.enumShapes.rect,
+						color: 'yellow',
+						ticks: 11,
+						count: 8,
+						size: (Game.entitySize * entitySize),
+						speed: 1.3,
+					});
+				}
+				Game.deleteEntity(robot[i].methodId);
+			}
+		}
 		function robotAttackBase(base, robot, i, color) {
 			if (base) {
 				base.props.hp--;
 				base.msg = 'HP: ' + base.props.hp;
 				// remove the robot and all of its parts
-				for (let i = 0; i < robot.length; i++) {
-					// make the robot explode where the body is
-					if (i === 0) {
-						Particle.drawSpark({
-							posX: robot[i].posX,
-							posY: robot[i].posY,
-							shape: Particle.enumShapes.rect,
-							color: 'yellow',
-							ticks: 11,
-							count: 8,
-							size: (Game.entitySize * 1),
-							speed: 1.3,
-						});
-					}
-					Game.deleteEntity(robot[i].methodId);
-				}
+				deleteRobotMethodObject(robot, 1);
 				// future Jordan, remove the robots collisions after they're deleted
 				if (color === 'blue') {
 					gameObject.arenaBlueAttackers.splice(i, 1);
@@ -3216,6 +3245,12 @@ const maulPage = {
 		function selectUpgradeTowerMenu(tower, towerIndex) {
 			let msgs = [];
 			const towerLevel = tower.props.stats.lvl + 1;
+			// future Jordan, hide the upgrade button when the arena level is under level and
+			// when the tower is upgraded to the max
+			// also look for any small runtime errors with the bullets and the robots
+			// future Jordan, apply the robots stats to the base stats like the robots hp
+			// or the towers attack damage. get towers working and building for red
+			// and finally balance the rest of the game like upgrade costs
 			let maxLevel = false;
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel,
