@@ -152,6 +152,13 @@ function collisionCheck() {
     let primaryMethods = Game.methodObjects.filter(x => x.id === primary);
     let targetMethods = Game.methodObjects.filter(x => x.id === target);
     // find out if a collision is happening
+    
+    // *** this is a test for future collisions ***
+    // const isCollisionY = !!primaryMethods.find(x => targetMethods.find(y => x.posY + (x.width * 0.94) >= y.posY && x.posY <= (y.posY + (!y.height ? y.width : y.height))));
+    // future Jordan, do the same thing for the X axis
+    // console.log(isCollisionY);
+    // *** end test ***
+    
     for (let j = 0; j < primaryMethods.length; j++) {
       for (let k = 0; k < targetMethods.length; k++) {
         let widthOrHeight = 0;

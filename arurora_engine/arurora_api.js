@@ -40,6 +40,8 @@ const Game = { // the user will want to use this object
 	}
   },
   collisionSetup: { // use this to create collisions
+	  // collisions are cleaned when deleteEntity is called
+	  // based on the primary property
     primary: '', // the id that's waiting for a collision
     target: '', // the id that did the colliding
     method: function(id) {/*put your method here*/},
@@ -83,41 +85,21 @@ const Game = { // the user will want to use this object
   deleteEntity: function(id) { // delete an object in the MethodObjects using the methodId
     for (let i = 0; i < this.methodObjects.length; i++) {
       if (this.methodObjects[i].methodId === id) {
+		  // clean up collisions
+		const findPrimary = Main.collisions.filter(x => x.primary === this.methodObjects[i].id);
+		if (findPrimary.length > 0) {
+			findPrimary.forEach(item => {
+				const index = Main.collisions.findIndex(x => x.primary === item.primary && x.target === item.target);
+				if (index >= 0) {
+					Main.collisions.splice(index, 1);
+				}   
+			});
+		  }
         for (let j = 0; j < Main.methodsToRun.length; j++) {
           if (this.methodObjects[i]?.methodId === Main.methodsToRun[j]?.methodId) {
 			  if (this.methodObjects[i].isModalBtn) {
 				  Main.isModalVisible = false;
 			  }
-			  // console.log(this.methodObjects[i].id);
-			  // remove this method objects collisions if any
-			  // future Jordan, work on figuring out removing the deleted method objects collisions.
-			  // we seem to have the complete list here... find a way to remove the collisions next
-			   const findPrimary = Main.collisions.filter(x => x.primary === this.methodObjects[i].id);
-			   const primaryIndexs = [];
-			   const findTarget = Main.collisions.filter(x => x.target === this.methodObjects[i].id);
-			   //if (findPrimary.length > 0) {
-				   //for (let k = 0; k < Main.collisions.length; k++) {
-					   //for (let l = 0; l < findPrimary.length; l++) {
-						   //if (Main.collisions[k].methodId === findPrimary[l].methodId) {
-							   //primaryIndexs.push(k);
-						   //}
-					   //}
-				   //}
-				   //for (let k = 0; k < primaryIndexs.length; k++) {
-					   //Main.collisions.splice(primaryIndexs[k], 1);
-				   //}
-				   
-			   //}
-			   // console.log(Main.collisions);
-			   console.log(findPrimary, findTarget);
-			  //const removeCollisionMethodIds = [];
-			  //for (let k = 0; k < Main.collisions.length; k++) {
-				  //console.log(Main.collisions[k], this.methodObjects[i].id);
-				////if (this.methodObjects[i].id === Main.collisions[k].primaryId) {
-					////removeCollisionMethodIds.push(Main.collisions[k].methodId);
-				////}
-			  //}
-			  //console.log(removeCollisionMethodIds);
             this.methodObjects.splice(i, 1);
             Main.methodObjectShadows.splice(i, 1);
             Main.methodsToRun.splice(j, 1);

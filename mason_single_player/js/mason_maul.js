@@ -18,9 +18,6 @@ const maulPage = {
 		gameObject.selectedRobot = [];
 		Game.keepPreviousSize = true;
 		Game.clearStage();
-		// future Jordan, work on double tapping towers.
-		// one to build/display range and health under and one more tap to bring up a menu to upgrade or switch tower
-		// if there isn't a tower built, one tap to open the build menu
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 		const roadImg = new Image();
@@ -242,7 +239,6 @@ const maulPage = {
 			const bullets = Game.methodObjects.filter(x => x.id === 'blue-tower-bullet');
 			if (bullets.length > 0) {
 				bullets.forEach((bullet, i) => {
-					// future Jordan, work on making the bullets move diagonal
 					if (bullet) {
 						const robot = Game.methodObjects.find(x => x.id === bullet.props.target);
 						if (robot) {
@@ -342,8 +338,6 @@ const maulPage = {
 			}
 		}
 		function setBlueRightTowerRangeCollisions(robotId) {
-			// future Jordan, create blues right tower ranges
-			// and then create the tower ranges collisions here
 			Game.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-5', 
@@ -931,9 +925,6 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function sendRedRobotLeft(robot) {
-			// future Jordan, work on adding up all the red robot stats.
-			// perhaps make it a global function. apply the total def stat to the health
-			// and add the 'totalStats' property to the red robots
 			// future Jordan, apply the proper stats to the rest of the robots and towers
 			gameObject.arenaRedGameMoney -= 10;
 			setRedLeftRoadNavCollisions();
@@ -1519,7 +1510,6 @@ const maulPage = {
 			}
 		}
 		function drawBlueTowerSpawns() {
-			// future Jordan, work on making the tower's bullets target the robot in range
 			let rangeWidth = 0;
 			let arcWidth = 0;
 			let isMobile = false;
@@ -2843,9 +2833,9 @@ const maulPage = {
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
 					gameObject.arenaBlueGameMoney += 50;
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 3);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
 					gameObject.arenaRedGameMoney += 50;
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 3);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 2);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
@@ -2898,7 +2888,6 @@ const maulPage = {
 		}
 		function moveRedRobots() {
 			gameObject.arenaRedAttackers.forEach((battleRobot, i) => {
-				// future Jordan, make the robots move
 				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
 				moveRightRobots(battleRobot, robot, 'red', i);
 				moveLeftRobots(battleRobot, robot, 'red', i);
@@ -2928,7 +2917,6 @@ const maulPage = {
 				base.msg = 'HP: ' + base.props.hp;
 				// remove the robot and all of its parts
 				deleteRobotMethodObject(robot, 1);
-				// future Jordan, remove the robots collisions after they're deleted
 				if (color === 'blue') {
 					gameObject.arenaBlueAttackers.splice(i, 1);
 				} else if (color === 'red') {
