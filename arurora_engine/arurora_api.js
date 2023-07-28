@@ -48,8 +48,8 @@ const Game = { // the user will want to use this object
   addCollision: function(collision) { // pass the collision setup
     Main.collisions.push(collision);
     this.collisionSetup = {
-      primaryId: '',
-      targetId: '',
+      primary: '',
+      target: '',
       method: function(id) {},
       methodId: undefined,
     }
@@ -88,6 +88,36 @@ const Game = { // the user will want to use this object
 			  if (this.methodObjects[i].isModalBtn) {
 				  Main.isModalVisible = false;
 			  }
+			  // console.log(this.methodObjects[i].id);
+			  // remove this method objects collisions if any
+			  // future Jordan, work on figuring out removing the deleted method objects collisions.
+			  // we seem to have the complete list here... find a way to remove the collisions next
+			   const findPrimary = Main.collisions.filter(x => x.primary === this.methodObjects[i].id);
+			   const primaryIndexs = [];
+			   const findTarget = Main.collisions.filter(x => x.target === this.methodObjects[i].id);
+			   //if (findPrimary.length > 0) {
+				   //for (let k = 0; k < Main.collisions.length; k++) {
+					   //for (let l = 0; l < findPrimary.length; l++) {
+						   //if (Main.collisions[k].methodId === findPrimary[l].methodId) {
+							   //primaryIndexs.push(k);
+						   //}
+					   //}
+				   //}
+				   //for (let k = 0; k < primaryIndexs.length; k++) {
+					   //Main.collisions.splice(primaryIndexs[k], 1);
+				   //}
+				   
+			   //}
+			   // console.log(Main.collisions);
+			   console.log(findPrimary, findTarget);
+			  //const removeCollisionMethodIds = [];
+			  //for (let k = 0; k < Main.collisions.length; k++) {
+				  //console.log(Main.collisions[k], this.methodObjects[i].id);
+				////if (this.methodObjects[i].id === Main.collisions[k].primaryId) {
+					////removeCollisionMethodIds.push(Main.collisions[k].methodId);
+				////}
+			  //}
+			  //console.log(removeCollisionMethodIds);
             this.methodObjects.splice(i, 1);
             Main.methodObjectShadows.splice(i, 1);
             Main.methodsToRun.splice(j, 1);
@@ -96,6 +126,7 @@ const Game = { // the user will want to use this object
         }
       }
     }
+    // refresh backgrounds
     for (let i = 0; i < this.methodObjects.length; i++) {
       if (!this.methodObjects[i]?.isBackground) {
         this.methodObjects[i].isAnim = true;

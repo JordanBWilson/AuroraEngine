@@ -2622,3 +2622,23 @@ function totalSelectedRobotStats() {
 
 	return stat;
 }
+function totalRobotStats(robot) {
+	const stat = {
+		stats: {
+			att: 0,
+			def: 0,
+			spd: 0,
+			ai: 0,
+			storage: 0,
+		}
+	};
+	robot.robotParts.forEach((part, i) => {
+		stat.stats.att += part.stats.att;
+		stat.stats.def += part.stats.def;
+		stat.stats.spd += part.stats.spd;
+		stat.stats.ai += part.stats.ai;
+		stat.stats.storage += part.stats.storage;
+	});
+
+	return stat;
+}

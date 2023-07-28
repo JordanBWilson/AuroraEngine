@@ -935,7 +935,6 @@ const maulPage = {
 			// perhaps make it a global function. apply the total def stat to the health
 			// and add the 'totalStats' property to the red robots
 			// future Jordan, apply the proper stats to the rest of the robots and towers
-			console.log(robot);
 			gameObject.arenaRedGameMoney -= 10;
 			setRedLeftRoadNavCollisions();
 			Game.collisionSetup = {
@@ -955,7 +954,8 @@ const maulPage = {
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							deleteRobotMethodObject(robotHitMethodObject, 1);
-							gameObject.arenaBlueGameMoney += 2;
+							// future Jordan, apply a floating +1 here
+							gameObject.arenaBlueGameMoney += 1;
 							updateMoneyBackground();
 						}
 					}
@@ -963,16 +963,18 @@ const maulPage = {
 				methodId: undefined,
 			}
 			Game.addCollision(Game.collisionSetup);
+			const robotStats = totalRobotStats(robot);
 			const redRobot = {
 				posX: Game.placeEntityX(0),
 				posY: Game.placeEntityY(0.615), // reds bots start position- posY: Game.placeEntityY(0.615),
 				width: (Game.entitySize * 1.5),
 				height: (Game.entitySize * 1.5),
 				id: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
-				hp: 10, // future Jordan, buff this with the robots defense
+				hp: 10 + robotStats.stats.def,
 				robotParts: robot.robotParts,
 				direction: 'lt',
 				stop: 0,
+				totalStats: robotStats.stats,
 			}
 			sendRedRobot(redRobot);
 			setBlueLeftTowerRangeCollisions(redRobot.id);
@@ -997,7 +999,8 @@ const maulPage = {
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							deleteRobotMethodObject(robotHitMethodObject, 1);
-							gameObject.arenaBlueGameMoney += 2;
+							// future Jordan, apply a floating +1 here
+							gameObject.arenaBlueGameMoney += 1;
 							updateMoneyBackground();
 						}
 					}
@@ -1005,16 +1008,18 @@ const maulPage = {
 				methodId: undefined,
 			}
 			Game.addCollision(Game.collisionSetup);
+			const robotStats = totalRobotStats(robot);
 			const redRobot = {
 				posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
 				posY: Game.placeEntityY(0.615), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
 				width: (Game.entitySize * 1.5),
 				height: (Game.entitySize * 1.5),
 				id: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
-				hp: 10, // future Jordan, buff this with the robots defense
+				hp: 10 + robotStats.stats.def,
 				robotParts: robot.robotParts,
 				direction: 'rt',
 				stop: 0,
+				totalStats: robotStats.stats,
 			}
 			sendRedRobot(redRobot);
 			setBlueRightTowerRangeCollisions(redRobot.id);
