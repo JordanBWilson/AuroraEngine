@@ -152,36 +152,20 @@ function collisionCheck() {
     let primaryMethods = Game.methodObjects.filter(x => x.id === primary);
     let targetMethods = Game.methodObjects.filter(x => x.id === target);
     // find out if a collision is happening
-    
-    // *** this is a test for future collisions ***
-    const isCollisionY = !!primaryMethods.find(primary => targetMethods.find(target => primary.posY + (primary.width * 0.94) >= target.posY 
-		&& primary.posY <= (target.posY + (!target.height ? target.width : target.height))));
-    // future Jordan, do the same thing for the X axis
-    console.log(isCollisionY);
-    // *** end test ***
-    
-    for (let j = 0; j < primaryMethods.length; j++) {
-      for (let k = 0; k < targetMethods.length; k++) {
-        let widthOrHeight = 0;
-        // because we are dealing with arcs as well, you can't be too careful
-        if (!targetMethods[k]?.height) {
-          widthOrHeight = targetMethods[k].width;
-        } else {
-          widthOrHeight = targetMethods[k].height;
-        }
-        if (primaryMethods[j].posY + (primaryMethods[j].width * 0.94) >= targetMethods[k].posY && primaryMethods[j].posY <= (targetMethods[k].posY + widthOrHeight)) {
-          if (primaryMethods[j].posX + (primaryMethods[j].width * 0.94) >= targetMethods[k].posX && primaryMethods[j].posX <= (targetMethods[k].posX + targetMethods[k].width)) {
-            Main.collisions[i].methodId = targetMethods[k].methodId;
-            Main.collisions[i].method(targetMethods[k].methodId);
-            break;
-          }
-        }
-      }
-    }
+	const targetHit = targetMethods.find(target => 
+		primaryMethods.find(primary => 
+			primary.posY + (primary.width * 0.94) >= target.posY 
+			&& primary.posY <= (target.posY + (!target.height ? target.width : target.height)) && primary.posX + (primary.width * 0.94) >= target.posX 
+			&& primary.posX <= (target.posX + target.width)));
+	if (targetHit) {
+		Main.collisions[i].methodId = targetHit.methodId;
+        Main.collisions[i].method(targetHit.methodId);
+	}
   }
 }
 
 function backgroundAnimationCheck(index) {
+	// future Jordan, look into simplifying this check just like the collision check method above
   if (!Main.isResizing && Game.methodObjects[index] && Game.methodObjects[index].isBackground) { // is this rect a backgound..
     for (let i = 0; i < Game.methodObjects.length; i++) { // find any method object that in colliding with this background
       if (Game.methodObjects[i].isAnim && !Game.methodObjects[i].isBtn) { // is this thing animated? Find if it is colliding with this background
