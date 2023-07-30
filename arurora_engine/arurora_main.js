@@ -167,40 +167,34 @@ function collisionCheck() {
 function backgroundAnimationCheck(index) {
 	// future Jordan, look into simplifying this check just like the collision check method above
   if (!Main.isResizing && Game.methodObjects[index] && Game.methodObjects[index].isBackground) { // is this rect a backgound..
-    for (let i = 0; i < Game.methodObjects.length; i++) { // find any method object that in colliding with this background
-      if (Game.methodObjects[i].isAnim && !Game.methodObjects[i].isBtn) { // is this thing animated? Find if it is colliding with this background
-        // future Jordan. '&& !Game.methodObjects[i].isBtn' check may not be needed there. fixes a bug with the button on an animated screen
-        let widthOrHeight = findWidthHeightMethodObjects(i);
-        if (Game.methodObjects[i].posY >= Game.methodObjects[index].posY - widthOrHeight  &&
-           Game.methodObjects[i].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight) {
-          if (Game.methodObjects[i].posX >= Game.methodObjects[index].posX - Game.methodObjects[i].width &&
-             Game.methodObjects[i].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[i].width) {
-
-            for (let j = 0; j < Game.methodObjects.length; j++) { // look and see if there is anything not animated that needs to be redrawn..
-              let widthOrHeight = findWidthHeightMethodObjects(j);
-              if (Game.methodObjects[j].posY >= Game.methodObjects[index].posY - Game.methodObjects[j].width  &&
-                   Game.methodObjects[j].posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + widthOrHeight || Game.methodObjects[j].align) {
-                if (Game.methodObjects[j].posX >= Game.methodObjects[index].posX - Game.methodObjects[j].width &&
-                    Game.methodObjects[j].posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + Game.methodObjects[j].width || Game.methodObjects[j].align) {
-                  // find out what shape this is and redraw it
-                  if (!Game.methodObjects[j].isAnim && !Game.methodObjects[j].isBackground && j !== index) {
-                    // this will need to be split up as the shapes and graphics grow
-                    if (Game.methodObjects[j].height) { // check for a rect shape
-                      Game.methodObjects[j].isAnim = true;
-                    }
-                  }
-                  // redraw this text
-                  if(Game.methodObjects[j].align && j !== index && !Game.methodObjects[j].isAnim) {
-                    Game.methodObjects[j].isAnim = true;
-                  }
-                }
-              }
-            }
-            Game.methodObjects[index].isAnim = true; // animate the background
-          }
-        }
-      }
-    }
+	 // find what's being animated
+	const animatedObjects = Game.methodObjects.filter(
+		obj => obj.isAnim && !obj.isBtn && obj.methodId !== Game.methodObjects[index].methodId && 
+		obj.posY >= Game.methodObjects[index].posY - (!obj.height ? obj.width : obj.height) && 
+		obj.posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + (!obj.height ? obj.width : obj.height) &&
+		obj.posX >= Game.methodObjects[index].posX - obj.width &&
+		obj.posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + obj.width
+	);
+	for (let j = 0; j < animatedObjects.length; j++) {
+		// look for colliding methods objects
+		const collidingMethods = Game.methodObjects.filter(
+			obj => !obj.isAnim && !obj.isBackground && obj.methodId !== Game.methodObjects[index].methodId && 
+			obj.posY >= Game.methodObjects[index].posY - (!obj.height ? obj.width : obj.height) && 
+			obj.posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + (!obj.height ? obj.width : obj.height) || obj.align &&
+			obj.posX >= Game.methodObjects[index].posX - obj.width &&
+			obj.posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + obj.width || obj.align
+		);
+		Game.methodObjects[index].isAnim = true; // animate the background
+		const animateRects = collidingMethods.filter(rect => rect.height);
+		for (let i = 0; i < animateRects.length; i++) {
+			animateRects[i].isAnim = true;
+		}
+		const animateText = collidingMethods.filter(rect => rect.align);
+		for (let i = 0; i < animateText.length; i++) {
+			animateText[i].isAnim = true;
+			
+		}
+	}
   }
 }
 
@@ -210,14 +204,6 @@ function doesMethodParamExist(methodId) {
 
 function findMethodParamIndex(methodId) {
   return Game.methodObjects.findIndex(x => x.methodId === methodId);
-}
-function findWidthHeightMethodObjects(index) {
-  // because we are dealing with arcs as well, there might not be a height.
-  if (!Game.methodObjects[index].height) {
-    return Game.methodObjects[index].width;
-  } else {
-    return Game.methodObjects[index].height;
-  }
 }
 // this method grabs the gif image frames and assigns it to the correct method Id
 function assignImages(pngs, methodId) {
