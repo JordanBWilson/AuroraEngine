@@ -289,8 +289,6 @@ const maulPage = {
 			}
 		}
 		function blueTowerShootRobot(towerStats, primaryId) {
-			// const robot = Game.methodObjects.find(x => x.id === primaryId);
-			// console.log('Tower: ', towerStats, 'Robot: ', robot);
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -332,9 +330,13 @@ const maulPage = {
 						// future Jordan, make red tower bullets shoot
 					}
 				}
+				let towerShootSPeed = 2200 - (towerStats.props.stats.spd * 100);
+				if (towerShootSPeed <= 100) {
+					towerShootSPeed = 100;
+				}
 				shootSpeed = setTimeout(function() {
 					tower.props.canShoot = true;
-				}, 1000); // future Jordan, update this to reflect the tower shoot speed.
+				}, towerShootSPeed); // future Jordan, update this to reflect the tower shoot speed.
 			}
 		}
 		function setBlueRightTowerRangeCollisions(robotId) {
@@ -838,6 +840,7 @@ const maulPage = {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate();
+										// future Jordan, blue robots need a bullet collision here
 										setBlueLeftRoadNavCollisions();
 										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
@@ -890,6 +893,7 @@ const maulPage = {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate();
+										// future Jordan, blue robots need a bullet collision here
 										setBlueRightRoadNavCollisions();
 										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
@@ -939,14 +943,13 @@ const maulPage = {
 						const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
-							// future Jordan, apply the tower damage to the base damage
-							robotHitStats.hp -= 3;
+							robotHitStats.hp -= (3 + towerAtt);
 						}
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							deleteRobotMethodObject(robotHitMethodObject, 1);
-							// future Jordan, apply a floating +1 here
-							gameObject.arenaBlueGameMoney += 1;
+							// future Jordan, apply a floating +2 here
+							gameObject.arenaBlueGameMoney += 2;
 							updateMoneyBackground();
 						}
 					}
@@ -984,14 +987,13 @@ const maulPage = {
 						const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
-							// future Jordan, apply the tower damage to the base damage
-							robotHitStats.hp -= 3;
+							robotHitStats.hp -= (3 + towerAtt);
 						}
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							deleteRobotMethodObject(robotHitMethodObject, 1);
-							// future Jordan, apply a floating +1 here
-							gameObject.arenaBlueGameMoney += 1;
+							// future Jordan, apply a floating +2 here
+							gameObject.arenaBlueGameMoney += 2;
 							updateMoneyBackground();
 						}
 					}
@@ -2833,9 +2835,9 @@ const maulPage = {
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
 					gameObject.arenaBlueGameMoney += 50;
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 3);
 					gameObject.arenaRedGameMoney += 50;
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 2);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 3);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
@@ -2925,38 +2927,37 @@ const maulPage = {
 			}
 		}
 		function moveRightRobots(br, robot, color, i) {
+			const robotSpeed = (br.totalStats.spd) * 0.01;
 			if (br.direction === 'rt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
-					// future Jordan base the speed on the robot's stats
-					rob.posX -= Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					rob.posX -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
-					// future Jordan base the speed on the robot's stats
-					rob.posX -= Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					rob.posX -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 					
@@ -2992,20 +2993,21 @@ const maulPage = {
 			}
 		}
 		function moveLeftRobots(br, robot, color, i) {
+			const robotSpeed = (br.totalStats.spd) * 0.01;
 			if (br.direction === 'lt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
-					rob.posX += Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					rob.posX += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 				});
@@ -3013,17 +3015,17 @@ const maulPage = {
 			if (br.direction === 'lt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
 					// future Jordan base the speed on the robot's stats
-					rob.posX += Game.moveEntity(0.05, Game.enumDirections.leftRight);
+					rob.posX += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY -= Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY += Game.moveEntity(0.05, Game.enumDirections.topDown);
+						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 				});

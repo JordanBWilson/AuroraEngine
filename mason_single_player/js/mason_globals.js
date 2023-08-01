@@ -273,7 +273,7 @@ const robotHeads = [
 		count: 6, // how many parts have been made
 		stats: {
 			att: 0,
-			def: 1,
+			def: 2,
 			spd: 0,
 			ai: 1,
 			storage: 0,
@@ -301,7 +301,7 @@ const robotHeads = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 1,
+			def: 4,
 			spd: 0,
 			ai: 1,
 			storage: 1,
@@ -316,9 +316,9 @@ const robotHeads = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 5,
+			roboticSkill: 5,
+			engineeringSkill: 5,
 		},
 	},
 	{
@@ -329,7 +329,7 @@ const robotHeads = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 1,
+			def: 2,
 			spd: 0,
 			ai: 2,
 			storage: 0,
@@ -344,9 +344,9 @@ const robotHeads = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 10,
+			roboticSkill: 10,
+			engineeringSkill: 10,
 		},
 	},
 	{
@@ -356,8 +356,8 @@ const robotHeads = [
 		img: 'cornflowerblue',
 		count: 0,
 		stats: {
-			att: 1,
-			def: 1,
+			att: 0,
+			def: 6,
 			spd: 0,
 			ai: 1,
 			storage: 0,
@@ -372,9 +372,9 @@ const robotHeads = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 15,
+			roboticSkill: 15,
+			engineeringSkill: 15,
 		},
 	},
 ];
@@ -387,7 +387,7 @@ const robotChassis = [
 		count: 6,
 		stats: {
 			att: 0,
-			def: 1,
+			def: 4,
 			spd: 0,
 			ai: 0,
 			storage: 1,
@@ -402,9 +402,9 @@ const robotChassis = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 1,
+			roboticSkill: 1,
+			engineeringSkill: 1,
 		},
 	},
 	{
@@ -415,7 +415,7 @@ const robotChassis = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 1,
+			def: 6,
 			spd: 0,
 			ai: 0,
 			storage: 2,
@@ -430,9 +430,9 @@ const robotChassis = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 10,
+			roboticSkill: 10,
+			engineeringSkill: 10,
 		},
 	},
 	{
@@ -443,10 +443,10 @@ const robotChassis = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 1,
+			def: 2,
 			spd: 0,
 			ai: 2,
-			storage: 0,
+			storage: 1,
 		},
 		scrapToBuild: {
 			commonScrap: 9,
@@ -458,9 +458,9 @@ const robotChassis = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 20,
+			roboticSkill: 20,
+			engineeringSkill: 20,
 		},
 	},
 	{
@@ -471,7 +471,7 @@ const robotChassis = [
 		count: 0,
 		stats: {
 			att: 1,
-			def: 1,
+			def: 4,
 			spd: 0,
 			ai: 0,
 			storage: 0,
@@ -486,67 +486,11 @@ const robotChassis = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 30,
+			roboticSkill: 30,
+			engineeringSkill: 30,
 		},
 	},
-	//{
-		//chassisId: 5,
-		//type: 'chassis',
-		//name: 'Test Chassis-1',
-		//img: 'red',
-		//count: 1,
-		//stats: {
-			//att: 0,
-			//def: 1,
-			//spd: 0,
-			//ai: 0,
-			//storage: 0,
-		//},
-		//scrapToBuild: {
-			//commonScrap: 0,
-			//unCommonScrap: 0,
-			//uniqueScrap: 0,
-			//intriguingScrap: 0,
-			//facinatingScrap: 0,
-			//mythicScrap: 0,
-			//exoticScrap: 0,
-		//},
-		//requires: {
-			//factoryLevel: 0,
-			//roboticSkill: 0,
-			//engineeringSkill: 0,
-		//},
-	//},
-	//{
-		//chassisId: 6,
-		//type: 'chassis',
-		//name: 'Test Chassis-2',
-		//img: 'red',
-		//count: 1,
-		//stats: {
-			//att: 0,
-			//def: 1,
-			//spd: 0,
-			//ai: 0,
-			//storage: 0,
-		//},
-		//scrapToBuild: {
-			//commonScrap: 0,
-			//unCommonScrap: 0,
-			//uniqueScrap: 0,
-			//intriguingScrap: 0,
-			//facinatingScrap: 0,
-			//mythicScrap: 0,
-			//exoticScrap: 0,
-		//},
-		//requires: {
-			//factoryLevel: 0,
-			//roboticSkill: 0,
-			//engineeringSkill: 0,
-		//},
-	//},
 ];
 const robotLegs = [
 	{
@@ -558,7 +502,7 @@ const robotLegs = [
 		count: 2,
 		stats: {
 			att: 0,
-			def: 1,
+			def: 2,
 			spd: 1,
 			ai: 0,
 			storage: 0,
@@ -573,9 +517,9 @@ const robotLegs = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 1,
+			roboticSkill: 1,
+			engineeringSkill: 1,
 		},
 	},
 	{
@@ -587,10 +531,10 @@ const robotLegs = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 1,
-			spd: 1,
-			ai: 1,
-			storage: 0,
+			def: 2,
+			spd: 2,
+			ai: 0,
+			storage: 1,
 		},
 		scrapToBuild: {
 			commonScrap: 7,
@@ -602,9 +546,9 @@ const robotLegs = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 7,
+			roboticSkill: 7,
+			engineeringSkill: 7,
 		},
 	},
 	{
@@ -616,8 +560,8 @@ const robotLegs = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 1,
-			spd: 1,
+			def: 4,
+			spd: 2,
 			ai: 1,
 			storage: 0,
 		},
@@ -631,9 +575,9 @@ const robotLegs = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 12,
+			roboticSkill: 12,
+			engineeringSkill: 12,
 		},
 	},
 	{
@@ -645,7 +589,7 @@ const robotLegs = [
 		count: 0,
 		stats: {
 			att: 1,
-			def: 1,
+			def: 4,
 			spd: 1,
 			ai: 0,
 			storage: 0,
@@ -660,9 +604,9 @@ const robotLegs = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 17,
+			roboticSkill: 17,
+			engineeringSkill: 17,
 		},
 	},
 ];
@@ -676,7 +620,7 @@ const robotArms = [
 		count: 2,
 		stats: {
 			att: 1,
-			def: 1,
+			def: 2,
 			spd: 0,
 			ai: 0,
 			storage: 0,
@@ -691,9 +635,9 @@ const robotArms = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 1,
+			roboticSkill: 1,
+			engineeringSkill: 1,
 		},
 	},
 	{
@@ -704,8 +648,8 @@ const robotArms = [
 		img: 'coral',
 		count: 0,
 		stats: {
-			att: 1,
-			def: 1,
+			att: 2,
+			def: 2,
 			spd: 0,
 			ai: 0,
 			storage: 1,
@@ -720,9 +664,9 @@ const robotArms = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 8,
+			roboticSkill: 8,
+			engineeringSkill: 8,
 		},
 	},
 	{
@@ -734,7 +678,7 @@ const robotArms = [
 		count: 0,
 		stats: {
 			att: 1,
-			def: 1,
+			def: 4,
 			spd: 0,
 			ai: 1,
 			storage: 0,
@@ -749,9 +693,9 @@ const robotArms = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 13,
+			roboticSkill: 13,
+			engineeringSkill: 13,
 		},
 	},
 	{
@@ -763,7 +707,7 @@ const robotArms = [
 		count: 0,
 		stats: {
 			att: 2,
-			def: 1,
+			def: 4,
 			spd: 0,
 			ai: 0,
 			storage: 0,
@@ -778,9 +722,9 @@ const robotArms = [
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 0,
-			roboticSkill: 0,
-			engineeringSkill: 0,
+			factoryLevel: 18,
+			roboticSkill: 18,
+			engineeringSkill: 18,
 		},
 	},
 ];
@@ -793,9 +737,9 @@ const arenaTowers = [
 		name: 'Simple Tower',
 		img: 'pink',
 		stats: {
-			att: 3,
+			att: 5,
 			def: 2,
-			spd: 3,
+			spd: 5,
 			hp: 20,
 			lvl: 1,
 			splash: 0,
@@ -806,25 +750,25 @@ const arenaTowers = [
 			arenaLvlToUpgrade: 0,
 		},
 	},
-	{
-		towerId: 2,
-		type: 'bunker',
-		name: 'Bunker',
-		img: 'indigo',
-		stats: {
-			att: 0,
-			def: 3,
-			spd: 0,
-			hp: 20,
-			lvl: 1,
-			splash: 0,
-		},
-		robotParts: [],
-		requires: {
-			arenaLvlToBuild: 0,
-			arenaLvlToUpgrade: 0,
-		},
-	},
+	//{
+		//towerId: 2,
+		//type: 'bunker',
+		//name: 'Bunker',
+		//img: 'indigo',
+		//stats: {
+			//att: 0,
+			//def: 3,
+			//spd: 0,
+			//hp: 20,
+			//lvl: 1,
+			//splash: 0,
+		//},
+		//robotParts: [],
+		//requires: {
+			//arenaLvlToBuild: 0,
+			//arenaLvlToUpgrade: 0,
+		//},
+	//},
 ];
 
 // *** Add Funds ***
