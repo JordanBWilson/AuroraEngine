@@ -260,8 +260,15 @@ const gameObject = {
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
-	// arenaRobotIndex: -1, // which arena robot is selected
-	// arenaTowerIndex: -1, // which arena tower is selected
+	directiveCost: { // how much something should cost based on its directive
+		d1: 10,
+		d2: 20,
+		d3: 30,
+		d4: 40,
+	},
+	gamesPlayed: 0, // how many arena games played
+	gamesWon: 0, // how many arena games won
+	gamesLost: 0, // how many arena games lost
 };
 // ** Robot Parts ***
 const robotHeads = [
@@ -739,7 +746,7 @@ const arenaTowers = [
 		stats: {
 			att: 5,
 			def: 2,
-			spd: 5,
+			spd: 7, // 5
 			hp: 20,
 			lvl: 1,
 			splash: 0,

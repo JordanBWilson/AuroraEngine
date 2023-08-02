@@ -832,17 +832,23 @@ const arenaPage = {
 					}
 				}
 			);
+			const directiveReadyList = []; // future Jordan, when these directives are ready, remove this
 			for (let i = 0; i < 4; i++) {
 				let directiveMsg = '';
 				if (i === 0) {
 					directiveMsg = 'Tank';
+					directiveReadyList.push(true);
 				} else if (i === 1) {
 					directiveMsg = 'Warrior';
+					directiveReadyList.push(false);
 				} else if (i === 2) {
 					directiveMsg = 'Support';
+					directiveReadyList.push(false);
 				} else if (i === 3) {
 					directiveMsg = 'Lee-Roy';
+					directiveReadyList.push(true);
 				}
+				
 				Game.methodSetup = {
 					method: function(id) {
 						drawButton({
@@ -851,7 +857,7 @@ const arenaPage = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 9),
 							lineWidth: 1,
-							btnColor: arenaTowerIndex === -1 || arenaTowerIndex === undefined ? 'green' : '#C0C0C0',
+							btnColor: (arenaTowerIndex === -1 || arenaTowerIndex === undefined) && directiveReadyList[i] ? 'green' : '#C0C0C0',
 							txtColor: 'white',
 							font: '1em serif',
 							msg: directiveMsg,
@@ -859,7 +865,7 @@ const arenaPage = {
 							id: 'directive-' + (i + 1),
 							action: { 
 								method: function(id) {
-									if (arenaTowerIndex === -1 || arenaTowerIndex === undefined) {
+									if ((arenaTowerIndex === -1 || arenaTowerIndex === undefined) && directiveReadyList[i]) {
 										let msgs = [];
 										// future Jordan update description with the in game costs
 										if (i === 0) {
@@ -1480,16 +1486,21 @@ const arenaPage = {
 					arenaTowerSelect(arenaTowerIndex);
 				}
 			}
+			const directiveReadyList = []; // future Jordan, when these directives are ready, remove this
 			for (let i = 0; i < 4; i++) {
 				let directiveMsg = '';
 				if (i === 0) {
 					directiveMsg = selectedTower.type === 'bunker' ? 'Select Robot' : 'Standard';
+					directiveReadyList.push(true);
 				} else if (i === 1) {
 					directiveMsg = selectedTower.type === 'bunker' ? 'Standard' : 'Splash-Shot';
+					directiveReadyList.push(false);
 				} else if (i === 2) {
 					directiveMsg = selectedTower.type === 'bunker' ? 'Rapid' : 'Rapid-Shot';
+					directiveReadyList.push(true);
 				} else if (i === 3) {
 					directiveMsg = selectedTower.type === 'bunker' ? 'Defense' : 'Ram-Shot';
+					directiveReadyList.push(false);
 				}
 				Game.methodSetup = {
 					method: function(id) {
@@ -1499,7 +1510,7 @@ const arenaPage = {
 							width: (Game.entitySize * 22),
 							height: (Game.entitySize * 9),
 							lineWidth: 1,
-							btnColor: selectedTower.type === 'bunker' && i === 0 ? 'grey' : 'green',
+							btnColor: (selectedTower.type === 'bunker' && i === 0) || !directiveReadyList[i] ? '#C0C0C0' : 'green', // the color here should be grey or green
 							txtColor: 'white',
 							font: '1em serif',
 							msg: directiveMsg,
@@ -1507,162 +1518,164 @@ const arenaPage = {
 							id: 'directive-' + (i + 1),
 							action: { 
 								method: function(id) {
-									let msgs = [];
-									let selectRobot = false;
-									if (i === 0) {
-										if (selectedTower.type === 'bunker') {
-											selectRobot = true;
-										} else {
-											msgs = ['Standard', 'Tower will attack at', 'a standard rate'];
-										}
-									} else if (i === 1) {
-										if (selectedTower.type === 'bunker') {
-											msgs = ['Standard', 'Bunker will create', ' 2 robots a turn'];
-										} else {
-											msgs = ['Splash-Shot', 'Tower will gain splash', 'but will attack slower'];
-										}
-									} else if (i === 2) {
-										if (selectedTower.type === 'bunker') {
-											msgs = ['Rapid', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
-										} else {
-											msgs = ['Rapid-Shot', 'Tower will attack faster', 'but will lose some damage'];
-										}
-									} else if (i === 3) {
-										if (selectedTower.type === 'bunker') {
-											msgs = ['Defense', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash'];
-										} else {
-											msgs = ['Ram-Shot', 'Tower will get added attack', 'and splash but lose some speed'];
-										}
-									}
-									if (selectRobot) {
-										// select a robot
-										arenaRobotSelect(selectedTower, arenaTowerIndex);
-									} else {
-										Game.methodSetup = {
-											method: function(id) {
-												drawDialogueModal({
-													posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-													width: (Game.entitySize * 45),
-													height: (Game.entitySize * 50),
-													lineWidth: 1,
-													modalColor: 'darkgrey',
-													msgColor: 'white',
-													msgFont: '1em serif',
-													msgs: msgs,
-													msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-													msgDistance: (Game.entitySize * 5),
-													bgColor: '',
-													isModalFilled: true,
-													id: Game.modalId,
-													action: {
-														method: function(id) {}
-													},
-													isModalBtn: false,
-													props: {},
-													methodId: id
-												});
+									if (directiveReadyList[i]) {
+										let msgs = [];
+										let selectRobot = false;
+										if (i === 0) {
+											if (selectedTower.type === 'bunker') {
+												selectRobot = true;
+											} else {
+												msgs = ['Standard', 'Tower will attack at', 'a standard rate'];
 											}
-										};
-										Game.addMethod(Game.methodSetup);
-										Game.methodSetup = {
-											method: function(id) {
-												drawButton({
-													posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
-													width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-													height: (Game.entitySize * 7),
-													lineWidth: 1,
-													btnColor: 'grey',
-													txtColor: 'white',
-													font: '1.3em serif',
-													msg: 'Program',
-													isFilled: true,
-													id: 'Program-directive',
-													action: { 
-														method: function(id) {
-															gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
-															// apply the stat changes
-															const cloneTower = Object.assign({}, selectedTower);
-															cloneTower.stats = Object.assign({}, selectedTower.stats);
-															if (cloneTower.type === 'bunker') {
-																// find the default tower stats
-																cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
-																// directive 1 is select robot
-																if (i + 1 === 2) { // standard
-																	// use the default tower stats
-																} else if (i + 1 === 3) { // rapid
-																	cloneTower.stats.hp -= 5;
-																} else if (i + 1 === 4) { // defense
-																	cloneTower.stats.att += 2;
-																	cloneTower.stats.spd += 1;
-																	cloneTower.stats.splash += 1;
+										} else if (i === 1) {
+											if (selectedTower.type === 'bunker') {
+												msgs = ['Standard', 'Bunker will create', ' 2 robots a turn'];
+											} else {
+												msgs = ['Splash-Shot', 'Tower will gain splash', 'but will attack slower'];
+											}
+										} else if (i === 2) {
+											if (selectedTower.type === 'bunker') {
+												msgs = ['Rapid', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
+											} else {
+												msgs = ['Rapid-Shot', 'Tower will attack faster', 'but will lose some damage'];
+											}
+										} else if (i === 3) {
+											if (selectedTower.type === 'bunker') {
+												msgs = ['Defense', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash'];
+											} else {
+												msgs = ['Ram-Shot', 'Tower will get added attack', 'and splash but lose some speed'];
+											}
+										}
+										if (selectRobot) {
+											// select a robot
+											arenaRobotSelect(selectedTower, arenaTowerIndex);
+										} else {
+											Game.methodSetup = {
+												method: function(id) {
+													drawDialogueModal({
+														posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
+														posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+														width: (Game.entitySize * 45),
+														height: (Game.entitySize * 50),
+														lineWidth: 1,
+														modalColor: 'darkgrey',
+														msgColor: 'white',
+														msgFont: '1em serif',
+														msgs: msgs,
+														msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
+														msgDistance: (Game.entitySize * 5),
+														bgColor: '',
+														isModalFilled: true,
+														id: Game.modalId,
+														action: {
+															method: function(id) {}
+														},
+														isModalBtn: false,
+														props: {},
+														methodId: id
+													});
+												}
+											};
+											Game.addMethod(Game.methodSetup);
+											Game.methodSetup = {
+												method: function(id) {
+													drawButton({
+														posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+														posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
+														width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+														height: (Game.entitySize * 7),
+														lineWidth: 1,
+														btnColor: 'grey',
+														txtColor: 'white',
+														font: '1.3em serif',
+														msg: 'Program',
+														isFilled: true,
+														id: 'Program-directive',
+														action: { 
+															method: function(id) {
+																gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
+																// apply the stat changes
+																const cloneTower = Object.assign({}, selectedTower);
+																cloneTower.stats = Object.assign({}, selectedTower.stats);
+																if (cloneTower.type === 'bunker') {
+																	// find the default tower stats
+																	cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
+																	// directive 1 is select robot
+																	if (i + 1 === 2) { // standard
+																		// use the default tower stats
+																	} else if (i + 1 === 3) { // rapid
+																		cloneTower.stats.hp -= 5;
+																	} else if (i + 1 === 4) { // defense
+																		cloneTower.stats.att += 2;
+																		cloneTower.stats.spd += 1;
+																		cloneTower.stats.splash += 1;
+																	}
+																	if (reselect) {
+																		gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
+																	}
+																} else {
+																	// find the default tower stats
+																	cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
+																	if (i + 1 === 1) { // standard
+																		// use the default tower stats
+																	} else if (i + 1 === 2) { // splash shot
+																		cloneTower.stats.att -= 1;
+																		cloneTower.stats.spd -= 2;
+																		cloneTower.stats.splash += 3;
+																	} else if (i + 1 === 3) { // rapid shot
+																		cloneTower.stats.spd += 3;
+																		cloneTower.stats.att -= 2;
+																	} else if (i + 1 === 4) { // ram shot
+																		cloneTower.stats.att += 2;
+																		cloneTower.stats.spd -= 2;
+																		cloneTower.stats.splash += 1;
+																	}
+																	if (reselect) {
+																		gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
+																	}
 																}
-																if (reselect) {
-																	gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
-																}
-															} else {
-																// find the default tower stats
-																cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
-																if (i + 1 === 1) { // standard
-																	// use the default tower stats
-																} else if (i + 1 === 2) { // splash shot
-																	cloneTower.stats.att -= 1;
-																	cloneTower.stats.spd -= 2;
-																	cloneTower.stats.splash += 3;
-																} else if (i + 1 === 3) { // rapid shot
-																	cloneTower.stats.spd += 3;
-																	cloneTower.stats.att -= 2;
-																} else if (i + 1 === 4) { // ram shot
-																	cloneTower.stats.att += 2;
-																	cloneTower.stats.spd -= 2;
-																	cloneTower.stats.splash += 1;
-																}
-																if (reselect) {
-																	gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
-																}
+																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																Game.deleteEntity(modal.methodId);
+																
+																arenaTowerDetails(cloneTower, arenaTowerIndex, reselect, false);
 															}
-															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-															Game.deleteEntity(modal.methodId);
-															
-															arenaTowerDetails(cloneTower, arenaTowerIndex, reselect, false);
-														}
-													},
-													isModalBtn: true,
-													props: {},
-													methodId: id
-												});
-											}
-										};
-										Game.addMethod(Game.methodSetup);
-										Game.methodSetup = {
-											method: function(id) {
-												drawButton({
-													posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-													width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-													height: (Game.entitySize * 7),
-													lineWidth: 1,
-													btnColor: 'grey',
-													txtColor: 'white',
-													font: '1.3em serif',
-													msg: 'Cancel',
-													isFilled: true,
-													id: 'cancel-directive',
-													action: { 
-														method: function(id) { 
-															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-															Game.deleteEntity(modal.methodId);
-															arenaTowerDetails(selectedTower, arenaTowerIndex, reselect, false);
-														}
-													},
-													isModalBtn: true,
-													props: {},
-													methodId: id
-												});
-											}
-										};
-										Game.addMethod(Game.methodSetup);
+														},
+														isModalBtn: true,
+														props: {},
+														methodId: id
+													});
+												}
+											};
+											Game.addMethod(Game.methodSetup);
+											Game.methodSetup = {
+												method: function(id) {
+													drawButton({
+														posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+														posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
+														width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
+														height: (Game.entitySize * 7),
+														lineWidth: 1,
+														btnColor: 'grey',
+														txtColor: 'white',
+														font: '1.3em serif',
+														msg: 'Cancel',
+														isFilled: true,
+														id: 'cancel-directive',
+														action: { 
+															method: function(id) { 
+																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																Game.deleteEntity(modal.methodId);
+																arenaTowerDetails(selectedTower, arenaTowerIndex, reselect, false);
+															}
+														},
+														isModalBtn: true,
+														props: {},
+														methodId: id
+													});
+												}
+											};
+											Game.addMethod(Game.methodSetup);
+										}
 									}
 								}
 							},
@@ -1707,8 +1720,10 @@ const arenaPage = {
 			for (let i = 1; i <= 4; i++) {
 				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + i);
 				if (highlight) {
-					highlight.btnColor = 'green';
-					highlight.txtColor = 'white';
+					if (i !== 2 && i !== 3) { 
+						highlight.btnColor = 'green';
+						highlight.txtColor = 'white';
+					}
 				}
 				
 			}
@@ -1726,8 +1741,8 @@ const arenaPage = {
 		function clearTowerPreviewHighlight(selectedTower) {
 			for (let i = 1; i <= 4; i++) {
 				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + i);
-				if (highlight) {
-					highlight.btnColor = selectedTower.type === 'bunker' && i === 1 ? 'grey' : 'green';
+				if (highlight) { // future Jordan, when the robot directives are ready, remove || (i === 2 || i === 4). The color should be grey or green
+					highlight.btnColor = (selectedTower.type === 'bunker' && i === 1) || (i === 2 || i === 4) ? '#C0C0C0' : 'green';
 					highlight.txtColor = 'white';
 				}
 				

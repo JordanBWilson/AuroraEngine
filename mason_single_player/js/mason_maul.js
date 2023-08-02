@@ -23,8 +23,6 @@ const maulPage = {
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
 		let aiThinking = true;
-		let sendRedLeftCount = 0;
-		let sendRedRightCount = 0;
 		let gameTimer;
 		roadImg.src = roadPath;
 		Particle.init();
@@ -71,7 +69,8 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			gameObject.redMaxTowerLevel = Math.floor((Math.random() * 3) + 1);
+			gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
+			gameObject.gamesPlayed += 1;
 		}
 		function setBlueRightRoadNavCollisions() {
 			Game.collisionSetup = {
@@ -312,31 +311,33 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function towerTargetRange(primary, target, color) {
-			let shootSpeed;
-			const tower = Game.methodObjects.find(x => x.id === target);
-			const towerStats = Game.methodObjects.find(x => x.id === tower.props.towerId);
-			const robot = Game.methodObjects.find(bg => bg.id === primary);
-			const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === primary);
-			if (tower.props.targetId === '' && tower.props.canShoot) {
-				tower.props.targetId = primary;
-				tower.props.canShoot = false;
-			}
-			if (!tower.props.canShoot && tower.props.targetId) {
-				tower.props.targetId = '';
-				if (towerStats.props.towerId > 0) {
-					if (color === 'blue') {
-						blueTowerShootRobot(towerStats, primary);
-					} else if (color === 'red') {
-						// future Jordan, make red tower bullets shoot
+			if (gameObject.arenaGameStarted) {
+				let shootSpeed;
+				const tower = Game.methodObjects.find(x => x.id === target);
+				const towerStats = Game.methodObjects.find(x => x.id === tower.props.towerId);
+				const robot = Game.methodObjects.find(bg => bg.id === primary);
+				const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === primary);
+				if (tower.props.targetId === '' && tower.props.canShoot) {
+					tower.props.targetId = primary;
+					tower.props.canShoot = false;
+				}
+				if (!tower.props.canShoot && tower.props.targetId) {
+					tower.props.targetId = '';
+					if (towerStats.props.towerId > 0) {
+						if (color === 'blue') {
+							blueTowerShootRobot(towerStats, primary);
+						} else if (color === 'red') {
+							// future Jordan, make red tower bullets shoot
+						}
 					}
+					let towerShootSPeed = 2200 - (towerStats.props.stats.spd * 100);
+					if (towerShootSPeed <= 100) {
+						towerShootSPeed = 100;
+					}
+					shootSpeed = setTimeout(function() {
+						tower.props.canShoot = true;
+					}, towerShootSPeed);
 				}
-				let towerShootSPeed = 2200 - (towerStats.props.stats.spd * 100);
-				if (towerShootSPeed <= 100) {
-					towerShootSPeed = 100;
-				}
-				shootSpeed = setTimeout(function() {
-					tower.props.canShoot = true;
-				}, towerShootSPeed); // future Jordan, update this to reflect the tower shoot speed.
 			}
 		}
 		function setBlueRightTowerRangeCollisions(robotId) {
@@ -1082,25 +1083,34 @@ const maulPage = {
 					robotParts: [],
 					directive: Math.floor((Math.random() * 4) + 1),
 				};
-				const headIndex = Math.floor((Math.random() * robotHeads.length));
+				let headIndex = 0;
+				let chassisIndex = 0;
+				let leftArmIndex = 0;
+				let rightArmIndex = 0;
+				let leftLegIndex = 0;
+				let rightLegIndex = 0;
+				if (gameObject.gamesWon > 4) { // give the player a few 'easy' games
+					headIndex = Math.floor((Math.random() * robotHeads.length));
+					chassisIndex = Math.floor((Math.random() * robotChassis.length));
+					leftArmIndex = Math.floor((Math.random() * robotArms.length));
+					rightArmIndex = Math.floor((Math.random() * robotArms.length));
+					leftLegIndex = Math.floor((Math.random() * robotLegs.length));
+					rightLegIndex = Math.floor((Math.random() * robotLegs.length));
+				}
+				
 				const randomHead = Object.assign({}, robotHeads[headIndex]);
 				robotDesign.robotParts.push(randomHead);
-				const chassisIndex = Math.floor((Math.random() * robotChassis.length));
 				const randomChassis = Object.assign({}, robotChassis[chassisIndex]);
 				robotDesign.robotParts.push(randomChassis);
-				const leftArmIndex = Math.floor((Math.random() * robotArms.length));
 				const randomLeftArm = Object.assign({}, robotArms[leftArmIndex]);
 				randomLeftArm.armPos = 'left';
 				robotDesign.robotParts.push(randomLeftArm);
-				const rightArmIndex = Math.floor((Math.random() * robotArms.length));
 				const randomRightArm = Object.assign({}, robotArms[rightArmIndex]);
 				randomRightArm.armPos = 'right';
 				robotDesign.robotParts.push(randomRightArm);
-				const leftLegIndex = Math.floor((Math.random() * robotLegs.length));
 				const randomLeftLeg = Object.assign({}, robotLegs[leftLegIndex]);
 				randomLeftLeg.legPos = 'left';
 				robotDesign.robotParts.push(randomLeftLeg);
-				const rightLegIndex = Math.floor((Math.random() * robotLegs.length));
 				const randomRightLeg = Object.assign({}, robotLegs[rightLegIndex]);
 				randomRightLeg.legPos = 'right';
 				robotDesign.robotParts.push(randomRightLeg);
@@ -3105,14 +3115,10 @@ const maulPage = {
 					const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
 					const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
 					const whereToSend = Math.floor((Math.random() * 2) + 1);
-					if (whereToSend === 1 && sendRedLeftCount < 3 || sendRedRightCount === 2) {
-						sendRedLeftCount++;
+					if (whereToSend === 1) {
 						sendRedRobotLeft(redBot);
-						sendRedRightCount = 0;
-					} else if (whereToSend === 2 && sendRedRightCount < 3 || sendRedLeftCount == 2) {
-						sendRedRightCount++;
+					} else if (whereToSend === 2) {
 						sendRedRobotRight(redBot);
-						sendRedLeftCount = 0;
 					}
 				}
 				aiThinking = false;
@@ -3152,6 +3158,7 @@ const maulPage = {
 			let msgs = [];
 			if (winningTeam === 'red') {
 				msgs = ['Red Team Wins!', '', 'Tap here to continue'];
+				gameObject.gamesLost += 1;
 			} else if (winningTeam === 'draw') {
 				msgs = ['Draw!', '', 'Tap here to continue'];
 			} else if (winningTeam === 'blue') {
@@ -3161,6 +3168,7 @@ const maulPage = {
 					unlockPart = unlockRobotPart();
 				}
 				msgs = ['Blue Team Wins!', unlockPart , 'Tap here to continue'];
+				gameObject.gamesWon += 1;
 			}
 			Game.methodSetup = {
 				layer: 1,
@@ -3400,7 +3408,7 @@ const maulPage = {
 										tower.props.stats.spd += 2;
 										tower.props.stats.splash += 0;
 										tower.props.stats.lvl += 1;
-										tower.props.requires.arenaLvlToUpgrade += 1;
+										tower.props.requires.arenaLvlToUpgrade += 3;
 										tower.msg = 'HP: ' + tower.props.stats.hp;
 										closeUpdateTowerModal();
 									} else {
