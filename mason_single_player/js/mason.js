@@ -47,7 +47,7 @@ function seedArenaTowers() {
 			arenaTowerId: i,
 			arenaTower: {},
 			robotParts: [], // if the tower is a bunker, this is the selected robot
-			directive: 1, // will the tower be standard, long-shot, rapid-shot or ram-shot
+			directive: 1, // will the tower be standard, splash-shot, rapid-shot or ram-shot
 			// each directive will alter the tower stats. standard will be default
 		}
 		gameObject.towerArenaDesigns.push(towerDesign);

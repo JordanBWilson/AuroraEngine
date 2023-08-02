@@ -861,14 +861,15 @@ const arenaPage = {
 								method: function(id) {
 									if (arenaTowerIndex === -1 || arenaTowerIndex === undefined) {
 										let msgs = [];
+										// future Jordan update description with the in game costs
 										if (i === 0) {
-											msgs = ['Tank', 'Tanks will target towers before', 'getting to the enemy stronghold'];
+											msgs = ['Tank', 'Tanks will target towers before', 'getting to the enemy base'];
 										} else if (i === 1) {
-											msgs = ['Warrior', 'Warriors will target troops before', 'getting to the enemy stronghold'];
+											msgs = ['Warrior', 'Warriors will target troops before', 'getting to the enemy base'];
 										} else if (i === 2) {
-											msgs = ['Support', 'Supports will target anything', 'before getting to the', 'enemy stronghold'];
+											msgs = ['Support', 'Supports will target anything', 'before getting to the', 'enemy base'];
 										} else if (i === 3) {
-											msgs = ['Lee-Roy', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy stronghold'];
+											msgs = ['Lee-Roy', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy base'];
 										}
 										Game.methodSetup = {
 											method: function(id) {
@@ -1484,7 +1485,7 @@ const arenaPage = {
 				if (i === 0) {
 					directiveMsg = selectedTower.type === 'bunker' ? 'Select Robot' : 'Standard';
 				} else if (i === 1) {
-					directiveMsg = selectedTower.type === 'bunker' ? 'Standard' : 'Long-Shot';
+					directiveMsg = selectedTower.type === 'bunker' ? 'Standard' : 'Splash-Shot';
 				} else if (i === 2) {
 					directiveMsg = selectedTower.type === 'bunker' ? 'Rapid' : 'Rapid-Shot';
 				} else if (i === 3) {
@@ -1518,7 +1519,7 @@ const arenaPage = {
 										if (selectedTower.type === 'bunker') {
 											msgs = ['Standard', 'Bunker will create', ' 2 robots a turn'];
 										} else {
-											msgs = ['Long-Shot', 'Tower will gain splash', 'but will attack slower'];
+											msgs = ['Splash-Shot', 'Tower will gain splash', 'but will attack slower'];
 										}
 									} else if (i === 2) {
 										if (selectedTower.type === 'bunker') {
@@ -1605,8 +1606,9 @@ const arenaPage = {
 																cloneTower.stats = Object.assign({}, arenaTowers.find(x => x.towerId === selectedTower.towerId).stats);
 																if (i + 1 === 1) { // standard
 																	// use the default tower stats
-																} else if (i + 1 === 2) { // long shot
-																	cloneTower.stats.spd -= 1;
+																} else if (i + 1 === 2) { // splash shot
+																	cloneTower.stats.att -= 1;
+																	cloneTower.stats.spd -= 2;
 																	cloneTower.stats.splash += 3;
 																} else if (i + 1 === 3) { // rapid shot
 																	cloneTower.stats.spd += 3;

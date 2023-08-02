@@ -66,7 +66,7 @@ const maulPage = {
 						aiThinking = undefined;
 						setTimeout(function() { // this is how fast the ai makes it's moves
 							aiThinking = true;
-						}, 1500);
+						}, 1300);
 					}
 				}
 			};
@@ -836,6 +836,8 @@ const maulPage = {
 						id: 'send-robots-left',
 						action: { 
 							method: function(id) {
+								// future Jordan, based on what directive the robot is, adjust the price
+								// put the directive costs in the gameObject
 								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= 10 && gameObject.selectedRobot.length === 6) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
@@ -889,6 +891,7 @@ const maulPage = {
 						id: 'send-robots-right',
 						action: { 
 							method: function(id) {
+								// future Jordan, based on what directive the robot is, adjust the price
 								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= 10 && gameObject.selectedRobot.length === 6 ) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
@@ -930,6 +933,7 @@ const maulPage = {
 		}
 		function sendRedRobotLeft(robot) {
 			// future Jordan, apply the proper stats to the rest of the robots and towers
+			// future Jordan, based on what directive the robot is, adjust the price
 			gameObject.arenaRedGameMoney -= 10;
 			setRedLeftRoadNavCollisions();
 			Game.collisionSetup = {
@@ -944,12 +948,32 @@ const maulPage = {
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
 							robotHitStats.hp -= (3 + towerAtt);
+							Particle.drawSpark({
+								posX: robotHitStats.posX,
+								posY: robotHitStats.posY,
+								shape: Particle.enumShapes.rect,
+								color: 'yellow',
+								ticks: 6,
+								count: 8,
+								size: (Game.entitySize * 0.3),
+								speed: 1.3,
+							});
 						}
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							deleteRobotMethodObject(robotHitMethodObject, 1);
-							// future Jordan, apply a floating +2 here
-							gameObject.arenaBlueGameMoney += 2;
+							Particle.floatingText({
+								font: '1rem serif',
+								msg: '+3',
+								align: 'center',
+								posX: robotHitStats.posX,
+								posY: robotHitStats.posY,
+								direction: 'top',
+								color: 'gold',
+								ticks: 33,
+								speed: 0.1,
+							});
+							gameObject.arenaBlueGameMoney += 3;
 							updateMoneyBackground();
 						}
 					}
@@ -974,6 +998,7 @@ const maulPage = {
 			setBlueLeftTowerRangeCollisions(redRobot.id);
 		}
 		function sendRedRobotRight(robot) {
+			// future Jordan, based on what directive the robot is, adjust the price
 			gameObject.arenaRedGameMoney -= 10;
 			setRedRightRoadNavCollisions();
 			Game.collisionSetup = {
@@ -988,12 +1013,32 @@ const maulPage = {
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
 							robotHitStats.hp -= (3 + towerAtt);
+							Particle.drawSpark({
+								posX: robotHitStats.posX,
+								posY: robotHitStats.posY,
+								shape: Particle.enumShapes.rect,
+								color: 'yellow',
+								ticks: 6,
+								count: 8,
+								size: (Game.entitySize * 0.3),
+								speed: 1.3,
+							});
 						}
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							deleteRobotMethodObject(robotHitMethodObject, 1);
-							// future Jordan, apply a floating +2 here
-							gameObject.arenaBlueGameMoney += 2;
+							Particle.floatingText({
+								font: '1rem serif',
+								msg: '+3',
+								align: 'center',
+								posX: robotHitStats.posX,
+								posY: robotHitStats.posY,
+								direction: 'top',
+								color: 'gold',
+								ticks: 33,
+								speed: 0.1,
+							});
+							gameObject.arenaBlueGameMoney += 3;
 							updateMoneyBackground();
 						}
 					}
@@ -3220,7 +3265,7 @@ const maulPage = {
 				directiveName = 'Standard';
 			}
 			if (gameObject.towerArenaDesigns[index].directive === 2 && gameObject.towerArenaDesigns[index].arenaTower.type !== 'bunker') {
-				directiveName = 'Long-Shot';
+				directiveName = 'Splash-Shot';
 			} else if (gameObject.towerArenaDesigns[index].directive === 2 && gameObject.towerArenaDesigns[index].arenaTower.type === 'bunker') {
 				directiveName = 'Standard';
 			}
@@ -3282,10 +3327,10 @@ const maulPage = {
 			let upgradeIssue = false;
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel,
-						'Cost: $' + 40 * (towerLevel),
+						'Cost: $' + 20 * (towerLevel),
 						'Attack: ' + tower.props.stats.att + '| +2',
 						'Defense: ' + tower.props.stats.def + '| +2',
-						'Health: ' + tower.props.stats.hp + '| +5',
+						'Health: ' + tower.props.stats.hp + '| +3',
 						'Speed: ' + tower.props.stats.spd + '| +2',
 						'Splash: ' + tower.props.stats.splash + '| 0',
 						];
@@ -3346,13 +3391,12 @@ const maulPage = {
 							layer: 1,
 							action: { 
 								method: function(id) {
-									console.log(tower, gameObject.arenaBlueGameMoney >= 40 * (towerLevel), gameObject.arenaBlueGameMoney);
-									if (gameObject.arenaBlueGameMoney >= 40 * (towerLevel)) {
-										gameObject.arenaBlueGameMoney -= 40 * (towerLevel);
+									if (gameObject.arenaBlueGameMoney >= 20 * (towerLevel)) {
+										gameObject.arenaBlueGameMoney -= 20 * (towerLevel);
 										updateMoneyBackground();
 										tower.props.stats.att += 2;
 										tower.props.stats.def += 2;
-										tower.props.stats.hp += 5;
+										tower.props.stats.hp += 3;
 										tower.props.stats.spd += 2;
 										tower.props.stats.splash += 0;
 										tower.props.stats.lvl += 1;
@@ -3615,6 +3659,7 @@ const maulPage = {
 						action: { 
 							method: function(id) {
 								if (selectedTowerDesign.arenaTower.towerId) {
+									// future Jordan, based on what directive the tower is, adjust the price...
 									if (gameObject.arenaBlueGameMoney >= 20) {
 										gameObject.arenaBlueGameMoney -= 20;
 										updateMoneyBackground();

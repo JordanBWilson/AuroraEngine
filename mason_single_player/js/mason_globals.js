@@ -560,7 +560,7 @@ const robotLegs = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 4,
+			def: 3,
 			spd: 2,
 			ai: 1,
 			storage: 0,
@@ -678,7 +678,7 @@ const robotArms = [
 		count: 0,
 		stats: {
 			att: 1,
-			def: 4,
+			def: 3,
 			spd: 0,
 			ai: 1,
 			storage: 0,
@@ -746,8 +746,8 @@ const arenaTowers = [
 		},
 		robotParts: [],
 		requires: {
-			arenaLvlToBuild: 0,
-			arenaLvlToUpgrade: 0,
+			arenaLvlToBuild: 1,
+			arenaLvlToUpgrade: 5,
 		},
 	},
 	//{
