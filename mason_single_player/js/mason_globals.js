@@ -260,11 +260,22 @@ const gameObject = {
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
-	directiveCost: { // how much something should cost based on its directive
-		d1: 10,
+	robotDirectiveCost: { // how much a robot should cost based on its directive
+		d1: 30,
 		d2: 20,
+		d3: 40,
+		d4: 10,
+	},
+	towerDirectiveCost: { // how much a tower should cost based on its directive
+		d1: 20,
+		d2: 40,
 		d3: 30,
-		d4: 40,
+		d4: 50,
+	},
+	bunkerDirectiveCost: { // how much a tower should cost based on its directive
+		d1: 30,
+		d2: 40,
+		d3: 50,
 	},
 	gamesPlayed: 0, // how many arena games played
 	gamesWon: 0, // how many arena games won

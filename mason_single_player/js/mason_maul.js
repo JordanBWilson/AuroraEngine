@@ -533,6 +533,19 @@ const maulPage = {
 				sendRobotsRight.btnColor = 'grey';
 			}
 		}
+		function findRobotDirectiveCost(robotDirective) {
+			let robotCost = 0;
+			if (robotDirective === 1) {
+				robotCost = gameObject.robotDirectiveCost.d1;
+			} else if (robotDirective === 2) {
+				robotCost = gameObject.robotDirectiveCost.d2;
+			} else if (robotDirective === 3) {
+				robotCost = gameObject.robotDirectiveCost.d3;
+			} else if (robotDirective === 4) {
+				robotCost = gameObject.robotDirectiveCost.d4;
+			}
+			return robotCost;
+		}
 		function drawRobotSelection() {
 			Game.methodSetup = {
 				method: function(id) {
@@ -762,6 +775,29 @@ const maulPage = {
 				};
 				Game.addMethod(Game.methodSetup);
 				drawRobotSelectParts('arena-robot-' + i);
+				if (gameObject.robotArenaDesigns[i].robotParts.length === 6) {
+					setTimeout(function() {
+						const robotCost = findRobotDirectiveCost(gameObject.robotArenaDesigns[i].directive);
+						Game.methodSetup = {
+							layer: 1,
+							method: function(id) {
+								drawText({
+									font: '1em serif',
+									msg: '$' + robotCost,
+									posX: Game.placeEntityX(posX + (0.07), (Game.entitySize * (posXoffset + 2))),
+									posY: Game.placeEntityY(posY + (0.033), (Game.entitySize * posYoffset)),
+									color: 'black',
+									align: 'center',
+									props: {},
+									id: 'robot-cost-' + i,
+									layer: 1,
+									methodId: id
+								});
+							}
+						};
+						Game.addMethod(Game.methodSetup);
+					}, 2000);
+				}
 			}
 		}
 		function drawBasesAndSends() {
@@ -837,12 +873,12 @@ const maulPage = {
 						id: 'send-robots-left',
 						action: { 
 							method: function(id) {
-								// future Jordan, based on what directive the robot is, adjust the price
-								// put the directive costs in the gameObject
-								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= 10 && gameObject.selectedRobot.length === 6) {
+								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive;
+								const robotCost = findRobotDirectiveCost(robotDirective);
+								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
-										blueRobotSendMoneyUpdate();
+										blueRobotSendMoneyUpdate(robotCost);
 										// future Jordan, blue robots need a bullet collision here
 										setBlueLeftRoadNavCollisions();
 										const robotStats = totalSelectedRobotStats();
@@ -892,11 +928,12 @@ const maulPage = {
 						id: 'send-robots-right',
 						action: { 
 							method: function(id) {
-								// future Jordan, based on what directive the robot is, adjust the price
-								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= 10 && gameObject.selectedRobot.length === 6 ) {
+								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive;
+								const robotCost = findRobotDirectiveCost(robotDirective);
+								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6 ) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
-										blueRobotSendMoneyUpdate();
+										blueRobotSendMoneyUpdate(robotCost);
 										// future Jordan, blue robots need a bullet collision here
 										setBlueRightRoadNavCollisions();
 										const robotStats = totalSelectedRobotStats();
@@ -1072,8 +1109,8 @@ const maulPage = {
 				moneyBackground.isAnim = true;
 			}
 		}
-		function blueRobotSendMoneyUpdate() {
-			gameObject.arenaBlueGameMoney -= 10;
+		function blueRobotSendMoneyUpdate(cost) {
+			gameObject.arenaBlueGameMoney -= cost;
 			updateMoneyBackground();
 		}
 		function generateRedArenaRobots() {
@@ -3115,6 +3152,8 @@ const maulPage = {
 					const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
 					const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
 					const whereToSend = Math.floor((Math.random() * 2) + 1);
+					// future Jordan, apply the directive costs to the red robots and also apply
+					// it to the tower selection as well
 					if (whereToSend === 1) {
 						sendRedRobotLeft(redBot);
 					} else if (whereToSend === 2) {
@@ -3305,7 +3344,6 @@ const maulPage = {
 			}
 		}
 		function selectBuildTower(tower, index) {
-			console.log('select', index);
 			const directiveName = findTowerDirectiveName(index);
 			const selectedTowerDesign = gameObject.towerArenaDesigns[index];
 			msgs = [selectedTowerDesign.arenaTower.name ? selectedTowerDesign.arenaTower.name : 'Nothing Selected', directiveName];
@@ -3456,7 +3494,7 @@ const maulPage = {
 		}
 		function selectBuildTowerMenu(tower, towerIndex) {
 			let directiveName = findTowerDirectiveName(0);
-			const selectedTowerDesign = Object.assign({}, gameObject.towerArenaDesigns[0]);
+			let selectedTowerDesign = Object.assign({}, gameObject.towerArenaDesigns[0]);
 			const arenaTower = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower);
 			const towerRequires = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower.requires);
 			const towerStats = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower.stats);
