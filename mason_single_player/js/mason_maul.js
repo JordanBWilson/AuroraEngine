@@ -1725,6 +1725,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -1813,6 +1814,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -1901,6 +1903,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -1989,6 +1992,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2077,6 +2081,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2165,6 +2170,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2253,6 +2259,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2341,6 +2348,7 @@ const maulPage = {
 								arenaLvlToBuild: 0,
 								arenaLvlToUpgrade: 0,
 							},
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2373,6 +2381,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2403,6 +2412,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2433,6 +2443,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2463,6 +2474,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2493,6 +2505,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2523,6 +2536,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2553,6 +2567,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -2583,6 +2598,7 @@ const maulPage = {
 								splash: 0,
 							},
 							robotParts: [],
+							directive: 0,
 						},
 						methodId: id
 					});
@@ -3393,11 +3409,11 @@ const maulPage = {
 			const towerLevel = tower.props.stats.lvl + 1;
 			// future Jordan, get towers working and building for red
 			// and finally balance the rest of the game like upgrade costs
-			// also look into upgrade cost based on the tower directive
+			const towerCost = findTowerDirectiveCost(tower.props.directive);
 			let upgradeIssue = false;
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel,
-						'Cost: $' + 20 * (towerLevel),
+						'Cost: $' + towerCost * (towerLevel),
 						'Attack: ' + tower.props.stats.att + '| +2',
 						'Defense: ' + tower.props.stats.def + '| +2',
 						'Health: ' + tower.props.stats.hp + '| +3',
@@ -3461,8 +3477,8 @@ const maulPage = {
 							layer: 1,
 							action: { 
 								method: function(id) {
-									if (gameObject.arenaBlueGameMoney >= 20 * (towerLevel)) {
-										gameObject.arenaBlueGameMoney -= 20 * (towerLevel);
+									if (gameObject.arenaBlueGameMoney >= towerCost * (towerLevel)) {
+										gameObject.arenaBlueGameMoney -= towerCost * (towerLevel);
 										updateMoneyBackground();
 										tower.props.stats.att += 2;
 										tower.props.stats.def += 2;
@@ -3743,6 +3759,7 @@ const maulPage = {
 										tower.props.stats = selectedTowerDesign.arenaTower.stats;
 										tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
 										tower.props.type = selectedTowerDesign.arenaTower.type;
+										tower.props.directive = selectedTowerDesign.directive;
 										tower.msg = 'HP: ' + tower.props.stats.hp;
 										tower.font = '0.7em serif';
 										closeBuildTowerModal();

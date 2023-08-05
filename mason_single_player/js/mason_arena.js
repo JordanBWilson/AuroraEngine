@@ -1536,7 +1536,7 @@ const arenaPage = {
 											if (selectedTower.type === 'bunker') {
 												msgs = ['Rapid', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
 											} else {
-												msgs = ['Rapid-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster', 'but will lose some damage'];
+												msgs = ['Rapid-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but will', 'lose some damage and health'];
 											}
 										} else if (i === 3) {
 											if (selectedTower.type === 'bunker') {
@@ -1624,6 +1624,7 @@ const arenaPage = {
 																	} else if (i + 1 === 3) { // rapid shot
 																		cloneTower.stats.spd += 3;
 																		cloneTower.stats.att -= 2;
+																		cloneTower.stats.hp -= 5;
 																	} else if (i + 1 === 4) { // ram shot
 																		cloneTower.stats.att += 2;
 																		cloneTower.stats.spd -= 2;
