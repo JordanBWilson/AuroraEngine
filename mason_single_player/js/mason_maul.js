@@ -69,7 +69,12 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
+			if (gameObject.gamesWon > 3) { // give the player a few 'easy' games
+				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
+			} else {
+				gameObject.redMaxTowerLevel = 1;
+			}
+			
 			gameObject.gamesPlayed += 1;
 		}
 		function setBlueRightRoadNavCollisions() {
@@ -1153,7 +1158,7 @@ const maulPage = {
 				let rightArmIndex = 0;
 				let leftLegIndex = 0;
 				let rightLegIndex = 0;
-				if (gameObject.gamesWon > 4) { // give the player a few 'easy' games
+				if (gameObject.gamesWon > 3) { // give the player a few 'easy' games
 					headIndex = Math.floor((Math.random() * robotHeads.length));
 					chassisIndex = Math.floor((Math.random() * robotChassis.length));
 					leftArmIndex = Math.floor((Math.random() * robotArms.length));
@@ -3180,6 +3185,9 @@ const maulPage = {
 				}
 			}
 		}
+		// future Jordan, we still have to make a way for red to select a tower and it's directive, make reds tower ranges,
+		// a way to select a tower plot and build on it, upgrade the tower and finally make reds tower bullet and all of its collisions
+		// we also have to make the robots 'tank' directive attack the built towers for both red and blue. tanks will explode on contact
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 2) + 1);
@@ -3602,8 +3610,6 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			// future Jordan, center the tower for non-mobile screens. Looks good on mobile here
-			// then update the other towers
 			Game.methodSetup = {
 				layer: 1,
 				method: function(id) {
