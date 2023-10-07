@@ -547,17 +547,17 @@ const maulPage = {
 			return robotCost;
 		}
 		function findTowerDirectiveCost(towerDirective) {
-			let robotCost = 0;
+			let towerCost = 0;
 			if (towerDirective === 1) {
-				robotCost = gameObject.towerDirectiveCost.d1;
+				towerCost = gameObject.towerDirectiveCost.d1;
 			} else if (towerDirective === 2) {
-				robotCost = gameObject.towerDirectiveCost.d2;
+				towerCost = gameObject.towerDirectiveCost.d2;
 			} else if (towerDirective === 3) {
-				robotCost = gameObject.towerDirectiveCost.d3;
+				towerCost = gameObject.towerDirectiveCost.d3;
 			} else if (towerDirective === 4) {
-				robotCost = gameObject.towerDirectiveCost.d4;
+				towerCost = gameObject.towerDirectiveCost.d4;
 			}
-			return robotCost;
+			return towerCost;
 		}
 		function drawRobotSelection() {
 			Game.methodSetup = {
@@ -3424,7 +3424,7 @@ const maulPage = {
 				msgs = ['This Towers Level is maxed out!', 'No further upgrades can be made'];
 				upgradeIssue = true;
 			} else if (gameObject.arenaLevel < tower.props.requires.arenaLvlToUpgrade) {
-				msgs = ['Upgrade To Level ' + towerLevel, 'To upgrade this tower, your arena', 'level needs to be: ' + tower.props.requires.arenaLvlToUpgrade];
+				msgs = ['Upgrade To Level ' + towerLevel, 'To upgrade this tower, your arena', 'needs to be level: ' + tower.props.requires.arenaLvlToUpgrade];
 				upgradeIssue = true;
 			}
 			Game.methodSetup = {
@@ -3543,6 +3543,14 @@ const maulPage = {
 			arenaTower.requires = towerRequires;
 			selectedTowerDesign.arenaTower = arenaTower;
 			let msgs = [selectedTowerDesign.arenaTower.name, directiveName + ': $' + towerCost];
+			// future Jordan, this isMobile variable could be a global thing.
+			// it's being used in at lease one other place
+			let isMobile = false;
+			if (Game.canvas.height > Game.canvas.width) { // mobile
+				isMobile = true;
+			} else { // everything else
+				isMobile = false;
+			}
 			Game.methodSetup = {
 				layer: 1,
 				method: function(id) {
@@ -3580,7 +3588,7 @@ const maulPage = {
 					drawRect({
 						posX: Game.placeEntityX(0.11, (Game.entitySize * -0.01)),
 						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.15),
+						width: (Game.entityWidth * 15),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
 						color: 'yellow',
@@ -3594,13 +3602,15 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
+			// future Jordan, center the tower for non-mobile screens. Looks good on mobile here
+			// then update the other towers
 			Game.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.136, (Game.entitySize * -0.01)),
+						posX: Game.placeEntityX(0.136, isMobile ? (Game.entityWidth * 0.7) : (Game.entityWidth * -5.6)),
 						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.10),
+						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[0].arenaTower.img ? gameObject.towerArenaDesigns[0].arenaTower.img : 'lightslategrey',
@@ -3632,7 +3642,7 @@ const maulPage = {
 					drawRect({
 						posX: Game.placeEntityX(0.43, (Game.entitySize * 1.99)),
 						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.15),
+						width: (Game.entityWidth * 15),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
 						color: 'darkgrey',
@@ -3650,9 +3660,9 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.456, (Game.entitySize * 1.99)),
+						posX: Game.placeEntityX(0.456, isMobile ? (Game.entitySize * 2.3) : (Game.entitySize * -5.6)),
 						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.10),
+						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[1].arenaTower.img ? gameObject.towerArenaDesigns[1].arenaTower.img : 'lightslategrey',
@@ -3684,7 +3694,7 @@ const maulPage = {
 					drawRect({
 						posX: Game.placeEntityX(0.739, (Game.entitySize * 1)),
 						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.15),
+						width: (Game.entityWidth * 15),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
 						color: 'darkgrey',
@@ -3702,9 +3712,9 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.765, (Game.entitySize * 1)),
+						posX: Game.placeEntityX(0.765, isMobile ? (Game.entitySize * 1.3) : (Game.entitySize * -7.7)),
 						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.10),
+						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[2].arenaTower.img ? gameObject.towerArenaDesigns[2].arenaTower.img : 'lightslategrey',
@@ -3734,7 +3744,7 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+						posX: Game.placeEntityX(0.47, isMobile ? (Game.entitySize * 40) : (Game.entitySize * 33)),
 						posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
 						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
 						height: (Game.entitySize * 7),
@@ -3781,7 +3791,7 @@ const maulPage = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
+						posX: Game.placeEntityX(0.47, isMobile ? (Game.entitySize * 40) : (Game.entitySize * 33)),
 						posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
 						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
 						height: (Game.entitySize * 7),

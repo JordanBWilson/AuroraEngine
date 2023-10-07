@@ -1536,7 +1536,7 @@ const arenaPage = {
 											if (selectedTower.type === 'bunker') {
 												msgs = ['Rapid', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
 											} else {
-												msgs = ['Rapid-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but will', 'lose some damage and health'];
+												msgs = ['Rapid-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but will', 'lose some attack and HP'];
 											}
 										} else if (i === 3) {
 											if (selectedTower.type === 'bunker') {
