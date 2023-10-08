@@ -3431,20 +3431,67 @@ const maulPage = {
 				}
 			}
 		}
-		// future Jordan, we still have to make a way to select a tower plot and build on it, 
+		// future Jordan, we still have to balance where red builds their towers; tends to build left more often, 
 		// upgrade the tower and finally make reds tower bullet and all of its collisions
 		// we also have to make the robots 'tank' directive attack the built towers for both red and blue. tanks will explode on contact
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 2) + 1);
-				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
+				// select a robot to send
+				const redBotIndex = Math.floor((Math.random() * (gameObject.redRobotArenaDesigns.length - 1)));
 				const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
 				const robotDirective = redBot.directive;
 				const robotCost = findRobotDirectiveCost(robotDirective);
-				// future Jordan, figure out what towers are availiable to build on
-				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= 20) {
-					// build a level 1 tower
-					whatToDo = 2;
+				// select a tower to build
+				const redTowerIndex = Math.floor((Math.random() * (gameObject.redTowerArenaDesigns.length - 1)));
+				const redTower = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex]);
+				const towerDirective = redTower.directive;
+				const towerCost = findTowerDirectiveCost(towerDirective);
+				// console.log(redTower);
+				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= towerCost) {
+					// build a tower
+					const redLeftTowers = Game.methodObjects.filter(x => x.id.includes('red-left-tower-spawn'));
+					const redRightTowers = Game.methodObjects.filter(x => x.id.includes('red-right-tower-spawn'));
+					const availableRedLeftTowers = redLeftTowers.filter(x => x.props.towerId === 0);
+					const availableRedRightTowers = redRightTowers.filter(x => x.props.towerId === 0);
+					let whereToBuild = Math.floor((Math.random() * 2) + 1);
+					console.log(whereToBuild, availableRedLeftTowers.length, availableRedRightTowers.length);
+					if (availableRedLeftTowers.length > 0 && whereToBuild === 1) {
+						// build left
+						const redBuildTowerIndex = Math.floor((Math.random() * (availableRedLeftTowers.length - 1)));
+						const selectedRedTower = availableRedLeftTowers[redBuildTowerIndex];
+						gameObject.arenaRedGameMoney -= towerCost;
+						selectedRedTower.btnColor = redTower.arenaTower.img;
+						selectedRedTower.props.robotParts = redTower.arenaTower.robotParts;
+						selectedRedTower.props.stats = redTower.arenaTower.stats;
+						selectedRedTower.props.towerId = redTower.arenaTower.towerId;
+						selectedRedTower.props.type = redTower.arenaTower.type;
+						selectedRedTower.props.directive = redTower.directive;
+						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
+						selectedRedTower.font = '0.7em serif';
+						console.log(selectedRedTower);
+					} else if (availableRedRightTowers.length > 0 && whereToBuild === 2) { 
+						// build right
+						const redBuildTowerIndex = Math.floor((Math.random() * (availableRedRightTowers.length - 1)));
+						const selectedRedTower = availableRedRightTowers[redBuildTowerIndex];
+						gameObject.arenaRedGameMoney -= towerCost;
+						selectedRedTower.btnColor = redTower.arenaTower.img;
+						selectedRedTower.props.robotParts = redTower.arenaTower.robotParts;
+						selectedRedTower.props.stats = redTower.arenaTower.stats;
+						selectedRedTower.props.towerId = redTower.arenaTower.towerId;
+						selectedRedTower.props.type = redTower.arenaTower.type;
+						selectedRedTower.props.directive = redTower.directive;
+						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
+						selectedRedTower.font = '0.7em serif';
+						console.log(selectedRedTower);
+					} else if (availableRedRightTowers.length === 0 && availableRedLeftTowers.length === 0) { 
+						// upgrade a tower
+					} else {
+						// send a robot
+						whatToDo = 2;
+					}
+					// console.log(availableRedLeftTowers, availableRedRightTowers);
+					
 				}
 				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= robotCost) {
 					// send a robot
