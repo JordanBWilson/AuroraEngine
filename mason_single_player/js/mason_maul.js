@@ -37,6 +37,7 @@ const maulPage = {
 		}
 		function setupGame() {
 			generateRedArenaRobots();
+			generateRedArenaTowers();
 			drawGrassBackGround();
 			drawRobotSelection();
 			drawBlueRoads();
@@ -1187,6 +1188,34 @@ const maulPage = {
 				gameObject.redRobotArenaDesigns.push(robotDesign);
 			}
 		}
+		function generateRedArenaTowers() {
+			// there is only one tower right now
+			for (let i = 0; i < gameObject.towerArenaDesignCount; i++) {
+				const cloneTower = Object.assign({}, arenaTowers[0]);
+				cloneTower.stats = Object.assign({}, arenaTowers[0].stats);
+				
+				const randomDirective = Math.floor((Math.random() * 2) + 1);
+				let directive;
+				if (randomDirective === 1) {
+					directive = 3;
+					cloneTower.stats.spd += 3;
+					cloneTower.stats.att -= 2;
+					cloneTower.stats.hp -= 5;
+				} else {
+					directive = 1
+					// use default tower stats
+				}
+				const towerDesign = {
+					arenaTowerId: i,
+					arenaTower: cloneTower,
+					robotParts: [], // if the tower is a bunker, this is the selected robot
+					directive: directive, // will the tower be standard, splash-shot, rapid-shot or ram-shot
+					// each directive will alter the tower stats. standard will be default
+				}
+				gameObject.redTowerArenaDesigns.push(towerDesign);
+			}
+			console.log(gameObject.redTowerArenaDesigns);
+		}
 		function sendRobot(robot) {
 			Game.methodSetup = {
 				method: function(id) {
@@ -1699,7 +1728,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-1',
 						action: {
@@ -1788,7 +1817,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-2',
 						action: {
@@ -1877,7 +1906,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-3',
 						action: {
@@ -1966,7 +1995,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-4',
 						action: {
@@ -2055,7 +2084,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-5',
 						action: {
@@ -2144,7 +2173,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-6',
 						action: {
@@ -2233,7 +2262,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-7',
 						action: {
@@ -2322,7 +2351,7 @@ const maulPage = {
 						btnColor: 'orange',
 						txtColor: 'white',
 						font: '0.8em serif',
-						msg: 'Tower',
+						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-8',
 						action: {
@@ -2362,18 +2391,53 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function drawRedTowerSpawns() {
+			let rangeWidth = 0;
+			let isMobile = false;
+			if (Game.canvas.height > Game.canvas.width) { // mobile
+				rangeWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.025);
+				isMobile = true;
+			} else { // everything else
+				rangeWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
+				isMobile = false;
+			}
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)),
+						posY: Game.placeEntityY(0.18),
+						width: rangeWidth,
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-1',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-left-tower-spawn-1',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)),
 						posY: Game.placeEntityY(0.18),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-1',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -2396,15 +2460,41 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.165, (Game.entitySize * 1)) : Game.placeEntityX(0.195, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.311),
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-2',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-left-tower-spawn-2',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)),
 						posY: Game.placeEntityY(0.311),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-2',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -2427,15 +2517,41 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.315, (Game.entitySize * 1)) : Game.placeEntityX(0.345, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.311),
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-3',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-left-tower-spawn-3',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)),
 						posY: Game.placeEntityY(0.311),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-3',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -2458,15 +2574,41 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.435, (Game.entitySize * 1)) : Game.placeEntityX(0.605, (Game.entitySize * 17.5)),
+						posY: Game.placeEntityY(0.18),
+						width: rangeWidth,
+						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-4',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-left-tower-spawn-4',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5)),
 						posY: Game.placeEntityY(0.18),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-4',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -2489,15 +2631,41 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.465, (Game.entitySize * -8.5)) : Game.placeEntityX(0.419, (Game.entitySize * -8.5)),
+						posY: Game.placeEntityY(0.18),
+						width: rangeWidth,
+						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-5',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-right-tower-spawn-5',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.49, (Game.entitySize * -8.5)),
 						posY: Game.placeEntityY(0.18),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-5',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -2520,15 +2688,41 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.625, (Game.entitySize * 1)) : Game.placeEntityX(0.579, (Game.entitySize * 1)),
+						posY: Game.placeEntityY(0.311),
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-6',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-right-tower-spawn-6',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)),
 						posY: Game.placeEntityY(0.311),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-6',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -2551,15 +2745,41 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.82, (Game.entitySize * 15.5)) : Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
+						posY: Game.placeEntityY(0.311),
+						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-7',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-right-tower-spawn-7',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
 						posY: Game.placeEntityY(0.311),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-7',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -2582,15 +2802,41 @@ const maulPage = {
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
+						posX: !isMobile ? Game.placeEntityX(0.94, (Game.entitySize * 9.6)) : Game.placeEntityX(0.97, (Game.entitySize * 9.6)),
+						posY: Game.placeEntityY(0.18),
+						width: rangeWidth,
+						height: rangeWidth,
+						lineWidth: 1,
+						color: 'rgba(0, 0, 200, 0)', // transparant
+						isFilled: true,
+						isBackground: false,
+						id: 'red-tower-range-8',
+						props: {
+							targetId: '',
+							canShoot: true,
+							towerId: 'red-right-tower-spawn-8',
+						},
+						methodId: id
+					});
+				}
+			}
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = {
+				method: function(id) {
+					drawButton({
 						posX: Game.placeEntityX(0.94, (Game.entitySize * 9.6)),
 						posY: Game.placeEntityY(0.18),
 						width: (Game.entitySize * 6),
 						height: (Game.entitySize * 6),
 						lineWidth: 1,
-						color: 'darkorange',
+						btnColor: 'darkorange',
+						txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-8',
-						isBackground: false,
+						action: {},
+						isModalBtn: false,
 						props: {
 							towerId: 0,
 							type: '',
@@ -3185,8 +3431,8 @@ const maulPage = {
 				}
 			}
 		}
-		// future Jordan, we still have to make a way for red to select a tower and it's directive, make reds tower ranges,
-		// a way to select a tower plot and build on it, upgrade the tower and finally make reds tower bullet and all of its collisions
+		// future Jordan, we still have to make a way to select a tower plot and build on it, 
+		// upgrade the tower and finally make reds tower bullet and all of its collisions
 		// we also have to make the robots 'tank' directive attack the built towers for both red and blue. tanks will explode on contact
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
