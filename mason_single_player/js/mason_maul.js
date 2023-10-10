@@ -3434,6 +3434,7 @@ const maulPage = {
 		// future Jordan, we still have to balance where red builds their towers; tends to build left more often, 
 		// upgrade the tower and finally make reds tower bullet and all of its collisions
 		// we also have to make the robots 'tank' directive attack the built towers for both red and blue. tanks will explode on contact
+		// this is a test comment
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 2) + 1);
