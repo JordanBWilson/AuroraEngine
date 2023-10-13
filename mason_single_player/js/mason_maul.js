@@ -54,7 +54,9 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = { method: function(id) { moveRedRobots(); }};
 			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = { method: function(id) { blueTowerBulletFindRobot(); }};
+			Game.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
+			Game.addMethod(Game.methodSetup);
+			Game.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = { 
 				method: function(id) {
@@ -240,8 +242,8 @@ const maulPage = {
 			}
 			Game.addCollision(Game.collisionSetup);
 		}
-		function blueTowerBulletFindRobot() {
-			const bullets = Game.methodObjects.filter(x => x.id === 'blue-tower-bullet');
+		function towerBulletFindRobot(teamColor) {
+			const bullets = Game.methodObjects.filter(x => x.id === teamColor + '-tower-bullet');
 			if (bullets.length > 0) {
 				bullets.forEach((bullet, i) => {
 					if (bullet) {
@@ -316,6 +318,29 @@ const maulPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
+		function redTowerShootRobot(towerStats, primaryId) {
+			Game.methodSetup = {
+				method: function(id) {
+					drawRect({
+						posX: towerStats.posX + (towerStats.width / 2),
+						posY: towerStats.posY,
+						width: Game.entitySize * 1,
+						height: Game.entitySize * 1,
+						lineWidth: 1,
+						color: 'gold',
+						isFilled: true,
+						id: 'red-tower-bullet',
+						isBackground: false,
+						props: {
+							target: primaryId,
+							tower: towerStats.id,
+						},
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
 		function towerTargetRange(primary, target, color) {
 			if (gameObject.arenaGameStarted) {
 				let shootSpeed;
@@ -334,6 +359,7 @@ const maulPage = {
 							blueTowerShootRobot(towerStats, primary);
 						} else if (color === 'red') {
 							// future Jordan, make red tower bullets shoot
+							redTowerShootRobot(towerStats, primary);
 						}
 					}
 					let towerShootSPeed = 2200 - (towerStats.props.stats.spd * 100);
@@ -384,6 +410,44 @@ const maulPage = {
 			}
 			Game.addCollision(Game.collisionSetup);
 		}
+		function setRedRightTowerRangeCollisions(robotId) {
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-5', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-6', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-7', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-8', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+		}
 		function setBlueLeftTowerRangeCollisions(robotId) {
 			Game.collisionSetup = {
 				primary: robotId, 
@@ -417,6 +481,44 @@ const maulPage = {
 				target: 'blue-tower-range-4', 
 				method: function(id) {
 					towerTargetRange(this.primary, this.target, 'blue');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+		}
+		function setRedLeftTowerRangeCollisions(robotId) {
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-1', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-2', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-3', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
+				},
+				methodId: undefined,
+			}
+			Game.addCollision(Game.collisionSetup);
+			Game.collisionSetup = {
+				primary: robotId, 
+				target: 'red-tower-range-4', 
+				method: function(id) {
+					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
 			}
@@ -898,8 +1000,51 @@ const maulPage = {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate(robotCost);
-										// future Jordan, blue robots need a bullet collision here
 										setBlueLeftRoadNavCollisions();
+										Game.collisionSetup = {
+											primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
+											target: 'red-tower-bullet',
+											method: function(id) {
+												const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+												if (bullet) {
+													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+													const towerAtt = tower.props.stats.att;
+													const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
+													if (robotHitStats) {
+														robotHitStats.hp -= (3 + towerAtt);
+														Particle.drawSpark({
+															posX: robotHitStats.posX,
+															posY: robotHitStats.posY,
+															shape: Particle.enumShapes.rect,
+															color: 'yellow',
+															ticks: 6,
+															count: 8,
+															size: (Game.entitySize * 0.3),
+															speed: 1.3,
+														});
+													}
+													Game.deleteEntity(bullet.methodId);
+													if (robotHitStats?.hp <= 0) {
+														deleteRobotMethodObject(robotHitMethodObject, 1);
+														Particle.floatingText({
+															font: '1rem serif',
+															msg: '+3',
+															align: 'center',
+															posX: robotHitStats.posX,
+															posY: robotHitStats.posY,
+															direction: 'top',
+															color: 'gold',
+															ticks: 33,
+															speed: 0.1,
+														});
+														gameObject.arenaRedGameMoney += 3;
+													}
+												}
+											},
+											methodId: undefined,
+										}
+										Game.addCollision(Game.collisionSetup);
 										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
 											posX: Game.placeEntityX(0),
@@ -915,6 +1060,7 @@ const maulPage = {
 											directive: robotDirective,
 										}
 										sendBlueRobot(blueRobot);
+										setRedLeftTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											gameObject.canClick = true;
 										}, 800);
@@ -956,6 +1102,50 @@ const maulPage = {
 										blueRobotSendMoneyUpdate(robotCost);
 										// future Jordan, blue robots need a bullet collision here
 										setBlueRightRoadNavCollisions();
+										Game.collisionSetup = {
+											primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+											target: 'red-tower-bullet',
+											method: function(id) {
+												const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+												if (bullet) {
+													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+													const towerAtt = tower.props.stats.att;
+													const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
+													if (robotHitStats) {
+														robotHitStats.hp -= (3 + towerAtt);
+														Particle.drawSpark({
+															posX: robotHitStats.posX,
+															posY: robotHitStats.posY,
+															shape: Particle.enumShapes.rect,
+															color: 'yellow',
+															ticks: 6,
+															count: 8,
+															size: (Game.entitySize * 0.3),
+															speed: 1.3,
+														});
+													}
+													Game.deleteEntity(bullet.methodId);
+													if (robotHitStats?.hp <= 0) {
+														deleteRobotMethodObject(robotHitMethodObject, 1);
+														Particle.floatingText({
+															font: '1rem serif',
+															msg: '+3',
+															align: 'center',
+															posX: robotHitStats.posX,
+															posY: robotHitStats.posY,
+															direction: 'top',
+															color: 'gold',
+															ticks: 33,
+															speed: 0.1,
+														});
+														gameObject.arenaRedGameMoney += 3;
+													}
+												}
+											},
+											methodId: undefined,
+										}
+										Game.addCollision(Game.collisionSetup);
 										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
 											posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
@@ -972,6 +1162,7 @@ const maulPage = {
 										}
 										
 										sendBlueRobot(blueRobot);
+										setRedRightTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											gameObject.canClick = true;
 										}, 800);
@@ -1193,7 +1384,6 @@ const maulPage = {
 			for (let i = 0; i < gameObject.towerArenaDesignCount; i++) {
 				const cloneTower = Object.assign({}, arenaTowers[0]);
 				cloneTower.stats = Object.assign({}, arenaTowers[0].stats);
-				
 				const randomDirective = Math.floor((Math.random() * 2) + 1);
 				let directive;
 				if (randomDirective === 1) {
@@ -3432,9 +3622,8 @@ const maulPage = {
 			}
 		}
 		// future Jordan, we still have to balance where red builds their towers; tends to build left more often, 
-		// upgrade the tower and finally make reds tower bullet and all of its collisions
-		// we also have to make the robots 'tank' directive attack the built towers for both red and blue. tanks will explode on contact
-		// this is a test comment
+		// upgrade the tower and finally we also have to make the robots 'tank' directive attack the built towers 
+		// for both red and blue. tanks will explode on contact
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 2) + 1);
@@ -3485,8 +3674,11 @@ const maulPage = {
 						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
 						selectedRedTower.font = '0.7em serif';
 						console.log(selectedRedTower);
-					} else if (availableRedRightTowers.length === 0 && availableRedLeftTowers.length === 0) { 
+					} else if (availableRedRightTowers.length === 0 && availableRedLeftTowers.length === 0) {
 						// upgrade a tower
+						
+						// if there are no towers left to upgrade...
+						whatToDo = 2;
 					} else {
 						// send a robot
 						whatToDo = 2;
