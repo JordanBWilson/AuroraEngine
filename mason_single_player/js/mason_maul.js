@@ -20,6 +20,7 @@ const maulPage = {
 		Game.clearStage();
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
+		let redPreviousTowerBuild = '';
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
 		let aiThinking = true;
@@ -75,7 +76,7 @@ const maulPage = {
 			if (gameObject.gamesWon > 3) { // give the player a few 'easy' games
 				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
 			} else {
-				gameObject.redMaxTowerLevel = 1;
+				gameObject.redMaxTowerLevel = 2;
 			}
 			
 			gameObject.gamesPlayed += 1;
@@ -3621,8 +3622,8 @@ const maulPage = {
 				}
 			}
 		}
-		// future Jordan, we still have to balance where red builds their towers; tends to build left more often, 
-		// upgrade the tower and finally we also have to make the robots 'tank' directive attack the built towers 
+		// future Jordan, we still have to perfect the upgrade of the towers. Not all of the towers are getting selected 
+		// and finally we also have to make the robots 'tank' directive attack the built towers 
 		// for both red and blue. tanks will explode on contact
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
@@ -3635,6 +3636,8 @@ const maulPage = {
 				// select a tower to build
 				const redTowerIndex = Math.floor((Math.random() * (gameObject.redTowerArenaDesigns.length - 1)));
 				const redTower = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex]);
+				redTower.arenaTower.stats = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex].arenaTower.stats);
+				// console.log(redTower);
 				const towerDirective = redTower.directive;
 				const towerCost = findTowerDirectiveCost(towerDirective);
 				// console.log(redTower);
@@ -3645,9 +3648,15 @@ const maulPage = {
 					const availableRedLeftTowers = redLeftTowers.filter(x => x.props.towerId === 0);
 					const availableRedRightTowers = redRightTowers.filter(x => x.props.towerId === 0);
 					let whereToBuild = Math.floor((Math.random() * 2) + 1);
-					console.log(whereToBuild, availableRedLeftTowers.length, availableRedRightTowers.length);
+					if (redPreviousTowerBuild === 'left') {
+						whereToBuild = 2;
+					} else if (redPreviousTowerBuild === 'right') {
+						whereToBuild = 1;
+					}
+					// console.log(whereToBuild, availableRedLeftTowers.length, availableRedRightTowers.length);
 					if (availableRedLeftTowers.length > 0 && whereToBuild === 1) {
 						// build left
+						redPreviousTowerBuild = 'left';
 						const redBuildTowerIndex = Math.floor((Math.random() * (availableRedLeftTowers.length - 1)));
 						const selectedRedTower = availableRedLeftTowers[redBuildTowerIndex];
 						gameObject.arenaRedGameMoney -= towerCost;
@@ -3659,9 +3668,10 @@ const maulPage = {
 						selectedRedTower.props.directive = redTower.directive;
 						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
 						selectedRedTower.font = '0.7em serif';
-						console.log(selectedRedTower);
-					} else if (availableRedRightTowers.length > 0 && whereToBuild === 2) { 
+						// console.log(selectedRedTower);
+					} else if (availableRedRightTowers.length > 0 && whereToBuild === 2) {
 						// build right
+						redPreviousTowerBuild = 'right';
 						const redBuildTowerIndex = Math.floor((Math.random() * (availableRedRightTowers.length - 1)));
 						const selectedRedTower = availableRedRightTowers[redBuildTowerIndex];
 						gameObject.arenaRedGameMoney -= towerCost;
@@ -3673,12 +3683,46 @@ const maulPage = {
 						selectedRedTower.props.directive = redTower.directive;
 						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
 						selectedRedTower.font = '0.7em serif';
-						console.log(selectedRedTower);
+						// console.log(selectedRedTower);
 					} else if (availableRedRightTowers.length === 0 && availableRedLeftTowers.length === 0) {
 						// upgrade a tower
+						let whereToUpgrade = Math.floor((Math.random() * 2) + 1);
+						// let redUpgradeTowerIndex;
+						// let selectedRedTower;
 						
-						// if there are no towers left to upgrade...
-						whatToDo = 2;
+						if (whereToUpgrade === 1) {
+							const redUpgradeTowerIndex = Math.floor((Math.random() * (redLeftTowers.length - 1)));
+							const selectedRedTower = redLeftTowers[redUpgradeTowerIndex];
+							console.log(whereToUpgrade, redUpgradeTowerIndex, redLeftTowers.length, selectedRedTower);
+							if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
+								selectedRedTower.props.stats.att += 2;
+								selectedRedTower.props.stats.def += 2;
+								selectedRedTower.props.stats.hp += 3;
+								selectedRedTower.props.stats.spd += 2;
+								selectedRedTower.props.stats.splash += 0;
+								selectedRedTower.props.stats.lvl += 1;
+								selectedRedTower.msg = 'HP: ' + selectedRedTower.props.stats.hp;
+								// console.log(selectedRedTower, whereToUpgrade);
+							} else {
+								whatToDo = 2;
+							}
+						} else if (whereToUpgrade === 2) {
+							const redUpgradeTowerIndex = Math.floor((Math.random() * (redRightTowers.length - 1)));
+							const selectedRedTower = redRightTowers[redUpgradeTowerIndex];
+							console.log(whereToUpgrade, redUpgradeTowerIndex, redRightTowers.length, selectedRedTower);
+							if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
+								selectedRedTower.props.stats.att += 2;
+								selectedRedTower.props.stats.def += 2;
+								selectedRedTower.props.stats.hp += 3;
+								selectedRedTower.props.stats.spd += 2;
+								selectedRedTower.props.stats.splash += 0;
+								selectedRedTower.props.stats.lvl += 1;
+								selectedRedTower.msg = 'HP: ' + selectedRedTower.props.stats.hp;
+								// console.log(selectedRedTower, whereToUpgrade);
+							} else {
+								whatToDo = 2;
+							}
+						}
 					} else {
 						// send a robot
 						whatToDo = 2;
@@ -3710,6 +3754,7 @@ const maulPage = {
 				gameObject.redTowerArenaDesigns = [];
 				gameObject.selectedRobotDesign = -1;
 				gameObject.arenaGameRound = 1;
+				gameObject.redMaxTowerLevel = 1;
 				gameObject.arenaRoundSeconds = 15;
 				gameObject.arenaBlueGameMoney = 50;
 				gameObject.arenaRedGameMoney = 50;
