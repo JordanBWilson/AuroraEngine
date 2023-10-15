@@ -245,8 +245,8 @@ const gameObject = {
 	towerArenaDesigns: [], // these are the towers that will compete in the arena
 	towerArenaDesignCount: 3, // max number of towers that can be on a team
 	arenaRoundSeconds: 15, // how many seconds there are between each round // 15 is the default
-	arenaBlueGameMoney: 50, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
-	arenaRedGameMoney: 50, // how much money COM starts out with
+	arenaBlueGameMoney: 200, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
+	arenaRedGameMoney: 200, // how much money COM starts out with
 	arenaGameRound: 1,
 	arenaGameMaxRounds: 12,
 	arenaBlueSendCount: 0, // how many robots the player has sent
@@ -261,18 +261,18 @@ const gameObject = {
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
 	robotDirectiveCost: { // how much a robot should cost based on its directive
-		d1: 30,
-		d2: 20,
-		d3: 40,
-		d4: 10,
+		d1: 25, // 30
+		d2: 20, // 20
+		d3: 35, // 40
+		d4: 15, // 10
 	},
 	towerDirectiveCost: { // how much a tower should cost based on its directive
-		d1: 20,
-		d2: 40,
-		d3: 30,
-		d4: 50,
+		d1: 10, // 20
+		d2: 30, // 40
+		d3: 20, // 30
+		d4: 40, // 50
 	},
-	bunkerDirectiveCost: { // how much a tower should cost based on its directive
+	bunkerDirectiveCost: { // how much a bunker should cost based on its directive
 		d1: 30,
 		d2: 40,
 		d3: 50,

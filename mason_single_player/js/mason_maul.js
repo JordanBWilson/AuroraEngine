@@ -397,6 +397,7 @@ const maulPage = {
 							}
 							blueTowerShootRobot(towerStats, primary);
 						} else if (color === 'red') {
+							// future Jordan, continue balancing the game. make sure when reds towers are destroyed, that red can rebuild in those locations
 							if (robotPasser.attackTower && robotPasser.towerTargePosX === undefined && robotPasser.towerTargePosY === undefined) {
 								robotPasser.towerTargePosX = towerStats.posX;
 								robotPasser.towerTargePosY = towerStats.posY;
@@ -410,13 +411,15 @@ const maulPage = {
 										towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
 										deleteRobotMethodObject(robotHitMethodObject, 1);
 										if (towerStats.props.stats.hp <= 0) {
-											towerStats.btnColor = 'orange';
+											towerStats.btnColor = 'darkorange';
 											towerStats.font = '0.8em serif';
-											towerStats.msg = 'Build';
+											towerStats.msg = '';
 											if (towerStats.props.towerId === 1) {
-												towerStats.props.requires.arenaLvlToUpgrade = 5;
-												towerStats.props.towerId = 0;
+												if (towerStats.props.requires) {
+													towerStats.props.requires.arenaLvlToUpgrade = 5;
+												}
 											}
+											towerStats.props.towerId = 0;
 											towerStats.props.stats.att = 0;
 											towerStats.props.stats.def = 0;
 											towerStats.props.stats.hp = 0;
@@ -3805,8 +3808,8 @@ const maulPage = {
 				gameObject.arenaGameRound = 1;
 				gameObject.redMaxTowerLevel = 1;
 				gameObject.arenaRoundSeconds = 15;
-				gameObject.arenaBlueGameMoney = 50;
-				gameObject.arenaRedGameMoney = 50;
+				gameObject.arenaBlueGameMoney = 200;
+				gameObject.arenaRedGameMoney = 200;
 				gameObject.arenaBlueSendCount = 0;
 				gameObject.arenaRedSendCount = 0;
 				gameObject.arenaGameStarted = false;
