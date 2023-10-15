@@ -357,9 +357,44 @@ const maulPage = {
 					tower.props.targetId = '';
 					if (towerStats.props.towerId > 0) {
 						if (color === 'blue') {
+							console.log(robotPasser, towerStats, robot);
+							// future Jordan, red robots also need a collision. Need to make sure this works first...
+							// search for other 'future Jordan's to find the last bits to do
+							if (robotPasser.attackTower && robotPasser.towerTargetId.length === 0) {
+								robotPasser.towerTargetId = towerStats.id;
+								Game.collisionSetup = {
+									primary: robotPasser.id, 
+									target: towerStats.id,
+									method: function(id) {
+										const robotAttack = 5 + robotPasser.totalStats.att;
+										towerStats.props.stats.hp -= robotAttack;
+										// we need a particle effect here possibly
+										if (towerStats.props.stats.hp <= 0) {
+											towerStats.btnColor = 'orange';
+											towerStats.msg = '';
+											if (towerStats.props.towerId === 1) {
+												towerStats.props.requires.arenaLvlToUpgrade = 5;
+												towerStats.props.towerId = 0;
+											}
+											towerStats.props.stats.att = 0;
+											towerStats.props.stats.def = 0;
+											towerStats.props.stats.hp = 0;
+											towerStats.props.stats.lvl = 0;
+											towerStats.props.stats.spd = 0;
+											towerStats.props.stats.splash = 0;
+											// future Jordan, we need to remove the whole robot
+											// deleteRobotMethodObject(robotHitMethodObject, 1);
+										}
+									},
+									methodId: undefined,
+								}
+								Game.addCollision(Game.collisionSetup);
+							}
 							blueTowerShootRobot(towerStats, primary);
 						} else if (color === 'red') {
-							// future Jordan, make red tower bullets shoot
+							if (robotPasser.attackTower && robotPasser.towerTargetId.length === 0) {
+								robotPasser.towerTargetId = towerStats.id;
+							}
 							redTowerShootRobot(towerStats, primary);
 						}
 					}
@@ -995,7 +1030,7 @@ const maulPage = {
 						id: 'send-robots-left',
 						action: { 
 							method: function(id) {
-								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive;
+								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
 								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6) {
 									if (gameObject.canClick) {
@@ -1057,6 +1092,8 @@ const maulPage = {
 											robotParts: gameObject.selectedRobot,
 											direction: 'lt',
 											stop: 0,
+											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
+											towerTargetId: '',
 											totalStats: robotStats.stats,
 											directive: robotDirective,
 										}
@@ -1095,13 +1132,12 @@ const maulPage = {
 						id: 'send-robots-right',
 						action: { 
 							method: function(id) {
-								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive;
+								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
 								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6 ) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate(robotCost);
-										// future Jordan, blue robots need a bullet collision here
 										setBlueRightRoadNavCollisions();
 										Game.collisionSetup = {
 											primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
@@ -1158,6 +1194,8 @@ const maulPage = {
 											robotParts: gameObject.selectedRobot,
 											direction: 'rt',
 											stop: 0,
+											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
+											towerTargetId: '',
 											totalStats: robotStats.stats,
 											directive: robotDirective,
 										}
@@ -1243,6 +1281,8 @@ const maulPage = {
 				robotParts: robot.robotParts,
 				direction: 'lt',
 				stop: 0,
+				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
+				towerTargetId: '',
 				totalStats: robotStats.stats,
 				directive: robotDirective,
 			}
@@ -1310,6 +1350,8 @@ const maulPage = {
 				robotParts: robot.robotParts,
 				direction: 'rt',
 				stop: 0,
+				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
+				towerTargetId: '',
 				totalStats: robotStats.stats,
 				directive: robotDirective,
 			}
@@ -1336,9 +1378,9 @@ const maulPage = {
 				const randomDirective = Math.floor((Math.random() * 2) + 1);
 				let directive;
 				if (randomDirective === 1) {
-					directive = 4;
+					directive = 4; // lee-roy
 				} else {
-					directive = 1
+					directive = 1 // tank
 				}
 				const robotDesign = {
 					robotId: i,
@@ -1388,7 +1430,7 @@ const maulPage = {
 				const randomDirective = Math.floor((Math.random() * 2) + 1);
 				let directive;
 				if (randomDirective === 1) {
-					directive = 3;
+					directive = 3; // rapid-shot
 					cloneTower.stats.spd += 3;
 					cloneTower.stats.att -= 2;
 					cloneTower.stats.hp -= 5;
@@ -3504,6 +3546,8 @@ const maulPage = {
 			}
 		}
 		function moveRightRobots(br, robot, color, i) {
+			// future Jordan, make the robots with tank directives move towards the target tower
+			// console.log(br);
 			const robotSpeed = (br.totalStats.spd) * 0.01;
 			if (br.direction === 'rt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
@@ -3542,15 +3586,6 @@ const maulPage = {
 			}
 			if (br.direction === 'rt' && br.stop === 4) {
 				// start attacking red or blue base
-				
-				// future Jordan, start working on blue attacking reds base and
-				// red attacking blue base. display the bases health. perhaps destroy the
-				// robots on contact with the bases. work on establishing a winner and a loser.
-				// if blue wins, create a chance to unlock a new robot part
-				
-				// future Jordan, after all of that is said and done, start to work on reds towers
-				// selection and generation. red should also be able to upgrade towers that they've built
-				// there's a new 'redMaxTowerLevel' to determine what the max level is this game
 				
 				// future Jordan, look into some of the buttons and backrounds that use "Game.entitySize"
 				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
@@ -3622,19 +3657,18 @@ const maulPage = {
 				}
 			}
 		}
-		// future Jordan, we still have to perfect the upgrade of the towers. Not all of the towers are getting selected 
-		// and finally we also have to make the robots 'tank' directive attack the built towers 
+		// future Jordan, we have to make the robots 'tank' directive attack the built towers 
 		// for both red and blue. tanks will explode on contact
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 2) + 1);
 				// select a robot to send
-				const redBotIndex = Math.floor((Math.random() * (gameObject.redRobotArenaDesigns.length - 1)));
+				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
 				const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
 				const robotDirective = redBot.directive;
 				const robotCost = findRobotDirectiveCost(robotDirective);
 				// select a tower to build
-				const redTowerIndex = Math.floor((Math.random() * (gameObject.redTowerArenaDesigns.length - 1)));
+				const redTowerIndex = Math.floor((Math.random() * gameObject.redTowerArenaDesigns.length));
 				const redTower = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex]);
 				redTower.arenaTower.stats = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex].arenaTower.stats);
 				// console.log(redTower);
@@ -3657,7 +3691,7 @@ const maulPage = {
 					if (availableRedLeftTowers.length > 0 && whereToBuild === 1) {
 						// build left
 						redPreviousTowerBuild = 'left';
-						const redBuildTowerIndex = Math.floor((Math.random() * (availableRedLeftTowers.length - 1)));
+						const redBuildTowerIndex = Math.floor((Math.random() * availableRedLeftTowers.length));
 						const selectedRedTower = availableRedLeftTowers[redBuildTowerIndex];
 						gameObject.arenaRedGameMoney -= towerCost;
 						selectedRedTower.btnColor = redTower.arenaTower.img;
@@ -3672,7 +3706,7 @@ const maulPage = {
 					} else if (availableRedRightTowers.length > 0 && whereToBuild === 2) {
 						// build right
 						redPreviousTowerBuild = 'right';
-						const redBuildTowerIndex = Math.floor((Math.random() * (availableRedRightTowers.length - 1)));
+						const redBuildTowerIndex = Math.floor((Math.random() * availableRedRightTowers.length));
 						const selectedRedTower = availableRedRightTowers[redBuildTowerIndex];
 						gameObject.arenaRedGameMoney -= towerCost;
 						selectedRedTower.btnColor = redTower.arenaTower.img;
@@ -3687,42 +3721,33 @@ const maulPage = {
 					} else if (availableRedRightTowers.length === 0 && availableRedLeftTowers.length === 0) {
 						// upgrade a tower
 						let whereToUpgrade = Math.floor((Math.random() * 2) + 1);
-						// let redUpgradeTowerIndex;
-						// let selectedRedTower;
-						
+						let redUpgradeTowerIndex;
+						let selectedRedTower;
 						if (whereToUpgrade === 1) {
-							const redUpgradeTowerIndex = Math.floor((Math.random() * (redLeftTowers.length - 1)));
-							const selectedRedTower = redLeftTowers[redUpgradeTowerIndex];
-							console.log(whereToUpgrade, redUpgradeTowerIndex, redLeftTowers.length, selectedRedTower);
-							if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
-								selectedRedTower.props.stats.att += 2;
-								selectedRedTower.props.stats.def += 2;
-								selectedRedTower.props.stats.hp += 3;
-								selectedRedTower.props.stats.spd += 2;
-								selectedRedTower.props.stats.splash += 0;
-								selectedRedTower.props.stats.lvl += 1;
-								selectedRedTower.msg = 'HP: ' + selectedRedTower.props.stats.hp;
-								// console.log(selectedRedTower, whereToUpgrade);
-							} else {
-								whatToDo = 2;
-							}
+							redUpgradeTowerIndex = Math.floor((Math.random() * redLeftTowers.length));
+							selectedRedTower = redLeftTowers[redUpgradeTowerIndex];
+							const upgradeCost = findTowerDirectiveCost(selectedRedTower.props.directive);
+							gameObject.arenaRedGameMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
 						} else if (whereToUpgrade === 2) {
-							const redUpgradeTowerIndex = Math.floor((Math.random() * (redRightTowers.length - 1)));
-							const selectedRedTower = redRightTowers[redUpgradeTowerIndex];
-							console.log(whereToUpgrade, redUpgradeTowerIndex, redRightTowers.length, selectedRedTower);
-							if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
-								selectedRedTower.props.stats.att += 2;
-								selectedRedTower.props.stats.def += 2;
-								selectedRedTower.props.stats.hp += 3;
-								selectedRedTower.props.stats.spd += 2;
-								selectedRedTower.props.stats.splash += 0;
-								selectedRedTower.props.stats.lvl += 1;
-								selectedRedTower.msg = 'HP: ' + selectedRedTower.props.stats.hp;
-								// console.log(selectedRedTower, whereToUpgrade);
-							} else {
-								whatToDo = 2;
-							}
+							redUpgradeTowerIndex = Math.floor((Math.random() * redRightTowers.length));
+							selectedRedTower = redRightTowers[redUpgradeTowerIndex];
+							const upgradeCost = findTowerDirectiveCost(selectedRedTower.props.directive);
+							gameObject.arenaRedGameMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
 						}
+						if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
+							selectedRedTower.props.stats.att += 2;
+							selectedRedTower.props.stats.def += 2;
+							selectedRedTower.props.stats.hp += 3;
+							selectedRedTower.props.stats.spd += 2;
+							selectedRedTower.props.stats.splash += 0;
+							selectedRedTower.props.stats.lvl += 1;
+							selectedRedTower.msg = 'HP: ' + selectedRedTower.props.stats.hp;
+							console.log(selectedRedTower, whereToUpgrade);
+						} else {
+							// send a robot
+							whatToDo = 2;
+						}
+						// console.log(whereToUpgrade, redUpgradeTowerIndex, redLeftTowers.length, selectedRedTower);
 					} else {
 						// send a robot
 						whatToDo = 2;
@@ -3946,8 +3971,7 @@ const maulPage = {
 		function selectUpgradeTowerMenu(tower, towerIndex) {
 			let msgs = [];
 			const towerLevel = tower.props.stats.lvl + 1;
-			// future Jordan, get towers working and building for red
-			// and finally balance the rest of the game like upgrade costs
+			// future Jordan, balance the rest of the game like upgrade costs
 			const towerCost = findTowerDirectiveCost(tower.props.directive);
 			let upgradeIssue = false;
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
