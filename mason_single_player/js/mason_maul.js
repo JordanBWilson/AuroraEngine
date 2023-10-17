@@ -20,7 +20,7 @@ const maulPage = {
 		Game.clearStage();
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
-		let redPreviousTowerBuild = '';
+		let selectBuildTowerIndex = 0;
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
 		let aiThinking = true;
@@ -73,7 +73,7 @@ const maulPage = {
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			if (gameObject.gamesWon > 3) { // give the player a few 'easy' games
+			if (gameObject.gamesWon > 2) { // give the player a few 'easy' games
 				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
 			} else {
 				gameObject.redMaxTowerLevel = 1;
@@ -415,11 +415,10 @@ const maulPage = {
 											towerStats.font = '0.8em serif';
 											towerStats.msg = '';
 											if (towerStats.props.towerId === 1) {
-												if (towerStats.props.requires) {
-													towerStats.props.requires.arenaLvlToUpgrade = 5;
-												}
+												towerStats.props.requires.arenaLvlToUpgrade = 5;
+												towerStats.props.towerId = 0;
 											}
-											towerStats.props.towerId = 0;
+											
 											towerStats.props.stats.att = 0;
 											towerStats.props.stats.def = 0;
 											towerStats.props.stats.hp = 0;
@@ -1433,7 +1432,7 @@ const maulPage = {
 				let rightArmIndex = 0;
 				let leftLegIndex = 0;
 				let rightLegIndex = 0;
-				if (gameObject.gamesWon > 3) { // give the player a few 'easy' games
+				if (gameObject.gamesWon > 2) { // give the player a few 'easy' games
 					headIndex = Math.floor((Math.random() * robotHeads.length));
 					chassisIndex = Math.floor((Math.random() * robotChassis.length));
 					leftArmIndex = Math.floor((Math.random() * robotArms.length));
@@ -1466,6 +1465,7 @@ const maulPage = {
 			for (let i = 0; i < gameObject.towerArenaDesignCount; i++) {
 				const cloneTower = Object.assign({}, arenaTowers[0]);
 				cloneTower.stats = Object.assign({}, arenaTowers[0].stats);
+				cloneTower.requires = Object.assign({}, arenaTowers[0].requires);
 				const randomDirective = Math.floor((Math.random() * 2) + 1);
 				let directive;
 				if (randomDirective === 1) {
@@ -3696,7 +3696,7 @@ const maulPage = {
 		}
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
-				let whatToDo = Math.floor((Math.random() * 2) + 1);
+				let whatToDo = Math.floor((Math.random() * 3) + 1);
 				// select a robot to send
 				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
 				const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
@@ -3704,8 +3704,15 @@ const maulPage = {
 				const robotCost = findRobotDirectiveCost(robotDirective);
 				// select a tower to build
 				const redTowerIndex = Math.floor((Math.random() * gameObject.redTowerArenaDesigns.length));
-				const redTower = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex]);
-				redTower.arenaTower.stats = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex].arenaTower.stats);
+				let redTower = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex]);
+				const arenaTower = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex].arenaTower);
+				const towerRequires = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex].arenaTower.requires);
+				const towerStats = Object.assign({}, gameObject.redTowerArenaDesigns[redTowerIndex].arenaTower.stats);
+				arenaTower.stats = towerStats;
+				arenaTower.requires = towerRequires;
+				redTower.arenaTower = arenaTower;
+				// we will need a robotParts here as well one day
+				// we need a requires here
 				const towerDirective = redTower.directive;
 				const towerCost = findTowerDirectiveCost(towerDirective);
 				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= towerCost) {
@@ -3715,14 +3722,8 @@ const maulPage = {
 					const availableRedLeftTowers = redLeftTowers.filter(x => x.props.towerId === 0);
 					const availableRedRightTowers = redRightTowers.filter(x => x.props.towerId === 0);
 					let whereToBuild = Math.floor((Math.random() * 2) + 1);
-					if (redPreviousTowerBuild === 'left') {
-						whereToBuild = 2;
-					} else if (redPreviousTowerBuild === 'right') {
-						whereToBuild = 1;
-					}
 					if (availableRedLeftTowers.length > 0 && whereToBuild === 1) {
 						// build left
-						redPreviousTowerBuild = 'left';
 						const redBuildTowerIndex = Math.floor((Math.random() * availableRedLeftTowers.length));
 						const selectedRedTower = availableRedLeftTowers[redBuildTowerIndex];
 						gameObject.arenaRedGameMoney -= towerCost;
@@ -3732,11 +3733,11 @@ const maulPage = {
 						selectedRedTower.props.towerId = redTower.arenaTower.towerId;
 						selectedRedTower.props.type = redTower.arenaTower.type;
 						selectedRedTower.props.directive = redTower.directive;
+						selectedRedTower.props.requires = redTower.arenaTower.requires;
 						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
 						selectedRedTower.font = '0.7em serif';
 					} else if (availableRedRightTowers.length > 0 && whereToBuild === 2) {
 						// build right
-						redPreviousTowerBuild = 'right';
 						const redBuildTowerIndex = Math.floor((Math.random() * availableRedRightTowers.length));
 						const selectedRedTower = availableRedRightTowers[redBuildTowerIndex];
 						gameObject.arenaRedGameMoney -= towerCost;
@@ -3746,6 +3747,7 @@ const maulPage = {
 						selectedRedTower.props.towerId = redTower.arenaTower.towerId;
 						selectedRedTower.props.type = redTower.arenaTower.type;
 						selectedRedTower.props.directive = redTower.directive;
+						selectedRedTower.props.requires = redTower.arenaTower.requires;
 						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
 						selectedRedTower.font = '0.7em serif';
 					} else if (availableRedRightTowers.length === 0 && availableRedLeftTowers.length === 0) {
@@ -3776,13 +3778,13 @@ const maulPage = {
 							// send a robot
 							whatToDo = 2;
 						}
-					} else {
-						// send a robot
-						whatToDo = 2;
 					}
-					
+				} else {
+					// send a robot
+					whatToDo = 2;
 				}
-				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= robotCost) {
+				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= robotCost || 
+					whatToDo === 3 && gameObject.arenaRedGameMoney >= robotCost) {
 					// send a robot
 					const whereToSend = Math.floor((Math.random() * 2) + 1);
 					if (whereToSend === 1) {
@@ -3838,6 +3840,25 @@ const maulPage = {
 				if (newPart === 4) { // 1 and 4 chance to unlock a part
 					unlockPart = unlockRobotPart();
 				}
+				// future Jordan, we are going to have to make a way to format the prize money so it 
+				// will look good in the msgs modal below. We are also going to have to ballance the rest
+				// of the robot parts. No part should be weaker than the starting parts. Also add more stats
+				// to individual parts... Just to see how it plays
+				
+				//const prizeMoney = 0;
+				//const prizePool = [
+					//{ money: 'mythryl', price: 0 },
+					//{ money: 'iridium', price: 0 },
+					//{ money: 'platinum', price: 0 },
+					//{ money: 'gold', price: 0 },
+					//{ money: 'silver', price: 0 },
+					//{ money: 'nickel', price: 0 },
+					//{ money: 'bronze', price: 0 },
+					//{ money: 'copper', price: prizeMoney }
+				//]
+				
+				//addFunds(prizePool);
+				
 				msgs = ['Blue Team Wins!', unlockPart , 'Tap here to continue'];
 				gameObject.gamesWon += 1;
 			}
@@ -3979,6 +4000,7 @@ const maulPage = {
 			const directiveName = findTowerDirectiveName(index);
 			const selectedTowerDesign = gameObject.towerArenaDesigns[index];
 			const towerCost = findTowerDirectiveCost(selectedTowerDesign.directive);
+			selectBuildTowerIndex = index;
 			msgs = [selectedTowerDesign.arenaTower.name ? selectedTowerDesign.arenaTower.name : 'Nothing Selected', directiveName + ': $' + towerCost];
 			const modal = Game.methodObjects.find(bg => bg.id === Game.modalId);
 			if (modal) {
@@ -4123,11 +4145,11 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function selectBuildTowerMenu(tower, towerIndex) {
-			let directiveName = findTowerDirectiveName(0);
-			let selectedTowerDesign = Object.assign({}, gameObject.towerArenaDesigns[0]);
-			const arenaTower = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower);
-			const towerRequires = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower.requires);
-			const towerStats = Object.assign({}, gameObject.towerArenaDesigns[0].arenaTower.stats);
+			let directiveName = findTowerDirectiveName(selectBuildTowerIndex);
+			let selectedTowerDesign = Object.assign({}, gameObject.towerArenaDesigns[selectBuildTowerIndex]);
+			const arenaTower = Object.assign({}, gameObject.towerArenaDesigns[selectBuildTowerIndex].arenaTower);
+			const towerRequires = Object.assign({}, gameObject.towerArenaDesigns[selectBuildTowerIndex].arenaTower.requires);
+			const towerStats = Object.assign({}, gameObject.towerArenaDesigns[selectBuildTowerIndex].arenaTower.stats);
 			let towerCost = findTowerDirectiveCost(selectedTowerDesign.directive);
 			arenaTower.stats = towerStats;
 			arenaTower.requires = towerRequires;
@@ -4181,7 +4203,7 @@ const maulPage = {
 						width: (Game.entityWidth * 15),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
-						color: 'yellow',
+						color: selectBuildTowerIndex === 0 ? 'yellow' : 'darkgrey',
 						isBackground: false,
 						isFilled: true,
 						id: 'arena-tower-bg-1',
@@ -4233,7 +4255,7 @@ const maulPage = {
 						width: (Game.entityWidth * 15),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
-						color: 'darkgrey',
+						color: selectBuildTowerIndex === 1 ? 'yellow' : 'darkgrey',
 						isBackground: false,
 						isFilled: true,
 						id: 'arena-tower-bg-2',
@@ -4285,7 +4307,7 @@ const maulPage = {
 						width: (Game.entityWidth * 15),
 						height: (Game.entitySize * 10),
 						lineWidth: 1,
-						color: 'darkgrey',
+						color: selectBuildTowerIndex === 2 ? 'yellow' : 'darkgrey',
 						isBackground: false,
 						isFilled: true,
 						id: 'arena-tower-bg-3',
@@ -4358,7 +4380,7 @@ const maulPage = {
 										tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
 										tower.props.type = selectedTowerDesign.arenaTower.type;
 										tower.props.directive = selectedTowerDesign.directive;
-										tower.msg = 'HP: ' + tower.props.stats.hp;
+										tower.msg = 'HP: ' + selectedTowerDesign.arenaTower.stats.hp;
 										tower.font = '0.7em serif';
 										closeBuildTowerModal();
 									} else {
