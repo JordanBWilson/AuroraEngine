@@ -250,7 +250,11 @@ const gameObject = {
 	arenaGameRound: 1,
 	arenaGameMaxRounds: 12,
 	arenaBlueSendCount: 0, // how many robots the player has sent
+	arenaBlueSendLeeRoyCount: 0, // how many directive leeroys have been sent
+	arenaBlueSendTankCount: 0, // how many directive tanks have been sent
 	arenaRedSendCount: 0, // how many robots COM has sent
+	arenaRedSendLeeRoyCount: 0, // how many directive leeroys COM has sent
+	arenaRedSendTankCount: 0, // how many directive tanks COM has sent
 	arenaGameStarted: false, // has the game started?
 	arenaBlueAttackers: [],
 	arenaRedAttackers: [],

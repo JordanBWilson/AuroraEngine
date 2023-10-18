@@ -21,6 +21,28 @@ const maulPage = {
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
 		let selectBuildTowerIndex = 0;
+		const baseRobotAttack = 3;
+		const baseTowerAttack = 3;
+		const upgradeTowerStats = {
+			att: 2,
+			def: 2,
+			hp: 5,
+			spd: 2,
+			splash: 0,
+			lvl: 1,
+			arenaLvlToUpgrade: 3,
+		};
+		const robotMoneyGained = {
+			leeRoy: 3,
+			tank: 5,
+		};
+		let redAIThinkTimer = 800;
+		if (gameObject.gamesWon === 0) {
+			redAIThinkTimer = 2500;
+		} else if (gameObject.gamesWon === 1) {
+			redAIThinkTimer = 1300;
+		}
+		const tutorialGames = 2;
 		const roadImg = new Image();
 		const roadPath = './assets/images/brick.png';
 		let aiThinking = true;
@@ -59,7 +81,7 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 			Game.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
 			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = { 
+			Game.methodSetup = {
 				method: function(id) {
 					if (aiThinking === true) {
 						redAiMind(); 
@@ -68,12 +90,12 @@ const maulPage = {
 						aiThinking = undefined;
 						setTimeout(function() { // this is how fast the ai makes it's moves
 							aiThinking = true;
-						}, 1000); // 1300
+						}, redAIThinkTimer); // 1300
 					}
 				}
 			};
 			Game.addMethod(Game.methodSetup);
-			if (gameObject.gamesWon > 2) { // give the player a few 'easy' games
+			if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
 				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
 			} else {
 				gameObject.redMaxTowerLevel = 1;
@@ -370,11 +392,14 @@ const maulPage = {
 									primary: robotPasser.id, 
 									target: target,
 									method: function(id) {
-										const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
-										const robotAttack = 5 + robotPasser.totalStats.att;
+										robotPasser.attackTower = false;
+										robotPasser.towerTargePosX = undefined;
+										robotPasser.towerTargePosY = undefined;
+										
+										const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
 										towerStats.props.stats.hp -= robotAttack;
 										towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
-										deleteRobotMethodObject(robotHitMethodObject, 1);
+										
 										if (towerStats.props.stats.hp <= 0) {
 											towerStats.btnColor = 'orange';
 											towerStats.font = '0.8em serif';
@@ -389,6 +414,8 @@ const maulPage = {
 											towerStats.props.stats.lvl = 0;
 											towerStats.props.stats.spd = 0;
 											towerStats.props.stats.splash = 0;
+											const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
+											deleteRobotMethodObject(robotHitMethodObject, 1);
 										}
 									},
 									methodId: undefined,
@@ -397,7 +424,7 @@ const maulPage = {
 							}
 							blueTowerShootRobot(towerStats, primary);
 						} else if (color === 'red') {
-							// future Jordan, continue balancing the game. make sure when reds towers are destroyed, that red can rebuild in those locations
+							// future Jordan, continue balancing the game.
 							if (robotPasser.attackTower && robotPasser.towerTargePosX === undefined && robotPasser.towerTargePosY === undefined) {
 								robotPasser.towerTargePosX = towerStats.posX;
 								robotPasser.towerTargePosY = towerStats.posY;
@@ -405,11 +432,19 @@ const maulPage = {
 									primary: robotPasser.id, 
 									target: target,
 									method: function(id) {
-										const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
-										const robotAttack = 5 + robotPasser.totalStats.att;
+										
+										// future Jordan, figure out a way for the tanks to only attack once
+										// ballance the robot parts
+										
+										//Game.removeCollision(robotPasser.id, target);
+										//robotPasser.attackTower = false;
+										//robotPasser.towerTargePosX = undefined;
+										//robotPasser.towerTargePosY = undefined;
+										
+										const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
 										towerStats.props.stats.hp -= robotAttack;
 										towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
-										deleteRobotMethodObject(robotHitMethodObject, 1);
+										
 										if (towerStats.props.stats.hp <= 0) {
 											towerStats.btnColor = 'darkorange';
 											towerStats.font = '0.8em serif';
@@ -417,14 +452,15 @@ const maulPage = {
 											if (towerStats.props.towerId === 1) {
 												towerStats.props.requires.arenaLvlToUpgrade = 5;
 												towerStats.props.towerId = 0;
-											}
-											
+											}	
 											towerStats.props.stats.att = 0;
 											towerStats.props.stats.def = 0;
 											towerStats.props.stats.hp = 0;
 											towerStats.props.stats.lvl = 0;
 											towerStats.props.stats.spd = 0;
 											towerStats.props.stats.splash = 0;
+											const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
+											deleteRobotMethodObject(robotHitMethodObject, 1);
 										}
 									},
 									methodId: undefined,
@@ -1080,10 +1116,9 @@ const maulPage = {
 												if (bullet) {
 													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 													const towerAtt = tower.props.stats.att;
-													const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
 													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
 													if (robotHitStats) {
-														robotHitStats.hp -= (3 + towerAtt);
+														robotHitStats.hp -= (baseTowerAttack + towerAtt);
 														Particle.drawSpark({
 															posX: robotHitStats.posX,
 															posY: robotHitStats.posY,
@@ -1097,19 +1132,15 @@ const maulPage = {
 													}
 													Game.deleteEntity(bullet.methodId);
 													if (robotHitStats?.hp <= 0) {
+														const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+														let moneyGained = 0;
+														if (robotDirective === 4) { // lee-roy
+															moneyGained = robotMoneyGained.leeRoy;
+														} else if (robotDirective === 1) { // tank
+															moneyGained = robotMoneyGained.tank;
+														}
 														deleteRobotMethodObject(robotHitMethodObject, 1);
-														Particle.floatingText({
-															font: '1rem serif',
-															msg: '+3',
-															align: 'center',
-															posX: robotHitStats.posX,
-															posY: robotHitStats.posY,
-															direction: 'top',
-															color: 'gold',
-															ticks: 33,
-															speed: 0.1,
-														});
-														gameObject.arenaRedGameMoney += 3;
+														gameObject.arenaRedGameMoney += moneyGained;
 													}
 												}
 											},
@@ -1133,7 +1164,7 @@ const maulPage = {
 											totalStats: robotStats.stats,
 											directive: robotDirective,
 										}
-										sendBlueRobot(blueRobot);
+										sendBlueRobot(blueRobot, robotDirective);
 										setRedLeftTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											gameObject.canClick = true;
@@ -1183,10 +1214,9 @@ const maulPage = {
 												if (bullet) {
 													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 													const towerAtt = tower.props.stats.att;
-													const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
 													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
 													if (robotHitStats) {
-														robotHitStats.hp -= (3 + towerAtt);
+														robotHitStats.hp -= (baseTowerAttack + towerAtt);
 														Particle.drawSpark({
 															posX: robotHitStats.posX,
 															posY: robotHitStats.posY,
@@ -1200,19 +1230,15 @@ const maulPage = {
 													}
 													Game.deleteEntity(bullet.methodId);
 													if (robotHitStats?.hp <= 0) {
+														const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+														let moneyGained = 0;
+														if (robotDirective === 4) { // lee-roy
+															moneyGained = robotMoneyGained.leeRoy;
+														} else if (robotDirective === 1) { // tank
+															moneyGained = robotMoneyGained.tank;
+														}
 														deleteRobotMethodObject(robotHitMethodObject, 1);
-														Particle.floatingText({
-															font: '1rem serif',
-															msg: '+3',
-															align: 'center',
-															posX: robotHitStats.posX,
-															posY: robotHitStats.posY,
-															direction: 'top',
-															color: 'gold',
-															ticks: 33,
-															speed: 0.1,
-														});
-														gameObject.arenaRedGameMoney += 3;
+														gameObject.arenaRedGameMoney += moneyGained;
 													}
 												}
 											},
@@ -1237,7 +1263,7 @@ const maulPage = {
 											directive: robotDirective,
 										}
 										
-										sendBlueRobot(blueRobot);
+										sendBlueRobot(blueRobot, robotDirective);
 										setRedRightTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											gameObject.canClick = true;
@@ -1270,10 +1296,9 @@ const maulPage = {
 					if (bullet) {
 						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 						const towerAtt = tower.props.stats.att;
-						const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
-							robotHitStats.hp -= (3 + towerAtt);
+							robotHitStats.hp -= (baseTowerAttack + towerAtt);
 							Particle.drawSpark({
 								posX: robotHitStats.posX,
 								posY: robotHitStats.posY,
@@ -1287,10 +1312,17 @@ const maulPage = {
 						}
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
+							const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+							let moneyGained = 0;
+							if (robotDirective === 4) { // lee-roy
+								moneyGained = robotMoneyGained.leeRoy;
+							} else if (robotDirective === 1) { // tank
+								moneyGained = robotMoneyGained.tank;
+							}
 							deleteRobotMethodObject(robotHitMethodObject, 1);
 							Particle.floatingText({
 								font: '1rem serif',
-								msg: '+3',
+								msg: '+' + moneyGained,
 								align: 'center',
 								posX: robotHitStats.posX,
 								posY: robotHitStats.posY,
@@ -1299,7 +1331,7 @@ const maulPage = {
 								ticks: 33,
 								speed: 0.1,
 							});
-							gameObject.arenaBlueGameMoney += 3;
+							gameObject.arenaBlueGameMoney += moneyGained;
 							updateMoneyBackground();
 						}
 					}
@@ -1324,7 +1356,7 @@ const maulPage = {
 				totalStats: robotStats.stats,
 				directive: robotDirective,
 			}
-			sendRedRobot(redRobot);
+			sendRedRobot(redRobot, robotDirective);
 			setBlueLeftTowerRangeCollisions(redRobot.id);
 		}
 		function sendRedRobotRight(robot) {
@@ -1340,10 +1372,9 @@ const maulPage = {
 					if (bullet) {
 						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 						const towerAtt = tower.props.stats.att;
-						const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
-							robotHitStats.hp -= (3 + towerAtt);
+							robotHitStats.hp -= (baseTowerAttack + towerAtt);
 							Particle.drawSpark({
 								posX: robotHitStats.posX,
 								posY: robotHitStats.posY,
@@ -1357,10 +1388,17 @@ const maulPage = {
 						}
 						Game.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
+							const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+							let moneyGained = 0;
+							if (robotDirective === 4) { // lee-roy
+								moneyGained = robotMoneyGained.leeRoy;
+							} else if (robotDirective === 1) { // tank
+								moneyGained = robotMoneyGained.tank;
+							}
 							deleteRobotMethodObject(robotHitMethodObject, 1);
 							Particle.floatingText({
 								font: '1rem serif',
-								msg: '+3',
+								msg: '+' + moneyGained,
 								align: 'center',
 								posX: robotHitStats.posX,
 								posY: robotHitStats.posY,
@@ -1369,7 +1407,7 @@ const maulPage = {
 								ticks: 33,
 								speed: 0.1,
 							});
-							gameObject.arenaBlueGameMoney += 3;
+							gameObject.arenaBlueGameMoney += moneyGained;
 							updateMoneyBackground();
 						}
 					}
@@ -1394,7 +1432,7 @@ const maulPage = {
 				totalStats: robotStats.stats,
 				directive: robotDirective,
 			}
-			sendRedRobot(redRobot);
+			sendRedRobot(redRobot, robotDirective);
 			setBlueRightTowerRangeCollisions(redRobot.id);
 			
 		}
@@ -1414,7 +1452,10 @@ const maulPage = {
 			for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
 				// future Jordan remove the random directive and put this here instead: Math.floor((Math.random() * 4) + 1)
 				// we need to make the rest of the directives work first
-				const randomDirective = Math.floor((Math.random() * 2) + 1);
+				let randomDirective = Math.floor((Math.random() * 2) + 1);
+				if (gameObject.gamesWon === 0) { // give the player an 'easy' first round
+					randomDirective = 1;
+				}
 				let directive;
 				if (randomDirective === 1) {
 					directive = 4; // lee-roy
@@ -1432,7 +1473,7 @@ const maulPage = {
 				let rightArmIndex = 0;
 				let leftLegIndex = 0;
 				let rightLegIndex = 0;
-				if (gameObject.gamesWon > 2) { // give the player a few 'easy' games
+				if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
 					headIndex = Math.floor((Math.random() * robotHeads.length));
 					chassisIndex = Math.floor((Math.random() * robotChassis.length));
 					leftArmIndex = Math.floor((Math.random() * robotArms.length));
@@ -1609,17 +1650,27 @@ const maulPage = {
 			};
 			Game.addMethod(Game.methodSetup);
 		}
-		function sendBlueRobot(blueRobot) {
+		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
 			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
+			if (robotDirective === 4) { // lee-roy
+				gameObject.arenaBlueSendLeeRoyCount++;
+			} else if (robotDirective === 1) { // tank
+				gameObject.arenaBlueSendTankCount++;
+			}
 		}
-		function sendRedRobot(redRobot) {
+		function sendRedRobot(redRobot, robotDirective) {
 			sendRobot(redRobot);
 			drawRobotSelectParts(redRobot.id);
 			gameObject.arenaRedAttackers.push(redRobot);
 			gameObject.arenaRedSendCount++;
+			if (robotDirective === 4) { // lee-roy
+				gameObject.arenaRedSendLeeRoyCount++;
+			} else if (robotDirective === 1) { // tank
+				gameObject.arenaRedSendTankCount++;
+			}
 		}
 		function drawBlueRoads() {
 			Game.methodSetup = {
@@ -3492,10 +3543,13 @@ const maulPage = {
 					roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
-					gameObject.arenaBlueGameMoney += 50;
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 3);
-					gameObject.arenaRedGameMoney += 50;
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 3);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendLeeRoyCount * robotMoneyGained.leeRoy);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendTankCount * robotMoneyGained.tank);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
+					// add to the COMs money
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendLeeRoyCount * robotMoneyGained.leeRoy);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendTankCount * robotMoneyGained.tank);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 2);
 					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
@@ -3767,12 +3821,12 @@ const maulPage = {
 							gameObject.arenaRedGameMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
 						}
 						if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
-							selectedRedTower.props.stats.att += 2;
-							selectedRedTower.props.stats.def += 2;
-							selectedRedTower.props.stats.hp += 3;
-							selectedRedTower.props.stats.spd += 2;
-							selectedRedTower.props.stats.splash += 0;
-							selectedRedTower.props.stats.lvl += 1;
+							selectedRedTower.props.stats.att += upgradeTowerStats.att;
+							selectedRedTower.props.stats.def += upgradeTowerStats.def;
+							selectedRedTower.props.stats.hp += upgradeTowerStats.hp;
+							selectedRedTower.props.stats.spd += upgradeTowerStats.spd;
+							selectedRedTower.props.stats.splash += upgradeTowerStats.splash;
+							selectedRedTower.props.stats.lvl += upgradeTowerStats.lvl;
 							selectedRedTower.msg = 'HP: ' + selectedRedTower.props.stats.hp;
 						} else {
 							// send a robot
@@ -3813,7 +3867,11 @@ const maulPage = {
 				gameObject.arenaBlueGameMoney = 200;
 				gameObject.arenaRedGameMoney = 200;
 				gameObject.arenaBlueSendCount = 0;
+				gameObject.arenaBlueSendLeeRoyCount = 0;
+				gameObject.arenaBlueSendTankCount = 0;
 				gameObject.arenaRedSendCount = 0;
+				gameObject.arenaRedSendLeeRoyCount = 0;
+				gameObject.arenaRedSendTankCount = 0;
 				gameObject.arenaGameStarted = false;
 				gameObject.canClick = true;
 				Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
@@ -4026,11 +4084,11 @@ const maulPage = {
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
 				msgs = ['Upgrade To Level ' + towerLevel,
 						'Cost: $' + towerCost * (towerLevel),
-						'Attack: ' + tower.props.stats.att + '| +2',
-						'Defense: ' + tower.props.stats.def + '| +2',
-						'Health: ' + tower.props.stats.hp + '| +3',
-						'Speed: ' + tower.props.stats.spd + '| +2',
-						'Splash: ' + tower.props.stats.splash + '| 0',
+						'Attack: ' + tower.props.stats.att + '| +' + upgradeTowerStats.att,
+						'Defense: ' + tower.props.stats.def + '| +' + upgradeTowerStats.def,
+						'Health: ' + tower.props.stats.hp + '| +' + upgradeTowerStats.hp,
+						'Speed: ' + tower.props.stats.spd + '| +' + upgradeTowerStats.spd,
+						'Splash: ' + tower.props.stats.splash + '| +' + upgradeTowerStats.splash,
 						];
 			} else if (towerLevel > 5) {
 				msgs = ['This Towers Level is maxed out!', 'No further upgrades can be made'];
@@ -4089,21 +4147,25 @@ const maulPage = {
 							layer: 1,
 							action: { 
 								method: function(id) {
-									if (gameObject.arenaBlueGameMoney >= towerCost * (towerLevel)) {
-										gameObject.arenaBlueGameMoney -= towerCost * (towerLevel);
-										updateMoneyBackground();
-										tower.props.stats.att += 2;
-										tower.props.stats.def += 2;
-										tower.props.stats.hp += 3;
-										tower.props.stats.spd += 2;
-										tower.props.stats.splash += 0;
-										tower.props.stats.lvl += 1;
-										tower.props.requires.arenaLvlToUpgrade += 3;
-										tower.msg = 'HP: ' + tower.props.stats.hp;
-										closeUpdateTowerModal();
+									if (tower.props.towerId > 0) {
+										if (gameObject.arenaBlueGameMoney >= towerCost * (towerLevel)) {
+											gameObject.arenaBlueGameMoney -= towerCost * (towerLevel);
+											updateMoneyBackground();
+											tower.props.stats.att += upgradeTowerStats.att;
+											tower.props.stats.def += upgradeTowerStats.def;
+											tower.props.stats.hp += upgradeTowerStats.hp;
+											tower.props.stats.spd += upgradeTowerStats.spd;
+											tower.props.stats.splash += upgradeTowerStats.splash;
+											tower.props.stats.lvl += upgradeTowerStats.lvl;
+											tower.props.requires.arenaLvlToUpgrade += upgradeTowerStats.arenaLvlToUpgrade;
+											tower.msg = 'HP: ' + tower.props.stats.hp;
+											closeUpdateTowerModal();
+										} else {
+											const upgradeButton = Game.methodObjects.find(bs => bs.id === 'upgrade-tower');
+											upgradeButton.btnColor = '#C0C0C0';
+										}
 									} else {
-										const upgradeButton = Game.methodObjects.find(bs => bs.id === 'upgrade-tower');
-										upgradeButton.btnColor = '#C0C0C0';
+										closeUpdateTowerModal();
 									}
 								}
 							},

@@ -116,6 +116,13 @@ const Game = { // the user will want to use this object
 
     }
   },
+  removeCollision: function(primaryId, targetId) {
+	const findCollision = Main.collisions.find(x => x.primary === primaryId && x.target === targetId);
+	if (findCollision) {
+		const index = Main.collisions.findIndex(x => x.primary === primaryId && x.target === targetId);
+		Main.collisions.splice(index, 1);
+	}
+  },
   // these settings will make the game run faster or slower
   setSettingsLow: function() {
     this.selectedSetting = Game.enumSettings.low;
