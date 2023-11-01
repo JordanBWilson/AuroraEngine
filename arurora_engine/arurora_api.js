@@ -117,10 +117,12 @@ const Game = { // the user will want to use this object
     }
   },
   removeCollision: function(primaryId, targetId) {
-	const findCollision = Main.collisions.find(x => x.primary === primaryId && x.target === targetId);
-	if (findCollision) {
-		const index = Main.collisions.findIndex(x => x.primary === primaryId && x.target === targetId);
+	const index = Main.collisions.findIndex(x => x.primary === primaryId && x.target === targetId);
+	if (index !== -1) {
 		Main.collisions.splice(index, 1);
+		return true;
+	} else {
+		return false;
 	}
   },
   // these settings will make the game run faster or slower

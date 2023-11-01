@@ -392,30 +392,43 @@ const maulPage = {
 									primary: robotPasser.id, 
 									target: target,
 									method: function(id) {
-										robotPasser.attackTower = false;
-										robotPasser.towerTargePosX = undefined;
-										robotPasser.towerTargePosY = undefined;
-										
-										const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
-										towerStats.props.stats.hp -= robotAttack;
-										towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
-										
-										if (towerStats.props.stats.hp <= 0) {
-											towerStats.btnColor = 'orange';
-											towerStats.font = '0.8em serif';
-											towerStats.msg = 'Build';
-											if (towerStats.props.towerId === 1) {
-												towerStats.props.requires.arenaLvlToUpgrade = 5;
-												towerStats.props.towerId = 0;
+										robotPasser.towerHitCount++;
+										Game.removeCollision(robotPasser.id, target);
+										if (robotPasser.towerHitCount === 1) {
+											robotPasser.attackTower = false;
+											robotPasser.towerTargePosX = undefined;
+											robotPasser.towerTargePosY = undefined;
+											Particle.drawSpark({
+												posX: towerStats.posX,
+												posY: towerStats.posY,
+												shape: Particle.enumShapes.rect,
+												color: 'yellow',
+												ticks: 11,
+												count: 8,
+												size: (Game.entitySize),
+												speed: 1.3,
+											});
+											const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
+											towerStats.props.stats.hp -= robotAttack;
+											towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
+											
+											if (towerStats.props.stats.hp <= 0) {
+												towerStats.btnColor = 'orange';
+												towerStats.font = '0.8em serif';
+												towerStats.msg = 'Build';
+												if (towerStats.props.towerId === 1) {
+													towerStats.props.requires.arenaLvlToUpgrade = 5;
+													towerStats.props.towerId = 0;
+												}
+												towerStats.props.stats.att = 0;
+												towerStats.props.stats.def = 0;
+												towerStats.props.stats.hp = 0;
+												towerStats.props.stats.lvl = 0;
+												towerStats.props.stats.spd = 0;
+												towerStats.props.stats.splash = 0;
+												const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
+												deleteRobotMethodObject(robotHitMethodObject, 1);
 											}
-											towerStats.props.stats.att = 0;
-											towerStats.props.stats.def = 0;
-											towerStats.props.stats.hp = 0;
-											towerStats.props.stats.lvl = 0;
-											towerStats.props.stats.spd = 0;
-											towerStats.props.stats.splash = 0;
-											const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
-											deleteRobotMethodObject(robotHitMethodObject, 1);
 										}
 									},
 									methodId: undefined,
@@ -424,7 +437,6 @@ const maulPage = {
 							}
 							blueTowerShootRobot(towerStats, primary);
 						} else if (color === 'red') {
-							// future Jordan, continue balancing the game.
 							if (robotPasser.attackTower && robotPasser.towerTargePosX === undefined && robotPasser.towerTargePosY === undefined) {
 								robotPasser.towerTargePosX = towerStats.posX;
 								robotPasser.towerTargePosY = towerStats.posY;
@@ -432,36 +444,45 @@ const maulPage = {
 									primary: robotPasser.id, 
 									target: target,
 									method: function(id) {
-										
-										// future Jordan, figure out a way for the tanks to only attack once
-										// ballance the robot parts
-										
-										//Game.removeCollision(robotPasser.id, target);
-										//robotPasser.attackTower = false;
-										//robotPasser.towerTargePosX = undefined;
-										//robotPasser.towerTargePosY = undefined;
-										
-										const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
-										towerStats.props.stats.hp -= robotAttack;
-										towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
-										
-										if (towerStats.props.stats.hp <= 0) {
-											towerStats.btnColor = 'darkorange';
-											towerStats.font = '0.8em serif';
-											towerStats.msg = '';
-											if (towerStats.props.towerId === 1) {
-												towerStats.props.requires.arenaLvlToUpgrade = 5;
-												towerStats.props.towerId = 0;
-											}	
-											towerStats.props.stats.att = 0;
-											towerStats.props.stats.def = 0;
-											towerStats.props.stats.hp = 0;
-											towerStats.props.stats.lvl = 0;
-											towerStats.props.stats.spd = 0;
-											towerStats.props.stats.splash = 0;
-											const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
-											deleteRobotMethodObject(robotHitMethodObject, 1);
+										robotPasser.towerHitCount++;
+										Game.removeCollision(robotPasser.id, target);
+										if (robotPasser.towerHitCount === 1) {
+											robotPasser.attackTower = false;
+											robotPasser.towerTargePosX = undefined;
+											robotPasser.towerTargePosY = undefined;
+											Particle.drawSpark({
+												posX: towerStats.posX,
+												posY: towerStats.posY,
+												shape: Particle.enumShapes.rect,
+												color: 'yellow',
+												ticks: 11,
+												count: 8,
+												size: (Game.entitySize),
+												speed: 1.3,
+											});
+											const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
+											towerStats.props.stats.hp -= robotAttack;
+											towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
+											
+											if (towerStats.props.stats.hp <= 0) {
+												towerStats.btnColor = 'darkorange';
+												towerStats.font = '0.8em serif';
+												towerStats.msg = '';
+												if (towerStats.props.towerId === 1) {
+													towerStats.props.requires.arenaLvlToUpgrade = 5;
+													towerStats.props.towerId = 0;
+												}	
+												towerStats.props.stats.att = 0;
+												towerStats.props.stats.def = 0;
+												towerStats.props.stats.hp = 0;
+												towerStats.props.stats.lvl = 0;
+												towerStats.props.stats.spd = 0;
+												towerStats.props.stats.splash = 0;
+												const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
+												deleteRobotMethodObject(robotHitMethodObject, 1);
+											}
 										}
+								
 									},
 									methodId: undefined,
 								}
@@ -1161,6 +1182,7 @@ const maulPage = {
 											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 											towerTargePosX: undefined,
 											towerTargePosY: undefined,
+											towerHitCount: 0,
 											totalStats: robotStats.stats,
 											directive: robotDirective,
 										}
@@ -1259,6 +1281,7 @@ const maulPage = {
 											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 											towerTargePosX: undefined,
 											towerTargePosY: undefined,
+											towerHitCount: 0,
 											totalStats: robotStats.stats,
 											directive: robotDirective,
 										}
@@ -1353,6 +1376,7 @@ const maulPage = {
 				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 				towerTargePosX: undefined,
 				towerTargePosY: undefined,
+				towerHitCount: 0,
 				totalStats: robotStats.stats,
 				directive: robotDirective,
 			}
@@ -1429,6 +1453,7 @@ const maulPage = {
 				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 				towerTargePosX: undefined,
 				towerTargePosY: undefined,
+				towerHitCount: 0,
 				totalStats: robotStats.stats,
 				directive: robotDirective,
 			}
@@ -2723,6 +2748,8 @@ const maulPage = {
 				rangeWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
 				isMobile = false;
 			}
+			// future Jordan, fix red's towers tower range on mobile devices. The range seems to be too small
+			// also when blue wins, fix the pop up window in this method here: drawWinnerModal
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -2731,7 +2758,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-1',
@@ -2759,7 +2786,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-1',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -2788,7 +2815,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-2',
@@ -2816,7 +2843,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-2',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -2845,7 +2872,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-3',
@@ -2873,7 +2900,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-3',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -2902,7 +2929,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-4',
@@ -2930,7 +2957,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-4',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -2959,7 +2986,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-5',
@@ -2987,7 +3014,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-5',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -3016,7 +3043,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-6',
@@ -3044,7 +3071,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-6',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -3073,7 +3100,7 @@ const maulPage = {
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-7',
@@ -3101,7 +3128,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-7',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -3130,7 +3157,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'rgba(0, 0, 200, 0)', // transparant
+						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-8',
@@ -3158,7 +3185,7 @@ const maulPage = {
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-8',
-						action: {},
+						action: {method: function(id) {}},
 						isModalBtn: false,
 						props: {
 							towerId: 0,
@@ -3903,21 +3930,25 @@ const maulPage = {
 				// of the robot parts. No part should be weaker than the starting parts. Also add more stats
 				// to individual parts... Just to see how it plays
 				
-				//const prizeMoney = 0;
-				//const prizePool = [
-					//{ money: 'mythryl', price: 0 },
-					//{ money: 'iridium', price: 0 },
-					//{ money: 'platinum', price: 0 },
-					//{ money: 'gold', price: 0 },
-					//{ money: 'silver', price: 0 },
-					//{ money: 'nickel', price: 0 },
-					//{ money: 'bronze', price: 0 },
-					//{ money: 'copper', price: prizeMoney }
-				//]
+				const prizeMoney = gameObject.arenaLevel * 50;
+				const prizePool = [
+					{ money: 'mythryl', price: 0 },
+					{ money: 'iridium', price: 0 },
+					{ money: 'platinum', price: 0 },
+					{ money: 'gold', price: 0 },
+					{ money: 'silver', price: 0 },
+					{ money: 'nickel', price: 0 },
+					{ money: 'bronze', price: 0 },
+					{ money: 'copper', price: prizeMoney }
+				];
+				const formatPrizePool = addUpPrizePool(prizePool);
+				addFunds(formatPrizePool.funds);
+				const displayPool = formatDisplayValue(formatPrizePool.display);
 				
-				//addFunds(prizePool);
+				const highValueDisplay = displayPool.highValue.type !== '' ? displayPool.highValue.type + ': ' + displayPool.highValue.value : '';
+				const lowValueDisplay = displayPool.lowValue.type !== '' ? displayPool.lowValue.type + ': ' + displayPool.lowValue.value : '';
 				
-				msgs = ['Blue Team Wins!', unlockPart , 'Tap here to continue'];
+				msgs = ['Blue Team Wins!', highValueDisplay, lowValueDisplay, unlockPart, 'Tap here to continue'];
 				gameObject.gamesWon += 1;
 			}
 			Game.methodSetup = {
@@ -3934,7 +3965,7 @@ const maulPage = {
 						msgFont: '1em serif',
 						msgs: msgs,
 						msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
-						msgDistance: (Game.entitySize * 8),
+						msgDistance: (Game.entitySize * 5),
 						bgColor: '',
 						isModalFilled: true,
 						id: Game.modalId,

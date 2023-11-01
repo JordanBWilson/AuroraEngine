@@ -1561,9 +1561,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 		Game.addMethod(Game.methodSetup);
 	}
 }
-
 function formatDisplayValue(formatPartCost) {
-	
 	const displayPartValue = {
 		highValue: {
 			type: '',
@@ -1643,10 +1641,8 @@ function formatDisplayValue(formatPartCost) {
 			value: formatPartCost.copper
 		}
 	}
-	
 	return displayPartValue;
 }
-
 function combineRobotParts(robot) {
 	const parts = {
 		scrapToBuild: {
@@ -2607,4 +2603,99 @@ function totalRobotStats(robot) {
 	});
 
 	return stat;
+}
+function addUpPrizePool(prizePool) {
+	const prizeMoney = {
+		mythryl: 0,
+		iridium: 0,
+		platinum: 0,
+		gold: 0,
+		silver: 0,
+		nickel: 0,
+		bronze: 0,
+		copper: 0,
+	};
+	prizePool.forEach(fund => {
+		if (fund.money === 'copper') {
+			for (let i = 0; i < fund.price; i++) {
+				prizeMoney.copper++;
+				if (prizeMoney.copper >= 1000) {
+					prizeMoney.copper = 0;
+					prizeMoney.bronze++;
+				}
+			}
+		}
+		if (fund.money === 'bronze') {
+			for (let i = 0; i < fund.price; i++) {
+				prizeMoney.bronze++;
+				if (prizeMoney.bronze >= 1000) {
+					prizeMoney.bronze = 0;
+					prizeMoney.nickel++;
+				}
+			}
+		}
+		if (fund.money === 'nickel') {
+			for (let i = 0; i < fund.price; i++) {
+				prizeMoney.nickel++;
+				if (prizeMoney.nickel >= 1000) {
+					prizeMoney.nickel = 0;
+					prizeMoney.silver++;
+				}
+			}
+		}
+		if (fund.money === 'silver') {
+			for (let i = 0; i < fund.price; i++) {
+				prizeMoney.silver++;
+				if (prizeMoney.silver >= 1000) {
+					prizeMoney.silver = 0;
+					prizeMoney.gold++;
+				}
+			}
+		}
+		if (fund.money === 'gold') {
+			for (let i = 0; i < fund.price; i++) {
+				prizeMoney.gold++;
+				if (prizeMoney.gold >= 1000) {
+					prizeMoney.gold = 0;
+					prizeMoney.platinum++;
+				}
+			}
+		}
+		if (fund.money === 'platinum') {
+			for (let i = 0; i < fund.price; i++) {
+				prizeMoney.platinum++;
+				if (prizeMoney.platinum >= 1000) {
+					prizeMoney.platinum = 0;
+					prizeMoney.iridium++;
+				}
+			}
+		}
+		if (fund.money === 'iridium') {
+			for (let i = 0; i < fund.price; i++) {
+				prizeMoney.iridium++;
+				if (prizeMoney.iridium >= 1000) {
+					prizeMoney.iridium = 0;
+					prizeMoney.mythryl++;
+				}
+			}
+		}
+		if (fund.money === 'mythryl') {
+			prizeMoney.mythryl += fund.price;
+		}
+	});
+	const newPrizePool = [
+		{ money: 'mythryl', price: prizeMoney.mythryl },
+		{ money: 'iridium', price: prizeMoney.iridium },
+		{ money: 'platinum', price: prizeMoney.platinum },
+		{ money: 'gold', price: prizeMoney.gold },
+		{ money: 'silver', price: prizeMoney.silver },
+		{ money: 'nickel', price: prizeMoney.nickel },
+		{ money: 'bronze', price: prizeMoney.bronze },
+		{ money: 'copper', price: prizeMoney.copper }
+	];
+	const prize = {
+		funds: newPrizePool,
+		display: prizeMoney
+	};
+	return prize;
 }
