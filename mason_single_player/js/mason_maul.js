@@ -393,8 +393,8 @@ const maulPage = {
 									target: target,
 									method: function(id) {
 										robotPasser.towerHitCount++;
-										Game.removeCollision(robotPasser.id, target);
 										if (robotPasser.towerHitCount === 1) {
+											Game.removeCollision(robotPasser.id, target);
 											robotPasser.attackTower = false;
 											robotPasser.towerTargePosX = undefined;
 											robotPasser.towerTargePosY = undefined;
@@ -428,6 +428,18 @@ const maulPage = {
 												towerStats.props.stats.splash = 0;
 												const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
 												deleteRobotMethodObject(robotHitMethodObject, 1);
+												Particle.floatingText({
+													font: '1rem serif',
+													msg: '+' + robotMoneyGained.tank,
+													align: 'center',
+													posX: robotPasser.posX,
+													posY: robotPasser.posY,
+													direction: 'top',
+													color: 'gold',
+													ticks: 33,
+													speed: 0.1,
+												});
+												gameObject.arenaBlueGameMoney += robotMoneyGained.tank;
 											}
 										}
 									},
@@ -445,8 +457,8 @@ const maulPage = {
 									target: target,
 									method: function(id) {
 										robotPasser.towerHitCount++;
-										Game.removeCollision(robotPasser.id, target);
 										if (robotPasser.towerHitCount === 1) {
+											Game.removeCollision(robotPasser.id, target);
 											robotPasser.attackTower = false;
 											robotPasser.towerTargePosX = undefined;
 											robotPasser.towerTargePosY = undefined;
@@ -480,6 +492,7 @@ const maulPage = {
 												towerStats.props.stats.splash = 0;
 												const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
 												deleteRobotMethodObject(robotHitMethodObject, 1);
+												gameObject.arenaRedGameMoney += robotMoneyGained.tank;
 											}
 										}
 								
@@ -2754,11 +2767,11 @@ const maulPage = {
 				method: function(id) {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.18),
+						posY: !isMobile ? Game.placeEntityY(0.18) : Game.placeEntityY(0.25),
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-1',
@@ -2811,11 +2824,11 @@ const maulPage = {
 				method: function(id) {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.165, (Game.entitySize * 1)) : Game.placeEntityX(0.195, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.311),
+						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-2',
@@ -2868,11 +2881,11 @@ const maulPage = {
 				method: function(id) {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.315, (Game.entitySize * 1)) : Game.placeEntityX(0.345, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.311),
+						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-3',
@@ -2929,7 +2942,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-4',
@@ -2986,7 +2999,7 @@ const maulPage = {
 						width: rangeWidth,
 						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-5',
@@ -3039,11 +3052,11 @@ const maulPage = {
 				method: function(id) {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.625, (Game.entitySize * 1)) : Game.placeEntityX(0.579, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.311),
+						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-6',
@@ -3096,11 +3109,11 @@ const maulPage = {
 				method: function(id) {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.82, (Game.entitySize * 15.5)) : Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
-						posY: Game.placeEntityY(0.311),
+						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
 						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-7',
@@ -3153,11 +3166,11 @@ const maulPage = {
 				method: function(id) {
 					drawRect({
 						posX: !isMobile ? Game.placeEntityX(0.94, (Game.entitySize * 9.6)) : Game.placeEntityX(0.97, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.18),
+						posY: !isMobile ? Game.placeEntityY(0.18) : Game.placeEntityY(0.25),
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
-						color: 'blue', //'rgba(0, 0, 200, 0)', // transparant
+						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
 						isBackground: false,
 						id: 'red-tower-range-8',
@@ -3891,8 +3904,8 @@ const maulPage = {
 				gameObject.arenaGameRound = 1;
 				gameObject.redMaxTowerLevel = 1;
 				gameObject.arenaRoundSeconds = 15;
-				gameObject.arenaBlueGameMoney = 200;
-				gameObject.arenaRedGameMoney = 200;
+				gameObject.arenaBlueGameMoney = 160;
+				gameObject.arenaRedGameMoney = 160;
 				gameObject.arenaBlueSendCount = 0;
 				gameObject.arenaBlueSendLeeRoyCount = 0;
 				gameObject.arenaBlueSendTankCount = 0;
@@ -3925,9 +3938,9 @@ const maulPage = {
 				if (newPart === 4) { // 1 and 4 chance to unlock a part
 					unlockPart = unlockRobotPart();
 				}
-				// future Jordan, we are going to have to make a way to format the prize money so it 
-				// will look good in the msgs modal below. We are also going to have to ballance the rest
-				// of the robot parts. No part should be weaker than the starting parts. Also add more stats
+				// future Jordan, we are going to have to finish styling the modal below
+				// We are also going to have to ballance the rest of the robot parts. 
+				// No part should be weaker than the starting parts. Also add more stats
 				// to individual parts... Just to see how it plays
 				
 				const prizeMoney = gameObject.arenaLevel * 50;

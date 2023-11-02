@@ -245,8 +245,8 @@ const gameObject = {
 	towerArenaDesigns: [], // these are the towers that will compete in the arena
 	towerArenaDesignCount: 3, // max number of towers that can be on a team
 	arenaRoundSeconds: 15, // how many seconds there are between each round // 15 is the default
-	arenaBlueGameMoney: 200, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
-	arenaRedGameMoney: 200, // how much money COM starts out with
+	arenaBlueGameMoney: 160, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
+	arenaRedGameMoney: 160, // how much money COM starts out with
 	arenaGameRound: 1,
 	arenaGameMaxRounds: 12,
 	arenaBlueSendCount: 0, // how many robots the player has sent
