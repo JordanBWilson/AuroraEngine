@@ -3731,7 +3731,7 @@ const homePlayerUpgrades = {
 																!gameObject.barterBonusCost.iridium &&
 																!gameObject.barterBonusCost.mythryl) {
 																	if (gameObject.barterBonusCost.copper === 0) {
-																		gameObject.barterBonusCost.copper += 2;
+																		gameObject.barterBonusCost.copper += 5;
 																	}
 																	gameObject.barterBonusCost.copper *= 2;
 																} else if (gameObject.barterBonusCost.bronze) {

@@ -411,6 +411,8 @@ const maulPage = {
 											const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
 											towerStats.props.stats.hp -= robotAttack;
 											towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
+											const towerAttack = baseTowerAttack + towerStats.props.stats.att;
+											robotPasser.hp -= towerAttack;
 											
 											if (towerStats.props.stats.hp <= 0) {
 												towerStats.btnColor = 'orange';
@@ -475,6 +477,8 @@ const maulPage = {
 											const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
 											towerStats.props.stats.hp -= robotAttack;
 											towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
+											const towerAttack = baseTowerAttack + towerStats.props.stats.att;
+											robotPasser.hp -= towerAttack;
 											
 											if (towerStats.props.stats.hp <= 0) {
 												towerStats.btnColor = 'darkorange';
@@ -3928,20 +3932,17 @@ const maulPage = {
 			closeUpdateTowerModal();
 			let msgs = [];
 			if (winningTeam === 'red') {
-				msgs = ['Red Team Wins!', '', 'Tap here to continue'];
+				msgs = ['Red Team Wins!', '', '', '', 'Tap here to continue'];
 				gameObject.gamesLost += 1;
 			} else if (winningTeam === 'draw') {
-				msgs = ['Draw!', '', 'Tap here to continue'];
+				msgs = ['Draw!', '', '', '', 'Tap here to continue'];
 			} else if (winningTeam === 'blue') {
 				const newPart = Math.floor((Math.random() * 4) + 1);
 				let unlockPart = '';
 				if (newPart === 4) { // 1 and 4 chance to unlock a part
 					unlockPart = unlockRobotPart();
 				}
-				// future Jordan, we are going to have to finish styling the modal below
-				// We are also going to have to ballance the rest of the robot parts. 
-				// No part should be weaker than the starting parts. Also add more stats
-				// to individual parts... Just to see how it plays
+				// future Jordan, it's time to make a way to save the game to local storage
 				
 				const prizeMoney = gameObject.arenaLevel * 50;
 				const prizePool = [
@@ -3971,7 +3972,7 @@ const maulPage = {
 						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
 						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
 						width: (Game.entitySize * 45),
-						height: (Game.entitySize * 25),
+						height: (Game.entitySize * 28),
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',

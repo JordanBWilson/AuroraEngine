@@ -58,7 +58,7 @@ function mainLoop() {
 			  });
 		  }
           if (Main.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
-            Main.globalId = Math.floor((Math.random() * 9007199254740992) + 1); // max int size
+            Main.globalId = createGUID();
             Main.methodsToRun[i].methodId = Main.globalId;
           }
           Main.methodsToRun[i].method(Main.methodsToRun[i].methodId); // run through all the methods the user sent us
@@ -228,4 +228,10 @@ function removeLoadingScreen() {
 		}
 	}, 300);
   
+}
+function createGUID() {
+	const guid = '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c => 
+		(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+	);
+	return guid;
 }

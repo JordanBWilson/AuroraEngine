@@ -106,7 +106,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 50
 	},
 	engineeringUpgradeCost: {
 		mythryl: 0,
@@ -116,7 +116,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 250
 	},
 	roboticsUpgradeCost: {
 		mythryl: 0,
@@ -126,7 +126,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 350
 	},
 	scrappingUpgradeCost: {
 		mythryl: 0,
@@ -136,7 +136,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 75
 	},
 	barteringUpgradeCost: {
 		mythryl: 0,
@@ -146,7 +146,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 150
 	},
 	arenaUpgradeCost: {
 		mythryl: 0,
@@ -156,7 +156,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 100
 	},
 	scrapInvUpgradeCost: {
 		mythryl: 0,
@@ -166,7 +166,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 250
 	},
 	partInvUpgradeCost: {
 		mythryl: 0,
@@ -176,7 +176,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 350
 	},
 	robotInvUpgradeCost: {
 		mythryl: 0,
@@ -186,7 +186,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 500
 	},
 	barterBonusCost: {
 		mythryl: 0,
@@ -196,7 +196,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 5
+		copper: 0
 	},
 	// -- general stats to improve and upgrade
 	scrapInvintory: 10, // how much scrap can the player hold
@@ -292,7 +292,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'New World Head',
 		img: 'orange',
-		count: 6, // how many parts have been made
+		count: 0, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 2,
@@ -330,8 +330,8 @@ const robotHeads = [
 		},
 		scrapToBuild: {
 			commonScrap: 5,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
+			unCommonScrap: 3,
+			uniqueScrap: 2,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -351,16 +351,16 @@ const robotHeads = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 2,
+			def: 4,
 			spd: 0,
 			ai: 2,
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 4,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
+			commonScrap: 7,
+			unCommonScrap: 3,
+			uniqueScrap: 5,
+			intriguingScrap: 2,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -378,18 +378,18 @@ const robotHeads = [
 		img: 'cornflowerblue',
 		count: 0,
 		stats: {
-			att: 0,
+			att: 1,
 			def: 6,
 			spd: 0,
 			ai: 1,
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 6,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
-			facinatingScrap: 0,
+			commonScrap: 10,
+			unCommonScrap: 10,
+			uniqueScrap: 7,
+			intriguingScrap: 5,
+			facinatingScrap: 3,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
@@ -406,7 +406,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'New World Chassis',
 		img: 'orange',
-		count: 6,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 4,
@@ -437,15 +437,15 @@ const robotChassis = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 6,
+			def: 8,
 			spd: 0,
 			ai: 0,
 			storage: 2,
 		},
 		scrapToBuild: {
-			commonScrap: 10,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
+			commonScrap: 15,
+			unCommonScrap: 10,
+			uniqueScrap: 5,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -465,16 +465,16 @@ const robotChassis = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 2,
+			def: 10,
 			spd: 0,
 			ai: 2,
 			storage: 1,
 		},
 		scrapToBuild: {
-			commonScrap: 9,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
+			commonScrap: 20,
+			unCommonScrap: 15,
+			uniqueScrap: 10,
+			intriguingScrap: 5,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -492,18 +492,18 @@ const robotChassis = [
 		img: 'cornflowerblue',
 		count: 0,
 		stats: {
-			att: 1,
-			def: 4,
+			att: 3,
+			def: 10,
 			spd: 0,
 			ai: 0,
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 10,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
-			facinatingScrap: 0,
+			commonScrap: 25,
+			unCommonScrap: 20,
+			uniqueScrap: 15,
+			intriguingScrap: 10,
+			facinatingScrap: 5,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
@@ -521,7 +521,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'New World Leg',
 		img: 'orange',
-		count: 2,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 2,
@@ -553,15 +553,15 @@ const robotLegs = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 2,
+			def: 3,
 			spd: 2,
 			ai: 0,
 			storage: 1,
 		},
 		scrapToBuild: {
 			commonScrap: 7,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
+			unCommonScrap: 3,
+			uniqueScrap: 1,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -582,16 +582,16 @@ const robotLegs = [
 		count: 0,
 		stats: {
 			att: 0,
-			def: 3,
-			spd: 2,
+			def: 4,
+			spd: 4,
 			ai: 1,
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 6,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
+			commonScrap: 10,
+			unCommonScrap: 8,
+			uniqueScrap: 5,
+			intriguingScrap: 3,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -610,18 +610,18 @@ const robotLegs = [
 		img: 'cornflowerblue',
 		count: 0,
 		stats: {
-			att: 1,
-			def: 4,
-			spd: 1,
+			att: 2,
+			def: 5,
+			spd: 2,
 			ai: 0,
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 7,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
-			facinatingScrap: 0,
+			commonScrap: 15,
+			unCommonScrap: 10,
+			uniqueScrap: 8,
+			intriguingScrap: 5,
+			facinatingScrap: 3,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
@@ -639,7 +639,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'New World Arm',
 		img: 'orange',
-		count: 2,
+		count: 0,
 		stats: {
 			att: 1,
 			def: 2,
@@ -671,15 +671,15 @@ const robotArms = [
 		count: 0,
 		stats: {
 			att: 2,
-			def: 2,
+			def: 3,
 			spd: 0,
 			ai: 0,
 			storage: 1,
 		},
 		scrapToBuild: {
 			commonScrap: 7,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
+			unCommonScrap: 5,
+			uniqueScrap: 3,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -699,17 +699,17 @@ const robotArms = [
 		img: 'darkgoldenrod',
 		count: 0,
 		stats: {
-			att: 1,
-			def: 3,
-			spd: 0,
+			att: 2,
+			def: 4,
+			spd: 1,
 			ai: 1,
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 6,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
+			commonScrap: 10,
+			unCommonScrap: 8,
+			uniqueScrap: 5,
+			intriguingScrap: 3,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -728,18 +728,18 @@ const robotArms = [
 		img: 'cornflowerblue',
 		count: 0,
 		stats: {
-			att: 2,
-			def: 4,
+			att: 3,
+			def: 5,
 			spd: 0,
 			ai: 0,
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 7,
-			unCommonScrap: 0,
-			uniqueScrap: 0,
-			intriguingScrap: 0,
-			facinatingScrap: 0,
+			commonScrap: 15,
+			unCommonScrap: 10,
+			uniqueScrap: 8,
+			intriguingScrap: 5,
+			facinatingScrap: 3,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
