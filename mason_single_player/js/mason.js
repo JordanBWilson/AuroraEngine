@@ -12,13 +12,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+// load the games images
+const grassImg = new Image();
+const grassPath = './assets/images/grass.png';
+grassImg.src = grassPath;
+const roadImg = new Image();
+const roadPath = './assets/images/brick.png';
+roadImg.src = roadPath;
+
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	seedRobotDesigns();
 	seedArenaRobotDesigns();
 	seedArenaTowers();
+	loadGame();
 	Game.setSettingsHigh();
 })();
+
+// future Jordan, it's time to add some sounds
+// add a small tutorial as well
 
 function seedRobotDesigns() {
 	for (let i = 0; i < gameObject.robotDesignCount; i++) {
@@ -29,7 +41,6 @@ function seedRobotDesigns() {
 		gameObject.robotDesigns.push(robotDesign);
 	}
 }
-
 function seedArenaRobotDesigns() {
 	for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
 		const robotDesign = {
@@ -40,7 +51,6 @@ function seedArenaRobotDesigns() {
 		gameObject.robotArenaDesigns.push(robotDesign);
 	}
 }
-
 function seedArenaTowers() {
 	for (let i = 0; i < gameObject.towerArenaDesignCount; i++) {
 		const towerDesign = {
@@ -53,32 +63,26 @@ function seedArenaTowers() {
 		gameObject.towerArenaDesigns.push(towerDesign);
 	}
 }
+function loadGame() {
+	const gameLoaded = localStorage.getItem('mason-game');
+	if (gameLoaded) {
+		gameObject = JSON.parse(gameLoaded);
+	}
+}
 
 const mainPage = {
 	description: 'The main landing page of Mason',
 	loadPage: function() {
 		gameObject.canClick = true;
-		const masonWorkerImg = new Image();
-		const rockImg = new Image();
-		const grassImg = new Image();
-		const masonWorkerPath = './assets/images/stoneWorker.png';
-		const rock1Path = './assets/images/rock1.png';
-		const grassPath = './assets/images/grass.png';
+		// const grassImg = new Image();
+		// const grassPath = './assets/images/grass.png';
 		let knight = {};
 		let robot = {};
-
-		masonWorkerImg.src = masonWorkerPath;
-		rockImg.src = rock1Path;
-		grassImg.src = grassPath;
+		// grassImg.src = grassPath;
 		playGame();
 
 		function playGame() {
 			robot = {};
-			// below is a test... the player needs to discover these
-			//gameObject.discoveredChassis = robotChassis;
-			//gameObject.discoveredHeads = robotHeads;
-			//gameObject.discoveredLegs = robotLegs;
-			//gameObject.discoveredArms = robotArms;
 			if (gameObject.discoveredChassis.length === 0) {
 				gameObject.discoveredChassis.push(robotChassis[0]);
 			}
@@ -265,15 +269,15 @@ const mainPage = {
 				};
 				Game.addMethod(Game.methodSetup);
 			}
-			drawRobot();
+			// drawRobot();
 		  // Game.methodSetup = { method: function(id) { moveMasonWorker(); }};
 		  // Game.addMethod(Game.methodSetup);
 
-			Game.methodSetup = { method: function(id) { findGameObjects(); }};
-			Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = { method: function(id) { findGameObjects(); }};
+			//Game.addMethod(Game.methodSetup);
 
-			Game.methodSetup = { method: function(id) { animateObjects(); }};
-			Game.addMethod(Game.methodSetup);
+			//Game.methodSetup = { method: function(id) { animateObjects(); }};
+			//Game.addMethod(Game.methodSetup);
 
 		  Game.collisionSetup = {
 			primary: 'scrap',

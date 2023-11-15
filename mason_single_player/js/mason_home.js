@@ -111,8 +111,136 @@ const homePage = {
 						isFilled: true,
 						id: 'home-select-map',
 						action: { 
-							method: function(id) { 
-								console.log('load up the map menu');
+							method: function(id) {
+								// future Jordan, this isMobile variable could be a global thing.
+								// it's being used in at lease two other places. Both are in mason_maul
+								let isMobile = false;
+								if (Game.canvas.height > Game.canvas.width) { // mobile
+									isMobile = true;
+								} else { // everything else
+									isMobile = false;
+								}
+								const msgs = ['Are you ready to save your progress?'];
+								Game.methodSetup = {
+									layer: 1,
+									method: function(id) {
+										drawDialogueModal({
+											posX: Game.placeEntityX(0.075),
+											posY: Game.placeEntityY(0.35, (Game.entitySize * 30)),
+											width: (Game.canvas.width * 0.85),
+											height: (Game.entitySize * 45),
+											lineWidth: 1,
+											modalColor: 'grey',
+											msgColor: 'white',
+											msgFont: '1em serif',
+											msgs: msgs,
+											msgStart: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+											msgDistance: (Game.entitySize * 6),
+											bgColor: '',
+											isModalFilled: true,
+											id: Game.modalId,
+											layer: 1,
+											action: {
+												method: function(id) {
+													
+												}
+											},
+											isModalBtn: false,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+								Game.methodSetup = {
+									layer: 1,
+									method: function(id) {
+										drawButton({
+											posX: isMobile ? Game.placeEntityX(0.47, (Game.entitySize * 40)) : Game.placeEntityX(0.50, (Game.entitySize * 40)),
+											posY: Game.placeEntityY(0.60, (Game.entitySize * 30)),
+											width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+											height: (Game.entitySize * 7),
+											lineWidth: 1,
+											btnColor: 'darkgrey',
+											txtColor: 'white',
+											font: '1.3em serif',
+											msg: 'Save',
+											isFilled: true,
+											id: 'save-game-btn',
+											layer: 1,
+											action: { 
+												method: function(id) {
+													// save game
+													localStorage.setItem('mason-game', JSON.stringify(gameObject));
+													closeSaveGameModal();
+													Game.methodSetup = {
+														method: function(id) {
+															drawSimpleModal({
+																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
+																posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
+																width: (Game.entitySize * 40),
+																height: (Game.entitySize * 30),
+																lineWidth: 1,
+																modalColor: 'grey',
+																msgColor: 'white',
+																msgFont: '1.3em serif',
+																msg: 'Game Saved',
+																footerColor: 'white',
+																footerFont: '1em serif',
+																footerMsg: 'Tap here to continue',
+																bgColor: '',
+																isModalFilled: true,
+																id: Game.modalId,
+																action: { 
+																	method: function(id) {
+																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+																		Game.deleteEntity(modal.methodId);
+																		homeMenuSelect();
+																	}
+																},
+																props: {},
+																methodId: id
+															});
+														}
+													};
+													Game.addMethod(Game.methodSetup);
+												}
+											},
+											isModalBtn: true,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
+								Game.methodSetup = {
+									layer: 1,
+									method: function(id) {
+										drawButton({
+											posX: isMobile ? Game.placeEntityX(0.47, (Game.entitySize * 40)) : Game.placeEntityX(0.50, (Game.entitySize * 40)),
+											posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
+											width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
+											height: (Game.entitySize * 7),
+											lineWidth: 1,
+											btnColor: 'darkgrey',
+											txtColor: 'white',
+											font: '1.3em serif',
+											msg: 'Cancel',
+											isFilled: true,
+											id: 'cancel-save-game-btn',
+											layer: 1,
+											action: { 
+												method: function(id) {
+													closeSaveGameModal();
+												}
+											},
+											isModalBtn: true,
+											props: {},
+											methodId: id
+										});
+									}
+								};
+								Game.addMethod(Game.methodSetup);
 							}
 						},
 						isModalBtn: false,
@@ -176,6 +304,22 @@ const homePage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		homeMenuSelect(); // draw the home page
+		
+		function closeSaveGameModal() {
+			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			if (modal) {
+				Game.deleteEntity(modal.methodId);
+			}
+			const saveBtn = Game.methodObjects.find(btn => btn.id === 'save-game-btn');
+			if (saveBtn) {
+				Game.deleteEntity(saveBtn.methodId);
+			}
+			const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-save-game-btn');
+			if (cancelBtn) {
+				Game.deleteEntity(cancelBtn.methodId);
+			}
+			homeMenuSelect();
+		}
 	}
 }
 

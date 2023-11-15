@@ -13,7 +13,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // this will keep track of the game
-const gameObject = {
+let gameObject = {
 	// ---types of scrap matirials---
 	commonScrap: 0,
 	unCommonScrap: 0,
@@ -116,7 +116,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 250
+		copper: 150
 	},
 	roboticsUpgradeCost: {
 		mythryl: 0,
@@ -126,7 +126,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 350
+		copper: 150
 	},
 	scrappingUpgradeCost: {
 		mythryl: 0,
@@ -186,7 +186,7 @@ const gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 500
+		copper: 400
 	},
 	barterBonusCost: {
 		mythryl: 0,
@@ -357,10 +357,10 @@ const robotHeads = [
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 7,
-			unCommonScrap: 3,
-			uniqueScrap: 5,
-			intriguingScrap: 2,
+			commonScrap: 0,
+			unCommonScrap: 6,
+			uniqueScrap: 7,
+			intriguingScrap: 4,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -385,11 +385,11 @@ const robotHeads = [
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 10,
-			unCommonScrap: 10,
-			uniqueScrap: 7,
-			intriguingScrap: 5,
-			facinatingScrap: 3,
+			commonScrap: 0,
+			unCommonScrap: 13,
+			uniqueScrap: 10,
+			intriguingScrap: 8,
+			facinatingScrap: 4,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
@@ -443,9 +443,9 @@ const robotChassis = [
 			storage: 2,
 		},
 		scrapToBuild: {
-			commonScrap: 15,
-			unCommonScrap: 10,
-			uniqueScrap: 5,
+			commonScrap: 0,
+			unCommonScrap: 20,
+			uniqueScrap: 10,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -471,10 +471,10 @@ const robotChassis = [
 			storage: 1,
 		},
 		scrapToBuild: {
-			commonScrap: 20,
-			unCommonScrap: 15,
-			uniqueScrap: 10,
-			intriguingScrap: 5,
+			commonScrap: 0,
+			unCommonScrap: 25,
+			uniqueScrap: 15,
+			intriguingScrap: 10,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -499,11 +499,11 @@ const robotChassis = [
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 25,
-			unCommonScrap: 20,
-			uniqueScrap: 15,
-			intriguingScrap: 10,
-			facinatingScrap: 5,
+			commonScrap: 0,
+			unCommonScrap: 30,
+			uniqueScrap: 20,
+			intriguingScrap: 15,
+			facinatingScrap: 10,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
@@ -559,9 +559,9 @@ const robotLegs = [
 			storage: 1,
 		},
 		scrapToBuild: {
-			commonScrap: 7,
-			unCommonScrap: 3,
-			uniqueScrap: 1,
+			commonScrap: 0,
+			unCommonScrap: 7,
+			uniqueScrap: 4,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -588,10 +588,10 @@ const robotLegs = [
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 10,
-			unCommonScrap: 8,
-			uniqueScrap: 5,
-			intriguingScrap: 3,
+			commonScrap: 0,
+			unCommonScrap: 12,
+			uniqueScrap: 8,
+			intriguingScrap: 6,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -617,11 +617,11 @@ const robotLegs = [
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 15,
-			unCommonScrap: 10,
-			uniqueScrap: 8,
-			intriguingScrap: 5,
-			facinatingScrap: 3,
+			commonScrap: 0,
+			unCommonScrap: 13,
+			uniqueScrap: 12,
+			intriguingScrap: 9,
+			facinatingScrap: 7,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
@@ -677,9 +677,9 @@ const robotArms = [
 			storage: 1,
 		},
 		scrapToBuild: {
-			commonScrap: 7,
-			unCommonScrap: 5,
-			uniqueScrap: 3,
+			commonScrap: 0,
+			unCommonScrap: 9,
+			uniqueScrap: 6,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -706,10 +706,10 @@ const robotArms = [
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 10,
-			unCommonScrap: 8,
-			uniqueScrap: 5,
-			intriguingScrap: 3,
+			commonScrap: 0,
+			unCommonScrap: 14,
+			uniqueScrap: 7,
+			intriguingScrap: 5,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -735,11 +735,11 @@ const robotArms = [
 			storage: 0,
 		},
 		scrapToBuild: {
-			commonScrap: 15,
-			unCommonScrap: 10,
-			uniqueScrap: 8,
-			intriguingScrap: 5,
-			facinatingScrap: 3,
+			commonScrap: 0,
+			unCommonScrap: 13,
+			uniqueScrap: 12,
+			intriguingScrap: 9,
+			facinatingScrap: 7,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},

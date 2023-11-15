@@ -43,11 +43,8 @@ const maulPage = {
 			redAIThinkTimer = 1300;
 		}
 		const tutorialGames = 2;
-		const roadImg = new Image();
-		const roadPath = './assets/images/brick.png';
 		let aiThinking = true;
 		let gameTimer;
-		roadImg.src = roadPath;
 		Particle.init();
 		setupGame();
 		Game.pageResized = {
@@ -725,10 +722,6 @@ const maulPage = {
 			Game.addCollision(Game.collisionSetup);
 		}
 		function drawGrassBackGround() {
-			const grassImg = new Image();
-			const grassPath = './assets/images/grass.png';
-			grassImg.src = grassPath;
-			
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -1569,7 +1562,6 @@ const maulPage = {
 				}
 				gameObject.redTowerArenaDesigns.push(towerDesign);
 			}
-			console.log(gameObject.redTowerArenaDesigns);
 		}
 		function sendRobot(robot) {
 			Game.methodSetup = {
@@ -2765,8 +2757,6 @@ const maulPage = {
 				rangeWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
 				isMobile = false;
 			}
-			// future Jordan, fix red's towers tower range on mobile devices. The range seems to be too small
-			// also when blue wins, fix the pop up window in this method here: drawWinnerModal
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -3926,8 +3916,6 @@ const maulPage = {
 			}, 0);
 		}
 		function drawWinnerModal(winningTeam) { // winningTeam can be red, blue or draw
-			// future Jordan, give the blue player their money winnings. perhaps 100 copper to start?
-			// increase their winnings based on their arena level
 			closeBuildTowerModal();
 			closeUpdateTowerModal();
 			let msgs = [];
@@ -3942,8 +3930,6 @@ const maulPage = {
 				if (newPart === 4) { // 1 and 4 chance to unlock a part
 					unlockPart = unlockRobotPart();
 				}
-				// future Jordan, it's time to make a way to save the game to local storage
-				
 				const prizeMoney = gameObject.arenaLevel * 50;
 				const prizePool = [
 					{ money: 'mythryl', price: 0 },
@@ -3959,8 +3945,8 @@ const maulPage = {
 				addFunds(formatPrizePool.funds);
 				const displayPool = formatDisplayValue(formatPrizePool.display);
 				
-				const highValueDisplay = displayPool.highValue.type !== '' ? displayPool.highValue.type + ': ' + displayPool.highValue.value : '';
-				const lowValueDisplay = displayPool.lowValue.type !== '' ? displayPool.lowValue.type + ': ' + displayPool.lowValue.value : '';
+				const highValueDisplay = displayPool.highValue.type !== '' ? displayPool.highValue.type + ': +' + displayPool.highValue.value : '';
+				const lowValueDisplay = displayPool.lowValue.type !== '' ? displayPool.lowValue.type + ': +' + displayPool.lowValue.value : '';
 				
 				msgs = ['Blue Team Wins!', highValueDisplay, lowValueDisplay, unlockPart, 'Tap here to continue'];
 				gameObject.gamesWon += 1;
@@ -4123,7 +4109,6 @@ const maulPage = {
 		function selectUpgradeTowerMenu(tower, towerIndex) {
 			let msgs = [];
 			const towerLevel = tower.props.stats.lvl + 1;
-			// future Jordan, balance the rest of the game like upgrade costs
 			const towerCost = findTowerDirectiveCost(tower.props.directive);
 			let upgradeIssue = false;
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade) {
