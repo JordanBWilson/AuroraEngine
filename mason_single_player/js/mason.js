@@ -20,6 +20,17 @@ const roadImg = new Image();
 const roadPath = './assets/images/brick.png';
 roadImg.src = roadPath;
 
+// load the game sounds
+const selectSound = new Audio('./assets/sounds/select.wav');
+const addScrapSound = new Audio('./assets/sounds/add_scrap.wav');
+const arenaReadySound = new Audio('./assets/sounds/arena_ready.wav');
+const buildTowerSound = new Audio('./assets/sounds/build_tower.wav');
+const robotHitSound = new Audio('./assets/sounds/robot_hit.wav');
+const scrappingSound = new Audio('./assets/sounds/scrapping.wav');
+const sellSound = new Audio('./assets/sounds/sell.wav');
+const towerExplosionSound = new Audio('./assets/sounds/tower_explosion.wav');
+const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
+
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	seedRobotDesigns();
@@ -70,8 +81,296 @@ function loadGame() {
 	}
 }
 
+const titlePage = {
+	description: 'The main title page of Mason',
+	loadPage: function() {
+		Game.clearStage();
+		Game.methodSetup = {
+			method: function(id) {
+				drawRect({
+					posX: Game.placeEntityX(0),
+					posY: Game.placeEntityY(0),
+					width: Game.canvas.width,
+					height: (Game.canvas.height),
+					lineWidth: 1,
+					color: 'grey',
+					isFilled: true,
+					id: 'title-background',
+					isBackground: true,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '3.3em serif',
+					msg: 'Mason',
+					posX: Game.placeEntityX(0.50),
+					posY: Game.placeEntityY(0.075),
+					color: 'darkgrey',
+					align: 'center',
+					props: {},
+					id: 'home-title',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawText({
+					font: '1.5em serif',
+					msg: 'MVP Edition',
+					posX: Game.placeEntityX(0.50),
+					posY: Game.placeEntityY(0.13),
+					color: 'darkgrey',
+					align: 'center',
+					props: {},
+					id: 'home-title',
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawRect({
+					posX: Game.placeEntityX(0.505, (Game.canvas.width * 0.45)),
+					posY: Game.placeEntityY(0.375, (Game.canvas.height * 0.45)),
+					width: (Game.canvas.width * 0.45),
+					height: (Game.canvas.height * 0.42),
+					lineWidth: 1,
+					color: 'lightgrey',
+					isFilled: true,
+					id: 'robot-background',
+					isBackground: true,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.50, (Game.entitySize * 12)),
+					posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+					width: (Game.entitySize * 12),
+					height: (Game.entitySize * 12),
+					lineWidth: 1,
+					btnColor: 'orange',
+					txtColor: 'white',
+					font: '1.5em serif',
+					msg: '',
+					isFilled: true,
+					id: 'robot-body',
+					action: { 
+						method: function(id) {
+						
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.499, (Game.entitySize * 10)),
+					posY: Game.placeEntityY(0.22, (Game.entitySize * 10)),
+					width: (Game.entitySize * 10),
+					height: (Game.entitySize * 10),
+					lineWidth: 1,
+					btnColor: 'orange',
+					txtColor: 'black',
+					font: '1.5em serif',
+					msg: '',
+					isFilled: true,
+					id: 'robot-head',
+					action: {
+						method: function(id) {
+							
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.45, (Game.entitySize * 15)),
+					posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+					width: (Game.entitySize * 3),
+					height: (Game.entitySize * 12),
+					lineWidth: 1,
+					btnColor: 'orange',
+					txtColor: 'black',
+					font: '1em serif',
+					msg: '',
+					isFilled: true,
+					id: 'robot-left-arm',
+					action: { 
+						method: function(id) {
+							
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.56, (Game.entitySize * -8.3)),
+					posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
+					width: (Game.entitySize * 3),
+					height: (Game.entitySize * 12),
+					lineWidth: 1,
+					btnColor: 'orange',
+					txtColor: 'black',
+					font: '1em serif',
+					msg: '',
+					isFilled: true,
+					id: 'robot-right-arm',
+					action: { 
+						method: function(id) {
+							
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.496, (Game.entitySize * 9)),
+					posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+					width: (Game.entitySize * 3),
+					height: (Game.entitySize * 12),
+					lineWidth: 1,
+					btnColor: 'orange',
+					txtColor: 'black',
+					font: '1em serif',
+					msg: '',
+					isFilled: true,
+					id: 'robot-left-leg',
+					action: {
+						method: function(id) {
+							
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.497, (Game.entitySize * -4.3)),
+					posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
+					width: (Game.entitySize * 3),
+					height: (Game.entitySize * 12),
+					lineWidth: 1,
+					btnColor: 'orange',
+					txtColor: 'black',
+					font: '1em serif',
+					msg: '',
+					isFilled: true,
+					id: 'robot-right-leg',
+					action: {
+						method: function(id) {
+							
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.505, (Game.canvas.width * 0.45)),
+					posY: Game.placeEntityY(0.90, (Game.canvas.height * 0.45)),
+					width: (Game.canvas.width * 0.45),
+					height: (Game.entitySize * 7),
+					lineWidth: 1,
+					btnColor: 'darkgrey',
+					txtColor: 'white',
+					font: '1.5em serif',
+					msg: 'Play',
+					isFilled: true,
+					id: 'play-game',
+					action: { 
+						method: function(id) {
+							mainPage.loadPage();
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+		Game.methodSetup = {
+			method: function(id) {
+				drawButton({
+					posX: Game.placeEntityX(0.505, (Game.canvas.width * 0.45)),
+					posY: Game.placeEntityY(1.05, (Game.canvas.height * 0.45)),
+					width: (Game.canvas.width * 0.45),
+					height: (Game.entitySize * 7),
+					lineWidth: 1,
+					btnColor: 'darkgrey',
+					txtColor: 'white',
+					font: '1.2em serif',
+					msg: !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On',
+					isFilled: true,
+					id: 'play-game-sounds',
+					action: { 
+						method: function(id) {
+							gameObject.gameSounds = !gameObject.gameSounds;
+							const soundBtn = Game.methodObjects.find(btn => btn.id === 'play-game-sounds');
+							soundBtn.msg = !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On';
+							if (gameObject.gameSounds) {
+								selectSound.play();
+							}
+						}
+					},
+					isModalBtn: false,
+					props: {},
+					methodId: id
+				});
+			}
+		};
+		Game.addMethod(Game.methodSetup);
+	}
+}
+
 const mainPage = {
-	description: 'The main landing page of Mason',
+	description: 'The main game page of Mason',
 	loadPage: function() {
 		gameObject.canClick = true;
 		// const grassImg = new Image();
@@ -339,7 +638,7 @@ const mainPage = {
 						selectedImage: 0,
 						animTicks: 0,
 						ticks: 0,
-						id: 'grass-background',
+						id: 'grass-background-pattern',
 						isBackground: true,
 						props: {},
 						methodId: id
@@ -1140,7 +1439,7 @@ const mainPage = {
 		}
 	}
 }
-mainPage.loadPage();
+titlePage.loadPage();
 
 
 

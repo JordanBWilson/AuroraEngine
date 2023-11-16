@@ -106,7 +106,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 50
+		copper: 25
 	},
 	engineeringUpgradeCost: {
 		mythryl: 0,
@@ -116,7 +116,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 150
+		copper: 50
 	},
 	roboticsUpgradeCost: {
 		mythryl: 0,
@@ -126,7 +126,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 150
+		copper: 50
 	},
 	scrappingUpgradeCost: {
 		mythryl: 0,
@@ -146,7 +146,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 150
+		copper: 100
 	},
 	arenaUpgradeCost: {
 		mythryl: 0,
@@ -156,7 +156,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 100
+		copper: 25
 	},
 	scrapInvUpgradeCost: {
 		mythryl: 0,
@@ -166,7 +166,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 250
+		copper: 150
 	},
 	partInvUpgradeCost: {
 		mythryl: 0,
@@ -176,7 +176,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 350
+		copper: 250
 	},
 	robotInvUpgradeCost: {
 		mythryl: 0,
@@ -186,7 +186,7 @@ let gameObject = {
 		silver: 0,
 		nickel: 0,
 		bronze: 0,
-		copper: 400
+		copper: 300
 	},
 	barterBonusCost: {
 		mythryl: 0,
@@ -284,6 +284,9 @@ let gameObject = {
 	gamesPlayed: 0, // how many arena games played
 	gamesWon: 0, // how many arena games won
 	gamesLost: 0, // how many arena games lost
+	tutorialStep: 0, // what part of the tutorial is being displayed
+	newPlayer: true, // is this a new player, show the tutorial
+	gameSounds: false, // play game sounds
 };
 // ** Robot Parts ***
 const robotHeads = [
@@ -2491,7 +2494,6 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 		}
 	};
 	Game.addMethod(Game.methodSetup);
-
 	refreshStats();
 }
 function drawNextPrevRobotList(robotList, refreshMethod) {
