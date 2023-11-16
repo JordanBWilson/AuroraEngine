@@ -40,7 +40,7 @@ const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
 	Game.setSettingsHigh();
 })();
 
-// future Jordan, it's time to add some sounds
+// future Jordan, try to find a way for sounds to play over each other
 // add a small tutorial as well
 
 function seedRobotDesigns() {
@@ -852,6 +852,9 @@ const mainPage = {
 		function mineScrap() {
 			if (gameObject.canClick) {
 				gameObject.canClick = false;
+				if (gameObject.gameSounds) {
+					scrappingSound.play();
+				}
 				let scrapFoundText = '';
 				let scrapFoundCount = 0;
 				let totalScrap = 
@@ -1380,6 +1383,11 @@ const mainPage = {
 							scrapFoundCount = 1;
 							scrapFoundText = 'Common Scrap +' + scrapFoundCount;
 							gameObject.commonScrap += scrapFoundCount;
+						}
+					}
+					if (scrapFoundCount > 0) {
+						if (gameObject.gameSounds) {
+							addScrapSound.play();
 						}
 					}
 					Particle.floatingText({

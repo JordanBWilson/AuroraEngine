@@ -381,6 +381,9 @@ const maulPage = {
 				if (!tower.props.canShoot && tower.props.targetId) {
 					tower.props.targetId = '';
 					if (towerStats.props.towerId > 0) {
+						if (gameObject.gameSounds) {
+							towerShootSound.play();
+						}
 						if (color === 'blue') {
 							if (robotPasser.attackTower && robotPasser.towerTargePosX === undefined && robotPasser.towerTargePosY === undefined) {
 								robotPasser.towerTargePosX = towerStats.posX;
@@ -391,6 +394,9 @@ const maulPage = {
 									method: function(id) {
 										robotPasser.towerHitCount++;
 										if (robotPasser.towerHitCount === 1) {
+											if (gameObject.gameSounds) {
+												towerExplosionSound.play();
+											}
 											Game.removeCollision(robotPasser.id, target);
 											robotPasser.attackTower = false;
 											robotPasser.towerTargePosX = undefined;
@@ -457,6 +463,9 @@ const maulPage = {
 									method: function(id) {
 										robotPasser.towerHitCount++;
 										if (robotPasser.towerHitCount === 1) {
+											if (gameObject.gameSounds) {
+												towerExplosionSound.play();
+											}
 											Game.removeCollision(robotPasser.id, target);
 											robotPasser.attackTower = false;
 											robotPasser.towerTargePosX = undefined;
@@ -1145,6 +1154,9 @@ const maulPage = {
 											method: function(id) {
 												const bullet = Game.methodObjects.find(bg => bg.methodId === id);
 												if (bullet) {
+													if (gameObject.gameSounds) {
+														robotHitSound.play();
+													}
 													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 													const towerAtt = tower.props.stats.att;
 													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
@@ -1244,6 +1256,9 @@ const maulPage = {
 											method: function(id) {
 												const bullet = Game.methodObjects.find(bg => bg.methodId === id);
 												if (bullet) {
+													if (gameObject.gameSounds) {
+														robotHitSound.play();
+													}
 													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 													const towerAtt = tower.props.stats.att;
 													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
@@ -1327,6 +1342,9 @@ const maulPage = {
 				method: function(id) {
 					const bullet = Game.methodObjects.find(bg => bg.methodId === id);
 					if (bullet) {
+						if (gameObject.gameSounds) {
+							robotHitSound.play();
+						}
 						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 						const towerAtt = tower.props.stats.att;
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
@@ -1404,6 +1422,9 @@ const maulPage = {
 				method: function(id) {
 					const bullet = Game.methodObjects.find(bg => bg.methodId === id);
 					if (bullet) {
+						if (gameObject.gameSounds) {
+							robotHitSound.play();
+						}
 						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
 						const towerAtt = tower.props.stats.att;
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
@@ -3503,6 +3524,9 @@ const maulPage = {
 			Game.addMethod(Game.methodSetup);
 		}
 		function readySetGoGame() {
+			if (gameObject.gameSounds) {
+				arenaReadySound.play();
+			}
 			Game.methodSetup = {
 				method: function(id) {
 					drawRect({
@@ -3716,12 +3740,18 @@ const maulPage = {
 				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
 				if (color === 'blue') {
 					const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
+					if (gameObject.gameSounds) {
+						towerExplosionSound.play();
+					}
 					robotAttackBase(redBase, robot, i, color);
 					if (redBase.props.hp <= 0) {
 						endGame('blue');
 					}
 				} else if (color === 'red') {
 					const blueBase = Game.methodObjects.find(bg => bg.id === 'blue-base');
+					if (gameObject.gameSounds) {
+						towerExplosionSound.play();
+					}
 					robotAttackBase(blueBase, robot, i, color);
 					if (blueBase.props.hp <= 0) {
 						endGame('red');
@@ -3930,7 +3960,7 @@ const maulPage = {
 				if (newPart === 4) { // 1 and 4 chance to unlock a part
 					unlockPart = unlockRobotPart();
 				}
-				const prizeMoney = gameObject.arenaLevel * 50;
+				const prizeMoney = gameObject.arenaLevel * 25;
 				const prizePool = [
 					{ money: 'mythryl', price: 0 },
 					{ money: 'iridium', price: 0 },
@@ -4179,6 +4209,9 @@ const maulPage = {
 								method: function(id) {
 									if (tower.props.towerId > 0) {
 										if (gameObject.arenaBlueGameMoney >= towerCost * (towerLevel)) {
+											if (gameObject.gameSounds) {
+												selectSound.play();
+											}
 											gameObject.arenaBlueGameMoney -= towerCost * (towerLevel);
 											updateMoneyBackground();
 											tower.props.stats.att += upgradeTowerStats.att;
@@ -4462,6 +4495,9 @@ const maulPage = {
 							method: function(id) {
 								if (selectedTowerDesign.arenaTower.towerId) {
 									if (gameObject.arenaBlueGameMoney >= towerCost) {
+										if (gameObject.gameSounds) {
+											buildTowerSound.play();
+										}
 										gameObject.arenaBlueGameMoney -= towerCost;
 										updateMoneyBackground();
 										tower.btnColor = selectedTowerDesign.arenaTower.img;

@@ -288,6 +288,9 @@ const arenaPage = {
 								});
 								
 								if (selectedRobots >= 1 && selectedTower >= 1) {
+									if (gameObject.gameSounds) {
+										selectSound.play();
+									}
 									maulPage.loadPage();
 								} else {
 									let msgs = ['Select At Least', 'One Robot and Tower', 'Tap here to continue'];
@@ -919,6 +922,9 @@ const arenaPage = {
 													id: 'Program-directive',
 													action: { 
 														method: function(id) {
+															if (gameObject.gameSounds) {
+																selectSound.play();
+															}
 															gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive = i + 1;
 															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 															Game.deleteEntity(modal.methodId);
@@ -1144,6 +1150,9 @@ const arenaPage = {
 						id: 'select-robot',
 						action: { 
 							method: function(id) {
+								if (gameObject.gameSounds) {
+									selectSound.play();
+								}
 								gameObject.partPageIndex = 0;
 								if (arenaTowerIndex === -1 || arenaTowerIndex === undefined) {
 									if (!reselect) {
@@ -1460,6 +1469,9 @@ const arenaPage = {
 						id: 'select-tower',
 						action: { 
 							method: function(id) {
+								if (gameObject.gameSounds) {
+									selectSound.play();
+								}
 								gameObject.partPageIndex = 0;
 								if (selectedTower.type !== 'bunker') {
 									gameObject.towerArenaDesigns[arenaTowerIndex].robotParts = [];
@@ -1592,6 +1604,9 @@ const arenaPage = {
 														id: 'Program-directive',
 														action: { 
 															method: function(id) {
+																if (gameObject.gameSounds) {
+																	selectSound.play();
+																}
 																gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
 																// apply the stat changes
 																const cloneTower = Object.assign({}, selectedTower);

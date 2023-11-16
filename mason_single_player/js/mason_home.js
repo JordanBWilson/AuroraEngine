@@ -1155,6 +1155,9 @@ const homeSellScrap = {
 								if (gameObject.canClick) {
 									gameObject.canClick = false;
 									if (!gameObject.buildButtonDisabled) {
+										if (gameObject.gameSounds) {
+											sellSound.play();
+										}
 										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
 										if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
 											gameObject.commonScrap--;
@@ -1548,9 +1551,10 @@ const homeSellParts = {
 						msg: 'Back',
 						isFilled: true,
 						id: 'sell-part-back-game',
-						action: { method: function(id) {
-							 homeSellMenus.loadPage();
-							 gameObject.buildButtonDisabled = false;
+						action: { 
+							method: function(id) {
+								homeSellMenus.loadPage();
+								gameObject.buildButtonDisabled = false;
 							}
 						},
 						isModalBtn: false,
@@ -1642,8 +1646,9 @@ const homeSellParts = {
 						msg: 'Chassis',
 						isFilled: true,
 						id: 'sell-body-parts',
-						action: { method: function(id) {
-							selectSellPartChassis();
+						action: { 
+							method: function(id) {
+								selectSellPartChassis();
 							}
 						},
 						isModalBtn: false,
@@ -1667,8 +1672,9 @@ const homeSellParts = {
 						msg: 'Heads',
 						isFilled: true,
 						id: 'sell-head-parts',
-						action: { method: function(id) {
-							selectSellPartHead();
+						action: { 
+							method: function(id) {
+								selectSellPartHead();
 							}
 						},
 						isModalBtn: false,
@@ -1692,8 +1698,9 @@ const homeSellParts = {
 						msg: 'Arms',
 						isFilled: true,
 						id: 'sell-arm-parts',
-						action: { method: function(id) {
-							selectSellPartArms();
+						action: { 
+							method: function(id) {
+								selectSellPartArms();
 							}
 						},
 						isModalBtn: false,
@@ -1717,8 +1724,9 @@ const homeSellParts = {
 						msg: 'Legs',
 						isFilled: true,
 						id: 'sell-leg-parts',
-						action: { method: function(id) {
-							selectSellPartLegs();
+						action: { 
+							method: function(id) {
+								selectSellPartLegs();
 							}
 						},
 						isModalBtn: false,
@@ -1951,14 +1959,15 @@ const homeSellParts = {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										if (!gameObject.buildButtonDisabled) {
-										
 											const scrapCosts = gatherScrapCostFromPart(part);
 											// calculate how much we can sell the part for
 											// add the funds and subtract the part
 											if (part.count > 0) {
+												if (gameObject.gameSounds) {
+													sellSound.play();
+												}
 												const formatPartCost = calculatePartPrice(scrapCosts);
 												const addPartCost = formatPartsCostToFunds(formatPartCost);
-												
 												addFunds(addPartCost);
 												part.count--;
 												Particle.floatingText({
@@ -3194,6 +3203,9 @@ const homeSellRobots = {
 								if (gameObject.canClick) {
 									gameObject.canClick = false;
 									if (gameObject.robotTeams.length > 0) {
+										if (gameObject.gameSounds) {
+											sellSound.play();
+										}
 										if (gameObject.selectedRobotDesign + 1 <= gameObject.robotTeams.length) {
 											// remove the robot and add to the players funds
 											gameObject.robotTeams.splice(gameObject.selectedRobotDesign, 1);
@@ -3668,6 +3680,9 @@ const homePlayerUpgrades = {
 														let upgradeMsgs = [];
 														if (checkFunds && upgrading) {
 															upgrading = false;
+															if (gameObject.gameSounds) {
+																selectSound.play();
+															}
 															if (upgradeIndex === 0) {
 																gameObject.factoryLevel++;
 																let designIncrease = false;

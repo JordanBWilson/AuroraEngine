@@ -958,9 +958,15 @@ const factoryPage = {
 							id: 'confirm-part',
 							action: { method: function(id) {
 								if (confirmed && gameObject.selectedRobot.length === 6) {
+									if (gameObject.gameSounds) {
+										addScrapSound.play();
+									}
 									buildRobot();
 								} else {
 									if (part.requires !== undefined && part.requires.roboticSkill <= gameObject.roboticSkill) {
+										if (gameObject.gameSounds) {
+											selectSound.play();
+										}
 										equipPart(part);
 									} else {
 										// display modal
@@ -2259,11 +2265,13 @@ const factoryParts = {
 							id: 'confirm-part',
 							action: {
 								method: function(id) {
-									
 									if (part.requires !== undefined && 
 									part.requires.factoryLevel <= gameObject.factoryLevel && 
 									part.requires.engineeringSkill <= gameObject.engineeringSkill) {
 										if (!gameObject.buildButtonDisabled) {
+											if (gameObject.gameSounds) {
+												addScrapSound.play();
+											}
 											const scrapCosts = [];
 											for (const scrap in part.scrapToBuild) {
 												if (part.scrapToBuild[scrap] > 0) {
