@@ -31,6 +31,7 @@ const sellSound = new Audio('./assets/sounds/sell.wav');
 const towerExplosionSound = new Audio('./assets/sounds/tower_explosion.wav');
 const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
 
+
 (function() {
 	Game.canvas = document.getElementById('Stage');
 	seedRobotDesigns();
@@ -38,6 +39,15 @@ const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
 	seedArenaTowers();
 	loadGame();
 	Game.setSettingsHigh();
+	selectSound.load();
+	addScrapSound.load();
+	arenaReadySound.load();
+	buildTowerSound.load();
+	robotHitSound.load();
+	scrappingSound.load();
+	sellSound.load();
+	towerExplosionSound.load();
+	towerShootSound.load();
 })();
 
 // future Jordan, try to find a way for sounds to play over each other
@@ -355,7 +365,7 @@ const titlePage = {
 							const soundBtn = Game.methodObjects.find(btn => btn.id === 'play-game-sounds');
 							soundBtn.msg = !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On';
 							if (gameObject.gameSounds) {
-								selectSound.play();
+								selectSound.cloneNode(true).play();
 							}
 						}
 					},
@@ -373,11 +383,8 @@ const mainPage = {
 	description: 'The main game page of Mason',
 	loadPage: function() {
 		gameObject.canClick = true;
-		// const grassImg = new Image();
-		// const grassPath = './assets/images/grass.png';
 		let knight = {};
 		let robot = {};
-		// grassImg.src = grassPath;
 		playGame();
 
 		function playGame() {
@@ -853,7 +860,7 @@ const mainPage = {
 			if (gameObject.canClick) {
 				gameObject.canClick = false;
 				if (gameObject.gameSounds) {
-					scrappingSound.play();
+					scrappingSound.cloneNode(true).play();
 				}
 				let scrapFoundText = '';
 				let scrapFoundCount = 0;
@@ -1387,7 +1394,7 @@ const mainPage = {
 					}
 					if (scrapFoundCount > 0) {
 						if (gameObject.gameSounds) {
-							addScrapSound.play();
+							addScrapSound.cloneNode(true).play();
 						}
 					}
 					Particle.floatingText({

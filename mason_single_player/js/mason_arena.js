@@ -289,7 +289,7 @@ const arenaPage = {
 								
 								if (selectedRobots >= 1 && selectedTower >= 1) {
 									if (gameObject.gameSounds) {
-										selectSound.play();
+										selectSound.cloneNode(true).play();
 									}
 									maulPage.loadPage();
 								} else {
@@ -923,7 +923,7 @@ const arenaPage = {
 													action: { 
 														method: function(id) {
 															if (gameObject.gameSounds) {
-																selectSound.play();
+																selectSound.cloneNode(true).play();
 															}
 															gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive = i + 1;
 															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
@@ -1151,7 +1151,7 @@ const arenaPage = {
 						action: { 
 							method: function(id) {
 								if (gameObject.gameSounds) {
-									selectSound.play();
+									selectSound.cloneNode(true).play();
 								}
 								gameObject.partPageIndex = 0;
 								if (arenaTowerIndex === -1 || arenaTowerIndex === undefined) {
@@ -1470,7 +1470,7 @@ const arenaPage = {
 						action: { 
 							method: function(id) {
 								if (gameObject.gameSounds) {
-									selectSound.play();
+									selectSound.cloneNode(true).play();
 								}
 								gameObject.partPageIndex = 0;
 								if (selectedTower.type !== 'bunker') {
@@ -1605,7 +1605,7 @@ const arenaPage = {
 														action: { 
 															method: function(id) {
 																if (gameObject.gameSounds) {
-																	selectSound.play();
+																	selectSound.cloneNode(true).play();
 																}
 																gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
 																// apply the stat changes

@@ -959,13 +959,13 @@ const factoryPage = {
 							action: { method: function(id) {
 								if (confirmed && gameObject.selectedRobot.length === 6) {
 									if (gameObject.gameSounds) {
-										addScrapSound.play();
+										addScrapSound.cloneNode(true).play();
 									}
 									buildRobot();
 								} else {
 									if (part.requires !== undefined && part.requires.roboticSkill <= gameObject.roboticSkill) {
 										if (gameObject.gameSounds) {
-											selectSound.play();
+											selectSound.cloneNode(true).play();
 										}
 										equipPart(part);
 									} else {
@@ -2270,7 +2270,7 @@ const factoryParts = {
 									part.requires.engineeringSkill <= gameObject.engineeringSkill) {
 										if (!gameObject.buildButtonDisabled) {
 											if (gameObject.gameSounds) {
-												addScrapSound.play();
+												addScrapSound.cloneNode(true).play();
 											}
 											const scrapCosts = [];
 											for (const scrap in part.scrapToBuild) {
