@@ -376,6 +376,24 @@ const titlePage = {
 			}
 		};
 		Game.addMethod(Game.methodSetup);
+		if (!Game.isLoaded) {
+			Game.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '3em serif',
+						msg: 'Loading...',
+						posX: Game.placeEntityX(0.50),
+						posY: Game.placeEntityY(0.55),
+						color: 'indigo',
+						align: 'center',
+						props: {},
+						id: Game.loadingId,
+						methodId: id
+					});
+				}
+			};
+			Game.addMethod(Game.methodSetup);
+		}
 	}
 }
 
@@ -404,24 +422,6 @@ const mainPage = {
 			
 			Game.clearStage();
 			drawBackground();
-			if (!Game.isLoaded) {
-				Game.methodSetup = {
-					method: function(id) {
-						drawText({
-							font: '3em serif',
-							msg: 'Loading...',
-							posX: Game.placeEntityX(0.50),
-							posY: Game.placeEntityY(0.55),
-							color: 'indigo',
-							align: 'center',
-							props: {},
-							id: Game.loadingId,
-							methodId: id
-						});
-					}
-				};
-			  Game.addMethod(Game.methodSetup);
-			}
 			// Game.methodSetup = {
 			// 	method: function(id) {
 			// 		drawImage({
