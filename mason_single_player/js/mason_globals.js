@@ -245,17 +245,17 @@ let gameObject = {
 	towerArenaDesigns: [], // these are the towers that will compete in the arena
 	towerArenaDesignCount: 3, // max number of towers that can be on a team
 	arenaRoundSeconds: 15, // how many seconds there are between each round // 15 is the default
-	arenaBlueGameMoney: 160, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
-	arenaRedGameMoney: 160, // how much money COM starts out with
-	arenaGameRound: 1,
-	arenaGameMaxRounds: 12,
+	arenaBlueAuroraMoney: 160, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
+	arenaRedAuroraMoney: 160, // how much money COM starts out with
+	arenaAuroraRound: 1,
+	arenaAuroraMaxRounds: 12,
 	arenaBlueSendCount: 0, // how many robots the player has sent
 	arenaBlueSendLeeRoyCount: 0, // how many directive leeroys have been sent
 	arenaBlueSendTankCount: 0, // how many directive tanks have been sent
 	arenaRedSendCount: 0, // how many robots COM has sent
 	arenaRedSendLeeRoyCount: 0, // how many directive leeroys COM has sent
 	arenaRedSendTankCount: 0, // how many directive tanks COM has sent
-	arenaGameStarted: false, // has the game started?
+	arenaAuroraStarted: false, // has the game started?
 	arenaBlueAttackers: [],
 	arenaRedAttackers: [],
 	redRobotArenaDesigns: [],
@@ -1315,13 +1315,13 @@ function subtractFunds(subFunds) {
 function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, color, align) {
 	if (gameObject.mythryl > 0) {
 		// future Jordan, 99,999 is the max number on mobile display
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Mythryl: ' + gameObject.mythryl,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1330,14 +1330,14 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
+		Aurora.addMethod(Aurora.methodSetup);
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Iridium: ' + gameObject.iridium,
-					posX: Game.placeEntityX(lowFundX),
-					posY: Game.placeEntityY(lowFundY),
+					posX: Aurora.placeEntityX(lowFundX),
+					posY: Aurora.placeEntityY(lowFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1346,15 +1346,15 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	} else if (gameObject.iridium > 0) {
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Iridium: ' + gameObject.iridium,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1363,14 +1363,14 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
+		Aurora.addMethod(Aurora.methodSetup);
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Platinum: ' + gameObject.platinum,
-					posX: Game.placeEntityX(lowFundX),
-					posY: Game.placeEntityY(lowFundY),
+					posX: Aurora.placeEntityX(lowFundX),
+					posY: Aurora.placeEntityY(lowFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1379,15 +1379,15 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	} else if (gameObject.platinum > 0) {
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Platinum: ' + gameObject.platinum,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1396,14 +1396,14 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
+		Aurora.addMethod(Aurora.methodSetup);
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Gold: ' + gameObject.gold,
-					posX: Game.placeEntityX(lowFundX),
-					posY: Game.placeEntityY(lowFundY),
+					posX: Aurora.placeEntityX(lowFundX),
+					posY: Aurora.placeEntityY(lowFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1412,15 +1412,15 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	} else if (gameObject.gold > 0) {
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Gold: ' + gameObject.gold,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1429,14 +1429,14 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
+		Aurora.addMethod(Aurora.methodSetup);
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Silver: ' + gameObject.silver,
-					posX: Game.placeEntityX(lowFundX),
-					posY: Game.placeEntityY(lowFundY),
+					posX: Aurora.placeEntityX(lowFundX),
+					posY: Aurora.placeEntityY(lowFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1445,15 +1445,15 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	} else if (gameObject.silver > 0) {
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Silver: ' + gameObject.silver,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1462,14 +1462,14 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
+		Aurora.addMethod(Aurora.methodSetup);
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Nickel: ' + gameObject.nickel,
-					posX: Game.placeEntityX(lowFundX),
-					posY: Game.placeEntityY(lowFundY),
+					posX: Aurora.placeEntityX(lowFundX),
+					posY: Aurora.placeEntityY(lowFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1478,15 +1478,15 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	} else if (gameObject.nickel > 0) {
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Nickel: ' + gameObject.nickel,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1495,14 +1495,14 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
+		Aurora.addMethod(Aurora.methodSetup);
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Bronze: ' + gameObject.bronze,
-					posX: Game.placeEntityX(lowFundX),
-					posY: Game.placeEntityY(lowFundY),
+					posX: Aurora.placeEntityX(lowFundX),
+					posY: Aurora.placeEntityY(lowFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1511,15 +1511,15 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	} else if (gameObject.bronze > 0) {
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Bronze: ' + gameObject.bronze,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1528,14 +1528,14 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
-		Game.methodSetup = {
+		Aurora.addMethod(Aurora.methodSetup);
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Copper: ' + gameObject.copper,
-					posX: Game.placeEntityX(lowFundX),
-					posY: Game.placeEntityY(lowFundY),
+					posX: Aurora.placeEntityX(lowFundX),
+					posY: Aurora.placeEntityY(lowFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1544,15 +1544,15 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	} else if (gameObject.copper >= 0) {
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
 					font: font,
 					msg: 'Copper: ' + gameObject.copper,
-					posX: Game.placeEntityX(highFundX),
-					posY: Game.placeEntityY(highFundY),
+					posX: Aurora.placeEntityX(highFundX),
+					posY: Aurora.placeEntityY(highFundY),
 					color: color,
 					align: align ? align : 'left',
 					props: {},
@@ -1561,7 +1561,7 @@ function displayCondensedFunds(highFundX, highFundY, lowFundX, lowFundY, font, c
 				});
 			}
 		};
-		Game.addMethod(Game.methodSetup);
+		Aurora.addMethod(Aurora.methodSetup);
 	}
 }
 function formatDisplayValue(formatPartCost) {
@@ -2071,13 +2071,13 @@ function drawRobotSelectPreviewParts(partType, robotDesign) {
 }
 // display a robot with parts or not
 function drawRobotSelect(posX, posY, robotDesign, index, action) {
-	Game.methodSetup = {
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: posX + (Game.entityWidth * 12.6) - (Game.entitySize * 3),
-				posY: posY + (Game.canvas.height * 0.065),
-				width: (Game.entitySize * 6),
-				height: (Game.entitySize * 6),
+				posX: posX + (Aurora.entityWidth * 12.6) - (Aurora.entitySize * 3),
+				posY: posY + (Aurora.canvas.height * 0.065),
+				width: (Aurora.entitySize * 6),
+				height: (Aurora.entitySize * 6),
 				lineWidth: 1,
 				btnColor: drawRobotSelectPreviewParts('chassis', robotDesign),
 				txtColor: 'white',
@@ -2093,13 +2093,13 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 				isModalBtn: false,
 				props: {
 					drawHead: function(parent) {
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawButton({
-									posX: parent.posX + (Game.entitySize * 0.5),
-									posY: parent.posY - (Game.entitySize * 5),
-									width: (Game.entitySize * 5),
-									height: (Game.entitySize * 5),
+									posX: parent.posX + (Aurora.entitySize * 0.5),
+									posY: parent.posY - (Aurora.entitySize * 5),
+									width: (Aurora.entitySize * 5),
+									height: (Aurora.entitySize * 5),
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('head', robotDesign),
 									txtColor: 'white',
@@ -2118,16 +2118,16 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 					},
 					drawLeftArm: function(parent) {
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawButton({
-									posX: parent.posX - (Game.entitySize * 1.5),
+									posX: parent.posX - (Aurora.entitySize * 1.5),
 									posY: parent.posY,
-									width: (Game.entitySize * 1.5),
-									height: (Game.entitySize * 6),
+									width: (Aurora.entitySize * 1.5),
+									height: (Aurora.entitySize * 6),
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('left-arm', robotDesign),
 									txtColor: 'white',
@@ -2146,16 +2146,16 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 					},
 					drawRightArm: function(parent) {
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawButton({
-									posX: parent.posX + (Game.entitySize * 6),
+									posX: parent.posX + (Aurora.entitySize * 6),
 									posY: parent.posY,
-									width: (Game.entitySize * 1.5),
-									height: (Game.entitySize * 6),
+									width: (Aurora.entitySize * 1.5),
+									height: (Aurora.entitySize * 6),
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('right-arm', robotDesign),
 									txtColor: 'white',
@@ -2174,16 +2174,16 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 					},
 					drawLeftLeg: function(parent) {
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawButton({
-									posX: parent.posX + (Game.entitySize * 0.25),
-									posY: parent.posY + (Game.entitySize * 6),
-									width: (Game.entitySize * 1.5),
-									height: (Game.entitySize * 6),
+									posX: parent.posX + (Aurora.entitySize * 0.25),
+									posY: parent.posY + (Aurora.entitySize * 6),
+									width: (Aurora.entitySize * 1.5),
+									height: (Aurora.entitySize * 6),
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('left-leg', robotDesign),
 									txtColor: 'white',
@@ -2202,16 +2202,16 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 					},
 					drawRightLeg: function(parent) {
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawButton({
-									posX: parent.posX + (Game.entitySize * 4.3),
-									posY: parent.posY + (Game.entitySize * 6),
-									width: (Game.entitySize * 1.5),
-									height: (Game.entitySize * 6),
+									posX: parent.posX + (Aurora.entitySize * 4.3),
+									posY: parent.posY + (Aurora.entitySize * 6),
+									width: (Aurora.entitySize * 1.5),
+									height: (Aurora.entitySize * 6),
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('right-leg', robotDesign),
 									txtColor: 'white',
@@ -2230,19 +2230,19 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 					},
 				},
 				methodId: id
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
+	Aurora.addMethod(Aurora.methodSetup);
 }
 function drawRobotSelectParts(search = 'preview-robot') {
 	const findPreviews = setInterval(function() {
-		if (Game.methodObjects.filter(x => x.id === search).length > 0) {
-			Game.methodObjects.filter(x => x.id === search).forEach(robot => {
+		if (Aurora.methodObjects.filter(x => x.id === search).length > 0) {
+			Aurora.methodObjects.filter(x => x.id === search).forEach(robot => {
 				if (typeof robot.props.drawHead !== 'undefined') {
 					robot.props.drawHead(robot);
 				}
@@ -2261,7 +2261,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 			});
 			clearInterval(findPreviews);
 		}
-	}, Game.frameRate);
+	}, Aurora.frameRate);
 }
 function drawRobotPreviewParts(partType) {
 	if (partType === 'chassis') {
@@ -2338,13 +2338,13 @@ function drawRobotPreviewParts(partType) {
 	}
 }
 function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLegAction, rLegAction, refreshStats) {
-	Game.methodSetup = {
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.25, (Game.entitySize * 12)),
-				posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-				width: (Game.entitySize * 12),
-				height: (Game.entitySize * 12),
+				posX: Aurora.placeEntityX(0.25, (Aurora.entitySize * 12)),
+				posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
+				width: (Aurora.entitySize * 12),
+				height: (Aurora.entitySize * 12),
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('chassis'),
 				txtColor: 'white',
@@ -2363,14 +2363,14 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
+	Aurora.addMethod(Aurora.methodSetup);
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.249, (Game.entitySize * 10)),
-				posY: Game.placeEntityY(0.22, (Game.entitySize * 10)),
-				width: (Game.entitySize * 10),
-				height: (Game.entitySize * 10),
+				posX: Aurora.placeEntityX(0.249, (Aurora.entitySize * 10)),
+				posY: Aurora.placeEntityY(0.22, (Aurora.entitySize * 10)),
+				width: (Aurora.entitySize * 10),
+				height: (Aurora.entitySize * 10),
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('head'),
 				txtColor: 'black',
@@ -2389,14 +2389,14 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
+	Aurora.addMethod(Aurora.methodSetup);
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.20, (Game.entitySize * 15)),
-				posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-				width: (Game.entitySize * 3),
-				height: (Game.entitySize * 12),
+				posX: Aurora.placeEntityX(0.20, (Aurora.entitySize * 15)),
+				posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
+				width: (Aurora.entitySize * 3),
+				height: (Aurora.entitySize * 12),
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('left-arm'),
 				txtColor: 'black',
@@ -2415,14 +2415,14 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
+	Aurora.addMethod(Aurora.methodSetup);
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.31, (Game.entitySize * -8.3)),
-				posY: Game.placeEntityY(0.35, (Game.entitySize * 12)),
-				width: (Game.entitySize * 3),
-				height: (Game.entitySize * 12),
+				posX: Aurora.placeEntityX(0.31, (Aurora.entitySize * -8.3)),
+				posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
+				width: (Aurora.entitySize * 3),
+				height: (Aurora.entitySize * 12),
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('right-arm'),
 				txtColor: 'black',
@@ -2441,14 +2441,14 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
+	Aurora.addMethod(Aurora.methodSetup);
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.246, (Game.entitySize * 9)),
-				posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
-				width: (Game.entitySize * 3),
-				height: (Game.entitySize * 12),
+				posX: Aurora.placeEntityX(0.246, (Aurora.entitySize * 9)),
+				posY: Aurora.placeEntityY(0.49, (Aurora.entitySize * 12)),
+				width: (Aurora.entitySize * 3),
+				height: (Aurora.entitySize * 12),
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('left-leg'),
 				txtColor: 'black',
@@ -2467,14 +2467,14 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
+	Aurora.addMethod(Aurora.methodSetup);
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({
-				posX: Game.placeEntityX(0.247, (Game.entitySize * -4.3)),
-				posY: Game.placeEntityY(0.49, (Game.entitySize * 12)),
-				width: (Game.entitySize * 3),
-				height: (Game.entitySize * 12),
+				posX: Aurora.placeEntityX(0.247, (Aurora.entitySize * -4.3)),
+				posY: Aurora.placeEntityY(0.49, (Aurora.entitySize * 12)),
+				width: (Aurora.entitySize * 3),
+				height: (Aurora.entitySize * 12),
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('right-leg'),
 				txtColor: 'black',
@@ -2493,17 +2493,17 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
+	Aurora.addMethod(Aurora.methodSetup);
 	refreshStats();
 }
 function drawNextPrevRobotList(robotList, refreshMethod) {
-	Game.methodSetup = {
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({ // the btnColor is css grey
-				posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-				posY: Game.placeEntityY(0.80),
-				width: (Game.entitySize * 22),
-				height: (Game.entitySize * 7),
+				posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+				posY: Aurora.placeEntityY(0.80),
+				width: (Aurora.entitySize * 22),
+				height: (Aurora.entitySize * 7),
 				lineWidth: 1,
 				btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
 				txtColor: 'white',
@@ -2528,14 +2528,14 @@ function drawNextPrevRobotList(robotList, refreshMethod) {
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
-	Game.methodSetup = {
+	Aurora.addMethod(Aurora.methodSetup);
+	Aurora.methodSetup = {
 		method: function(id) {
 			drawButton({ // the btnColor is css grey
-				posX: Game.placeEntityX(0.245, (Game.entitySize * 22.5)),
-				posY: Game.placeEntityY(0.80),
-				width: (Game.entitySize * 22),
-				height: (Game.entitySize * 7),
+				posX: Aurora.placeEntityX(0.245, (Aurora.entitySize * 22.5)),
+				posY: Aurora.placeEntityY(0.80),
+				width: (Aurora.entitySize * 22),
+				height: (Aurora.entitySize * 7),
 				lineWidth: 1,
 				btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
 				txtColor: 'white',
@@ -2564,7 +2564,7 @@ function drawNextPrevRobotList(robotList, refreshMethod) {
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
+	Aurora.addMethod(Aurora.methodSetup);
 }
 function totalSelectedRobotStats() {
 	const stat = {

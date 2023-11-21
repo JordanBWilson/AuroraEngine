@@ -16,14 +16,14 @@ const factoryPage = {
 	description: 'This is where the player can build parts and robots',
 	loadPage: function() {
 		function factoryRobotSelect() {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -34,14 +34,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -63,14 +63,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.97, (Game.entitySize * 30)),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 15),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.97, (Aurora.entitySize * 30)),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 15),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -92,14 +92,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Select',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -108,14 +108,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -126,7 +126,7 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
 			for (let i = 0; i < gameObject.robotDesignCount; i++) {
@@ -160,13 +160,13 @@ const factoryPage = {
 					posXoffset = 1;
 				}	
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.25),
-							height: (Game.entitySize * 20),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.25),
+							height: (Aurora.entitySize * 20),
 							lineWidth: 1,
 							color: 'darkgrey',
 							isBackground: false,
@@ -177,11 +177,11 @@ const factoryPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				
 				drawRobotSelect(
-					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+					Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
 					gameObject.robotDesigns[i].robotParts,
 					i,
 					function() {
@@ -204,7 +204,7 @@ const factoryPage = {
 			}
 			drawRobotSelectParts();
 
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'factory-robot-select',
 				method: function() {
 					factoryPage.loadPage();
@@ -213,14 +213,14 @@ const factoryPage = {
 		}
 		factoryRobotSelect(); // draw the factory page
 		function factoryRobotDetails() {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -231,14 +231,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.45),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.45),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -249,14 +249,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.43),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.825, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.43),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -267,14 +267,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.39),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.815, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.39),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -285,40 +285,40 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			drawRobotPreview(
 				function() {
-					const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+					const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 					if (!robotMade) {
 						selectRobotChassis(); 
 					}
 				},
 				function() {
-					const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+					const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 					if (!robotMade) {
 							selectRobotHead(); 
 					}
 				},
 				function() {
-					const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+					const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 					if (!robotMade) {
 						selectRobotArms('left');
 					}
 				},
 				function() {
-					const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+					const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 					if (!robotMade) {
 						selectRobotArms('right');
 					}
 				},
 				function() {
-					const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+					const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 					if (!robotMade) {
 						selectRobotLegs('left'); 
 					}
 				},
 				function() {
-					const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+					const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 					if (!robotMade) {
 						selectRobotLegs('right'); 
 					}
@@ -329,13 +329,13 @@ const factoryPage = {
 					}
 				}
 			); // draw the robot in the top left
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -344,7 +344,7 @@ const factoryPage = {
 						isFilled: true,
 						id: 'factory-back-game',
 						action: { method: function(id) {
-								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 								if (!robotMade) {
 									factoryPage.loadPage();
 									gameObject.partsDisplayed = ''; 
@@ -359,14 +359,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Details',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -375,14 +375,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Stats',
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -391,14 +391,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.97, (Game.entitySize * 30)),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 15),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.97, (Aurora.entitySize * 30)),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 15),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -408,7 +408,7 @@ const factoryPage = {
 						id: 'factory-view',
 						action: { 
 							method: function(id) {
-								const robotMade = Game.methodObjects.find(build => build.id === 'robot-built-title');
+								const robotMade = Aurora.methodObjects.find(build => build.id === 'robot-built-title');
 								if (!robotMade) {
 									factoryParts.loadPage();
 									gameObject.partsDisplayed = ''; 
@@ -423,16 +423,16 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			// display the build button when the robot parts are complete
 			if (gameObject.selectedRobot.length === 6) {
 				displaySelectPart({}, true);
 			}
 			
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'factory-robot-details',
 				method: function() {
-					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+					const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 					clearRobotBuildMessage();
 					if (!modal && gameObject.partsDisplayed === 'leg-right') {
 						selectRobotLegs('right');
@@ -456,58 +456,58 @@ const factoryPage = {
 			}
 		}
 		function clearRobotParts() {
-			const chassisParts = Game.methodObjects.filter(x => x.id === 'robot-chassis-part');
-			const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
-			const legLeftParts = Game.methodObjects.filter(x => x.id === 'robot-left-leg-part');
-			const legRightParts = Game.methodObjects.filter(x => x.id === 'robot-right-leg-part');
-			const armRightParts = Game.methodObjects.filter(x => x.id === 'robot-right-arm-part');
-			const armLeftParts = Game.methodObjects.filter(x => x.id === 'robot-left-arm-part');
-			const nextBtn = Game.methodObjects.filter(x => x.id === 'next-part');
-			const prevBtn = Game.methodObjects.filter(x => x.id === 'last-part');
-			const partCount = Game.methodObjects.filter(x => x.id === 'part-count');
+			const chassisParts = Aurora.methodObjects.filter(x => x.id === 'robot-chassis-part');
+			const headParts = Aurora.methodObjects.filter(x => x.id === 'robot-head-part');
+			const legLeftParts = Aurora.methodObjects.filter(x => x.id === 'robot-left-leg-part');
+			const legRightParts = Aurora.methodObjects.filter(x => x.id === 'robot-right-leg-part');
+			const armRightParts = Aurora.methodObjects.filter(x => x.id === 'robot-right-arm-part');
+			const armLeftParts = Aurora.methodObjects.filter(x => x.id === 'robot-left-arm-part');
+			const nextBtn = Aurora.methodObjects.filter(x => x.id === 'next-part');
+			const prevBtn = Aurora.methodObjects.filter(x => x.id === 'last-part');
+			const partCount = Aurora.methodObjects.filter(x => x.id === 'part-count');
 			if (chassisParts.length > 0) {
 				chassisParts.forEach((item, i) => {
-					Game.deleteEntity(chassisParts[i].methodId);
+					Aurora.deleteEntity(chassisParts[i].methodId);
 				});
 			}
 			if (headParts.length > 0) {
 				headParts.forEach((item, i) => {
-					Game.deleteEntity(headParts[i].methodId);
+					Aurora.deleteEntity(headParts[i].methodId);
 				});
 			}
 			if (legLeftParts.length > 0) {
 				legLeftParts.forEach((item, i) => {
-					Game.deleteEntity(legLeftParts[i].methodId);
+					Aurora.deleteEntity(legLeftParts[i].methodId);
 				});
 			}
 			if (legRightParts.length > 0) {
 				legRightParts.forEach((item, i) => {
-					Game.deleteEntity(legRightParts[i].methodId);
+					Aurora.deleteEntity(legRightParts[i].methodId);
 				});
 			}
 			if (armRightParts.length > 0) {
 				armRightParts.forEach((item, i) => {
-					Game.deleteEntity(armRightParts[i].methodId);
+					Aurora.deleteEntity(armRightParts[i].methodId);
 				});
 			}
 			if (armLeftParts.length > 0) {
 				armLeftParts.forEach((item, i) => {
-					Game.deleteEntity(armLeftParts[i].methodId);
+					Aurora.deleteEntity(armLeftParts[i].methodId);
 				});
 			}
 			if (nextBtn.length > 0) {
 				nextBtn.forEach((item, i) => {
-					Game.deleteEntity(nextBtn[i].methodId);
+					Aurora.deleteEntity(nextBtn[i].methodId);
 				});
 			}
 			if (prevBtn.length > 0) {
 				prevBtn.forEach((item, i) => {
-					Game.deleteEntity(prevBtn[i].methodId);
+					Aurora.deleteEntity(prevBtn[i].methodId);
 				});
 			}
 			if (partCount.length > 0) {
 				partCount.forEach((item, i) => {
-					Game.deleteEntity(partCount[i].methodId);
+					Aurora.deleteEntity(partCount[i].methodId);
 				});
 			}
 			setTimeout(function() {
@@ -523,7 +523,7 @@ const factoryPage = {
 			clearSelectedPartStatDetails(); // clear the stats
 			refreshFactoryBackgrounds(); // refresh the background
 			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-' + armPos + '-arm');
 			highlight.btnColor = 'yellow';
 			displayDiscoveredParts(gameObject.discoveredArms, armPos);
 			if (gameObject.selectedRobot.length === 6) {
@@ -540,7 +540,7 @@ const factoryPage = {
 			clearSelectedPartStatDetails(); // clear the stats
 			refreshFactoryBackgrounds(); // refresh the background
 			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-' + legPos + '-leg');
 			highlight.btnColor = 'yellow';
 			displayDiscoveredParts(gameObject.discoveredLegs, legPos);
 			if (gameObject.selectedRobot.length === 6) {
@@ -556,7 +556,7 @@ const factoryPage = {
 			clearSelectedPartStatDetails(); // clear the stats
 			refreshFactoryBackgrounds(); // refresh the background
 			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-body');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-body');
 			highlight.btnColor = 'yellow';
 			displayDiscoveredParts(gameObject.discoveredChassis, '');
 			if (gameObject.selectedRobot.length === 6) {
@@ -572,7 +572,7 @@ const factoryPage = {
 			clearSelectedPartStatDetails(); // clear the stats
 			refreshFactoryBackgrounds(); // refresh the background
 			clearRobotPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-head');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-head');
 			highlight.btnColor = 'yellow';
 			displayDiscoveredParts(gameObject.discoveredHeads, '');
 			if (gameObject.selectedRobot.length === 6) {
@@ -610,13 +610,13 @@ const factoryPage = {
 			// display all the parts on each page
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.330 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 3),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.330 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
 							btnColor: drawActiveParts(discoveredPart, true),
 							txtColor: 'black',
@@ -643,14 +643,14 @@ const factoryPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.241 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 9),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.241 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
 							btnColor: drawActiveParts(discoveredPart, true),
 							txtColor: 'black',
@@ -677,20 +677,20 @@ const factoryPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			drawNextPrevPartList(partsDiscovered, limbPos);
 		}
 
 		function drawNextPrevPartList(partList, limbPos) {
 			// the part could be head, chassis, legs or arms
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.135),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+						posY: Aurora.placeEntityY(0.135),
+						width: (Aurora.entitySize * 22),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
@@ -714,14 +714,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.90),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+						posY: Aurora.placeEntityY(0.90),
+						width: (Aurora.entitySize * 22),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
@@ -749,72 +749,72 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function clearRobotPreviewHighlight() {
-			const headHighlight = Game.methodObjects.find(item => item.id === 'robot-head');
+			const headHighlight = Aurora.methodObjects.find(item => item.id === 'robot-head');
 			headHighlight.btnColor = drawRobotPreviewParts('head');
-			const chassisHighlight = Game.methodObjects.find(item => item.id === 'robot-body');
+			const chassisHighlight = Aurora.methodObjects.find(item => item.id === 'robot-body');
 			chassisHighlight.btnColor = drawRobotPreviewParts('chassis');
-			const armRightHighlight = Game.methodObjects.find(x => x.id === 'robot-right-arm');
+			const armRightHighlight = Aurora.methodObjects.find(x => x.id === 'robot-right-arm');
 			armRightHighlight.btnColor = drawRobotPreviewParts('right-arm');
-			const armLeftHighlight = Game.methodObjects.find(x => x.id === 'robot-left-arm');
+			const armLeftHighlight = Aurora.methodObjects.find(x => x.id === 'robot-left-arm');
 			armLeftHighlight.btnColor = drawRobotPreviewParts('left-arm');
-			const legRightHighlight = Game.methodObjects.find(x => x.id === 'robot-right-leg');
+			const legRightHighlight = Aurora.methodObjects.find(x => x.id === 'robot-right-leg');
 			legRightHighlight.btnColor = drawRobotPreviewParts('right-leg');
-			const legLeftHighlight = Game.methodObjects.find(x => x.id === 'robot-left-leg');
+			const legLeftHighlight = Aurora.methodObjects.find(x => x.id === 'robot-left-leg');
 			legLeftHighlight.btnColor = drawRobotPreviewParts('left-leg');
 		}
 
 		function clearSelectedPartStatDetails() {
 			// clear the stats and the buttons
-			const selectPartBtn = Game.methodObjects.filter(x => x.id === 'confirm-part');
+			const selectPartBtn = Aurora.methodObjects.filter(x => x.id === 'confirm-part');
 			if (selectPartBtn) {
 				selectPartBtn.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectAttStat = Game.methodObjects.filter(x => x.id === 'att-stat');
+			const selectAttStat = Aurora.methodObjects.filter(x => x.id === 'att-stat');
 			if (selectAttStat) {
 				selectAttStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectDefStat = Game.methodObjects.filter(x => x.id === 'def-stat');
+			const selectDefStat = Aurora.methodObjects.filter(x => x.id === 'def-stat');
 			if (selectDefStat) {
 				selectDefStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectSpdStat = Game.methodObjects.filter(x => x.id === 'spd-stat');
+			const selectSpdStat = Aurora.methodObjects.filter(x => x.id === 'spd-stat');
 			if (selectSpdStat) {
 				selectSpdStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectAiStat = Game.methodObjects.filter(x => x.id === 'ai-stat');
+			const selectAiStat = Aurora.methodObjects.filter(x => x.id === 'ai-stat');
 			if (selectAiStat) {
 				selectAiStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectStorageStat = Game.methodObjects.filter(x => x.id === 'storage-stat');
+			const selectStorageStat = Aurora.methodObjects.filter(x => x.id === 'storage-stat');
 			if (selectStorageStat) {
 				selectStorageStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			// clear the titles
-			const factoryTitle = Game.methodObjects.filter(x => x.id === 'factory-title');
+			const factoryTitle = Aurora.methodObjects.filter(x => x.id === 'factory-title');
 			if (factoryTitle) {
 				factoryTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
+			const statTitle = Aurora.methodObjects.filter(x => x.id === 'stat-title');
 			if (statTitle) {
 				statTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 		}
@@ -824,13 +824,13 @@ const factoryPage = {
 			if (!selectedPart || confirmed) {
 				selectedPart = totalSelectedRobotStats();
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Stats',
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -839,14 +839,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Details',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -855,14 +855,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Attack: ' + returnStatValue(selectedPart?.stats?.att, 'att', confirmed, partChanged, existingPart?.stats?.att),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.69),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.69),
 						color: returnStatColor(existingPart?.stats?.att, selectedPart?.stats?.att, 'att', partChanged, confirmed),
 						align: 'left',
 						props: {},
@@ -871,14 +871,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Defense: ' + returnStatValue(selectedPart?.stats?.def, 'def', confirmed, partChanged, existingPart?.stats?.def),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.74),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.74),
 						color: returnStatColor(existingPart?.stats?.def, selectedPart?.stats?.def, 'def', partChanged, confirmed),
 						align: 'left',
 						props: {},
@@ -887,14 +887,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Speed: ' + returnStatValue(selectedPart?.stats?.spd, 'spd', confirmed, partChanged, existingPart?.stats?.spd),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.79),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.79),
 						color: returnStatColor(existingPart?.stats?.spd, selectedPart?.stats?.spd, 'spd', partChanged, confirmed),
 						align: 'left',
 						props: {},
@@ -903,14 +903,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'AI: ' + returnStatValue(selectedPart?.stats?.ai, 'ai', confirmed, partChanged, existingPart?.stats?.ai),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.84),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.84),
 						color: returnStatColor(existingPart?.stats?.ai, selectedPart?.stats?.ai, 'ai', partChanged, confirmed),
 						align: 'left',
 						props: {},
@@ -919,14 +919,14 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged, existingPart?.stats?.storage),
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.88),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.88),
 						color: returnStatColor(existingPart?.stats?.storage, selectedPart?.stats?.storage, 'storage', partChanged, confirmed),
 						align: 'left',
 						props: {},
@@ -935,20 +935,20 @@ const factoryPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			clearSelectedPartStatDetails();
 			refreshFactoryBackgrounds();
 		}
 		function displaySelectPart(part, confirmed) {
 			const partChanged = true;
 			setTimeout(function() {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-							posY: Game.placeEntityY(0.90),
-							width: (Game.entitySize * 23),
-							height: (Game.entitySize * 7),
+							posX: Aurora.placeEntityX(0.226, (Aurora.entitySize * 19.7)),
+							posY: Aurora.placeEntityY(0.90),
+							width: (Aurora.entitySize * 23),
+							height: (Aurora.entitySize * 7),
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
@@ -972,23 +972,23 @@ const factoryPage = {
 										// display modal
 										if (part.requires !== undefined) {
 											const msgs = ['Part Requires', 'Robotics Level: ' + part.requires.roboticSkill];
-											Game.methodSetup = {
+											Aurora.methodSetup = {
 												method: function(id) {
 													drawDialogueModal({
-														posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-														posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-														width: (Game.entitySize * 45),
-														height: (Game.entitySize * 50),
+														posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+														posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+														width: (Aurora.entitySize * 45),
+														height: (Aurora.entitySize * 50),
 														lineWidth: 1,
 														modalColor: 'darkgrey',
 														msgColor: 'white',
 														msgFont: '1em serif',
 														msgs: msgs,
-														msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-														msgDistance: (Game.entitySize * 10),
+														msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+														msgDistance: (Aurora.entitySize * 10),
 														bgColor: '',
 														isModalFilled: true,
-														id: Game.modalId,
+														id: Aurora.modalId,
 														action: {
 															method: function(id) {}
 														},
@@ -998,14 +998,14 @@ const factoryPage = {
 													});
 												}
 											};
-											Game.addMethod(Game.methodSetup);
-											Game.methodSetup = {
+											Aurora.addMethod(Aurora.methodSetup);
+											Aurora.methodSetup = {
 												method: function(id) {
 													drawButton({
-														posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-														posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-														width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-														height: (Game.entitySize * 7),
+														posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+														posY: Aurora.placeEntityY(0.815, (Aurora.entitySize * 30)),
+														width:(Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+														height: (Aurora.entitySize * 7),
 														lineWidth: 1,
 														btnColor: 'grey',
 														txtColor: 'white',
@@ -1015,10 +1015,10 @@ const factoryPage = {
 														id: 'requires-robot',
 														action: { 
 															method: function(id) { 
-																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																Game.deleteEntity(modal.methodId);
-																const btn = Game.methodObjects.find(build => build.id === 'requires-robot');
-																Game.deleteEntity(btn.methodId);
+																const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																Aurora.deleteEntity(modal.methodId);
+																const btn = Aurora.methodObjects.find(build => build.id === 'requires-robot');
+																Aurora.deleteEntity(btn.methodId);
 																gameObject.buildButtonDisabled = true;
 																displaySelectPart({}, true);
 																setTimeout(function() {
@@ -1032,7 +1032,7 @@ const factoryPage = {
 													});
 												}
 											};
-											Game.addMethod(Game.methodSetup);
+											Aurora.addMethod(Aurora.methodSetup);
 										}
 									}
 									
@@ -1044,7 +1044,7 @@ const factoryPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				let existingPart;
 				if (part.type === 'chassis') {
 					existingPart = gameObject.selectedRobot.find(build => build.type === 'chassis');
@@ -1130,14 +1130,14 @@ const factoryPage = {
 					gameObject.selectedRobot.splice(existingChassis, 1);
 				}
 				gameObject.selectedRobot.push(part);
-				Game.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
+				Aurora.methodObjects.find(x => x.id === 'robot-body').btnColor = part.img; // change this to the actual image when availiable
 			} else if (part.type === 'head') {
 				const existingHead = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'head');
 				if (existingHead > -1) {
 					gameObject.selectedRobot.splice(existingHead, 1);
 				}
 				gameObject.selectedRobot.push(part);
-				Game.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
+				Aurora.methodObjects.find(x => x.id === 'robot-head').btnColor = part.img; // change this to the actual image when availiable
 			} else if (part.type === 'leg') {
 				const existingLeg = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'leg' && partPos.legPos === part.legPos);
 				if (existingLeg > -1) {
@@ -1145,10 +1145,10 @@ const factoryPage = {
 				}
 				if (part.legPos === 'left') {
 					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-left-leg').btnColor = part.img; // change this to the actual image when availiable
+					Aurora.methodObjects.find(x => x.id === 'robot-left-leg').btnColor = part.img; // change this to the actual image when availiable
 				} else if (part.legPos === 'right') {
 					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-right-leg').btnColor = part.img; // change this to the actual image when availiable
+					Aurora.methodObjects.find(x => x.id === 'robot-right-leg').btnColor = part.img; // change this to the actual image when availiable
 				}
 			} else if (part.type === 'arm') {
 				const existingArm = gameObject.selectedRobot.findIndex(partPos => partPos.type === 'arm' && partPos.armPos === part.armPos);
@@ -1157,10 +1157,10 @@ const factoryPage = {
 				}
 				if (part.armPos === 'left') {
 					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-left-arm').btnColor = part.img; // change this to the actual image when availiable
+					Aurora.methodObjects.find(x => x.id === 'robot-left-arm').btnColor = part.img; // change this to the actual image when availiable
 				} else if (part.armPos === 'right') {
 					gameObject.selectedRobot.push(part);
-					Game.methodObjects.find(x => x.id === 'robot-right-arm').btnColor = part.img; // change this to the actual image when availiable
+					Aurora.methodObjects.find(x => x.id === 'robot-right-arm').btnColor = part.img; // change this to the actual image when availiable
 				}
 			}
 			gameObject.robotDesigns[gameObject.selectedRobotDesign].robotParts = gameObject.selectedRobot;
@@ -1218,13 +1218,13 @@ const factoryPage = {
 					clearRobotPreviewHighlight();
 
 					setTimeout(function() {
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawRect({
-									posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-									posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-									width: (Game.entitySize * 40),
-									height: (Game.entitySize * 30),
+									posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+									posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+									width: (Aurora.entitySize * 40),
+									height: (Aurora.entitySize * 30),
 									lineWidth: 1,
 									color: 'lightslategrey',
 									isFilled: true,
@@ -1235,14 +1235,14 @@ const factoryPage = {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
-						Game.methodSetup = {
+						Aurora.addMethod(Aurora.methodSetup);
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawText({
 									font: '2.3em serif',
 									msg: 'Robot Made',
-									posX: Game.placeEntityX(0.50),
-									posY: Game.placeEntityY(0.50),
+									posX: Aurora.placeEntityX(0.50),
+									posY: Aurora.placeEntityY(0.50),
 									color: 'white',
 									align: 'center',
 									props: {},
@@ -1251,14 +1251,14 @@ const factoryPage = {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
-						Game.methodSetup = {
+						Aurora.addMethod(Aurora.methodSetup);
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawText({
 									font: '1em serif',
 									msg: 'Robot Storage: ' + gameObject.robotsMade + '/' + gameObject.robotStorage,
-									posX: Game.placeEntityX(0.50),
-									posY: Game.placeEntityY(0.55),
+									posX: Aurora.placeEntityX(0.50),
+									posY: Aurora.placeEntityY(0.55),
 									color: 'white',
 									align: 'center',
 									props: {},
@@ -1267,26 +1267,26 @@ const factoryPage = {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 						const removeTitles = setInterval(function() {
 							clearInterval(removeTitles);
 							clearRobotBuildMessage();
 							clearSelectedPartStatDetails(); // clear the stats
 							refreshFactoryBackgrounds(); // refresh the background
 							createFactoryTitleStats(undefined, undefined, undefined, undefined);
-							const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+							const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 							if (!modal) {
 								displaySelectPart({}, true);
 							}
 							if (modal) {
-								Game.deleteEntity(modal.methodId);
-								Game.methodSetup = {
+								Aurora.deleteEntity(modal.methodId);
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawSimpleModal({
-											posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-											posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-											width: (Game.entitySize * 40),
-											height: (Game.entitySize * 30),
+											posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+											posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+											width: (Aurora.entitySize * 40),
+											height: (Aurora.entitySize * 30),
 											lineWidth: modal.lineWidth,
 											modalColor: modal.modalColor,
 											msgColor: modal.msgColor,
@@ -1297,14 +1297,14 @@ const factoryPage = {
 											footerMsg: modal.footerMsg,
 											bgColor: modal.bgColor,
 											isModalFilled: modal.isModalFilled,
-											id: Game.modalId,
+											id: Aurora.modalId,
 											action: modal.action,
 											props: {},
 											methodId: id
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 							}
 						}, 1500);
 					}, 100);
@@ -1318,13 +1318,13 @@ const factoryPage = {
 					arm1.count++;
 					arm2.count++;
 					setTimeout(function() {
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							method: function(id) {
 								drawSimpleModal({
-									posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-									posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-									width: (Game.entitySize * 40),
-									height: (Game.entitySize * 30),
+									posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+									posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+									width: (Aurora.entitySize * 40),
+									height: (Aurora.entitySize * 30),
 									lineWidth: 1,
 									modalColor: 'darkgrey',
 									msgColor: 'white',
@@ -1335,11 +1335,11 @@ const factoryPage = {
 									footerMsg: 'Tap here to continue',
 									bgColor: '',
 									isModalFilled: true,
-									id: Game.modalId,
+									id: Aurora.modalId,
 									action: { 
 										method: function(id) {
-											const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-											Game.deleteEntity(modal.methodId);
+											const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+											Aurora.deleteEntity(modal.methodId);
 											gameObject.buildButtonDisabled = true;
 											displaySelectPart({}, true);
 											setTimeout(function() {
@@ -1353,19 +1353,19 @@ const factoryPage = {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 					}, 100);
 				}
 				
 			} else {
 				setTimeout(function() {
-					Game.methodSetup = {
+					Aurora.methodSetup = {
 						method: function(id) {
 							drawSimpleModal({
-								posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-								posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-								width: (Game.entitySize * 40),
-								height: (Game.entitySize * 30),
+								posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+								posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+								width: (Aurora.entitySize * 40),
+								height: (Aurora.entitySize * 30),
 								lineWidth: 1,
 								modalColor: 'darkgrey',
 								msgColor: 'white',
@@ -1376,11 +1376,11 @@ const factoryPage = {
 								footerMsg: 'Tap here to continue',
 								bgColor: '',
 								isModalFilled: true,
-								id: Game.modalId,
+								id: Aurora.modalId,
 								action: { 
 									method: function(id) {
-										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-										Game.deleteEntity(modal.methodId);
+										const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+										Aurora.deleteEntity(modal.methodId);
 										gameObject.buildButtonDisabled = true;
 										displaySelectPart({}, true);
 										setTimeout(function() {
@@ -1394,7 +1394,7 @@ const factoryPage = {
 							});
 						}
 					};
-					Game.addMethod(Game.methodSetup);
+					Aurora.addMethod(Aurora.methodSetup);
 				}, 100);
 			}
 			clearRobotParts();
@@ -1419,17 +1419,17 @@ const factoryPage = {
 		}
 
 		function clearRobotBuildMessage() {
-			const builtBg = Game.methodObjects.find(x => x.id === 'robot-built-background');
+			const builtBg = Aurora.methodObjects.find(x => x.id === 'robot-built-background');
 			if (builtBg) {
-				Game.deleteEntity(builtBg.methodId);
+				Aurora.deleteEntity(builtBg.methodId);
 			}
-			const builtTitle = Game.methodObjects.find(x => x.id === 'robot-built-title');
+			const builtTitle = Aurora.methodObjects.find(x => x.id === 'robot-built-title');
 			if (builtTitle) {
-				Game.deleteEntity(builtTitle.methodId);
+				Aurora.deleteEntity(builtTitle.methodId);
 			}
-			const storageTitle = Game.methodObjects.find(x => x.id === 'robot-storage-title');
+			const storageTitle = Aurora.methodObjects.find(x => x.id === 'robot-storage-title');
 			if (storageTitle) {
-				Game.deleteEntity(storageTitle.methodId);
+				Aurora.deleteEntity(storageTitle.methodId);
 			}
 		}
 	}
@@ -1441,15 +1441,15 @@ const factoryParts = {
 	description: 'This is where the player can build parts for their robots',
 	loadPage: function() {
 		function factoryRobotParts() {
-			Game.clearStage();
+			Aurora.clearStage();
 			Particle.init();
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -1460,14 +1460,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.45),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.45),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1478,14 +1478,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.43),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.825, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.43),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1496,14 +1496,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.39),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.815, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.39),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1514,15 +1514,15 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			drawRobotPartButtons(); // draw the buttons in the top left
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -1543,14 +1543,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Parts',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -1559,9 +1559,9 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'factory-robot-parts',
 				method: function() {
 					if (gameObject.partsDisplayed === 'leg') {
@@ -1576,17 +1576,17 @@ const factoryParts = {
 					if (gameObject.partsDisplayed === 'head') {
 						selectRobotPartHead();
 					}
-					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+					const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 					if (modal?.isModalBtn !== undefined && modal.isModalBtn === true) {
-						Game.deleteEntity(modal.methodId);
+						Aurora.deleteEntity(modal.methodId);
 						setTimeout(function() {
-							Game.methodSetup = {
+							Aurora.methodSetup = {
 								method: function(id) {
 									drawSimpleModal({
-										posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-										posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-										width: (Game.entitySize * 40),
-										height: (Game.entitySize * 30),
+										posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+										posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+										width: (Aurora.entitySize * 40),
+										height: (Aurora.entitySize * 30),
 										lineWidth: modal.lineWidth,
 										modalColor: modal.modalColor,
 										msgColor: modal.msgColor,
@@ -1597,38 +1597,38 @@ const factoryParts = {
 										footerMsg: modal.footerMsg,
 										bgColor: modal.bgColor,
 										isModalFilled: modal.isModalFilled,
-										id: Game.modalId,
+										id: Aurora.modalId,
 										action: modal.action,
 										props: {},
 										methodId: id
 									});
 								}
 							};
-							Game.addMethod(Game.methodSetup);
+							Aurora.addMethod(Aurora.methodSetup);
 						}, 150);
 					} else {
 						if (modal?.methodId !== undefined && modal.isModalBtn === false) {
-							Game.deleteEntity(modal.methodId);
-							const btn = Game.methodObjects.find(build => build.id === 'requires-parts');
-							Game.deleteEntity(btn.methodId);
+							Aurora.deleteEntity(modal.methodId);
+							const btn = Aurora.methodObjects.find(build => build.id === 'requires-parts');
+							Aurora.deleteEntity(btn.methodId);
 							setTimeout(function() {
-								Game.methodSetup = {
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawDialogueModal({
-											posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-											posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-											width: (Game.entitySize * 45),
-											height: (Game.entitySize * 50),
+											posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+											posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+											width: (Aurora.entitySize * 45),
+											height: (Aurora.entitySize * 50),
 											lineWidth: modal.lineWidth,
 											modalColor: modal.modalColor,
 											msgColor: modal.msgColor,
 											msgFont: modal.msgFont,
 											msgs: modal.msgs,
-											msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-											msgDistance: (Game.entitySize * 10),
+											msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+											msgDistance: (Aurora.entitySize * 10),
 											bgColor: modal.bgColor,
 											isModalFilled: modal.isModalFilled,
-											id: Game.modalId,
+											id: Aurora.modalId,
 											action: modal.action,
 											isModalBtn: false,
 											props: {},
@@ -1636,14 +1636,14 @@ const factoryParts = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
-								Game.methodSetup = {
+								Aurora.addMethod(Aurora.methodSetup);
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawButton({
-											posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-											posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-											width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-											height: (Game.entitySize * 7),
+											posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+											posY: Aurora.placeEntityY(0.815, (Aurora.entitySize * 30)),
+											width:(Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+											height: (Aurora.entitySize * 7),
 											lineWidth: 1,
 											btnColor: 'grey',
 											txtColor: 'white',
@@ -1653,10 +1653,10 @@ const factoryParts = {
 											id: 'requires-parts',
 											action: { 
 												method: function(id) { 
-													const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-													Game.deleteEntity(modal.methodId);
-													const btn = Game.methodObjects.find(build => build.id === 'requires-parts');
-													Game.deleteEntity(btn.methodId);
+													const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+													Aurora.deleteEntity(modal.methodId);
+													const btn = Aurora.methodObjects.find(build => build.id === 'requires-parts');
+													Aurora.deleteEntity(btn.methodId);
 													if (gameObject.partsDisplayed === 'chassis') {
 														selectRobotPartChassis();
 													} else if (gameObject.partsDisplayed === 'head') {
@@ -1674,7 +1674,7 @@ const factoryParts = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 								
 							}, 150);
 						}
@@ -1685,13 +1685,13 @@ const factoryParts = {
 		}
 		factoryRobotParts(); // load the parts page
 		function drawRobotPartButtons() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.36, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.36, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1706,14 +1706,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.47, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.47, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1728,14 +1728,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.58, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.58, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1750,14 +1750,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.69, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.69, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1772,7 +1772,7 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function selectRobotPartChassis() {
 			gameObject.partsDisplayed = 'chassis';
@@ -1781,7 +1781,7 @@ const factoryParts = {
 			clearSelectedPartScrapDetails();
 			refreshFactoryBackgrounds();
 			clearRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-body-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-body-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredPartParts(gameObject.discoveredChassis);
@@ -1794,7 +1794,7 @@ const factoryParts = {
 			clearSelectedPartScrapDetails();
 			refreshFactoryBackgrounds();
 			clearRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-head-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-head-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredPartParts(gameObject.discoveredHeads);
@@ -1807,7 +1807,7 @@ const factoryParts = {
 			clearSelectedPartScrapDetails();
 			refreshFactoryBackgrounds();
 			clearRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-arm-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-arm-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredPartParts(gameObject.discoveredArms);
@@ -1820,52 +1820,52 @@ const factoryParts = {
 			clearSelectedPartScrapDetails();
 			refreshFactoryBackgrounds();
 			clearRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'robot-leg-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'robot-leg-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredPartParts(gameObject.discoveredLegs);
 		}
 		function clearRobotPartParts() {
-			const chassisParts = Game.methodObjects.filter(x => x.id === 'robot-chassis-part');
-			const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
-			const legParts = Game.methodObjects.filter(x => x.id === 'robot-leg-part');
-			const armParts = Game.methodObjects.filter(x => x.id === 'robot-arm-part');
-			const nextBtn = Game.methodObjects.filter(x => x.id === 'next-part');
-			const prevBtn = Game.methodObjects.filter(x => x.id === 'last-part');
-			const partCount = Game.methodObjects.filter(x => x.id === 'part-count');
+			const chassisParts = Aurora.methodObjects.filter(x => x.id === 'robot-chassis-part');
+			const headParts = Aurora.methodObjects.filter(x => x.id === 'robot-head-part');
+			const legParts = Aurora.methodObjects.filter(x => x.id === 'robot-leg-part');
+			const armParts = Aurora.methodObjects.filter(x => x.id === 'robot-arm-part');
+			const nextBtn = Aurora.methodObjects.filter(x => x.id === 'next-part');
+			const prevBtn = Aurora.methodObjects.filter(x => x.id === 'last-part');
+			const partCount = Aurora.methodObjects.filter(x => x.id === 'part-count');
 			if (chassisParts.length > 0) {
 				chassisParts.forEach((item, i) => {
-					Game.deleteEntity(chassisParts[i].methodId);
+					Aurora.deleteEntity(chassisParts[i].methodId);
 				});
 			}
 			if (headParts.length > 0) {
 				headParts.forEach((item, i) => {
-					Game.deleteEntity(headParts[i].methodId);
+					Aurora.deleteEntity(headParts[i].methodId);
 				});
 			}
 			if (legParts.length > 0) {
 				legParts.forEach((item, i) => {
-					Game.deleteEntity(legParts[i].methodId);
+					Aurora.deleteEntity(legParts[i].methodId);
 				});
 			}
 			if (armParts.length > 0) {
 				armParts.forEach((item, i) => {
-					Game.deleteEntity(armParts[i].methodId);
+					Aurora.deleteEntity(armParts[i].methodId);
 				});
 			}
 			if (nextBtn.length > 0) {
 				nextBtn.forEach((item, i) => {
-					Game.deleteEntity(nextBtn[i].methodId);
+					Aurora.deleteEntity(nextBtn[i].methodId);
 				});
 			}
 			if (prevBtn.length > 0) {
 				prevBtn.forEach((item, i) => {
-					Game.deleteEntity(prevBtn[i].methodId);
+					Aurora.deleteEntity(prevBtn[i].methodId);
 				});
 			}
 			if (partCount.length > 0) {
 				partCount.forEach((item, i) => {
-					Game.deleteEntity(partCount[i].methodId);
+					Aurora.deleteEntity(partCount[i].methodId);
 				});
 			}
 			setTimeout(function() {
@@ -1885,13 +1885,13 @@ const factoryParts = {
 						scrapCosts.push(scrapObj);
 					}
 				}
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '0.9em serif',
 							msg: part.name,
-							posX: Game.placeEntityX(0.255),
-							posY: Game.placeEntityY(0.62),
+							posX: Aurora.placeEntityX(0.255),
+							posY: Aurora.placeEntityY(0.62),
 							color: 'grey',
 							align: 'center',
 							props: {},
@@ -1900,14 +1900,14 @@ const factoryParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '0.9em serif',
 							msg: 'Count: ' + part.count,
-							posX: Game.placeEntityX(0.255),
-							posY: Game.placeEntityY(0.655),
+							posX: Aurora.placeEntityX(0.255),
+							posY: Aurora.placeEntityY(0.655),
 							color: 'grey',
 							align: 'center',
 							props: {},
@@ -1916,14 +1916,14 @@ const factoryParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '2em serif',
 							msg: 'Scrap',
-							posX: Game.placeEntityX(0.25),
-							posY: Game.placeEntityY(0.705),
+							posX: Aurora.placeEntityX(0.25),
+							posY: Aurora.placeEntityY(0.705),
 							color: 'grey',
 							align: 'center',
 							props: {},
@@ -1932,7 +1932,7 @@ const factoryParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				
 				scrapCosts.forEach((scrap, i) => {
 					let scrapType = '';
@@ -1963,13 +1963,13 @@ const factoryParts = {
 					scrapCost = scrap.cost;
 					// future Jordan just under 10,000 scrapCost would fit nicely in
 					// this spot
-					Game.methodSetup = {
+					Aurora.methodSetup = {
 						method: function(id) {
 							drawText({
 								font: '0.9em serif',
 								msg: scrapType + ': ' + scrapCost + ' (' + totalScrap + ')',
-								posX: Game.placeEntityX(0.08),
-								posY: Game.placeEntityY(0.75 + (i * 0.055)),
+								posX: Aurora.placeEntityX(0.08),
+								posY: Aurora.placeEntityY(0.75 + (i * 0.055)),
 								color: 'grey',
 								align: 'left',
 								props: {},
@@ -1978,7 +1978,7 @@ const factoryParts = {
 							});
 						}
 					};
-					Game.addMethod(Game.methodSetup);
+					Aurora.addMethod(Aurora.methodSetup);
 				});
 			}
 
@@ -1987,93 +1987,93 @@ const factoryParts = {
 		}
 		function clearSelectedPartScrapDetails() {
 			// clear the stats and the buttons
-			const selectPartBtn = Game.methodObjects.filter(x => x.id === 'confirm-part');
+			const selectPartBtn = Aurora.methodObjects.filter(x => x.id === 'confirm-part');
 			if (selectPartBtn) {
 				selectPartBtn.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectCommonScrap = Game.methodObjects.filter(x => x.id === 'commonScrap');
+			const selectCommonScrap = Aurora.methodObjects.filter(x => x.id === 'commonScrap');
 			if (selectCommonScrap) {
 				selectCommonScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectUnCommonScrap = Game.methodObjects.filter(x => x.id === 'unCommonScrap');
+			const selectUnCommonScrap = Aurora.methodObjects.filter(x => x.id === 'unCommonScrap');
 			if (selectUnCommonScrap) {
 				selectUnCommonScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectUniqueScrap = Game.methodObjects.filter(x => x.id === 'uniqueScrap');
+			const selectUniqueScrap = Aurora.methodObjects.filter(x => x.id === 'uniqueScrap');
 			if (selectUniqueScrap) {
 				selectUniqueScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectIntriguingScrap = Game.methodObjects.filter(x => x.id === 'intriguingScrap');
+			const selectIntriguingScrap = Aurora.methodObjects.filter(x => x.id === 'intriguingScrap');
 			if (selectIntriguingScrap) {
 				selectIntriguingScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectFacinatingScrap = Game.methodObjects.filter(x => x.id === 'facinatingScrap');
+			const selectFacinatingScrap = Aurora.methodObjects.filter(x => x.id === 'facinatingScrap');
 			if (selectFacinatingScrap) {
 				selectFacinatingScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectMythicScrap = Game.methodObjects.filter(x => x.id === 'mythicScrap');
+			const selectMythicScrap = Aurora.methodObjects.filter(x => x.id === 'mythicScrap');
 			if (selectMythicScrap) {
 				selectMythicScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectExoticScrap = Game.methodObjects.filter(x => x.id === 'exoticScrap');
+			const selectExoticScrap = Aurora.methodObjects.filter(x => x.id === 'exoticScrap');
 			if (selectExoticScrap) {
 				selectExoticScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			// clear the titles
-			const factoryTitle = Game.methodObjects.filter(x => x.id === 'factory-title');
+			const factoryTitle = Aurora.methodObjects.filter(x => x.id === 'factory-title');
 			if (factoryTitle) {
 				factoryTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
+			const statTitle = Aurora.methodObjects.filter(x => x.id === 'stat-title');
 			if (statTitle) {
 				statTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectAttStat = Game.methodObjects.filter(x => x.id === 'part-title');
+			const selectAttStat = Aurora.methodObjects.filter(x => x.id === 'part-title');
 			if (selectAttStat) {
 				selectAttStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectDefStat = Game.methodObjects.filter(x => x.id === 'count-title');
+			const selectDefStat = Aurora.methodObjects.filter(x => x.id === 'count-title');
 			if (selectDefStat) {
 				selectDefStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectSpdStat = Game.methodObjects.filter(x => x.id === 'scrap-title');
+			const selectSpdStat = Aurora.methodObjects.filter(x => x.id === 'scrap-title');
 			if (selectSpdStat) {
 				selectSpdStat.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			// redraw the title here
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Parts',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -2082,19 +2082,19 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function clearRobotPartPreviewHighlight() {
-			const headHighlight = Game.methodObjects.find(item => item.id === 'robot-head-parts');
+			const headHighlight = Aurora.methodObjects.find(item => item.id === 'robot-head-parts');
 			headHighlight.btnColor = 'lightslategrey';
 			headHighlight.txtColor = 'white';
-			const chassisHighlight = Game.methodObjects.find(item => item.id === 'robot-body-parts');
+			const chassisHighlight = Aurora.methodObjects.find(item => item.id === 'robot-body-parts');
 			chassisHighlight.btnColor = 'lightslategrey';
 			chassisHighlight.txtColor = 'white';
-			const armRightHighlight = Game.methodObjects.find(x => x.id === 'robot-arm-parts');
+			const armRightHighlight = Aurora.methodObjects.find(x => x.id === 'robot-arm-parts');
 			armRightHighlight.btnColor = 'lightslategrey';
 			armRightHighlight.txtColor = 'white';
-			const legRightHighlight = Game.methodObjects.find(x => x.id === 'robot-leg-parts');
+			const legRightHighlight = Aurora.methodObjects.find(x => x.id === 'robot-leg-parts');
 			legRightHighlight.btnColor = 'lightslategrey';
 			legRightHighlight.txtColor = 'white';
 		}
@@ -2120,13 +2120,13 @@ const factoryParts = {
 			// display all the parts on each page
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.330 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 3),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.330 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
 							btnColor: drawActiveParts(discoveredPart, false),
 							txtColor: 'black',
@@ -2146,14 +2146,14 @@ const factoryParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.241 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 9),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.241 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
 							btnColor: drawActiveParts(discoveredPart, false),
 							txtColor: 'black',
@@ -2173,20 +2173,20 @@ const factoryParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			drawNextPrevPartPartsList(partsDiscovered);
 			
 		}
 		function drawNextPrevPartPartsList(partList) {
 			// the part could be head, chassis, legs or arms
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.135),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+						posY: Aurora.placeEntityY(0.135),
+						width: (Aurora.entitySize * 22),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
@@ -2209,14 +2209,14 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.90),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+						posY: Aurora.placeEntityY(0.90),
+						width: (Aurora.entitySize * 22),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
@@ -2243,19 +2243,19 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 		}
 		function displaySelectPartParts(part) {
 			const partChanged = true;
 			setTimeout(function() {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-							posY: Game.placeEntityY(0.90),
-							width: (Game.entitySize * 23),
-							height: (Game.entitySize * 7),
+							posX: Aurora.placeEntityX(0.226, (Aurora.entitySize * 19.7)),
+							posY: Aurora.placeEntityY(0.90),
+							width: (Aurora.entitySize * 23),
+							height: (Aurora.entitySize * 7),
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
@@ -2333,13 +2333,13 @@ const factoryParts = {
 											if (problems > 0) {
 												gameObject.buildButtonDisabled = true;
 												setTimeout(function() {
-													Game.methodSetup = {
+													Aurora.methodSetup = {
 														method: function(id) {
 															drawSimpleModal({
-																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-																posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-																width: (Game.entitySize * 40),
-																height: (Game.entitySize * 30),
+																posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+																posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+																width: (Aurora.entitySize * 40),
+																height: (Aurora.entitySize * 30),
 																lineWidth: 1,
 																modalColor: 'darkgrey',
 																msgColor: 'white',
@@ -2350,11 +2350,11 @@ const factoryParts = {
 																footerMsg: 'Tap here to continue',
 																bgColor: '',
 																isModalFilled: true,
-																id: Game.modalId,
+																id: Aurora.modalId,
 																action: { 
 																	method: function(id) {
-																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																		Game.deleteEntity(modal.methodId); 
+																		const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																		Aurora.deleteEntity(modal.methodId); 
 																		if (gameObject.partsDisplayed === 'chassis') {
 																			selectRobotPartChassis();
 																		} else if (gameObject.partsDisplayed === 'head') {
@@ -2371,7 +2371,7 @@ const factoryParts = {
 															});
 														}
 													};
-													Game.addMethod(Game.methodSetup);
+													Aurora.addMethod(Aurora.methodSetup);
 												},200);
 					
 											} else {
@@ -2414,8 +2414,8 @@ const factoryParts = {
 														font: '2rem serif',
 														msg: '+          +',
 														align: 'center',
-														posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
-														posY: Game.placeEntityY(0.69, (Game.entitySize * 0.7)),
+														posX: Aurora.placeEntityX(0.259, (Aurora.entitySize * 0.7)),
+														posY: Aurora.placeEntityY(0.69, (Aurora.entitySize * 0.7)),
 														direction: 'top',
 														color: 'green',
 														ticks: 13,
@@ -2424,13 +2424,13 @@ const factoryParts = {
 												} else {
 													gameObject.buildButtonDisabled = true;
 													setTimeout(function() {
-														Game.methodSetup = {
+														Aurora.methodSetup = {
 															method: function(id) {
 																drawSimpleModal({
-																	posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-																	posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-																	width: (Game.entitySize * 40),
-																	height: (Game.entitySize * 30),
+																	posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+																	posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+																	width: (Aurora.entitySize * 40),
+																	height: (Aurora.entitySize * 30),
 																	lineWidth: 1,
 																	modalColor: 'darkgrey',
 																	msgColor: 'white',
@@ -2441,11 +2441,11 @@ const factoryParts = {
 																	footerMsg: 'Tap here to continue',
 																	bgColor: '',
 																	isModalFilled: true,
-																	id: Game.modalId,
+																	id: Aurora.modalId,
 																	action: { 
 																		method: function(id) {
-																			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																			Game.deleteEntity(modal.methodId); 
+																			const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																			Aurora.deleteEntity(modal.methodId); 
 																			if (gameObject.partsDisplayed === 'chassis') {
 																				selectRobotPartChassis();
 																			} else if (gameObject.partsDisplayed === 'head') {
@@ -2462,7 +2462,7 @@ const factoryParts = {
 																});
 															}
 														};
-														Game.addMethod(Game.methodSetup);
+														Aurora.addMethod(Aurora.methodSetup);
 													},200);
 												}
 											}
@@ -2479,23 +2479,23 @@ const factoryParts = {
 									} else {
 										// display modal
 										const msgs = ['Part Requires', 'Factory Level: ' + part.requires.factoryLevel, 'Engineering Level: ' + part.requires.engineeringSkill];
-										Game.methodSetup = {
+										Aurora.methodSetup = {
 											method: function(id) {
 												drawDialogueModal({
-													posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-													width: (Game.entitySize * 45),
-													height: (Game.entitySize * 50),
+													posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+													posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+													width: (Aurora.entitySize * 45),
+													height: (Aurora.entitySize * 50),
 													lineWidth: 1,
 													modalColor: 'darkgrey',
 													msgColor: 'white',
 													msgFont: '1em serif',
 													msgs: msgs,
-													msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-													msgDistance: (Game.entitySize * 10),
+													msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+													msgDistance: (Aurora.entitySize * 10),
 													bgColor: '',
 													isModalFilled: true,
-													id: Game.modalId,
+													id: Aurora.modalId,
 													action: {
 														method: function(id) {}
 													},
@@ -2505,14 +2505,14 @@ const factoryParts = {
 												});
 											}
 										};
-										Game.addMethod(Game.methodSetup);
-										Game.methodSetup = {
+										Aurora.addMethod(Aurora.methodSetup);
+										Aurora.methodSetup = {
 											method: function(id) {
 												drawButton({
-													posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-													width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-													height: (Game.entitySize * 7),
+													posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+													posY: Aurora.placeEntityY(0.815, (Aurora.entitySize * 30)),
+													width:(Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+													height: (Aurora.entitySize * 7),
 													lineWidth: 1,
 													btnColor: 'grey',
 													txtColor: 'white',
@@ -2522,10 +2522,10 @@ const factoryParts = {
 													id: 'requires-parts',
 													action: { 
 														method: function(id) { 
-															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-															Game.deleteEntity(modal.methodId);
-															const btn = Game.methodObjects.find(build => build.id === 'requires-parts');
-															Game.deleteEntity(btn.methodId);
+															const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+															Aurora.deleteEntity(modal.methodId);
+															const btn = Aurora.methodObjects.find(build => build.id === 'requires-parts');
+															Aurora.deleteEntity(btn.methodId);
 															if (gameObject.partsDisplayed === 'chassis') {
 																selectRobotPartChassis();
 															} else if (gameObject.partsDisplayed === 'head') {
@@ -2543,7 +2543,7 @@ const factoryParts = {
 												});
 											}
 										};
-										Game.addMethod(Game.methodSetup);
+										Aurora.addMethod(Aurora.methodSetup);
 									}
 									
 									
@@ -2561,7 +2561,7 @@ const factoryParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			createFactoryTitleScraps(part);
 				
 			}, 0);
@@ -2571,14 +2571,14 @@ const factoryParts = {
 
 // global factory methods
 function refreshFactoryBackgrounds() {
-	if (Game.methodObjects.find(x => x.id === 'robot-stat-background')) {
-		Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
+	if (Aurora.methodObjects.find(x => x.id === 'robot-stat-background')) {
+		Aurora.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
 	}
-	if (Game.methodObjects.find(x => x.id === 'part-background')) {
-		Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
+	if (Aurora.methodObjects.find(x => x.id === 'part-background')) {
+		Aurora.methodObjects.find(x => x.id === 'part-background').isAnim = true;
 	}
-	if (Game.methodObjects.find(x => x.id === 'factory-background')) {
-		Game.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
+	if (Aurora.methodObjects.find(x => x.id === 'factory-background')) {
+		Aurora.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
 	}
 }
 function drawActiveParts(discoveredPart, isRobotPage) {

@@ -16,13 +16,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 (function() {
-  if (!Game.canvas) {
+  if (!Aurora.canvas) {
     console.log('No game stage detected.');
   } else {
     // get this party train moving
-    Main.stage = Game.canvas.getContext('2d');
+    Main.stage = Aurora.canvas.getContext('2d');
     window.addEventListener('resize', resizeStage, false);
-    Game.canvas.addEventListener('click', function(event) {
+    Aurora.canvas.addEventListener('click', function(event) {
       screenTapped(event);
     }, false);
     resizeStage();
@@ -40,7 +40,7 @@
 function mainLoop() {
 
   Main.interval = setInterval(function() {
-    if (Game.isLoaded) {
+    if (Aurora.isLoaded) {
       if (Main.methodsToRun.length > 0) {
         // run the game
         for (let i = 0; i < Main.methodsToRun.length; i++) {
@@ -53,7 +53,7 @@ function mainLoop() {
 			  Main.methodsToRun.sort(function(a, b) {
 				return a?.layer - b?.layer;
 			  });
-			  Game.methodObjects.sort(function(a, b) {
+			  Aurora.methodObjects.sort(function(a, b) {
 				return a?.layer - b?.layer;
 			  });
 		  }
@@ -63,8 +63,8 @@ function mainLoop() {
           }
           Main.methodsToRun[i].method(Main.methodsToRun[i].methodId); // run through all the methods the user sent us
           if (Main.isStageTapped) { // when the stage is tapped
-            if (Game.methodObjects[i]?.isBtn) { // look to see if the user tapped on a button
-              isButtonTapped(Game.methodObjects[i]);
+            if (Aurora.methodObjects[i]?.isBtn) { // look to see if the user tapped on a button
+              isButtonTapped(Aurora.methodObjects[i]);
               if (i == Main.methodsToRun.length - 1) {
                 Main.isStageTapped = false;
                 Main.tappedX = 0;
@@ -74,13 +74,13 @@ function mainLoop() {
               Main.isStageTapped = false;
             }
           }
-			if (Game.methodObjects[i]?.id === Game.modalId) {
+			if (Aurora.methodObjects[i]?.id === Aurora.modalId) {
 				Main.isModalVisible = true;
 			}
         }
         collisionCheck();
-        if (Main.isResizing && Game.pageResized.section.length > 0) {
-			Game.pageResized.method();
+        if (Main.isResizing && Aurora.pageResized.section.length > 0) {
+			Aurora.pageResized.method();
 		}
 
       } else {
@@ -92,21 +92,21 @@ function mainLoop() {
     } else {
       removeLoadingScreen();
     }
-  }, Game.frameRate);
+  }, Aurora.frameRate);
 }
 
 function resizeStage() {
   // don't want to grab the new width and height too many times..
   clearTimeout(Main.resizeWindow);
-  if (!Game.keepPreviousSize) {
+  if (!Aurora.keepPreviousSize) {
 	Main.resizeWindow = setTimeout(function() {
 		// resize the game stage and set new base values
-		Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
-		Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
-		Game.entitySize = (Game.canvas.height * 0.01);
-		Game.entityWidth = (Game.canvas.width * 0.01);
+		Aurora.canvas.width = window.innerWidth * Aurora.stageWidthPrct;
+		Aurora.canvas.height = window.innerHeight * Aurora.stageHeightPrct;
+		Aurora.entitySize = (Aurora.canvas.height * 0.01);
+		Aurora.entityWidth = (Aurora.canvas.width * 0.01);
 		Main.isResizing = true;
-		Game.isLoaded = true;
+		Aurora.isLoaded = true;
 		const doneResizing = setTimeout(function() {
 		  Main.isResizing = false;
 		  removeLoadingScreen();
@@ -118,7 +118,7 @@ function resizeStage() {
 }
 
 function screenTapped(event) {
-	const boundingBox = Game.canvas.getBoundingClientRect();
+	const boundingBox = Aurora.canvas.getBoundingClientRect();
 	Main.isStageTapped = event ? true : false;
 	Main.tappedX = event.clientX - boundingBox.left;
 	Main.tappedY = event.clientY - boundingBox.top;
@@ -149,8 +149,8 @@ function collisionCheck() {
   for (let i = 0; i < Main.collisions.length; i++) {
     let primary = Main.collisions[i].primary;
     let target = Main.collisions[i].target;
-    let primaryMethods = Game.methodObjects.filter(x => x.id === primary);
-    let targetMethods = Game.methodObjects.filter(x => x.id === target);
+    let primaryMethods = Aurora.methodObjects.filter(x => x.id === primary);
+    let targetMethods = Aurora.methodObjects.filter(x => x.id === target);
     // find out if a collision is happening
 	const targetHit = targetMethods.find(target => 
 		primaryMethods.find(primary => 
@@ -166,25 +166,25 @@ function collisionCheck() {
 
 function backgroundAnimationCheck(index) {
 	// future Jordan, look into simplifying this check just like the collision check method above
-  if (!Main.isResizing && Game.methodObjects[index] && Game.methodObjects[index].isBackground) { // is this rect a backgound..
+  if (!Main.isResizing && Aurora.methodObjects[index] && Aurora.methodObjects[index].isBackground) { // is this rect a backgound..
 	 // find what's being animated
-	const animatedObjects = Game.methodObjects.filter(
-		obj => obj.isAnim && !obj.isBtn && obj.methodId !== Game.methodObjects[index].methodId && 
-		obj.posY >= Game.methodObjects[index].posY - (!obj.height ? obj.width : obj.height) && 
-		obj.posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + (!obj.height ? obj.width : obj.height) &&
-		obj.posX >= Game.methodObjects[index].posX - obj.width &&
-		obj.posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + obj.width
+	const animatedObjects = Aurora.methodObjects.filter(
+		obj => obj.isAnim && !obj.isBtn && obj.methodId !== Aurora.methodObjects[index].methodId && 
+		obj.posY >= Aurora.methodObjects[index].posY - (!obj.height ? obj.width : obj.height) && 
+		obj.posY <= Aurora.methodObjects[index].posY + Aurora.methodObjects[index].height + (!obj.height ? obj.width : obj.height) &&
+		obj.posX >= Aurora.methodObjects[index].posX - obj.width &&
+		obj.posX <= Aurora.methodObjects[index].posX + Aurora.methodObjects[index].width + obj.width
 	);
 	for (let j = 0; j < animatedObjects.length; j++) {
 		// look for colliding methods objects
-		const collidingMethods = Game.methodObjects.filter(
-			obj => !obj.isAnim && !obj.isBackground && obj.methodId !== Game.methodObjects[index].methodId && 
-			obj.posY >= Game.methodObjects[index].posY - (!obj.height ? obj.width : obj.height) && 
-			obj.posY <= Game.methodObjects[index].posY + Game.methodObjects[index].height + (!obj.height ? obj.width : obj.height) || obj.align &&
-			obj.posX >= Game.methodObjects[index].posX - obj.width &&
-			obj.posX <= Game.methodObjects[index].posX + Game.methodObjects[index].width + obj.width || obj.align
+		const collidingMethods = Aurora.methodObjects.filter(
+			obj => !obj.isAnim && !obj.isBackground && obj.methodId !== Aurora.methodObjects[index].methodId && 
+			obj.posY >= Aurora.methodObjects[index].posY - (!obj.height ? obj.width : obj.height) && 
+			obj.posY <= Aurora.methodObjects[index].posY + Aurora.methodObjects[index].height + (!obj.height ? obj.width : obj.height) || obj.align &&
+			obj.posX >= Aurora.methodObjects[index].posX - obj.width &&
+			obj.posX <= Aurora.methodObjects[index].posX + Aurora.methodObjects[index].width + obj.width || obj.align
 		);
-		Game.methodObjects[index].isAnim = true; // animate the background
+		Aurora.methodObjects[index].isAnim = true; // animate the background
 		const animateRects = collidingMethods.filter(rect => rect.height);
 		for (let i = 0; i < animateRects.length; i++) {
 			animateRects[i].isAnim = true;
@@ -199,32 +199,32 @@ function backgroundAnimationCheck(index) {
 }
 
 function doesMethodParamExist(methodId) {
-  return Game.methodObjects.find(x => x.methodId === methodId) ? true : false;
+  return Aurora.methodObjects.find(x => x.methodId === methodId) ? true : false;
 }
 
 function findMethodParamIndex(methodId) {
-  return Game.methodObjects.findIndex(x => x.methodId === methodId);
+  return Aurora.methodObjects.findIndex(x => x.methodId === methodId);
 }
 // this method grabs the gif image frames and assigns it to the correct method Id
 function assignImages(pngs, methodId) {
-  if (Game.gifImageList.length === 0) { // if the list is empty, add the new method
-    Game.gifImageList.push({pngs: pngs, methodId: methodId});
+  if (Aurora.gifImageList.length === 0) { // if the list is empty, add the new method
+    Aurora.gifImageList.push({pngs: pngs, methodId: methodId});
   } else { // if the list has something, look and see if the same id is getting used
-    const imgCheck = Game.gifImageList.filter(img => img.methodId === methodId);
+    const imgCheck = Aurora.gifImageList.filter(img => img.methodId === methodId);
     if (imgCheck.length === 0) {
-      Game.gifImageList.push({pngs: pngs, methodId: methodId});
+      Aurora.gifImageList.push({pngs: pngs, methodId: methodId});
     }
   }
-  Game.methodObjects.find(x => x.methodId === methodId).images = pngs;
-  Game.isLoaded = true;
+  Aurora.methodObjects.find(x => x.methodId === methodId).images = pngs;
+  Aurora.isLoaded = true;
 }
 function removeLoadingScreen() {
 	const checkLoad = setInterval(function() {
-		const loading = Game.methodObjects.find(x => x.id === Game.loadingId)?.methodId;
+		const loading = Aurora.methodObjects.find(x => x.id === Aurora.loadingId)?.methodId;
 		if (loading) {
 			// remove the loading message
 			clearInterval(checkLoad);
-			Game.deleteEntity(loading);
+			Aurora.deleteEntity(loading);
 		}
 	}, 300);
   

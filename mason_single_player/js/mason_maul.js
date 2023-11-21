@@ -16,10 +16,10 @@ const maulPage = {
 	description: 'The multiplayer game',
 	loadPage: function() {
 		gameObject.selectedRobot = [];
-		Game.keepPreviousSize = true;
-		Game.clearStage();
-		let prevCanvasWidth = JSON.parse(JSON.stringify(Game.canvas.width));
-		let prevCanvasHeight = JSON.parse(JSON.stringify(Game.canvas.height));
+		Aurora.keepPreviousSize = true;
+		Aurora.clearStage();
+		let prevCanvasWidth = JSON.parse(JSON.stringify(Aurora.canvas.width));
+		let prevCanvasHeight = JSON.parse(JSON.stringify(Aurora.canvas.height));
 		let selectBuildTowerIndex = 0;
 		const baseRobotAttack = 3;
 		const baseTowerAttack = 3;
@@ -42,12 +42,12 @@ const maulPage = {
 		} else if (gameObject.gamesWon === 1) {
 			redAIThinkTimer = 1300;
 		}
-		const tutorialGames = 2;
+		const tutorialAuroras = 2;
 		let aiThinking = true;
 		let gameTimer;
 		Particle.init();
-		setupGame();
-		Game.pageResized = {
+		setupAurora();
+		Aurora.pageResized = {
 			section: 'arena-game',
 			method: function() {
 				if (gameObject.selectedRobotDesign !== -1) {
@@ -55,7 +55,7 @@ const maulPage = {
 				}
 			}
 		}
-		function setupGame() {
+		function setupAurora() {
 			generateRedArenaRobots();
 			generateRedArenaTowers();
 			drawGrassBackGround();
@@ -69,16 +69,16 @@ const maulPage = {
 			drawRedRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
-			readySetGoGame();
-			Game.methodSetup = { method: function(id) { moveBlueRobots(); }};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = { method: function(id) { moveRedRobots(); }};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			readySetGoAurora();
+			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					if (aiThinking === true) {
 						redAiMind(); 
@@ -91,8 +91,8 @@ const maulPage = {
 					}
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
+			Aurora.addMethod(Aurora.methodSetup);
+			if (gameObject.gamesWon > tutorialAuroras) { // give the player a few 'easy' games
 				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
 			} else {
 				gameObject.redMaxTowerLevel = 1;
@@ -101,11 +101,11 @@ const maulPage = {
 			gameObject.gamesPlayed += 1;
 		}
 		function setBlueRightRoadNavCollisions() {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'blue-right-stop-1',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
@@ -113,12 +113,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'blue-right-stop-2',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 1) { // moving left on the road
 						robotPasser.stop++;
@@ -126,12 +126,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'blue-stop-3',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
@@ -139,12 +139,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 				target: 'red-base',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 3) { // attack the red base
 						robotPasser.stop++;
@@ -152,14 +152,14 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function setRedRightRoadNavCollisions() {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
 				target: 'red-right-stop-1',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
@@ -167,12 +167,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
 				target: 'red-right-stop-2',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 1) { // moving left on the road
 						robotPasser.stop++;
@@ -180,12 +180,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
 				target: 'red-stop-3',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
@@ -193,12 +193,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
 				target: 'blue-base',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 3) { // attack the blue base
 						robotPasser.stop++;
@@ -206,14 +206,14 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function setBlueLeftRoadNavCollisions() {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 				target: 'blue-left-stop-1',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
@@ -221,12 +221,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 				target: 'blue-left-stop-2',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 1) { // moving right on the road
 						robotPasser.stop++;
@@ -234,12 +234,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 				target: 'blue-stop-3',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
@@ -247,12 +247,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 				target: 'red-base',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaBlueAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 3) { // attack the red base
 						robotPasser.stop++;
@@ -260,69 +260,69 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function towerBulletFindRobot(teamColor) {
-			const bullets = Game.methodObjects.filter(x => x.id === teamColor + '-tower-bullet');
+			const bullets = Aurora.methodObjects.filter(x => x.id === teamColor + '-tower-bullet');
 			if (bullets.length > 0) {
 				bullets.forEach((bullet, i) => {
 					if (bullet) {
-						const robot = Game.methodObjects.find(x => x.id === bullet.props.target);
+						const robot = Aurora.methodObjects.find(x => x.id === bullet.props.target);
 						if (robot) {
 							// check the left and right of the bullet first
 							if (bullet.posX >= robot.posX) {
-								bullet.posX -= Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								bullet.posX -= Aurora.moveEntity(0.3, Aurora.enumDirections.leftRight);
 								if (bullet.posY >= robot.posY) {
-									bullet.posY -= Game.moveEntity(0.3, Game.enumDirections.topDown);
+									bullet.posY -= Aurora.moveEntity(0.3, Aurora.enumDirections.topDown);
 								}
 								if (bullet.posY <= robot.posY) {
-									bullet.posY += Game.moveEntity(0.3, Game.enumDirections.topDown);
+									bullet.posY += Aurora.moveEntity(0.3, Aurora.enumDirections.topDown);
 								}
 							}
 							if (bullet.posX <= robot.posX) {
-								bullet.posX += Game.moveEntity(0.3, Game.enumDirections.leftRight);
+								bullet.posX += Aurora.moveEntity(0.3, Aurora.enumDirections.leftRight);
 								if (bullet.posY >= robot.posY) {
-									bullet.posY -= Game.moveEntity(0.3, Game.enumDirections.topDown);
+									bullet.posY -= Aurora.moveEntity(0.3, Aurora.enumDirections.topDown);
 								}
 								if (bullet.posY <= robot.posY) {
-									bullet.posY += Game.moveEntity(0.3, Game.enumDirections.topDown);
+									bullet.posY += Aurora.moveEntity(0.3, Aurora.enumDirections.topDown);
 								}
 							}
 							// check above and below the bullet next
 							if (bullet.posY >= robot.posY) {
-								bullet.posY -= Game.moveEntity(0.3, Game.enumDirections.topDown);
+								bullet.posY -= Aurora.moveEntity(0.3, Aurora.enumDirections.topDown);
 								if (bullet.posX >= robot.posX) {
-									bullet.posX -= Game.moveEntity(0.3, Game.enumDirections.leftRight);
+									bullet.posX -= Aurora.moveEntity(0.3, Aurora.enumDirections.leftRight);
 								}
 								if (bullet.posX <= robot.posX) {
-									bullet.posX += Game.moveEntity(0.3, Game.enumDirections.leftRight);
+									bullet.posX += Aurora.moveEntity(0.3, Aurora.enumDirections.leftRight);
 								}
 							}
 							if (bullet.posY <= robot.posY) {
-								bullet.posY += Game.moveEntity(0.3, Game.enumDirections.topDown);
+								bullet.posY += Aurora.moveEntity(0.3, Aurora.enumDirections.topDown);
 								if (bullet.posX >= robot.posX) {
-									bullet.posX -= Game.moveEntity(0.3, Game.enumDirections.leftRight);
+									bullet.posX -= Aurora.moveEntity(0.3, Aurora.enumDirections.leftRight);
 								}
 								if (bullet.posX <= robot.posX) {
-									bullet.posX += Game.moveEntity(0.3, Game.enumDirections.leftRight);
+									bullet.posX += Aurora.moveEntity(0.3, Aurora.enumDirections.leftRight);
 								}
 							}
 						} else {
 							// if the robot doesn't exist anymore, remove the bullet
-							Game.deleteEntity(bullet.methodId);
+							Aurora.deleteEntity(bullet.methodId);
 						}
 					}
 				});
 			}
 		}
 		function blueTowerShootRobot(towerStats, primaryId) {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
 						posX: towerStats.posX + (towerStats.width / 2),
 						posY: towerStats.posY,
-						width: Game.entitySize * 1,
-						height: Game.entitySize * 1,
+						width: Aurora.entitySize * 1,
+						height: Aurora.entitySize * 1,
 						lineWidth: 1,
 						color: 'gold',
 						isFilled: true,
@@ -336,16 +336,16 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function redTowerShootRobot(towerStats, primaryId) {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
 						posX: towerStats.posX + (towerStats.width / 2),
 						posY: towerStats.posY,
-						width: Game.entitySize * 1,
-						height: Game.entitySize * 1,
+						width: Aurora.entitySize * 1,
+						height: Aurora.entitySize * 1,
 						lineWidth: 1,
 						color: 'gold',
 						isFilled: true,
@@ -359,14 +359,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function towerTargetRange(primary, target, color) {
-			if (gameObject.arenaGameStarted) {
+			if (gameObject.arenaAuroraStarted) {
 				let shootSpeed;
-				const tower = Game.methodObjects.find(x => x.id === target);
-				const towerStats = Game.methodObjects.find(x => x.id === tower.props.towerId);
-				const robot = Game.methodObjects.find(bg => bg.id === primary);
+				const tower = Aurora.methodObjects.find(x => x.id === target);
+				const towerStats = Aurora.methodObjects.find(x => x.id === tower.props.towerId);
+				const robot = Aurora.methodObjects.find(bg => bg.id === primary);
 				let robotPasser;
 				const robotFinder = gameObject.arenaRedAttackers.find(bg => bg.id === primary);
 				if (robotFinder) {
@@ -388,7 +388,7 @@ const maulPage = {
 							if (robotPasser.attackTower && robotPasser.towerTargePosX === undefined && robotPasser.towerTargePosY === undefined) {
 								robotPasser.towerTargePosX = towerStats.posX;
 								robotPasser.towerTargePosY = towerStats.posY;
-								Game.collisionSetup = {
+								Aurora.collisionSetup = {
 									primary: robotPasser.id, 
 									target: target,
 									method: function(id) {
@@ -397,7 +397,7 @@ const maulPage = {
 											if (gameObject.gameSounds) {
 												towerExplosionSound.cloneNode(true).play();
 											}
-											Game.removeCollision(robotPasser.id, target);
+											Aurora.removeCollision(robotPasser.id, target);
 											robotPasser.attackTower = false;
 											robotPasser.towerTargePosX = undefined;
 											robotPasser.towerTargePosY = undefined;
@@ -408,7 +408,7 @@ const maulPage = {
 												color: 'yellow',
 												ticks: 11,
 												count: 8,
-												size: (Game.entitySize),
+												size: (Aurora.entitySize),
 												speed: 1.3,
 											});
 											const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
@@ -431,7 +431,7 @@ const maulPage = {
 												towerStats.props.stats.lvl = 0;
 												towerStats.props.stats.spd = 0;
 												towerStats.props.stats.splash = 0;
-												const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
+												const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === primary);
 												deleteRobotMethodObject(robotHitMethodObject, 1);
 												Particle.floatingText({
 													font: '1rem serif',
@@ -444,20 +444,20 @@ const maulPage = {
 													ticks: 33,
 													speed: 0.1,
 												});
-												gameObject.arenaBlueGameMoney += robotMoneyGained.tank;
+												gameObject.arenaBlueAuroraMoney += robotMoneyGained.tank;
 											}
 										}
 									},
 									methodId: undefined,
 								}
-								Game.addCollision(Game.collisionSetup);
+								Aurora.addCollision(Aurora.collisionSetup);
 							}
 							blueTowerShootRobot(towerStats, primary);
 						} else if (color === 'red') {
 							if (robotPasser.attackTower && robotPasser.towerTargePosX === undefined && robotPasser.towerTargePosY === undefined) {
 								robotPasser.towerTargePosX = towerStats.posX;
 								robotPasser.towerTargePosY = towerStats.posY;
-								Game.collisionSetup = {
+								Aurora.collisionSetup = {
 									primary: robotPasser.id, 
 									target: target,
 									method: function(id) {
@@ -466,7 +466,7 @@ const maulPage = {
 											if (gameObject.gameSounds) {
 												towerExplosionSound.cloneNode(true).play();
 											}
-											Game.removeCollision(robotPasser.id, target);
+											Aurora.removeCollision(robotPasser.id, target);
 											robotPasser.attackTower = false;
 											robotPasser.towerTargePosX = undefined;
 											robotPasser.towerTargePosY = undefined;
@@ -477,7 +477,7 @@ const maulPage = {
 												color: 'yellow',
 												ticks: 11,
 												count: 8,
-												size: (Game.entitySize),
+												size: (Aurora.entitySize),
 												speed: 1.3,
 											});
 											const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
@@ -500,16 +500,16 @@ const maulPage = {
 												towerStats.props.stats.lvl = 0;
 												towerStats.props.stats.spd = 0;
 												towerStats.props.stats.splash = 0;
-												const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === primary);
+												const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === primary);
 												deleteRobotMethodObject(robotHitMethodObject, 1);
-												gameObject.arenaRedGameMoney += robotMoneyGained.tank;
+												gameObject.arenaRedAuroraMoney += robotMoneyGained.tank;
 											}
 										}
 								
 									},
 									methodId: undefined,
 								}
-								Game.addCollision(Game.collisionSetup);
+								Aurora.addCollision(Aurora.collisionSetup);
 							}
 							redTowerShootRobot(towerStats, primary);
 						}
@@ -525,7 +525,7 @@ const maulPage = {
 			}
 		}
 		function setBlueRightTowerRangeCollisions(robotId) {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-5', 
 				method: function(id) {
@@ -533,8 +533,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-6', 
 				method: function(id) {
@@ -542,8 +542,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-7', 
 				method: function(id) {
@@ -551,8 +551,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-8', 
 				method: function(id) {
@@ -560,10 +560,10 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function setRedRightTowerRangeCollisions(robotId) {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-5', 
 				method: function(id) {
@@ -571,8 +571,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-6', 
 				method: function(id) {
@@ -580,8 +580,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-7', 
 				method: function(id) {
@@ -589,8 +589,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-8', 
 				method: function(id) {
@@ -598,10 +598,10 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function setBlueLeftTowerRangeCollisions(robotId) {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-1', 
 				method: function(id) {
@@ -609,8 +609,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-2', 
 				method: function(id) {
@@ -618,8 +618,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-3', 
 				method: function(id) {
@@ -627,8 +627,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'blue-tower-range-4', 
 				method: function(id) {
@@ -636,10 +636,10 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function setRedLeftTowerRangeCollisions(robotId) {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-1', 
 				method: function(id) {
@@ -647,8 +647,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-2', 
 				method: function(id) {
@@ -656,8 +656,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-3', 
 				method: function(id) {
@@ -665,8 +665,8 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-4', 
 				method: function(id) {
@@ -674,14 +674,14 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function setRedLeftRoadNavCollisions() {
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 				target: 'red-left-stop-1',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 0) { // moving down the road now
 						robotPasser.stop++;
@@ -689,12 +689,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 				target: 'red-left-stop-2',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 1) { // moving right on the road
 						robotPasser.stop++;
@@ -702,12 +702,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 				target: 'red-stop-3',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 2) { // moving up the road
 						robotPasser.stop++;
@@ -715,12 +715,12 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
-			Game.collisionSetup = {
+			Aurora.addCollision(Aurora.collisionSetup);
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 				target: 'blue-base',
 				method: function(id) {
-					const robot = Game.methodObjects.find(bg => bg.id === this.primary);
+					const robot = Aurora.methodObjects.find(bg => bg.id === this.primary);
 					const robotPasser = gameObject.arenaRedAttackers.find(bg => bg.id === this.primary); 
 					if (robotPasser?.stop === 3) { // attack the blue base
 						robotPasser.stop++;
@@ -728,16 +728,16 @@ const maulPage = {
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 		}
 		function drawGrassBackGround() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: Game.canvas.height,
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: Aurora.canvas.height,
 						lineWidth: 1,
 						color: '#3C7521',
 						isFilled: true,
@@ -748,16 +748,16 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImagePattern({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: (Game.canvas.width),
-						height: (Game.canvas.height),
-						patternWidth: (Game.canvas.height * 0.2),
-						patternHeight: (Game.canvas.height * 0.2),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: (Aurora.canvas.width),
+						height: (Aurora.canvas.height),
+						patternWidth: (Aurora.canvas.height * 0.2),
+						patternHeight: (Aurora.canvas.height * 0.2),
 						images: [grassImg],
 						selectedImage: 0,
 						animTicks: 0,
@@ -769,22 +769,22 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function selectArenaRobot(index) {
-			if (gameObject.arenaGameStarted && gameObject.robotArenaDesigns[index].robotParts.length === 6) {
-				const allBackgrounds = Game.methodObjects.filter(bg => bg.id.includes('arena-robot-details-btn-'));
+			if (gameObject.arenaAuroraStarted && gameObject.robotArenaDesigns[index].robotParts.length === 6) {
+				const allBackgrounds = Aurora.methodObjects.filter(bg => bg.id.includes('arena-robot-details-btn-'));
 				allBackgrounds.forEach(bg => {
 					bg.color = 'darkgrey';	
 				});
-				const selectRobotBG = Game.methodObjects.find(bg => bg.id === 'arena-robot-details-btn-' + index);
+				const selectRobotBG = Aurora.methodObjects.find(bg => bg.id === 'arena-robot-details-btn-' + index);
 				selectRobotBG.color = 'yellow';
 				gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 				gameObject.selectedRobotDesign = index;
 				// reset the send button colors
-				const sendRobotsLeft = Game.methodObjects.find(bs => bs.id === 'send-robots-left');
+				const sendRobotsLeft = Aurora.methodObjects.find(bs => bs.id === 'send-robots-left');
 				sendRobotsLeft.btnColor = 'grey';
-				const sendRobotsRight = Game.methodObjects.find(bs => bs.id === 'send-robots-right');
+				const sendRobotsRight = Aurora.methodObjects.find(bs => bs.id === 'send-robots-right');
 				sendRobotsRight.btnColor = 'grey';
 			}
 		}
@@ -815,13 +815,13 @@ const maulPage = {
 			return towerCost;
 		}
 		function drawRobotSelection() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0.90),
-						width: Game.canvas.width,
-						height: (Game.canvas.height * 0.10),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0.90),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height * 0.10),
 						lineWidth: 1,
 						color: 'brown',
 						isFilled: true,
@@ -832,7 +832,7 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
 			for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
@@ -857,13 +857,13 @@ const maulPage = {
 					posX = 0.739;
 					posXoffset = 1;
 				}
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.15),
-							height: (Game.entitySize * 10),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.15),
+							height: (Aurora.entitySize * 10),
 							lineWidth: 1,
 							color: 'darkgrey',
 							isBackground: false,
@@ -874,14 +874,14 @@ const maulPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(posX + (0.07), (Game.entitySize * (posXoffset + 2))),
-							posY: Game.placeEntityY(posY + (0.033), (Game.entitySize * posYoffset)),
-							width: (Game.entitySize * 3),
-							height: (Game.entitySize * 3),
+							posX: Aurora.placeEntityX(posX + (0.07), (Aurora.entitySize * (posXoffset + 2))),
+							posY: Aurora.placeEntityY(posY + (0.033), (Aurora.entitySize * posYoffset)),
+							width: (Aurora.entitySize * 3),
+							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
 							btnColor: drawRobotSelectPreviewParts('chassis', gameObject.robotArenaDesigns[i].robotParts),
 							txtColor: 'white',
@@ -897,13 +897,13 @@ const maulPage = {
 							isModalBtn: false,
 							props: {
 								drawHead: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 0.3),
-												posY: parent.posY - (Game.entitySize * 2.5),
-												width: (Game.entitySize * 2.5),
-												height: (Game.entitySize * 2.5),
+												posX: parent.posX + (Aurora.entitySize * 0.3),
+												posY: parent.posY - (Aurora.entitySize * 2.5),
+												width: (Aurora.entitySize * 2.5),
+												height: (Aurora.entitySize * 2.5),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('head', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
@@ -922,16 +922,16 @@ const maulPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawLeftArm: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX - (Game.entitySize * 0.75),
+												posX: parent.posX - (Aurora.entitySize * 0.75),
 												posY: parent.posY,
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-arm', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
@@ -950,16 +950,16 @@ const maulPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawRightArm: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 3),
+												posX: parent.posX + (Aurora.entitySize * 3),
 												posY: parent.posY,
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-arm', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
@@ -978,16 +978,16 @@ const maulPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawLeftLeg: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 0.25),
-												posY: parent.posY + (Game.entitySize * 3),
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												posX: parent.posX + (Aurora.entitySize * 0.25),
+												posY: parent.posY + (Aurora.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-leg', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
@@ -1006,16 +1006,16 @@ const maulPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawRightLeg: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 2.15),
-												posY: parent.posY + (Game.entitySize * 3),
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												posX: parent.posX + (Aurora.entitySize * 2.15),
+												posY: parent.posY + (Aurora.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-leg', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
@@ -1034,26 +1034,26 @@ const maulPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 							},
 							methodId: id
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				drawRobotSelectParts('arena-robot-' + i);
 				if (gameObject.robotArenaDesigns[i].robotParts.length === 6) {
 					setTimeout(function() {
 						const robotCost = findRobotDirectiveCost(gameObject.robotArenaDesigns[i].directive);
-						Game.methodSetup = {
+						Aurora.methodSetup = {
 							layer: 1,
 							method: function(id) {
 								drawText({
 									font: '1em serif',
 									msg: '$' + robotCost,
-									posX: Game.placeEntityX(posX + (0.04), (Game.entitySize * (posXoffset + 2))),
-									posY: Game.placeEntityY(posY + (0.033), (Game.entitySize * posYoffset)),
+									posX: Aurora.placeEntityX(posX + (0.04), (Aurora.entitySize * (posXoffset + 2))),
+									posY: Aurora.placeEntityY(posY + (0.033), (Aurora.entitySize * posYoffset)),
 									color: 'black',
 									align: 'center',
 									props: {},
@@ -1063,19 +1063,19 @@ const maulPage = {
 								});
 							}
 						};
-						Game.addMethod(Game.methodSetup);
+						Aurora.addMethod(Aurora.methodSetup);
 					}, 2000);
 				}
 			}
 		}
 		function drawBasesAndSends() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.78),
-						width: (Game.entitySize * 10),
-						height: (Game.entitySize * 10),
+						posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * 9)),
+						posY: Aurora.placeEntityY(0.78),
+						width: (Aurora.entitySize * 10),
+						height: (Aurora.entitySize * 10),
 						lineWidth: 1,
 						btnColor: 'darkblue',
 						txtColor: 'white',
@@ -1096,14 +1096,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 10),
-						height: (Game.entitySize * 10),
+						posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * 9)),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 10),
+						height: (Aurora.entitySize * 10),
 						lineWidth: 1,
 						btnColor: 'darkred',
 						txtColor: 'white',
@@ -1124,14 +1124,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.19, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.78),
-						width: (Game.entitySize * 10),
-						height: (Game.entitySize * 10),
+						posX: Aurora.placeEntityX(0.19, (Aurora.entitySize * 9)),
+						posY: Aurora.placeEntityY(0.78),
+						width: (Aurora.entitySize * 10),
+						height: (Aurora.entitySize * 10),
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
@@ -1143,18 +1143,18 @@ const maulPage = {
 							method: function(id) {
 								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
-								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6) {
+								if (gameObject.arenaAuroraStarted && gameObject.arenaBlueAuroraMoney >= robotCost && gameObject.selectedRobot.length === 6) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate(robotCost);
 										setBlueLeftRoadNavCollisions();
-										Game.collisionSetup = {
+										Aurora.collisionSetup = {
 											primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 											target: 'red-tower-bullet',
 											method: function(id) {
-												const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+												const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
 												if (bullet) {
-													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+													const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
 													const towerAtt = tower.props.stats.att;
 													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
 													if (robotHitStats) {
@@ -1166,16 +1166,16 @@ const maulPage = {
 															color: 'yellow',
 															ticks: 6,
 															count: 8,
-															size: (Game.entitySize * 0.3),
+															size: (Aurora.entitySize * 0.3),
 															speed: 1.3,
 														});
 													}
-													Game.deleteEntity(bullet.methodId);
+													Aurora.deleteEntity(bullet.methodId);
 													if (robotHitStats?.hp <= 0) {
 														if (gameObject.gameSounds) {
 															robotHitSound.cloneNode(true).play();
 														}
-														const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+														const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
 														let moneyGained = 0;
 														if (robotDirective === 4) { // lee-roy
 															moneyGained = robotMoneyGained.leeRoy;
@@ -1183,19 +1183,19 @@ const maulPage = {
 															moneyGained = robotMoneyGained.tank;
 														}
 														deleteRobotMethodObject(robotHitMethodObject, 1);
-														gameObject.arenaRedGameMoney += moneyGained;
+														gameObject.arenaRedAuroraMoney += moneyGained;
 													}
 												}
 											},
 											methodId: undefined,
 										}
-										Game.addCollision(Game.collisionSetup);
+										Aurora.addCollision(Aurora.collisionSetup);
 										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
-											posX: Game.placeEntityX(0),
-											posY: Game.placeEntityY(0.265),
-											width: (Game.entitySize * 1.5),
-											height: (Game.entitySize * 1.5),
+											posX: Aurora.placeEntityX(0),
+											posY: Aurora.placeEntityY(0.265),
+											width: (Aurora.entitySize * 1.5),
+											height: (Aurora.entitySize * 1.5),
 											id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 											hp: 10 + robotStats.stats.def,
 											robotParts: gameObject.selectedRobot,
@@ -1215,7 +1215,7 @@ const maulPage = {
 										}, 800);
 									}
 								} else {
-									const sendRobotsLeft = Game.methodObjects.find(bs => bs.id === 'send-robots-left');
+									const sendRobotsLeft = Aurora.methodObjects.find(bs => bs.id === 'send-robots-left');
 									sendRobotsLeft.btnColor = '#C0C0C0';
 								}
 							}
@@ -1226,14 +1226,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.81, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.78),
-						width: (Game.entitySize * 10),
-						height: (Game.entitySize * 10),
+						posX: Aurora.placeEntityX(0.81, (Aurora.entitySize * 9)),
+						posY: Aurora.placeEntityY(0.78),
+						width: (Aurora.entitySize * 10),
+						height: (Aurora.entitySize * 10),
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
@@ -1245,18 +1245,18 @@ const maulPage = {
 							method: function(id) {
 								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
-								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6 ) {
+								if (gameObject.arenaAuroraStarted && gameObject.arenaBlueAuroraMoney >= robotCost && gameObject.selectedRobot.length === 6 ) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate(robotCost);
 										setBlueRightRoadNavCollisions();
-										Game.collisionSetup = {
+										Aurora.collisionSetup = {
 											primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 											target: 'red-tower-bullet',
 											method: function(id) {
-												const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+												const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
 												if (bullet) {
-													const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+													const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
 													const towerAtt = tower.props.stats.att;
 													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
 													if (robotHitStats) {
@@ -1268,16 +1268,16 @@ const maulPage = {
 															color: 'yellow',
 															ticks: 6,
 															count: 8,
-															size: (Game.entitySize * 0.3),
+															size: (Aurora.entitySize * 0.3),
 															speed: 1.3,
 														});
 													}
-													Game.deleteEntity(bullet.methodId);
+													Aurora.deleteEntity(bullet.methodId);
 													if (robotHitStats?.hp <= 0) {
 														if (gameObject.gameSounds) {
 															robotHitSound.cloneNode(true).play();
 														}
-														const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+														const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
 														let moneyGained = 0;
 														if (robotDirective === 4) { // lee-roy
 															moneyGained = robotMoneyGained.leeRoy;
@@ -1285,19 +1285,19 @@ const maulPage = {
 															moneyGained = robotMoneyGained.tank;
 														}
 														deleteRobotMethodObject(robotHitMethodObject, 1);
-														gameObject.arenaRedGameMoney += moneyGained;
+														gameObject.arenaRedAuroraMoney += moneyGained;
 													}
 												}
 											},
 											methodId: undefined,
 										}
-										Game.addCollision(Game.collisionSetup);
+										Aurora.addCollision(Aurora.collisionSetup);
 										const robotStats = totalSelectedRobotStats();
 										const blueRobot = {
-											posX: Game.placeEntityX(1),
-											posY: Game.placeEntityY(0.265),
-											width: (Game.entitySize * 1.5),
-											height: (Game.entitySize * 1.5),
+											posX: Aurora.placeEntityX(1),
+											posY: Aurora.placeEntityY(0.265),
+											width: (Aurora.entitySize * 1.5),
+											height: (Aurora.entitySize * 1.5),
 											id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 											hp: 10 + robotStats.stats.def,
 											robotParts: gameObject.selectedRobot,
@@ -1318,7 +1318,7 @@ const maulPage = {
 										}, 800);
 									}
 								} else {
-									const sendRobotsRight = Game.methodObjects.find(bs => bs.id === 'send-robots-right');
+									const sendRobotsRight = Aurora.methodObjects.find(bs => bs.id === 'send-robots-right');
 									sendRobotsRight.btnColor = '#C0C0C0';
 								}
 							}
@@ -1329,20 +1329,20 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendRedRobotLeft(robot) {
 			const robotDirective = robot.directive;
 			const robotCost = findRobotDirectiveCost(robotDirective);
-			gameObject.arenaRedGameMoney -= robotCost;
+			gameObject.arenaRedAuroraMoney -= robotCost;
 			setRedLeftRoadNavCollisions();
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 				target: 'blue-tower-bullet',
 				method: function(id) {
-					const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+					const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
 					if (bullet) {
-						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+						const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
 						const towerAtt = tower.props.stats.att;
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
@@ -1354,16 +1354,16 @@ const maulPage = {
 								color: 'yellow',
 								ticks: 6,
 								count: 8,
-								size: (Game.entitySize * 0.3),
+								size: (Aurora.entitySize * 0.3),
 								speed: 1.3,
 							});
 						}
-						Game.deleteEntity(bullet.methodId);
+						Aurora.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							if (gameObject.gameSounds) {
 								robotHitSound.cloneNode(true).play();
 							}
-							const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+							const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
 							let moneyGained = 0;
 							if (robotDirective === 4) { // lee-roy
 								moneyGained = robotMoneyGained.leeRoy;
@@ -1382,20 +1382,20 @@ const maulPage = {
 								ticks: 33,
 								speed: 0.1,
 							});
-							gameObject.arenaBlueGameMoney += moneyGained;
+							gameObject.arenaBlueAuroraMoney += moneyGained;
 							updateMoneyBackground();
 						}
 					}
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 			const robotStats = totalRobotStats(robot);
 			const redRobot = {
-				posX: Game.placeEntityX(0),
-				posY: Game.placeEntityY(0.615),
-				width: (Game.entitySize * 1.5),
-				height: (Game.entitySize * 1.5),
+				posX: Aurora.placeEntityX(0),
+				posY: Aurora.placeEntityY(0.615),
+				width: (Aurora.entitySize * 1.5),
+				height: (Aurora.entitySize * 1.5),
 				id: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 				hp: 10 + robotStats.stats.def,
 				robotParts: robot.robotParts,
@@ -1414,15 +1414,15 @@ const maulPage = {
 		function sendRedRobotRight(robot) {
 			const robotDirective = robot.directive;
 			const robotCost = findRobotDirectiveCost(robotDirective);
-			gameObject.arenaRedGameMoney -= robotCost;
+			gameObject.arenaRedAuroraMoney -= robotCost;
 			setRedRightRoadNavCollisions();
-			Game.collisionSetup = {
+			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
 				target: 'blue-tower-bullet',
 				method: function(id) {
-					const bullet = Game.methodObjects.find(bg => bg.methodId === id);
+					const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
 					if (bullet) {
-						const tower = Game.methodObjects.find(bg => bg.id === bullet.props.tower);
+						const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
 						const towerAtt = tower.props.stats.att;
 						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
 						if (robotHitStats) {
@@ -1434,16 +1434,16 @@ const maulPage = {
 								color: 'yellow',
 								ticks: 6,
 								count: 8,
-								size: (Game.entitySize * 0.3),
+								size: (Aurora.entitySize * 0.3),
 								speed: 1.3,
 							});
 						}
-						Game.deleteEntity(bullet.methodId);
+						Aurora.deleteEntity(bullet.methodId);
 						if (robotHitStats?.hp <= 0) {
 							if (gameObject.gameSounds) {
 								robotHitSound.cloneNode(true).play();
 							}
-							const robotHitMethodObject = Game.methodObjects.filter(bg => bg.id === bullet.props.target);
+							const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
 							let moneyGained = 0;
 							if (robotDirective === 4) { // lee-roy
 								moneyGained = robotMoneyGained.leeRoy;
@@ -1462,20 +1462,20 @@ const maulPage = {
 								ticks: 33,
 								speed: 0.1,
 							});
-							gameObject.arenaBlueGameMoney += moneyGained;
+							gameObject.arenaBlueAuroraMoney += moneyGained;
 							updateMoneyBackground();
 						}
 					}
 				},
 				methodId: undefined,
 			}
-			Game.addCollision(Game.collisionSetup);
+			Aurora.addCollision(Aurora.collisionSetup);
 			const robotStats = totalRobotStats(robot);
 			const redRobot = {
-				posX: Game.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
-				posY: Game.placeEntityY(0.615), //0.265 // reds bots start position- posY: Game.placeEntityY(0.615),
-				width: (Game.entitySize * 1.5),
-				height: (Game.entitySize * 1.5),
+				posX: Aurora.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
+				posY: Aurora.placeEntityY(0.615), //0.265 // reds bots start position- posY: Aurora.placeEntityY(0.615),
+				width: (Aurora.entitySize * 1.5),
+				height: (Aurora.entitySize * 1.5),
 				id: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
 				hp: 10 + robotStats.stats.def,
 				robotParts: robot.robotParts,
@@ -1493,15 +1493,15 @@ const maulPage = {
 			
 		}
 		function updateMoneyBackground() {
-			const moneyBackground = Game.methodObjects.find(bg => bg.id === 'money-bar-background');
-			const moneyCounter = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
+			const moneyBackground = Aurora.methodObjects.find(bg => bg.id === 'money-bar-background');
+			const moneyCounter = Aurora.methodObjects.find(bg => bg.id === 'player-money-amount-title');
 			if (moneyCounter) {
-				moneyCounter.msg = '$' + gameObject.arenaBlueGameMoney;
+				moneyCounter.msg = '$' + gameObject.arenaBlueAuroraMoney;
 				moneyBackground.isAnim = true;
 			}
 		}
 		function blueRobotSendMoneyUpdate(cost) {
-			gameObject.arenaBlueGameMoney -= cost;
+			gameObject.arenaBlueAuroraMoney -= cost;
 			updateMoneyBackground();
 		}
 		function generateRedArenaRobots() {
@@ -1529,7 +1529,7 @@ const maulPage = {
 				let rightArmIndex = 0;
 				let leftLegIndex = 0;
 				let rightLegIndex = 0;
-				if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
+				if (gameObject.gamesWon > tutorialAuroras) { // give the player a few 'easy' games
 					headIndex = Math.floor((Math.random() * robotHeads.length));
 					chassisIndex = Math.floor((Math.random() * robotChassis.length));
 					leftArmIndex = Math.floor((Math.random() * robotArms.length));
@@ -1585,7 +1585,7 @@ const maulPage = {
 			}
 		}
 		function sendRobot(robot) {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
 						posX: robot.posX,
@@ -1599,13 +1599,13 @@ const maulPage = {
 						id: robot.id,
 						props: {
 							drawHead: function(parent) {
-								Game.methodSetup = {
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawRect({
-											posX: parent.posX + (Game.entitySize * 0.15),
-											posY: parent.posY - (Game.entitySize * 1.25),
-											width: (Game.entitySize * 1.25),
-											height: (Game.entitySize * 1.25),
+											posX: parent.posX + (Aurora.entitySize * 0.15),
+											posY: parent.posY - (Aurora.entitySize * 1.25),
+											width: (Aurora.entitySize * 1.25),
+											height: (Aurora.entitySize * 1.25),
 											lineWidth: 1,
 											color: drawRobotSelectPreviewParts('head', robot?.robotParts),
 											isFilled: true,
@@ -1616,16 +1616,16 @@ const maulPage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 							},
 							drawLeftArm: function(parent) {
-								Game.methodSetup = {
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawRect({
-											posX: parent.posX - (Game.entitySize * 0.375),
+											posX: parent.posX - (Aurora.entitySize * 0.375),
 											posY: parent.posY,
-											width: (Game.entitySize * 0.375),
-											height: (Game.entitySize * 1.5),
+											width: (Aurora.entitySize * 0.375),
+											height: (Aurora.entitySize * 1.5),
 											lineWidth: 1,
 											color: drawRobotSelectPreviewParts('left-arm', robot?.robotParts),
 											isFilled: true,
@@ -1636,16 +1636,16 @@ const maulPage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 							},
 							drawRightArm: function(parent) {
-								Game.methodSetup = {
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawRect({
-											posX: parent.posX + (Game.entitySize * 1.5),
+											posX: parent.posX + (Aurora.entitySize * 1.5),
 											posY: parent.posY,
-											width: (Game.entitySize * 0.375),
-											height: (Game.entitySize * 1.5),
+											width: (Aurora.entitySize * 0.375),
+											height: (Aurora.entitySize * 1.5),
 											lineWidth: 1,
 											color: drawRobotSelectPreviewParts('right-arm', robot?.robotParts),
 											isFilled: true,
@@ -1656,16 +1656,16 @@ const maulPage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 							},
 							drawLeftLeg: function(parent) {
-								Game.methodSetup = {
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawRect({
-											posX: parent.posX + (Game.entitySize * 0.125),
-											posY: parent.posY + (Game.entitySize * 1.5),
-											width: (Game.entitySize * 0.375),
-											height: (Game.entitySize * 1.5),
+											posX: parent.posX + (Aurora.entitySize * 0.125),
+											posY: parent.posY + (Aurora.entitySize * 1.5),
+											width: (Aurora.entitySize * 0.375),
+											height: (Aurora.entitySize * 1.5),
 											lineWidth: 1,
 											color: drawRobotSelectPreviewParts('left-leg', robot?.robotParts),
 											isFilled: true,
@@ -1676,16 +1676,16 @@ const maulPage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 							},
 							drawRightLeg: function(parent) {
-								Game.methodSetup = {
+								Aurora.methodSetup = {
 									method: function(id) {
 										drawRect({
-											posX: parent.posX + (Game.entitySize * 1.075),
-											posY: parent.posY + (Game.entitySize * 1.5),
-											width: (Game.entitySize * 0.375),
-											height: (Game.entitySize * 1.5),
+											posX: parent.posX + (Aurora.entitySize * 1.075),
+											posY: parent.posY + (Aurora.entitySize * 1.5),
+											width: (Aurora.entitySize * 0.375),
+											height: (Aurora.entitySize * 1.5),
 											lineWidth: 1,
 											color: drawRobotSelectPreviewParts('right-leg', robot?.robotParts),
 											isFilled: true,
@@ -1696,14 +1696,14 @@ const maulPage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 							},
 						},
 						methodId: id
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
@@ -1728,13 +1728,13 @@ const maulPage = {
 			}
 		}
 		function drawBlueRoads() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.10, (Game.entitySize * 4.3)),
-			 			posY: Game.placeEntityY(0.46),
-			 			width: (Game.canvas.width * 0.50),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.10, (Aurora.entitySize * 4.3)),
+			 			posY: Aurora.placeEntityY(0.46),
+			 			width: (Aurora.canvas.width * 0.50),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1748,14 +1748,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.48, (Game.entitySize * 5.5)),
-			 			posY: Game.placeEntityY(0.46),
-			 			width: (Game.canvas.width * 0.50),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.48, (Aurora.entitySize * 5.5)),
+			 			posY: Aurora.placeEntityY(0.46),
+			 			width: (Aurora.canvas.width * 0.50),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1769,14 +1769,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.93, (Game.entitySize * 5.5)),
-			 			posY: Game.placeEntityY(0.59),
-			 			width: (Game.entitySize * 20),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.93, (Aurora.entitySize * 5.5)),
+			 			posY: Aurora.placeEntityY(0.59),
+			 			width: (Aurora.entitySize * 20),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1790,14 +1790,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.05, (Game.entitySize * 24)),
-			 			posY: Game.placeEntityY(0.59),
-			 			width: (Game.entitySize * 20),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.05, (Aurora.entitySize * 24)),
+			 			posY: Aurora.placeEntityY(0.59),
+			 			width: (Aurora.entitySize * 20),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1811,14 +1811,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.95, (Game.entitySize * 15)),
-			 			posY: Game.placeEntityY(0.46),
-			 			width: (Game.entitySize * 7),
-			 			height: (Game.entitySize * 20),
+			 			posX: Aurora.placeEntityX(0.95, (Aurora.entitySize * 15)),
+			 			posY: Aurora.placeEntityY(0.46),
+			 			width: (Aurora.entitySize * 7),
+			 			height: (Aurora.entitySize * 20),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1832,14 +1832,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.09, (Game.entitySize * 3)),
-			 			posY: Game.placeEntityY(0.46),
-			 			width: (Game.entitySize * 7),
-			 			height: (Game.entitySize * 20),
+			 			posX: Aurora.placeEntityX(0.09, (Aurora.entitySize * 3)),
+			 			posY: Aurora.placeEntityY(0.46),
+			 			width: (Aurora.entitySize * 7),
+			 			height: (Aurora.entitySize * 20),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1853,14 +1853,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.49, (Game.entitySize * 5.5)),
-			 			posY: Game.placeEntityY(0.46),
-			 			width: (Game.entitySize * 7),
-			 			height: (Game.entitySize * 33),
+			 			posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * 5.5)),
+			 			posY: Aurora.placeEntityY(0.46),
+			 			width: (Aurora.entitySize * 7),
+			 			height: (Aurora.entitySize * 33),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1874,16 +1874,16 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawRedRoads() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.10, (Game.entitySize * 4.3)),
-			 			posY: Game.placeEntityY(0.37),
-			 			width: (Game.canvas.width * 0.50),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.10, (Aurora.entitySize * 4.3)),
+			 			posY: Aurora.placeEntityY(0.37),
+			 			width: (Aurora.canvas.width * 0.50),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1897,14 +1897,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.48, (Game.entitySize * 5.5)),
-			 			posY: Game.placeEntityY(0.37),
-			 			width: (Game.canvas.width * 0.50),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.48, (Aurora.entitySize * 5.5)),
+			 			posY: Aurora.placeEntityY(0.37),
+			 			width: (Aurora.canvas.width * 0.50),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1918,14 +1918,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.93, (Game.entitySize * 5.5)),
-			 			posY: Game.placeEntityY(0.24),
-			 			width: (Game.entitySize * 20),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.93, (Aurora.entitySize * 5.5)),
+			 			posY: Aurora.placeEntityY(0.24),
+			 			width: (Aurora.entitySize * 20),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1939,14 +1939,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.05, (Game.entitySize * 24)),
-			 			posY: Game.placeEntityY(0.24),
-			 			width: (Game.entitySize * 20),
-			 			height: (Game.entitySize * 7),
+			 			posX: Aurora.placeEntityX(0.05, (Aurora.entitySize * 24)),
+			 			posY: Aurora.placeEntityY(0.24),
+			 			width: (Aurora.entitySize * 20),
+			 			height: (Aurora.entitySize * 7),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1960,14 +1960,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.95, (Game.entitySize * 15)),
-			 			posY: Game.placeEntityY(0.24),
-			 			width: (Game.entitySize * 7),
-			 			height: (Game.entitySize * 20),
+			 			posX: Aurora.placeEntityX(0.95, (Aurora.entitySize * 15)),
+			 			posY: Aurora.placeEntityY(0.24),
+			 			width: (Aurora.entitySize * 7),
+			 			height: (Aurora.entitySize * 20),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -1981,14 +1981,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.09, (Game.entitySize * 3)),
-			 			posY: Game.placeEntityY(0.24),
-			 			width: (Game.entitySize * 7),
-			 			height: (Game.entitySize * 20),
+			 			posX: Aurora.placeEntityX(0.09, (Aurora.entitySize * 3)),
+			 			posY: Aurora.placeEntityY(0.24),
+			 			width: (Aurora.entitySize * 7),
+			 			height: (Aurora.entitySize * 20),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -2002,14 +2002,14 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-			 			posX: Game.placeEntityX(0.49, (Game.entitySize * 5.5)),
-			 			posY: Game.placeEntityY(0.113),
-			 			width: (Game.entitySize * 7),
-			 			height: (Game.entitySize * 33),
+			 			posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * 5.5)),
+			 			posY: Aurora.placeEntityY(0.113),
+			 			width: (Aurora.entitySize * 7),
+			 			height: (Aurora.entitySize * 33),
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
@@ -2023,11 +2023,11 @@ const maulPage = {
 			 		});
 			 	}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function selectTower(methodId, towerIndex) {
-			let tower = Game.methodObjects.find(bg => bg.methodId === methodId);
-			const range = Game.methodObjects.find(bg => bg.id === tower.props.arcId);
+			let tower = Aurora.methodObjects.find(bg => bg.methodId === methodId);
+			const range = Aurora.methodObjects.find(bg => bg.id === tower.props.arcId);
 			if (tower.props.towerId === 0) { // no tower built here
 				selectBuildTowerMenu(tower, towerIndex);
 			} else if (tower.props.towerId !== 0 && !tower.props.selected) { // tower is built but not yet selected
@@ -2046,20 +2046,20 @@ const maulPage = {
 			let rangeWidth = 0;
 			let arcWidth = 0;
 			let isMobile = false;
-			if (Game.canvas.height > Game.canvas.width) { // mobile
-				rangeWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.025);
+			if (Aurora.canvas.height > Aurora.canvas.width) { // mobile
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.height * 0.025);
 				arcWidth = rangeWidth;
 				isMobile = true;
 			} else { // everything else
-				rangeWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
-				arcWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.04);
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.06);
+				arcWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.04);
 				isMobile = false;
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.619),
+						posX: !isMobile ? Aurora.placeEntityX(0.08, (Aurora.entitySize * 9)) : Aurora.placeEntityX(0.11, (Aurora.entitySize * 9)),
+						posY: Aurora.placeEntityY(0.619),
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
@@ -2076,12 +2076,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)) + ((Game.entitySize * 6) / 2),
-						posY: isMobile ? Game.placeEntityY(0.66) : Game.placeEntityY(0.68),
+						posX: Aurora.placeEntityX(0.11, (Aurora.entitySize * 9)) + ((Aurora.entitySize * 6) / 2),
+						posY: isMobile ? Aurora.placeEntityY(0.66) : Aurora.placeEntityY(0.68),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2094,14 +2094,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.66),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.11, (Aurora.entitySize * 9)),
+						posY: Aurora.placeEntityY(0.66),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2112,7 +2112,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 1);
 								}
 							}
@@ -2143,13 +2143,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.165, (Game.entitySize * 1)) : Game.placeEntityX(0.195, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.49),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.165, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.195, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.49),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -2165,12 +2165,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
-						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
+						posX: Aurora.placeEntityX(0.195, (Aurora.entitySize * 1)) + ((Aurora.entitySize * 6) / 2),
+						posY: isMobile ? Aurora.placeEntityY(0.53) : Aurora.placeEntityY(0.55),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2183,14 +2183,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.53),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.195, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.53),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2201,7 +2201,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 2);
 								}
 							}
@@ -2232,13 +2232,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.315, (Game.entitySize * 1)) : Game.placeEntityX(0.345, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.49),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.315, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.345, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.49),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -2254,12 +2254,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)) + ((Game.entitySize * 6) / 2),
-						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
+						posX: Aurora.placeEntityX(0.345, (Aurora.entitySize * 1)) + ((Aurora.entitySize * 6) / 2),
+						posY: isMobile ? Aurora.placeEntityY(0.53) : Aurora.placeEntityY(0.55),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2272,14 +2272,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.53),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.345, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.53),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2290,7 +2290,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 3);
 								}
 							}
@@ -2321,14 +2321,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.435, (Game.entitySize * 1)) : Game.placeEntityX(0.605, (Game.entitySize * 17.5)),
-						posY: Game.placeEntityY(0.67),
+						posX: !isMobile ? Aurora.placeEntityX(0.435, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.605, (Aurora.entitySize * 17.5)),
+						posY: Aurora.placeEntityY(0.67),
 						width: rangeWidth,
-						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
+						height: !isMobile ? rangeWidth : rangeWidth + (Aurora.entitySize * 3),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
@@ -2343,12 +2343,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: isMobile ? Game.placeEntityX(0.49, (Game.entitySize * 17.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * 17.5))  + (Game.entitySize * 6),
-						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
+						posX: isMobile ? Aurora.placeEntityX(0.49, (Aurora.entitySize * 17.5))  + (Aurora.entitySize * 6) : Aurora.placeEntityX(0.47, (Aurora.entitySize * 17.5))  + (Aurora.entitySize * 6),
+						posY: Aurora.placeEntityY(0.67) + ((Aurora.entitySize * 6) / 2),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2361,14 +2361,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5)),
-						posY: Game.placeEntityY(0.67),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * 17.5)),
+						posY: Aurora.placeEntityY(0.67),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2379,7 +2379,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 4);
 								}
 							}
@@ -2410,14 +2410,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.465, (Game.entitySize * -8.5)) : Game.placeEntityX(0.419, (Game.entitySize * -8.5)),
-						posY: Game.placeEntityY(0.67),
+						posX: !isMobile ? Aurora.placeEntityX(0.465, (Aurora.entitySize * -8.5)) : Aurora.placeEntityX(0.419, (Aurora.entitySize * -8.5)),
+						posY: Aurora.placeEntityY(0.67),
 						width: rangeWidth,
-						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
+						height: !isMobile ? rangeWidth : rangeWidth + (Aurora.entitySize * 3),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
@@ -2432,12 +2432,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: isMobile ? Game.placeEntityX(0.39, (Game.entitySize * -8.5))  + (Game.entitySize * 6) : Game.placeEntityX(0.47, (Game.entitySize * -8.5))  + (Game.entitySize * 6),
-						posY: Game.placeEntityY(0.67) + ((Game.entitySize * 6) / 2),
+						posX: isMobile ? Aurora.placeEntityX(0.39, (Aurora.entitySize * -8.5))  + (Aurora.entitySize * 6) : Aurora.placeEntityX(0.47, (Aurora.entitySize * -8.5))  + (Aurora.entitySize * 6),
+						posY: Aurora.placeEntityY(0.67) + ((Aurora.entitySize * 6) / 2),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2450,14 +2450,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * -8.5)),
-						posY: Game.placeEntityY(0.67),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * -8.5)),
+						posY: Aurora.placeEntityY(0.67),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2468,7 +2468,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 5);
 								}
 							}
@@ -2499,13 +2499,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.625, (Game.entitySize * 1)) : Game.placeEntityX(0.579, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.49),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.625, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.579, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.49),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -2521,12 +2521,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)) + ((Game.entitySize * 6) / 2),
-						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
+						posX: Aurora.placeEntityX(0.65, (Aurora.entitySize * 9.5)) + ((Aurora.entitySize * 6) / 2),
+						posY: isMobile ? Aurora.placeEntityY(0.53) : Aurora.placeEntityY(0.55),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2539,14 +2539,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)),
-						posY: Game.placeEntityY(0.53),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.65, (Aurora.entitySize * 9.5)),
+						posY: Aurora.placeEntityY(0.53),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2557,7 +2557,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 6);
 								}
 							}
@@ -2588,13 +2588,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.82, (Game.entitySize * 15.5)) : Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
-						posY: Game.placeEntityY(0.49),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.82, (Aurora.entitySize * 15.5)) : Aurora.placeEntityX(0.85, (Aurora.entitySize * 15.5)),
+						posY: Aurora.placeEntityY(0.49),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -2610,12 +2610,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)) + ((Game.entitySize * 6) / 2),
-						posY: isMobile ? Game.placeEntityY(0.53) : Game.placeEntityY(0.55),
+						posX: Aurora.placeEntityX(0.85, (Aurora.entitySize * 15.5)) + ((Aurora.entitySize * 6) / 2),
+						posY: isMobile ? Aurora.placeEntityY(0.53) : Aurora.placeEntityY(0.55),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2628,14 +2628,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
-						posY: Game.placeEntityY(0.53),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.85, (Aurora.entitySize * 15.5)),
+						posY: Aurora.placeEntityY(0.53),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2646,7 +2646,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 7);
 								}
 							}
@@ -2677,12 +2677,12 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.94, (Game.entitySize * 9.6)) : Game.placeEntityX(0.97, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.619),
+						posX: !isMobile ? Aurora.placeEntityX(0.94, (Aurora.entitySize * 9.6)) : Aurora.placeEntityX(0.97, (Aurora.entitySize * 9.6)),
+						posY: Aurora.placeEntityY(0.619),
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
@@ -2699,12 +2699,12 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawArc({
-						posX: Game.placeEntityX(0.94, (Game.entitySize * 9.6)) + ((Game.entitySize * 6) / 2),
-						posY: isMobile ? Game.placeEntityY(0.66) : Game.placeEntityY(0.68),
+						posX: Aurora.placeEntityX(0.94, (Aurora.entitySize * 9.6)) + ((Aurora.entitySize * 6) / 2),
+						posY: isMobile ? Aurora.placeEntityY(0.66) : Aurora.placeEntityY(0.68),
 						width: arcWidth,
 						aglStrt: 0,
 						aglEnd: (2 * Math.PI),
@@ -2717,14 +2717,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.94, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.66),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.94, (Aurora.entitySize * 9.6)),
+						posY: Aurora.placeEntityY(0.66),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
@@ -2735,7 +2735,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaGameStarted) {
+								if (gameObject.arenaAuroraStarted) {
 									selectTower(this.methodId, 8);
 								}
 							}
@@ -2766,23 +2766,23 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawRedTowerSpawns() {
 			let rangeWidth = 0;
 			let isMobile = false;
-			if (Game.canvas.height > Game.canvas.width) { // mobile
-				rangeWidth = (Game.entitySize * 1) + (Game.canvas.height * 0.025);
+			if (Aurora.canvas.height > Aurora.canvas.width) { // mobile
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.height * 0.025);
 				isMobile = true;
 			} else { // everything else
-				rangeWidth = (Game.entitySize * 1) + (Game.canvas.width * 0.06);
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.06);
 				isMobile = false;
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.08, (Game.entitySize * 9)) : Game.placeEntityX(0.11, (Game.entitySize * 9)),
-						posY: !isMobile ? Game.placeEntityY(0.18) : Game.placeEntityY(0.25),
+						posX: !isMobile ? Aurora.placeEntityX(0.08, (Aurora.entitySize * 9)) : Aurora.placeEntityX(0.11, (Aurora.entitySize * 9)),
+						posY: !isMobile ? Aurora.placeEntityY(0.18) : Aurora.placeEntityY(0.25),
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
@@ -2799,14 +2799,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.11, (Game.entitySize * 9)),
-						posY: Game.placeEntityY(0.18),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.11, (Aurora.entitySize * 9)),
+						posY: Aurora.placeEntityY(0.18),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -2834,13 +2834,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.165, (Game.entitySize * 1)) : Game.placeEntityX(0.195, (Game.entitySize * 1)),
-						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.165, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.195, (Aurora.entitySize * 1)),
+						posY: !isMobile ? Aurora.placeEntityY(0.311) : Aurora.placeEntityY(0.381),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -2856,14 +2856,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.195, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.311),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.195, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.311),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -2891,13 +2891,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.315, (Game.entitySize * 1)) : Game.placeEntityX(0.345, (Game.entitySize * 1)),
-						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.315, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.345, (Aurora.entitySize * 1)),
+						posY: !isMobile ? Aurora.placeEntityY(0.311) : Aurora.placeEntityY(0.381),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -2913,14 +2913,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.345, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.311),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.345, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.311),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -2948,14 +2948,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.435, (Game.entitySize * 1)) : Game.placeEntityX(0.605, (Game.entitySize * 17.5)),
-						posY: Game.placeEntityY(0.18),
+						posX: !isMobile ? Aurora.placeEntityX(0.435, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.605, (Aurora.entitySize * 17.5)),
+						posY: Aurora.placeEntityY(0.18),
 						width: rangeWidth,
-						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
+						height: !isMobile ? rangeWidth : rangeWidth + (Aurora.entitySize * 3),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
@@ -2970,14 +2970,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * 17.5)),
-						posY: Game.placeEntityY(0.18),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * 17.5)),
+						posY: Aurora.placeEntityY(0.18),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -3005,14 +3005,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.465, (Game.entitySize * -8.5)) : Game.placeEntityX(0.419, (Game.entitySize * -8.5)),
-						posY: Game.placeEntityY(0.18),
+						posX: !isMobile ? Aurora.placeEntityX(0.465, (Aurora.entitySize * -8.5)) : Aurora.placeEntityX(0.419, (Aurora.entitySize * -8.5)),
+						posY: Aurora.placeEntityY(0.18),
 						width: rangeWidth,
-						height: !isMobile ? rangeWidth : rangeWidth + (Game.entitySize * 3),
+						height: !isMobile ? rangeWidth : rangeWidth + (Aurora.entitySize * 3),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: true,
@@ -3027,14 +3027,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.49, (Game.entitySize * -8.5)),
-						posY: Game.placeEntityY(0.18),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * -8.5)),
+						posY: Aurora.placeEntityY(0.18),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -3062,13 +3062,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.625, (Game.entitySize * 1)) : Game.placeEntityX(0.579, (Game.entitySize * 1)),
-						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.625, (Aurora.entitySize * 1)) : Aurora.placeEntityX(0.579, (Aurora.entitySize * 1)),
+						posY: !isMobile ? Aurora.placeEntityY(0.311) : Aurora.placeEntityY(0.381),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -3084,14 +3084,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.65, (Game.entitySize * 9.5)),
-						posY: Game.placeEntityY(0.311),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.65, (Aurora.entitySize * 9.5)),
+						posY: Aurora.placeEntityY(0.311),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -3119,13 +3119,13 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.82, (Game.entitySize * 15.5)) : Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
-						posY: !isMobile ? Game.placeEntityY(0.311) : Game.placeEntityY(0.381),
-						width: !isMobile ? rangeWidth : rangeWidth - (Game.entitySize * 1),
+						posX: !isMobile ? Aurora.placeEntityX(0.82, (Aurora.entitySize * 15.5)) : Aurora.placeEntityX(0.85, (Aurora.entitySize * 15.5)),
+						posY: !isMobile ? Aurora.placeEntityY(0.311) : Aurora.placeEntityY(0.381),
+						width: !isMobile ? rangeWidth : rangeWidth - (Aurora.entitySize * 1),
 						height: rangeWidth,
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
@@ -3141,14 +3141,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.85, (Game.entitySize * 15.5)),
-						posY: Game.placeEntityY(0.311),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.85, (Aurora.entitySize * 15.5)),
+						posY: Aurora.placeEntityY(0.311),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -3176,12 +3176,12 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: !isMobile ? Game.placeEntityX(0.94, (Game.entitySize * 9.6)) : Game.placeEntityX(0.97, (Game.entitySize * 9.6)),
-						posY: !isMobile ? Game.placeEntityY(0.18) : Game.placeEntityY(0.25),
+						posX: !isMobile ? Aurora.placeEntityX(0.94, (Aurora.entitySize * 9.6)) : Aurora.placeEntityX(0.97, (Aurora.entitySize * 9.6)),
+						posY: !isMobile ? Aurora.placeEntityY(0.18) : Aurora.placeEntityY(0.25),
 						width: rangeWidth,
 						height: rangeWidth,
 						lineWidth: 1,
@@ -3198,14 +3198,14 @@ const maulPage = {
 					});
 				}
 			}
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.94, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.18),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 6),
+						posX: Aurora.placeEntityX(0.94, (Aurora.entitySize * 9.6)),
+						posY: Aurora.placeEntityY(0.18),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 6),
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
@@ -3233,16 +3233,16 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawBlueRobotRoadNavigation() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.26),
-						width: (Game.entitySize * 2),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.928, (Aurora.entitySize * 9.6)),
+						posY: Aurora.placeEntityY(0.26),
+						width: (Aurora.entitySize * 2),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3253,14 +3253,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.08, (Game.entitySize * -9.6)),
-						posY: Game.placeEntityY(0.26),
-						width: (Game.entitySize * 2),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.08, (Aurora.entitySize * -9.6)),
+						posY: Aurora.placeEntityY(0.26),
+						width: (Aurora.entitySize * 2),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3271,14 +3271,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.42),
-						width: (Game.entitySize * 4),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.928, (Aurora.entitySize * 9.6)),
+						posY: Aurora.placeEntityY(0.42),
+						width: (Aurora.entitySize * 4),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3289,14 +3289,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.06, (Game.entitySize * -9.6)),
-						posY: Game.placeEntityY(0.42),
-						width: (Game.entitySize * 4),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.06, (Aurora.entitySize * -9.6)),
+						posY: Aurora.placeEntityY(0.42),
+						width: (Aurora.entitySize * 4),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3307,14 +3307,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.495),
-						posY: Game.placeEntityY(0.42),
-						width: (Game.entitySize * 1),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.495),
+						posY: Aurora.placeEntityY(0.42),
+						width: (Aurora.entitySize * 1),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3325,16 +3325,16 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawRedRobotRoadNavigation() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.62),
-						width: (Game.entitySize * 2),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.928, (Aurora.entitySize * 9.6)),
+						posY: Aurora.placeEntityY(0.62),
+						width: (Aurora.entitySize * 2),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3345,14 +3345,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.08, (Game.entitySize * -9.6)),
-						posY: Game.placeEntityY(0.62),
-						width: (Game.entitySize * 2),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.08, (Aurora.entitySize * -9.6)),
+						posY: Aurora.placeEntityY(0.62),
+						width: (Aurora.entitySize * 2),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3363,14 +3363,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.928, (Game.entitySize * 9.6)),
-						posY: Game.placeEntityY(0.46),
-						width: (Game.entitySize * 4),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.928, (Aurora.entitySize * 9.6)),
+						posY: Aurora.placeEntityY(0.46),
+						width: (Aurora.entitySize * 4),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3381,14 +3381,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.06, (Game.entitySize * -9.6)),
-						posY: Game.placeEntityY(0.46),
-						width: (Game.entitySize * 4),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.06, (Aurora.entitySize * -9.6)),
+						posY: Aurora.placeEntityY(0.46),
+						width: (Aurora.entitySize * 4),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3399,14 +3399,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.495),
-						posY: Game.placeEntityY(0.46),
-						width: (Game.entitySize * 1),
-						height: (Game.entitySize * 2),
+						posX: Aurora.placeEntityX(0.495),
+						posY: Aurora.placeEntityY(0.46),
+						width: (Aurora.entitySize * 1),
+						height: (Aurora.entitySize * 2),
 						lineWidth: 1,
 						color: 'rgba(0, 0, 200, 0)', // transparant
 						isFilled: false,
@@ -3417,16 +3417,16 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawPlayerMoney() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.01),
-						posY: Game.placeEntityY(0),
-						width: (Game.entitySize * 18),
-						height: (Game.canvas.height * 0.10),
+						posX: Aurora.placeEntityX(0.01),
+						posY: Aurora.placeEntityY(0),
+						width: (Aurora.entitySize * 18),
+						height: (Aurora.canvas.height * 0.10),
 						lineWidth: 1,
 						color: 'brown',
 						isFilled: true,
@@ -3437,14 +3437,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Funds',
-						posX: Game.placeEntityX(0.04),
-						posY: Game.placeEntityY(0.03),
+						posX: Aurora.placeEntityX(0.04),
+						posY: Aurora.placeEntityY(0.03),
 						color: 'white',
 						align: 'left',
 						props: {},
@@ -3453,14 +3453,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.5em serif',
-						msg: '$' + gameObject.arenaBlueGameMoney,
-						posX: Game.placeEntityX(0.04),
-						posY: Game.placeEntityY(0.07),
+						msg: '$' + gameObject.arenaBlueAuroraMoney,
+						posX: Aurora.placeEntityX(0.04),
+						posY: Aurora.placeEntityY(0.07),
 						color: 'white',
 						align: 'left',
 						props: {},
@@ -3469,16 +3469,16 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawRoundTime() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.99, (Game.entitySize * 36)),
-						posY: Game.placeEntityY(0),
-						width: (Game.entitySize * 18),
-						height: (Game.canvas.height * 0.10),
+						posX: Aurora.placeEntityX(0.99, (Aurora.entitySize * 36)),
+						posY: Aurora.placeEntityY(0),
+						width: (Aurora.entitySize * 18),
+						height: (Aurora.canvas.height * 0.10),
 						lineWidth: 1,
 						color: 'brown',
 						isFilled: true,
@@ -3489,14 +3489,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.5em serif',
 						msg: gameObject.arenaRoundSeconds + 's',
-						posX: Game.placeEntityX(0.99, (Game.entitySize * 34)),
-						posY: Game.placeEntityY(0.04),
+						posX: Aurora.placeEntityX(0.99, (Aurora.entitySize * 34)),
+						posY: Aurora.placeEntityY(0.04),
 						color: 'white',
 						align: 'left',
 						props: {},
@@ -3505,14 +3505,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
-						msg: 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds,
-						posX: Game.placeEntityX(0.99, (Game.entitySize * 34)),
-						posY: Game.placeEntityY(0.08),
+						msg: 'Turn: ' + gameObject.arenaAuroraRound + '/' + gameObject.arenaAuroraMaxRounds,
+						posX: Aurora.placeEntityX(0.99, (Aurora.entitySize * 34)),
+						posY: Aurora.placeEntityY(0.08),
 						color: 'white',
 						align: 'left',
 						props: {},
@@ -3521,19 +3521,19 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
-		function readySetGoGame() {
+		function readySetGoAurora() {
 			if (gameObject.gameSounds) {
 				arenaReadySound.play();
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-						width: (Game.entitySize * 40),
-						height: (Game.entitySize * 30),
+						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 40),
+						height: (Aurora.entitySize * 30),
 						lineWidth: 1,
 						color: 'lightslategrey',
 						isFilled: true,
@@ -3544,14 +3544,14 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2em serif',
 						msg: 'Battle Stations!',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.52),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.52),
 						color: 'white',
 						align: 'center',
 						props: {},
@@ -3560,73 +3560,73 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			setTimeout(function() {
-				const gameStartBackground = Game.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
-				const gameStartTitle = Game.methodObjects.find(title => title.id === 'arena-game-ready-title');
+				const gameStartBackground = Aurora.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
+				const gameStartTitle = Aurora.methodObjects.find(title => title.id === 'arena-game-ready-title');
 				if (gameStartTitle) {
 					gameStartBackground.isAnim = true;
 					gameStartTitle.msg = 'Get Ready';
 				}
 			}, 2000);
 			setTimeout(function() {
-				const gameStartBackground = Game.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
-				const gameStartTitle = Game.methodObjects.find(title => title.id === 'arena-game-ready-title');
+				const gameStartBackground = Aurora.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
+				const gameStartTitle = Aurora.methodObjects.find(title => title.id === 'arena-game-ready-title');
 				if (gameStartTitle) {
 					gameStartBackground.isAnim = true;
 					gameStartTitle.msg = 'Fight!';
 				}
 			}, 4500);
 			setTimeout(function() {
-				const gameStartBackground = Game.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
-				const gameStartTitle = Game.methodObjects.find(title => title.id === 'arena-game-ready-title');
-				Game.deleteEntity(gameStartBackground.methodId);
-				Game.deleteEntity(gameStartTitle.methodId);
+				const gameStartBackground = Aurora.methodObjects.find(bg => bg.id === 'arena-game-ready-background');
+				const gameStartTitle = Aurora.methodObjects.find(title => title.id === 'arena-game-ready-title');
+				Aurora.deleteEntity(gameStartBackground.methodId);
+				Aurora.deleteEntity(gameStartTitle.methodId);
 				// start the game round timer and round numbers
-				if (!gameObject.arenaGameStarted) {
-					startGameRounds();
+				if (!gameObject.arenaAuroraStarted) {
+					startAuroraRounds();
 				}
 			}, 5500);
 			
 		}
-		function startGameRounds() {
-			gameObject.arenaGameStarted = true;
-			const roundTimer = Game.methodObjects.find(bg => bg.id === 'player-round-time-title');
-			const roundBackground = Game.methodObjects.find(bg => bg.id === 'round-bar-background');
-			const roundCounter = Game.methodObjects.find(bg => bg.id === 'player-round-number-title');
+		function startAuroraRounds() {
+			gameObject.arenaAuroraStarted = true;
+			const roundTimer = Aurora.methodObjects.find(bg => bg.id === 'player-round-time-title');
+			const roundBackground = Aurora.methodObjects.find(bg => bg.id === 'round-bar-background');
+			const roundCounter = Aurora.methodObjects.find(bg => bg.id === 'player-round-number-title');
 			gameTimer = setInterval(function() {
 				if (gameObject.arenaRoundSeconds > 0) {
 					gameObject.arenaRoundSeconds--;
 					roundTimer.msg = gameObject.arenaRoundSeconds + 's';
-					roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
+					roundCounter.msg = 'Turn: ' + gameObject.arenaAuroraRound + '/' + gameObject.arenaAuroraMaxRounds;
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendLeeRoyCount * robotMoneyGained.leeRoy);
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendTankCount * robotMoneyGained.tank);
-					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
+					gameObject.arenaBlueAuroraMoney += (gameObject.arenaBlueSendLeeRoyCount * robotMoneyGained.leeRoy);
+					gameObject.arenaBlueAuroraMoney += (gameObject.arenaBlueSendTankCount * robotMoneyGained.tank);
+					gameObject.arenaBlueAuroraMoney += (gameObject.arenaBlueSendCount * 2);
 					// add to the COMs money
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendLeeRoyCount * robotMoneyGained.leeRoy);
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendTankCount * robotMoneyGained.tank);
-					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 2);
-					gameObject.arenaGameRound++;
+					gameObject.arenaRedAuroraMoney += (gameObject.arenaRedSendLeeRoyCount * robotMoneyGained.leeRoy);
+					gameObject.arenaRedAuroraMoney += (gameObject.arenaRedSendTankCount * robotMoneyGained.tank);
+					gameObject.arenaRedAuroraMoney += (gameObject.arenaRedSendCount * 2);
+					gameObject.arenaAuroraRound++;
 					gameObject.arenaRoundSeconds = 15;
-					const blueMoney = Game.methodObjects.find(bg => bg.id === 'player-money-amount-title');
+					const blueMoney = Aurora.methodObjects.find(bg => bg.id === 'player-money-amount-title');
 					// reset send robot buttons
-					const sendRobotsLeft = Game.methodObjects.find(bs => bs.id === 'send-robots-left');
+					const sendRobotsLeft = Aurora.methodObjects.find(bs => bs.id === 'send-robots-left');
 					sendRobotsLeft.btnColor = 'grey';
-					const sendRobotsRight = Game.methodObjects.find(bs => bs.id === 'send-robots-right');
+					const sendRobotsRight = Aurora.methodObjects.find(bs => bs.id === 'send-robots-right');
 					sendRobotsRight.btnColor = 'grey';
 					// every turn except the last turn
-					if (gameObject.arenaGameRound <= 12) {
+					if (gameObject.arenaAuroraRound <= 12) {
 						roundTimer.msg = gameObject.arenaRoundSeconds + 's';
-						roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
-						blueMoney.msg = '$' + gameObject.arenaBlueGameMoney;
+						roundCounter.msg = 'Turn: ' + gameObject.arenaAuroraRound + '/' + gameObject.arenaAuroraMaxRounds;
+						blueMoney.msg = '$' + gameObject.arenaBlueAuroraMoney;
 						Particle.floatingText({
 							font: '2rem serif',
 							msg: '+      +',
 							align: 'left',
-							posX: Game.placeEntityX(0.023),
-							posY: Game.placeEntityY(0.07),
+							posX: Aurora.placeEntityX(0.023),
+							posY: Aurora.placeEntityY(0.07),
 							direction: 'top',
 							color: 'green',
 							ticks: 33,
@@ -3634,9 +3634,9 @@ const maulPage = {
 						});
 					}
 					// the very last turn. End game
-					if (gameObject.arenaGameRound === 13) {
-						const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
-						const blueBase = Game.methodObjects.find(bs => bs.id === 'blue-base');
+					if (gameObject.arenaAuroraRound === 13) {
+						const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
+						const blueBase = Aurora.methodObjects.find(bs => bs.id === 'blue-base');
 						let winningTeam = '';
 						if (redBase.props.hp > blueBase.props.hp) {
 							winningTeam = 'red';
@@ -3645,7 +3645,7 @@ const maulPage = {
 						} else {
 							winningTeam = 'draw';
 						}
-						endGame(winningTeam);
+						endAurora(winningTeam);
 					}
 				}
 				roundBackground.isAnim = true;
@@ -3653,14 +3653,14 @@ const maulPage = {
 		}
 		function moveBlueRobots() {
 			gameObject.arenaBlueAttackers.forEach((battleRobot, i) => {
-				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
+				const robot = Aurora.methodObjects.filter(rob => rob.id === battleRobot.id);
 				moveRightRobots(battleRobot, robot, 'blue', i);
 				moveLeftRobots(battleRobot, robot, 'blue', i);
 			});
 		}
 		function moveRedRobots() {
 			gameObject.arenaRedAttackers.forEach((battleRobot, i) => {
-				const robot = Game.methodObjects.filter(rob => rob.id === battleRobot.id);
+				const robot = Aurora.methodObjects.filter(rob => rob.id === battleRobot.id);
 				moveRightRobots(battleRobot, robot, 'red', i);
 				moveLeftRobots(battleRobot, robot, 'red', i);
 			});
@@ -3676,11 +3676,11 @@ const maulPage = {
 						color: 'yellow',
 						ticks: 11,
 						count: 8,
-						size: (Game.entitySize * entitySize),
+						size: (Aurora.entitySize * entitySize),
 						speed: 1.3,
 					});
 				}
-				Game.deleteEntity(robot[i].methodId);
+				Aurora.deleteEntity(robot[i].methodId);
 			}
 		}
 		function robotAttackBase(base, robot, i, color) {
@@ -3704,34 +3704,34 @@ const maulPage = {
 			const robotSpeed = (br.totalStats.spd) * 0.01;
 			if (br.direction === 'rt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
-					rob.posX -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
+					rob.posX -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
-					rob.posX -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
+					rob.posX -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'rt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 					
@@ -3740,19 +3740,19 @@ const maulPage = {
 			if (br.direction === 'rt' && br.stop === 4) {
 				// start attacking red or blue base
 				
-				// future Jordan, look into some of the buttons and backrounds that use "Game.entitySize"
+				// future Jordan, look into some of the buttons and backrounds that use "Aurora.entitySize"
 				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
 				if (color === 'blue') {
-					const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
+					const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
 					robotAttackBase(redBase, robot, i, color);
 					if (redBase.props.hp <= 0) {
-						endGame('blue');
+						endAurora('blue');
 					}
 				} else if (color === 'red') {
-					const blueBase = Game.methodObjects.find(bg => bg.id === 'blue-base');
+					const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
 					robotAttackBase(blueBase, robot, i, color);
 					if (blueBase.props.hp <= 0) {
-						endGame('red');
+						endAurora('red');
 					}
 				}
 			}
@@ -3761,34 +3761,34 @@ const maulPage = {
 			const robotSpeed = (br.totalStats.spd) * 0.01;
 			if (br.direction === 'lt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
-					rob.posX += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
+					rob.posX += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 1) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
-					rob.posX += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.leftRight);
+					rob.posX += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
 			if (br.direction === 'lt' && br.stop === 3) {
 				robot.forEach((rob, j) => {
 					if (color === 'blue') {
-						rob.posY -= Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					} else if (color === 'red') {
-						rob.posY += Game.moveEntity((0.05 + robotSpeed), Game.enumDirections.topDown);
+						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
 						br.posY = rob.posY;
 					}
 				});
@@ -3796,22 +3796,22 @@ const maulPage = {
 			if (br.direction === 'lt' && br.stop === 4) {
 				// start attacking red or blue base
 				if (color === 'blue') {
-					const redBase = Game.methodObjects.find(bs => bs.id === 'red-base');
+					const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
 					robotAttackBase(redBase, robot, i, color);
 					if (redBase.props.hp <= 0) {
-						endGame('blue');
+						endAurora('blue');
 					}
 				} else if (color === 'red') {
-					const blueBase = Game.methodObjects.find(bg => bg.id === 'blue-base');
+					const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
 					robotAttackBase(blueBase, robot, i, color);
 					if (blueBase.props.hp <= 0) {
-						endGame('red');
+						endAurora('red');
 					}
 				}
 			}
 		}
 		function redAiMind() {
-			if (gameObject.arenaGameStarted) {
+			if (gameObject.arenaAuroraStarted) {
 				let whatToDo = Math.floor((Math.random() * 3) + 1);
 				// select a robot to send
 				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
@@ -3831,10 +3831,10 @@ const maulPage = {
 				// we need a requires here
 				const towerDirective = redTower.directive;
 				const towerCost = findTowerDirectiveCost(towerDirective);
-				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= towerCost) {
+				if (whatToDo === 1 && gameObject.arenaRedAuroraMoney >= towerCost) {
 					// build a tower
-					const redLeftTowers = Game.methodObjects.filter(x => x.id.includes('red-left-tower-spawn'));
-					const redRightTowers = Game.methodObjects.filter(x => x.id.includes('red-right-tower-spawn'));
+					const redLeftTowers = Aurora.methodObjects.filter(x => x.id.includes('red-left-tower-spawn'));
+					const redRightTowers = Aurora.methodObjects.filter(x => x.id.includes('red-right-tower-spawn'));
 					const availableRedLeftTowers = redLeftTowers.filter(x => x.props.towerId === 0);
 					const availableRedRightTowers = redRightTowers.filter(x => x.props.towerId === 0);
 					let whereToBuild = Math.floor((Math.random() * 2) + 1);
@@ -3842,7 +3842,7 @@ const maulPage = {
 						// build left
 						const redBuildTowerIndex = Math.floor((Math.random() * availableRedLeftTowers.length));
 						const selectedRedTower = availableRedLeftTowers[redBuildTowerIndex];
-						gameObject.arenaRedGameMoney -= towerCost;
+						gameObject.arenaRedAuroraMoney -= towerCost;
 						selectedRedTower.btnColor = redTower.arenaTower.img;
 						selectedRedTower.props.robotParts = redTower.arenaTower.robotParts;
 						selectedRedTower.props.stats = redTower.arenaTower.stats;
@@ -3856,7 +3856,7 @@ const maulPage = {
 						// build right
 						const redBuildTowerIndex = Math.floor((Math.random() * availableRedRightTowers.length));
 						const selectedRedTower = availableRedRightTowers[redBuildTowerIndex];
-						gameObject.arenaRedGameMoney -= towerCost;
+						gameObject.arenaRedAuroraMoney -= towerCost;
 						selectedRedTower.btnColor = redTower.arenaTower.img;
 						selectedRedTower.props.robotParts = redTower.arenaTower.robotParts;
 						selectedRedTower.props.stats = redTower.arenaTower.stats;
@@ -3875,12 +3875,12 @@ const maulPage = {
 							redUpgradeTowerIndex = Math.floor((Math.random() * redLeftTowers.length));
 							selectedRedTower = redLeftTowers[redUpgradeTowerIndex];
 							const upgradeCost = findTowerDirectiveCost(selectedRedTower.props.directive);
-							gameObject.arenaRedGameMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
+							gameObject.arenaRedAuroraMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
 						} else if (whereToUpgrade === 2) {
 							redUpgradeTowerIndex = Math.floor((Math.random() * redRightTowers.length));
 							selectedRedTower = redRightTowers[redUpgradeTowerIndex];
 							const upgradeCost = findTowerDirectiveCost(selectedRedTower.props.directive);
-							gameObject.arenaRedGameMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
+							gameObject.arenaRedAuroraMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
 						}
 						if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
 							selectedRedTower.props.stats.att += upgradeTowerStats.att;
@@ -3899,8 +3899,8 @@ const maulPage = {
 					// send a robot
 					whatToDo = 2;
 				}
-				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= robotCost || 
-					whatToDo === 3 && gameObject.arenaRedGameMoney >= robotCost) {
+				if (whatToDo === 2 && gameObject.arenaRedAuroraMoney >= robotCost || 
+					whatToDo === 3 && gameObject.arenaRedAuroraMoney >= robotCost) {
 					// send a robot
 					const whereToSend = Math.floor((Math.random() * 2) + 1);
 					if (whereToSend === 1) {
@@ -3912,7 +3912,7 @@ const maulPage = {
 				aiThinking = false;
 			}
 		}
-		function endGame(winningTeam) {
+		function endAurora(winningTeam) {
 			if (gameTimer) {
 				clearInterval(gameTimer);
 			}
@@ -3923,23 +3923,23 @@ const maulPage = {
 				gameObject.redRobotArenaDesigns = [];
 				gameObject.redTowerArenaDesigns = [];
 				gameObject.selectedRobotDesign = -1;
-				gameObject.arenaGameRound = 1;
+				gameObject.arenaAuroraRound = 1;
 				gameObject.redMaxTowerLevel = 1;
 				gameObject.arenaRoundSeconds = 15;
-				gameObject.arenaBlueGameMoney = 160;
-				gameObject.arenaRedGameMoney = 160;
+				gameObject.arenaBlueAuroraMoney = 160;
+				gameObject.arenaRedAuroraMoney = 160;
 				gameObject.arenaBlueSendCount = 0;
 				gameObject.arenaBlueSendLeeRoyCount = 0;
 				gameObject.arenaBlueSendTankCount = 0;
 				gameObject.arenaRedSendCount = 0;
 				gameObject.arenaRedSendLeeRoyCount = 0;
 				gameObject.arenaRedSendTankCount = 0;
-				gameObject.arenaGameStarted = false;
+				gameObject.arenaAuroraStarted = false;
 				gameObject.canClick = true;
-				Game.canvas.width = window.innerWidth * Game.stageWidthPrct;
-				Game.canvas.height = window.innerHeight * Game.stageHeightPrct;
-				Game.entitySize = (Game.canvas.height * 0.01);
-				Game.entityWidth = (Game.canvas.width * 0.01);
+				Aurora.canvas.width = window.innerWidth * Aurora.stageWidthPrct;
+				Aurora.canvas.height = window.innerHeight * Aurora.stageHeightPrct;
+				Aurora.entitySize = (Aurora.canvas.height * 0.01);
+				Aurora.entityWidth = (Aurora.canvas.width * 0.01);
 				drawWinnerModal(winningTeam);
 			}, 0);
 		}
@@ -3979,28 +3979,28 @@ const maulPage = {
 				msgs = ['Blue Team Wins!', highValueDisplay, lowValueDisplay, unlockPart, 'Tap here to continue'];
 				gameObject.gamesWon += 1;
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawDialogueModal({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-						width: (Game.entitySize * 45),
-						height: (Game.entitySize * 28),
+						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 28),
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
 						msgFont: '1em serif',
 						msgs: msgs,
-						msgStart: Game.placeEntityY(0.55, (Game.entitySize * 30)),
-						msgDistance: (Game.entitySize * 5),
+						msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+						msgDistance: (Aurora.entitySize * 5),
 						bgColor: '',
 						isModalFilled: true,
-						id: Game.modalId,
+						id: Aurora.modalId,
 						layer: 1,
 						action: {
 							method: function(id) {
-								Game.keepPreviousSize = false;
+								Aurora.keepPreviousSize = false;
 								arenaPage.loadPage();
 							}
 						},
@@ -4010,7 +4010,7 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function unlockRobotPart() {
 			let partSelection = '';
@@ -4100,15 +4100,15 @@ const maulPage = {
 			return directiveName;
 		}
 		function resetTowerSelect() {
-			const towerOne = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-1');
+			const towerOne = Aurora.methodObjects.find(bg => bg.id === 'arena-tower-bg-1');
 			if (towerOne) {
 				towerOne.color = 'darkgrey';
 			}
-			const towerTwo = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-2');
+			const towerTwo = Aurora.methodObjects.find(bg => bg.id === 'arena-tower-bg-2');
 			if (towerTwo) {
 				towerTwo.color = 'darkgrey';
 			}
-			const towerThree = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-3');
+			const towerThree = Aurora.methodObjects.find(bg => bg.id === 'arena-tower-bg-3');
 			if (towerThree) {
 				towerThree.color = 'darkgrey';
 			}
@@ -4119,12 +4119,12 @@ const maulPage = {
 			const towerCost = findTowerDirectiveCost(selectedTowerDesign.directive);
 			selectBuildTowerIndex = index;
 			msgs = [selectedTowerDesign.arenaTower.name ? selectedTowerDesign.arenaTower.name : 'Nothing Selected', directiveName + ': $' + towerCost];
-			const modal = Game.methodObjects.find(bg => bg.id === Game.modalId);
+			const modal = Aurora.methodObjects.find(bg => bg.id === Aurora.modalId);
 			if (modal) {
 				modal.msgs = msgs;
 			}
 			resetTowerSelect();
-			const towerBg = Game.methodObjects.find(bg => bg.id === 'arena-tower-bg-' + (index + 1));
+			const towerBg = Aurora.methodObjects.find(bg => bg.id === 'arena-tower-bg-' + (index + 1));
 			if (towerBg) {
 				towerBg.color = 'yellow';
 			}
@@ -4155,24 +4155,24 @@ const maulPage = {
 				msgs = ['Upgrade To Level ' + towerLevel, 'To upgrade this tower, your arena', 'needs to be level: ' + tower.props.requires.arenaLvlToUpgrade];
 				upgradeIssue = true;
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawDialogueModal({
-						posX: Game.placeEntityX(0.07),
-						posY: Game.placeEntityY(0.25, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.85),
-						height: (Game.entitySize * 65),
+						posX: Aurora.placeEntityX(0.07),
+						posY: Aurora.placeEntityY(0.25, (Aurora.entitySize * 30)),
+						width: (Aurora.canvas.width * 0.85),
+						height: (Aurora.entitySize * 65),
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
 						msgFont: '1em serif',
 						msgs: msgs,
-						msgStart: Game.placeEntityY(0.30, (Game.entitySize * 30)),
-						msgDistance: (Game.entitySize * 6),
+						msgStart: Aurora.placeEntityY(0.30, (Aurora.entitySize * 30)),
+						msgDistance: (Aurora.entitySize * 6),
 						bgColor: '',
 						isModalFilled: true,
-						id: Game.modalId,
+						id: Aurora.modalId,
 						layer: 1,
 						action: {
 							method: function(id) {
@@ -4185,16 +4185,16 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (gameObject.arenaLevel >= tower.props.requires.arenaLvlToUpgrade && towerLevel < 6 && !upgradeIssue) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					layer: 1,
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-							posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
-							width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-							height: (Game.entitySize * 7),
+							posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+							posY: Aurora.placeEntityY(0.70, (Aurora.entitySize * 30)),
+							width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+							height: (Aurora.entitySize * 7),
 							lineWidth: 1,
 							btnColor: 'darkgrey',
 							txtColor: 'white',
@@ -4206,11 +4206,11 @@ const maulPage = {
 							action: { 
 								method: function(id) {
 									if (tower.props.towerId > 0) {
-										if (gameObject.arenaBlueGameMoney >= towerCost * (towerLevel)) {
+										if (gameObject.arenaBlueAuroraMoney >= towerCost * (towerLevel)) {
 											if (gameObject.gameSounds) {
 												selectSound.play();
 											}
-											gameObject.arenaBlueGameMoney -= towerCost * (towerLevel);
+											gameObject.arenaBlueAuroraMoney -= towerCost * (towerLevel);
 											updateMoneyBackground();
 											tower.props.stats.att += upgradeTowerStats.att;
 											tower.props.stats.def += upgradeTowerStats.def;
@@ -4222,7 +4222,7 @@ const maulPage = {
 											tower.msg = 'HP: ' + tower.props.stats.hp;
 											closeUpdateTowerModal();
 										} else {
-											const upgradeButton = Game.methodObjects.find(bs => bs.id === 'upgrade-tower');
+											const upgradeButton = Aurora.methodObjects.find(bs => bs.id === 'upgrade-tower');
 											upgradeButton.btnColor = '#C0C0C0';
 										}
 									} else {
@@ -4236,16 +4236,16 @@ const maulPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
-						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.80, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -4265,7 +4265,7 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function selectBuildTowerMenu(tower, towerIndex) {
 			let directiveName = findTowerDirectiveName(selectBuildTowerIndex);
@@ -4281,29 +4281,29 @@ const maulPage = {
 			// future Jordan, this isMobile variable could be a global thing.
 			// it's being used in at lease one other place
 			let isMobile = false;
-			if (Game.canvas.height > Game.canvas.width) { // mobile
+			if (Aurora.canvas.height > Aurora.canvas.width) { // mobile
 				isMobile = true;
 			} else { // everything else
 				isMobile = false;
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawDialogueModal({
-						posX: Game.placeEntityX(0.07),
-						posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-						width: (Game.canvas.width * 0.85),
-						height: (Game.entitySize * 50),
+						posX: Aurora.placeEntityX(0.07),
+						posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+						width: (Aurora.canvas.width * 0.85),
+						height: (Aurora.entitySize * 50),
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
 						msgFont: '1em serif',
 						msgs: msgs,
-						msgStart: Game.placeEntityY(0.58, (Game.entitySize * 30)),
-						msgDistance: (Game.entitySize * 7),
+						msgStart: Aurora.placeEntityY(0.58, (Aurora.entitySize * 30)),
+						msgDistance: (Aurora.entitySize * 7),
 						bgColor: '',
 						isModalFilled: true,
-						id: Game.modalId,
+						id: Aurora.modalId,
 						layer: 1,
 						action: {
 							method: function(id) {
@@ -4316,15 +4316,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.11, (Game.entitySize * -0.01)),
-						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
-						width: (Game.entityWidth * 15),
-						height: (Game.entitySize * 10),
+						posX: Aurora.placeEntityX(0.11, (Aurora.entitySize * -0.01)),
+						posY: Aurora.placeEntityY(0.43, (Aurora.entitySize * 30)),
+						width: (Aurora.entityWidth * 15),
+						height: (Aurora.entitySize * 10),
 						lineWidth: 1,
 						color: selectBuildTowerIndex === 0 ? 'yellow' : 'darkgrey',
 						isBackground: false,
@@ -4336,15 +4336,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.136, isMobile ? (Game.entityWidth * 0.7) : (Game.entityWidth * -5.6)),
-						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 9),
+						posX: Aurora.placeEntityX(0.136, isMobile ? (Aurora.entityWidth * 0.7) : (Aurora.entityWidth * -5.6)),
+						posY: Aurora.placeEntityY(0.435, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[0].arenaTower.img ? gameObject.towerArenaDesigns[0].arenaTower.img : 'lightslategrey',
 						txtColor: 'white',
@@ -4368,15 +4368,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.43, (Game.entitySize * 1.99)),
-						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
-						width: (Game.entityWidth * 15),
-						height: (Game.entitySize * 10),
+						posX: Aurora.placeEntityX(0.43, (Aurora.entitySize * 1.99)),
+						posY: Aurora.placeEntityY(0.43, (Aurora.entitySize * 30)),
+						width: (Aurora.entityWidth * 15),
+						height: (Aurora.entitySize * 10),
 						lineWidth: 1,
 						color: selectBuildTowerIndex === 1 ? 'yellow' : 'darkgrey',
 						isBackground: false,
@@ -4388,15 +4388,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.456, isMobile ? (Game.entitySize * 2.3) : (Game.entitySize * -5.6)),
-						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 9),
+						posX: Aurora.placeEntityX(0.456, isMobile ? (Aurora.entitySize * 2.3) : (Aurora.entitySize * -5.6)),
+						posY: Aurora.placeEntityY(0.435, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[1].arenaTower.img ? gameObject.towerArenaDesigns[1].arenaTower.img : 'lightslategrey',
 						txtColor: 'white',
@@ -4420,15 +4420,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.739, (Game.entitySize * 1)),
-						posY: Game.placeEntityY(0.43, (Game.entitySize * 30)),
-						width: (Game.entityWidth * 15),
-						height: (Game.entitySize * 10),
+						posX: Aurora.placeEntityX(0.739, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.43, (Aurora.entitySize * 30)),
+						width: (Aurora.entityWidth * 15),
+						height: (Aurora.entitySize * 10),
 						lineWidth: 1,
 						color: selectBuildTowerIndex === 2 ? 'yellow' : 'darkgrey',
 						isBackground: false,
@@ -4440,15 +4440,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.765, isMobile ? (Game.entitySize * 1.3) : (Game.entitySize * -7.7)),
-						posY: Game.placeEntityY(0.435, (Game.entitySize * 30)),
-						width: (Game.entitySize * 6),
-						height: (Game.entitySize * 9),
+						posX: Aurora.placeEntityX(0.765, isMobile ? (Aurora.entitySize * 1.3) : (Aurora.entitySize * -7.7)),
+						posY: Aurora.placeEntityY(0.435, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 6),
+						height: (Aurora.entitySize * 9),
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[2].arenaTower.img ? gameObject.towerArenaDesigns[2].arenaTower.img : 'lightslategrey',
 						txtColor: 'white',
@@ -4472,15 +4472,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.47, isMobile ? (Game.entitySize * 40) : (Game.entitySize * 33)),
-						posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
-						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.47, isMobile ? (Aurora.entitySize * 40) : (Aurora.entitySize * 33)),
+						posY: Aurora.placeEntityY(0.70, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -4492,11 +4492,11 @@ const maulPage = {
 						action: { 
 							method: function(id) {
 								if (selectedTowerDesign.arenaTower.towerId) {
-									if (gameObject.arenaBlueGameMoney >= towerCost) {
+									if (gameObject.arenaBlueAuroraMoney >= towerCost) {
 										if (gameObject.gameSounds) {
 											buildTowerSound.play();
 										}
-										gameObject.arenaBlueGameMoney -= towerCost;
+										gameObject.arenaBlueAuroraMoney -= towerCost;
 										updateMoneyBackground();
 										tower.btnColor = selectedTowerDesign.arenaTower.img;
 										tower.props.name = selectedTowerDesign.arenaTower.name;
@@ -4510,7 +4510,7 @@ const maulPage = {
 										tower.font = '0.7em serif';
 										closeBuildTowerModal();
 									} else {
-										const buildButton = Game.methodObjects.find(bs => bs.id === 'build-tower');
+										const buildButton = Aurora.methodObjects.find(bs => bs.id === 'build-tower');
 										buildButton.btnColor = '#C0C0C0';
 									}
 								}
@@ -4522,15 +4522,15 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.47, isMobile ? (Game.entitySize * 40) : (Game.entitySize * 33)),
-						posY: Game.placeEntityY(0.80, (Game.entitySize * 30)),
-						width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.47, isMobile ? (Aurora.entitySize * 40) : (Aurora.entitySize * 33)),
+						posY: Aurora.placeEntityY(0.80, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -4550,62 +4550,62 @@ const maulPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function closeBuildTowerModal() {
-			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 			if (modal) {
-				Game.deleteEntity(modal.methodId);
+				Aurora.deleteEntity(modal.methodId);
 			}
 			removeTowerSelect();
-			const buildBtn = Game.methodObjects.find(btn => btn.id === 'build-tower');
+			const buildBtn = Aurora.methodObjects.find(btn => btn.id === 'build-tower');
 			if (buildBtn) {
-				Game.deleteEntity(buildBtn.methodId);
+				Aurora.deleteEntity(buildBtn.methodId);
 			}
-			const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-build-tower');
+			const cancelBtn = Aurora.methodObjects.find(btn => btn.id === 'cancel-build-tower');
 			if (cancelBtn) {
-				Game.deleteEntity(cancelBtn.methodId);
+				Aurora.deleteEntity(cancelBtn.methodId);
 			}
 		}
 		function closeUpdateTowerModal() {
-			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 			if (modal) {
-				Game.deleteEntity(modal.methodId);
+				Aurora.deleteEntity(modal.methodId);
 			}
 			removeTowerSelect();
-			const buildBtn = Game.methodObjects.find(btn => btn.id === 'upgrade-tower');
+			const buildBtn = Aurora.methodObjects.find(btn => btn.id === 'upgrade-tower');
 			if (buildBtn) {
-				Game.deleteEntity(buildBtn.methodId);
+				Aurora.deleteEntity(buildBtn.methodId);
 			}
-			const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-upgrade-tower');
+			const cancelBtn = Aurora.methodObjects.find(btn => btn.id === 'cancel-upgrade-tower');
 			if (cancelBtn) {
-				Game.deleteEntity(cancelBtn.methodId);
+				Aurora.deleteEntity(cancelBtn.methodId);
 			}
 		}
 		function removeTowerSelect() {
-			const towerSelect1 = Game.methodObjects.find(tower => tower.id === 'blue-tower-1');
+			const towerSelect1 = Aurora.methodObjects.find(tower => tower.id === 'blue-tower-1');
 			if (towerSelect1) {
-				Game.deleteEntity(towerSelect1.methodId);
+				Aurora.deleteEntity(towerSelect1.methodId);
 			}
-			const towerSelect2 = Game.methodObjects.find(tower => tower.id === 'blue-tower-2');
+			const towerSelect2 = Aurora.methodObjects.find(tower => tower.id === 'blue-tower-2');
 			if (towerSelect2) {
-				Game.deleteEntity(towerSelect2.methodId);
+				Aurora.deleteEntity(towerSelect2.methodId);
 			}
-			const towerSelect3 = Game.methodObjects.find(tower => tower.id === 'blue-tower-3');
+			const towerSelect3 = Aurora.methodObjects.find(tower => tower.id === 'blue-tower-3');
 			if (towerSelect3) {
-				Game.deleteEntity(towerSelect3.methodId);
+				Aurora.deleteEntity(towerSelect3.methodId);
 			}
-			const towerSelectBg1 = Game.methodObjects.find(tower => tower.id === 'arena-tower-bg-1');
+			const towerSelectBg1 = Aurora.methodObjects.find(tower => tower.id === 'arena-tower-bg-1');
 			if (towerSelectBg1) {
-				Game.deleteEntity(towerSelectBg1.methodId);
+				Aurora.deleteEntity(towerSelectBg1.methodId);
 			}
-			const towerSelectBg2 = Game.methodObjects.find(tower => tower.id === 'arena-tower-bg-2');
+			const towerSelectBg2 = Aurora.methodObjects.find(tower => tower.id === 'arena-tower-bg-2');
 			if (towerSelectBg2) {
-				Game.deleteEntity(towerSelectBg2.methodId);
+				Aurora.deleteEntity(towerSelectBg2.methodId);
 			}
-			const towerSelectBg3 = Game.methodObjects.find(tower => tower.id === 'arena-tower-bg-3');
+			const towerSelectBg3 = Aurora.methodObjects.find(tower => tower.id === 'arena-tower-bg-3');
 			if (towerSelectBg3) {
-				Game.deleteEntity(towerSelectBg3.methodId);
+				Aurora.deleteEntity(towerSelectBg3.methodId);
 			}
 		}
 	}

@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-const Game = { // the user will want to use this object
+const Aurora = { // the user will want to use this object
   frameRate: 1000 / 60, // how fast the game is running
   methodObjects: [], // this holds all the current param values
   canvas: undefined, // the game stage
@@ -70,16 +70,16 @@ const Game = { // the user will want to use this object
   },
   placeEntityX: function(pos, size) {
     if (size) { // this will help center the entity X coord before placing
-      return (Game.canvas.width * pos) - (size / 2);
+      return (Aurora.canvas.width * pos) - (size / 2);
     } else {
-      return (Game.canvas.width * pos);
+      return (Aurora.canvas.width * pos);
     }
   },
   placeEntityY: function(pos, size) {
     if (size) { // this will help center the entity Y coord before placing
-      return (Game.canvas.height * pos) - (size / 2);
+      return (Aurora.canvas.height * pos) - (size / 2);
     } else {
-      return (Game.canvas.height * pos);
+      return (Aurora.canvas.height * pos);
     }
   },
   deleteEntity: function(id) { // delete an object in the MethodObjects using the methodId
@@ -127,7 +127,7 @@ const Game = { // the user will want to use this object
   },
   // these settings will make the game run faster or slower
   setSettingsLow: function() {
-    this.selectedSetting = Game.enumSettings.low;
+    this.selectedSetting = Aurora.enumSettings.low;
     this.frameRate = 1000 / 15; // 15 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
@@ -140,7 +140,7 @@ const Game = { // the user will want to use this object
     },0);
   },
   setSettingsMed: function() {
-    this.selectedSetting = Game.enumSettings.med;
+    this.selectedSetting = Aurora.enumSettings.med;
     this.frameRate = 1000 / 30; // 30 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
@@ -153,7 +153,7 @@ const Game = { // the user will want to use this object
     },0);
   },
   setSettingsHigh: function() {
-    this.selectedSetting = Game.enumSettings.high;
+    this.selectedSetting = Aurora.enumSettings.high;
     this.frameRate = 1000 / 60; // 60 frames a second
     setTimeout(function() {
       clearInterval(Main.interval);
@@ -180,32 +180,32 @@ const Game = { // the user will want to use this object
   moveEntity: function(speed, direction) {
     const speedPerc = speed * 0.01;
     if (direction === this.enumDirections.topDown) {
-      if (this.selectedSetting === Game.enumSettings.high) {
-        return (Game.canvas.height * speedPerc);
+      if (this.selectedSetting === Aurora.enumSettings.high) {
+        return (Aurora.canvas.height * speedPerc);
       }
-      if (this.selectedSetting === Game.enumSettings.med) {
-        return (Game.canvas.height * speedPerc) * 2;
+      if (this.selectedSetting === Aurora.enumSettings.med) {
+        return (Aurora.canvas.height * speedPerc) * 2;
       }
-      if (this.selectedSetting === Game.enumSettings.low) {
-        return (Game.canvas.height * speedPerc) * 4;
+      if (this.selectedSetting === Aurora.enumSettings.low) {
+        return (Aurora.canvas.height * speedPerc) * 4;
       }
       if (!this.selectedSetting) {
-        return (Game.canvas.height * speedPerc);
+        return (Aurora.canvas.height * speedPerc);
       }
 
     }
     if (direction === this.enumDirections.leftRight) {
-      if (this.selectedSetting === Game.enumSettings.high) {
-        return (Game.canvas.width * speedPerc);
+      if (this.selectedSetting === Aurora.enumSettings.high) {
+        return (Aurora.canvas.width * speedPerc);
       }
-      if (this.selectedSetting === Game.enumSettings.med) {
-        return (Game.canvas.width * speedPerc) * 2;
+      if (this.selectedSetting === Aurora.enumSettings.med) {
+        return (Aurora.canvas.width * speedPerc) * 2;
       }
-      if (this.selectedSetting === Game.enumSettings.low) {
-        return (Game.canvas.width * speedPerc) * 4;
+      if (this.selectedSetting === Aurora.enumSettings.low) {
+        return (Aurora.canvas.width * speedPerc) * 4;
       }
       if (!this.selectedSetting) {
-        return (Game.canvas.width * speedPerc);
+        return (Aurora.canvas.width * speedPerc);
       }
     }
 

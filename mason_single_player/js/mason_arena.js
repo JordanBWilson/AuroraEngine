@@ -16,14 +16,14 @@ const arenaPage = {
 	description: 'This is where the player can compete for prizes',
 	loadPage: function() {
 		function arenaMenuSelect() {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -34,14 +34,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -60,14 +60,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Arena',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -76,14 +76,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -94,7 +94,7 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			let robotCount = 0;
 			let robotSelectRow = 1;
@@ -121,13 +121,13 @@ const arenaPage = {
 					posXoffset = 1;
 				}	
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.25),
-							height: (Game.entitySize * 20),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.25),
+							height: (Aurora.entitySize * 20),
 							lineWidth: 1,
 							color: 'darkgrey',
 							isBackground: false,
@@ -138,10 +138,10 @@ const arenaPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				drawRobotSelect(
-					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+					Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
 					gameObject.robotArenaDesigns[i].robotParts,
 					i,
 					function() {
@@ -164,13 +164,13 @@ const arenaPage = {
 			}
 			drawRobotSelectParts();
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Team',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.20),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.20),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -179,7 +179,7 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			let towerCount = 0;
 			let towerSelectRow = 1;
@@ -206,13 +206,13 @@ const arenaPage = {
 					posX = 0.689;
 					posXoffset = 1;
 				}	
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.25),
-							height: (Game.entitySize * 20),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.25),
+							height: (Aurora.entitySize * 20),
 							lineWidth: 1,
 							color: 'darkgrey',
 							isBackground: false,
@@ -223,11 +223,11 @@ const arenaPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				
 				drawTowerSelect(
-					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+					Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
 					gameObject.towerArenaDesigns[i].arenaTower,
 					i,
 					function() {
@@ -241,13 +241,13 @@ const arenaPage = {
 				
 			}
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Tower Defense',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.50),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.50),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -256,15 +256,15 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.925, (Game.entitySize * 47)),
-						posY: Game.placeEntityY(0.90),
-						width: (Game.entitySize * 25),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.925, (Aurora.entitySize * 47)),
+						posY: Aurora.placeEntityY(0.90),
+						width: (Aurora.entitySize * 25),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
@@ -294,23 +294,23 @@ const arenaPage = {
 									maulPage.loadPage();
 								} else {
 									let msgs = ['Select At Least', 'One Robot and Tower', 'Tap here to continue'];
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawDialogueModal({
-												posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-												posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-												width: (Game.entitySize * 45),
-												height: (Game.entitySize * 25),
+												posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+												posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+												width: (Aurora.entitySize * 45),
+												height: (Aurora.entitySize * 25),
 												lineWidth: 1,
 												modalColor: 'grey',
 												msgColor: 'white',
 												msgFont: '1em serif',
 												msgs: msgs,
-												msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-												msgDistance: (Game.entitySize * 8),
+												msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+												msgDistance: (Aurora.entitySize * 8),
 												bgColor: '',
 												isModalFilled: true,
-												id: Game.modalId,
+												id: Aurora.modalId,
 												action: {
 													method: function(id) {
 														arenaPage.loadPage();
@@ -322,7 +322,7 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								}
 								
 								
@@ -334,32 +334,32 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'arena-robot-select',
 				method: function() {
-					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+					const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 					if (modal) {
-						Game.deleteEntity(modal.methodId);
+						Aurora.deleteEntity(modal.methodId);
 						setTimeout(function() {
-							Game.methodSetup = {
+							Aurora.methodSetup = {
 								method: function(id) {
 									drawDialogueModal({
-										posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-										posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-										width: (Game.entitySize * 45),
-										height: (Game.entitySize * 25),
+										posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+										posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+										width: (Aurora.entitySize * 45),
+										height: (Aurora.entitySize * 25),
 										lineWidth: modal.lineWidth,
 										modalColor: modal.modalColor,
 										msgColor: modal.msgColor,
 										msgFont: modal.msgFont,
 										msgs: modal.msgs,
-										msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-										msgDistance: (Game.entitySize * 8),
+										msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+										msgDistance: (Aurora.entitySize * 8),
 										bgColor: modal.bgColor,
 										isModalFilled: modal.isModalFilled,
-										id: Game.modalId,
+										id: Aurora.modalId,
 										action: modal.action,
 										isModalBtn: modal.isModalBtn,
 										props: {},
@@ -367,7 +367,7 @@ const arenaPage = {
 									});
 								}
 							};
-							Game.addMethod(Game.methodSetup);
+							Aurora.addMethod(Aurora.methodSetup);
 						}, 150);
 					}
 					arenaPage.loadPage();
@@ -376,14 +376,14 @@ const arenaPage = {
 		}
 		arenaMenuSelect();
 		function arenaRobotSelect(selectedTower, arenaTowerIndex = -1, reselect = false, standardDirective = true) {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -394,14 +394,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -435,14 +435,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Select',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -451,14 +451,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -469,7 +469,7 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
 			for (let i = gameObject.partPageIndex; i < gameObject.robotTeams.length; i++) {
@@ -503,13 +503,13 @@ const arenaPage = {
 					posXoffset = 1;
 				} 	
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.25),
-							height: (Game.entitySize * 20),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.25),
+							height: (Aurora.entitySize * 20),
 							lineWidth: 1,
 							color: 'darkgrey',
 							isBackground: false,
@@ -520,10 +520,10 @@ const arenaPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				drawRobotSelect(
-					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+					Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
 					gameObject.robotTeams[i].robotParts,
 					i,
 					function() {
@@ -547,14 +547,14 @@ const arenaPage = {
 			drawNextPrevRobotList(gameObject.robotTeams, function() { arenaRobotSelect(selectedTower, arenaTowerIndex, reselect, standardDirective); });
 		}
 		function arenaTowerSelect(arenaTowerIndex) {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -565,14 +565,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -591,14 +591,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Select',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -607,14 +607,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -625,7 +625,7 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
 			for (let i = gameObject.partPageIndex; i < arenaTowers.length; i++) {
@@ -659,13 +659,13 @@ const arenaPage = {
 					posXoffset = 1;
 				} 	
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.25),
-							height: (Game.entitySize * 20),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.25),
+							height: (Aurora.entitySize * 20),
 							lineWidth: 1,
 							color: 'darkgrey',
 							isBackground: false,
@@ -676,11 +676,11 @@ const arenaPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				
 				previewTower(
-					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+					Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
 					arenaTowers[i],
 					i,
 					function() {
@@ -718,23 +718,23 @@ const arenaPage = {
 		}
 		function noRobotDesignModal() {
 			const msg = ['In the Factory, Design', 'a Robot and Build it!', 'Tap here to continue'];
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawDialogueModal({
-						posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-						width: (Game.entitySize * 45),
-						height: (Game.entitySize * 25),
+						posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 25),
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
 						msgFont: '1em serif',
 						msgs: msg,
-						msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-						msgDistance: (Game.entitySize * 8),
+						msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+						msgDistance: (Aurora.entitySize * 8),
 						bgColor: '',
 						isModalFilled: true,
-						id: Game.modalId,
+						id: Aurora.modalId,
 						action: {
 							method: function(id) {
 								arenaPage.loadPage();
@@ -746,17 +746,17 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function arenaRobotDetails(reselect = false, arenaTowerIndex, selectedTower) {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -767,14 +767,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.45),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.45),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -785,14 +785,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.43),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.825, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.43),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -803,14 +803,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.39),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.815, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.39),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -821,7 +821,7 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			drawRobotPreview(
 				function() {},
 				function() {},
@@ -852,13 +852,13 @@ const arenaPage = {
 					directiveReadyList.push(true);
 				}
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.330 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 9),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.330 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
 							btnColor: (arenaTowerIndex === -1 || arenaTowerIndex === undefined) && directiveReadyList[i] ? 'green' : '#C0C0C0',
 							txtColor: 'white',
@@ -871,31 +871,31 @@ const arenaPage = {
 									if ((arenaTowerIndex === -1 || arenaTowerIndex === undefined) && directiveReadyList[i]) {
 										let msgs = [];
 										if (i === 0) {
-											msgs = ['Tank', '- In Game Cost: $' + gameObject.robotDirectiveCost.d1 + ' -', 'Tanks will target towers before', 'getting to the enemy base'];
+											msgs = ['Tank', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d1 + ' -', 'Tanks will target towers before', 'getting to the enemy base'];
 										} else if (i === 1) {
-											msgs = ['Warrior', '- In Game Cost: $' + gameObject.robotDirectiveCost.d2 + ' -', 'Warriors will target troops before', 'getting to the enemy base'];
+											msgs = ['Warrior', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d2 + ' -', 'Warriors will target troops before', 'getting to the enemy base'];
 										} else if (i === 2) {
-											msgs = ['Support', '- In Game Cost: $' + gameObject.robotDirectiveCost.d3 + ' -', 'Supports will heal fellow robots', 'before getting to the', 'enemy base'];
+											msgs = ['Support', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d3 + ' -', 'Supports will heal fellow robots', 'before getting to the', 'enemy base'];
 										} else if (i === 3) {
-											msgs = ['Lee-Roy', '- In Game Cost: $' + gameObject.robotDirectiveCost.d4 + ' -', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy base'];
+											msgs = ['Lee-Roy', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d4 + ' -', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy base'];
 										}
-										Game.methodSetup = {
+										Aurora.methodSetup = {
 											method: function(id) {
 												drawDialogueModal({
-													posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-													width: (Game.entitySize * 45),
-													height: (Game.entitySize * 50),
+													posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+													posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+													width: (Aurora.entitySize * 45),
+													height: (Aurora.entitySize * 50),
 													lineWidth: 1,
 													modalColor: 'darkgrey',
 													msgColor: 'white',
 													msgFont: '1em serif',
 													msgs: msgs,
-													msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-													msgDistance: (Game.entitySize * 5),
+													msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+													msgDistance: (Aurora.entitySize * 5),
 													bgColor: '',
 													isModalFilled: true,
-													id: Game.modalId,
+													id: Aurora.modalId,
 													action: {
 														method: function(id) {}
 													},
@@ -905,14 +905,14 @@ const arenaPage = {
 												});
 											}
 										};
-										Game.addMethod(Game.methodSetup);
-										Game.methodSetup = {
+										Aurora.addMethod(Aurora.methodSetup);
+										Aurora.methodSetup = {
 											method: function(id) {
 												drawButton({
-													posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
-													width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-													height: (Game.entitySize * 7),
+													posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+													posY: Aurora.placeEntityY(0.72, (Aurora.entitySize * 30)),
+													width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+													height: (Aurora.entitySize * 7),
 													lineWidth: 1,
 													btnColor: 'grey',
 													txtColor: 'white',
@@ -926,8 +926,8 @@ const arenaPage = {
 																selectSound.cloneNode(true).play();
 															}
 															gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive = i + 1;
-															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-															Game.deleteEntity(modal.methodId);
+															const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+															Aurora.deleteEntity(modal.methodId);
 															arenaRobotDetails(reselect, arenaTowerIndex, selectedTower);
 														}
 													},
@@ -937,14 +937,14 @@ const arenaPage = {
 												});
 											}
 										};
-										Game.addMethod(Game.methodSetup);
-										Game.methodSetup = {
+										Aurora.addMethod(Aurora.methodSetup);
+										Aurora.methodSetup = {
 											method: function(id) {
 												drawButton({
-													posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-													posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-													width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-													height: (Game.entitySize * 7),
+													posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+													posY: Aurora.placeEntityY(0.815, (Aurora.entitySize * 30)),
+													width:(Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+													height: (Aurora.entitySize * 7),
 													lineWidth: 1,
 													btnColor: 'grey',
 													txtColor: 'white',
@@ -954,8 +954,8 @@ const arenaPage = {
 													id: 'cancel-directive',
 													action: { 
 														method: function(id) { 
-															const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-															Game.deleteEntity(modal.methodId);
+															const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+															Aurora.deleteEntity(modal.methodId);
 															arenaRobotDetails(reselect, arenaTowerIndex, selectedTower);
 														}
 													},
@@ -965,7 +965,7 @@ const arenaPage = {
 												});
 											}
 										};
-										Game.addMethod(Game.methodSetup);
+										Aurora.addMethod(Aurora.methodSetup);
 									}
 								}
 							},
@@ -975,15 +975,15 @@ const arenaPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -1020,14 +1020,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Details',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -1036,14 +1036,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Stats',
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -1052,15 +1052,15 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			const robotStats = totalSelectedRobotStats();
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Attack: ' + robotStats.stats.att,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.69),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.69),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1069,14 +1069,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Defense: ' + robotStats.stats.def,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.74),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.74),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1085,14 +1085,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Speed: ' + robotStats.stats.spd,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.79),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.79),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1101,14 +1101,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'AI: ' + robotStats.stats.ai,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.84),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.84),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1117,14 +1117,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Storage: ' + robotStats.stats.storage,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.88),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.88),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1133,14 +1133,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-						posY: Game.placeEntityY(0.90),
-						width: (Game.entitySize * 23),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.226, (Aurora.entitySize * 19.7)),
+						posY: Aurora.placeEntityY(0.90),
+						width: (Aurora.entitySize * 23),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
@@ -1183,10 +1183,10 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (arenaTowerIndex === -1 || arenaTowerIndex === undefined) { 
 				selectRobotDirective();
-				Game.pageResized = {
+				Aurora.pageResized = {
 					section: 'arena-robot-details',
 					method: function() {
 						selectRobotDirective();
@@ -1195,14 +1195,14 @@ const arenaPage = {
 			}
 		}
 		function arenaTowerDetails(selectedTower, arenaTowerIndex, reselect = false, standardDirective = true) {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -1213,14 +1213,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.45),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.45),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1231,14 +1231,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.43),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.825, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.43),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1249,14 +1249,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.39),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.815, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.39),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1267,15 +1267,15 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2em serif',
 						msg: 'Directive',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.20),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.20),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -1284,7 +1284,7 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			if (selectedTower.type !== 'bunker') {
 				selectedTower.robotParts = [];
@@ -1293,13 +1293,13 @@ const arenaPage = {
 			}
 			drawTowerDetail(selectedTower);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -1324,14 +1324,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Details',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -1340,14 +1340,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.1em serif',
 						msg: selectedTower.name,
-						posX: Game.placeEntityX(0.25, (Game.entitySize * 0.5)),
-						posY: Game.placeEntityY(0.185),
+						posX: Aurora.placeEntityX(0.25, (Aurora.entitySize * 0.5)),
+						posY: Aurora.placeEntityY(0.185),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -1356,14 +1356,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Stats',
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -1372,14 +1372,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Attack: ' + selectedTower.stats.att,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.69),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.69),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1388,14 +1388,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Defense: ' + selectedTower.stats.def,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.74),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.74),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1404,14 +1404,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Speed: ' + selectedTower.stats.spd,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.79),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.79),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1420,14 +1420,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'HP: ' + selectedTower.stats.hp,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.84),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.84),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1436,14 +1436,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: 'Splash: ' + selectedTower.stats.splash,
-						posX: Game.placeEntityX(0.09),
-						posY: Game.placeEntityY(0.88),
+						posX: Aurora.placeEntityX(0.09),
+						posY: Aurora.placeEntityY(0.88),
 						color: 'grey',
 						align: 'left',
 						props: {},
@@ -1452,14 +1452,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-						posY: Game.placeEntityY(0.90),
-						width: (Game.entitySize * 23),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.226, (Aurora.entitySize * 19.7)),
+						posY: Aurora.placeEntityY(0.90),
+						width: (Aurora.entitySize * 23),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: selectedTower.type === 'bunker' && gameObject.towerArenaDesigns[arenaTowerIndex].robotParts.length !== 6 ? '#C0C0C0' : 'grey',
 						txtColor: 'white',
@@ -1487,7 +1487,7 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			function selectTower(reselect, selectedTower, arenaTowerIndex) {
 				if (!reselect) {
 					const cloneTower = Object.assign({}, selectedTower);
@@ -1513,13 +1513,13 @@ const arenaPage = {
 					directiveMsg = selectedTower.type === 'bunker' ? 'Defense' : 'Ram-Shot';
 					directiveReadyList.push(false);
 				}
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.330 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 9),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.330 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
 							btnColor: (selectedTower.type === 'bunker' && i === 0) || !directiveReadyList[i] ? '#C0C0C0' : 'green', // the color here should be grey or green
 							txtColor: 'white',
@@ -1536,48 +1536,48 @@ const arenaPage = {
 											if (selectedTower.type === 'bunker') {
 												selectRobot = true;
 											} else {
-												msgs = ['Standard', '- In Game Cost: $' + gameObject.towerDirectiveCost.d1 + ' -', 'Tower will attack at', 'a standard rate'];
+												msgs = ['Standard', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d1 + ' -', 'Tower will attack at', 'a standard rate'];
 											}
 										} else if (i === 1) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Standard', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d1 + ' -', 'Bunker will create', ' 2 robots a turn'];
+												msgs = ['Standard', '- In Aurora Cost: $' + gameObject.bunkerDirectiveCost.d1 + ' -', 'Bunker will create', ' 2 robots a turn'];
 											} else {
-												msgs = ['Splash-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d2 + ' -', 'Tower will gain splash', 'but will attack slower'];
+												msgs = ['Splash-Shot', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d2 + ' -', 'Tower will gain splash', 'but will attack slower'];
 											}
 										} else if (i === 2) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Rapid', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
+												msgs = ['Rapid', '- In Aurora Cost: $' + gameObject.bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
 											} else {
-												msgs = ['Rapid-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but will', 'lose some attack and HP'];
+												msgs = ['Rapid-Shot', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but will', 'lose some attack and HP'];
 											}
 										} else if (i === 3) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Defense', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d3 + ' -', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash'];
+												msgs = ['Defense', '- In Aurora Cost: $' + gameObject.bunkerDirectiveCost.d3 + ' -', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash'];
 											} else {
-												msgs = ['Ram-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d4 + ' -', 'Tower will get added attack', 'and splash but lose some speed'];
+												msgs = ['Ram-Shot', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d4 + ' -', 'Tower will get added attack', 'and splash but lose some speed'];
 											}
 										}
 										if (selectRobot) {
 											// select a robot
 											arenaRobotSelect(selectedTower, arenaTowerIndex);
 										} else {
-											Game.methodSetup = {
+											Aurora.methodSetup = {
 												method: function(id) {
 													drawDialogueModal({
-														posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-														posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-														width: (Game.entitySize * 45),
-														height: (Game.entitySize * 50),
+														posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+														posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+														width: (Aurora.entitySize * 45),
+														height: (Aurora.entitySize * 50),
 														lineWidth: 1,
 														modalColor: 'darkgrey',
 														msgColor: 'white',
 														msgFont: '1em serif',
 														msgs: msgs,
-														msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-														msgDistance: (Game.entitySize * 5),
+														msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+														msgDistance: (Aurora.entitySize * 5),
 														bgColor: '',
 														isModalFilled: true,
-														id: Game.modalId,
+														id: Aurora.modalId,
 														action: {
 															method: function(id) {}
 														},
@@ -1587,14 +1587,14 @@ const arenaPage = {
 													});
 												}
 											};
-											Game.addMethod(Game.methodSetup);
-											Game.methodSetup = {
+											Aurora.addMethod(Aurora.methodSetup);
+											Aurora.methodSetup = {
 												method: function(id) {
 													drawButton({
-														posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-														posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
-														width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-														height: (Game.entitySize * 7),
+														posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+														posY: Aurora.placeEntityY(0.72, (Aurora.entitySize * 30)),
+														width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+														height: (Aurora.entitySize * 7),
 														lineWidth: 1,
 														btnColor: 'grey',
 														txtColor: 'white',
@@ -1649,8 +1649,8 @@ const arenaPage = {
 																		gameObject.towerArenaDesigns[arenaTowerIndex].arenaTower.stats = Object.assign({}, cloneTower.stats);
 																	}
 																}
-																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																Game.deleteEntity(modal.methodId);
+																const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																Aurora.deleteEntity(modal.methodId);
 																
 																arenaTowerDetails(cloneTower, arenaTowerIndex, reselect, false);
 															}
@@ -1661,14 +1661,14 @@ const arenaPage = {
 													});
 												}
 											};
-											Game.addMethod(Game.methodSetup);
-											Game.methodSetup = {
+											Aurora.addMethod(Aurora.methodSetup);
+											Aurora.methodSetup = {
 												method: function(id) {
 													drawButton({
-														posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-														posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-														width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-														height: (Game.entitySize * 7),
+														posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+														posY: Aurora.placeEntityY(0.815, (Aurora.entitySize * 30)),
+														width:(Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+														height: (Aurora.entitySize * 7),
 														lineWidth: 1,
 														btnColor: 'grey',
 														txtColor: 'white',
@@ -1678,8 +1678,8 @@ const arenaPage = {
 														id: 'cancel-directive',
 														action: { 
 															method: function(id) { 
-																const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																Game.deleteEntity(modal.methodId);
+																const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																Aurora.deleteEntity(modal.methodId);
 																arenaTowerDetails(selectedTower, arenaTowerIndex, reselect, false);
 															}
 														},
@@ -1689,7 +1689,7 @@ const arenaPage = {
 													});
 												}
 											};
-											Game.addMethod(Game.methodSetup);
+											Aurora.addMethod(Aurora.methodSetup);
 										}
 									}
 								}
@@ -1700,7 +1700,7 @@ const arenaPage = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			if (selectedTower.type === 'bunker' && standardDirective) {
 				gameObject.towerArenaDesigns[arenaTowerIndex].directive = 2;
@@ -1709,7 +1709,7 @@ const arenaPage = {
 			}
 			selectTowerDirective(arenaTowerIndex, selectedTower);
 			
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'arena-tower-details',
 				method: function() {
 					if (selectedTower.type === 'bunker') {
@@ -1724,7 +1724,7 @@ const arenaPage = {
 		function selectRobotDirective() {
 			setTimeout(function() {
 				clearRobotPreviewHighlight();
-				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive);
+				const highlight = Aurora.methodObjects.find(item => item.id === 'directive-' + gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive);
 				if (highlight) {
 					highlight.btnColor = 'yellow';
 					highlight.txtColor = 'black';
@@ -1733,7 +1733,7 @@ const arenaPage = {
 		}
 		function clearRobotPreviewHighlight() {
 			for (let i = 1; i <= 4; i++) {
-				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + i);
+				const highlight = Aurora.methodObjects.find(item => item.id === 'directive-' + i);
 				if (highlight) {
 					if (i !== 2 && i !== 3) { 
 						highlight.btnColor = 'green';
@@ -1746,7 +1746,7 @@ const arenaPage = {
 		function selectTowerDirective(arenaTowerIndex, selectedTower) {
 			setTimeout(function() {
 				clearTowerPreviewHighlight(selectedTower);
-				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + gameObject.towerArenaDesigns[arenaTowerIndex].directive);
+				const highlight = Aurora.methodObjects.find(item => item.id === 'directive-' + gameObject.towerArenaDesigns[arenaTowerIndex].directive);
 				if (highlight) {
 					highlight.btnColor = 'yellow';
 					highlight.txtColor = 'black';
@@ -1755,7 +1755,7 @@ const arenaPage = {
 		}
 		function clearTowerPreviewHighlight(selectedTower) {
 			for (let i = 1; i <= 4; i++) {
-				const highlight = Game.methodObjects.find(item => item.id === 'directive-' + i);
+				const highlight = Aurora.methodObjects.find(item => item.id === 'directive-' + i);
 				if (highlight) { // future Jordan, when the robot directives are ready, remove || (i === 2 || i === 4). The color should be grey or green
 					highlight.btnColor = (selectedTower.type === 'bunker' && i === 1) || (i === 2 || i === 4) ? '#C0C0C0' : 'green';
 					highlight.txtColor = 'white';
@@ -1764,13 +1764,13 @@ const arenaPage = {
 			}
 		}
 		function createRobotTitleStats(existingPart, part, confirmed, partChanged) {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2em serif',
 						msg: 'Directive',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.20),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.20),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -1779,14 +1779,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Details',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -1795,14 +1795,14 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Stats',
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -1811,41 +1811,41 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			clearSelectedRobotDetails();
 		}
 		function clearSelectedRobotDetails() {
 			// clear the titles
-			const directiveTitle = Game.methodObjects.filter(x => x.id === 'directive-title');
+			const directiveTitle = Aurora.methodObjects.filter(x => x.id === 'directive-title');
 			if (directiveTitle) {
 				directiveTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const detailTitle = Game.methodObjects.filter(x => x.id === 'robot-detail-title');
+			const detailTitle = Aurora.methodObjects.filter(x => x.id === 'robot-detail-title');
 			if (detailTitle) {
 				detailTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
+			const statTitle = Aurora.methodObjects.filter(x => x.id === 'stat-title');
 			if (statTitle) {
 				statTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 		}
 		function drawTowerSelect(posX, posY, towerDesign, index, action) {
 			previewTower(posX, posY, towerDesign, index, action);
 			if (gameObject.towerArenaDesigns[index].robotParts.length === 6) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: posX + (Game.entityWidth * 12.15) - (Game.entitySize * 1.3),
-							posY: posY + (Game.canvas.height * 0.11),
-							width: (Game.entitySize * 3),
-							height: (Game.entitySize * 3),
+							posX: posX + (Aurora.entityWidth * 12.15) - (Aurora.entitySize * 1.3),
+							posY: posY + (Aurora.canvas.height * 0.11),
+							width: (Aurora.entitySize * 3),
+							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
 							btnColor: drawRobotSelectPreviewParts('chassis', gameObject.towerArenaDesigns[index].robotParts),
 							txtColor: 'white',
@@ -1861,13 +1861,13 @@ const arenaPage = {
 							isModalBtn: false,
 							props: {
 								drawHead: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 0.3),
-												posY: parent.posY - (Game.entitySize * 2.5),
-												width: (Game.entitySize * 2.5),
-												height: (Game.entitySize * 2.5),
+												posX: parent.posX + (Aurora.entitySize * 0.3),
+												posY: parent.posY - (Aurora.entitySize * 2.5),
+												width: (Aurora.entitySize * 2.5),
+												height: (Aurora.entitySize * 2.5),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('head', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
@@ -1886,16 +1886,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawLeftArm: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX - (Game.entitySize * 0.75),
+												posX: parent.posX - (Aurora.entitySize * 0.75),
 												posY: parent.posY,
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-arm', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
@@ -1914,16 +1914,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawRightArm: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 3),
+												posX: parent.posX + (Aurora.entitySize * 3),
 												posY: parent.posY,
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-arm', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
@@ -1942,16 +1942,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawLeftLeg: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 0.25),
-												posY: parent.posY + (Game.entitySize * 3),
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												posX: parent.posX + (Aurora.entitySize * 0.25),
+												posY: parent.posY + (Aurora.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-leg', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
@@ -1970,16 +1970,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawRightLeg: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 2.15),
-												posY: parent.posY + (Game.entitySize * 3),
-												width: (Game.entitySize * 0.75),
-												height: (Game.entitySize * 3),
+												posX: parent.posX + (Aurora.entitySize * 2.15),
+												posY: parent.posY + (Aurora.entitySize * 3),
+												width: (Aurora.entitySize * 0.75),
+												height: (Aurora.entitySize * 3),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-leg', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
@@ -1998,27 +1998,27 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 							},
 							methodId: id
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 		}
 		function previewTower(posX, posY, towerDesign, index, action, showImg = false) {
 			if (towerDesign?.towerId) {
 				showImg = true;
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: posX + (Game.entityWidth * 11.9) - (Game.entitySize * 4),
-						posY: posY + (Game.canvas.height * 0.025),
-						width: (Game.entitySize * 9),
-						height: (Game.entitySize * 15),
+						posX: posX + (Aurora.entityWidth * 11.9) - (Aurora.entitySize * 4),
+						posY: posY + (Aurora.canvas.height * 0.025),
+						width: (Aurora.entitySize * 9),
+						height: (Aurora.entitySize * 15),
 						lineWidth: 1,
 						btnColor: !showImg ? 'lightslategrey' : towerDesign.img,
 						txtColor: 'white',
@@ -2037,16 +2037,16 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawTowerDetail(selectedTower) {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.23, (Game.entitySize * 15)),
-						posY: Game.placeEntityY(0.30, (Game.entitySize * 15)),
-						width: (Game.entitySize * 18),
-						height: (Game.entitySize * 30),
+						posX: Aurora.placeEntityX(0.23, (Aurora.entitySize * 15)),
+						posY: Aurora.placeEntityY(0.30, (Aurora.entitySize * 15)),
+						width: (Aurora.entitySize * 18),
+						height: (Aurora.entitySize * 30),
 						lineWidth: 1,
 						btnColor: selectedTower.img,
 						txtColor: 'white',
@@ -2063,17 +2063,17 @@ const arenaPage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (selectedTower.robotParts.length === 6) {
 				const posX = 0.39;
 				const posY = 0.0;
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: posX + (Game.entityWidth * 22.55) - (Game.entitySize * 1.3),
-							posY: posY + (Game.canvas.height * 0.41),
-							width: (Game.entitySize * 6),
-							height: (Game.entitySize * 6),
+							posX: posX + (Aurora.entityWidth * 22.55) - (Aurora.entitySize * 1.3),
+							posY: posY + (Aurora.canvas.height * 0.41),
+							width: (Aurora.entitySize * 6),
+							height: (Aurora.entitySize * 6),
 							lineWidth: 1,
 							btnColor: drawRobotSelectPreviewParts('chassis', selectedTower.robotParts),
 							txtColor: 'white',
@@ -2089,13 +2089,13 @@ const arenaPage = {
 							isModalBtn: false,
 							props: {
 								drawHead: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 0.5),
-												posY: parent.posY - (Game.entitySize * 5),
-												width: (Game.entitySize * 5),
-												height: (Game.entitySize * 5),
+												posX: parent.posX + (Aurora.entitySize * 0.5),
+												posY: parent.posY - (Aurora.entitySize * 5),
+												width: (Aurora.entitySize * 5),
+												height: (Aurora.entitySize * 5),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('head', selectedTower.robotParts),
 												txtColor: 'white',
@@ -2114,16 +2114,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawLeftArm: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX - (Game.entitySize * 1.5),
+												posX: parent.posX - (Aurora.entitySize * 1.5),
 												posY: parent.posY,
-												width: (Game.entitySize * 1.5),
-												height: (Game.entitySize * 6),
+												width: (Aurora.entitySize * 1.5),
+												height: (Aurora.entitySize * 6),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-arm', selectedTower.robotParts),
 												txtColor: 'white',
@@ -2142,16 +2142,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawRightArm: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 6),
+												posX: parent.posX + (Aurora.entitySize * 6),
 												posY: parent.posY,
-												width: (Game.entitySize * 1.5),
-												height: (Game.entitySize * 6),
+												width: (Aurora.entitySize * 1.5),
+												height: (Aurora.entitySize * 6),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-arm', selectedTower.robotParts),
 												txtColor: 'white',
@@ -2170,16 +2170,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawLeftLeg: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 0.25),
-												posY: parent.posY + (Game.entitySize * 6),
-												width: (Game.entitySize * 1.5),
-												height: (Game.entitySize * 6),
+												posX: parent.posX + (Aurora.entitySize * 0.25),
+												posY: parent.posY + (Aurora.entitySize * 6),
+												width: (Aurora.entitySize * 1.5),
+												height: (Aurora.entitySize * 6),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-leg', selectedTower.robotParts),
 												txtColor: 'white',
@@ -2198,16 +2198,16 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 								drawRightLeg: function(parent) {
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: parent.posX + (Game.entitySize * 4.3),
-												posY: parent.posY + (Game.entitySize * 6),
-												width: (Game.entitySize * 1.5),
-												height: (Game.entitySize * 6),
+												posX: parent.posX + (Aurora.entitySize * 4.3),
+												posY: parent.posY + (Aurora.entitySize * 6),
+												width: (Aurora.entitySize * 1.5),
+												height: (Aurora.entitySize * 6),
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-leg', selectedTower.robotParts),
 												txtColor: 'white',
@@ -2226,14 +2226,14 @@ const arenaPage = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								},
 							},
 							methodId: id
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				drawRobotSelectParts();
 			}
 		}

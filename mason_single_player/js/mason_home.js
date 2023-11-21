@@ -17,14 +17,14 @@ const homePage = {
 	loadPage: function() {
 		function homeMenuSelect() {
 			gameObject.canClick = true;
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -35,14 +35,14 @@ const homePage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -61,14 +61,14 @@ const homePage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Home',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -77,14 +77,14 @@ const homePage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -95,14 +95,14 @@ const homePage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.25, (Game.entitySize * 20)),
-						posY: Game.placeEntityY(0.55, (Game.entitySize * 75)),
-						width: (Game.entitySize * 20),
-						height: (Game.entitySize * 75),
+						posX: Aurora.placeEntityX(0.25, (Aurora.entitySize * 20)),
+						posY: Aurora.placeEntityY(0.55, (Aurora.entitySize * 75)),
+						width: (Aurora.entitySize * 20),
+						height: (Aurora.entitySize * 75),
 						lineWidth: 1,
 						btnColor: 'brown',
 						txtColor: 'white',
@@ -115,30 +115,30 @@ const homePage = {
 								// future Jordan, this isMobile variable could be a global thing.
 								// it's being used in at lease two other places. Both are in mason_maul
 								let isMobile = false;
-								if (Game.canvas.height > Game.canvas.width) { // mobile
+								if (Aurora.canvas.height > Aurora.canvas.width) { // mobile
 									isMobile = true;
 								} else { // everything else
 									isMobile = false;
 								}
 								const msgs = ['Are you ready to save your progress?'];
-								Game.methodSetup = {
+								Aurora.methodSetup = {
 									layer: 1,
 									method: function(id) {
 										drawDialogueModal({
-											posX: Game.placeEntityX(0.075),
-											posY: Game.placeEntityY(0.35, (Game.entitySize * 30)),
-											width: (Game.canvas.width * 0.85),
-											height: (Game.entitySize * 45),
+											posX: Aurora.placeEntityX(0.075),
+											posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 30)),
+											width: (Aurora.canvas.width * 0.85),
+											height: (Aurora.entitySize * 45),
 											lineWidth: 1,
 											modalColor: 'grey',
 											msgColor: 'white',
 											msgFont: '1em serif',
 											msgs: msgs,
-											msgStart: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-											msgDistance: (Game.entitySize * 6),
+											msgStart: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+											msgDistance: (Aurora.entitySize * 6),
 											bgColor: '',
 											isModalFilled: true,
-											id: Game.modalId,
+											id: Aurora.modalId,
 											layer: 1,
 											action: {
 												method: function(id) {
@@ -151,15 +151,15 @@ const homePage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
-								Game.methodSetup = {
+								Aurora.addMethod(Aurora.methodSetup);
+								Aurora.methodSetup = {
 									layer: 1,
 									method: function(id) {
 										drawButton({
-											posX: isMobile ? Game.placeEntityX(0.47, (Game.entitySize * 40)) : Game.placeEntityX(0.50, (Game.entitySize * 40)),
-											posY: Game.placeEntityY(0.60, (Game.entitySize * 30)),
-											width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-											height: (Game.entitySize * 7),
+											posX: isMobile ? Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)) : Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+											posY: Aurora.placeEntityY(0.60, (Aurora.entitySize * 30)),
+											width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+											height: (Aurora.entitySize * 7),
 											lineWidth: 1,
 											btnColor: 'darkgrey',
 											txtColor: 'white',
@@ -172,29 +172,29 @@ const homePage = {
 												method: function(id) {
 													// save game
 													localStorage.setItem('mason-game', JSON.stringify(gameObject));
-													closeSaveGameModal();
-													Game.methodSetup = {
+													closeSaveAuroraModal();
+													Aurora.methodSetup = {
 														method: function(id) {
 															drawSimpleModal({
-																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-																posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-																width: (Game.entitySize * 40),
-																height: (Game.entitySize * 30),
+																posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+																posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+																width: (Aurora.entitySize * 40),
+																height: (Aurora.entitySize * 30),
 																lineWidth: 1,
 																modalColor: 'grey',
 																msgColor: 'white',
 																msgFont: '1.3em serif',
-																msg: 'Game Saved',
+																msg: 'Aurora Saved',
 																footerColor: 'white',
 																footerFont: '1em serif',
 																footerMsg: 'Tap here to continue',
 																bgColor: '',
 																isModalFilled: true,
-																id: Game.modalId,
+																id: Aurora.modalId,
 																action: { 
 																	method: function(id) {
-																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																		Game.deleteEntity(modal.methodId);
+																		const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																		Aurora.deleteEntity(modal.methodId);
 																		homeMenuSelect();
 																	}
 																},
@@ -203,7 +203,7 @@ const homePage = {
 															});
 														}
 													};
-													Game.addMethod(Game.methodSetup);
+													Aurora.addMethod(Aurora.methodSetup);
 												}
 											},
 											isModalBtn: true,
@@ -212,15 +212,15 @@ const homePage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
-								Game.methodSetup = {
+								Aurora.addMethod(Aurora.methodSetup);
+								Aurora.methodSetup = {
 									layer: 1,
 									method: function(id) {
 										drawButton({
-											posX: isMobile ? Game.placeEntityX(0.47, (Game.entitySize * 40)) : Game.placeEntityX(0.50, (Game.entitySize * 40)),
-											posY: Game.placeEntityY(0.70, (Game.entitySize * 30)),
-											width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-											height: (Game.entitySize * 7),
+											posX: isMobile ? Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)) : Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+											posY: Aurora.placeEntityY(0.70, (Aurora.entitySize * 30)),
+											width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+											height: (Aurora.entitySize * 7),
 											lineWidth: 1,
 											btnColor: 'darkgrey',
 											txtColor: 'white',
@@ -231,7 +231,7 @@ const homePage = {
 											layer: 1,
 											action: { 
 												method: function(id) {
-													closeSaveGameModal();
+													closeSaveAuroraModal();
 												}
 											},
 											isModalBtn: true,
@@ -240,7 +240,7 @@ const homePage = {
 										});
 									}
 								};
-								Game.addMethod(Game.methodSetup);
+								Aurora.addMethod(Aurora.methodSetup);
 							}
 						},
 						isModalBtn: false,
@@ -249,14 +249,14 @@ const homePage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.75, (Game.entitySize * 20)),
-						posY: Game.placeEntityY(0.36, (Game.entitySize * 37)),
-						width: (Game.entitySize * 20),
-						height: (Game.entitySize * 37),
+						posX: Aurora.placeEntityX(0.75, (Aurora.entitySize * 20)),
+						posY: Aurora.placeEntityY(0.36, (Aurora.entitySize * 37)),
+						width: (Aurora.entitySize * 20),
+						height: (Aurora.entitySize * 37),
 						lineWidth: 1,
 						btnColor: 'burlywood',
 						txtColor: 'white',
@@ -275,14 +275,14 @@ const homePage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.75, (Game.entitySize * 20)),
-						posY: Game.placeEntityY(0.74, (Game.entitySize * 37)),
-						width: (Game.entitySize * 20),
-						height: (Game.entitySize * 37),
+						posX: Aurora.placeEntityX(0.75, (Aurora.entitySize * 20)),
+						posY: Aurora.placeEntityY(0.74, (Aurora.entitySize * 37)),
+						width: (Aurora.entitySize * 20),
+						height: (Aurora.entitySize * 37),
 						lineWidth: 1,
 						btnColor: 'cadetblue',
 						txtColor: 'white',
@@ -301,22 +301,22 @@ const homePage = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		homeMenuSelect(); // draw the home page
 		
-		function closeSaveGameModal() {
-			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+		function closeSaveAuroraModal() {
+			const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 			if (modal) {
-				Game.deleteEntity(modal.methodId);
+				Aurora.deleteEntity(modal.methodId);
 			}
-			const saveBtn = Game.methodObjects.find(btn => btn.id === 'save-game-btn');
+			const saveBtn = Aurora.methodObjects.find(btn => btn.id === 'save-game-btn');
 			if (saveBtn) {
-				Game.deleteEntity(saveBtn.methodId);
+				Aurora.deleteEntity(saveBtn.methodId);
 			}
-			const cancelBtn = Game.methodObjects.find(btn => btn.id === 'cancel-save-game-btn');
+			const cancelBtn = Aurora.methodObjects.find(btn => btn.id === 'cancel-save-game-btn');
 			if (cancelBtn) {
-				Game.deleteEntity(cancelBtn.methodId);
+				Aurora.deleteEntity(cancelBtn.methodId);
 			}
 			homeMenuSelect();
 		}
@@ -330,14 +330,14 @@ const homeSellMenus = {
 	loadPage: function() {
 		// start of the sell menus
 		function homeSellSelect() {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -348,14 +348,14 @@ const homeSellMenus = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -374,14 +374,14 @@ const homeSellMenus = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Sell',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -390,14 +390,14 @@ const homeSellMenus = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -408,14 +408,14 @@ const homeSellMenus = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
-						posY: Game.placeEntityY(0.30, (Game.entitySize * 20)),
-						width: (Game.entitySize * 45),
-						height: (Game.entitySize * 20),
+						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 45)),
+						posY: Aurora.placeEntityY(0.30, (Aurora.entitySize * 20)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 20),
 						lineWidth: 1,
 						btnColor: 'dodgerblue',
 						txtColor: 'white',
@@ -434,14 +434,14 @@ const homeSellMenus = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
-						posY: Game.placeEntityY(0.55, (Game.entitySize * 20)),
-						width: (Game.entitySize * 45),
-						height: (Game.entitySize * 20),
+						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 45)),
+						posY: Aurora.placeEntityY(0.55, (Aurora.entitySize * 20)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 20),
 						lineWidth: 1,
 						btnColor: 'goldenrod',
 						txtColor: 'white',
@@ -460,14 +460,14 @@ const homeSellMenus = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = { 
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { 
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 45)),
-						posY: Game.placeEntityY(0.80, (Game.entitySize * 20)),
-						width: (Game.entitySize * 45),
-						height: (Game.entitySize * 20),
+						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 45)),
+						posY: Aurora.placeEntityY(0.80, (Aurora.entitySize * 20)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 20),
 						lineWidth: 1,
 						btnColor: 'indigo',
 						txtColor: 'white',
@@ -486,7 +486,7 @@ const homeSellMenus = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		homeSellSelect(); // display the sell menu
 	}
@@ -498,14 +498,14 @@ const homeSellScrap = {
 	loadPage: function() {
 		// start of sell scrap menu
 		function homeSellScrap() {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -516,14 +516,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -534,14 +534,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.775, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.725, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.48),
-						height: (Game.canvas.height * 0.48),
+						posX: Aurora.placeEntityX(0.775, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.725, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.48),
+						height: (Aurora.canvas.height * 0.48),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -552,14 +552,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.775, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.48),
-						height: (Game.canvas.height * 0.365),
+						posX: Aurora.placeEntityX(0.775, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.48),
+						height: (Aurora.canvas.height * 0.365),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -570,15 +570,15 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			drawSellScrapButtons(); // draw the scrap buttons in the top left
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -597,11 +597,11 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			createSellScrapTitles();
 			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em serif', 'grey', 'center');
 			Particle.init();
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'home-sell-scrap',
 				method: function() {
 					if (gameObject.scrapToSell === 'common') {
@@ -625,17 +625,17 @@ const homeSellScrap = {
 					if (gameObject.scrapToSell === 'exotic') {
 						selectExoticScrap();
 					}
-					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+					const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 					if (modal) {
-						Game.deleteEntity(modal.methodId);
+						Aurora.deleteEntity(modal.methodId);
 						setTimeout(function() {
-							Game.methodSetup = {
+							Aurora.methodSetup = {
 								method: function(id) {
 									drawSimpleModal({
-										posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-										posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-										width: (Game.entitySize * 40),
-										height: (Game.entitySize * 30),
+										posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+										posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+										width: (Aurora.entitySize * 40),
+										height: (Aurora.entitySize * 30),
 										lineWidth: modal.lineWidth,
 										modalColor: modal.modalColor,
 										msgColor: modal.msgColor,
@@ -646,14 +646,14 @@ const homeSellScrap = {
 										footerMsg: modal.footerMsg,
 										bgColor: modal.bgColor,
 										isModalFilled: modal.isModalFilled,
-										id: Game.modalId,
+										id: Aurora.modalId,
 										action: modal.action,
 										props: {},
 										methodId: id
 									});
 								}
 							};
-							Game.addMethod(Game.methodSetup);
+							Aurora.addMethod(Aurora.methodSetup);
 						}, 150);
 					}
 				}
@@ -661,13 +661,13 @@ const homeSellScrap = {
 		}
 		homeSellScrap();
 		function createSellScrapTitles() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2em serif',
 						msg: 'Sell Scrap',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -676,14 +676,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2em serif',
 						msg: 'Total',
-						posX: Game.placeEntityX(0.715),
-						posY: Game.placeEntityY(0.565),
+						posX: Aurora.placeEntityX(0.715),
+						posY: Aurora.placeEntityY(0.565),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -692,14 +692,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2em serif',
 						msg: 'Funds',
-						posX: Game.placeEntityX(0.715),
-						posY: Game.placeEntityY(0.185),
+						posX: Aurora.placeEntityX(0.715),
+						posY: Aurora.placeEntityY(0.185),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -708,14 +708,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2em serif',
 						msg: 'Count',
-						posX: Game.placeEntityX(0.715),
-						posY: Game.placeEntityY(0.385),
+						posX: Aurora.placeEntityX(0.715),
+						posY: Aurora.placeEntityY(0.385),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -724,17 +724,17 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 
 		function drawSellScrapButtons() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.395, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.395, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: gameObject.commonScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
@@ -756,14 +756,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.505, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.505, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: gameObject.unCommonScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
@@ -784,14 +784,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.615, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.615, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: gameObject.uniqueScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
@@ -812,14 +812,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.725, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.725, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: gameObject.intriguingScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
@@ -840,14 +840,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.835, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.835, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: gameObject.facinatingScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
@@ -868,14 +868,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.945, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.945, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: gameObject.mythicScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
@@ -896,14 +896,14 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(1.055, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(1.055, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: gameObject.exoticScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
@@ -924,7 +924,7 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 
 		function selectCommonScrap() {
@@ -932,7 +932,7 @@ const homeSellScrap = {
 			clearSellScrapScreen();
 			refreshSellScrapBackgrounds();
 			clearSellScrapHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-common-scrap');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			gameObject.buildButtonDisabled = false;
@@ -947,7 +947,7 @@ const homeSellScrap = {
 			clearSellScrapScreen();
 			refreshSellScrapBackgrounds();
 			clearSellScrapHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			gameObject.buildButtonDisabled = false;
@@ -961,7 +961,7 @@ const homeSellScrap = {
 			clearSellScrapScreen();
 			refreshSellScrapBackgrounds();
 			clearSellScrapHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-unique-scrap');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-unique-scrap');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			gameObject.buildButtonDisabled = false;
@@ -975,7 +975,7 @@ const homeSellScrap = {
 			clearSellScrapScreen();
 			refreshSellScrapBackgrounds();
 			clearSellScrapHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-intriguing-scrap');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-intriguing-scrap');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			gameObject.buildButtonDisabled = false;
@@ -989,7 +989,7 @@ const homeSellScrap = {
 			clearSellScrapScreen();
 			refreshSellScrapBackgrounds();
 			clearSellScrapHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-facinating-scrap');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-facinating-scrap');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			gameObject.buildButtonDisabled = false;
@@ -1003,7 +1003,7 @@ const homeSellScrap = {
 			clearSellScrapScreen();
 			refreshSellScrapBackgrounds();
 			clearSellScrapHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-mythic-scrap');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-mythic-scrap');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			gameObject.buildButtonDisabled = false;
@@ -1017,7 +1017,7 @@ const homeSellScrap = {
 			clearSellScrapScreen();
 			refreshSellScrapBackgrounds();
 			clearSellScrapHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-exotic-scrap');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-exotic-scrap');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			gameObject.buildButtonDisabled = false;
@@ -1034,13 +1034,13 @@ const homeSellScrap = {
 			createSellScrapTitles();
 			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em serif', 'grey', 'center');
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.5em serif',
 						msg: displayScrapCount(scrapType),
-						posX: Game.placeEntityX(0.715),
-						posY: Game.placeEntityY(0.445),
+						posX: Aurora.placeEntityX(0.715),
+						posY: Aurora.placeEntityY(0.445),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -1049,7 +1049,7 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			let maxValue = false;
 			const pricesToDisplay = [];
 			
@@ -1119,13 +1119,13 @@ const homeSellScrap = {
 			}
 			
 			pricesToDisplay.forEach((scrap, i) => {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1.2em serif',
 							msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
-							posX: Game.placeEntityX(0.715),
-							posY: Game.placeEntityY(0.635 + (i * 0.045)),
+							posX: Aurora.placeEntityX(0.715),
+							posY: Aurora.placeEntityY(0.635 + (i * 0.045)),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -1134,15 +1134,15 @@ const homeSellScrap = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			});
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.73, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(1.111, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.08),
+						posX: Aurora.placeEntityX(0.73, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(1.111, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.08),
 						lineWidth: 1,
 						btnColor: sellScrapBtnActivity(),
 						txtColor: 'white',
@@ -1158,7 +1158,7 @@ const homeSellScrap = {
 										if (gameObject.gameSounds) {
 											sellSound.cloneNode(true).play();
 										}
-										const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+										const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 										if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
 											gameObject.commonScrap--;
 											
@@ -1220,8 +1220,8 @@ const homeSellScrap = {
 											font: '2rem serif',
 											msg: '+          +',
 											align: 'center',
-											posX: Game.placeEntityX(0.719, (Game.entitySize * 0.7)),
-											posY: Game.placeEntityY(0.21, (Game.entitySize * 0.7)),
+											posX: Aurora.placeEntityX(0.719, (Aurora.entitySize * 0.7)),
+											posY: Aurora.placeEntityY(0.21, (Aurora.entitySize * 0.7)),
 											direction: 'top',
 											color: 'green',
 											ticks: 13,
@@ -1255,7 +1255,7 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 
 		function particleAnimationOver() {
@@ -1266,7 +1266,7 @@ const homeSellScrap = {
 						refreshSellScrapBackgrounds();
 						selectScrapPrice(gameObject.scrapToSell);
 						setTimeout(function() {
-							const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+							const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 							if (modal) {
 								displayNotEnoughScrapModal();
 							}
@@ -1319,112 +1319,112 @@ const homeSellScrap = {
 		}
 
 		function clearSellScrapHighlight() {
-			const commonHighlight = Game.methodObjects.find(item => item.id === 'sell-common-scrap');
+			const commonHighlight = Aurora.methodObjects.find(item => item.id === 'sell-common-scrap');
 			commonHighlight.btnColor = gameObject.commonScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 			commonHighlight.txtColor = 'white';
-			const unCommonHighlight = Game.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
+			const unCommonHighlight = Aurora.methodObjects.find(item => item.id === 'sell-uncommon-scrap');
 			unCommonHighlight.btnColor = gameObject.unCommonScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 			unCommonHighlight.txtColor = 'white';
-			const uniqueHighlight = Game.methodObjects.find(x => x.id === 'sell-unique-scrap');
+			const uniqueHighlight = Aurora.methodObjects.find(x => x.id === 'sell-unique-scrap');
 			uniqueHighlight.btnColor = gameObject.uniqueScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 			uniqueHighlight.txtColor = 'white';
-			const intriguingHighlight = Game.methodObjects.find(x => x.id === 'sell-intriguing-scrap');
+			const intriguingHighlight = Aurora.methodObjects.find(x => x.id === 'sell-intriguing-scrap');
 			intriguingHighlight.btnColor = gameObject.intriguingScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 			intriguingHighlight.txtColor = 'white';
-			const facinatingHighlight = Game.methodObjects.find(x => x.id === 'sell-facinating-scrap');
+			const facinatingHighlight = Aurora.methodObjects.find(x => x.id === 'sell-facinating-scrap');
 			facinatingHighlight.btnColor = gameObject.facinatingScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 			facinatingHighlight.txtColor = 'white';
-			const mythicHighlight = Game.methodObjects.find(x => x.id === 'sell-mythic-scrap');
+			const mythicHighlight = Aurora.methodObjects.find(x => x.id === 'sell-mythic-scrap');
 			mythicHighlight.btnColor = gameObject.mythicScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 			mythicHighlight.txtColor = 'white';
-			const exoticHighlight = Game.methodObjects.find(x => x.id === 'sell-exotic-scrap');
+			const exoticHighlight = Aurora.methodObjects.find(x => x.id === 'sell-exotic-scrap');
 			exoticHighlight.btnColor = gameObject.exoticScrap <= 0 ? '#C0C0C0' : 'lightslategrey';
 			exoticHighlight.txtColor = 'white';
 		}
 
 		function clearSellScrapScreen() {
-			const scrapCount = Game.methodObjects.filter(x => x.id === 'scrap-count');
-			const scrapPrice = Game.methodObjects.filter(x => x.id === 'scrap-price');
-			const sellScrapBtn = Game.methodObjects.filter(x => x.id === 'sell-scrap-btn');
-			const sellScrapTitle = Game.methodObjects.filter(x => x.id === 'sell-scrap-title');
-			const scrapPriceTitle = Game.methodObjects.filter(x => x.id === 'total-scrap-price-title');
-			const fundsTitle = Game.methodObjects.filter(x => x.id === 'total-funds-title');
-			const scrapCountTitle = Game.methodObjects.filter(x => x.id === 'total-scrap-count-title');
-			const fundsHigh = Game.methodObjects.filter(x => x.id === 'player-funds-high');
-			const fundsLow = Game.methodObjects.filter(x => x.id === 'player-funds-low');
+			const scrapCount = Aurora.methodObjects.filter(x => x.id === 'scrap-count');
+			const scrapPrice = Aurora.methodObjects.filter(x => x.id === 'scrap-price');
+			const sellScrapBtn = Aurora.methodObjects.filter(x => x.id === 'sell-scrap-btn');
+			const sellScrapTitle = Aurora.methodObjects.filter(x => x.id === 'sell-scrap-title');
+			const scrapPriceTitle = Aurora.methodObjects.filter(x => x.id === 'total-scrap-price-title');
+			const fundsTitle = Aurora.methodObjects.filter(x => x.id === 'total-funds-title');
+			const scrapCountTitle = Aurora.methodObjects.filter(x => x.id === 'total-scrap-count-title');
+			const fundsHigh = Aurora.methodObjects.filter(x => x.id === 'player-funds-high');
+			const fundsLow = Aurora.methodObjects.filter(x => x.id === 'player-funds-low');
 			if (scrapCount.length > 0) {
 				scrapCount.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (scrapPrice.length > 0) {
 				scrapPrice.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (sellScrapBtn.length > 0) {
 				sellScrapBtn.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (sellScrapTitle.length > 0) {
 				sellScrapTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (scrapPriceTitle.length > 0) {
 				scrapPriceTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (fundsTitle.length > 0) {
 				fundsTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (scrapCountTitle.length > 0) {
 				scrapCountTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (fundsHigh.length > 0) {
 				fundsHigh.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			if (fundsLow.length > 0) {
 				fundsLow.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 		}
 
 		function refreshSellScrapBackgrounds() {
-			if (Game.methodObjects.find(x => x.id === 'sell-scrap-main-background')) {
-				Game.methodObjects.find(x => x.id === 'sell-scrap-main-background').isAnim = true;
+			if (Aurora.methodObjects.find(x => x.id === 'sell-scrap-main-background')) {
+				Aurora.methodObjects.find(x => x.id === 'sell-scrap-main-background').isAnim = true;
 			}
-			if (Game.methodObjects.find(x => x.id === 'scrap-types-background')) {
-				Game.methodObjects.find(x => x.id === 'scrap-types-background').isAnim = true;
+			if (Aurora.methodObjects.find(x => x.id === 'scrap-types-background')) {
+				Aurora.methodObjects.find(x => x.id === 'scrap-types-background').isAnim = true;
 			}
-			if (Game.methodObjects.find(x => x.id === 'scrap-sell-background')) {
-				Game.methodObjects.find(x => x.id === 'scrap-sell-background').isAnim = true;
+			if (Aurora.methodObjects.find(x => x.id === 'scrap-sell-background')) {
+				Aurora.methodObjects.find(x => x.id === 'scrap-sell-background').isAnim = true;
 			}
-			if (Game.methodObjects.find(x => x.id === 'scrap-count-background')) {
-				Game.methodObjects.find(x => x.id === 'scrap-count-background').isAnim = true;
+			if (Aurora.methodObjects.find(x => x.id === 'scrap-count-background')) {
+				Aurora.methodObjects.find(x => x.id === 'scrap-count-background').isAnim = true;
 			}
 		}
 		function displayNotEnoughScrapModal() {
-			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+			const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 			if (modal) {
-				Game.deleteEntity(modal.methodId);
+				Aurora.deleteEntity(modal.methodId);
 			}
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawSimpleModal({
-						posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-						posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-						width: (Game.entitySize * 40),
-						height: (Game.entitySize * 30),
+						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 40),
+						height: (Aurora.entitySize * 30),
 						lineWidth: 1,
 						modalColor: 'darkgrey',
 						msgColor: 'white',
@@ -1435,11 +1435,11 @@ const homeSellScrap = {
 						footerMsg: 'Tap here to continue',
 						bgColor: '',
 						isModalFilled: true,
-						id: Game.modalId,
+						id: Aurora.modalId,
 						action: { 
 							method: function(id) {
-								const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-								Game.deleteEntity(modal.methodId);
+								const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+								Aurora.deleteEntity(modal.methodId);
 								clearSellScrapScreen();
 								refreshSellScrapBackgrounds();
 								setTimeout(function() {
@@ -1452,7 +1452,7 @@ const homeSellScrap = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 	}	
 }
@@ -1462,15 +1462,15 @@ const homeSellParts = {
 	description: 'This is where the player can sell their parts',
 	loadPage: function() {
 		function homeSellParts() {
-			Game.clearStage();
+			Aurora.clearStage();
 			Particle.init();
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -1481,14 +1481,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.45),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.45),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1499,14 +1499,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.43),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.825, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.43),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1517,14 +1517,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.39),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.815, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.39),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -1535,15 +1535,15 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			drawSellPartButtons(); // draw the buttons in the top left
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -1563,14 +1563,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Sell Parts',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -1579,9 +1579,9 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'home-sell-parts',
 				method: function() {
 					if (gameObject.partsDisplayed === 'leg') {
@@ -1596,17 +1596,17 @@ const homeSellParts = {
 					if (gameObject.partsDisplayed === 'head') {
 						selectSellPartHead();
 					}
-					const modal = Game.methodObjects.find(build => build.id === Game.modalId);
+					const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 					if (modal) {
-						Game.deleteEntity(modal.methodId);
+						Aurora.deleteEntity(modal.methodId);
 						setTimeout(function() {
-							Game.methodSetup = {
+							Aurora.methodSetup = {
 								method: function(id) {
 									drawSimpleModal({
-										posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-										posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-										width: (Game.entitySize * 40),
-										height: (Game.entitySize * 30),
+										posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+										posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+										width: (Aurora.entitySize * 40),
+										height: (Aurora.entitySize * 30),
 										lineWidth: modal.lineWidth,
 										modalColor: modal.modalColor,
 										msgColor: modal.msgColor,
@@ -1617,14 +1617,14 @@ const homeSellParts = {
 										footerMsg: modal.footerMsg,
 										bgColor: modal.bgColor,
 										isModalFilled: modal.isModalFilled,
-										id: Game.modalId,
+										id: Aurora.modalId,
 										action: modal.action,
 										props: {},
 										methodId: id
 									});
 								}
 							};
-							Game.addMethod(Game.methodSetup);
+							Aurora.addMethod(Aurora.methodSetup);
 						}, 150);
 					}
 				}
@@ -1632,13 +1632,13 @@ const homeSellParts = {
 		}
 		homeSellParts(); // load up the page
 		function drawSellPartButtons() {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.36, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.36, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1657,14 +1657,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.47, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.47, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1683,14 +1683,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.58, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.58, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1709,14 +1709,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.2547, (Game.canvas.width * 0.44)),
-						posY: Game.placeEntityY(0.69, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.44),
-						height: (Game.canvas.height * 0.1),
+						posX: Aurora.placeEntityX(0.2547, (Aurora.canvas.width * 0.44)),
+						posY: Aurora.placeEntityY(0.69, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.44),
+						height: (Aurora.canvas.height * 0.1),
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
@@ -1735,7 +1735,7 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		
 		function selectSellPartChassis() {
@@ -1745,7 +1745,7 @@ const homeSellParts = {
 			clearSelectedSellPartScrapDetails();
 			refreshSellPartsBackgrounds();
 			clearSellRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-body-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-body-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredSellPartParts(gameObject.discoveredChassis);
@@ -1758,7 +1758,7 @@ const homeSellParts = {
 			clearSelectedSellPartScrapDetails();
 			refreshSellPartsBackgrounds();
 			clearSellRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-head-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-head-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredSellPartParts(gameObject.discoveredHeads);
@@ -1771,7 +1771,7 @@ const homeSellParts = {
 			clearSelectedSellPartScrapDetails();
 			refreshSellPartsBackgrounds();
 			clearSellRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-arm-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-arm-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredSellPartParts(gameObject.discoveredArms);
@@ -1784,7 +1784,7 @@ const homeSellParts = {
 			clearSelectedSellPartScrapDetails();
 			refreshSellPartsBackgrounds();
 			clearSellRobotPartPreviewHighlight();
-			const highlight = Game.methodObjects.find(item => item.id === 'sell-leg-parts');
+			const highlight = Aurora.methodObjects.find(item => item.id === 'sell-leg-parts');
 			highlight.btnColor = 'yellow';
 			highlight.txtColor = 'black';
 			displayDiscoveredSellPartParts(gameObject.discoveredLegs);
@@ -1812,13 +1812,13 @@ const homeSellParts = {
 			// display all the parts on each page
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.330 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 3),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.330 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
 							btnColor: drawActiveSellParts(discoveredPart.img, discoveredPart.count),
 							txtColor: 'black',
@@ -1838,14 +1838,14 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-							posY: Game.placeEntityY(0.241 + (i * 0.125)),
-							width: (Game.entitySize * 22),
-							height: (Game.entitySize * 9),
+							posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+							posY: Aurora.placeEntityY(0.241 + (i * 0.125)),
+							width: (Aurora.entitySize * 22),
+							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
 							btnColor: drawActiveSellParts(discoveredPart.img, discoveredPart.count),
 							txtColor: 'black',
@@ -1865,19 +1865,19 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			drawNextPrevSellPartPartsList(partsDiscovered);
 		}
 		function drawNextPrevSellPartPartsList(partList) {
 			// the part could be head, chassis, legs or arms
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.135),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+						posY: Aurora.placeEntityY(0.135),
+						width: (Aurora.entitySize * 22),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
@@ -1900,14 +1900,14 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({ // the btnColor is css grey
-						posX: Game.placeEntityX(0.76, (Game.entitySize * 22.5)),
-						posY: Game.placeEntityY(0.90),
-						width: (Game.entitySize * 22),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.76, (Aurora.entitySize * 22.5)),
+						posY: Aurora.placeEntityY(0.90),
+						width: (Aurora.entitySize * 22),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
@@ -1934,19 +1934,19 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 
 		function displaySelectSellPartParts(part) {
 			const partChanged = true;
 			setTimeout(function() {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-							posY: Game.placeEntityY(0.90),
-							width: (Game.entitySize * 23),
-							height: (Game.entitySize * 7),
+							posX: Aurora.placeEntityX(0.226, (Aurora.entitySize * 19.7)),
+							posY: Aurora.placeEntityY(0.90),
+							width: (Aurora.entitySize * 23),
+							height: (Aurora.entitySize * 7),
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
@@ -1974,8 +1974,8 @@ const homeSellParts = {
 													font: '2rem serif',
 													msg: '+          +',
 													align: 'center',
-													posX: Game.placeEntityX(0.259, (Game.entitySize * 0.7)),
-													posY: Game.placeEntityY(0.72, (Game.entitySize * 0.7)),
+													posX: Aurora.placeEntityX(0.259, (Aurora.entitySize * 0.7)),
+													posY: Aurora.placeEntityY(0.72, (Aurora.entitySize * 0.7)),
 													direction: 'top',
 													color: 'green',
 													ticks: 13,
@@ -1989,13 +1989,13 @@ const homeSellParts = {
 											} else {
 												gameObject.buildButtonDisabled = true;
 												setTimeout(function() {
-													Game.methodSetup = {
+													Aurora.methodSetup = {
 														method: function(id) {
 															drawSimpleModal({
-																posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-																posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-																width: (Game.entitySize * 40),
-																height: (Game.entitySize * 30),
+																posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+																posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+																width: (Aurora.entitySize * 40),
+																height: (Aurora.entitySize * 30),
 																lineWidth: 1,
 																modalColor: 'darkgrey',
 																msgColor: 'white',
@@ -2006,11 +2006,11 @@ const homeSellParts = {
 																footerMsg: 'Tap here to continue',
 																bgColor: '',
 																isModalFilled: true,
-																id: Game.modalId,
+																id: Aurora.modalId,
 																action: { 
 																	method: function(id) {
-																		const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																		Game.deleteEntity(modal.methodId);
+																		const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																		Aurora.deleteEntity(modal.methodId);
 																		displaySelectSellPartParts(part);
 																	 }
 																},
@@ -2019,7 +2019,7 @@ const homeSellParts = {
 															});
 														}
 													};
-													Game.addMethod(Game.methodSetup);
+													Aurora.addMethod(Aurora.methodSetup);
 												},200);
 											}
 											if (gameObject.partsDisplayed === 'chassis') {
@@ -2051,7 +2051,7 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				createSellPartTitleScraps(part);
 			}, 0);
 		}
@@ -2066,123 +2066,123 @@ const homeSellParts = {
 
 		function clearSelectedSellPartScrapDetails() {
 			// clear the stats and the buttons
-			const selectPartBtn = Game.methodObjects.filter(x => x.id === 'confirm-part');
+			const selectPartBtn = Aurora.methodObjects.filter(x => x.id === 'confirm-part');
 			if (selectPartBtn) {
 				selectPartBtn.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectCommonScrap = Game.methodObjects.filter(x => x.id === 'commonScrap');
+			const selectCommonScrap = Aurora.methodObjects.filter(x => x.id === 'commonScrap');
 			if (selectCommonScrap) {
 				selectCommonScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectUnCommonScrap = Game.methodObjects.filter(x => x.id === 'unCommonScrap');
+			const selectUnCommonScrap = Aurora.methodObjects.filter(x => x.id === 'unCommonScrap');
 			if (selectUnCommonScrap) {
 				selectUnCommonScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectUniqueScrap = Game.methodObjects.filter(x => x.id === 'uniqueScrap');
+			const selectUniqueScrap = Aurora.methodObjects.filter(x => x.id === 'uniqueScrap');
 			if (selectUniqueScrap) {
 				selectUniqueScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectIntriguingScrap = Game.methodObjects.filter(x => x.id === 'intriguingScrap');
+			const selectIntriguingScrap = Aurora.methodObjects.filter(x => x.id === 'intriguingScrap');
 			if (selectIntriguingScrap) {
 				selectIntriguingScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectFacinatingScrap = Game.methodObjects.filter(x => x.id === 'facinatingScrap');
+			const selectFacinatingScrap = Aurora.methodObjects.filter(x => x.id === 'facinatingScrap');
 			if (selectFacinatingScrap) {
 				selectFacinatingScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectMythicScrap = Game.methodObjects.filter(x => x.id === 'mythicScrap');
+			const selectMythicScrap = Aurora.methodObjects.filter(x => x.id === 'mythicScrap');
 			if (selectMythicScrap) {
 				selectMythicScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectExoticScrap = Game.methodObjects.filter(x => x.id === 'exoticScrap');
+			const selectExoticScrap = Aurora.methodObjects.filter(x => x.id === 'exoticScrap');
 			if (selectExoticScrap) {
 				selectExoticScrap.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			// clear the titles
-			const factoryTitle = Game.methodObjects.filter(x => x.id === 'sell-part-title');
+			const factoryTitle = Aurora.methodObjects.filter(x => x.id === 'sell-part-title');
 			if (factoryTitle) {
 				factoryTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
+			const statTitle = Aurora.methodObjects.filter(x => x.id === 'stat-title');
 			if (statTitle) {
 				statTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectPartTitle = Game.methodObjects.filter(x => x.id === 'part-title');
+			const selectPartTitle = Aurora.methodObjects.filter(x => x.id === 'part-title');
 			if (selectPartTitle) {
 				selectPartTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectCountTitle = Game.methodObjects.filter(x => x.id === 'count-title');
+			const selectCountTitle = Aurora.methodObjects.filter(x => x.id === 'count-title');
 			if (selectCountTitle) {
 				selectCountTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectFundTitle = Game.methodObjects.filter(x => x.id === 'fund-title');
+			const selectFundTitle = Aurora.methodObjects.filter(x => x.id === 'fund-title');
 			if (selectFundTitle) {
 				selectFundTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectSellTitle = Game.methodObjects.filter(x => x.id === 'sell-title'); // sell-part-high
+			const selectSellTitle = Aurora.methodObjects.filter(x => x.id === 'sell-title'); // sell-part-high
 			if (selectSellTitle) {
 				selectSellTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectMoneyHigh = Game.methodObjects.filter(x => x.id === 'player-funds-high');
+			const selectMoneyHigh = Aurora.methodObjects.filter(x => x.id === 'player-funds-high');
 			if (selectMoneyHigh) {
 				selectMoneyHigh.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectMoneyLow = Game.methodObjects.filter(x => x.id === 'player-funds-low');
+			const selectMoneyLow = Aurora.methodObjects.filter(x => x.id === 'player-funds-low');
 			if (selectMoneyLow) {
 				selectMoneyLow.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectSellPartHigh = Game.methodObjects.filter(x => x.id === 'sell-part-high');
+			const selectSellPartHigh = Aurora.methodObjects.filter(x => x.id === 'sell-part-high');
 			if (selectSellPartHigh) {
 				selectSellPartHigh.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const selectSellPartLow = Game.methodObjects.filter(x => x.id === 'sell-part-low');
+			const selectSellPartLow = Aurora.methodObjects.filter(x => x.id === 'sell-part-low');
 			if (selectSellPartLow) {
 				selectSellPartLow.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			// redraw the title here
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Sell Parts',
-						posX: Game.placeEntityX(0.50),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -2191,50 +2191,50 @@ const homeSellParts = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 
 		function clearSellRobotPartParts() {
-			const chassisParts = Game.methodObjects.filter(x => x.id === 'robot-chassis-part');
-			const headParts = Game.methodObjects.filter(x => x.id === 'robot-head-part');
-			const legParts = Game.methodObjects.filter(x => x.id === 'robot-leg-part');
-			const armParts = Game.methodObjects.filter(x => x.id === 'robot-arm-part');
-			const nextBtn = Game.methodObjects.filter(x => x.id === 'next-part');
-			const prevBtn = Game.methodObjects.filter(x => x.id === 'last-part');
-			const partCount = Game.methodObjects.filter(x => x.id === 'part-count');
+			const chassisParts = Aurora.methodObjects.filter(x => x.id === 'robot-chassis-part');
+			const headParts = Aurora.methodObjects.filter(x => x.id === 'robot-head-part');
+			const legParts = Aurora.methodObjects.filter(x => x.id === 'robot-leg-part');
+			const armParts = Aurora.methodObjects.filter(x => x.id === 'robot-arm-part');
+			const nextBtn = Aurora.methodObjects.filter(x => x.id === 'next-part');
+			const prevBtn = Aurora.methodObjects.filter(x => x.id === 'last-part');
+			const partCount = Aurora.methodObjects.filter(x => x.id === 'part-count');
 			if (chassisParts.length > 0) {
 				chassisParts.forEach((item, i) => {
-					Game.deleteEntity(chassisParts[i].methodId);
+					Aurora.deleteEntity(chassisParts[i].methodId);
 				});
 			}
 			if (headParts.length > 0) {
 				headParts.forEach((item, i) => {
-					Game.deleteEntity(headParts[i].methodId);
+					Aurora.deleteEntity(headParts[i].methodId);
 				});
 			}
 			if (legParts.length > 0) {
 				legParts.forEach((item, i) => {
-					Game.deleteEntity(legParts[i].methodId);
+					Aurora.deleteEntity(legParts[i].methodId);
 				});
 			}
 			if (armParts.length > 0) {
 				armParts.forEach((item, i) => {
-					Game.deleteEntity(armParts[i].methodId);
+					Aurora.deleteEntity(armParts[i].methodId);
 				});
 			}
 			if (nextBtn.length > 0) {
 				nextBtn.forEach((item, i) => {
-					Game.deleteEntity(nextBtn[i].methodId);
+					Aurora.deleteEntity(nextBtn[i].methodId);
 				});
 			}
 			if (prevBtn.length > 0) {
 				prevBtn.forEach((item, i) => {
-					Game.deleteEntity(prevBtn[i].methodId);
+					Aurora.deleteEntity(prevBtn[i].methodId);
 				});
 			}
 			if (partCount.length > 0) {
 				partCount.forEach((item, i) => {
-					Game.deleteEntity(partCount[i].methodId);
+					Aurora.deleteEntity(partCount[i].methodId);
 				});
 			}
 			setTimeout(function() {
@@ -2243,16 +2243,16 @@ const homeSellParts = {
 		}
 
 		function clearSellRobotPartPreviewHighlight() {
-			const headHighlight = Game.methodObjects.find(item => item.id === 'sell-head-parts');
+			const headHighlight = Aurora.methodObjects.find(item => item.id === 'sell-head-parts');
 			headHighlight.btnColor = 'lightslategrey';
 			headHighlight.txtColor = 'white';
-			const chassisHighlight = Game.methodObjects.find(item => item.id === 'sell-body-parts');
+			const chassisHighlight = Aurora.methodObjects.find(item => item.id === 'sell-body-parts');
 			chassisHighlight.btnColor = 'lightslategrey';
 			chassisHighlight.txtColor = 'white';
-			const armRightHighlight = Game.methodObjects.find(x => x.id === 'sell-arm-parts');
+			const armRightHighlight = Aurora.methodObjects.find(x => x.id === 'sell-arm-parts');
 			armRightHighlight.btnColor = 'lightslategrey';
 			armRightHighlight.txtColor = 'white';
-			const legRightHighlight = Game.methodObjects.find(x => x.id === 'sell-leg-parts');
+			const legRightHighlight = Aurora.methodObjects.find(x => x.id === 'sell-leg-parts');
 			legRightHighlight.btnColor = 'lightslategrey';
 			legRightHighlight.txtColor = 'white';
 		}
@@ -2260,13 +2260,13 @@ const homeSellParts = {
 		function createSellPartTitleScraps(part) {
 			if (part) {
 				const scrapCosts = gatherScrapCostFromPart(part);
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '0.9em serif',
 							msg: part.name,
-							posX: Game.placeEntityX(0.255),
-							posY: Game.placeEntityY(0.62),
+							posX: Aurora.placeEntityX(0.255),
+							posY: Aurora.placeEntityY(0.62),
 							color: 'grey',
 							align: 'center',
 							props: {},
@@ -2275,14 +2275,14 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '0.9em serif',
 							msg: 'Count: ' + part.count,
-							posX: Game.placeEntityX(0.255),
-							posY: Game.placeEntityY(0.655),
+							posX: Aurora.placeEntityX(0.255),
+							posY: Aurora.placeEntityY(0.655),
 							color: 'grey',
 							align: 'center',
 							props: {},
@@ -2291,14 +2291,14 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
-				Game.methodSetup = {
+				Aurora.addMethod(Aurora.methodSetup);
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1.3em serif',
 							msg: 'Funds',
-							posX: Game.placeEntityX(0.25),
-							posY: Game.placeEntityY(0.69),
+							posX: Aurora.placeEntityX(0.25),
+							posY: Aurora.placeEntityY(0.69),
 							color: 'grey',
 							align: 'center',
 							props: {},
@@ -2307,16 +2307,16 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				displayCondensedFunds(0.25, 0.72, 0.25, 0.755, '1em serif', 'grey', 'center');
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1.3em serif',
 							msg: 'Sell Price',
-							posX: Game.placeEntityX(0.25),
-							posY: Game.placeEntityY(0.80),
+							posX: Aurora.placeEntityX(0.25),
+							posY: Aurora.placeEntityY(0.80),
 							color: 'grey',
 							align: 'center',
 							props: {},
@@ -2325,19 +2325,19 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				const formatPartCost = calculatePartPrice(scrapCosts);
 				// display the top two highest money type
 				const displayPartValue = formatDisplayValue(formatPartCost);
 				
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1em serif',
 							msg: displayPartValue.highValue.type + ': ' + displayPartValue.highValue.value,
-							posX: Game.placeEntityX(0.25),
-							posY: Game.placeEntityY(0.83),
+							posX: Aurora.placeEntityX(0.25),
+							posY: Aurora.placeEntityY(0.83),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -2346,15 +2346,15 @@ const homeSellParts = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				if (displayPartValue.lowValue.value) {
-					Game.methodSetup = {
+					Aurora.methodSetup = {
 						method: function(id) {
 							drawText({
 								font: '1em serif',
 								msg: displayPartValue.lowValue.type + ': ' + displayPartValue.lowValue.value,
-								posX: Game.placeEntityX(0.25),
-								posY: Game.placeEntityY(0.865),
+								posX: Aurora.placeEntityX(0.25),
+								posY: Aurora.placeEntityY(0.865),
 								color: 'green',
 								align: 'center',
 								props: {},
@@ -2363,7 +2363,7 @@ const homeSellParts = {
 							});
 						}
 					};
-					Game.addMethod(Game.methodSetup);
+					Aurora.addMethod(Aurora.methodSetup);
 				}
 			}
 
@@ -2372,14 +2372,14 @@ const homeSellParts = {
 		}
 
 		function refreshSellPartsBackgrounds() {
-			if (Game.methodObjects.find(x => x.id === 'robot-stat-background')) {
-				Game.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
+			if (Aurora.methodObjects.find(x => x.id === 'robot-stat-background')) {
+				Aurora.methodObjects.find(x => x.id === 'robot-stat-background').isAnim = true;
 			}
-			if (Game.methodObjects.find(x => x.id === 'part-background')) {
-				Game.methodObjects.find(x => x.id === 'part-background').isAnim = true;
+			if (Aurora.methodObjects.find(x => x.id === 'part-background')) {
+				Aurora.methodObjects.find(x => x.id === 'part-background').isAnim = true;
 			}
-			if (Game.methodObjects.find(x => x.id === 'sell-part-background')) {
-				Game.methodObjects.find(x => x.id === 'sell-part-background').isAnim = true;
+			if (Aurora.methodObjects.find(x => x.id === 'sell-part-background')) {
+				Aurora.methodObjects.find(x => x.id === 'sell-part-background').isAnim = true;
 			}
 		}
 	}
@@ -2390,14 +2390,14 @@ const homeSellRobots = {
 	description: 'This is where the player can sell their robots',
 	loadPage: function() {
 		function sellRobotSelect() {
-			Game.clearStage();
-			Game.methodSetup = {
+			Aurora.clearStage();
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -2408,14 +2408,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -2438,14 +2438,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.1em serif',
 						msg: 'Sell Robots',
-						posX: Game.placeEntityX(0.525),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.525),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -2454,14 +2454,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -2472,7 +2472,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
 			for (let i = gameObject.partPageIndex; i < gameObject.robotTeams.length; i++) {
@@ -2506,13 +2506,13 @@ const homeSellRobots = {
 					posXoffset = 1;
 				} 
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.25),
-							height: (Game.entitySize * 20),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.25),
+							height: (Aurora.entitySize * 20),
 							lineWidth: 1,
 							color: 'darkgrey',
 							isBackground: false,
@@ -2523,11 +2523,11 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				
 				drawRobotSelect(
-					Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-					Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
+					Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+					Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
 					gameObject.robotTeams[i].robotParts,
 					i,
 					function() {
@@ -2552,7 +2552,7 @@ const homeSellRobots = {
 			
 			drawNextPrevRobotList(gameObject.robotTeams, sellRobotSelect);
 
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'factory-robot-select',
 				method: function() {
 					homeSellRobots.loadPage();
@@ -2561,15 +2561,15 @@ const homeSellRobots = {
 		}
 		sellRobotSelect(); // draw the sell robot page
 		function factoryRobotDetails() {
-			Game.clearStage();
+			Aurora.clearStage();
 			Particle.init();
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -2580,14 +2580,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.45),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.45),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -2598,14 +2598,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.825, (Game.canvas.width * 0.57)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.43),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.825, (Aurora.canvas.width * 0.57)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.43),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -2616,14 +2616,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.815, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.45),
-						height: (Game.canvas.height * 0.39),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.815, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.45),
+						height: (Aurora.canvas.height * 0.39),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -2634,7 +2634,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			drawRobotPreview(
 				function() {},
 				function() {},
@@ -2648,13 +2648,13 @@ const homeSellRobots = {
 					}
 				}
 			); // draw the robot in the top left
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -2676,14 +2676,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.1em serif',
 						msg: 'Sell Details',
-						posX: Game.placeEntityX(0.525),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.525),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -2692,14 +2692,14 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Barter Total',
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -2708,13 +2708,13 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			// display the build button when the robot parts are complete
 			if (gameObject.selectedRobot.length === 6) {
 				displaySelectPart({}, true);
 			}
 			
-			Game.pageResized = {
+			Aurora.pageResized = {
 				section: 'factory-robot-details',
 				method: function() {
 
@@ -2723,35 +2723,35 @@ const homeSellRobots = {
 		}
 		function clearSelectedRobotDetails() {
 			// clear the stats and the buttons
-			const selectPartBtn = Game.methodObjects.filter(x => x.id === 'confirm-part');
+			const selectPartBtn = Aurora.methodObjects.filter(x => x.id === 'confirm-part');
 			if (selectPartBtn) {
 				selectPartBtn.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 			// clear the titles
-			const factoryTitle = Game.methodObjects.filter(x => x.id === 'factory-title');
+			const factoryTitle = Aurora.methodObjects.filter(x => x.id === 'factory-title');
 			if (factoryTitle) {
 				factoryTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
-			const statTitle = Game.methodObjects.filter(x => x.id === 'stat-title');
+			const statTitle = Aurora.methodObjects.filter(x => x.id === 'stat-title');
 			if (statTitle) {
 				statTitle.forEach((item, i) => {
-					Game.deleteEntity(item.methodId);
+					Aurora.deleteEntity(item.methodId);
 				});
 			}
 		}
 
 		function createRobotTitleStats(existingPart, part, confirmed, partChanged) {
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.3em serif',
 						msg: 'Funds',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.20),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.20),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -2760,17 +2760,17 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			displayCondensedFunds(0.76, 0.245, 0.76, 0.28, '1.2em serif', 'grey', 'center');
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Head',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.33),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.33),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -2779,7 +2779,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			const headPart = gameObject.selectedRobot.find(part => part.type === 'head');
 			const headScrapCosts = gatherScrapCostFromPart(headPart);
@@ -2787,13 +2787,13 @@ const homeSellRobots = {
 			// display the top two highest money type
 			const displayHeadPartValue = formatDisplayValue(formatHeadPartCost);	
 				
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: displayHeadPartValue.highValue.type + ': ' + displayHeadPartValue.highValue.value,
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.36),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.36),
 						color: 'green',
 						align: 'center',
 						props: {},
@@ -2802,15 +2802,15 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (displayHeadPartValue.lowValue.value) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1em serif',
 							msg: displayHeadPartValue.lowValue.type + ': ' + displayHeadPartValue.lowValue.value,
-							posX: Game.placeEntityX(0.76),
-							posY: Game.placeEntityY(0.39),
+							posX: Aurora.placeEntityX(0.76),
+							posY: Aurora.placeEntityY(0.39),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -2819,16 +2819,16 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Chassis',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.435),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.435),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -2837,7 +2837,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			const chassisPart = gameObject.selectedRobot.find(part => part.type === 'chassis');
 			const chassisScrapCosts = gatherScrapCostFromPart(chassisPart);
@@ -2845,13 +2845,13 @@ const homeSellRobots = {
 			// display the top two highest money type
 			const displayChassisPartValue = formatDisplayValue(formatChassisPartCost);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: displayChassisPartValue.highValue.type + ': ' + displayChassisPartValue.highValue.value,
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.465),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.465),
 						color: 'green',
 						align: 'center',
 						props: {},
@@ -2860,15 +2860,15 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (displayChassisPartValue.lowValue.value) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1em serif',
 							msg: displayChassisPartValue.lowValue.type + ': ' + displayChassisPartValue.lowValue.value,
-							posX: Game.placeEntityX(0.76),
-							posY: Game.placeEntityY(0.495),
+							posX: Aurora.placeEntityX(0.76),
+							posY: Aurora.placeEntityY(0.495),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -2877,16 +2877,16 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Left Arm',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.54),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.54),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -2895,7 +2895,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			const leftArmPart = gameObject.selectedRobot.find(part => part.type === 'arm' && part.armPos === 'left');
 			const leftArmScrapCosts = gatherScrapCostFromPart(leftArmPart);
@@ -2903,13 +2903,13 @@ const homeSellRobots = {
 			// display the top two highest money type
 			const displayLeftArmPartValue = formatDisplayValue(formatLeftArmPartCost);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: displayLeftArmPartValue.highValue.type + ': ' + displayLeftArmPartValue.highValue.value,
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.575),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.575),
 						color: 'green',
 						align: 'center',
 						props: {},
@@ -2918,15 +2918,15 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (displayLeftArmPartValue.lowValue.value) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1em serif',
 							msg: displayLeftArmPartValue.lowValue.type + ': ' + displayLeftArmPartValue.lowValue.value,
-							posX: Game.placeEntityX(0.76),
-							posY: Game.placeEntityY(0.605),
+							posX: Aurora.placeEntityX(0.76),
+							posY: Aurora.placeEntityY(0.605),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -2935,16 +2935,16 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Right Arm',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -2953,7 +2953,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			const rightArmPart = gameObject.selectedRobot.find(part => part.type === 'arm' && part.armPos === 'right');
 			const rightArmScrapCosts = gatherScrapCostFromPart(rightArmPart);
@@ -2961,13 +2961,13 @@ const homeSellRobots = {
 			// display the top two highest money type
 			const displayRightArmPartValue = formatDisplayValue(formatRightArmPartCost);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: displayRightArmPartValue.highValue.type + ': ' + displayRightArmPartValue.highValue.value,
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.685),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.685),
 						color: 'green',
 						align: 'center',
 						props: {},
@@ -2976,15 +2976,15 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (displayRightArmPartValue.lowValue.value) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1em serif',
 							msg: displayRightArmPartValue.lowValue.type + ': ' + displayRightArmPartValue.lowValue.value,
-							posX: Game.placeEntityX(0.76),
-							posY: Game.placeEntityY(0.715),
+							posX: Aurora.placeEntityX(0.76),
+							posY: Aurora.placeEntityY(0.715),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -2993,16 +2993,16 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Left Leg',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.76),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.76),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -3011,7 +3011,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			const leftLegPart = gameObject.selectedRobot.find(part => part.type === 'leg' && part.legPos === 'left');
 			const leftLegScrapCosts = gatherScrapCostFromPart(leftLegPart);
@@ -3019,13 +3019,13 @@ const homeSellRobots = {
 			// display the top two highest money type
 			const displayLeftLegPartValue = formatDisplayValue(formatLeftLegPartCost);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: displayLeftLegPartValue.highValue.type + ': ' + displayLeftLegPartValue.highValue.value,
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.795),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.795),
 						color: 'green',
 						align: 'center',
 						props: {},
@@ -3034,15 +3034,15 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (displayLeftLegPartValue.lowValue.value) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1em serif',
 							msg: displayLeftLegPartValue.lowValue.type + ': ' + displayLeftLegPartValue.lowValue.value,
-							posX: Game.placeEntityX(0.76),
-							posY: Game.placeEntityY(0.825),
+							posX: Aurora.placeEntityX(0.76),
+							posY: Aurora.placeEntityY(0.825),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -3051,16 +3051,16 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Right Leg',
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.87),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.87),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -3069,7 +3069,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			const rightLegPart = gameObject.selectedRobot.find(part => part.type === 'leg' && part.legPos === 'right');
 			const rightLegScrapCosts = gatherScrapCostFromPart(rightLegPart);
@@ -3077,13 +3077,13 @@ const homeSellRobots = {
 			// display the top two highest money type
 			const displayRightLegPartValue = formatDisplayValue(formatRightLegPartCost);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
 						msg: displayRightLegPartValue.highValue.type + ': ' + displayRightLegPartValue.highValue.value,
-						posX: Game.placeEntityX(0.76),
-						posY: Game.placeEntityY(0.905),
+						posX: Aurora.placeEntityX(0.76),
+						posY: Aurora.placeEntityY(0.905),
 						color: 'green',
 						align: 'center',
 						props: {},
@@ -3092,15 +3092,15 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (displayRightLegPartValue.lowValue.value) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1em serif',
 							msg: displayRightLegPartValue.lowValue.type + ': ' + displayRightLegPartValue.lowValue.value,
-							posX: Game.placeEntityX(0.76),
-							posY: Game.placeEntityY(0.935),
+							posX: Aurora.placeEntityX(0.76),
+							posY: Aurora.placeEntityY(0.935),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -3109,15 +3109,15 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}	
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.6em serif',
 						msg: 'Barter Total',
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.65),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.65),
 						color: 'grey',
 						align: 'center',
 						props: {},
@@ -3126,7 +3126,7 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			const totalRobotScrap = combineRobotParts(gameObject.selectedRobot);
 			
@@ -3146,13 +3146,13 @@ const homeSellRobots = {
 			// display the top two highest money type
 			const displayTotalPartValue = formatDisplayValue(formatTotalPartCost);
 			
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '1.1em serif',
 						msg: displayTotalPartValue.highValue.type + ': ' + displayTotalPartValue.highValue.value,
-						posX: Game.placeEntityX(0.247),
-						posY: Game.placeEntityY(0.71),
+						posX: Aurora.placeEntityX(0.247),
+						posY: Aurora.placeEntityY(0.71),
 						color: 'green',
 						align: 'center',
 						props: {},
@@ -3161,15 +3161,15 @@ const homeSellRobots = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			if (displayTotalPartValue.lowValue.value) {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
 							font: '1.1em serif',
 							msg: displayTotalPartValue.lowValue.type + ': ' + displayTotalPartValue.lowValue.value,
-							posX: Game.placeEntityX(0.247),
-							posY: Game.placeEntityY(0.76),
+							posX: Aurora.placeEntityX(0.247),
+							posY: Aurora.placeEntityY(0.76),
 							color: 'green',
 							align: 'center',
 							props: {},
@@ -3178,20 +3178,20 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 			}
 			clearSelectedRobotDetails();
 		}
 		function displaySelectPart(part, confirmed) {
 			const partChanged = true;
 			setTimeout(function() {
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
-							posX: Game.placeEntityX(0.226, (Game.entitySize * 19.7)),
-							posY: Game.placeEntityY(0.90),
-							width: (Game.entitySize * 23),
-							height: (Game.entitySize * 7),
+							posX: Aurora.placeEntityX(0.226, (Aurora.entitySize * 19.7)),
+							posY: Aurora.placeEntityY(0.90),
+							width: (Aurora.entitySize * 23),
+							height: (Aurora.entitySize * 7),
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
@@ -3235,8 +3235,8 @@ const homeSellRobots = {
 													font: '2rem serif',
 													msg: '+            +',
 													align: 'center',
-													posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
-													posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
+													posX: Aurora.placeEntityX(0.763, (Aurora.entitySize * 0.7)),
+													posY: Aurora.placeEntityY(0.25, (Aurora.entitySize * 0.7)),
 													direction: 'top',
 													color: 'green',
 													ticks: 13,
@@ -3245,13 +3245,13 @@ const homeSellRobots = {
 												Particle.animComplete = {
 													method: function() {
 														factoryRobotDetails();
-														Game.methodSetup = {
+														Aurora.methodSetup = {
 															method: function(id) {
 																drawSimpleModal({
-																	posX: Game.placeEntityX(0.50, (Game.entitySize * 40)),
-																	posY: Game.placeEntityY(0.50, (Game.entitySize * 30)),
-																	width: (Game.entitySize * 40),
-																	height: (Game.entitySize * 30),
+																	posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+																	posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+																	width: (Aurora.entitySize * 40),
+																	height: (Aurora.entitySize * 30),
 																	lineWidth: 1,
 																	modalColor: 'darkgrey',
 																	msgColor: 'white',
@@ -3262,11 +3262,11 @@ const homeSellRobots = {
 																	footerMsg: 'Tap here to continue',
 																	bgColor: '',
 																	isModalFilled: true,
-																	id: Game.modalId,
+																	id: Aurora.modalId,
 																	action: { 
 																		method: function(id) {
-																			const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																			Game.deleteEntity(modal.methodId);
+																			const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																			Aurora.deleteEntity(modal.methodId);
 																			homeSellRobots.loadPage();
 																		 }
 																	},
@@ -3275,7 +3275,7 @@ const homeSellRobots = {
 																});
 															}
 														};
-														Game.addMethod(Game.methodSetup);
+														Aurora.addMethod(Aurora.methodSetup);
 													}
 												};
 											}
@@ -3286,8 +3286,8 @@ const homeSellRobots = {
 													font: '2rem serif',
 													msg: '+            +',
 													align: 'center',
-													posX: Game.placeEntityX(0.763, (Game.entitySize * 0.7)),
-													posY: Game.placeEntityY(0.25, (Game.entitySize * 0.7)),
+													posX: Aurora.placeEntityX(0.763, (Aurora.entitySize * 0.7)),
+													posY: Aurora.placeEntityY(0.25, (Aurora.entitySize * 0.7)),
 													direction: 'top',
 													color: 'green',
 													ticks: 13,
@@ -3315,7 +3315,7 @@ const homeSellRobots = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				let existingPart;
 				if (part.type === 'chassis') {
 					existingPart = gameObject.selectedRobot.find(build => build.type === 'chassis');
@@ -3341,15 +3341,15 @@ const homePlayerUpgrades = {
 	description: 'This is where the player can upgrade their stats',
 	loadPage: function() {
 		function upgradePlayer() {
-			Game.clearStage();
+			Aurora.clearStage();
 			Particle.init();
-			Game.methodSetup = {
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0),
-						posY: Game.placeEntityY(0),
-						width: Game.canvas.width,
-						height: (Game.canvas.height),
+						posX: Aurora.placeEntityX(0),
+						posY: Aurora.placeEntityY(0),
+						width: Aurora.canvas.width,
+						height: (Aurora.canvas.height),
 						lineWidth: 1,
 						color: 'grey',
 						isFilled: true,
@@ -3360,14 +3360,14 @@ const homePlayerUpgrades = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
-						posX: Game.placeEntityX(0.03),
-						posY: Game.placeEntityY(0.03),
-						width: (Game.entitySize * 12),
-						height: (Game.entitySize * 7),
+						posX: Aurora.placeEntityX(0.03),
+						posY: Aurora.placeEntityY(0.03),
+						width: (Aurora.entitySize * 12),
+						height: (Aurora.entitySize * 7),
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
@@ -3386,14 +3386,14 @@ const homePlayerUpgrades = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
 						font: '2.1em serif',
 						msg: 'Upgrades',
-						posX: Game.placeEntityX(0.525),
-						posY: Game.placeEntityY(0.085),
+						posX: Aurora.placeEntityX(0.525),
+						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
 						props: {},
@@ -3402,14 +3402,14 @@ const homePlayerUpgrades = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
-			Game.methodSetup = {
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
 				method: function(id) {
 					drawRect({
-						posX: Game.placeEntityX(0.255, (Game.canvas.width * 0.45)),
-						posY: Game.placeEntityY(0.35, (Game.canvas.height * 0.45)),
-						width: (Game.canvas.width * 0.94),
-						height: (Game.canvas.height * 0.855),
+						posX: Aurora.placeEntityX(0.255, (Aurora.canvas.width * 0.45)),
+						posY: Aurora.placeEntityY(0.35, (Aurora.canvas.height * 0.45)),
+						width: (Aurora.canvas.width * 0.94),
+						height: (Aurora.canvas.height * 0.855),
 						lineWidth: 1,
 						color: 'lightgrey',
 						isFilled: true,
@@ -3420,7 +3420,7 @@ const homePlayerUpgrades = {
 					});
 				}
 			};
-			Game.addMethod(Game.methodSetup);
+			Aurora.addMethod(Aurora.methodSetup);
 			
 			let upgradeCount = 0;
 			let upgradeSelectRow = 1;
@@ -3455,7 +3455,7 @@ const homePlayerUpgrades = {
 					posXoffset = -0.4;
 				}	
 				
-				Game.methodSetup = {
+				Aurora.methodSetup = {
 					method: function(id) {
 						const upgradeIndex = i;
 						let upgradeTitle = '';
@@ -3487,10 +3487,10 @@ const homePlayerUpgrades = {
 							upgradeTitle = 'Robot Space';
 						}
 						drawButton({
-							posX: Game.placeEntityX(posX, (Game.entitySize * posXoffset)),
-							posY: Game.placeEntityY(posY, (Game.entitySize * posYoffset)),
-							width: (Game.canvas.width * 0.28),
-							height: (Game.entitySize * 20),
+							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
+							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
+							width: (Aurora.canvas.width * 0.28),
+							height: (Aurora.entitySize * 20),
 							lineWidth: 1,
 							btnColor: 'darkgrey',
 							txtColor: 'white',
@@ -3556,13 +3556,13 @@ const homePlayerUpgrades = {
 										 upgrade.lowValue.type.length > 0 ? upgrade.lowValue.type + ': ' + upgrade.lowValue.value : ''];
 									}
 									
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawRect({
-												posX: Game.placeEntityX(0),
-												posY: Game.placeEntityY(0),
-												width: Game.canvas.width,
-												height: (Game.canvas.height),
+												posX: Aurora.placeEntityX(0),
+												posY: Aurora.placeEntityY(0),
+												width: Aurora.canvas.width,
+												height: (Aurora.canvas.height),
 												lineWidth: 1,
 												color: 'grey',
 												isFilled: true,
@@ -3573,25 +3573,25 @@ const homePlayerUpgrades = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 									
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawDialogueModal({
-												posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-												posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-												width: (Game.entitySize * 45),
-												height: (Game.entitySize * 50),
+												posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+												posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+												width: (Aurora.entitySize * 45),
+												height: (Aurora.entitySize * 50),
 												lineWidth: 1,
 												modalColor: 'darkgrey',
 												msgColor: 'white',
 												msgFont: '1em serif',
 												msgs: msgs,
-												msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-												msgDistance: (Game.entitySize * 5),
+												msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+												msgDistance: (Aurora.entitySize * 5),
 												bgColor: '',
 												isModalFilled: true,
-												id: Game.modalId,
+												id: Aurora.modalId,
 												action: {
 													method: function(id) {}
 												},
@@ -3601,15 +3601,15 @@ const homePlayerUpgrades = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 									
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawText({
 												font: '2.1em serif',
 												msg: 'Funds',
-												posX: Game.placeEntityX(0.466),
-												posY: Game.placeEntityY(0.14),
+												posX: Aurora.placeEntityX(0.466),
+												posY: Aurora.placeEntityY(0.14),
 												color: 'darkgrey',
 												align: 'center',
 												props: {},
@@ -3618,7 +3618,7 @@ const homePlayerUpgrades = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 									
 									displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em serif', 'white', 'center');
 									
@@ -3661,13 +3661,13 @@ const homePlayerUpgrades = {
 
 									const checkFunds = checkSubtractFunds(formatUpgradeCost);
 									let upgrading = true;
-									Game.methodSetup = {
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-												posY: Game.placeEntityY(0.72, (Game.entitySize * 30)),
-												width: (Game.entitySize * 45) - (Game.canvas.width * 0.04),
-												height: (Game.entitySize * 7),
+												posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+												posY: Aurora.placeEntityY(0.72, (Aurora.entitySize * 30)),
+												width: (Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+												height: (Aurora.entitySize * 7),
 												lineWidth: 1,
 												btnColor: checkFunds ? 'grey' : '#C0C0C0',
 												txtColor: 'white',
@@ -4079,8 +4079,8 @@ const homePlayerUpgrades = {
 																font: '2.3rem serif',
 																msg: '+',
 																align: 'center',
-																posX: Game.placeEntityX(0.472),
-																posY: Game.placeEntityY(0.29),
+																posX: Aurora.placeEntityX(0.472),
+																posY: Aurora.placeEntityY(0.29),
 																direction: 'top',
 																color: 'green',
 																ticks: 13,
@@ -4090,13 +4090,13 @@ const homePlayerUpgrades = {
 															Particle.animComplete = {
 																method: function() {
 																	homePlayerUpgrades.loadPage();
-																	Game.methodSetup = {
+																	Aurora.methodSetup = {
 																		method: function(id) {
 																			drawRect({
-																				posX: Game.placeEntityX(0),
-																				posY: Game.placeEntityY(0),
-																				width: Game.canvas.width,
-																				height: (Game.canvas.height),
+																				posX: Aurora.placeEntityX(0),
+																				posY: Aurora.placeEntityY(0),
+																				width: Aurora.canvas.width,
+																				height: (Aurora.canvas.height),
 																				lineWidth: 1,
 																				color: 'grey',
 																				isFilled: true,
@@ -4107,24 +4107,24 @@ const homePlayerUpgrades = {
 																			});
 																		}
 																	};
-																	Game.addMethod(Game.methodSetup);
-																	Game.methodSetup = {
+																	Aurora.addMethod(Aurora.methodSetup);
+																	Aurora.methodSetup = {
 																		method: function(id) {
 																			drawDialogueModal({
-																				posX: Game.placeEntityX(0.45, (Game.entitySize * 40)),
-																				posY: Game.placeEntityY(0.40, (Game.entitySize * 30)),
-																				width: (Game.entitySize * 45),
-																				height: (Game.entitySize * 50),
+																				posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 40)),
+																				posY: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
+																				width: (Aurora.entitySize * 45),
+																				height: (Aurora.entitySize * 50),
 																				lineWidth: 1,
 																				modalColor: 'darkgrey',
 																				msgColor: 'white',
 																				msgFont: '1em serif',
 																				msgs: upgradeMsgs,
-																				msgStart: Game.placeEntityY(0.45, (Game.entitySize * 30)),
-																				msgDistance: (Game.entitySize * 8),
+																				msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
+																				msgDistance: (Aurora.entitySize * 8),
 																				bgColor: 'grey',
 																				isModalFilled: true,
-																				id: Game.modalId,
+																				id: Aurora.modalId,
 																				action: {
 																					method: function(id) {}
 																				},
@@ -4134,15 +4134,15 @@ const homePlayerUpgrades = {
 																			});
 																		}
 																	};
-																	Game.addMethod(Game.methodSetup);
+																	Aurora.addMethod(Aurora.methodSetup);
 															
-																	Game.methodSetup = {
+																	Aurora.methodSetup = {
 																		method: function(id) {
 																			drawText({
 																				font: '2.1em serif',
 																				msg: 'Funds',
-																				posX: Game.placeEntityX(0.466),
-																				posY: Game.placeEntityY(0.14),
+																				posX: Aurora.placeEntityX(0.466),
+																				posY: Aurora.placeEntityY(0.14),
 																				color: 'darkgrey',
 																				align: 'center',
 																				props: {},
@@ -4151,15 +4151,15 @@ const homePlayerUpgrades = {
 																			});
 																		}
 																	};
-																	Game.addMethod(Game.methodSetup);
+																	Aurora.addMethod(Aurora.methodSetup);
 																	displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em serif', 'white', 'center');
-																	Game.methodSetup = {
+																	Aurora.methodSetup = {
 																		method: function(id) {
 																			drawButton({
-																				posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-																				posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-																				width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-																				height: (Game.entitySize * 7),
+																				posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+																				posY: Aurora.placeEntityY(0.815, (Aurora.entitySize * 30)),
+																				width:(Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+																				height: (Aurora.entitySize * 7),
 																				lineWidth: 1,
 																				btnColor: 'grey',
 																				txtColor: 'white',
@@ -4169,8 +4169,8 @@ const homePlayerUpgrades = {
 																				id: 'upgraded',
 																				action: { 
 																					method: function(id) { 
-																						const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-																						Game.deleteEntity(modal.methodId);
+																						const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+																						Aurora.deleteEntity(modal.methodId);
 																						homePlayerUpgrades.loadPage();
 																					}
 																				},
@@ -4180,7 +4180,7 @@ const homePlayerUpgrades = {
 																			});
 																		}
 																	};
-																	Game.addMethod(Game.methodSetup);
+																	Aurora.addMethod(Aurora.methodSetup);
 																}
 															};
 														}
@@ -4193,14 +4193,14 @@ const homePlayerUpgrades = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
-									Game.methodSetup = {
+									Aurora.addMethod(Aurora.methodSetup);
+									Aurora.methodSetup = {
 										method: function(id) {
 											drawButton({
-												posX: Game.placeEntityX(0.47, (Game.entitySize * 40)),
-												posY: Game.placeEntityY(0.815, (Game.entitySize * 30)),
-												width:(Game.entitySize * 45) - (Game.canvas.width * 0.04),
-												height: (Game.entitySize * 7),
+												posX: Aurora.placeEntityX(0.47, (Aurora.entitySize * 40)),
+												posY: Aurora.placeEntityY(0.815, (Aurora.entitySize * 30)),
+												width:(Aurora.entitySize * 45) - (Aurora.canvas.width * 0.04),
+												height: (Aurora.entitySize * 7),
 												lineWidth: 1,
 												btnColor: 'grey',
 												txtColor: 'white',
@@ -4210,8 +4210,8 @@ const homePlayerUpgrades = {
 												id: 'cancel-upgrade',
 												action: { 
 													method: function(id) { 
-														const modal = Game.methodObjects.find(build => build.id === Game.modalId);
-														Game.deleteEntity(modal.methodId);
+														const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+														Aurora.deleteEntity(modal.methodId);
 														homePlayerUpgrades.loadPage();
 													}
 												},
@@ -4221,7 +4221,7 @@ const homePlayerUpgrades = {
 											});
 										}
 									};
-									Game.addMethod(Game.methodSetup);
+									Aurora.addMethod(Aurora.methodSetup);
 								}
 							},
 							isModalBtn: false,
@@ -4230,7 +4230,7 @@ const homePlayerUpgrades = {
 						});
 					}
 				};
-				Game.addMethod(Game.methodSetup);
+				Aurora.addMethod(Aurora.methodSetup);
 				
 				if (i === 2) {
 					upgradeSelectRow++;

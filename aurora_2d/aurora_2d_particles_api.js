@@ -17,8 +17,8 @@
 
 const Particle = {
   init: function() {
-    Game.methodSetup = { method: function(id) { moveParticles(); }};
-    Game.addMethod(Game.methodSetup);
+    Aurora.methodSetup = { method: function(id) { moveParticles(); }};
+    Aurora.addMethod(Aurora.methodSetup);
   },
   animComplete: {
 	method: function() {}, 
@@ -38,7 +38,7 @@ const Particle = {
     if (drawParticle?.shape === this.enumShapes.arc) {
       for (let i = 0; i < drawParticle.count; i++) {
         const direction = chooseDirection();
-        Game.methodSetup = {
+        Aurora.methodSetup = {
           method: function(id) {
             drawArc({
                 posX: drawParticle.posX,
@@ -60,13 +60,13 @@ const Particle = {
             });
           }
         }
-        Game.addMethod(Game.methodSetup);
+        Aurora.addMethod(Aurora.methodSetup);
       }
     }
     if (drawParticle?.shape === this.enumShapes.rect) {
       for (let i = 0; i < drawParticle.count; i++) {
         const direction = chooseDirection();
-          Game.methodSetup = {
+          Aurora.methodSetup = {
         		method: function(id) {
         			drawRect({
         				posX: drawParticle.posX,
@@ -88,7 +88,7 @@ const Particle = {
         			});
         		}
   	       };
-           Game.addMethod(Game.methodSetup);
+           Aurora.addMethod(Aurora.methodSetup);
          }
        }
     },
@@ -109,7 +109,7 @@ const Particle = {
 		//	 align: 'center',
 		//   ticks: 0, // in milliseconds,
 		// }
-		Game.methodSetup = {
+		Aurora.methodSetup = {
 		method: function(id) {
 			drawText({
 				font: floatText.font,
@@ -129,7 +129,7 @@ const Particle = {
 			});
 		}
 	};
-	Game.addMethod(Game.methodSetup);
+	Aurora.addMethod(Aurora.methodSetup);
 		
 	},
     drawStars: function() {
@@ -194,57 +194,57 @@ const Particle = {
 }
 
 function moveParticles() {
-	const particles = Game.methodObjects.filter(x => x.id === 'particle-effect');
+	const particles = Aurora.methodObjects.filter(x => x.id === 'particle-effect');
 	// remove expired particles
 	for (let i = 0; i < particles.length; i++) {
 	  if (particles[i].props.ticks <= 1) {
 			Particle.animComplete.method();
-			Game.deleteEntity(particles[i].methodId);
+			Aurora.deleteEntity(particles[i].methodId);
 		}
 	}
 	// move the particles
   for (let i = 0; i < particles.length; i++) {
 	  // refresh backgrounds
-    const backgrounds = Game.methodObjects.filter(x => x.isBackground === true);
+    const backgrounds = Aurora.methodObjects.filter(x => x.isBackground === true);
     if (backgrounds.length > 0) {
 		backgrounds.forEach(item => {
 			item.isAnim = true;
 		});
 	}
     if (particles[i].props.direction === 'rt') {
-      particles[i].posX += Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+      particles[i].posX += Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.leftRight);
     }
     if (particles[i].props.direction === 'lt') {
-      particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+      particles[i].posX -= Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.leftRight);
     }
     if (particles[i].props.direction === 'top') {
-      particles[i].posY -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
+      particles[i].posY -= Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.topDown);
     }
     if (particles[i].props.direction === 'bot') {
-      particles[i].posY += Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
+      particles[i].posY += Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.topDown);
     }
     if (particles[i].props.direction === 'toprt') {
-      particles[i].posY -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
-      particles[i].posX += Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+      particles[i].posY -= Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.topDown);
+      particles[i].posX += Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.leftRight);
     }
     if (particles[i].props.direction === 'toplt') {
-      particles[i].posY -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
-      particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+      particles[i].posY -= Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.topDown);
+      particles[i].posX -= Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.leftRight);
     }
     if (particles[i].props.direction === 'botrt') {
-      particles[i].posY += Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
-      particles[i].posX += Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+      particles[i].posY += Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.topDown);
+      particles[i].posX += Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.leftRight);
     }
     if (particles[i].props.direction === 'botlt') {
-      particles[i].posY += Game.moveEntity(particles[i].props.speed, Game.enumDirections.topDown);
-      particles[i].posX -= Game.moveEntity(particles[i].props.speed, Game.enumDirections.leftRight);
+      particles[i].posY += Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.topDown);
+      particles[i].posX -= Aurora.moveEntity(particles[i].props.speed, Aurora.enumDirections.leftRight);
     }
 
-    if (Game.selectedSetting === Game.enumSettings.high) {
+    if (Aurora.selectedSetting === Aurora.enumSettings.high) {
   		particles[i].props.ticks--;
-  	} else if (Game.selectedSetting === Game.enumSettings.med) {
+  	} else if (Aurora.selectedSetting === Aurora.enumSettings.med) {
   		particles[i].props.ticks -= 2;
-  	} else if (Game.selectedSetting === Game.enumSettings.low) {
+  	} else if (Aurora.selectedSetting === Aurora.enumSettings.low) {
   		particles[i].props.ticks -= 4;
   	} else {
       particles[i].props.ticks--;
