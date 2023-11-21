@@ -39,15 +39,6 @@ const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
 	seedArenaTowers();
 	loadAurora();
 	Aurora.setSettingsHigh();
-	selectSound.load();
-	addScrapSound.load();
-	arenaReadySound.load();
-	buildTowerSound.load();
-	robotHitSound.load();
-	scrappingSound.load();
-	sellSound.load();
-	towerExplosionSound.load();
-	towerShootSound.load();
 })();
 
 // future Jordan, try to find a way for sounds to play over each other
@@ -383,7 +374,7 @@ const titlePage = {
 						font: '3em serif',
 						msg: 'Loading...',
 						posX: Aurora.placeEntityX(0.50),
-						posY: Aurora.placeEntityY(0.55),
+						posY: Aurora.placeEntityY(0.63),
 						color: 'indigo',
 						align: 'center',
 						props: {},
@@ -393,9 +384,14 @@ const titlePage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
-		} else {
-			titlePage.loadPage();
+			const loadCheck = setInterval(function() {
+				if (Aurora.isLoaded) {
+					clearInterval(loadCheck);
+					titlePage.loadPage();
+				}
+			}, 300);
 		}
+		
 	}
 }
 

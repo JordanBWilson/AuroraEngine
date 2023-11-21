@@ -1584,6 +1584,9 @@ const maulPage = {
 				gameObject.redTowerArenaDesigns.push(towerDesign);
 			}
 		}
+		
+		// future Jordan, it's time to apply the robot part images here
+		
 		function sendRobot(robot) {
 			Aurora.methodSetup = {
 				method: function(id) {
