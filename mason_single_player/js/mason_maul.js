@@ -18,6 +18,7 @@ const maulPage = {
 		gameObject.selectedRobot = [];
 		Aurora.keepPreviousSize = true;
 		Aurora.clearStage();
+		let newWorldheadImages = [];
 		let prevCanvasWidth = JSON.parse(JSON.stringify(Aurora.canvas.width));
 		let prevCanvasHeight = JSON.parse(JSON.stringify(Aurora.canvas.height));
 		let selectBuildTowerIndex = 0;
@@ -77,6 +78,48 @@ const maulPage = {
 			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			
+			// future Jordan, make 'newWorldheadImages' a global object. perhaps make it into a list that
+			// will have all the animated heads in the future. Make this work for all robot gif images.
+			// we will want to load these images up on the title screen of the game not here...
+			
+			Aurora.methodSetup = {
+				method: function(id) {
+					const head = Aurora.methodObjects.find(x => x.id === 'new-world-head');
+					if (head) {
+						Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', head.methodId);
+						const findImage = Aurora.gifImageList.find(x => x.methodId === head.methodId);
+						if (findImage) {
+							newWorldheadImages = findImage.pngs
+							console.log(newWorldheadImages);
+							head.images = newWorldheadImages;
+							Aurora.deleteEntity(id);
+							Aurora.deleteEntity(head.methodId);
+						}
+					}
+					
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+			 	method: function(id) {
+			 		drawImage({
+			 			posX: Aurora.placeEntityX(0.50),
+			 			posY: Aurora.placeEntityY(0.50),
+			 			width: (Aurora.entitySize * 20),
+			 			height: (Aurora.entitySize * 20),
+			 			images: Aurora.gifImageList.length > 0 ? Aurora.gifImageList.find(img => img.methodId === id).pngs : [],
+			 			selectedImage: 0,
+			 			animTicks: 25,
+			 			ticks: 25,
+			 			id: 'new-world-head',
+			 			isBackground: false,
+			 			props: {},
+			 			methodId: id
+			 		});
+			 	}
+			};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
 				method: function(id) {

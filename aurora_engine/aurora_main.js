@@ -215,7 +215,7 @@ function assignImages(pngs, methodId) {
       Aurora.gifImageList.push({pngs: pngs, methodId: methodId});
     }
   }
-  Aurora.methodObjects.find(x => x.methodId === methodId).images = pngs;
+  // Aurora.methodObjects.find(x => x.methodId === methodId).images = pngs;
   Aurora.isLoaded = true;
 }
 function removeLoadingScreen() {
