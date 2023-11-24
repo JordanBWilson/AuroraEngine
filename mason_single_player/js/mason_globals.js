@@ -295,6 +295,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'New World Head',
 		img: 'orange',
+		imgs: [],
 		count: 20, // how many parts have been made
 		stats: {
 			att: 0,

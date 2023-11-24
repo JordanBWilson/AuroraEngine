@@ -65,7 +65,6 @@ function drawModalImage(incomingModalImage) {
 function drawDialogueModal(incomingModal) {
   drawDialogueModalMethod(incomingModal);
 }
-// future Jordan, we'll probably will want a dialogue modal image as well
 
 // this is where all the work happens for the methods above
 

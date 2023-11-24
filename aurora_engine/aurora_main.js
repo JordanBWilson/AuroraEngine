@@ -31,7 +31,7 @@
     window.addEventListener('beforeunload', function(e) { cancelAnimationFrame(Main.intervalAnimateId); });
     Main.intervalAnimateId = requestAnimationFrame(function() {
 		if (typeof mainLoop !== 'undefined') {
-			mainLoop(); 
+			mainLoop();
 		}
 	});
   }
@@ -165,7 +165,6 @@ function collisionCheck() {
 }
 
 function backgroundAnimationCheck(index) {
-	// future Jordan, look into simplifying this check just like the collision check method above
   if (!Main.isResizing && Aurora.methodObjects[index] && Aurora.methodObjects[index].isBackground) { // is this rect a backgound..
 	 // find what's being animated
 	const animatedObjects = Aurora.methodObjects.filter(
@@ -206,16 +205,15 @@ function findMethodParamIndex(methodId) {
   return Aurora.methodObjects.findIndex(x => x.methodId === methodId);
 }
 // this method grabs the gif image frames and assigns it to the correct method Id
-function assignImages(pngs, methodId) {
+function assignImages(pngs, id) {
   if (Aurora.gifImageList.length === 0) { // if the list is empty, add the new method
-    Aurora.gifImageList.push({pngs: pngs, methodId: methodId});
+    Aurora.gifImageList.push({pngs: pngs, id: id});
   } else { // if the list has something, look and see if the same id is getting used
-    const imgCheck = Aurora.gifImageList.filter(img => img.methodId === methodId);
+    const imgCheck = Aurora.gifImageList.filter(img => img.id === id);
     if (imgCheck.length === 0) {
       Aurora.gifImageList.push({pngs: pngs, methodId: methodId});
     }
   }
-  // Aurora.methodObjects.find(x => x.methodId === methodId).images = pngs;
   Aurora.isLoaded = true;
 }
 function removeLoadingScreen() {

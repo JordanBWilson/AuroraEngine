@@ -41,8 +41,7 @@ const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
 	Aurora.setSettingsHigh();
 })();
 
-// future Jordan, try to find a way for sounds to play over each other
-// add a small tutorial as well
+// future Jordan, add a small tutorial as well
 
 function seedRobotDesigns() {
 	for (let i = 0; i < gameObject.robotDesignCount; i++) {
@@ -80,6 +79,31 @@ function loadAurora() {
 	if (gameLoaded) {
 		gameObject = JSON.parse(gameLoaded);
 	}
+}
+// future Jordan, load up the rest of the images like this
+function loadRobotHeadGifs() {
+	// load the images
+	const newWorldHeadImgId = 'new-world-head';
+	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldHeadImgId);
+	// find the images
+	Aurora.methodSetup = {
+		method: function(id) {
+			let imageCount = 0;
+			const searchForImages = setInterval(function() {
+				const findNewWorldHead = Aurora.gifImageList.find(x => x.id === newWorldHeadImgId);
+				console.log('head', findNewWorldHead);
+				if (findNewWorldHead) {
+					robotHeads[imageCount].imgs = findNewWorldHead.pngs
+					console.log('done');
+					imageCount++;
+					// future Jordan, we don't want to remove this function until we have all the head images
+					Aurora.deleteEntity(id);
+					clearInterval(searchForImages);
+				}
+			}, 300);
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
 }
 
 const titlePage = {
@@ -384,6 +408,7 @@ const titlePage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+			loadRobotHeadGifs();
 			const loadCheck = setInterval(function() {
 				if (Aurora.isLoaded) {
 					clearInterval(loadCheck);

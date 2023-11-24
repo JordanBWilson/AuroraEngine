@@ -19,16 +19,11 @@ const currentScript = getCurrentScript();
 let gifWorker;
 const gifWorkerCallbacks = {};
 
-function createImagesFromGif(imageSrc, methodId) { // call this when you want to convert a gif to base64 pngs
-
-  const img = new Image();
-  img.src = imageSrc;
-  let sendImage = true;
-  img.onload = function() {
-    newGifImg(img, sendImage, methodId);
-    sendImage = false;
-    Aurora.isLoaded = false;
-  }
+function createImagesFromGif(imageSrc, id) { // call this when you want to convert a gif to base64 pngs
+	let sendImage = true;
+	newGifImg(imageSrc, sendImage, id);
+	sendImage = false;
+	Aurora.isLoaded = false;
 } // completedCallback() is the method that returns the base64 pngs
 
 function calculateBestSize(width, height, count) {
@@ -53,8 +48,8 @@ function handleFiles(e) {
   }
   reader.readAsDataURL(e.target.files[0]);
 }
-function newGifImg(img, banana, methodId) { // this is the main function
-    const gif = createGif(img.src);
+function newGifImg(imageSrc, banana, id) { // this is the main function
+    const gif = createGif(imageSrc);
     gif.addEventListener('load', function readGif(e) {
         const width = gif.naturalWidth, height = gif.naturalHeight;
         const cols = calculateBestSize(width, gif.naturalHeight, gif.frameCount);
@@ -94,10 +89,10 @@ function newGifImg(img, banana, methodId) { // this is the main function
             const image = new Image();
             image.src = canvas.toDataURL('image/png')
             gifImages.push(image);
-            if (count>=gif.frameCount) {
-              if (methodId) { // if the current methodId is defined...
+            if (count >= gif.frameCount) {
+              if (id) { // if the current id is defined...
                 // send the images to aruroa_main
-                assignImages(gifImages, methodId); // when the images are ready, these are the raw base64 pngs
+                assignImages(gifImages, id); // when the images are ready, these are the raw base64 pngs
                 gif.removeEventListener('load', readGif); // remove the old event listenter
               }
             }

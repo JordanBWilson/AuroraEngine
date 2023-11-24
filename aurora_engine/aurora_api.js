@@ -223,10 +223,10 @@ const Aurora = { // the user will want to use this object
       method(event);
     }, false);
   },
-  createImageListFromGif: function(gifLocation, methodId) {
+  createImageListFromGif: function(gifLocation, id) {
     // this method is dependent on arurora_gifs.js
-    if (gifLocation.length > 0 && methodId) {
-      createImagesFromGif(gifLocation, methodId);
+    if (gifLocation.length > 0 && id) {
+		createImagesFromGif(gifLocation, id);
     }
   },
   gifImageList: [],
