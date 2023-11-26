@@ -1605,19 +1605,33 @@ const maulPage = {
 							drawHead: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										drawRect({
-											posX: parent.posX + (Aurora.entitySize * 0.15),
-											posY: parent.posY - (Aurora.entitySize * 1.25),
-											width: (Aurora.entitySize * 1.25),
+										//drawRect({
+											//posX: parent.posX + (Aurora.entitySize * 0.15),
+											//posY: parent.posY - (Aurora.entitySize * 1.25),
+											//width: (Aurora.entitySize * 1.25),
+											//height: (Aurora.entitySize * 1.25),
+											//lineWidth: 1,
+											//color: drawRobotSelectPreviewParts('head', robot?.robotParts),
+											//isFilled: true,
+											//isBackground: false,
+											//id: parent.id,
+											//props: {},
+											//methodId: id
+										//});
+								 		drawImage({
+								 			posX: parent.posX + (Aurora.entitySize * 0.15),
+								 			posY: parent.posY - (Aurora.entitySize * 1.25),
+								 			width: (Aurora.entitySize * 1.25),
 											height: (Aurora.entitySize * 1.25),
-											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('head', robot?.robotParts),
-											isFilled: true,
-											isBackground: false,
-											id: parent.id,
-											props: {},
-											methodId: id
-										});
+								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true)[0].pngs,
+								 			selectedImage: 0,
+								 			animTicks: 0,
+								 			ticks: 0,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
 									}
 								};
 								Aurora.addMethod(Aurora.methodSetup);

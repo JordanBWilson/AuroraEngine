@@ -80,31 +80,40 @@ function loadAurora() {
 		gameObject = JSON.parse(gameLoaded);
 	}
 }
-// future Jordan, load up the rest of the images like this
 function loadRobotHeadGifs() {
 	// load the images
 	const newWorldHeadImgId = 'new-world-head';
 	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldHeadImgId);
 	// find the images
-	Aurora.methodSetup = {
-		method: function(id) {
-			let imageCount = 0;
-			const searchForImages = setInterval(function() {
-				const findNewWorldHead = Aurora.gifImageList.find(x => x.id === newWorldHeadImgId);
-				console.log('head', findNewWorldHead);
-				if (findNewWorldHead) {
-					robotHeads[imageCount].imgs = findNewWorldHead.pngs
-					console.log('done');
-					imageCount++;
-					// future Jordan, we don't want to remove this function until we have all the head images
-					Aurora.deleteEntity(id);
-					clearInterval(searchForImages);
-				}
-			}, 300);
+	let imageCount = 0;
+	const searchForImages = setInterval(function() {
+		const findNewWorldHead = Aurora.gifImageList.find(x => x.id === newWorldHeadImgId);
+		if (findNewWorldHead) {
+			robotHeads[imageCount].imgs.push(findNewWorldHead);
+			console.log(robotHeads[imageCount]);
+			imageCount++;
+			// future Jordan, we don't want to remove this function until we have all the head images
+			clearInterval(searchForImages);
 		}
-	};
-	Aurora.addMethod(Aurora.methodSetup);
+	}, 300);
 }
+//function loadRobotChassisGifs() {
+	//// load the images
+	//const newWorldChassisImgId = 'new-world-chassis';
+	//Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldChassisImgId);
+	//// find the images
+	//let imageCount = 0;
+	//const searchForImages = setInterval(function() {
+		//const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
+		//if (findNewWorldChassis) {
+			//robotChassis[imageCount].imgs.push(findNewWorldChassis);
+			//console.log(robotChassis[imageCount]);
+			//imageCount++;
+			//// future Jordan, we don't want to remove this function until we have all the head images
+			//clearInterval(searchForImages);
+		//}
+	//}, 300);
+//}
 
 const titlePage = {
 	description: 'The main title page of Mason',
@@ -409,6 +418,7 @@ const titlePage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 			loadRobotHeadGifs();
+			// loadRobotChassisGifs();
 			const loadCheck = setInterval(function() {
 				if (Aurora.isLoaded) {
 					clearInterval(loadCheck);

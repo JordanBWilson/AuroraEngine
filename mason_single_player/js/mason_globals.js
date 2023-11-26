@@ -324,6 +324,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Scrapper Head',
 		img: 'coral',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 0,
@@ -352,6 +353,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Scout Head',
 		img: 'darkgoldenrod',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 0,
@@ -380,6 +382,7 @@ const robotHeads = [
 		type: 'head',
 		name: 'NW Harvester Head',
 		img: 'cornflowerblue',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 1,
@@ -410,6 +413,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'New World Chassis',
 		img: 'orange',
+		imgs: [],
 		count: 20,
 		stats: {
 			att: 0,
@@ -438,6 +442,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scrapper Chassis',
 		img: 'coral',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 0,
@@ -466,6 +471,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Scout Chassis',
 		img: 'darkgoldenrod',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 0,
@@ -494,6 +500,7 @@ const robotChassis = [
 		type: 'chassis',
 		name: 'NW Harvester Chassis',
 		img: 'cornflowerblue',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 3,
@@ -525,6 +532,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'New World Leg',
 		img: 'orange',
+		imgs: [],
 		count: 20,
 		stats: {
 			att: 0,
@@ -554,6 +562,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Leg',
 		img: 'coral',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 0,
@@ -583,6 +592,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 0,
@@ -612,6 +622,7 @@ const robotLegs = [
 		legPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Leg',
 		img: 'cornflowerblue',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 2,
@@ -643,6 +654,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'New World Arm',
 		img: 'orange',
+		imgs: [],
 		count: 20,
 		stats: {
 			att: 1,
@@ -672,6 +684,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scrapper Arm',
 		img: 'coral',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 2,
@@ -701,6 +714,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Scout Arm',
 		img: 'darkgoldenrod',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 2,
@@ -730,6 +744,7 @@ const robotArms = [
 		armPos: undefined, // can be 'left' or 'right'
 		name: 'NW Harvester Arm',
 		img: 'cornflowerblue',
+		imgs: [],
 		count: 0,
 		stats: {
 			att: 3,
@@ -1996,14 +2011,18 @@ function formatPartCost(partCost) {
 	return formatPartCost;
 }
 
-function drawRobotSelectPreviewParts(partType, robotDesign) {
+function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 	if (partType === 'chassis') {
 		if (robotDesign.length === 0) {
 			return 'lightslategrey';
 		} else {
 			const part = robotDesign.find(partPos => partPos.type === 'chassis');
 			if (part) {
-				return part.img;
+				if (!loadImgs) {
+					return part.img;
+				} else {
+					return part.imgs;
+				}
 			} else {
 				return 'lightslategrey';
 			}
@@ -2015,7 +2034,11 @@ function drawRobotSelectPreviewParts(partType, robotDesign) {
 		} else {
 			const part = robotDesign.find(partPos => partPos.type === 'head');
 			if (part) {
-				return part.img;
+				if (!loadImgs) {
+					return part.img;
+				} else {
+					return part.imgs;
+				}
 			} else {
 				return 'lightslategrey';
 			}
@@ -2027,7 +2050,11 @@ function drawRobotSelectPreviewParts(partType, robotDesign) {
 		} else {
 			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left');
 			if (part) {
-				return part.img;
+				if (!loadImgs) {
+					return part.img;
+				} else {
+					return part.imgs;
+				}
 			} else {
 				return 'lightslategrey';
 			}
@@ -2039,7 +2066,11 @@ function drawRobotSelectPreviewParts(partType, robotDesign) {
 		} else {
 			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right');
 			if (part) {
-				return part.img;
+				if (!loadImgs) {
+					return part.img;
+				} else {
+					return part.imgs;
+				}
 			} else {
 				return 'lightslategrey';
 			}
@@ -2051,7 +2082,11 @@ function drawRobotSelectPreviewParts(partType, robotDesign) {
 		} else {
 			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left');
 			if (part) {
-				return part.img;
+				if (!loadImgs) {
+					return part.img;
+				} else {
+					return part.imgs;
+				}
 			} else {
 				return 'lightslategrey';
 			}
@@ -2063,7 +2098,11 @@ function drawRobotSelectPreviewParts(partType, robotDesign) {
 		} else {
 			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right');
 			if (part) {
-				return part.img;
+				if (!loadImgs) {
+					return part.img;
+				} else {
+					return part.imgs;
+				}
 			} else {
 				return 'lightslategrey';
 			}
