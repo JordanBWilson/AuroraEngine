@@ -211,7 +211,7 @@ function assignImages(pngs, id) {
   } else { // if the list has something, look and see if the same id is getting used
     const imgCheck = Aurora.gifImageList.filter(img => img.id === id);
     if (imgCheck.length === 0) {
-      Aurora.gifImageList.push({pngs: pngs, methodId: methodId});
+      Aurora.gifImageList.push({pngs: pngs, id: id});
     }
   }
   Aurora.isLoaded = true;

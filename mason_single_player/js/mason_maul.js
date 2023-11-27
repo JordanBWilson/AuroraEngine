@@ -1586,7 +1586,8 @@ const maulPage = {
 			}
 		}
 		
-		// future Jordan, it's time to apply the robot part images here
+		// future Jordan, apply the rest of the robot images
+		// begin to animate them
 		
 		function sendRobot(robot) {
 			Aurora.methodSetup = {
@@ -1623,7 +1624,7 @@ const maulPage = {
 								 			posY: parent.posY - (Aurora.entitySize * 1.25),
 								 			width: (Aurora.entitySize * 1.25),
 											height: (Aurora.entitySize * 1.25),
-								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true)[0].pngs,
+								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true)[0].pngs, // [robotHeadImg],
 								 			selectedImage: 0,
 								 			animTicks: 0,
 								 			ticks: 0,

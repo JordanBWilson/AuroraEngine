@@ -19,6 +19,9 @@ grassImg.src = grassPath;
 const roadImg = new Image();
 const roadPath = './assets/images/brick.png';
 roadImg.src = roadPath;
+const robotHeadImg = new Image();
+const robotHeadPath = './assets/images/Robot_Head_NW.png';
+robotHeadImg.src = robotHeadPath;
 
 // load the game sounds
 const selectSound = new Audio('./assets/sounds/select.wav');
@@ -83,7 +86,7 @@ function loadAurora() {
 function loadRobotHeadGifs() {
 	// load the images
 	const newWorldHeadImgId = 'new-world-head';
-	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldHeadImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk-1.gif', newWorldHeadImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
@@ -92,28 +95,96 @@ function loadRobotHeadGifs() {
 			robotHeads[imageCount].imgs.push(findNewWorldHead);
 			console.log(robotHeads[imageCount]);
 			imageCount++;
-			// future Jordan, we don't want to remove this function until we have all the head images
+			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
 		}
 	}, 300);
 }
-//function loadRobotChassisGifs() {
-	//// load the images
-	//const newWorldChassisImgId = 'new-world-chassis';
-	//Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldChassisImgId);
-	//// find the images
-	//let imageCount = 0;
-	//const searchForImages = setInterval(function() {
-		//const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
-		//if (findNewWorldChassis) {
-			//robotChassis[imageCount].imgs.push(findNewWorldChassis);
-			//console.log(robotChassis[imageCount]);
-			//imageCount++;
-			//// future Jordan, we don't want to remove this function until we have all the head images
-			//clearInterval(searchForImages);
-		//}
-	//}, 300);
-//}
+function loadRobotChassisGifs() {
+	// load the images
+	const newWorldChassisImgId = 'new-world-chassis';
+	Aurora.createImageListFromGif('./assets/images/New_World_Chassis_Walk.gif', newWorldChassisImgId);
+	// find the images
+	let imageCount = 0;
+	const searchForImages = setInterval(function() {
+		const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
+		if (findNewWorldChassis) {
+			robotChassis[imageCount].imgs.push(findNewWorldChassis);
+			console.log(robotChassis[imageCount]);
+			imageCount++;
+			// future Jordan, we don't want to remove this function until we have all the images
+			clearInterval(searchForImages);
+		}
+	}, 300);
+}
+function loadRobotLeftArmGifs() {
+	// load the images
+	const newWorldLeftArmImgId = 'new-world-left-arm';
+	Aurora.createImageListFromGif('./assets/images/New_World_Left_Arm_Walk-1.gif', newWorldLeftArmImgId);
+	// find the images
+	let imageCount = 0;
+	const searchForImages = setInterval(function() {
+		const findNewWorldLeftArm = Aurora.gifImageList.find(x => x.id === newWorldLeftArmImgId);
+		if (findNewWorldLeftArm) {
+			robotArms[imageCount].imgs.push(findNewWorldLeftArm);
+			console.log(robotArms[imageCount]);
+			imageCount++;
+			// future Jordan, we don't want to remove this function until we have all the images
+			clearInterval(searchForImages);
+		}
+	}, 300);
+}
+function loadRobotRightArmGifs() {
+	// load the images
+	const newWorldRightArmImgId = 'new-world-right-arm';
+	Aurora.createImageListFromGif('./assets/images/New_World_Right_Arm_Walk-1.gif', newWorldRightArmImgId);
+	// find the images
+	let imageCount = 0;
+	const searchForImages = setInterval(function() {
+		const findNewWorldRightArm = Aurora.gifImageList.find(x => x.id === newWorldRightArmImgId);
+		if (findNewWorldRightArm) {
+			robotArms[imageCount].imgs.push(findNewWorldRightArm);
+			console.log(robotArms[imageCount]);
+			imageCount++;
+			// future Jordan, we don't want to remove this function until we have all the images
+			clearInterval(searchForImages);
+		}
+	}, 300);
+}
+function loadRobotLeftLegGifs() {
+	// load the images
+	const newWorldLeftLegImgId = 'new-world-left-leg';
+	Aurora.createImageListFromGif('./assets/images/New_World_Left_Leg_Walk-1.gif', newWorldLeftLegImgId);
+	// find the images
+	let imageCount = 0;
+	const searchForImages = setInterval(function() {
+		const findNewWorldLeftLeg = Aurora.gifImageList.find(x => x.id === newWorldLeftLegImgId);
+		if (findNewWorldLeftLeg) {
+			robotLegs[imageCount].imgs.push(findNewWorldLeftLeg);
+			console.log(robotLegs[imageCount]);
+			imageCount++;
+			// future Jordan, we don't want to remove this function until we have all the images
+			clearInterval(searchForImages);
+		}
+	}, 300);
+}
+function loadRobotRightLegGifs() {
+	// load the images
+	const newWorldRightLegImgId = 'new-world-right-leg';
+	Aurora.createImageListFromGif('./assets/images/New_World_Right_Leg_Walk-1.gif', newWorldRightLegImgId);
+	// find the images
+	let imageCount = 0;
+	const searchForImages = setInterval(function() {
+		const findNewWorldRightLeg = Aurora.gifImageList.find(x => x.id === newWorldRightLegImgId);
+		if (findNewWorldRightLeg) {
+			robotLegs[imageCount].imgs.push(findNewWorldRightLeg);
+			console.log(robotLegs[imageCount]);
+			imageCount++;
+			// future Jordan, we don't want to remove this function until we have all the images
+			clearInterval(searchForImages);
+		}
+	}, 300);
+}
 
 const titlePage = {
 	description: 'The main title page of Mason',
@@ -418,7 +489,11 @@ const titlePage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 			loadRobotHeadGifs();
-			// loadRobotChassisGifs();
+			loadRobotChassisGifs();
+			loadRobotLeftArmGifs();
+			loadRobotRightArmGifs();
+			loadRobotLeftLegGifs();
+			loadRobotRightLegGifs();
 			const loadCheck = setInterval(function() {
 				if (Aurora.isLoaded) {
 					clearInterval(loadCheck);
