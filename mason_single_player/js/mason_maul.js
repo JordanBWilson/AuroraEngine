@@ -1592,16 +1592,17 @@ const maulPage = {
 		function sendRobot(robot) {
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawRect({
+					drawImage({
 						posX: robot.posX,
 						posY: robot.posY,
 						width: robot.width,
 						height: robot.height,
-						lineWidth: 1,
-						color: drawRobotSelectPreviewParts('chassis', robot?.robotParts),
-						isFilled: true,
-						isBackground: false,
+						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true),
+						selectedImage: 0,
+						animTicks: 25,
+						ticks: 25,
 						id: robot.id,
+						isBackground: false,
 						props: {
 							drawHead: function(parent) {
 								Aurora.methodSetup = {
@@ -1624,10 +1625,10 @@ const maulPage = {
 								 			posY: parent.posY - (Aurora.entitySize * 1.25),
 								 			width: (Aurora.entitySize * 1.25),
 											height: (Aurora.entitySize * 1.25),
-								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true)[0].pngs, // [robotHeadImg],
+								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true),
 								 			selectedImage: 0,
-								 			animTicks: 0,
-								 			ticks: 0,
+								 			animTicks: 25,
+								 			ticks: 25,
 								 			id: parent.id,
 								 			isBackground: false,
 								 			props: {},
@@ -1640,19 +1641,33 @@ const maulPage = {
 							drawLeftArm: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										drawRect({
-											posX: parent.posX - (Aurora.entitySize * 0.375),
+										//drawRect({
+											//posX: parent.posX - (Aurora.entitySize * 0.375),
+											//posY: parent.posY,
+											//width: (Aurora.entitySize * 0.375),
+											//height: (Aurora.entitySize * 1.5),
+											//lineWidth: 1,
+											//color: drawRobotSelectPreviewParts('left-arm', robot?.robotParts),
+											//isFilled: true,
+											//isBackground: false,
+											//id: parent.id,
+											//props: {},
+											//methodId: id
+										//});
+										drawImage({
+								 			posX: parent.posX - (Aurora.entitySize * 0.375),
 											posY: parent.posY,
-											width: (Aurora.entitySize * 0.375),
+											width: (Aurora.entitySize * 0.375), // (Aurora.entitySize * 0.375),
 											height: (Aurora.entitySize * 1.5),
-											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('left-arm', robot?.robotParts),
-											isFilled: true,
-											isBackground: false,
-											id: parent.id,
-											props: {},
-											methodId: id
-										});
+								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true),
+								 			selectedImage: 0,
+								 			animTicks: 25,
+								 			ticks: 25,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
 									}
 								};
 								Aurora.addMethod(Aurora.methodSetup);
@@ -1660,19 +1675,33 @@ const maulPage = {
 							drawRightArm: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										drawRect({
-											posX: parent.posX + (Aurora.entitySize * 1.5),
+										//drawRect({
+											//posX: parent.posX + (Aurora.entitySize * 1.5),
+											//posY: parent.posY,
+											//width: (Aurora.entitySize * 0.375),
+											//height: (Aurora.entitySize * 1.5),
+											//lineWidth: 1,
+											//color: drawRobotSelectPreviewParts('right-arm', robot?.robotParts),
+											//isFilled: true,
+											//isBackground: false,
+											//id: parent.id,
+											//props: {},
+											//methodId: id
+										//});
+										drawImage({
+								 			posX: parent.posX + (Aurora.entitySize * 1.5),
 											posY: parent.posY,
 											width: (Aurora.entitySize * 0.375),
 											height: (Aurora.entitySize * 1.5),
-											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('right-arm', robot?.robotParts),
-											isFilled: true,
-											isBackground: false,
-											id: parent.id,
-											props: {},
-											methodId: id
-										});
+								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true),
+								 			selectedImage: 0,
+								 			animTicks: 25,
+								 			ticks: 25,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
 									}
 								};
 								Aurora.addMethod(Aurora.methodSetup);
@@ -1680,19 +1709,33 @@ const maulPage = {
 							drawLeftLeg: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										drawRect({
-											posX: parent.posX + (Aurora.entitySize * 0.125),
+										//drawRect({
+											//posX: parent.posX + (Aurora.entitySize * 0.125),
+											//posY: parent.posY + (Aurora.entitySize * 1.5),
+											//width: (Aurora.entitySize * 0.375),
+											//height: (Aurora.entitySize * 1.5),
+											//lineWidth: 1,
+											//color: drawRobotSelectPreviewParts('left-leg', robot?.robotParts),
+											//isFilled: true,
+											//isBackground: false,
+											//id: parent.id,
+											//props: {},
+											//methodId: id
+										//});
+										drawImage({
+								 			posX: parent.posX + (Aurora.entitySize * 0.125),
 											posY: parent.posY + (Aurora.entitySize * 1.5),
 											width: (Aurora.entitySize * 0.375),
 											height: (Aurora.entitySize * 1.5),
-											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('left-leg', robot?.robotParts),
-											isFilled: true,
-											isBackground: false,
-											id: parent.id,
-											props: {},
-											methodId: id
-										});
+								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true),
+								 			selectedImage: 0,
+								 			animTicks: 25,
+								 			ticks: 25,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
 									}
 								};
 								Aurora.addMethod(Aurora.methodSetup);
@@ -1700,19 +1743,33 @@ const maulPage = {
 							drawRightLeg: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										drawRect({
-											posX: parent.posX + (Aurora.entitySize * 1.075),
+										//drawRect({
+											//posX: parent.posX + (Aurora.entitySize * 1.075),
+											//posY: parent.posY + (Aurora.entitySize * 1.5),
+											//width: (Aurora.entitySize * 0.375),
+											//height: (Aurora.entitySize * 1.5),
+											//lineWidth: 1,
+											//color: drawRobotSelectPreviewParts('right-leg', robot?.robotParts),
+											//isFilled: true,
+											//isBackground: false,
+											//id: parent.id,
+											//props: {},
+											//methodId: id
+										//});
+										drawImage({
+								 			posX: parent.posX + (Aurora.entitySize * 1.075),
 											posY: parent.posY + (Aurora.entitySize * 1.5),
 											width: (Aurora.entitySize * 0.375),
 											height: (Aurora.entitySize * 1.5),
-											lineWidth: 1,
-											color: drawRobotSelectPreviewParts('right-leg', robot?.robotParts),
-											isFilled: true,
-											isBackground: false,
-											id: parent.id,
-											props: {},
-											methodId: id
-										});
+								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true),
+								 			selectedImage: 0,
+								 			animTicks: 25,
+								 			ticks: 25,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
 									}
 								};
 								Aurora.addMethod(Aurora.methodSetup);
@@ -1726,6 +1783,12 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
+			// future Jordan, run the robot part animation here. Add the animations above.
+			// if the animations don't smooth out the x axis movements on mobile screens,
+			// consider speeding up the x axis speeds by a minimum of 0.13 and increasing
+			// the tower shoot speeds to compensate. The robots in the arena should be drawn
+			// a little bigger to prevent images from fading in and out. Again, see if
+			// running the animations will help with that
 			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
@@ -3705,7 +3768,6 @@ const maulPage = {
 		function robotAttackBase(base, robot, i, color) {
 			if (base) {
 				if (gameObject.gameSounds) {
-					//btowerExplosionSound.currentTime = 0;
 					towerExplosionSound.cloneNode(true).play();
 				}
 				base.props.hp--;

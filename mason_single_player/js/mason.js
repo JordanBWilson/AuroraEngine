@@ -19,9 +19,6 @@ grassImg.src = grassPath;
 const roadImg = new Image();
 const roadPath = './assets/images/brick.png';
 roadImg.src = roadPath;
-const robotHeadImg = new Image();
-const robotHeadPath = './assets/images/Robot_Head_NW.png';
-robotHeadImg.src = robotHeadPath;
 
 // load the game sounds
 const selectSound = new Audio('./assets/sounds/select.wav');
@@ -93,7 +90,6 @@ function loadRobotHeadGifs() {
 		const findNewWorldHead = Aurora.gifImageList.find(x => x.id === newWorldHeadImgId);
 		if (findNewWorldHead) {
 			robotHeads[imageCount].imgs.push(findNewWorldHead);
-			console.log(robotHeads[imageCount]);
 			imageCount++;
 			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
@@ -110,7 +106,6 @@ function loadRobotChassisGifs() {
 		const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
 		if (findNewWorldChassis) {
 			robotChassis[imageCount].imgs.push(findNewWorldChassis);
-			console.log(robotChassis[imageCount]);
 			imageCount++;
 			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
@@ -127,7 +122,6 @@ function loadRobotLeftArmGifs() {
 		const findNewWorldLeftArm = Aurora.gifImageList.find(x => x.id === newWorldLeftArmImgId);
 		if (findNewWorldLeftArm) {
 			robotArms[imageCount].imgs.push(findNewWorldLeftArm);
-			console.log(robotArms[imageCount]);
 			imageCount++;
 			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
@@ -144,7 +138,6 @@ function loadRobotRightArmGifs() {
 		const findNewWorldRightArm = Aurora.gifImageList.find(x => x.id === newWorldRightArmImgId);
 		if (findNewWorldRightArm) {
 			robotArms[imageCount].imgs.push(findNewWorldRightArm);
-			console.log(robotArms[imageCount]);
 			imageCount++;
 			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
@@ -161,7 +154,6 @@ function loadRobotLeftLegGifs() {
 		const findNewWorldLeftLeg = Aurora.gifImageList.find(x => x.id === newWorldLeftLegImgId);
 		if (findNewWorldLeftLeg) {
 			robotLegs[imageCount].imgs.push(findNewWorldLeftLeg);
-			console.log(robotLegs[imageCount]);
 			imageCount++;
 			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
@@ -178,7 +170,6 @@ function loadRobotRightLegGifs() {
 		const findNewWorldRightLeg = Aurora.gifImageList.find(x => x.id === newWorldRightLegImgId);
 		if (findNewWorldRightLeg) {
 			robotLegs[imageCount].imgs.push(findNewWorldRightLeg);
-			console.log(robotLegs[imageCount]);
 			imageCount++;
 			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
