@@ -245,17 +245,17 @@ let gameObject = {
 	towerArenaDesigns: [], // these are the towers that will compete in the arena
 	towerArenaDesignCount: 3, // max number of towers that can be on a team
 	arenaRoundSeconds: 15, // how many seconds there are between each round // 15 is the default
-	arenaBlueAuroraMoney: 160, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
-	arenaRedAuroraMoney: 160, // how much money COM starts out with
-	arenaAuroraRound: 1,
-	arenaAuroraMaxRounds: 12,
+	arenaBlueGameMoney: 160, // how much money the player starts with to play the game // 999999 is the max // 99999 fits great
+	arenaRedGameMoney: 160, // how much money COM starts out with
+	arenaGameRound: 1,
+	arenaGameMaxRounds: 12,
 	arenaBlueSendCount: 0, // how many robots the player has sent
 	arenaBlueSendLeeRoyCount: 0, // how many directive leeroys have been sent
 	arenaBlueSendTankCount: 0, // how many directive tanks have been sent
 	arenaRedSendCount: 0, // how many robots COM has sent
 	arenaRedSendLeeRoyCount: 0, // how many directive leeroys COM has sent
 	arenaRedSendTankCount: 0, // how many directive tanks COM has sent
-	arenaAuroraStarted: false, // has the game started?
+	arenaGameStarted: false, // has the game started?
 	arenaBlueAttackers: [],
 	arenaRedAttackers: [],
 	redRobotArenaDesigns: [],

@@ -363,7 +363,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function towerTargetRange(primary, target, color) {
-			if (gameObject.arenaAuroraStarted) {
+			if (gameObject.arenaGameStarted) {
 				let shootSpeed;
 				const tower = Aurora.methodObjects.find(x => x.id === target);
 				const towerStats = Aurora.methodObjects.find(x => x.id === tower.props.towerId);
@@ -445,7 +445,7 @@ const maulPage = {
 													ticks: 33,
 													speed: 0.1,
 												});
-												gameObject.arenaBlueAuroraMoney += robotMoneyGained.tank;
+												gameObject.arenaBlueGameMoney += robotMoneyGained.tank;
 											}
 										}
 									},
@@ -503,7 +503,7 @@ const maulPage = {
 												towerStats.props.stats.splash = 0;
 												const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === primary);
 												deleteRobotMethodObject(robotHitMethodObject, 1);
-												gameObject.arenaRedAuroraMoney += robotMoneyGained.tank;
+												gameObject.arenaRedGameMoney += robotMoneyGained.tank;
 											}
 										}
 								
@@ -773,7 +773,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function selectArenaRobot(index) {
-			if (gameObject.arenaAuroraStarted && gameObject.robotArenaDesigns[index].robotParts.length === 6) {
+			if (gameObject.arenaGameStarted && gameObject.robotArenaDesigns[index].robotParts.length === 6) {
 				const allBackgrounds = Aurora.methodObjects.filter(bg => bg.id.includes('arena-robot-details-btn-'));
 				allBackgrounds.forEach(bg => {
 					bg.color = 'darkgrey';	
@@ -1144,7 +1144,7 @@ const maulPage = {
 							method: function(id) {
 								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
-								if (gameObject.arenaAuroraStarted && gameObject.arenaBlueAuroraMoney >= robotCost && gameObject.selectedRobot.length === 6) {
+								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate(robotCost);
@@ -1184,7 +1184,7 @@ const maulPage = {
 															moneyGained = robotMoneyGained.tank;
 														}
 														deleteRobotMethodObject(robotHitMethodObject, 1);
-														gameObject.arenaRedAuroraMoney += moneyGained;
+														gameObject.arenaRedGameMoney += moneyGained;
 													}
 												}
 											},
@@ -1246,7 +1246,7 @@ const maulPage = {
 							method: function(id) {
 								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
-								if (gameObject.arenaAuroraStarted && gameObject.arenaBlueAuroraMoney >= robotCost && gameObject.selectedRobot.length === 6 ) {
+								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6 ) {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate(robotCost);
@@ -1286,7 +1286,7 @@ const maulPage = {
 															moneyGained = robotMoneyGained.tank;
 														}
 														deleteRobotMethodObject(robotHitMethodObject, 1);
-														gameObject.arenaRedAuroraMoney += moneyGained;
+														gameObject.arenaRedGameMoney += moneyGained;
 													}
 												}
 											},
@@ -1335,7 +1335,7 @@ const maulPage = {
 		function sendRedRobotLeft(robot) {
 			const robotDirective = robot.directive;
 			const robotCost = findRobotDirectiveCost(robotDirective);
-			gameObject.arenaRedAuroraMoney -= robotCost;
+			gameObject.arenaRedGameMoney -= robotCost;
 			setRedLeftRoadNavCollisions();
 			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
@@ -1383,7 +1383,7 @@ const maulPage = {
 								ticks: 33,
 								speed: 0.1,
 							});
-							gameObject.arenaBlueAuroraMoney += moneyGained;
+							gameObject.arenaBlueGameMoney += moneyGained;
 							updateMoneyBackground();
 						}
 					}
@@ -1415,7 +1415,7 @@ const maulPage = {
 		function sendRedRobotRight(robot) {
 			const robotDirective = robot.directive;
 			const robotCost = findRobotDirectiveCost(robotDirective);
-			gameObject.arenaRedAuroraMoney -= robotCost;
+			gameObject.arenaRedGameMoney -= robotCost;
 			setRedRightRoadNavCollisions();
 			Aurora.collisionSetup = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
@@ -1463,7 +1463,7 @@ const maulPage = {
 								ticks: 33,
 								speed: 0.1,
 							});
-							gameObject.arenaBlueAuroraMoney += moneyGained;
+							gameObject.arenaBlueGameMoney += moneyGained;
 							updateMoneyBackground();
 						}
 					}
@@ -1497,12 +1497,12 @@ const maulPage = {
 			const moneyBackground = Aurora.methodObjects.find(bg => bg.id === 'money-bar-background');
 			const moneyCounter = Aurora.methodObjects.find(bg => bg.id === 'player-money-amount-title');
 			if (moneyCounter) {
-				moneyCounter.msg = '$' + gameObject.arenaBlueAuroraMoney;
+				moneyCounter.msg = '$' + gameObject.arenaBlueGameMoney;
 				moneyBackground.isAnim = true;
 			}
 		}
 		function blueRobotSendMoneyUpdate(cost) {
-			gameObject.arenaBlueAuroraMoney -= cost;
+			gameObject.arenaBlueGameMoney -= cost;
 			updateMoneyBackground();
 		}
 		function generateRedArenaRobots() {
@@ -1599,11 +1599,26 @@ const maulPage = {
 						height: robot.height,
 						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true),
 						selectedImage: 0,
-						animTicks: 25,
-						ticks: 25,
+						animTicks: 15,
+						ticks: 15,
 						id: robot.id,
 						isBackground: false,
 						props: {
+							animate: (function(parent) {
+								if (gameObject.arenaGameStarted) {
+									const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
+									animateRobot.forEach(part => {
+										if (part.animTicks <= 1) {
+											if (part.selectedImage >= (part.images.length - 1)) {
+												part.selectedImage = 0;
+											} else {
+												part.selectedImage += 1;
+											}
+										}
+										part = Aurora.nextTick(part);
+									});
+								}
+							})(),
 							drawHead: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
@@ -1627,8 +1642,8 @@ const maulPage = {
 											height: (Aurora.entitySize * 1.25),
 								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true),
 								 			selectedImage: 0,
-								 			animTicks: 25,
-								 			ticks: 25,
+								 			animTicks: 3,
+								 			ticks: 3,
 								 			id: parent.id,
 								 			isBackground: false,
 								 			props: {},
@@ -1655,14 +1670,14 @@ const maulPage = {
 											//methodId: id
 										//});
 										drawImage({
-								 			posX: parent.posX - (Aurora.entitySize * 0.375),
+								 			posX: parent.posX - (Aurora.entitySize * 0.475),
 											posY: parent.posY,
-											width: (Aurora.entitySize * 0.375), // (Aurora.entitySize * 0.375),
+											width: (Aurora.entitySize * 0.775), // (Aurora.entitySize * 0.375),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
-								 			animTicks: 25,
-								 			ticks: 25,
+								 			animTicks: 5,
+								 			ticks: 5,
 								 			id: parent.id,
 								 			isBackground: false,
 								 			props: {},
@@ -1689,14 +1704,14 @@ const maulPage = {
 											//methodId: id
 										//});
 										drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 1.5),
+								 			posX: parent.posX + (Aurora.entitySize * 1.2),
 											posY: parent.posY,
-											width: (Aurora.entitySize * 0.375),
+											width: (Aurora.entitySize * 0.775),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
-								 			animTicks: 25,
-								 			ticks: 25,
+								 			animTicks: 5,
+								 			ticks: 5,
 								 			id: parent.id,
 								 			isBackground: false,
 								 			props: {},
@@ -1723,14 +1738,14 @@ const maulPage = {
 											//methodId: id
 										//});
 										drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 0.125),
-											posY: parent.posY + (Aurora.entitySize * 1.5),
-											width: (Aurora.entitySize * 0.375),
+								 			posX: parent.posX - (Aurora.entitySize * 0.2),
+											posY: parent.posY + (Aurora.entitySize * 1.09),
+											width: (Aurora.entitySize * 0.775),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
-								 			animTicks: 25,
-								 			ticks: 25,
+								 			animTicks: 3,
+								 			ticks: 3,
 								 			id: parent.id,
 								 			isBackground: false,
 								 			props: {},
@@ -1757,14 +1772,14 @@ const maulPage = {
 											//methodId: id
 										//});
 										drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 1.075),
-											posY: parent.posY + (Aurora.entitySize * 1.5),
-											width: (Aurora.entitySize * 0.375),
+								 			posX: parent.posX + (Aurora.entitySize * 0.9),
+											posY: parent.posY + (Aurora.entitySize * 1.09),
+											width: (Aurora.entitySize * 0.775),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
-								 			animTicks: 25,
-								 			ticks: 25,
+								 			animTicks: 3,
+								 			ticks: 3,
 								 			id: parent.id,
 								 			isBackground: false,
 								 			props: {},
@@ -1783,12 +1798,8 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			// future Jordan, run the robot part animation here. Add the animations above.
-			// if the animations don't smooth out the x axis movements on mobile screens,
-			// consider speeding up the x axis speeds by a minimum of 0.13 and increasing
-			// the tower shoot speeds to compensate. The robots in the arena should be drawn
-			// a little bigger to prevent images from fading in and out. Again, see if
-			// running the animations will help with that
+			// future Jordan, consider speeding up the x axis speeds by a minimum
+			// of 0.13 and increasing the tower shoot speeds to compensate.
 			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
@@ -2194,7 +2205,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 1);
 								}
 							}
@@ -2283,7 +2294,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 2);
 								}
 							}
@@ -2372,7 +2383,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 3);
 								}
 							}
@@ -2461,7 +2472,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 4);
 								}
 							}
@@ -2550,7 +2561,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 5);
 								}
 							}
@@ -2639,7 +2650,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 6);
 								}
 							}
@@ -2728,7 +2739,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 7);
 								}
 							}
@@ -2817,7 +2828,7 @@ const maulPage = {
 						action: {
 							methodId: id,
 							method: function(id) {
-								if (gameObject.arenaAuroraStarted) {
+								if (gameObject.arenaGameStarted) {
 									selectTower(this.methodId, 8);
 								}
 							}
@@ -3540,7 +3551,7 @@ const maulPage = {
 				method: function(id) {
 					drawText({
 						font: '1.5em serif',
-						msg: '$' + gameObject.arenaBlueAuroraMoney,
+						msg: '$' + gameObject.arenaBlueGameMoney,
 						posX: Aurora.placeEntityX(0.04),
 						posY: Aurora.placeEntityY(0.07),
 						color: 'white',
@@ -3592,7 +3603,7 @@ const maulPage = {
 				method: function(id) {
 					drawText({
 						font: '1em serif',
-						msg: 'Turn: ' + gameObject.arenaAuroraRound + '/' + gameObject.arenaAuroraMaxRounds,
+						msg: 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds,
 						posX: Aurora.placeEntityX(0.99, (Aurora.entitySize * 34)),
 						posY: Aurora.placeEntityY(0.08),
 						color: 'white',
@@ -3665,14 +3676,14 @@ const maulPage = {
 				Aurora.deleteEntity(gameStartBackground.methodId);
 				Aurora.deleteEntity(gameStartTitle.methodId);
 				// start the game round timer and round numbers
-				if (!gameObject.arenaAuroraStarted) {
+				if (!gameObject.arenaGameStarted) {
 					startAuroraRounds();
 				}
 			}, 5500);
 			
 		}
 		function startAuroraRounds() {
-			gameObject.arenaAuroraStarted = true;
+			gameObject.arenaGameStarted = true;
 			const roundTimer = Aurora.methodObjects.find(bg => bg.id === 'player-round-time-title');
 			const roundBackground = Aurora.methodObjects.find(bg => bg.id === 'round-bar-background');
 			const roundCounter = Aurora.methodObjects.find(bg => bg.id === 'player-round-number-title');
@@ -3680,17 +3691,17 @@ const maulPage = {
 				if (gameObject.arenaRoundSeconds > 0) {
 					gameObject.arenaRoundSeconds--;
 					roundTimer.msg = gameObject.arenaRoundSeconds + 's';
-					roundCounter.msg = 'Turn: ' + gameObject.arenaAuroraRound + '/' + gameObject.arenaAuroraMaxRounds;
+					roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
 				} else if(gameObject.arenaRoundSeconds === 0) {
 					// add to the players money
-					gameObject.arenaBlueAuroraMoney += (gameObject.arenaBlueSendLeeRoyCount * robotMoneyGained.leeRoy);
-					gameObject.arenaBlueAuroraMoney += (gameObject.arenaBlueSendTankCount * robotMoneyGained.tank);
-					gameObject.arenaBlueAuroraMoney += (gameObject.arenaBlueSendCount * 2);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendLeeRoyCount * robotMoneyGained.leeRoy);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendTankCount * robotMoneyGained.tank);
+					gameObject.arenaBlueGameMoney += (gameObject.arenaBlueSendCount * 2);
 					// add to the COMs money
-					gameObject.arenaRedAuroraMoney += (gameObject.arenaRedSendLeeRoyCount * robotMoneyGained.leeRoy);
-					gameObject.arenaRedAuroraMoney += (gameObject.arenaRedSendTankCount * robotMoneyGained.tank);
-					gameObject.arenaRedAuroraMoney += (gameObject.arenaRedSendCount * 2);
-					gameObject.arenaAuroraRound++;
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendLeeRoyCount * robotMoneyGained.leeRoy);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendTankCount * robotMoneyGained.tank);
+					gameObject.arenaRedGameMoney += (gameObject.arenaRedSendCount * 2);
+					gameObject.arenaGameRound++;
 					gameObject.arenaRoundSeconds = 15;
 					const blueMoney = Aurora.methodObjects.find(bg => bg.id === 'player-money-amount-title');
 					// reset send robot buttons
@@ -3699,10 +3710,10 @@ const maulPage = {
 					const sendRobotsRight = Aurora.methodObjects.find(bs => bs.id === 'send-robots-right');
 					sendRobotsRight.btnColor = 'grey';
 					// every turn except the last turn
-					if (gameObject.arenaAuroraRound <= 12) {
+					if (gameObject.arenaGameRound <= 12) {
 						roundTimer.msg = gameObject.arenaRoundSeconds + 's';
-						roundCounter.msg = 'Turn: ' + gameObject.arenaAuroraRound + '/' + gameObject.arenaAuroraMaxRounds;
-						blueMoney.msg = '$' + gameObject.arenaBlueAuroraMoney;
+						roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
+						blueMoney.msg = '$' + gameObject.arenaBlueGameMoney;
 						Particle.floatingText({
 							font: '2rem serif',
 							msg: '+      +',
@@ -3716,7 +3727,7 @@ const maulPage = {
 						});
 					}
 					// the very last turn. End game
-					if (gameObject.arenaAuroraRound === 13) {
+					if (gameObject.arenaGameRound === 13) {
 						const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
 						const blueBase = Aurora.methodObjects.find(bs => bs.id === 'blue-base');
 						let winningTeam = '';
@@ -3892,7 +3903,7 @@ const maulPage = {
 			}
 		}
 		function redAiMind() {
-			if (gameObject.arenaAuroraStarted) {
+			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 3) + 1);
 				// select a robot to send
 				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
@@ -3912,7 +3923,7 @@ const maulPage = {
 				// we need a requires here
 				const towerDirective = redTower.directive;
 				const towerCost = findTowerDirectiveCost(towerDirective);
-				if (whatToDo === 1 && gameObject.arenaRedAuroraMoney >= towerCost) {
+				if (whatToDo === 1 && gameObject.arenaRedGameMoney >= towerCost) {
 					// build a tower
 					const redLeftTowers = Aurora.methodObjects.filter(x => x.id.includes('red-left-tower-spawn'));
 					const redRightTowers = Aurora.methodObjects.filter(x => x.id.includes('red-right-tower-spawn'));
@@ -3923,7 +3934,7 @@ const maulPage = {
 						// build left
 						const redBuildTowerIndex = Math.floor((Math.random() * availableRedLeftTowers.length));
 						const selectedRedTower = availableRedLeftTowers[redBuildTowerIndex];
-						gameObject.arenaRedAuroraMoney -= towerCost;
+						gameObject.arenaRedGameMoney -= towerCost;
 						selectedRedTower.btnColor = redTower.arenaTower.img;
 						selectedRedTower.props.robotParts = redTower.arenaTower.robotParts;
 						selectedRedTower.props.stats = redTower.arenaTower.stats;
@@ -3937,7 +3948,7 @@ const maulPage = {
 						// build right
 						const redBuildTowerIndex = Math.floor((Math.random() * availableRedRightTowers.length));
 						const selectedRedTower = availableRedRightTowers[redBuildTowerIndex];
-						gameObject.arenaRedAuroraMoney -= towerCost;
+						gameObject.arenaRedGameMoney -= towerCost;
 						selectedRedTower.btnColor = redTower.arenaTower.img;
 						selectedRedTower.props.robotParts = redTower.arenaTower.robotParts;
 						selectedRedTower.props.stats = redTower.arenaTower.stats;
@@ -3956,12 +3967,12 @@ const maulPage = {
 							redUpgradeTowerIndex = Math.floor((Math.random() * redLeftTowers.length));
 							selectedRedTower = redLeftTowers[redUpgradeTowerIndex];
 							const upgradeCost = findTowerDirectiveCost(selectedRedTower.props.directive);
-							gameObject.arenaRedAuroraMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
+							gameObject.arenaRedGameMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
 						} else if (whereToUpgrade === 2) {
 							redUpgradeTowerIndex = Math.floor((Math.random() * redRightTowers.length));
 							selectedRedTower = redRightTowers[redUpgradeTowerIndex];
 							const upgradeCost = findTowerDirectiveCost(selectedRedTower.props.directive);
-							gameObject.arenaRedAuroraMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
+							gameObject.arenaRedGameMoney -= upgradeCost * (selectedRedTower.props.stats.lvl);
 						}
 						if (selectedRedTower.props.stats.lvl < gameObject.redMaxTowerLevel) {
 							selectedRedTower.props.stats.att += upgradeTowerStats.att;
@@ -3980,8 +3991,8 @@ const maulPage = {
 					// send a robot
 					whatToDo = 2;
 				}
-				if (whatToDo === 2 && gameObject.arenaRedAuroraMoney >= robotCost || 
-					whatToDo === 3 && gameObject.arenaRedAuroraMoney >= robotCost) {
+				if (whatToDo === 2 && gameObject.arenaRedGameMoney >= robotCost || 
+					whatToDo === 3 && gameObject.arenaRedGameMoney >= robotCost) {
 					// send a robot
 					const whereToSend = Math.floor((Math.random() * 2) + 1);
 					if (whereToSend === 1) {
@@ -4004,18 +4015,18 @@ const maulPage = {
 				gameObject.redRobotArenaDesigns = [];
 				gameObject.redTowerArenaDesigns = [];
 				gameObject.selectedRobotDesign = -1;
-				gameObject.arenaAuroraRound = 1;
+				gameObject.arenaGameRound = 1;
 				gameObject.redMaxTowerLevel = 1;
 				gameObject.arenaRoundSeconds = 15;
-				gameObject.arenaBlueAuroraMoney = 160;
-				gameObject.arenaRedAuroraMoney = 160;
+				gameObject.arenaBlueGameMoney = 160;
+				gameObject.arenaRedGameMoney = 160;
 				gameObject.arenaBlueSendCount = 0;
 				gameObject.arenaBlueSendLeeRoyCount = 0;
 				gameObject.arenaBlueSendTankCount = 0;
 				gameObject.arenaRedSendCount = 0;
 				gameObject.arenaRedSendLeeRoyCount = 0;
 				gameObject.arenaRedSendTankCount = 0;
-				gameObject.arenaAuroraStarted = false;
+				gameObject.arenaGameStarted = false;
 				gameObject.canClick = true;
 				Aurora.canvas.width = window.innerWidth * Aurora.stageWidthPrct;
 				Aurora.canvas.height = window.innerHeight * Aurora.stageHeightPrct;
@@ -4287,11 +4298,11 @@ const maulPage = {
 							action: { 
 								method: function(id) {
 									if (tower.props.towerId > 0) {
-										if (gameObject.arenaBlueAuroraMoney >= towerCost * (towerLevel)) {
+										if (gameObject.arenaBlueGameMoney >= towerCost * (towerLevel)) {
 											if (gameObject.gameSounds) {
 												selectSound.play();
 											}
-											gameObject.arenaBlueAuroraMoney -= towerCost * (towerLevel);
+											gameObject.arenaBlueGameMoney -= towerCost * (towerLevel);
 											updateMoneyBackground();
 											tower.props.stats.att += upgradeTowerStats.att;
 											tower.props.stats.def += upgradeTowerStats.def;
@@ -4573,11 +4584,11 @@ const maulPage = {
 						action: { 
 							method: function(id) {
 								if (selectedTowerDesign.arenaTower.towerId) {
-									if (gameObject.arenaBlueAuroraMoney >= towerCost) {
+									if (gameObject.arenaBlueGameMoney >= towerCost) {
 										if (gameObject.gameSounds) {
 											buildTowerSound.play();
 										}
-										gameObject.arenaBlueAuroraMoney -= towerCost;
+										gameObject.arenaBlueGameMoney -= towerCost;
 										updateMoneyBackground();
 										tower.btnColor = selectedTowerDesign.arenaTower.img;
 										tower.props.name = selectedTowerDesign.arenaTower.name;
