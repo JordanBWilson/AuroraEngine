@@ -515,9 +515,9 @@ const maulPage = {
 							redTowerShootRobot(towerStats, primary);
 						}
 					}
-					let towerShootSPeed = 2200 - (towerStats.props.stats.spd * 100);
-					if (towerShootSPeed <= 100) {
-						towerShootSPeed = 100;
+					let towerShootSPeed = 2000 - (towerStats.props.stats.spd * 100);
+					if (towerShootSPeed <= 50) {
+						towerShootSPeed = 50;
 					}
 					shootSpeed = setTimeout(function() {
 						tower.props.canShoot = true;
@@ -776,10 +776,10 @@ const maulPage = {
 			if (gameObject.arenaGameStarted && gameObject.robotArenaDesigns[index].robotParts.length === 6) {
 				const allBackgrounds = Aurora.methodObjects.filter(bg => bg.id.includes('arena-robot-details-btn-'));
 				allBackgrounds.forEach(bg => {
-					bg.color = 'darkgrey';	
+					bg.btnColor = 'darkgrey';	
 				});
 				const selectRobotBG = Aurora.methodObjects.find(bg => bg.id === 'arena-robot-details-btn-' + index);
-				selectRobotBG.color = 'yellow';
+				selectRobotBG.btnColor = 'yellow';
 				gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
 				gameObject.selectedRobotDesign = index;
 				// reset the send button colors
@@ -834,6 +834,37 @@ const maulPage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Aurora.placeEntityX(0.01, (Aurora.entitySize * -0.01)),
+						posY: Aurora.placeEntityY(0.84, (Aurora.entitySize * -11)),
+						width: (Aurora.canvas.width * 0.15),
+						height: (Aurora.entitySize * 10),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.3em serif',
+						msg: 'Wall',
+						isFilled: true,
+						id: 'arena-spell-btn-1',
+						action: {
+							method: function(id) {
+								// future Jordan, the wall should refresh in 25 seconds
+								// work on the new spell buttons
+								// update the player walk way to buttons
+								// only allow placing walls or emps on the player walk ways
+								// show a timer in the button when the spells are used
+								console.log('place the wall');
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
 			let robotCount = 0;
 			let robotSelectRow = 1;
 			for (let i = 0; i < gameObject.robotArenaDesignCount; i++) {
@@ -847,7 +878,8 @@ const maulPage = {
 					posYoffset = -11;
 				}
 				if (robotCount === 1) {
-					posX = 0.11;
+					// posX = 0.11;
+					posX = 0.21;
 					posXoffset = -0.01;
 				}
 				if (robotCount === 2) {
@@ -855,21 +887,30 @@ const maulPage = {
 					posXoffset = 1.99;
 				}
 				if (robotCount === 3) {
-					posX = 0.739;
+					//posX = 0.739;
+					posX = 0.639;
 					posXoffset = 1;
 				}
 				Aurora.methodSetup = {
 					method: function(id) {
-						drawRect({
+						drawButton({
 							posX: Aurora.placeEntityX(posX, (Aurora.entitySize * posXoffset)),
 							posY: Aurora.placeEntityY(posY, (Aurora.entitySize * posYoffset)),
 							width: (Aurora.canvas.width * 0.15),
 							height: (Aurora.entitySize * 10),
 							lineWidth: 1,
-							color: 'darkgrey',
-							isBackground: false,
+							btnColor: 'darkgrey',
+							txtColor: 'white',
+							font: '1.5em serif',
+							msg: '',
 							isFilled: true,
 							id: 'arena-robot-details-btn-' + i,
+							action: {
+								method: function(id) {
+									selectArenaRobot(i);
+								}
+							},
+							isModalBtn: false,
 							props: {},
 							methodId: id
 						});
@@ -1068,6 +1109,33 @@ const maulPage = {
 					}, 2000);
 				}
 			}
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawButton({
+						posX: Aurora.placeEntityX(0.839, (Aurora.entitySize * 1)),
+						posY: Aurora.placeEntityY(0.84, (Aurora.entitySize * -11)),
+						width: (Aurora.canvas.width * 0.15),
+						height: (Aurora.entitySize * 10),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'white',
+						font: '1.3em serif',
+						msg: 'EMP',
+						isFilled: true,
+						id: 'arena-spell-btn-2',
+						action: {
+							method: function(id) {
+								// future Jordan, the emp should refresh in 50 seconds
+								console.log('place the emp');
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function drawBasesAndSends() {
 			Aurora.methodSetup = {
@@ -1586,9 +1654,6 @@ const maulPage = {
 			}
 		}
 		
-		// future Jordan, apply the rest of the robot images
-		// begin to animate them
-		
 		function sendRobot(robot) {
 			Aurora.methodSetup = {
 				method: function(id) {
@@ -1622,19 +1687,6 @@ const maulPage = {
 							drawHead: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										//drawRect({
-											//posX: parent.posX + (Aurora.entitySize * 0.15),
-											//posY: parent.posY - (Aurora.entitySize * 1.25),
-											//width: (Aurora.entitySize * 1.25),
-											//height: (Aurora.entitySize * 1.25),
-											//lineWidth: 1,
-											//color: drawRobotSelectPreviewParts('head', robot?.robotParts),
-											//isFilled: true,
-											//isBackground: false,
-											//id: parent.id,
-											//props: {},
-											//methodId: id
-										//});
 								 		drawImage({
 								 			posX: parent.posX + (Aurora.entitySize * 0.15),
 								 			posY: parent.posY - (Aurora.entitySize * 1.25),
@@ -1656,23 +1708,10 @@ const maulPage = {
 							drawLeftArm: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										//drawRect({
-											//posX: parent.posX - (Aurora.entitySize * 0.375),
-											//posY: parent.posY,
-											//width: (Aurora.entitySize * 0.375),
-											//height: (Aurora.entitySize * 1.5),
-											//lineWidth: 1,
-											//color: drawRobotSelectPreviewParts('left-arm', robot?.robotParts),
-											//isFilled: true,
-											//isBackground: false,
-											//id: parent.id,
-											//props: {},
-											//methodId: id
-										//});
 										drawImage({
-								 			posX: parent.posX - (Aurora.entitySize * 0.475),
+								 			posX: parent.posX - (Aurora.entitySize * 1),
 											posY: parent.posY,
-											width: (Aurora.entitySize * 0.775), // (Aurora.entitySize * 0.375),
+											width: (Aurora.entitySize * 2),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
@@ -1690,23 +1729,10 @@ const maulPage = {
 							drawRightArm: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										//drawRect({
-											//posX: parent.posX + (Aurora.entitySize * 1.5),
-											//posY: parent.posY,
-											//width: (Aurora.entitySize * 0.375),
-											//height: (Aurora.entitySize * 1.5),
-											//lineWidth: 1,
-											//color: drawRobotSelectPreviewParts('right-arm', robot?.robotParts),
-											//isFilled: true,
-											//isBackground: false,
-											//id: parent.id,
-											//props: {},
-											//methodId: id
-										//});
 										drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 1.2),
+								 			posX: parent.posX + (Aurora.entitySize * 0.5),
 											posY: parent.posY,
-											width: (Aurora.entitySize * 0.775),
+											width: (Aurora.entitySize * 2),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
@@ -1724,23 +1750,10 @@ const maulPage = {
 							drawLeftLeg: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										//drawRect({
-											//posX: parent.posX + (Aurora.entitySize * 0.125),
-											//posY: parent.posY + (Aurora.entitySize * 1.5),
-											//width: (Aurora.entitySize * 0.375),
-											//height: (Aurora.entitySize * 1.5),
-											//lineWidth: 1,
-											//color: drawRobotSelectPreviewParts('left-leg', robot?.robotParts),
-											//isFilled: true,
-											//isBackground: false,
-											//id: parent.id,
-											//props: {},
-											//methodId: id
-										//});
 										drawImage({
-								 			posX: parent.posX - (Aurora.entitySize * 0.2),
+								 			posX: parent.posX - (Aurora.entitySize * 0.3),
 											posY: parent.posY + (Aurora.entitySize * 1.09),
-											width: (Aurora.entitySize * 0.775),
+											width: (Aurora.entitySize * 0.975),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
@@ -1758,23 +1771,10 @@ const maulPage = {
 							drawRightLeg: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
-										//drawRect({
-											//posX: parent.posX + (Aurora.entitySize * 1.075),
-											//posY: parent.posY + (Aurora.entitySize * 1.5),
-											//width: (Aurora.entitySize * 0.375),
-											//height: (Aurora.entitySize * 1.5),
-											//lineWidth: 1,
-											//color: drawRobotSelectPreviewParts('right-leg', robot?.robotParts),
-											//isFilled: true,
-											//isBackground: false,
-											//id: parent.id,
-											//props: {},
-											//methodId: id
-										//});
 										drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 0.9),
+								 			posX: parent.posX + (Aurora.entitySize * 0.85),
 											posY: parent.posY + (Aurora.entitySize * 1.09),
-											width: (Aurora.entitySize * 0.775),
+											width: (Aurora.entitySize * 0.975),
 											height: (Aurora.entitySize * 1.5),
 								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
@@ -1798,8 +1798,6 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			// future Jordan, consider speeding up the x axis speeds by a minimum
-			// of 0.13 and increasing the tower shoot speeds to compensate.
 			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
@@ -2144,7 +2142,7 @@ const maulPage = {
 				arcWidth = rangeWidth;
 				isMobile = true;
 			} else { // everything else
-				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.06);
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.08);
 				arcWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.04);
 				isMobile = false;
 			}
@@ -2868,7 +2866,7 @@ const maulPage = {
 				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.height * 0.025);
 				isMobile = true;
 			} else { // everything else
-				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.06);
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.08);
 				isMobile = false;
 			}
 			Aurora.methodSetup = {
@@ -3796,7 +3794,7 @@ const maulPage = {
 			const robotSpeed = (br.totalStats.spd) * 0.01;
 			if (br.direction === 'rt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
-					rob.posX -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
+					rob.posX -= Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
@@ -3813,7 +3811,7 @@ const maulPage = {
 			}
 			if (br.direction === 'rt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
-					rob.posX -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
+					rob.posX -= Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
@@ -3853,7 +3851,7 @@ const maulPage = {
 			const robotSpeed = (br.totalStats.spd) * 0.01;
 			if (br.direction === 'lt' && br.stop === 0) {
 				robot.forEach((rob, j) => {
-					rob.posX += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
+					rob.posX += Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
@@ -3870,7 +3868,7 @@ const maulPage = {
 			}
 			if (br.direction === 'lt' && br.stop === 2) {
 				robot.forEach((rob, j) => {
-					rob.posX += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.leftRight);
+					rob.posX += Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
 					br.posX = rob.posX;
 				});
 			}
