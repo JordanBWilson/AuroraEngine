@@ -287,6 +287,8 @@ let gameObject = {
 	tutorialStep: 0, // what part of the tutorial is being displayed
 	newPlayer: true, // is this a new player, show the tutorial
 	gameSounds: false, // play game sounds
+	wallReady: false, // wall spell ready
+	empReady: false, // emp spell ready
 };
 // ** Robot Parts ***
 const robotHeads = [

@@ -844,22 +844,24 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.3em serif',
+						font: '1.2em serif',
 						msg: 'Wall',
 						isFilled: true,
 						id: 'arena-spell-btn-1',
 						action: {
 							method: function(id) {
-								// future Jordan, the wall should refresh in 25 seconds
-								// work on the new spell buttons
-								// update the player walk way to buttons
-								// only allow placing walls or emps on the player walk ways
-								// show a timer in the button when the spells are used
+								console.log(id);
+								gameObject.wallReady = true;
+								gameObject.empReady = false;
+								// future Jordan, show a timer in the button when the spells are used
 								console.log('place the wall');
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							reloadTime: 25, // seconds
+							readyTime: 0, // ready to go
+						},
 						methodId: id
 					});
 				}
@@ -1119,18 +1121,23 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.3em serif',
+						font: '1.2em serif',
 						msg: 'EMP',
 						isFilled: true,
 						id: 'arena-spell-btn-2',
 						action: {
 							method: function(id) {
-								// future Jordan, the emp should refresh in 50 seconds
+								// future Jordan, show a timer in the button when the spells are used
+								gameObject.wallReady = false;
+								gameObject.empReady = true;
 								console.log('place the emp');
 							}
 						},
 						isModalBtn: false,
-						props: {},
+						props: {
+							reloadTime: 50, // seconds
+							readyTime: 0, // ready to go
+						},
 						methodId: id
 					});
 				}
@@ -1821,20 +1828,33 @@ const maulPage = {
 		function drawBlueRoads() {
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawImage({
+					drawButtonImage({
 			 			posX: Aurora.placeEntityX(0.10, (Aurora.entitySize * 4.3)),
 			 			posY: Aurora.placeEntityY(0.46),
 			 			width: (Aurora.canvas.width * 0.50),
 			 			height: (Aurora.entitySize * 7),
+			 			txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-left-base-road-1',
-			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			action: {
+							method: function(id, pos) {
+								if (gameObject.wallReady || gameObject.empReady) {
+									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
+									const convertX = pos.x / Aurora.canvas.width;
+									const convertY = pos.y / Aurora.canvas.height;
+									console.log(id, pos, castSpell, convertX, convertY);
+									// future Jordan, create a method that will place the spell
+									// in the correct coords. include the converted coords
+								}
+							}
+						},
+			 			isModalBtn: false,
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -1842,20 +1862,29 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawImage({
+					drawButtonImage({
 			 			posX: Aurora.placeEntityX(0.48, (Aurora.entitySize * 5.5)),
 			 			posY: Aurora.placeEntityY(0.46),
 			 			width: (Aurora.canvas.width * 0.50),
 			 			height: (Aurora.entitySize * 7),
+			 			txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-right-base-road-1',
-			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			action: {
+							method: function(id, pos) {
+								if (gameObject.wallReady || gameObject.empReady) {
+									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
+									console.log(id, pos, castSpell);
+								}
+							}
+						},
+			 			isModalBtn: false,
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -1863,20 +1892,29 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawImage({
+					drawButtonImage({
 			 			posX: Aurora.placeEntityX(0.93, (Aurora.entitySize * 5.5)),
 			 			posY: Aurora.placeEntityY(0.59),
 			 			width: (Aurora.entitySize * 20),
 			 			height: (Aurora.entitySize * 7),
+			 			txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-right-road-spawn',
-			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			action: {
+							method: function(id, pos) {
+								if (gameObject.wallReady || gameObject.empReady) {
+									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
+									console.log(id, pos, castSpell);
+								}
+							}
+						},
+			 			isModalBtn: false,
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -1884,20 +1922,29 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawImage({
+					drawButtonImage({
 			 			posX: Aurora.placeEntityX(0.05, (Aurora.entitySize * 24)),
 			 			posY: Aurora.placeEntityY(0.59),
 			 			width: (Aurora.entitySize * 20),
 			 			height: (Aurora.entitySize * 7),
+			 			txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-left-road-spawn',
-			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			action: {
+							method: function(id, pos) {
+								if (gameObject.wallReady || gameObject.empReady) {
+									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
+									console.log(id, pos, castSpell);
+								}
+							}
+						},
+			 			isModalBtn: false,
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -1905,20 +1952,29 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawImage({
+					drawButtonImage({
 			 			posX: Aurora.placeEntityX(0.95, (Aurora.entitySize * 15)),
 			 			posY: Aurora.placeEntityY(0.46),
 			 			width: (Aurora.entitySize * 7),
 			 			height: (Aurora.entitySize * 20),
+			 			txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-right-base-road-2',
-			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			action: {
+							method: function(id, pos) {
+								if (gameObject.wallReady || gameObject.empReady) {
+									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
+									console.log(id, pos, castSpell);
+								}
+							}
+						},
+			 			isModalBtn: false,
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -1926,20 +1982,29 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawImage({
+					drawButtonImage({
 			 			posX: Aurora.placeEntityX(0.09, (Aurora.entitySize * 3)),
 			 			posY: Aurora.placeEntityY(0.46),
 			 			width: (Aurora.entitySize * 7),
 			 			height: (Aurora.entitySize * 20),
+			 			txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-left-base-road-2',
-			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			action: {
+							method: function(id, pos) {
+								if (gameObject.wallReady || gameObject.empReady) {
+									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
+									console.log(id, pos, castSpell);
+								}
+							}
+						},
+			 			isModalBtn: false,
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -1947,20 +2012,29 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
 				method: function(id) {
-					drawImage({
+					drawButtonImage({
 			 			posX: Aurora.placeEntityX(0.49, (Aurora.entitySize * 5.5)),
 			 			posY: Aurora.placeEntityY(0.46),
 			 			width: (Aurora.entitySize * 7),
 			 			height: (Aurora.entitySize * 33),
+			 			txtColor: 'white',
+						font: '0.8em serif',
+						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
 			 			animTicks: 0,
 			 			ticks: 0,
 			 			id: 'blue-base-road',
-			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			action: {
+							method: function(id, pos) {
+								if (gameObject.wallReady || gameObject.empReady) {
+									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
+									console.log(id, pos, castSpell);
+								}
+							}
+						},
+			 			isModalBtn: false,
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -1981,9 +2055,7 @@ const maulPage = {
 			 			ticks: 0,
 			 			id: 'red-left-base-road-1',
 			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -2002,9 +2074,7 @@ const maulPage = {
 			 			ticks: 0,
 			 			id: 'red-right-base-road-1',
 			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -2023,9 +2093,7 @@ const maulPage = {
 			 			ticks: 0,
 			 			id: 'red-right-road-spawn',
 			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -2044,9 +2112,7 @@ const maulPage = {
 			 			ticks: 0,
 			 			id: 'red-left-road-spawn',
 			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -2065,9 +2131,7 @@ const maulPage = {
 			 			ticks: 0,
 			 			id: 'red-right-base-road-2',
 			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -2086,9 +2150,7 @@ const maulPage = {
 			 			ticks: 0,
 			 			id: 'red-left-base-road-2',
 			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -2107,9 +2169,7 @@ const maulPage = {
 			 			ticks: 0,
 			 			id: 'red-base-road',
 			 			isBackground: false,
-			 			props: {
-			 				
-			 			},
+			 			props: {},
 			 			methodId: id
 			 		});
 			 	}
@@ -4026,6 +4086,8 @@ const maulPage = {
 				gameObject.arenaRedSendTankCount = 0;
 				gameObject.arenaGameStarted = false;
 				gameObject.canClick = true;
+				gameObject.wallReady = false;
+				gameObject.empReady = false;
 				Aurora.canvas.width = window.innerWidth * Aurora.stageWidthPrct;
 				Aurora.canvas.height = window.innerHeight * Aurora.stageHeightPrct;
 				Aurora.entitySize = (Aurora.canvas.height * 0.01);

@@ -127,13 +127,17 @@ function screenTapped(event) {
 function isButtonTapped(btnParams) {
 	if (Main.tappedY >= btnParams.posY && Main.tappedY <= btnParams.posY + btnParams.height) {
 		if (Main.tappedX >= btnParams.posX && Main.tappedX <= btnParams.posX + btnParams.width) {
+			const pos = { // the coords the button was tapped
+				x: Main.tappedX,
+				y: Main.tappedY,
+			};
 			if (!Main.isModalVisible && !btnParams.isModalBtn) {
-				btnParams.action.method();
+				btnParams.action.method(btnParams.methodId, pos);
 				Main.isStageTapped = false;
 				Main.tappedX = 0;
 				Main.tappedY = 0;
 			} else if(Main.isModalVisible && btnParams.isModalBtn) {
-				btnParams.action.method();
+				btnParams.action.method(btnParams.methodId, pos);
 				Main.isStageTapped = false;
 				Main.tappedX = 0;
 				Main.tappedY = 0;

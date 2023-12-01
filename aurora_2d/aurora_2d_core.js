@@ -712,6 +712,9 @@ function drawButtonImageMethod(incomingButtonImage) {
       posY: incomingButtonImage.posY,
       width: incomingButtonImage.width,
       height: incomingButtonImage.height,
+      txtColor: incomingButtonImage.txtColor,
+      font: incomingButtonImage.font,
+      msg: incomingButtonImage.msg,
       images: incomingButtonImage.images,
       selectedImage: incomingButtonImage.selectedImage,
       animTicks: incomingButtonImage.animTicks,
@@ -726,7 +729,7 @@ function drawButtonImageMethod(incomingButtonImage) {
       methodId: incomingButtonImage.methodId,
     }
     Aurora.methodObjects.push(buttonImg);
-    redrawImage(incomingButtonImage);
+    redrawButtonImage(incomingButtonImage);
     const shadowButtonImg = Object.assign({}, buttonImg);
     Main.methodObjectShadows.push(shadowButtonImg);
   }
@@ -735,6 +738,9 @@ function drawButtonImageMethod(incomingButtonImage) {
     Aurora.methodObjects[index].posY = incomingButtonImage.posY;
     Aurora.methodObjects[index].width = incomingButtonImage.width;
     Aurora.methodObjects[index].height = incomingButtonImage.height;
+    Aurora.methodObjects[index].txtColor = incomingButtonImage.txtColor;
+    Aurora.methodObjects[index].font = incomingButtonImage.font;
+    Aurora.methodObjects[index].msg = incomingButtonImage.msg;
     Aurora.methodObjects[index].images = incomingButtonImage.images;
     Aurora.methodObjects[index].selectedImage = incomingButtonImage.selectedImage;
     Aurora.methodObjects[index].animTicks = incomingButtonImage.animTicks;
@@ -747,6 +753,9 @@ function drawButtonImageMethod(incomingButtonImage) {
     Main.methodObjectShadows[index].posY = incomingButtonImage.posY;
     Main.methodObjectShadows[index].width = incomingButtonImage.width;
     Main.methodObjectShadows[index].height = incomingButtonImage.height;
+    Main.methodObjectShadows[index].txtColor = incomingButtonImage.txtColor;
+    Main.methodObjectShadows[index].font = incomingButtonImage.font;
+    Main.methodObjectShadows[index].msg = incomingButtonImage.msg;
     Main.methodObjectShadows[index].images = incomingButtonImage.images;
     Main.methodObjectShadows[index].selectedImage = incomingButtonImage.selectedImage;
     Main.methodObjectShadows[index].animTicks = incomingButtonImage.animTicks;
@@ -755,7 +764,7 @@ function drawButtonImageMethod(incomingButtonImage) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButtonImage.props;
     Main.methodObjectShadows[index].layer = incomingButtonImage.layer;
-    redrawImage(incomingButtonImage);
+    redrawButtonImage(incomingButtonImage);
   }
   // checking for animations
   if (doesExist &&
@@ -763,24 +772,30 @@ function drawButtonImageMethod(incomingButtonImage) {
    Aurora.methodObjects[index].posX !== Main.methodObjectShadows[index].posX ||
    Aurora.methodObjects[index].width !== Main.methodObjectShadows[index].width ||
    Aurora.methodObjects[index].height !== Main.methodObjectShadows[index].height ||
+   Aurora.methodObjects[index].txtColor !== Main.methodObjectShadows[index].txtColor ||
+   Aurora.methodObjects[index].font !== Main.methodObjectShadows[index].font ||
+   Aurora.methodObjects[index].msg !== Main.methodObjectShadows[index].msg ||
    Aurora.methodObjects[index].images !== Main.methodObjectShadows[index].images ||
    Aurora.methodObjects[index].selectedImage !== Main.methodObjectShadows[index].selectedImage ||
    Aurora.methodObjects[index].animTicks !== Main.methodObjectShadows[index].animTicks ||
    Aurora.methodObjects[index].ticks !== Main.methodObjectShadows[index].ticks || 
    Aurora.methodObjects[index].layer !== Main.methodObjectShadows[index].layer)
    ) {
-     redrawImage(Aurora.methodObjects[index]);
+     redrawButtonImage(Aurora.methodObjects[index]);
       const shadowButtonImg = Object.assign({}, Aurora.methodObjects[index]);
       Main.methodObjectShadows[index] = shadowButtonImg;
       Aurora.methodObjects[index].isAnim = true;
    } else if (doesExist && Aurora.methodObjects[index].isAnim) {
-      redrawImage(Aurora.methodObjects[index]);
+      redrawButtonImage(Aurora.methodObjects[index]);
       Aurora.methodObjects[index].isAnim = false;
    } else if (doesExist &&
     (Aurora.methodObjects[index].posY === Main.methodObjectShadows[index].posY ||
     Aurora.methodObjects[index].posX === Main.methodObjectShadows[index].posX ||
     Aurora.methodObjects[index].width === Main.methodObjectShadows[index].width ||
     Aurora.methodObjects[index].height === Main.methodObjectShadows[index].height ||
+    Aurora.methodObjects[index].txtColor === Main.methodObjectShadows[index].txtColor ||
+    Aurora.methodObjects[index].font === Main.methodObjectShadows[index].font ||
+    Aurora.methodObjects[index].msg === Main.methodObjectShadows[index].msg ||
     Aurora.methodObjects[index].images === Main.methodObjectShadows[index].images ||
     Aurora.methodObjects[index].selectedImage === Main.methodObjectShadows[index].selectedImage ||
     Aurora.methodObjects[index].animTicks === Main.methodObjectShadows[index].animTicks ||
@@ -788,6 +803,13 @@ function drawButtonImageMethod(incomingButtonImage) {
     Aurora.methodObjects[index].layer === Main.methodObjectShadows[index].layer)) {
       Aurora.methodObjects[index].isAnim = false;
    }
+}
+function redrawButtonImage(incomingButtonImage) {
+	redrawImage(incomingButtonImage);
+	Main.stage.fillStyle = incomingButtonImage.txtColor;
+	Main.stage.font = incomingButtonImage.font;
+	Main.stage.textAlign = 'center';
+	Main.stage.fillText(incomingButtonImage.msg, (incomingButtonImage.posX + (incomingButtonImage.width * 0.5)), (incomingButtonImage.posY + (incomingButtonImage.height * 0.63)));
 }
 function drawSimpleModalMethod(incomingModal) {
   let doesExist = doesMethodParamExist(incomingModal.methodId);
