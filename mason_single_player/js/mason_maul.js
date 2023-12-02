@@ -772,12 +772,20 @@ const maulPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
+		function resetRobotSpellSelection() {
+			const allBackgrounds = Aurora.methodObjects.filter(bg => bg.id.includes('arena-robot-details-btn-'));
+			allBackgrounds.forEach(bg => {
+				bg.btnColor = 'darkgrey';	
+			});
+			const spellBackgrounds = Aurora.methodObjects.filter(bg => bg.id.includes('arena-spell-btn-'));
+			spellBackgrounds.forEach(bg => {
+				bg.btnColor = 'darkgrey';
+				bg.txtColor = 'white';
+			});
+		}
 		function selectArenaRobot(index) {
 			if (gameObject.arenaGameStarted && gameObject.robotArenaDesigns[index].robotParts.length === 6) {
-				const allBackgrounds = Aurora.methodObjects.filter(bg => bg.id.includes('arena-robot-details-btn-'));
-				allBackgrounds.forEach(bg => {
-					bg.btnColor = 'darkgrey';	
-				});
+				resetRobotSpellSelection();
 				const selectRobotBG = Aurora.methodObjects.find(bg => bg.id === 'arena-robot-details-btn-' + index);
 				selectRobotBG.btnColor = 'yellow';
 				gameObject.selectedRobot = gameObject.robotArenaDesigns[index].robotParts;
@@ -787,6 +795,18 @@ const maulPage = {
 				sendRobotsLeft.btnColor = 'grey';
 				const sendRobotsRight = Aurora.methodObjects.find(bs => bs.id === 'send-robots-right');
 				sendRobotsRight.btnColor = 'grey';
+				gameObject.wallReady = false;
+				gameObject.empReady = false;
+			}
+		}
+		function selectArenaSpell(spellId) {
+			if (gameObject.arenaGameStarted) {
+				resetRobotSpellSelection();
+				gameObject.selectedRobotDesign = -1;
+				gameObject.selectedRobot = [];
+				const selectSpellBG = Aurora.methodObjects.find(bg => bg.id === spellId);
+				selectSpellBG.btnColor = 'yellow';
+				selectSpellBG.txtColor = 'black';
 			}
 		}
 		function findRobotDirectiveCost(robotDirective) {
@@ -855,6 +875,8 @@ const maulPage = {
 								gameObject.empReady = false;
 								// future Jordan, show a timer in the button when the spells are used
 								console.log('place the wall');
+								selectArenaSpell('arena-spell-btn-1');
+								// this method is what casts the spell: function castSpell
 							}
 						},
 						isModalBtn: false,
@@ -880,7 +902,6 @@ const maulPage = {
 					posYoffset = -11;
 				}
 				if (robotCount === 1) {
-					// posX = 0.11;
 					posX = 0.21;
 					posXoffset = -0.01;
 				}
@@ -889,7 +910,6 @@ const maulPage = {
 					posXoffset = 1.99;
 				}
 				if (robotCount === 3) {
-					//posX = 0.739;
 					posX = 0.639;
 					posXoffset = 1;
 				}
@@ -1130,7 +1150,9 @@ const maulPage = {
 								// future Jordan, show a timer in the button when the spells are used
 								gameObject.wallReady = false;
 								gameObject.empReady = true;
+								selectArenaSpell('arena-spell-btn-2');
 								console.log('place the emp');
+								// this method is what casts the spell: function castSpell
 							}
 						},
 						isModalBtn: false,
@@ -1844,12 +1866,9 @@ const maulPage = {
 			 			action: {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
-									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
-									const convertX = pos.x / Aurora.canvas.width;
-									const convertY = pos.y / Aurora.canvas.height;
-									console.log(id, pos, castSpell, convertX, convertY);
+									const spellType = gameObject.wallReady ? 'wall' : 'emp';
+									castSpell(pos, spellType);
 									// future Jordan, create a method that will place the spell
-									// in the correct coords. include the converted coords
 								}
 							}
 						},
@@ -1878,8 +1897,8 @@ const maulPage = {
 			 			action: {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
-									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
-									console.log(id, pos, castSpell);
+									const spellType = gameObject.wallReady ? 'wall' : 'emp';
+									castSpell(pos, spellType);
 								}
 							}
 						},
@@ -1908,8 +1927,8 @@ const maulPage = {
 			 			action: {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
-									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
-									console.log(id, pos, castSpell);
+									const spellType = gameObject.wallReady ? 'wall' : 'emp';
+									castSpell(pos, spellType);
 								}
 							}
 						},
@@ -1938,8 +1957,8 @@ const maulPage = {
 			 			action: {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
-									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
-									console.log(id, pos, castSpell);
+									const spellType = gameObject.wallReady ? 'wall' : 'emp';
+									castSpell(pos, spellType);
 								}
 							}
 						},
@@ -1968,8 +1987,8 @@ const maulPage = {
 			 			action: {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
-									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
-									console.log(id, pos, castSpell);
+									const spellType = gameObject.wallReady ? 'wall' : 'emp';
+									castSpell(pos, spellType);
 								}
 							}
 						},
@@ -1998,8 +2017,8 @@ const maulPage = {
 			 			action: {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
-									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
-									console.log(id, pos, castSpell);
+									const spellType = gameObject.wallReady ? 'wall' : 'emp';
+									castSpell(pos, spellType);
 								}
 							}
 						},
@@ -2028,8 +2047,8 @@ const maulPage = {
 			 			action: {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
-									const castSpell = gameObject.wallReady ? 'wall' : 'emp';
-									console.log(id, pos, castSpell);
+									const spellType = gameObject.wallReady ? 'wall' : 'emp';
+									castSpell(pos, spellType);
 								}
 							}
 						},
@@ -2175,6 +2194,56 @@ const maulPage = {
 			 	}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+		}
+		function castSpell(pos, spellType) {
+			// future Jordan, make the walls disapate after the spells max time.
+			// center the spell from where the spell is placed on the road.
+			// make the spells a little smaller.
+			// create the emp spell.
+			// create the spell wall collisions between the robots
+			// create a collision on the robots, check every 3 seconds or so
+			// to see if the robots can move again.
+			// the emp should destroy the robots on collision and give funds
+			const convertX = pos.x / Aurora.canvas.width;
+			const convertY = pos.y / Aurora.canvas.height;
+			let isMobile = false;
+			let spellWidth = 0;
+			let spellArcWidth = 0;
+			if (Aurora.canvas.height > Aurora.canvas.width) { // mobile
+				spellWidth = (Aurora.entitySize * 1) + (Aurora.canvas.height * 0.025);
+				spellArcWidth = rangeWidth;
+				isMobile = true;
+			} else { // everything else
+				spellWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.08);
+				spellArcWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.04);
+				isMobile = false;
+			}
+			console.log(pos, spellType, convertX, convertY);
+			if (spellType === 'wall') {
+				Aurora.methodSetup = {
+					method: function(id) {
+						drawRect({
+							posX: !isMobile ? Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) : Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)),
+							posY: Aurora.placeEntityY(convertY),
+							width: spellWidth,
+							height: spellWidth,
+							lineWidth: 1,
+							color: 'blue',
+							isFilled: true,
+							isBackground: false,
+							id: 'spell-wall',
+							props: {
+								maxTime: 3, // how many seconds the wall will stay
+								timeOut: 3, // the count down for the wall to clear
+							},
+							methodId: id
+						});
+					}
+				}
+				Aurora.addMethod(Aurora.methodSetup);
+			} else if (spellType === 'emp') {
+				
+			}
 		}
 		function selectTower(methodId, towerIndex) {
 			let tower = Aurora.methodObjects.find(bg => bg.methodId === methodId);
