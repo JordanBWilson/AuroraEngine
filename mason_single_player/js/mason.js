@@ -30,6 +30,8 @@ const scrappingSound = new Audio('./assets/sounds/scrapping.wav');
 const sellSound = new Audio('./assets/sounds/sell.wav');
 const towerExplosionSound = new Audio('./assets/sounds/tower_explosion.wav');
 const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
+const empExplosionSound = new Audio('./assets/sounds/emp_explosion.wav');
+const wallDropSound = new Audio('./assets/sounds/wall_drop.wav');
 
 
 (function() {

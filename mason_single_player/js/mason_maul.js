@@ -879,7 +879,6 @@ const maulPage = {
 									gameObject.wallReady = true;
 									gameObject.empReady = false;
 									selectArenaSpell(spellId);
-									console.log('place the wall');
 									// this method is what casts the spell: function castSpell
 								}
 							}
@@ -1159,7 +1158,6 @@ const maulPage = {
 									gameObject.wallReady = false;
 									gameObject.empReady = true;
 									selectArenaSpell(spellId);
-									console.log('place the emp');
 									// this method is what casts the spell: function castSpell
 								}
 								
@@ -2207,7 +2205,7 @@ const maulPage = {
 		}
 		function castSpell(pos, spellType, spellBtnId) {
 			// future Jordan, create the spell wall collisions between the robots
-			// create a collision on the robots, check every 3 seconds or so
+			// create a collision on the robots, check every 0.5 seconds or so
 			// to see if the robots can move again.
 			// the emp should destroy the robots on collision and give funds
 			const convertX = pos.x / Aurora.canvas.width;
@@ -2228,13 +2226,24 @@ const maulPage = {
 							isBackground: false,
 							id: 'blue-spell-wall',
 							props: {
-								timeOut: 3, // how many seconds the wall will stay
+								timeOut: 5, // how many seconds the wall will stay
 							},
 							methodId: id
 						});
 					}
 				}
 				Aurora.addMethod(Aurora.methodSetup);
+				Particle.drawSpark({
+					posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth / 2),
+					posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
+					shape: Particle.enumShapes.arc,
+					color: 'lightblue',
+					ticks: 11,
+					count: 8,
+					size: (Aurora.entitySize * 0.5),
+					speed: 1.3,
+				});
+				wallDropSound.cloneNode(true).play();
 			} else if (spellType === 'emp') {
 				Aurora.methodSetup = {
 					method: function(id) {
@@ -2249,7 +2258,7 @@ const maulPage = {
 							isBackground: false,
 							id: 'blue-spell-emp-range',
 							props: {
-								timeOut: 3, // how many seconds the emp will stay
+								timeOut: 3.5, // how many seconds the emp will stay
 							},
 							methodId: id
 						});
@@ -2276,6 +2285,7 @@ const maulPage = {
 					}
 				}
 				Aurora.addMethod(Aurora.methodSetup);
+				empExplosionSound.cloneNode(true).play();
 				Particle.drawSpark({
 					posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth / 2),
 					posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
@@ -2286,6 +2296,9 @@ const maulPage = {
 					size: (Aurora.entitySize * 1),
 					speed: 1.3,
 				});
+				setTimeout(function() {
+					empArcEffect('blue-spell-emp-range-arc');
+				}, 0);
 			}
 			spellReload(spellBtnId, spellType);
 			setTimeout(function() {
@@ -2322,6 +2335,23 @@ const maulPage = {
 						clearTimeout(spellTime);
 					}, 1000 * sp.props.timeOut);
 				});
+			}
+		}
+		function empArcEffect(arcId) {
+			const empArc = !!Aurora.methodObjects.find(sp => sp.id === arcId);
+			if (empArc) {
+				const arcBlink = setInterval(function() {
+					const checkEmp = Aurora.methodObjects.find(sp => sp.id === arcId);
+					if (checkEmp) {
+						if (checkEmp.color === 'blue') {
+							checkEmp.color = 'rgba(0, 0, 200, 0)'; // transparant
+						} else {
+							checkEmp.color = 'blue';
+						}
+					} else {
+						clearInterval(arcBlink);
+					}
+				}, 125);
 			}
 		}
 		function selectTower(methodId, towerIndex) {
