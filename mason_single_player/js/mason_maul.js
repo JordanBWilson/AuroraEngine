@@ -1175,21 +1175,17 @@ const maulPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
-		function robotDirectiveMoneyGained(robotDirective) {
-			let moneyGained = 0;
-			if (robotDirective === 4) { // lee-roy
-				moneyGained = robotMoneyGained.leeRoy;
-			} else if (robotDirective === 1) { // tank
-				moneyGained = robotMoneyGained.tank;
-			}
-			return moneyGained;
-		} // future Jordan, simplify the robot bullet collisions
 		function robotBulletCollision(bulletId, robotDirective, teamColor, displayMoneyWon) {
 			const bullet = Aurora.methodObjects.find(bg => bg.methodId === bulletId);
 			if (bullet) {
 				const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
 				const towerAtt = tower.props.stats.att;
-				const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
+				let robotHitStats = {};
+				if (teamColor === 'blue') {
+					robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
+				} else if (teamColor === 'red') {
+					robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
+				}
 				if (robotHitStats) {
 					robotHitStats.hp -= (baseTowerAttack + towerAtt);
 					Particle.drawSpark({
@@ -1216,6 +1212,11 @@ const maulPage = {
 						moneyGained = robotMoneyGained.tank;
 					}
 					deleteRobotMethodObject(robotHitMethodObject, 1);
+					if (teamColor === 'blue') {
+						gameObject.arenaBlueGameMoney += moneyGained;
+					} else if (teamColor === 'red') {
+						gameObject.arenaRedGameMoney += moneyGained;
+					}
 					if (displayMoneyWon) {
 						Particle.floatingText({
 							font: '1rem serif',
@@ -1230,13 +1231,29 @@ const maulPage = {
 						});
 						updateMoneyBackground();
 					}
-					if (teamColor === 'blue') {
-						gameObject.arenaBlueGameMoney += moneyGained;
-					} else if (teamColor === 'red') {
-						gameObject.arenaRedGameMoney += moneyGained;
-					}
 				}
 			}
+		}
+		function createRobot(x, y, robotId, count, robotStats, selectedRobot, moveDirection, robotDirective) {
+			const newRobot = {
+				posX: Aurora.placeEntityX(x),
+				posY: Aurora.placeEntityY(y),
+				width: (Aurora.entitySize * 1.5),
+				height: (Aurora.entitySize * 1.5),
+				id: robotId + count,
+				hp: 10 + robotStats.stats.def,
+				robotParts: selectedRobot,
+				direction: moveDirection,
+				stop: 0,
+				halted: false,
+				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
+				towerTargePosX: undefined,
+				towerTargePosY: undefined,
+				towerHitCount: 0,
+				totalStats: robotStats.stats,
+				directive: robotDirective,
+			}
+			return newRobot;
 		}
 		function drawBasesAndSends() {
 			Aurora.methodSetup = {
@@ -1322,63 +1339,29 @@ const maulPage = {
 											primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
 											target: 'red-tower-bullet',
 											method: function(id) {
-												const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
-												if (bullet) {
-													const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
-													const towerAtt = tower.props.stats.att;
-													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
-													if (robotHitStats) {
-														robotHitStats.hp -= (baseTowerAttack + towerAtt);
-														Particle.drawSpark({
-															posX: robotHitStats.posX,
-															posY: robotHitStats.posY,
-															shape: Particle.enumShapes.rect,
-															color: 'yellow',
-															ticks: 6,
-															count: 8,
-															size: (Aurora.entitySize * 0.3),
-															speed: 1.3,
-														});
-													}
-													Aurora.deleteEntity(bullet.methodId);
-													if (robotHitStats?.hp <= 0) {
-														if (gameObject.gameSounds) {
-															robotHitSound.cloneNode(true).play();
-														}
-														const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
-														let moneyGained = 0;
-														if (robotDirective === 4) { // lee-roy
-															moneyGained = robotMoneyGained.leeRoy;
-														} else if (robotDirective === 1) { // tank
-															moneyGained = robotMoneyGained.tank;
-														}
-														deleteRobotMethodObject(robotHitMethodObject, 1);
-														gameObject.arenaRedGameMoney += moneyGained;
-													}
-												}
+												robotBulletCollision(id, robotDirective, 'red', false);
 											},
 											methodId: undefined,
 										}
 										Aurora.addCollision(Aurora.collisionSetup);
+										const allBluesLeft = gameObject.arenaBlueAttackers.filter(x => x.id.includes('arena-blue-att-robot-left-'));
+										allBluesLeft.forEach(robot => {
+											Aurora.collisionSetup = {
+												primary: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
+												target: robot.id,
+												method: function(id) {
+													const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount);
+													if (blueBot) {
+														blueBot.halted = true;
+													}
+												},
+												methodId: undefined,
+											}
+											Aurora.addCollision(Aurora.collisionSetup);
+										});
 										const robotStats = totalSelectedRobotStats();
-										const blueRobot = {
-											posX: Aurora.placeEntityX(0),
-											posY: Aurora.placeEntityY(0.265),
-											width: (Aurora.entitySize * 1.5),
-											height: (Aurora.entitySize * 1.5),
-											id: 'arena-blue-att-robot-left-' + gameObject.arenaBlueSendCount,
-											hp: 10 + robotStats.stats.def,
-											robotParts: gameObject.selectedRobot,
-											direction: 'lt',
-											stop: 0,
-											halted: false,
-											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
-											towerTargePosX: undefined,
-											towerTargePosY: undefined,
-											towerHitCount: 0,
-											totalStats: robotStats.stats,
-											directive: robotDirective,
-										}
+										const blueRobotId = 'arena-blue-att-robot-left-';
+										const blueRobot = createRobot(0, 0.265, blueRobotId, gameObject.arenaBlueSendCount, robotStats, gameObject.selectedRobot, 'lt', robotDirective);
 										sendBlueRobot(blueRobot, robotDirective);
 										setRedLeftTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
@@ -1425,64 +1408,30 @@ const maulPage = {
 											primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
 											target: 'red-tower-bullet',
 											method: function(id) {
-												const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
-												if (bullet) {
-													const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
-													const towerAtt = tower.props.stats.att;
-													const robotHitStats = gameObject.arenaBlueAttackers.find(bg => bg.id === bullet.props.target);
-													if (robotHitStats) {
-														robotHitStats.hp -= (baseTowerAttack + towerAtt);
-														Particle.drawSpark({
-															posX: robotHitStats.posX,
-															posY: robotHitStats.posY,
-															shape: Particle.enumShapes.rect,
-															color: 'yellow',
-															ticks: 6,
-															count: 8,
-															size: (Aurora.entitySize * 0.3),
-															speed: 1.3,
-														});
-													}
-													Aurora.deleteEntity(bullet.methodId);
-													if (robotHitStats?.hp <= 0) {
-														if (gameObject.gameSounds) {
-															robotHitSound.cloneNode(true).play();
-														}
-														const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
-														let moneyGained = 0;
-														if (robotDirective === 4) { // lee-roy
-															moneyGained = robotMoneyGained.leeRoy;
-														} else if (robotDirective === 1) { // tank
-															moneyGained = robotMoneyGained.tank;
-														}
-														deleteRobotMethodObject(robotHitMethodObject, 1);
-														gameObject.arenaRedGameMoney += moneyGained;
-													}
-												}
+												robotBulletCollision(id, robotDirective, 'red', false);
 											},
 											methodId: undefined,
 										}
 										Aurora.addCollision(Aurora.collisionSetup);
+										// future Jordan, make a collision between the robots and the spell wall
+										const allBluesRight = gameObject.arenaBlueAttackers.filter(x => x.id.includes('arena-blue-att-robot-right-'));
+										allBluesRight.forEach(robot => {
+											Aurora.collisionSetup = {
+												primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+												target: robot.id,
+												method: function(id) {
+													const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount);
+													if (blueBot) {
+														blueBot.halted = true;
+													}
+												},
+												methodId: undefined,
+											}
+											Aurora.addCollision(Aurora.collisionSetup);
+										});
 										const robotStats = totalSelectedRobotStats();
-										const blueRobot = {
-											posX: Aurora.placeEntityX(1),
-											posY: Aurora.placeEntityY(0.265),
-											width: (Aurora.entitySize * 1.5),
-											height: (Aurora.entitySize * 1.5),
-											id: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-											hp: 10 + robotStats.stats.def,
-											robotParts: gameObject.selectedRobot,
-											direction: 'rt',
-											stop: 0,
-											halted: false,
-											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
-											towerTargePosX: undefined,
-											towerTargePosY: undefined,
-											towerHitCount: 0,
-											totalStats: robotStats.stats,
-											directive: robotDirective,
-										}
-										
+										const blueRobotId = 'arena-blue-att-robot-right-';
+										const blueRobot = createRobot(1, 0.265, blueRobotId, gameObject.arenaBlueSendCount, robotStats, gameObject.selectedRobot, 'rt', robotDirective);
 										sendBlueRobot(blueRobot, robotDirective);
 										setRedRightTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
@@ -1512,75 +1461,29 @@ const maulPage = {
 				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 				target: 'blue-tower-bullet',
 				method: function(id) {
-					const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
-					if (bullet) {
-						const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
-						const towerAtt = tower.props.stats.att;
-						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
-						if (robotHitStats) {
-							robotHitStats.hp -= (baseTowerAttack + towerAtt);
-							Particle.drawSpark({
-								posX: robotHitStats.posX,
-								posY: robotHitStats.posY,
-								shape: Particle.enumShapes.rect,
-								color: 'yellow',
-								ticks: 6,
-								count: 8,
-								size: (Aurora.entitySize * 0.3),
-								speed: 1.3,
-							});
-						}
-						Aurora.deleteEntity(bullet.methodId);
-						if (robotHitStats?.hp <= 0) {
-							if (gameObject.gameSounds) {
-								robotHitSound.cloneNode(true).play();
-							}
-							const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
-							let moneyGained = 0;
-							if (robotDirective === 4) { // lee-roy
-								moneyGained = robotMoneyGained.leeRoy;
-							} else if (robotDirective === 1) { // tank
-								moneyGained = robotMoneyGained.tank;
-							}
-							deleteRobotMethodObject(robotHitMethodObject, 1);
-							Particle.floatingText({
-								font: '1rem serif',
-								msg: '+' + moneyGained,
-								align: 'center',
-								posX: robotHitStats.posX,
-								posY: robotHitStats.posY,
-								direction: 'top',
-								color: 'gold',
-								ticks: 33,
-								speed: 0.1,
-							});
-							gameObject.arenaBlueGameMoney += moneyGained;
-							updateMoneyBackground();
-						}
-					}
+					robotBulletCollision(id, robotDirective, 'blue', true);
 				},
 				methodId: undefined,
 			}
 			Aurora.addCollision(Aurora.collisionSetup);
+			const allRedsLeft = gameObject.arenaRedAttackers.filter(x => x.id.includes('arena-red-att-robot-left-'));
+			allRedsLeft.forEach(robot => {
+				Aurora.collisionSetup = {
+					primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+					target: robot.id,
+					method: function(id) {
+						const redBot = gameObject.arenaRedAttackers.find(x => x.id === 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount);
+						if (redBot) {
+							redBot.halted = true;
+						}
+					},
+					methodId: undefined,
+				}
+				Aurora.addCollision(Aurora.collisionSetup);
+			});
 			const robotStats = totalRobotStats(robot);
-			const redRobot = {
-				posX: Aurora.placeEntityX(0),
-				posY: Aurora.placeEntityY(0.615),
-				width: (Aurora.entitySize * 1.5),
-				height: (Aurora.entitySize * 1.5),
-				id: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
-				hp: 10 + robotStats.stats.def,
-				robotParts: robot.robotParts,
-				direction: 'lt',
-				stop: 0,
-				halted: false,
-				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
-				towerTargePosX: undefined,
-				towerTargePosY: undefined,
-				towerHitCount: 0,
-				totalStats: robotStats.stats,
-				directive: robotDirective,
-			}
+			const redRobotId = 'arena-red-att-robot-left-';
+			const redRobot = createRobot(0, 0.615, redRobotId, gameObject.arenaRedSendCount, robotStats, robot.robotParts, 'lt', robotDirective);
 			sendRedRobot(redRobot, robotDirective);
 			setBlueLeftTowerRangeCollisions(redRobot.id);
 		}
@@ -1593,75 +1496,29 @@ const maulPage = {
 				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
 				target: 'blue-tower-bullet',
 				method: function(id) {
-					const bullet = Aurora.methodObjects.find(bg => bg.methodId === id);
-					if (bullet) {
-						const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
-						const towerAtt = tower.props.stats.att;
-						const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
-						if (robotHitStats) {
-							robotHitStats.hp -= (baseTowerAttack + towerAtt);
-							Particle.drawSpark({
-								posX: robotHitStats.posX,
-								posY: robotHitStats.posY,
-								shape: Particle.enumShapes.rect,
-								color: 'yellow',
-								ticks: 6,
-								count: 8,
-								size: (Aurora.entitySize * 0.3),
-								speed: 1.3,
-							});
-						}
-						Aurora.deleteEntity(bullet.methodId);
-						if (robotHitStats?.hp <= 0) {
-							if (gameObject.gameSounds) {
-								robotHitSound.cloneNode(true).play();
-							}
-							const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
-							let moneyGained = 0;
-							if (robotDirective === 4) { // lee-roy
-								moneyGained = robotMoneyGained.leeRoy;
-							} else if (robotDirective === 1) { // tank
-								moneyGained = robotMoneyGained.tank;
-							}
-							deleteRobotMethodObject(robotHitMethodObject, 1);
-							Particle.floatingText({
-								font: '1rem serif',
-								msg: '+' + moneyGained,
-								align: 'center',
-								posX: robotHitStats.posX,
-								posY: robotHitStats.posY,
-								direction: 'top',
-								color: 'gold',
-								ticks: 33,
-								speed: 0.1,
-							});
-							gameObject.arenaBlueGameMoney += moneyGained;
-							updateMoneyBackground();
-						}
-					}
+					robotBulletCollision(id, robotDirective, 'blue', true);
 				},
 				methodId: undefined,
 			}
 			Aurora.addCollision(Aurora.collisionSetup);
+			const allRedsRight = gameObject.arenaRedAttackers.filter(x => x.id.includes('arena-red-att-robot-right-'));
+			allRedsRight.forEach(robot => {
+				Aurora.collisionSetup = {
+					primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+					target: robot.id,
+					method: function(id) {
+						const redBot = gameObject.arenaRedAttackers.find(x => x.id === 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount);
+						if (redBot) {
+							redBot.halted = true;
+						}
+					},
+					methodId: undefined,
+				}
+				Aurora.addCollision(Aurora.collisionSetup);
+			});
 			const robotStats = totalRobotStats(robot);
-			const redRobot = {
-				posX: Aurora.placeEntityX(1), // 0.999 // 0.903 <- stop there for pos 1
-				posY: Aurora.placeEntityY(0.615), //0.265 // reds bots start position- posY: Aurora.placeEntityY(0.615),
-				width: (Aurora.entitySize * 1.5),
-				height: (Aurora.entitySize * 1.5),
-				id: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
-				hp: 10 + robotStats.stats.def,
-				robotParts: robot.robotParts,
-				direction: 'rt',
-				stop: 0,
-				halted: false,
-				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
-				towerTargePosX: undefined,
-				towerTargePosY: undefined,
-				towerHitCount: 0,
-				totalStats: robotStats.stats,
-				directive: robotDirective,
-			}
+			const redRobotId = 'arena-red-att-robot-right-';
+			const redRobot = createRobot(1, 0.615, redRobotId, gameObject.arenaRedSendCount, robotStats, robot.robotParts, 'rt', robotDirective);
 			sendRedRobot(redRobot, robotDirective);
 			setBlueRightTowerRangeCollisions(redRobot.id);
 			
@@ -2310,7 +2167,9 @@ const maulPage = {
 					size: (Aurora.entitySize * 0.5),
 					speed: 1.3,
 				});
-				wallDropSound.cloneNode(true).play();
+				if (gameObject.gameSounds) {
+					wallDropSound.cloneNode(true).play();
+				}
 			} else if (spellType === 'emp') {
 				Aurora.methodSetup = {
 					method: function(id) {
@@ -2352,7 +2211,9 @@ const maulPage = {
 					}
 				}
 				Aurora.addMethod(Aurora.methodSetup);
-				empExplosionSound.cloneNode(true).play();
+				if (gameObject.gameSounds) {
+					empExplosionSound.cloneNode(true).play();
+				}
 				Particle.drawSpark({
 					posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth / 2),
 					posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
@@ -2447,7 +2308,7 @@ const maulPage = {
 				arcWidth = rangeWidth;
 				isMobile = true;
 			} else { // everything else
-				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.08);
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.075);
 				arcWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.04);
 				isMobile = false;
 			}
@@ -3171,7 +3032,7 @@ const maulPage = {
 				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.height * 0.025);
 				isMobile = true;
 			} else { // everything else
-				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.08);
+				rangeWidth = (Aurora.entitySize * 1) + (Aurora.canvas.width * 0.075);
 				isMobile = false;
 			}
 			Aurora.methodSetup = {
