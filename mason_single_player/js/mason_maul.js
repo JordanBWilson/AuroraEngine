@@ -1175,6 +1175,69 @@ const maulPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
+		function robotDirectiveMoneyGained(robotDirective) {
+			let moneyGained = 0;
+			if (robotDirective === 4) { // lee-roy
+				moneyGained = robotMoneyGained.leeRoy;
+			} else if (robotDirective === 1) { // tank
+				moneyGained = robotMoneyGained.tank;
+			}
+			return moneyGained;
+		} // future Jordan, simplify the robot bullet collisions
+		function robotBulletCollision(bulletId, robotDirective, teamColor, displayMoneyWon) {
+			const bullet = Aurora.methodObjects.find(bg => bg.methodId === bulletId);
+			if (bullet) {
+				const tower = Aurora.methodObjects.find(bg => bg.id === bullet.props.tower);
+				const towerAtt = tower.props.stats.att;
+				const robotHitStats = gameObject.arenaRedAttackers.find(bg => bg.id === bullet.props.target);
+				if (robotHitStats) {
+					robotHitStats.hp -= (baseTowerAttack + towerAtt);
+					Particle.drawSpark({
+						posX: robotHitStats.posX,
+						posY: robotHitStats.posY,
+						shape: Particle.enumShapes.rect,
+						color: 'yellow',
+						ticks: 6,
+						count: 8,
+						size: (Aurora.entitySize * 0.3),
+						speed: 1.3,
+					});
+				}
+				Aurora.deleteEntity(bullet.methodId);
+				if (robotHitStats?.hp <= 0) {
+					if (gameObject.gameSounds) {
+						robotHitSound.cloneNode(true).play();
+					}
+					const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
+					let moneyGained = 0;
+					if (robotDirective === 4) { // lee-roy
+						moneyGained = robotMoneyGained.leeRoy;
+					} else if (robotDirective === 1) { // tank
+						moneyGained = robotMoneyGained.tank;
+					}
+					deleteRobotMethodObject(robotHitMethodObject, 1);
+					if (displayMoneyWon) {
+						Particle.floatingText({
+							font: '1rem serif',
+							msg: '+' + moneyGained,
+							align: 'center',
+							posX: robotHitStats.posX,
+							posY: robotHitStats.posY,
+							direction: 'top',
+							color: 'gold',
+							ticks: 33,
+							speed: 0.1,
+						});
+						updateMoneyBackground();
+					}
+					if (teamColor === 'blue') {
+						gameObject.arenaBlueGameMoney += moneyGained;
+					} else if (teamColor === 'red') {
+						gameObject.arenaRedGameMoney += moneyGained;
+					}
+				}
+			}
+		}
 		function drawBasesAndSends() {
 			Aurora.methodSetup = {
 				method: function(id) {
@@ -1308,6 +1371,7 @@ const maulPage = {
 											robotParts: gameObject.selectedRobot,
 											direction: 'lt',
 											stop: 0,
+											halted: false,
 											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 											towerTargePosX: undefined,
 											towerTargePosY: undefined,
@@ -1410,6 +1474,7 @@ const maulPage = {
 											robotParts: gameObject.selectedRobot,
 											direction: 'rt',
 											stop: 0,
+											halted: false,
 											attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 											towerTargePosX: undefined,
 											towerTargePosY: undefined,
@@ -1508,6 +1573,7 @@ const maulPage = {
 				robotParts: robot.robotParts,
 				direction: 'lt',
 				stop: 0,
+				halted: false,
 				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 				towerTargePosX: undefined,
 				towerTargePosY: undefined,
@@ -1588,6 +1654,7 @@ const maulPage = {
 				robotParts: robot.robotParts,
 				direction: 'rt',
 				stop: 0,
+				halted: false,
 				attackTower: robotDirective === 1 ? true : false, // tanks attack towers
 				towerTargePosX: undefined,
 				towerTargePosY: undefined,
