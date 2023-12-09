@@ -1472,6 +1472,7 @@ const maulPage = {
 					primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
 					target: robot.id,
 					method: function(id) {
+						// future Jordan, replace this too, it's clearly worng. Also replace the red right side
 						const redBot = gameObject.arenaRedAttackers.find(x => x.id === 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount);
 						if (redBot) {
 							redBot.halted = true;
@@ -1481,6 +1482,22 @@ const maulPage = {
 				}
 				Aurora.addCollision(Aurora.collisionSetup);
 			});
+			Aurora.collisionSetup = {
+				primary: 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount,
+				target: 'blue-spell-wall',
+				method: function(id) {
+					setTimeout(function() {
+						const redBot = gameObject.arenaRedAttackers.find(x => x.id === 'arena-red-att-robot-left-' + gameObject.arenaRedSendCount);
+						// future Jordan, find the robot doing the colliding. Look at that method Id and compare to robotBulletCollision method
+						console.log(redBot, gameObject.arenaRedAttackers, gameObject.arenaRedSendCount);
+						if (redBot) {
+							redBot.halted = true;
+						}
+					}, 0);
+				},
+				methodId: undefined,
+			}
+			Aurora.addCollision(Aurora.collisionSetup);
 			const robotStats = totalRobotStats(robot);
 			const redRobotId = 'arena-red-att-robot-left-';
 			const redRobot = createRobot(0, 0.615, redRobotId, gameObject.arenaRedSendCount, robotStats, robot.robotParts, 'lt', robotDirective);
@@ -1516,6 +1533,18 @@ const maulPage = {
 				}
 				Aurora.addCollision(Aurora.collisionSetup);
 			});
+			Aurora.collisionSetup = {
+				primary: 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount,
+				target: 'blue-spell-wall',
+				method: function(id) {
+					const redBot = gameObject.arenaRedAttackers.find(x => x.id === 'arena-red-att-robot-right-' + gameObject.arenaRedSendCount);
+					if (redBot) {
+						redBot.halted = true;
+					}
+				},
+				methodId: undefined,
+			}
+			Aurora.addCollision(Aurora.collisionSetup);
 			const robotStats = totalRobotStats(robot);
 			const redRobotId = 'arena-red-att-robot-right-';
 			const redRobot = createRobot(1, 0.615, redRobotId, gameObject.arenaRedSendCount, robotStats, robot.robotParts, 'rt', robotDirective);
@@ -1800,7 +1829,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
 								}
 							}
 						},
@@ -1830,7 +1859,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
 								}
 							}
 						},
@@ -1860,7 +1889,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
 								}
 							}
 						},
@@ -1890,7 +1919,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
 								}
 							}
 						},
@@ -1920,7 +1949,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
 								}
 							}
 						},
@@ -1950,7 +1979,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
 								}
 							}
 						},
@@ -1980,7 +2009,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
 								}
 							}
 						},
@@ -2127,28 +2156,34 @@ const maulPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
-		function castSpell(pos, spellType, spellBtnId) {
+		function castSpell(pos, spellType, spellBtnId, teamColor, isPlayer) {
 			// future Jordan, create the spell wall collisions between the robots
 			// create a collision on the robots, check every 0.5 seconds or so
 			// to see if the robots can move again.
 			// the emp should destroy the robots on collision and give funds
-			const convertX = pos.x / Aurora.canvas.width;
-			const convertY = pos.y / Aurora.canvas.height;
+			let spellX = 0;
+			let spellY = 0;
+			if (isPlayer) {
+				spellX = pos.x / Aurora.canvas.width;
+				spellY = pos.y / Aurora.canvas.height;
+			} else {
+				// get COMs position as a percent
+			}
 			let spellWidth = (Aurora.entitySize * 1) + (Aurora.canvas.height * 0.025);
 			let spellArcWidth = spellWidth;
 			if (spellType === 'wall') {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth / 2),
-							posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
+							posX: Aurora.placeEntityX(spellX, (Aurora.entitySize * 9)) + (spellWidth / 2),
+							posY: Aurora.placeEntityY(spellY) - (spellWidth / 2),
 							width: spellWidth,
 							height: spellWidth,
 							lineWidth: 3,
 							color: 'lightblue',
 							isFilled: false,
 							isBackground: false,
-							id: 'blue-spell-wall',
+							id: teamColor + '-spell-wall',
 							props: {
 								timeOut: 5, // how many seconds the wall will stay
 							},
@@ -2158,8 +2193,8 @@ const maulPage = {
 				}
 				Aurora.addMethod(Aurora.methodSetup);
 				Particle.drawSpark({
-					posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth / 2),
-					posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
+					posX: Aurora.placeEntityX(spellX, (Aurora.entitySize * 9)) + (spellWidth / 2),
+					posY: Aurora.placeEntityY(spellY) - (spellWidth / 2),
 					shape: Particle.enumShapes.arc,
 					color: 'lightblue',
 					ticks: 11,
@@ -2174,15 +2209,15 @@ const maulPage = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawRect({
-							posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth / 2),
-							posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
+							posX: Aurora.placeEntityX(spellX, (Aurora.entitySize * 9)) + (spellWidth / 2),
+							posY: Aurora.placeEntityY(spellY) - (spellWidth / 2),
 							width: spellWidth,
 							height: spellWidth,
 							lineWidth: 1,
 							color: 'rgba(0, 0, 200, 0)', // transparant
 							isFilled: true,
 							isBackground: false,
-							id: 'blue-spell-emp-range',
+							id: teamColor + '-spell-emp-range',
 							props: {
 								timeOut: 3.5, // how many seconds the emp will stay
 							},
@@ -2194,17 +2229,17 @@ const maulPage = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawArc({
-							posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth),
-							posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
+							posX: Aurora.placeEntityX(spellX, (Aurora.entitySize * 9)) + (spellWidth),
+							posY: Aurora.placeEntityY(spellY) - (spellWidth / 2),
 							width: spellWidth,
 							aglStrt: 0,
 							aglEnd: (2 * Math.PI),
 							lineWidth: 3,
 							color: 'blue',
 							isFilled: false,
-							id: 'blue-spell-emp-range-arc',
+							id: teamColor + '-spell-emp-range-arc',
 							props: {
-								timeOut: 3, // how many seconds the emp will stay
+								timeOut: 3.5, // how many seconds the emp will stay
 							},
 							methodId: id
 						});
@@ -2215,8 +2250,8 @@ const maulPage = {
 					empExplosionSound.cloneNode(true).play();
 				}
 				Particle.drawSpark({
-					posX: Aurora.placeEntityX(convertX, (Aurora.entitySize * 9)) + (spellWidth / 2),
-					posY: Aurora.placeEntityY(convertY) - (spellWidth / 2),
+					posX: Aurora.placeEntityX(spellX, (Aurora.entitySize * 9)) + (spellWidth / 2),
+					posY: Aurora.placeEntityY(spellY) - (spellWidth / 2),
 					shape: Particle.enumShapes.arc,
 					color: 'blue',
 					ticks: 11,
@@ -2225,12 +2260,16 @@ const maulPage = {
 					speed: 1.3,
 				});
 				setTimeout(function() {
-					empArcEffect('blue-spell-emp-range-arc');
+					empArcEffect(teamColor + '-spell-emp-range-arc');
 				}, 0);
 			}
-			spellReload(spellBtnId, spellType);
+			if (spellBtnId) { // only refresh the spell buttons for players
+				spellReload(spellBtnId, spellType);
+			} else {
+				// future Jordan, reload spells for COM
+			}
 			setTimeout(function() {
-				spellDuration(spellType);
+				spellDuration(spellType, teamColor);
 			}, 0);
 			resetRobotSpellSelection();
 		}
@@ -2254,8 +2293,8 @@ const maulPage = {
 				}
 			}, 1000);
 		}
-		function spellDuration(spellType) {
-			const spell = Aurora.methodObjects.filter(x => x.id.includes('blue-spell-' + spellType));
+		function spellDuration(spellType, teamColor) {
+			const spell = Aurora.methodObjects.filter(x => x.id.includes(teamColor + '-spell-' + spellType));
 			if (spell.length >= 1) {
 				spell.forEach(sp => {
 					const spellTime = setTimeout(function() {
@@ -3957,113 +3996,121 @@ const maulPage = {
 			}
 		}
 		function moveRightRobots(br, robot, color, i) {
-			const robotSpeed = (br.totalStats.spd) * 0.01;
-			if (br.direction === 'rt' && br.stop === 0) {
-				robot.forEach((rob, j) => {
-					rob.posX -= Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
-					br.posX = rob.posX;
-				});
-			}
-			if (br.direction === 'rt' && br.stop === 1) {
-				robot.forEach((rob, j) => {
-					if (color === 'blue') {
-						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
-					} else if (color === 'red') {
-						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
-					}
-				});
-			}
-			if (br.direction === 'rt' && br.stop === 2) {
-				robot.forEach((rob, j) => {
-					rob.posX -= Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
-					br.posX = rob.posX;
-				});
-			}
-			if (br.direction === 'rt' && br.stop === 3) {
-				robot.forEach((rob, j) => {
-					if (color === 'blue') {
-						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
-					} else if (color === 'red') {
-						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
-					}
+			if (!br.halted) {
+				const robotSpeed = (br.totalStats.spd) * 0.01;
+				if (br.direction === 'rt' && br.stop === 0) {
+					robot.forEach((rob, j) => {
+						rob.posX -= Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
+						br.posX = rob.posX;
+					});
+				}
+				if (br.direction === 'rt' && br.stop === 1) {
+					robot.forEach((rob, j) => {
+						if (color === 'blue') {
+							rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						} else if (color === 'red') {
+							rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						}
+					});
+				}
+				if (br.direction === 'rt' && br.stop === 2) {
+					robot.forEach((rob, j) => {
+						rob.posX -= Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
+						br.posX = rob.posX;
+					});
+				}
+				if (br.direction === 'rt' && br.stop === 3) {
+					robot.forEach((rob, j) => {
+						if (color === 'blue') {
+							rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						} else if (color === 'red') {
+							rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						}
+						
+					});
+				}
+				if (br.direction === 'rt' && br.stop === 4) {
+					// start attacking red or blue base
 					
-				});
-			}
-			if (br.direction === 'rt' && br.stop === 4) {
-				// start attacking red or blue base
-				
-				// future Jordan, look into some of the buttons and backrounds that use "Aurora.entitySize"
-				// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
-				if (color === 'blue') {
-					const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
-					robotAttackBase(redBase, robot, i, color);
-					if (redBase.props.hp <= 0) {
-						endAurora('blue');
-					}
-				} else if (color === 'red') {
-					const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
-					robotAttackBase(blueBase, robot, i, color);
-					if (blueBase.props.hp <= 0) {
-						endAurora('red');
+					// future Jordan, look into some of the buttons and backrounds that use "Aurora.entitySize"
+					// some of the styles look a little off when switching between some of the different IOS and Android mobile screens
+					if (color === 'blue') {
+						const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
+						robotAttackBase(redBase, robot, i, color);
+						if (redBase.props.hp <= 0) {
+							endAurora('blue');
+						}
+					} else if (color === 'red') {
+						const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
+						robotAttackBase(blueBase, robot, i, color);
+						if (blueBase.props.hp <= 0) {
+							endAurora('red');
+						}
 					}
 				}
+			} else {
+				// future Jordan, check to see if robot can move again
 			}
 		}
 		function moveLeftRobots(br, robot, color, i) {
-			const robotSpeed = (br.totalStats.spd) * 0.01;
-			if (br.direction === 'lt' && br.stop === 0) {
-				robot.forEach((rob, j) => {
-					rob.posX += Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
-					br.posX = rob.posX;
-				});
-			}
-			if (br.direction === 'lt' && br.stop === 1) {
-				robot.forEach((rob, j) => {
+			if (!br.halted) {
+				const robotSpeed = (br.totalStats.spd) * 0.01;
+				if (br.direction === 'lt' && br.stop === 0) {
+					robot.forEach((rob, j) => {
+						rob.posX += Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
+						br.posX = rob.posX;
+					});
+				}
+				if (br.direction === 'lt' && br.stop === 1) {
+					robot.forEach((rob, j) => {
+						if (color === 'blue') {
+							rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						} else if (color === 'red') {
+							rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						}
+					});
+				}
+				if (br.direction === 'lt' && br.stop === 2) {
+					robot.forEach((rob, j) => {
+						rob.posX += Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
+						br.posX = rob.posX;
+					});
+				}
+				if (br.direction === 'lt' && br.stop === 3) {
+					robot.forEach((rob, j) => {
+						if (color === 'blue') {
+							rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						} else if (color === 'red') {
+							rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
+							br.posY = rob.posY;
+						}
+					});
+				}
+				if (br.direction === 'lt' && br.stop === 4) {
+					// start attacking red or blue base
 					if (color === 'blue') {
-						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
+						const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
+						robotAttackBase(redBase, robot, i, color);
+						if (redBase.props.hp <= 0) {
+							endAurora('blue');
+						}
 					} else if (color === 'red') {
-						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
-					}
-				});
-			}
-			if (br.direction === 'lt' && br.stop === 2) {
-				robot.forEach((rob, j) => {
-					rob.posX += Aurora.moveEntity((0.11 + robotSpeed), Aurora.enumDirections.leftRight);
-					br.posX = rob.posX;
-				});
-			}
-			if (br.direction === 'lt' && br.stop === 3) {
-				robot.forEach((rob, j) => {
-					if (color === 'blue') {
-						rob.posY -= Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
-					} else if (color === 'red') {
-						rob.posY += Aurora.moveEntity((0.05 + robotSpeed), Aurora.enumDirections.topDown);
-						br.posY = rob.posY;
-					}
-				});
-			}
-			if (br.direction === 'lt' && br.stop === 4) {
-				// start attacking red or blue base
-				if (color === 'blue') {
-					const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
-					robotAttackBase(redBase, robot, i, color);
-					if (redBase.props.hp <= 0) {
-						endAurora('blue');
-					}
-				} else if (color === 'red') {
-					const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
-					robotAttackBase(blueBase, robot, i, color);
-					if (blueBase.props.hp <= 0) {
-						endAurora('red');
+						const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
+						robotAttackBase(blueBase, robot, i, color);
+						if (blueBase.props.hp <= 0) {
+							endAurora('red');
+						}
 					}
 				}
+			} else {
+				// future Jordan, check to see if robot can move again
 			}
 		}
 		function redAiMind() {
