@@ -163,7 +163,7 @@ function collisionCheck() {
 			&& primary.posX <= (target.posX + target.width)));
 	if (targetHit) {
 		Main.collisions[i].methodId = targetHit.methodId;
-        Main.collisions[i].method(targetHit.methodId);
+        Main.collisions[i].method(targetHit.methodId, primary);
 	}
   }
 }
