@@ -1160,8 +1160,6 @@ const maulPage = {
 									selectArenaSpell(spellId);
 									// this method is what casts the spell: function castSpell
 								}
-								
-								
 							}
 						},
 						isModalBtn: false,
@@ -1174,6 +1172,32 @@ const maulPage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+		}
+		function moveRobotsForward(robotId, teamColor) {
+			const idSplit = robotId.split('-');
+			const uniqueRobot = +idSplit[idSplit.length-1];
+			let searchRobotId = '';
+			for (let i = 0; i < idSplit.length - 1; i++) {
+				searchRobotId += idSplit[i] + '-';
+			}
+			if (teamColor === 'blue') {
+				// future Jordan, create an interval loop and basically do what we're trying to do in the foreach
+				// the foreach loop is running too fast. Also check if the wall spell still exists.
+				// the interval should stop when the wall disapears. Also rest the spell wall back to 5 seconds when done.
+				// when this is done, make sure robots can't be placed on top of each other when they spawn
+				const moveRedBots = gameObject.arenaRedAttackers.filter(bg => bg.id.includes(searchRobotId));
+				moveRedBots.forEach(robot => {
+					const splitId = robot.id.split('-');
+					const checkUniqueId = +splitId[splitId.length-1];
+					if (checkUniqueId > uniqueRobot && robot.halted) {
+						console.log('working!');
+						robot.halted = false;
+						
+					}
+				});
+			} else if (teamColor === 'red') {
+				const moveRedBots = gameObject.arenaBlueAttackers.filter(bg => bg.id.includes(searchRobotId));
+			}
 		}
 		function robotBulletCollision(bulletId, robotDirective, teamColor, displayMoneyWon) {
 			const bullet = Aurora.methodObjects.find(bg => bg.methodId === bulletId);
@@ -1231,6 +1255,7 @@ const maulPage = {
 						});
 						updateMoneyBackground();
 					}
+					moveRobotsForward(bullet.props.target, teamColor);
 				}
 			}
 		}
@@ -2181,7 +2206,7 @@ const maulPage = {
 							isBackground: false,
 							id: teamColor + '-spell-wall',
 							props: {
-								timeOut: 5, // how many seconds the wall will stay
+								timeOut: 15, // how many seconds the wall will stay
 							},
 							methodId: id
 						});
@@ -2290,39 +2315,24 @@ const maulPage = {
 			}, 1000);
 		}
 		function spellDuration(spellType, teamColor) {
-			const spell = Aurora.methodObjects.filter(x => x.id.includes(teamColor + '-spell-' + spellType));
-			if (spell.length >= 1) {
-				spell.forEach(sp => {
-					const spellTime = setTimeout(function() {
-						Aurora.deleteEntity(sp.methodId);
-						clearTimeout(spellTime);
-						if (spellType === 'wall') {
-							if (teamColor === 'blue') {
-								// future Jordan, if there is no 'blue-spell-wall', make the robot move again in the moveLeftRobots and moveRightRobots methods
-								// look for the keyword '!halted'. Also, track what robot has been destroyed on each side. make the 
-								// robots move up with a higher count id than that robot
-								// look into why the red robots on the right move correctly and not the red robots on the left
-								// perhaps it has to do with the robot collisions
-								const haltedRobots = gameObject.arenaRedAttackers.filter(x => x.halted === true);
-								console.log(haltedRobots);
-								let haltedRobotIndex = 0;
-								if (haltedRobots.length > 0) {
-									const moveRobots = setInterval(function() {
-										haltedRobots[haltedRobotIndex].halted = false;
-										if (haltedRobots.length-1 === haltedRobotIndex) {
-											console.log('done moving robots');
-											clearInterval(moveRobots);
-										}
-										haltedRobotIndex++;
-									}, 800);
-								}
+			const spell = Aurora.methodObjects.find(x => x.id.includes(teamColor + '-spell-' + spellType));
+			if (spell) {
+				const spellTime = setTimeout(function() {
+					Aurora.deleteEntity(spell.methodId);
+					clearTimeout(spellTime);
+					//if (spellType === 'wall') {
+						//if (teamColor === 'blue') {
+							// future Jordan, if there is no 'blue-spell-wall', make the robot move again in the moveLeftRobots and moveRightRobots methods
+							// look for the keyword '!halted'. Also, track what robot has been destroyed on each side. make the 
+							// robots move up with a higher count id than that robot
+							// look into why the red robots on the right move correctly and not the red robots on the left
+							// perhaps it has to do with the robot collisions
 								
-							} else if (teamColor === 'red') {
-								
-							}
-						}
-					}, 1000 * sp.props.timeOut);
-				});
+						//} else if (teamColor === 'red') {
+							
+						//}
+					// }
+				}, 1000 * spell.props.timeOut);
 			}
 		}
 		function empArcEffect(arcId) {
@@ -3968,11 +3978,25 @@ const maulPage = {
 				roundBackground.isAnim = true;
 			}, 1000);
 		}
+		function moveRobotSpellWallCheck(br, teamColor) {
+			if (teamColor === 'blue' && br.halted) {
+				const spellWall = !!Aurora.methodObjects.find(x => x.id === 'red-spell-wall');
+				if (!spellWall) {
+					br.halted = false;
+				}
+			} else if (teamColor === 'red' && br.halted) {
+				const spellWall = !!Aurora.methodObjects.find(x => x.id === 'blue-spell-wall');
+				if (!spellWall) {
+					br.halted = false;
+				}
+			}
+		}
 		function moveBlueRobots() {
 			gameObject.arenaBlueAttackers.forEach((battleRobot, i) => {
 				const robot = Aurora.methodObjects.filter(rob => rob.id === battleRobot.id);
 				moveRightRobots(battleRobot, robot, 'blue', i);
 				moveLeftRobots(battleRobot, robot, 'blue', i);
+				moveRobotSpellWallCheck(battleRobot, 'blue');
 			});
 		}
 		function moveRedRobots() {
@@ -3980,6 +4004,7 @@ const maulPage = {
 				const robot = Aurora.methodObjects.filter(rob => rob.id === battleRobot.id);
 				moveRightRobots(battleRobot, robot, 'red', i);
 				moveLeftRobots(battleRobot, robot, 'red', i);
+				moveRobotSpellWallCheck(battleRobot, 'red');
 			});
 		}
 		function deleteRobotMethodObject(robot, entitySize) {
@@ -4016,21 +4041,7 @@ const maulPage = {
 				}
 			}
 		}
-		function moveRobotSpellWallCheck(br, teamColor) {
-			if (teamColor === 'blue' && br.halted) {
-				const spellWall = !!Aurora.methodObjects.find(x => x.id === 'red-spell-wall');
-				if (!spellWall) {
-					br.halted = false;
-				}
-			} else if (teamColor === 'red' && br.halted) {
-				const spellWall = !!Aurora.methodObjects.find(x => x.id === 'blue-spell-wall');
-				if (!spellWall) {
-					br.halted = false;
-				}
-			}
-		}
 		function moveRightRobots(br, robot, teamColor, i) {
-			
 			if (!br.halted) {
 				const robotSpeed = (br.totalStats.spd) * 0.01;
 				if (br.direction === 'rt' && br.stop === 0) {
@@ -4088,10 +4099,9 @@ const maulPage = {
 					}
 				}
 			}
-			moveRobotSpellWallCheck(br, teamColor);
+			// moveRobotSpellWallCheck(br, teamColor);
 		}
 		function moveLeftRobots(br, robot, teamColor, i) {
-			
 			if (!br.halted) {
 				const robotSpeed = (br.totalStats.spd) * 0.01;
 				if (br.direction === 'lt' && br.stop === 0) {
@@ -4145,7 +4155,7 @@ const maulPage = {
 					}
 				}
 			}
-			moveRobotSpellWallCheck(br, teamColor);
+			/// moveRobotSpellWallCheck(br, teamColor);
 		}
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
