@@ -85,7 +85,7 @@ function loadAurora() {
 function loadRobotHeadGifs() {
 	// load the images
 	const newWorldHeadImgId = 'new-world-head';
-	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk-1.gif', newWorldHeadImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldHeadImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
@@ -117,7 +117,7 @@ function loadRobotChassisGifs() {
 function loadRobotLeftArmGifs() {
 	// load the images
 	const newWorldLeftArmImgId = 'new-world-left-arm';
-	Aurora.createImageListFromGif('./assets/images/New_World_Left_Arm_Walk-1.gif', newWorldLeftArmImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Left_Arm_Walk.gif', newWorldLeftArmImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
@@ -133,7 +133,7 @@ function loadRobotLeftArmGifs() {
 function loadRobotRightArmGifs() {
 	// load the images
 	const newWorldRightArmImgId = 'new-world-right-arm';
-	Aurora.createImageListFromGif('./assets/images/New_World_Right_Arm_Walk-1.gif', newWorldRightArmImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Right_Arm_Walk.gif', newWorldRightArmImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
@@ -149,7 +149,7 @@ function loadRobotRightArmGifs() {
 function loadRobotLeftLegGifs() {
 	// load the images
 	const newWorldLeftLegImgId = 'new-world-left-leg';
-	Aurora.createImageListFromGif('./assets/images/New_World_Left_Leg_Walk-1.gif', newWorldLeftLegImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Left_Leg_Walk.gif', newWorldLeftLegImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
@@ -165,7 +165,7 @@ function loadRobotLeftLegGifs() {
 function loadRobotRightLegGifs() {
 	// load the images
 	const newWorldRightLegImgId = 'new-world-right-leg';
-	Aurora.createImageListFromGif('./assets/images/New_World_Right_Leg_Walk-1.gif', newWorldRightLegImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Right_Leg_Walk.gif', newWorldRightLegImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {

@@ -1393,6 +1393,9 @@ const maulPage = {
 													speed: 1.3,
 												});
 												gameObject.arenaRedGameMoney += moneyGained;
+												if (gameObject.gameSounds) {
+													robotHitSound.cloneNode(true).play();
+												}
 											},
 											methodId: undefined,
 										}
@@ -1502,6 +1505,9 @@ const maulPage = {
 													speed: 1.3,
 												});
 												gameObject.arenaRedGameMoney += moneyGained;
+												if (gameObject.gameSounds) {
+													robotHitSound.cloneNode(true).play();
+												}
 											},
 											methodId: undefined,
 										}
@@ -1605,6 +1611,9 @@ const maulPage = {
 						speed: 0.1,
 					});
 					gameObject.arenaBlueGameMoney += moneyGained;
+					if (gameObject.gameSounds) {
+						robotHitSound.cloneNode(true).play();
+					}
 				},
 				methodId: undefined,
 			}
@@ -1691,6 +1700,9 @@ const maulPage = {
 						speed: 0.1,
 					});
 					gameObject.arenaBlueGameMoney += moneyGained;
+					if (gameObject.gameSounds) {
+						robotHitSound.cloneNode(true).play();
+					}
 				},
 				methodId: undefined,
 			}
@@ -2311,8 +2323,6 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function castSpell(pos, spellType, spellBtnId, teamColor, isPlayer) {
-			// future Jordan,
-			// the emp should destroy the robots on collision and give funds
 			let spellX = 0;
 			let spellY = 0;
 			if (isPlayer) {
