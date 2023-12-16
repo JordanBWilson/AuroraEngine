@@ -871,13 +871,13 @@ const arenaPage = {
 									if ((arenaTowerIndex === -1 || arenaTowerIndex === undefined) && directiveReadyList[i]) {
 										let msgs = [];
 										if (i === 0) {
-											msgs = ['Tank', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d1 + ' -', 'Tanks will target towers before', 'getting to the enemy base'];
+											msgs = ['Tank', '- In Game Cost: $' + gameObject.robotDirectiveCost.d1 + ' -', 'Tanks will target towers before', 'getting to the enemy base'];
 										} else if (i === 1) {
-											msgs = ['Warrior', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d2 + ' -', 'Warriors will target troops before', 'getting to the enemy base'];
+											msgs = ['Warrior', '- In Game Cost: $' + gameObject.robotDirectiveCost.d2 + ' -', 'Warriors will target troops before', 'getting to the enemy base'];
 										} else if (i === 2) {
-											msgs = ['Support', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d3 + ' -', 'Supports will heal fellow robots', 'before getting to the', 'enemy base'];
+											msgs = ['Support', '- In Game Cost: $' + gameObject.robotDirectiveCost.d3 + ' -', 'Supports will heal fellow robots', 'before getting to the', 'enemy base'];
 										} else if (i === 3) {
-											msgs = ['Lee-Roy', '- In Aurora Cost: $' + gameObject.robotDirectiveCost.d4 + ' -', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy base'];
+											msgs = ['Lee-Roy', '- In Game Cost: $' + gameObject.robotDirectiveCost.d4 + ' -', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy base'];
 										}
 										Aurora.methodSetup = {
 											method: function(id) {
@@ -1536,25 +1536,25 @@ const arenaPage = {
 											if (selectedTower.type === 'bunker') {
 												selectRobot = true;
 											} else {
-												msgs = ['Standard', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d1 + ' -', 'Tower will attack at', 'a standard rate'];
+												msgs = ['Standard', '- In Game Cost: $' + gameObject.towerDirectiveCost.d1 + ' -', 'Tower will attack at', 'a standard rate'];
 											}
 										} else if (i === 1) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Standard', '- In Aurora Cost: $' + gameObject.bunkerDirectiveCost.d1 + ' -', 'Bunker will create', ' 2 robots a turn'];
+												msgs = ['Standard', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d1 + ' -', 'Bunker will create', ' 2 robots a turn'];
 											} else {
-												msgs = ['Splash-Shot', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d2 + ' -', 'Tower will gain splash', 'but will attack slower'];
+												msgs = ['Splash-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d2 + ' -', 'Tower will gain splash', 'but will attack slower'];
 											}
 										} else if (i === 2) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Rapid', '- In Aurora Cost: $' + gameObject.bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
+												msgs = ['Rapid', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP'];
 											} else {
-												msgs = ['Rapid-Shot', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but will', 'lose some attack and HP'];
+												msgs = ['Rapid-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but will', 'lose some attack and HP'];
 											}
 										} else if (i === 3) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Defense', '- In Aurora Cost: $' + gameObject.bunkerDirectiveCost.d3 + ' -', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash'];
+												msgs = ['Defense', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d3 + ' -', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash'];
 											} else {
-												msgs = ['Ram-Shot', '- In Aurora Cost: $' + gameObject.towerDirectiveCost.d4 + ' -', 'Tower will get added attack', 'and splash but lose some speed'];
+												msgs = ['Ram-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d4 + ' -', 'Tower will get added attack', 'and splash but lose some speed'];
 											}
 										}
 										if (selectRobot) {
