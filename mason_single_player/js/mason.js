@@ -82,6 +82,7 @@ function loadAurora() {
 		gameObject = JSON.parse(gameLoaded);
 	}
 }
+// future Jordan, load the rest of the robot images
 function loadRobotHeadGifs() {
 	// load the images
 	const newWorldHeadImgId = 'new-world-head';
