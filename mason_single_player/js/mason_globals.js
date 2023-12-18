@@ -289,8 +289,14 @@ let gameObject = {
 	gameSounds: false, // play game sounds
 	wallReady: false, // wall spell ready
 	empReady: false, // emp spell ready
+	spellWallTimer: 25, // how many seconds it will take to cast another
+	spellEmpTimer: 50, // how many seconds it will take to cast another
 	canRedCastWall: true, // can red cast the wall spell
 	canRedCastEmp: true, // can red cast the emp spell
+	redSpellTarget: { // where red will cast the spell
+		posX: 0,
+		posY: 0,
+	},
 };
 // ** Robot Parts ***
 const robotHeads = [

@@ -841,7 +841,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
-							reloadTime: 25, // seconds
+							reloadTime: gameObject.spellWallTimer, // 25 seconds
 							readyTime: 0, // ready to go
 						},
 						methodId: id
@@ -1119,7 +1119,7 @@ const maulPage = {
 						},
 						isModalBtn: false,
 						props: {
-							reloadTime: 50, // seconds
+							reloadTime: gameObject.spellEmpTimer, // 50 seconds
 							readyTime: 0, // ready to go
 						},
 						methodId: id
@@ -4103,7 +4103,7 @@ const maulPage = {
 						} else {
 							winningTeam = 'draw';
 						}
-						endAurora(winningTeam);
+						endGame(winningTeam);
 					}
 				}
 				roundBackground.isAnim = true;
@@ -4219,13 +4219,13 @@ const maulPage = {
 						const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
 						robotAttackBase(redBase, robot, i, teamColor);
 						if (redBase.props.hp <= 0) {
-							endAurora('blue');
+							endGame('blue');
 						}
 					} else if (teamColor === 'red') {
 						const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
 						robotAttackBase(blueBase, robot, i, teamColor);
 						if (blueBase.props.hp <= 0) {
-							endAurora('red');
+							endGame('red');
 						}
 					}
 				}
@@ -4274,13 +4274,13 @@ const maulPage = {
 						const redBase = Aurora.methodObjects.find(bs => bs.id === 'red-base');
 						robotAttackBase(redBase, robot, i, teamColor);
 						if (redBase.props.hp <= 0) {
-							endAurora('blue');
+							endGame('blue');
 						}
 					} else if (teamColor === 'red') {
 						const blueBase = Aurora.methodObjects.find(bg => bg.id === 'blue-base');
 						robotAttackBase(blueBase, robot, i, teamColor);
 						if (blueBase.props.hp <= 0) {
-							endAurora('red');
+							endGame('red');
 						}
 					}
 				}
@@ -4386,10 +4386,19 @@ const maulPage = {
 						sendRedRobotRight(redBot);
 					}
 				}
+				// see if red will cast a spell
+				if (gameObject.gamesWon >= 1) {
+					let canRedCast = Math.floor((Math.random() * 10) + 1);
+					if (canRedCast === 1 && (gameObject.canRedCastWall || gameObject.canRedCastEmp)) { // 1 and 10 chance of casting a spell
+						const spellType = gameObject.canRedCastWall ? 'wall' : 'emp';
+						// future Jordan, cast reds spell here.
+						// we also need to select a target for when one of blues robots runs into a tower arc
+					}
+				}
 				aiThinking = false;
 			}
 		}
-		function endAurora(winningTeam) {
+		function endGame(winningTeam) {
 			if (gameTimer) {
 				clearInterval(gameTimer);
 			}
@@ -4415,6 +4424,14 @@ const maulPage = {
 				gameObject.canClick = true;
 				gameObject.wallReady = false;
 				gameObject.empReady = false;
+				gameObject.spellEmpTimer = 50;
+				gameObject.spellWallTimer = 25;
+				gameObject.redSpellTarget = {
+					posX: 0,
+					posY: 0,
+				};
+				gameObject.canRedCastWall = true;
+				gameObject.canRedCastEmp = true;
 				Aurora.canvas.width = window.innerWidth * Aurora.stageWidthPrct;
 				Aurora.canvas.height = window.innerHeight * Aurora.stageHeightPrct;
 				Aurora.entitySize = (Aurora.canvas.height * 0.01);

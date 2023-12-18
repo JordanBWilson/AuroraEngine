@@ -116,7 +116,7 @@ function loadRobotHeadGifs() {
 			robotHeads[3].imgs.push(findNWHarvesterHead);
 			imageCount++;
 		}
-		if (imageCount === robotHeads.length -1) {
+		if (imageCount === robotHeads.length) {
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -135,10 +135,26 @@ function loadRobotChassisGifs() {
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
-		if (findNewWorldChassis) {
+		if (findNewWorldChassis && robotChassis[0].imgs.length === 0) {
 			robotChassis[0].imgs.push(findNewWorldChassis);
 			imageCount++;
-			// future Jordan, we don't want to remove this function until we have all the images
+		}
+		const findNWScrapperChassis = Aurora.gifImageList.find(x => x.id === nwScrapperChassisImgId);
+		if (findNWScrapperChassis && robotChassis[1].imgs.length === 0) {
+			robotChassis[1].imgs.push(findNWScrapperChassis);
+			imageCount++;
+		}
+		const findNWScoutChassis = Aurora.gifImageList.find(x => x.id === nwScoutChassisImgId);
+		if (findNWScoutChassis && robotChassis[2].imgs.length === 0) {
+			robotChassis[2].imgs.push(findNWScoutChassis);
+			imageCount++;
+		}
+		const findNWHarvesterChassis = Aurora.gifImageList.find(x => x.id === nwHarvesterChassisImgId);
+		if (findNWHarvesterChassis && robotChassis[3].imgs.length === 0) {
+			robotChassis[3].imgs.push(findNWHarvesterChassis);
+			imageCount++;
+		}
+		if (imageCount === robotChassis.length) {
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -147,14 +163,36 @@ function loadRobotLeftArmGifs() {
 	// load the images
 	const newWorldLeftArmImgId = 'new-world-left-arm';
 	Aurora.createImageListFromGif('./assets/images/New_World_Left_Arm_Walk.gif', newWorldLeftArmImgId);
+	const nwScrapperLeftArmImgId = 'nw-scrapper-left-arm';
+	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Left_Arm_Walk.gif', nwScrapperLeftArmImgId);
+	const nwScoutLeftArmImgId = 'nw-scout-left-arm';
+	Aurora.createImageListFromGif('./assets/images/NW_Scout_Left_Arm_Walk.gif', nwScoutLeftArmImgId);
+	const nwHarvesterLeftArmImgId = 'nw-harvester-left-arm';
+	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Arm_Walk.gif', nwHarvesterLeftArmImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldLeftArm = Aurora.gifImageList.find(x => x.id === newWorldLeftArmImgId);
-		if (findNewWorldLeftArm) {
-			robotArms[imageCount].imgs.push(findNewWorldLeftArm);
+		if (findNewWorldLeftArm && robotArms[0].imgs.length === 0) {
+			robotArms[0].imgs.push(findNewWorldLeftArm);
 			imageCount++;
-			// future Jordan, we don't want to remove this function until we have all the images
+		}
+		const findNWScrapperLeftArm = Aurora.gifImageList.find(x => x.id === nwScrapperLeftArmImgId);
+		if (findNWScrapperLeftArm && robotArms[1].imgs.length === 0) {
+			robotArms[1].imgs.push(findNWScrapperLeftArm);
+			imageCount++;
+		}
+		const findNWScoutLeftArm = Aurora.gifImageList.find(x => x.id === nwScoutLeftArmImgId);
+		if (findNWScoutLeftArm && robotArms[2].imgs.length === 0) {
+			robotArms[2].imgs.push(findNWScoutLeftArm);
+			imageCount++;
+		}
+		const findNWHarvesterLeftArm = Aurora.gifImageList.find(x => x.id === nwHarvesterLeftArmImgId);
+		if (findNWHarvesterLeftArm && robotArms[3].imgs.length === 0) {
+			robotArms[3].imgs.push(findNWHarvesterLeftArm);
+			imageCount++;
+		}
+		if (imageCount === robotArms.length) {
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -163,14 +201,36 @@ function loadRobotRightArmGifs() {
 	// load the images
 	const newWorldRightArmImgId = 'new-world-right-arm';
 	Aurora.createImageListFromGif('./assets/images/New_World_Right_Arm_Walk.gif', newWorldRightArmImgId);
+	const nwScrapperRightArmImgId = 'nw-scrapper-right-arm';
+	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Right_Arm_Walk.gif', nwScrapperRightArmImgId);
+	const nwScoutRightArmImgId = 'nw-scout-right-arm';
+	Aurora.createImageListFromGif('./assets/images/NW_Scout_Right_Arm_Walk.gif', nwScoutRightArmImgId);
+	const nwHarvesterRightArmImgId = 'nw-harvester-right-arm';
+	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Arm_Walk.gif', nwHarvesterRightArmImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldRightArm = Aurora.gifImageList.find(x => x.id === newWorldRightArmImgId);
-		if (findNewWorldRightArm) {
-			robotArms[imageCount].imgs.push(findNewWorldRightArm);
+		if (findNewWorldRightArm && robotArms[0].imgs.length === 1) {
+			robotArms[0].imgs.push(findNewWorldRightArm);
 			imageCount++;
-			// future Jordan, we don't want to remove this function until we have all the images
+		}
+		const findNWScrapperRightArm = Aurora.gifImageList.find(x => x.id === nwScrapperRightArmImgId);
+		if (findNWScrapperRightArm && robotArms[1].imgs.length === 1) {
+			robotArms[1].imgs.push(findNWScrapperRightArm);
+			imageCount++;
+		}
+		const findNWScoutRightArm = Aurora.gifImageList.find(x => x.id === nwScoutRightArmImgId);
+		if (findNWScoutRightArm && robotArms[2].imgs.length === 1) {
+			robotArms[2].imgs.push(findNWScoutRightArm);
+			imageCount++;
+		}
+		const findNWHarvesterRightArm = Aurora.gifImageList.find(x => x.id === nwHarvesterRightArmImgId);
+		if (findNWHarvesterRightArm && robotArms[3].imgs.length === 1) {
+			robotArms[3].imgs.push(findNWHarvesterRightArm);
+			imageCount++;
+		}
+		if (imageCount === robotArms.length) {
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -179,14 +239,36 @@ function loadRobotLeftLegGifs() {
 	// load the images
 	const newWorldLeftLegImgId = 'new-world-left-leg';
 	Aurora.createImageListFromGif('./assets/images/New_World_Left_Leg_Walk.gif', newWorldLeftLegImgId);
+	const nwScrapperLeftLegImgId = 'nw-scrapper-left-leg';
+	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Left_Leg_Walk.gif', nwScrapperLeftLegImgId);
+	const nwScoutLeftLegImgId = 'nw-scout-left-leg';
+	Aurora.createImageListFromGif('./assets/images/NW_Scout_Left_Leg_Walk.gif', nwScoutLeftLegImgId);
+	const nwHarvesterLeftLegImgId = 'nw-harvester-left-leg';
+	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Leg_Walk.gif', nwHarvesterLeftLegImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldLeftLeg = Aurora.gifImageList.find(x => x.id === newWorldLeftLegImgId);
-		if (findNewWorldLeftLeg) {
-			robotLegs[imageCount].imgs.push(findNewWorldLeftLeg);
+		if (findNewWorldLeftLeg && robotLegs[0].imgs.length === 0) {
+			robotLegs[0].imgs.push(findNewWorldLeftLeg);
 			imageCount++;
-			// future Jordan, we don't want to remove this function until we have all the images
+		}
+		const findNWScrapperLeftLeg = Aurora.gifImageList.find(x => x.id === nwScrapperLeftLegImgId);
+		if (findNWScrapperLeftLeg && robotLegs[1].imgs.length === 0) {
+			robotLegs[1].imgs.push(findNWScrapperLeftLeg);
+			imageCount++;
+		}
+		const findNWScoutLeftLeg = Aurora.gifImageList.find(x => x.id === nwScoutLeftLegImgId);
+		if (findNWScoutLeftLeg && robotLegs[2].imgs.length === 0) {
+			robotLegs[2].imgs.push(findNWScoutLeftLeg);
+			imageCount++;
+		}
+		const findNWHarvesterLeftLeg = Aurora.gifImageList.find(x => x.id === nwHarvesterLeftLegImgId);
+		if (findNWHarvesterLeftLeg && robotLegs[3].imgs.length === 0) {
+			robotLegs[3].imgs.push(findNWHarvesterLeftLeg);
+			imageCount++;
+		}
+		if (imageCount === robotLegs.length) {
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -195,14 +277,36 @@ function loadRobotRightLegGifs() {
 	// load the images
 	const newWorldRightLegImgId = 'new-world-right-leg';
 	Aurora.createImageListFromGif('./assets/images/New_World_Right_Leg_Walk.gif', newWorldRightLegImgId);
+	const nwScrapperRightLegImgId = 'nw-scrapper-right-leg';
+	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Right_Leg_Walk.gif', nwScrapperRightLegImgId);
+	const nwScoutRightLegImgId = 'nw-scout-right-leg';
+	Aurora.createImageListFromGif('./assets/images/NW_Scout_Right_Leg_Walk.gif', nwScoutRightLegImgId);
+	const nwHarvesterRightLegImgId = 'nw-harvester-right-leg';
+	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Right_Leg_Walk.gif', nwHarvesterRightLegImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldRightLeg = Aurora.gifImageList.find(x => x.id === newWorldRightLegImgId);
-		if (findNewWorldRightLeg) {
-			robotLegs[imageCount].imgs.push(findNewWorldRightLeg);
+		if (findNewWorldRightLeg && robotLegs[0].imgs.length === 1) {
+			robotLegs[0].imgs.push(findNewWorldRightLeg);
 			imageCount++;
-			// future Jordan, we don't want to remove this function until we have all the images
+		}
+		const findNWScrapperRightLeg = Aurora.gifImageList.find(x => x.id === nwScrapperRightLegImgId);
+		if (findNWScrapperRightLeg && robotLegs[1].imgs.length === 1) {
+			robotLegs[1].imgs.push(findNWScrapperRightLeg);
+			imageCount++;
+		}
+		const findNWScoutRightLeg = Aurora.gifImageList.find(x => x.id === nwScoutRightLegImgId);
+		if (findNWScoutRightLeg && robotLegs[2].imgs.length === 1) {
+			robotLegs[2].imgs.push(findNWScoutRightLeg);
+			imageCount++;
+		}
+		const findNWHarvesterRightLeg = Aurora.gifImageList.find(x => x.id === nwHarvesterRightLegImgId);
+		if (findNWHarvesterRightLeg && robotLegs[3].imgs.length === 1) {
+			robotLegs[3].imgs.push(findNWHarvesterRightLeg);
+			imageCount++;
+		}
+		if (imageCount === robotLegs.length) {
 			clearInterval(searchForImages);
 		}
 	}, 300);
