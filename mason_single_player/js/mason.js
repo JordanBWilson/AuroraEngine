@@ -101,18 +101,18 @@ function loadRobotHeadGifs() {
 			robotHeads[0].imgs.push(findNewWorldHead);
 			imageCount++;
 		}
-		const findNWScrapperHead = Aurora.gifImageList.find(x => x.id === findNWScrapperHead);
+		const findNWScrapperHead = Aurora.gifImageList.find(x => x.id === nwScrapperHeadImgId);
 		if (findNWScrapperHead && robotHeads[1].imgs.length === 0) {
 			robotHeads[1].imgs.push(findNWScrapperHead);
 			imageCount++;
 		}
 		const findNWScoutHead = Aurora.gifImageList.find(x => x.id === nwScoutHeadImgId);
-		if (findNWScoutHead && && robotHeads[2].imgs.length === 0) {
+		if (findNWScoutHead && robotHeads[2].imgs.length === 0) {
 			robotHeads[2].imgs.push(findNWScoutHead);
 			imageCount++;
 		}
 		const findNWHarvesterHead = Aurora.gifImageList.find(x => x.id === nwHarvesterHeadImgId);
-		if (findNWScofindNWHarvesterHeadutHead && && robotHeads[3].imgs.length === 0) {
+		if (findNWHarvesterHead && robotHeads[3].imgs.length === 0) {
 			robotHeads[3].imgs.push(findNWHarvesterHead);
 			imageCount++;
 		}
