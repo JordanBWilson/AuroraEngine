@@ -289,6 +289,8 @@ let gameObject = {
 	gameSounds: false, // play game sounds
 	wallReady: false, // wall spell ready
 	empReady: false, // emp spell ready
+	canRedCastWall: true, // can red cast the wall spell
+	canRedCastEmp: true, // can red cast the emp spell
 };
 // ** Robot Parts ***
 const robotHeads = [

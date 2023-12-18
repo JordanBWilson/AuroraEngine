@@ -82,19 +82,41 @@ function loadAurora() {
 		gameObject = JSON.parse(gameLoaded);
 	}
 }
-// future Jordan, load the rest of the robot images
+// future Jordan, make sure this works and apply it to the other parts
 function loadRobotHeadGifs() {
 	// load the images
 	const newWorldHeadImgId = 'new-world-head';
 	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldHeadImgId);
+	const nwScrapperHeadImgId = 'nw-scrapper-head';
+	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Head_Walk.gif', nwScrapperHeadImgId);
+	const nwScoutHeadImgId = 'nw-scout-head';
+	Aurora.createImageListFromGif('./assets/images/NW_Scout_Head_Walk.gif', nwScoutHeadImgId);
+	const nwHarvesterHeadImgId = 'nw-harvester-head';
+	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Head_Walk.gif', nwHarvesterHeadImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldHead = Aurora.gifImageList.find(x => x.id === newWorldHeadImgId);
-		if (findNewWorldHead) {
-			robotHeads[imageCount].imgs.push(findNewWorldHead);
+		if (findNewWorldHead && robotHeads[0].imgs.length === 0) {
+			robotHeads[0].imgs.push(findNewWorldHead);
 			imageCount++;
-			// future Jordan, we don't want to remove this function until we have all the images
+		}
+		const findNWScrapperHead = Aurora.gifImageList.find(x => x.id === findNWScrapperHead);
+		if (findNWScrapperHead && robotHeads[1].imgs.length === 0) {
+			robotHeads[1].imgs.push(findNWScrapperHead);
+			imageCount++;
+		}
+		const findNWScoutHead = Aurora.gifImageList.find(x => x.id === nwScoutHeadImgId);
+		if (findNWScoutHead && && robotHeads[2].imgs.length === 0) {
+			robotHeads[2].imgs.push(findNWScoutHead);
+			imageCount++;
+		}
+		const findNWHarvesterHead = Aurora.gifImageList.find(x => x.id === nwHarvesterHeadImgId);
+		if (findNWScofindNWHarvesterHeadutHead && && robotHeads[3].imgs.length === 0) {
+			robotHeads[3].imgs.push(findNWHarvesterHead);
+			imageCount++;
+		}
+		if (imageCount === robotHeads.length -1) {
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -103,12 +125,18 @@ function loadRobotChassisGifs() {
 	// load the images
 	const newWorldChassisImgId = 'new-world-chassis';
 	Aurora.createImageListFromGif('./assets/images/New_World_Chassis_Walk.gif', newWorldChassisImgId);
+	const nwScrapperChassisImgId = 'nw-scrapper-chassis';
+	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Chassis_Walk.gif', nwScrapperChassisImgId);
+	const nwScoutChassisImgId = 'nw-scout-chassis';
+	Aurora.createImageListFromGif('./assets/images/NW_Scout_Chassis_Walk.gif', nwScoutChassisImgId);
+	const nwHarvesterChassisImgId = 'nw-harvester-chassis';
+	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Chassis_Walk.gif', nwHarvesterChassisImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
 		if (findNewWorldChassis) {
-			robotChassis[imageCount].imgs.push(findNewWorldChassis);
+			robotChassis[0].imgs.push(findNewWorldChassis);
 			imageCount++;
 			// future Jordan, we don't want to remove this function until we have all the images
 			clearInterval(searchForImages);
