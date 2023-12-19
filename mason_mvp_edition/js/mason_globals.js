@@ -294,8 +294,8 @@ let gameObject = {
 	canRedCastWall: true, // can red cast the wall spell
 	canRedCastEmp: true, // can red cast the emp spell
 	redSpellTarget: { // where red will cast the spell
-		posX: 0,
-		posY: 0,
+		tappedX: 0,
+		tappedY: 0,
 	},
 };
 // ** Robot Parts ***

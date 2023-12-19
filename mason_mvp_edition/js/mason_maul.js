@@ -34,6 +34,10 @@ const maulPage = {
 			lvl: 1,
 			arenaLvlToUpgrade: 3,
 		};
+		const spellTimeOut = {
+			wall: 5,
+			emp: 8,
+		};
 		const robotMoneyGained = {
 			leeRoy: 3,
 			tank: 5,
@@ -483,6 +487,13 @@ const maulPage = {
 				}
 			}
 		}
+		function getRedSpellPosition(primaryId) {
+			const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
+			gameObject.redSpellTarget = {
+				tappedX: blueBot.posX,
+				tappedY: blueBot.posY
+			};
+		}
 		function setBlueRightTowerRangeCollisions(robotId) {
 			Aurora.collisionSetup = {
 				primary: robotId, 
@@ -525,7 +536,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-5', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -534,7 +546,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-6', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -543,7 +556,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-7', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -552,7 +566,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-8', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -601,7 +616,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-1', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -610,7 +626,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-2', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -619,7 +636,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-3', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -628,7 +646,8 @@ const maulPage = {
 			Aurora.collisionSetup = {
 				primary: robotId, 
 				target: 'red-tower-range-4', 
-				method: function(id) {
+				method: function(targetMethodId, primaryId) {
+					getRedSpellPosition(primaryId);
 					towerTargetRange(this.primary, this.target, 'red');
 				},
 				methodId: undefined,
@@ -1995,7 +2014,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue');
 								}
 							}
 						},
@@ -2025,7 +2044,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue');
 								}
 							}
 						},
@@ -2055,7 +2074,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue');
 								}
 							}
 						},
@@ -2085,7 +2104,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue');
 								}
 							}
 						},
@@ -2115,7 +2134,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue');
 								}
 							}
 						},
@@ -2145,7 +2164,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue');
 								}
 							}
 						},
@@ -2175,7 +2194,7 @@ const maulPage = {
 							method: function(id, pos) {
 								if (gameObject.wallReady || gameObject.empReady) {
 									const spellType = gameObject.wallReady ? 'wall' : 'emp';
-									castSpell(pos, spellType, selectedSpellBtn.id, 'blue', true);
+									castSpell(pos, spellType, selectedSpellBtn.id, 'blue');
 								}
 							}
 						},
@@ -2322,15 +2341,9 @@ const maulPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
-		function castSpell(pos, spellType, spellBtnId, teamColor, isPlayer) {
-			let spellX = 0;
-			let spellY = 0;
-			if (isPlayer) {
-				spellX = pos.x / Aurora.canvas.width;
-				spellY = pos.y / Aurora.canvas.height;
-			} else {
-				// get COMs position as a percent
-			}
+		function castSpell(pos, spellType, spellBtnId, teamColor) {
+			let spellX = pos.tappedX / Aurora.canvas.width;
+			let spellY = pos.tappedY / Aurora.canvas.height;
 			let spellWidth = (Aurora.entitySize * 1) + (Aurora.canvas.height * 0.025);
 			let spellArcWidth = spellWidth;
 			if (spellType === 'wall') {
@@ -2347,7 +2360,7 @@ const maulPage = {
 							isBackground: false,
 							id: teamColor + '-spell-wall',
 							props: {
-								timeOut: 5, // how many seconds the wall will stay
+								timeOut: spellTimeOut.wall, // how many seconds the wall will stay
 							},
 							methodId: id
 						});
@@ -2381,7 +2394,7 @@ const maulPage = {
 							isBackground: false,
 							id: teamColor + '-spell-emp',
 							props: {
-								timeOut: 8, // how many seconds the emp will stay
+								timeOut: spellTimeOut.emp, // how many seconds the emp will stay
 							},
 							methodId: id
 						});
@@ -4390,9 +4403,19 @@ const maulPage = {
 				if (gameObject.gamesWon >= 1) {
 					let canRedCast = Math.floor((Math.random() * 10) + 1);
 					if (canRedCast === 1 && (gameObject.canRedCastWall || gameObject.canRedCastEmp)) { // 1 and 10 chance of casting a spell
-						const spellType = gameObject.canRedCastWall ? 'wall' : 'emp';
-						// future Jordan, cast reds spell here.
-						// we also need to select a target for when one of blues robots runs into a tower arc
+						let whatToCast = Math.floor((Math.random() * 2) + 1);
+						let spellType = '';
+						if (gameObject.redSpellTarget.tappedX !== 0 && gameObject.redSpellTarget.tappedY !== 0) {
+							if (whatToCast === 1 && gameObject.canRedCastWall) {
+								spellType = 'wall';
+								castSpell(gameObject.redSpellTarget, spellType, undefined, 'red');
+							} else if (whatToCast === 2 && gameObject.canRedCastEmp) {
+								spellType = 'emp';
+								// future Jordan, make sure reds spells can reload
+								// make sure all of this works
+								castSpell(gameObject.redSpellTarget, spellType, undefined, 'red');
+							}
+						}
 					}
 				}
 				aiThinking = false;
@@ -4427,8 +4450,8 @@ const maulPage = {
 				gameObject.spellEmpTimer = 50;
 				gameObject.spellWallTimer = 25;
 				gameObject.redSpellTarget = {
-					posX: 0,
-					posY: 0,
+					tappedX: 0,
+					tappedY: 0,
 				};
 				gameObject.canRedCastWall = true;
 				gameObject.canRedCastEmp = true;

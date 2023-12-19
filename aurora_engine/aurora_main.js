@@ -128,8 +128,8 @@ function isButtonTapped(btnParams) {
 	if (Main.tappedY >= btnParams.posY && Main.tappedY <= btnParams.posY + btnParams.height) {
 		if (Main.tappedX >= btnParams.posX && Main.tappedX <= btnParams.posX + btnParams.width) {
 			const pos = { // the coords the button was tapped
-				x: Main.tappedX,
-				y: Main.tappedY,
+				tappedX: Main.tappedX,
+				tappedY: Main.tappedY,
 			};
 			if (!Main.isModalVisible && !btnParams.isModalBtn) {
 				btnParams.action.method(btnParams.methodId, pos);
