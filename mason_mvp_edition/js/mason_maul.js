@@ -489,10 +489,12 @@ const maulPage = {
 		}
 		function getRedSpellPosition(primaryId) {
 			const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
-			gameObject.redSpellTarget = {
-				tappedX: blueBot.posX,
-				tappedY: blueBot.posY
-			};
+			if (blueBot) {
+				gameObject.redSpellTarget = {
+					tappedX: blueBot.posX,
+					tappedY: blueBot.posY
+				};
+			}
 		}
 		function setBlueRightTowerRangeCollisions(robotId) {
 			Aurora.collisionSetup = {
@@ -2441,7 +2443,7 @@ const maulPage = {
 			if (spellBtnId) { // only refresh the spell buttons for players
 				spellReload(spellBtnId, spellType);
 			} else {
-				// future Jordan, reload spells for COM
+				redSpellReload(spellType);
 			}
 			setTimeout(function() {
 				spellDuration(spellType, teamColor);
@@ -2465,6 +2467,30 @@ const maulPage = {
 					}
 					spellBtn.msg = spellName;
 					clearInterval(reload);
+				}
+			}, 1000);
+		}
+		function redSpellReload(spellType) {
+			if (spellType === 'wall') {
+				gameObject.canRedCastWall = false;
+			} else if (spellType === 'emp') {
+				gameObject.canRedCastEmp = false;
+			}
+			let spellSeconds = 0;
+			const reload = setInterval(function() {
+				spellSeconds++;
+				if (spellType === 'wall') {
+					if (spellSeconds >= gameObject.spellWallTimer) {
+						spellSeconds = 0;
+						gameObject.canRedCastWall = true;
+						clearInterval(reload);
+					}
+				} else if (spellType === 'emp') {
+					if (spellSeconds >= gameObject.spellEmpTimer) {
+						spellSeconds = 0;
+						gameObject.canRedCastEmp = true;
+						clearInterval(reload);
+					}
 				}
 			}, 1000);
 		}
@@ -4123,6 +4149,11 @@ const maulPage = {
 			}, 1000);
 		}
 		function moveRobotSpellWallCheck(br, teamColor) {
+			// future Jordan, we need to find the robot that's hitting the wall.
+			// every robot id that's greater than the wall colliding robot should stop
+			// any robot that's less than that needs to keep moving
+			// checking for the wall may not be needed here.
+			// finding out if a robot is behind a wall colliding robot is most important
 			if (teamColor === 'blue' && br.halted) {
 				const spellWall = !!Aurora.methodObjects.find(x => x.id === 'red-spell-wall');
 				if (!spellWall) {
@@ -4300,7 +4331,6 @@ const maulPage = {
 			}
 		}
 		function redAiMind() {
-			// future Jordan, red needs to be able to cast spells after 1 game won
 			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 3) + 1);
 				// select a robot to send
@@ -4401,8 +4431,8 @@ const maulPage = {
 				}
 				// see if red will cast a spell
 				if (gameObject.gamesWon >= 1) {
-					let canRedCast = Math.floor((Math.random() * 10) + 1);
-					if (canRedCast === 1 && (gameObject.canRedCastWall || gameObject.canRedCastEmp)) { // 1 and 10 chance of casting a spell
+					let canRedCast = Math.floor((Math.random() * 3) + 1);
+					if (canRedCast === 1 && (gameObject.canRedCastWall || gameObject.canRedCastEmp)) { // 1 and 3 chance of casting a spell
 						let whatToCast = Math.floor((Math.random() * 2) + 1);
 						let spellType = '';
 						if (gameObject.redSpellTarget.tappedX !== 0 && gameObject.redSpellTarget.tappedY !== 0) {
