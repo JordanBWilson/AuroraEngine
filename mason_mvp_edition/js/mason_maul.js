@@ -42,6 +42,10 @@ const maulPage = {
 			leeRoy: 3,
 			tank: 5,
 		};
+		const spellWallCollisions = {
+			teamBlueIds: [],
+			teamRedIds: [],
+		}
 		let redAIThinkTimer = 800;
 		if (gameObject.gamesWon === 0) {
 			redAIThinkTimer = 2500;
@@ -1384,6 +1388,13 @@ const maulPage = {
 											method: function(targetMethodId, primaryId) {
 												const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
 												if (blueBot) {
+													const blueBotSplit = blueBot.id.split('-');
+													const blueBotId = +blueBotSplit[blueBotSplit.length-1];
+													const findId = !!spellWallCollisions.teamBlueIds.find(id => id === blueBotId);
+													console.log(findId);
+													if (findId === undefined) {
+														spellWallCollisions.teamBlueIds.push(blueBotId);
+													}
 													blueBot.halted = true;
 												}
 											},
@@ -1496,6 +1507,12 @@ const maulPage = {
 											method: function(targetMethodId, primaryId) {
 												const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
 												if (blueBot) {
+													const blueBotSplit = blueBot.id.split('-');
+													const blueBotId = +blueBotSplit[blueBotSplit.length-1];
+													const findId = spellWallCollisions.teamBlueIds.find(id => id === blueBotId);
+													if (findId === undefined) {
+														spellWallCollisions.teamBlueIds.push(blueBotId);
+													}
 													blueBot.halted = true;
 												}
 											},
@@ -1591,6 +1608,17 @@ const maulPage = {
 				method: function(targetMethodId, primaryId) {
 					const redBot = gameObject.arenaRedAttackers.find(x => x.id === primaryId);
 					if (redBot) {
+						const redBotSplit = redBot.id.split('-');
+						const redBotId = +redBotSplit[redBotSplit.length-1];
+						const findId = spellWallCollisions.teamRedIds.find(team => team.id === redBotId);
+						if (findId === undefined) {
+							const teamRed = {
+								id: redBotId,
+								direction: redBotSplit[redBotSplit.length-2]
+							}
+							console.log(teamRed);
+							spellWallCollisions.teamRedIds.push(teamRed);
+						}
 						redBot.halted = true;
 					}
 				},
@@ -1680,6 +1708,19 @@ const maulPage = {
 				method: function(targetMethodId, primaryId) {
 					const redBot = gameObject.arenaRedAttackers.find(x => x.id === primaryId);
 					if (redBot) {
+						const redBotSplit = redBot.id.split('-');
+						const redBotId = +redBotSplit[redBotSplit.length-1];
+						const findId = spellWallCollisions.teamRedIds.find(team => team.id === redBotId);
+						// future Jordan, apply this to the blue robot 'sends'. we need to test for direction as well
+						// as looking for if the id is larger than the wall colliding robots
+						if (findId === undefined) {
+							const teamRed = {
+								id: redBotId,
+								direction: redBotSplit[redBotSplit.length-2]
+							}
+							console.log(teamRed);
+							spellWallCollisions.teamRedIds.push(teamRed);
+						}
 						redBot.halted = true;
 					}
 				},
@@ -2499,6 +2540,11 @@ const maulPage = {
 			if (spells.length > 0) {
 				spells.forEach(spell => {
 					const spellTime = setTimeout(function() {
+						if (teamColor === 'blue') {
+							spellWallCollisions.teamBlueIds = [];
+						} else if (teamColor === 'red') {
+							spellWallCollisions.teamRedIds = [];
+						}
 						Aurora.deleteEntity(spell.methodId);
 						clearTimeout(spellTime);
 					}, 1000 * spell.props.timeOut);
@@ -4154,17 +4200,40 @@ const maulPage = {
 			// any robot that's less than that needs to keep moving
 			// checking for the wall may not be needed here.
 			// finding out if a robot is behind a wall colliding robot is most important
-			if (teamColor === 'blue' && br.halted) {
-				const spellWall = !!Aurora.methodObjects.find(x => x.id === 'red-spell-wall');
-				if (!spellWall) {
-					br.halted = false;
-				}
-			} else if (teamColor === 'red' && br.halted) {
+			
+			const idSplit = br.id.split('-');
+			const robotId = +idSplit[idSplit.length-1];
+			if (teamColor === 'blue' && br.halted && spellWallCollisions.teamBlueIds.length > 0) {
+				// const lessThan = spellWallCollisions.teamBlueIds.filter(id => id < robotId);
+				// if there are robots hitting the wall, allow robots with lesser Ids to keep moving
+				// console.log(lessThan);
+				//if (lessThan) {
+					//br.halted = false;
+				//}
+			} else if (teamColor === 'red' && br.halted && spellWallCollisions.teamRedIds.length > 0) {
+				// const lessThan = spellWallCollisions.teamRedIds.filter(id => id < robotId);
+				// console.log(spellWallCollisions.teamRedIds);
+				// if there are robots hitting the wall, allow robots with lesser Ids to keep moving
+				//if (lessThan) {
+					//br.halted = false;
+				//}
 				const spellWall = !!Aurora.methodObjects.find(x => x.id === 'blue-spell-wall');
 				if (!spellWall) {
 					br.halted = false;
 				}
 			}
+			
+			//if (teamColor === 'blue' && br.halted) {
+				//const spellWall = !!Aurora.methodObjects.find(x => x.id === 'red-spell-wall');
+				//if (!spellWall) {
+					//br.halted = false;
+				//}
+			//} else if (teamColor === 'red' && br.halted) {
+				//const spellWall = !!Aurora.methodObjects.find(x => x.id === 'blue-spell-wall');
+				//if (!spellWall) {
+					//br.halted = false;
+				//}
+			//}
 		}
 		function moveBlueRobots() {
 			gameObject.arenaBlueAttackers.forEach((battleRobot, i) => {
