@@ -65,6 +65,7 @@ const maulPage = {
 				}
 			}
 		}
+		// future Jordan, it's time to work on the tutorial
 		function setupAurora() {
 			generateRedArenaRobots();
 			generateRedArenaTowers();
@@ -1275,6 +1276,7 @@ const maulPage = {
 				towerHitCount: 0,
 				totalStats: robotStats.stats,
 				directive: robotDirective,
+				robotCount: count,
 			}
 			return newRobot;
 		}
@@ -1388,12 +1390,10 @@ const maulPage = {
 											method: function(targetMethodId, primaryId) {
 												const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
 												if (blueBot) {
-													const blueBotSplit = blueBot.id.split('-');
-													const blueBotId = +blueBotSplit[blueBotSplit.length-1];
-													const findId = spellWallCollisions.teamBlueIds.find(team => team.id === blueBotId);
+													const findId = spellWallCollisions.teamBlueIds.find(team => team.countId === blueBot.robotCount);
 													if (findId === undefined) {
 														const teamBlue = {
-															id: blueBotId,
+															countId: blueBot.robotCount,
 															direction: blueBot.direction,
 														}
 														spellWallCollisions.teamBlueIds.push(teamBlue);
@@ -1510,12 +1510,10 @@ const maulPage = {
 											method: function(targetMethodId, primaryId) {
 												const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
 												if (blueBot) {
-													const blueBotSplit = blueBot.id.split('-');
-													const blueBotId = +blueBotSplit[blueBotSplit.length-1];
-													const findId = spellWallCollisions.teamBlueIds.find(team => team.id === blueBotId);
+													const findId = spellWallCollisions.teamBlueIds.find(team => team.countId === blueBot.robotCount);
 													if (findId === undefined) {
 														const teamBlue = {
-															id: blueBotId,
+															countId: blueBot.robotCount,
 															direction: blueBot.direction,
 														}
 														spellWallCollisions.teamBlueIds.push(teamBlue);
@@ -1615,12 +1613,10 @@ const maulPage = {
 				method: function(targetMethodId, primaryId) {
 					const redBot = gameObject.arenaRedAttackers.find(x => x.id === primaryId);
 					if (redBot) {
-						const redBotSplit = redBot.id.split('-');
-						const redBotId = +redBotSplit[redBotSplit.length-1];
-						const findId = spellWallCollisions.teamRedIds.find(team => team.id === redBotId);
+						const findId = spellWallCollisions.teamRedIds.find(team => team.countId === redBot.robotCount);
 						if (findId === undefined) {
 							const teamRed = {
-								id: redBotId,
+								countId: redBot.robotCount,
 								direction: redBot.direction
 							}
 							spellWallCollisions.teamRedIds.push(teamRed);
@@ -1714,12 +1710,10 @@ const maulPage = {
 				method: function(targetMethodId, primaryId) {
 					const redBot = gameObject.arenaRedAttackers.find(x => x.id === primaryId);
 					if (redBot) {
-						const redBotSplit = redBot.id.split('-');
-						const redBotId = +redBotSplit[redBotSplit.length-1];
-						const findId = spellWallCollisions.teamRedIds.find(team => team.id === redBotId);
+						const findId = spellWallCollisions.teamRedIds.find(team => team.countId === redBot.robotCount);
 						if (findId === undefined) {
 							const teamRed = {
-								id: redBotId,
+								countId: redBot.robotCount,
 								direction: redBot.direction,
 							}
 							spellWallCollisions.teamRedIds.push(teamRed);
@@ -2486,13 +2480,13 @@ const maulPage = {
 			}
 			if (spellBtnId) { // only refresh the spell buttons for players
 				spellReload(spellBtnId, spellType);
+				resetRobotSpellSelection();
 			} else {
 				redSpellReload(spellType);
 			}
 			setTimeout(function() {
 				spellDuration(spellType, teamColor);
 			}, 0);
-			resetRobotSpellSelection();
 		}
 		function spellReload(spellBtnId, spellType) {
 			const spellBtn = Aurora.methodObjects.find(sp => sp.id === spellBtnId);
@@ -2543,9 +2537,11 @@ const maulPage = {
 			if (spells.length > 0) {
 				spells.forEach(spell => {
 					const spellTime = setTimeout(function() {
-						if (teamColor === 'blue') {
+						if (teamColor === 'red') {
 							spellWallCollisions.teamBlueIds = [];
-						} else if (teamColor === 'red') {
+						}
+						if (teamColor === 'blue') {
+							
 							spellWallCollisions.teamRedIds = [];
 						}
 						Aurora.deleteEntity(spell.methodId);
@@ -4198,43 +4194,24 @@ const maulPage = {
 			}, 1000);
 		}
 		function moveRobotSpellWallCheck(br, teamColor) {
-			// future Jordan, we need to find the robot that's hitting the wall.
-			// every robot id that's greater than the wall colliding robot should stop
-			// any robot that's less than that needs to keep moving
-			// checking for the wall may not be needed here.
-			// finding out if a robot is behind a wall colliding robot is most important
-			
-			const idSplit = br.id.split('-');
-			const robotId = +idSplit[idSplit.length-1];
+			// if there's a wall, see if the robot is behind the wall of in front of it
 			if (teamColor === 'blue' && br.halted && spellWallCollisions.teamBlueIds.length > 0) {
-				// const lessThan = spellWallCollisions.teamBlueIds.filter(id => id < robotId);
-				// if there are robots hitting the wall, allow robots with lesser Ids to keep moving
-				// console.log(lessThan);
-				//if (lessThan) {
-					//br.halted = false;
-				//}
+				const lessThan = !!spellWallCollisions.teamBlueIds.filter(team => team.countId > br.robotCount && team.direction === br.direction).length;
+				if (lessThan) {
+					br.halted = false;
+				}
 			} else if (teamColor === 'red' && br.halted && spellWallCollisions.teamRedIds.length > 0) {
-				const lessThan = spellWallCollisions.teamRedIds.filter(team => team.id < robotId && team.direction === br.direction);
-				// future Jordan consider for looping over this collection to see if the robot is on the right side where the wall is and if the robot is greater
-				// than the robot on the collision list. If the robot is less than, keep that robot moving
-				console.log(lessThan);
-				// console.log(spellWallCollisions.teamRedIds);
-				// if there are robots hitting the wall, allow robots with lesser Ids to keep moving
-				//if (lessThan) {
-					//br.halted = false;
-				//}
+				const lessThan = !!spellWallCollisions.teamRedIds.filter(team => team.countId > br.robotCount && team.direction === br.direction).length;
+				if (lessThan) {
+					br.halted = false;
+				}
 			} else {
-				//if (teamColor === 'blue' && br.halted) {
-					//const spellWall = !!Aurora.methodObjects.find(x => x.id === 'red-spell-wall');
-					//if (!spellWall) {
-						//br.halted = false;
-					//}
-				//} else if (teamColor === 'red' && br.halted) {
-					//const spellWall = !!Aurora.methodObjects.find(x => x.id === 'blue-spell-wall');
-					//if (!spellWall) {
-						//br.halted = false;
-					//}
-				//}
+				// if there is no wall, move all the halted robots
+				if (teamColor === 'blue' && br.halted && spellWallCollisions.teamBlueIds.length === 0) {
+					br.halted = false;
+				} else if (teamColor === 'red' && br.halted && spellWallCollisions.teamRedIds.length === 0) {
+					br.halted = false;
+				}
 			}
 		}
 		function moveBlueRobots() {
@@ -4401,6 +4378,11 @@ const maulPage = {
 				}
 			}
 		}
+		function castRedSpell(spellType) {
+			castSpell(gameObject.redSpellTarget, spellType, undefined, 'red');
+			gameObject.redSpellTarget.tappedX = 0;
+			gameObject.redSpellTarget.tappedY = 0;
+		}
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
 				let whatToDo = Math.floor((Math.random() * 3) + 1);
@@ -4509,12 +4491,10 @@ const maulPage = {
 						if (gameObject.redSpellTarget.tappedX !== 0 && gameObject.redSpellTarget.tappedY !== 0) {
 							if (whatToCast === 1 && gameObject.canRedCastWall) {
 								spellType = 'wall';
-								castSpell(gameObject.redSpellTarget, spellType, undefined, 'red');
+								castRedSpell(spellType);
 							} else if (whatToCast === 2 && gameObject.canRedCastEmp) {
 								spellType = 'emp';
-								// future Jordan, make sure reds spells can reload
-								// make sure all of this works
-								castSpell(gameObject.redSpellTarget, spellType, undefined, 'red');
+								castRedSpell(spellType);
 							}
 						}
 					}
