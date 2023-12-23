@@ -1154,21 +1154,14 @@ const maulPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
-		function moveRobotsForward(robotId, teamColor) {
-			const idSplit = robotId.split('-');
-			const uniqueRobot = +idSplit[idSplit.length-1];
-			let searchRobotId = '';
-			for (let i = 0; i < idSplit.length - 1; i++) {
-				searchRobotId += idSplit[i] + '-';
-			}
-			let attackerIndex = 0;
+		function moveRobotsForward(robotCountId, teamColor, direction) {
 			if (teamColor === 'blue') {
-				const moveRedBots = gameObject.arenaRedAttackers.filter(bot => bot.id.includes(searchRobotId) && bot.halted);
+				let attackerIndex = 0;
+				const moveRedBots = gameObject.arenaRedAttackers.filter(bot => bot.direction === direction && bot.halted);
 				if (moveRedBots.length > 0) {
 					const moveHaltedRobot = setInterval(function() {
-						const splitId = moveRedBots[attackerIndex].id.split('-');
-						const checkUniqueId = +splitId[splitId.length-1];
-						if (checkUniqueId > uniqueRobot) {
+						const checkCount = moveRedBots[attackerIndex].robotCount;
+						if (checkCount > robotCountId) {
 							moveRedBots[attackerIndex].halted = false;
 							
 						}
@@ -1180,12 +1173,12 @@ const maulPage = {
 					}, 100);
 				}
 			} else if (teamColor === 'red') {
-				const moveBlueBots = gameObject.arenaBlueAttackers.filter(bg => bg.id.includes(searchRobotId));
+				let attackerIndex = 0;
+				const moveBlueBots = gameObject.arenaBlueAttackers.filter(bot => bot.direction === direction && bot.halted);
 				if (moveBlueBots.length > 0) {
 					const moveHaltedRobot = setInterval(function() {
-						const splitId = moveBlueBots[attackerIndex].id.split('-');
-						const checkUniqueId = +splitId[splitId.length-1];
-						if (checkUniqueId > uniqueRobot) {
+						const checkCount = moveBlueBots[attackerIndex].robotCount;
+						if (checkCount > robotCountId) {
 							moveBlueBots[attackerIndex].halted = false;
 							
 						}
@@ -1254,7 +1247,7 @@ const maulPage = {
 						});
 						updateMoneyBackground();
 					}
-					moveRobotsForward(bullet.props.target, teamColor);
+					moveRobotsForward(robotHitStats.robotCount, teamColor, robotHitStats.direction);
 				}
 			}
 		}

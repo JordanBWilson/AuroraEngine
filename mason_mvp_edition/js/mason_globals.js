@@ -286,7 +286,6 @@ let gameObject = {
 	gamesLost: 0, // how many arena games lost
 	tutorialStep: 0, // what part of the tutorial is being displayed
 	cutSceneStep: 0, // what cut scene to show
-	newPlayer: true, // is this a new player, show the tutorial
 	gameSounds: false, // play game sounds
 	wallReady: false, // wall spell ready
 	empReady: false, // emp spell ready

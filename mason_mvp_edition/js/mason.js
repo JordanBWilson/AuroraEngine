@@ -635,11 +635,10 @@ const mainPage = {
 	description: 'The main game page of Mason',
 	loadPage: function() {
 		gameObject.canClick = true;
-		let knight = {};
 		let robot = {};
-		playAurora();
+		playGame();
 
-		function playAurora() {
+		function playGame() {
 			robot = {};
 			if (gameObject.discoveredChassis.length === 0) {
 				gameObject.discoveredChassis.push(robotChassis[0]);
@@ -656,87 +655,30 @@ const mainPage = {
 			
 			Aurora.clearStage();
 			drawBackground();
-			// Aurora.methodSetup = {
-			// 	method: function(id) {
-			// 		drawImage({
-			// 			posX: Aurora.placeEntityX(0, (Aurora.entitySize * 10)),
-			// 			posY: Aurora.placeEntityY(0.77, (Aurora.entitySize * 10)),
-			// 			width: (Aurora.entitySize * 10),
-			// 			height: (Aurora.entitySize * 10),
-			// 			images: [masonWorkerImg],
-			// 			selectedImage: 0,
-			// 			animTicks: 0,
-			// 			ticks: 0,
-			// 			id: 'mason-worker',
-			// 			isBackground: false,
-			// 			props: {
-			// 				direction: 'right',
-			// 			},
-			// 			methodId: id
-			// 		});
-			// 	}
-			// };
-			// Aurora.addMethod(Aurora.methodSetup);
-			// Aurora.methodSetup = {
-			// 	method: function(id) {
-			// 		drawImage({
-			// 			posX: Aurora.placeEntityX(0.75, (Aurora.entitySize * 10)),
-			// 			posY: Aurora.placeEntityY(0.77, (Aurora.entitySize * 10)),
-			// 			width: (Aurora.entitySize * 10),
-			// 			height: (Aurora.entitySize * 10),
-			// 			images: Aurora.gifImageList.length > 0 ? Aurora.gifImageList.find(img => img.methodId === id).pngs : [],
-			// 			selectedImage: 0,
-			// 			animTicks: 25,
-			// 			ticks: 25,
-			// 			id: 'knight',
-			// 			isBackground: false,
-			// 			props: {
-			// 				direction: 'right',
-			// 			},
-			// 			methodId: id
-			// 		});
-			// 	}
-			// };
-			// Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
-			method: function(id) {
-			  // drawButtonImage({
-			  //   posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 15)),
-			  //   posY: Aurora.placeEntityY(0.795, (Aurora.entitySize * 15)),
-			  //   width: (Aurora.entitySize * 15),
-			  //   height: (Aurora.entitySize * 15),
-			  //   images: [rockImg],
-					// 	selectedImage: 0,
-					// 	animTicks: 0,
-					// 	ticks: 0,
-			  //   id: 'rock',
-			  //   action: { method: function(id) { mineScrap(); }},
-			  //   isModalBtn: false,
-			  //   props: {},
-			  //   methodId: id
-			  // });
-			drawButton({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 15)),
-				posY: Aurora.placeEntityY(0.75, (Aurora.entitySize * 15)),
-				width: (Aurora.entitySize * 15),
-				height: (Aurora.entitySize * 15),
-				lineWidth: 1,
-				btnColor: 'darkgrey',
-				txtColor: 'black',
-				font: '1.5em serif',
-				msg: 'Scrap',
-				isFilled: true,
-				id: 'scrap',
-				action: { 
-					method: function(id) { 
-						mineScrap(); 
-					}
-				},
-				isModalBtn: false,
-				props: {},
-				methodId: id
-			  });
-			}
+				method: function(id) {
+					drawButton({
+						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 15)),
+						posY: Aurora.placeEntityY(0.75, (Aurora.entitySize * 15)),
+						width: (Aurora.entitySize * 15),
+						height: (Aurora.entitySize * 15),
+						lineWidth: 1,
+						btnColor: 'darkgrey',
+						txtColor: 'black',
+						font: '1.5em serif',
+						msg: 'Scrap',
+						isFilled: true,
+						id: 'scrap',
+						action: { 
+							method: function(id) { 
+								mineScrap(); 
+							}
+						},
+						isModalBtn: false,
+						props: {},
+						methodId: id
+					});
+				}
 		  };
 		  Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = {
@@ -810,23 +752,10 @@ const mainPage = {
 				Aurora.addMethod(Aurora.methodSetup);
 			}
 			// drawRobot();
-		  // Aurora.methodSetup = { method: function(id) { moveMasonWorker(); }};
-		  // Aurora.addMethod(Aurora.methodSetup);
-
-			//Aurora.methodSetup = { method: function(id) { findAuroraObjects(); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-
-			//Aurora.methodSetup = { method: function(id) { animateObjects(); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-
-		  Aurora.collisionSetup = {
-			primary: 'scrap',
-			target: 'mason-worker',
-			method: function(id) { masonRockCollision(this.methodId) },
-			methodId: undefined,
-		  }
-		  // Aurora.addCollision(Aurora.collisionSetup);
-		  Particle.init();
+			Particle.init();
+			if (gameObject.tutorialStep === 0) {
+				tutorialIntro();
+			}
 		}
 
 		function drawBackground() {
@@ -1010,16 +939,7 @@ const mainPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
-
 		function findAuroraObjects() {
-		  // when the game starts up, look for the knight and animate it
-		  // if (!knight?.methodId) {
-		  //   knight = Aurora.methodObjects.find(x => x.id === 'knight');
-			// 	if (knight.methodId) {
-			// 		Aurora.createImageListFromGif('./assets/images/testKnight.GIF', knight.methodId);
-			// 		animateObjects();
-			// 	}
-		  // }
 			if (!robot?.methodId) {
 				robot = Aurora.methodObjects.find(x => x.id === 'robot');
 				robot.props.drawHead(robot);
@@ -1030,66 +950,14 @@ const mainPage = {
 
 			}
 		}
-
-		function animateObjects() {
-			if (knight?.methodId) {
-				if (knight.animTicks <= 1) {
-					if (knight.selectedImage === 0) {
-						knight.selectedImage = 1;
-					} else if (knight.selectedImage === 1) {
-						knight.selectedImage = 0;
-					}
-				}
-				knight = Aurora.nextTick(knight);
-			}
-			if (robot?.methodId) {
-				const roboParts = Aurora.methodObjects.filter(x => x.id === 'robot');
-				if (roboParts.length === 6) {
-					setTimeout(function() {
-						for (let i = 0; i < roboParts.length; i++) {
-							roboParts[i].posX -= Aurora.moveEntity(0.1, Aurora.enumDirections.leftRight);
-							if (i === roboParts.length -1) {
-								break;
-							}
-						}
-					}, 0);
-				}
-			}
-		}
-
 		function openArena() {
 			// this is in mason_arena
 			arenaPage.loadPage();
 		}
-
-		function moveMasonWorker() {
-			const masonWorkers = Aurora.methodObjects.filter(x => x.id === 'mason-worker');
-			// move the mason worker
-			masonWorkers.forEach((worker, i) => {
-				if (worker.props.direction === 'right') {
-					masonWorkers[i].posX += Aurora.moveEntity(0.15, Aurora.enumDirections.leftRight);
-				}
-				if (worker.props.direction === 'left') {
-					masonWorkers[i].posX -= Aurora.moveEntity(0.15, Aurora.enumDirections.leftRight);
-				}
-			});
-		}
-
-		function masonRockCollision(methodId) {
-			const masonWorker = Aurora.methodObjects.find(x => x.methodId === methodId);
-			if (masonWorker.props.direction === 'left') {
-				masonWorker.props.direction = 'right';
-			}
-			if (masonWorker.props.direction === 'right') {
-				masonWorker.props.direction = 'left';
-			}
-		}
-
 		function openFactory() {
 			// this method is in mason_factory
 			factoryPage.loadPage();
 		}
-
 		function mineScrap() {
 			if (gameObject.canClick) {
 				gameObject.canClick = false;
@@ -1106,6 +974,10 @@ const mainPage = {
 					gameObject.facinatingScrap + 
 					gameObject.mythicScrap + 
 					gameObject.exoticScrap;
+				// future Jordan, test this out
+				if (totalScrap === gameObject.scrapInvintory && gameObject.tutorialStep === 1) {
+					tutorialSellScrapIntro();
+				}
 				if (totalScrap < gameObject.scrapInvintory) {
 					Particle.drawSpark({
 						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 0.7)),
@@ -1120,7 +992,6 @@ const mainPage = {
 					const scrapRoll =  Math.round(Math.random() * (gameObject.scrapperSkill + 40));
 					
 					// future Jordan, consider reversing the scrap order. later levels makes common scrap look rare
-					// other than testing the scrapping skill completely, it's time to work on the arena
 					if (gameObject.scrapperSkill === 0) {
 						if (scrapRoll >= (gameObject.scrapperSkill + 39)) {
 							scrapFoundCount = 1;
