@@ -210,6 +210,9 @@ const factoryPage = {
 					factoryPage.loadPage();
 				}
 			}
+			if (gameObject.tutorialStep === 10) {
+				tutorialFactoryMenu();
+			}
 		}
 		factoryRobotSelect(); // draw the factory page
 		function factoryRobotDetails() {
@@ -453,6 +456,9 @@ const factoryPage = {
 						selectRobotHead();
 					}
 				}
+			}
+			if (gameObject.tutorialStep === 12) {
+				tutorialFactoryRobots();
 			}
 		}
 		function clearRobotParts() {
@@ -1681,6 +1687,9 @@ const factoryParts = {
 						
 					}
 				}
+			}
+			if (gameObject.tutorialStep === 11) {
+				tutorialFactoryParts();
 			}
 		}
 		factoryRobotParts(); // load the parts page

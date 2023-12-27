@@ -184,7 +184,7 @@ const homePage = {
 																modalColor: 'grey',
 																msgColor: 'white',
 																msgFont: '1.3em serif',
-																msg: 'Aurora Saved',
+																msg: 'Game Saved',
 																footerColor: 'white',
 																footerFont: '1em serif',
 																footerMsg: 'Tap here to continue',
@@ -302,6 +302,13 @@ const homePage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+			
+			if (gameObject.tutorialStep === 2) {
+				tutorialSellScrapHome();
+			}
+			if (gameObject.tutorialStep === 6) {
+				tutorialCreateFactory();
+			}
 		}
 		homeMenuSelect(); // draw the home page
 		
@@ -487,6 +494,10 @@ const homeSellMenus = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+			
+			if (gameObject.tutorialStep === 3) {
+				tutorialSellScrapSellBtn();
+			}
 		}
 		homeSellSelect(); // display the sell menu
 	}
@@ -657,6 +668,9 @@ const homeSellScrap = {
 						}, 150);
 					}
 				}
+			}
+			if (gameObject.tutorialStep === 4) {
+				tutorialSellAllScrap();
 			}
 		}
 		homeSellScrap();
@@ -1165,6 +1179,9 @@ const homeSellScrap = {
 											addFunds(gameObject.commonScrapBase);
 											if (gameObject.commonScrap === 0) {
 												gameObject.buildButtonDisabled = true;
+												if (gameObject.tutorialStep === 5) {
+													tutorialSellScrapSold();
+												}
 												
 											}
 										}
@@ -4172,6 +4189,12 @@ const homePlayerUpgrades = {
 																						const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 																						Aurora.deleteEntity(modal.methodId);
 																						homePlayerUpgrades.loadPage();
+																						if (gameObject.factoryBuilt && gameObject.tutorialStep === 8) {
+																							tutorialBuildArena();
+																						}
+																						if (gameObject.arenaBuild && gameObject.tutorialStep === 9) {
+																							tutorialBuildRobotParts();
+																						}
 																					}
 																				},
 																				isModalBtn: true,
@@ -4241,6 +4264,9 @@ const homePlayerUpgrades = {
 				if (upgradeCount === 3) {
 					upgradeCount = 0;
 				}
+			}
+			if (gameObject.tutorialStep === 7) {
+				tutorialBuildFactory();
 			}
 		}
 		upgradePlayer(); // draw the upgrade menu

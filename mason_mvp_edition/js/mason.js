@@ -974,7 +974,6 @@ const mainPage = {
 					gameObject.facinatingScrap + 
 					gameObject.mythicScrap + 
 					gameObject.exoticScrap;
-				// future Jordan, test this out
 				if (totalScrap === gameObject.scrapInvintory && gameObject.tutorialStep === 1) {
 					tutorialSellScrapIntro();
 				}
