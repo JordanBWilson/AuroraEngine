@@ -291,8 +291,11 @@ const arenaPage = {
 									if (gameObject.gameSounds) {
 										selectSound.cloneNode(true).play();
 									}
-									// future Jordan, add the final tutorial here
-									maulPage.loadPage();
+									if (gameObject.arenaBuild && gameObject.tutorialStep === 14) {
+										tutorialMaul();
+									} else {
+										maulPage.loadPage();
+									}
 								} else {
 									let msgs = ['Select At Least', 'One Robot and Tower', 'Tap here to continue'];
 									Aurora.methodSetup = {

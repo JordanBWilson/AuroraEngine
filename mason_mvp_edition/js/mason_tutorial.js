@@ -180,7 +180,7 @@ function tutorialIntro4() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialSellScrapIntro() {
-	let msgs = ['Now that you have some scrap', 'sell it for some money. Different', 'scrap goes for various amounts', 'of money.', '- Tap here to continue -'];
+	let msgs = ['Now that you have some scrap,', 'sell it for some money. Different', 'scrap goes for various amounts', 'of money.', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -250,7 +250,7 @@ function tutorialSellScrapIntro1() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialSellScrapHome() {
-	let msgs = ['This is your base of operations.', 'Here you can use the Map to save your game,', 'Upgrade your skills and Sell scrap, robot', 'parts or completed robots.', '- Tap here to continue -'];
+	let msgs = ['This is your base of operations.', 'Here you can use the Map to save', 'your game, Upgrade your skills', ' and Sell Scrap, Robot Parts', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -285,6 +285,41 @@ function tutorialSellScrapHome() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialSellScrapHome1() {
+	let msgs = ['or Completed Robots.', '', '', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						tutorialSellScrapHome2();
+						removeModal();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialSellScrapHome2() {
 	let msgs = ['Right now you need some money.', 'Tap the Sell button.', '', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
@@ -309,6 +344,7 @@ function tutorialSellScrapHome1() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 3
 						removeModal();
+						homePage.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -344,6 +380,7 @@ function tutorialSellScrapSellBtn() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 4
 						removeModal();
+						homeSellMenus.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -355,7 +392,7 @@ function tutorialSellScrapSellBtn() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialSellAllScrap() {
-	let msgs = ['Go ahead and sell all of your scrap.', 'Tap Common Scrap and then tap the', 'Sell button.', '', '- Tap here to continue -'];
+	let msgs = ['Go ahead and sell all of your scrap.', 'Tap Common Scrap and then', 'tap the Sell button.', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -379,6 +416,7 @@ function tutorialSellAllScrap() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 5
 						removeModal();
+						homeSellScrap.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -389,6 +427,7 @@ function tutorialSellAllScrap() {
 	};
 	Aurora.addMethod(Aurora.methodSetup);
 }
+// future Jordan, continue going through the tutorial and make it better
 function tutorialSellScrapSold() {
 	let msgs = ['Great! Now that you have some money,', 'you can now afford to build a Factory.', 'The Factory is where you build Robot Defenders.', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
@@ -519,6 +558,7 @@ function tutorialBuildFactory() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 8
 						removeModal();
+						homePlayerUpgrades.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -1055,7 +1095,7 @@ function tutorialFactoryRobots5() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialArena() {
-	let msgs = ['This is where you can test out the new Robots', 'that you have made. Select a Robot that you have', 'built. After you have made your selection, select how you', 'would like your robot to behave with the Directives.', '- Tap here to continue -'];
+	let msgs = ['This is where you can test out the new Robots', 'that you have made. Select a Robot that you have built to', 'upload it. After you have made your selection, select how you', 'would like your robot to behave with the Directives.', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -1148,6 +1188,356 @@ function tutorialArena2() {
 				action: {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 14
+						removeModal();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul() {
+	let msgs = ['So it looks like you are ready to compete.', 'Here is a quick summary of the game you', 'will be playing.', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul1();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul1() {
+	let msgs = ['Protect your base. Build and upgrade the towers on your', 'side. Send Robots to attack your opponent. Cast', 'spells to slow down or destroy enemy Robots.', 'Did I mention protect your base?', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul2();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul2() {
+	let msgs = ['First objective is to build towers. There are spots', 'you can build on. They are marked as such.', 'Tap on a spot to build and then select the tower to build.', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul3();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul3() {
+	let msgs = ['Tapping a built tower once will show the towers range.', 'Tapping the same tower again will bring up the', 'upgrade menu for that tower. You may have to upgrade', 'your Arena to upgrade your tower in game.', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul4();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul4() {
+	let msgs = ['Next you need to worry about sending Robots.', 'Select one of the robots you uploaded and then tap', 'one of the Send buttons on the side you would', 'like to send it.', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul5();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul5() {
+	let msgs = ['Lastly let us review Spells. Spells can change the tide of the game.', 'You have two spells, one is a Wall and the other is an EMP', 'The wall stops the enemy robots from moving. The EMP destroys', 'robots on contact. Place Spells on the walkway closest to you.', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul6();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul6() {
+	let msgs = ['Do not worry about winning your first game. The first few games', 'are slow so you can get aquanted with the gameplay.', '', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul7();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul7() {
+	let msgs = ['If you do win, you will get prizes like money', 'and new Robot Parts. Keep in mind that every', 'win will increase the difficulty of the next game.', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul8();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul8() {
+	let msgs = ['When you are ready, tap the Play button', 'one more time. Good luck out there!', '', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul8();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul8() {
+	let msgs = ['***TRANSMISSION LOST***', '', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						gameObject.tutorialStep++; // step 15
 						removeModal();
 					}
 				},

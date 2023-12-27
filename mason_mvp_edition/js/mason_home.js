@@ -1179,10 +1179,6 @@ const homeSellScrap = {
 											addFunds(gameObject.commonScrapBase);
 											if (gameObject.commonScrap === 0) {
 												gameObject.buildButtonDisabled = true;
-												if (gameObject.tutorialStep === 5) {
-													tutorialSellScrapSold();
-												}
-												
 											}
 										}
 										if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
@@ -1253,7 +1249,11 @@ const homeSellScrap = {
 											setTimeout(function() {
 												displayNotEnoughScrapModal();
 											}, 0);
-											
+											if (gameObject.tutorialStep === 5) {
+												setTimeout(function() {
+													tutorialSellScrapSold();
+												}, 100);
+											}
 										}, 0);
 										
 										
