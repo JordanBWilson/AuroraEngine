@@ -40,7 +40,7 @@ function tutorialIntro() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialIntro1() {
-	let msgs = ['Finally someone answered!', 'Listen, you are not out of this yet.', 'My scanners detects unknown', ' entities all around you', '- Tap here to continue -'];
+	let msgs = ['Finally someone answered!', 'Listen, you are not out of this yet.', 'My scanners detect unknown', ' entities all around you.', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -250,7 +250,7 @@ function tutorialSellScrapIntro1() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialSellScrapHome() {
-	let msgs = ['This is your base of operations.', 'Here you can use the Map to save', 'your game, Upgrade your skills', ' and Sell Scrap, Robot Parts', '- Tap here to continue -'];
+	let msgs = ['This is your base of operations.', 'Here you can use the Map to save', 'your game, Upgrade your Skills', ' and Sell Scrap, Robot Parts', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -427,9 +427,8 @@ function tutorialSellAllScrap() {
 	};
 	Aurora.addMethod(Aurora.methodSetup);
 }
-// future Jordan, continue going through the tutorial and make it better
 function tutorialSellScrapSold() {
-	let msgs = ['Great! Now that you have some money,', 'you can now afford to build a Factory.', 'The Factory is where you build Robot Defenders.', '', '- Tap here to continue -'];
+	let msgs = ['Great! Now that you have some', 'money, you can now afford to build', 'a Factory. The Factory is where', 'you build Robot Defenders.', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -452,6 +451,7 @@ function tutorialSellScrapSold() {
 				action: {
 					method: function(id) {
 						removeModal();
+						homeSellScrap.loadPage();
 						tutorialSellScrapSold1();
 					}
 				},
@@ -488,6 +488,7 @@ function tutorialSellScrapSold1() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 6
 						removeModal();
+						homeSellScrap.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -523,6 +524,7 @@ function tutorialCreateFactory() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 7
 						removeModal();
+						homePage.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -570,7 +572,7 @@ function tutorialBuildFactory() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildArena() {
-	let msgs = ['Nice going! Now you can build Robot Defenders.', '', '', '', '- Tap here to continue -'];
+	let msgs = ['Nice going! Now you can build', 'Robot Defenders.', '', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -593,6 +595,7 @@ function tutorialBuildArena() {
 				action: {
 					method: function(id) {
 						removeModal();
+						homePlayerUpgrades.loadPage();
 						tutorialBuildArena1();
 					}
 				},
@@ -605,7 +608,7 @@ function tutorialBuildArena() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildArena1() {
-	let msgs = ['While you are here...', 'Go ahead and spend the rest of your money', 'on the Arena. It will be good to see what your', 'Robots are made of.', '- Tap here to continue -'];
+	let msgs = ['While you are here... Go ahead', 'and spend the rest of your money', 'on the Arena. It will be good to see', 'what your Robots are made of.', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -629,6 +632,7 @@ function tutorialBuildArena1() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 9
 						removeModal();
+						homePlayerUpgrades.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -640,7 +644,7 @@ function tutorialBuildArena1() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildRobotParts() {
-	let msgs = ['Nice! Now you will be able to see what', 'your Robots are made of in battle.', '', '', '- Tap here to continue -'];
+	let msgs = ['Nice! Now you will be able to', 'see what your Robots can do', 'in battle.', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -663,6 +667,7 @@ function tutorialBuildRobotParts() {
 				action: {
 					method: function(id) {
 						removeModal();
+						homePlayerUpgrades.loadPage();
 						tutorialBuildRobotParts1();
 					}
 				},
@@ -675,7 +680,7 @@ function tutorialBuildRobotParts() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildRobotParts1() {
-	let msgs = ['Next comes the tricky part. It is time to build', 'some robot parts. Before you can build any parts,', 'you will have to level up your Engineering skill.', '', '- Tap here to continue -'];
+	let msgs = ['Next comes the tricky part. It is', 'time to build some robot parts.', 'Before you can build any parts,', 'you will have to level up', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -698,6 +703,7 @@ function tutorialBuildRobotParts1() {
 				action: {
 					method: function(id) {
 						removeModal();
+						homePlayerUpgrades.loadPage();
 						tutorialBuildRobotParts2();
 					}
 				},
@@ -710,7 +716,7 @@ function tutorialBuildRobotParts1() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildRobotParts2() {
-	let msgs = ['Before you can level up your Engineering skill,', ' you will have to sell more Scrap.', 'Then you will need even more scrap to build', 'all the parts that you will need.', '- Tap here to continue -'];
+	let msgs = ['your Engineering skill.', '', '', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -733,6 +739,7 @@ function tutorialBuildRobotParts2() {
 				action: {
 					method: function(id) {
 						removeModal();
+						homePlayerUpgrades.loadPage();
 						tutorialBuildRobotParts3();
 					}
 				},
@@ -745,7 +752,115 @@ function tutorialBuildRobotParts2() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildRobotParts3() {
-	let msgs = ['To build a complete robot you will need:', 'One Chassis, One Head, Two Arms and Two Legs.', 'Now go outside and let us check out your', 'new Factory.', '- Tap here to continue -'];
+	let msgs = ['Before you can level up your', 'Engineering skill, you will have', 'to sell more Scrap. Then', 'you will need even more scrap', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						homePlayerUpgrades.loadPage();
+						tutorialBuildRobotParts4();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialBuildRobotParts4() {
+	let msgs = ['to build all the parts that you ', 'will need to build a Robot.', '', '', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						homePlayerUpgrades.loadPage();
+						tutorialBuildRobotParts5();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialBuildRobotParts5() {
+	let msgs = ['To build a complete robot you', 'will need: One Chassis, One Head,', 'Two Arms and Two Legs. Now', 'go outside and let us check out', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						homePlayerUpgrades.loadPage();
+						tutorialBuildRobotParts6();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialBuildRobotParts6() {
+	let msgs = ['your new Factory. Go back', 'outside and tap on your', 'Factory', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -769,6 +884,7 @@ function tutorialBuildRobotParts3() {
 					method: function(id) {
 						gameObject.tutorialStep++; // step 10
 						removeModal();
+						homePlayerUpgrades.loadPage();
 					}
 				},
 				isModalBtn: true,
@@ -780,7 +896,42 @@ function tutorialBuildRobotParts3() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialFactoryMenu() {
-	let msgs = ['In the Factory, you can tap the Parts button to', 'build robot parts or you can select a robot design', 'to create a new robot.', 'Tap on the Parts button.', '- Tap here to continue -'];
+	let msgs = ['In the Factory, you can tap the', 'Parts button to build robot parts', 'or you can select a robot', 'design to create a new robot. Tap', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialFactoryMenu1();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialFactoryMenu1() {
+	let msgs = ['on the Parts button.', '', '', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -814,6 +965,7 @@ function tutorialFactoryMenu() {
 	};
 	Aurora.addMethod(Aurora.methodSetup);
 }
+// future Jordan, continue perfecting the tutorial
 function tutorialFactoryParts() {
 	let msgs = ['This is where you can build parts for your Robots.', 'Choose what type of part you would like to make', 'and then choose the design.', 'Finally, tap the Build button.', '- Tap here to continue -'];
 	Aurora.methodSetup = {

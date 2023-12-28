@@ -1168,17 +1168,23 @@ const homeSellScrap = {
 							method: function(id) {
 								if (gameObject.canClick) {
 									gameObject.canClick = false;
+									const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 									if (!gameObject.buildButtonDisabled) {
 										if (gameObject.gameSounds) {
 											sellSound.cloneNode(true).play();
 										}
-										const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+										
 										if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
 											gameObject.commonScrap--;
 											
 											addFunds(gameObject.commonScrapBase);
 											if (gameObject.commonScrap === 0) {
 												gameObject.buildButtonDisabled = true;
+												//if (gameObject.tutorialStep === 5 && !modal) {
+													//setTimeout(function() {
+														//tutorialSellScrapSold();
+													//}, 100);
+												//}
 											}
 										}
 										if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
@@ -1246,13 +1252,18 @@ const homeSellScrap = {
 										refreshSellScrapBackgrounds();
 										setTimeout(function() {
 											selectScrapPrice(gameObject.scrapToSell);
-											setTimeout(function() {
-												displayNotEnoughScrapModal();
-											}, 0);
-											if (gameObject.tutorialStep === 5) {
+											if (gameObject.tutorialStep !== 5) {
 												setTimeout(function() {
+													displayNotEnoughScrapModal();
+												}, 0);
+											} else if (gameObject.tutorialStep === 5) {
+												setTimeout(function() {
+													const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+													if (modal) {
+														Aurora.deleteEntity(modal.methodId);
+													}
 													tutorialSellScrapSold();
-												}, 100);
+												}, 0);
 											}
 										}, 0);
 										
@@ -1284,11 +1295,18 @@ const homeSellScrap = {
 						selectScrapPrice(gameObject.scrapToSell);
 						setTimeout(function() {
 							const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
-							if (modal) {
-								displayNotEnoughScrapModal();
+							if (gameObject.tutorialStep !== 5) {
+								if (modal) {
+									displayNotEnoughScrapModal();
+								}
+							} else if (gameObject.tutorialStep === 5 && gameObject.commonScrap === 0) {
+								if (modal) {
+									Aurora.deleteEntity(modal.methodId);
+								}
+								tutorialSellScrapSold();
 							}
 						}, 0);
-					},0);			
+					},0);
 				}
 			};
 		}
