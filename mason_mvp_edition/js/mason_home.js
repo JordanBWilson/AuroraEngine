@@ -1180,11 +1180,6 @@ const homeSellScrap = {
 											addFunds(gameObject.commonScrapBase);
 											if (gameObject.commonScrap === 0) {
 												gameObject.buildButtonDisabled = true;
-												//if (gameObject.tutorialStep === 5 && !modal) {
-													//setTimeout(function() {
-														//tutorialSellScrapSold();
-													//}, 100);
-												//}
 											}
 										}
 										if (gameObject.scrapToSell === 'unCommon' && gameObject.unCommonScrap > 0 && !modal) {
@@ -3826,7 +3821,7 @@ const homePlayerUpgrades = {
 																} else if (gameObject.roboticsUpgradeCost.nickel) {
 																	gameObject.roboticsUpgradeCost.bronze = 0;
 																	gameObject.roboticsUpgradeCost.nickel *= 2;
-																} else if (gameObject.roboticsUpgradeCost.silver) {
+																} else if (gameObject.robtutorialoticsUpgradeCost.silver) {
 																	gameObject.roboticsUpgradeCost.nickel = 0;
 																	gameObject.roboticsUpgradeCost.silver *= 2;
 																} else if (gameObject.roboticsUpgradeCost.gold) {
@@ -3976,7 +3971,7 @@ const homePlayerUpgrades = {
 																	gameObject.arenaUpgradeCost.nickel = 0;
 																	gameObject.arenaUpgradeCost.silver *= 2;
 																} else if (gameObject.arenaUpgradeCost.gold) {
-																	gameObject.arenaUpgradeCost.silver = 0;
+																	gameObject.arenaUpgratutorialdeCost.silver = 0;
 																	gameObject.arenaUpgradeCost.gold *= 2;
 																} else if (gameObject.arenaUpgradeCost.platinum) {
 																	gameObject.arenaUpgradeCost.gold = 0;
@@ -4112,7 +4107,7 @@ const homePlayerUpgrades = {
 
 															Particle.floatingText({
 																font: '2.3rem serif',
-																msg: '+',
+																msg: '+',tutorial
 																align: 'center',
 																posX: Aurora.placeEntityX(0.472),
 																posY: Aurora.placeEntityY(0.29),
