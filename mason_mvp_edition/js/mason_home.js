@@ -4107,7 +4107,7 @@ const homePlayerUpgrades = {
 
 															Particle.floatingText({
 																font: '2.3rem serif',
-																msg: '+',tutorial
+																msg: '+',
 																align: 'center',
 																posX: Aurora.placeEntityX(0.472),
 																posY: Aurora.placeEntityY(0.29),

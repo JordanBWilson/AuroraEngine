@@ -19,6 +19,12 @@ grassImg.src = grassPath;
 const roadImg = new Image();
 const roadPath = './assets/images/brick.png';
 roadImg.src = roadPath;
+const treeImg = new Image();
+const treePath = './assets/images/Wild_Tree.png';
+treeImg.src = treePath;
+const cityImg = new Image();
+const cityPath = './assets/images/Lost_City.png';
+cityImg.src = cityPath;
 
 // load the game sounds
 const selectSound = new Audio('./assets/sounds/select.wav');
@@ -814,6 +820,82 @@ const mainPage = {
 						methodId: id
 					});
 				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Aurora.placeEntityX(0.85),
+			 			posY: Aurora.placeEntityY(0.06, (Aurora.entitySize * -35)),
+			 			width: (Aurora.canvas.height * 0.33),
+			 			height: (Aurora.canvas.height * 0.33),
+			 			images: [treeImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'wild-tree-1',
+			 			isBackground: false,
+			 			props: {},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Aurora.placeEntityX(0.55),
+			 			posY: Aurora.placeEntityY(0.06, (Aurora.entitySize * -35)),
+			 			width: (Aurora.canvas.height * 0.33),
+			 			height: (Aurora.canvas.height * 0.33),
+			 			images: [treeImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'wild-tree-2',
+			 			isBackground: false,
+			 			props: {},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Aurora.placeEntityX(0.25, (Aurora.entitySize * 10)),
+			 			posY: Aurora.placeEntityY(0.06, (Aurora.entitySize * -35)),
+			 			width: (Aurora.canvas.height * 0.33),
+			 			height: (Aurora.canvas.height * 0.33),
+			 			images: [treeImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'wild-tree-3',
+			 			isBackground: false,
+			 			props: {},
+			 			methodId: id
+			 		});
+			 	}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawImage({
+			 			posX: Aurora.placeEntityX(0.00, (Aurora.entitySize * 25)),
+			 			posY: Aurora.placeEntityY(0.06, (Aurora.entitySize * -35)),
+			 			width: (Aurora.canvas.height * 0.33),
+			 			height: (Aurora.canvas.height * 0.33),
+			 			images: [treeImg],
+			 			selectedImage: 0,
+			 			animTicks: 0,
+			 			ticks: 0,
+			 			id: 'wild-tree-4',
+			 			isBackground: false,
+			 			props: {},
+			 			methodId: id
+			 		});
+			 	}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
