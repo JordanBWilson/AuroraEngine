@@ -1595,36 +1595,38 @@ const mainPage = {
 						speed: 0.5,
 					});
 				} else {
-					Aurora.methodSetup = {
-						method: function(id) {
-							drawSimpleModal({
-								posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
-								posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
-								width: (Aurora.entitySize * 40),
-								height: (Aurora.entitySize * 30),
-								lineWidth: 1,
-								modalColor: 'darkgrey',
-								msgColor: 'white',
-								msgFont: '1.1em serif',
-								msg: 'Not Enough Scrap Space',
-								footerColor: 'white',
-								footerFont: '1em serif',
-								footerMsg: 'Tap here to continue',
-								bgColor: '',
-								isModalFilled: true,
-								id: Aurora.modalId,
-								action: { 
-									method: function(id) {
-										const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
-										Aurora.deleteEntity(modal.methodId);
-									}
-								},
-								props: {},
-								methodId: id
-							});
-						}
-					};
-					Aurora.addMethod(Aurora.methodSetup);
+					if (gameObject.tutorialStep !== 1) {
+						Aurora.methodSetup = {
+							method: function(id) {
+								drawSimpleModal({
+									posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+									posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+									width: (Aurora.entitySize * 40),
+									height: (Aurora.entitySize * 30),
+									lineWidth: 1,
+									modalColor: 'darkgrey',
+									msgColor: 'white',
+									msgFont: '1.1em serif',
+									msg: 'Not Enough Scrap Space',
+									footerColor: 'white',
+									footerFont: '1em serif',
+									footerMsg: 'Tap here to continue',
+									bgColor: '',
+									isModalFilled: true,
+									id: Aurora.modalId,
+									action: { 
+										method: function(id) {
+											const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+											Aurora.deleteEntity(modal.methodId);
+										}
+									},
+									props: {},
+									methodId: id
+								});
+							}
+						};
+						Aurora.addMethod(Aurora.methodSetup);
+					}
 				}
 				const scrapRest = setInterval(function() {
 					gameObject.canClick = true;

@@ -211,7 +211,10 @@ const factoryPage = {
 				}
 			}
 			if (gameObject.tutorialStep === 10) {
-				tutorialFactoryMenu();
+				setTimeout(function() {
+					tutorialFactoryMenu();
+				}, 100);
+				
 			}
 		}
 		factoryRobotSelect(); // draw the factory page
@@ -1521,7 +1524,9 @@ const factoryParts = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
-			drawRobotPartButtons(); // draw the buttons in the top left
+			if (gameObject.tutorialStep !== 11) {
+				drawRobotPartButtons(); // draw the buttons in the top left
+			}
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({

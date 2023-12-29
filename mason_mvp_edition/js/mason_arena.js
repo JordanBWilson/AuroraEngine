@@ -378,7 +378,9 @@ const arenaPage = {
 				}
 			}
 			if (gameObject.tutorialStep === 13) {
-				tutorialArena();
+				setTimeout(function() {
+					tutorialArena();
+				}, 100);
 			}
 		}
 		arenaMenuSelect();
