@@ -608,7 +608,7 @@ function tutorialBuildArena() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildArena1() {
-	let msgs = ['While you are here... Go ahead', 'and spend the rest of your money', 'on the Arena. It will be good to see', 'what your Robots are made of.', '- Tap here to continue -'];
+	let msgs = ['While you are here... Go ahead', 'and spend the rest of your money', 'on the Arena. It will be good to', 'test your Robots out.', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -788,7 +788,7 @@ function tutorialBuildRobotParts3() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialBuildRobotParts4() {
-	let msgs = ['to build all the parts that you ', 'will need to build a Robot.', '', '', '- Tap here to continue -'];
+	let msgs = ['to build all the parts that you ', 'will need to put together', 'a Robot.', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
