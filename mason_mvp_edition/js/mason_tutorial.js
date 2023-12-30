@@ -4,6 +4,7 @@ function removeModal() {
 		Aurora.deleteEntity(modal.methodId);
 	}
 }
+// future Jordan, time to work on the cut scenes
 function tutorialIntro() {
 	let msgs = ['***INCOMING TRANSMISSION***', '', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
@@ -145,7 +146,7 @@ function tutorialIntro3() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialIntro4() {
-	let msgs = ['Tap on the scrap pile till', 'you find some usable pieces.', '', '', '- Tap here to continue -'];
+	let msgs = ['Tap on the scrap pile till', 'you find some usable pieces.', 'You will need 10 pieces.', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -989,7 +990,10 @@ function tutorialFactoryParts() {
 				action: {
 					method: function(id) {
 						removeModal();
-						tutorialFactoryParts1();
+						setTimeout(function() {
+							tutorialFactoryParts1();
+						}, 0);
+						
 					}
 				},
 				isModalBtn: true,
@@ -1024,7 +1028,10 @@ function tutorialFactoryParts1() {
 				action: {
 					method: function(id) {
 						removeModal();
-						tutorialFactoryParts2();
+						setTimeout(function() {
+							tutorialFactoryParts2();
+						}, 0);
+						
 					}
 				},
 				isModalBtn: true,
@@ -1183,7 +1190,7 @@ function tutorialFactoryRobots3() {
 		method: function(id) {
 			drawDialogueModal({
 				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
-				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),			// if (gameObject.tutorialStep !== 11) {
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
 				lineWidth: 1,
@@ -1357,7 +1364,7 @@ function tutorialArena1() {
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
-			drawDialogueModal({
+			drawDialogueModal({			// if (gameObject.tutorialStep !== 11) {
 				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
@@ -1633,9 +1640,8 @@ function tutorialMaul4() {
 	};
 	Aurora.addMethod(Aurora.methodSetup);
 }
-// future Jordan, finish up spacing out the tutorial. 30-33 character spaces. Make sure it all works
 function tutorialMaul5() {
-	let msgs = ['your Arena to upgrade your', 'tower in game.', '', '', '- Tap here to continue -'];
+	let msgs = ['your Arena to upgrade your', 'tower in game. Next you need to', 'worry about sending Robots.', 'Select one of the robots you', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -1670,7 +1676,7 @@ function tutorialMaul5() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialMaul6() {
-	let msgs = ['Next you need to worry about sending Robots.', 'Select one of the robots you uploaded and then tap', 'one of the Send buttons on the side you would', 'like to send it.', '- Tap here to continue -'];
+	let msgs = ['uploaded and then tap one of the', 'Send buttons on the side you', 'would like to send it. Lastly let', 'us review Spells. Spells can', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -1705,7 +1711,7 @@ function tutorialMaul6() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialMaul7() {
-	let msgs = ['Lastly let us review Spells. Spells can change the tide of the game.', 'You have two spells, one is a Wall and the other is an EMP', 'The wall stops the enemy robots from moving. The EMP destroys', 'robots on contact. Place Spells on the walkway closest to you.', '- Tap here to continue -'];
+	let msgs = ['change the tide of the game.', 'You have two spells, one is a', 'Wall and the other is an EMP.', 'The wall stops the enemy robots', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -1740,7 +1746,7 @@ function tutorialMaul7() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialMaul8() {
-	let msgs = ['Do not worry about winning your first game. The first few games', 'are slow so you can get aquanted with the gameplay.', '', '', '- Tap here to continue -'];
+	let msgs = ['from moving. The EMP destroys', 'robots on contact. Place Spells', 'on the walkway closest to you.', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -1775,7 +1781,7 @@ function tutorialMaul8() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialMaul9() {
-	let msgs = ['If you do win, you will get prizes like money', 'and new Robot Parts. Keep in mind that every', 'win will increase the difficulty of the next game.', '', '- Tap here to continue -'];
+	let msgs = ['Do not worry about winning your', 'first game. The first few games', 'are slow so you can get aquanted', 'with the gameplay.', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -1810,7 +1816,7 @@ function tutorialMaul9() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialMaul10() {
-	let msgs = ['When you are ready, tap the Play button', 'one more time. Good luck out there!', '', '', '- Tap here to continue -'];
+	let msgs = ['If you do win, you will get', 'prizes like money and new Robot', 'Parts. Keep in mind that every', 'win will', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
@@ -1845,6 +1851,41 @@ function tutorialMaul10() {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function tutorialMaul11() {
+	let msgs = ['increase the difficulty of the', 'next game. When you are ready,', 'tap the Play button one more', 'time. Good luck out there!', '- Tap here to continue -'];
+	Aurora.methodSetup = {
+		layer: 1,
+		method: function(id) {
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
+				width: (Aurora.entitySize * 45),
+				height: (Aurora.entitySize * 28),
+				lineWidth: 1,
+				modalColor: 'grey',
+				msgColor: 'white',
+				msgFont: '1em serif',
+				msgs: msgs,
+				msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
+				msgDistance: (Aurora.entitySize * 5),
+				bgColor: '',
+				isModalFilled: true,
+				id: Aurora.modalId,
+				layer: 1,
+				action: {
+					method: function(id) {
+						removeModal();
+						tutorialMaul12();
+					}
+				},
+				isModalBtn: true,
+				props: {},
+				methodId: id
+			});
+		}
+	};
+	Aurora.addMethod(Aurora.methodSetup);
+}
+function tutorialMaul12() {
 	let msgs = ['***TRANSMISSION LOST***', '', '', '- Tap here to continue -'];
 	Aurora.methodSetup = {
 		layer: 1,

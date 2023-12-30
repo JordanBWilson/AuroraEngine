@@ -1524,9 +1524,7 @@ const factoryParts = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
-			if (gameObject.tutorialStep !== 11) {
-				drawRobotPartButtons(); // draw the buttons in the top left
-			}
+			drawRobotPartButtons(); // draw the buttons in the top left
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawButton({
