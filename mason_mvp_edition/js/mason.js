@@ -45,7 +45,7 @@ const wallDropSound = new Audio('./assets/sounds/wall_drop.wav');
 	seedRobotDesigns();
 	seedArenaRobotDesigns();
 	seedArenaTowers();
-	loadAurora();
+	loadGame();
 	Aurora.setSettingsHigh();
 })();
 
@@ -82,7 +82,7 @@ function seedArenaTowers() {
 		gameObject.towerArenaDesigns.push(towerDesign);
 	}
 }
-function loadAurora() {
+function loadGame() {
 	const gameLoaded = localStorage.getItem('mason-game');
 	if (gameLoaded) {
 		gameObject = JSON.parse(gameLoaded);
@@ -642,8 +642,11 @@ const mainPage = {
 	loadPage: function() {
 		gameObject.canClick = true;
 		let robot = {};
-		playGame();
-
+		if (gameObject.cutSceneStep === 0) {
+			cutSceneIntro();
+		} else  {
+			playGame();
+		}
 		function playGame() {
 			robot = {};
 			if (gameObject.discoveredChassis.length === 0) {
@@ -1021,7 +1024,7 @@ const mainPage = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
-		function findAuroraObjects() {
+		function findGameObjects() {
 			if (!robot?.methodId) {
 				robot = Aurora.methodObjects.find(x => x.id === 'robot');
 				robot.props.drawHead(robot);
