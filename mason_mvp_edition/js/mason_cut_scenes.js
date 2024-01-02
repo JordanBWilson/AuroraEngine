@@ -174,7 +174,7 @@ function drawLayer2Trees() {
 	Aurora.methodSetup = {
 		method: function(id) {
 			drawImage({
-			 	posX: Aurora.placeEntityX(0.70),
+			 	posX: Aurora.placeEntityX(1.15),
 			 	posY: Aurora.placeEntityY(0.28, (Aurora.entitySize * -35)),
 			 	width: (Aurora.canvas.height * 0.43),
 			 	height: (Aurora.canvas.height * 0.43),
@@ -193,7 +193,7 @@ function drawLayer2Trees() {
 	Aurora.methodSetup = {
 		method: function(id) {
 			drawImage({
-			 	posX: Aurora.placeEntityX(0.35),
+			 	posX: Aurora.placeEntityX(0.65),
 			 	posY: Aurora.placeEntityY(0.28, (Aurora.entitySize * -35)),
 			 	width: (Aurora.canvas.height * 0.43),
 			 	height: (Aurora.canvas.height * 0.43),
@@ -212,7 +212,7 @@ function drawLayer2Trees() {
 	Aurora.methodSetup = {
 		method: function(id) {
 			drawImage({
-			 	posX: Aurora.placeEntityX(0.0),
+			 	posX: Aurora.placeEntityX(0.15),
 			 	posY: Aurora.placeEntityY(0.28, (Aurora.entitySize * -35)),
 			 	width: (Aurora.canvas.height * 0.43),
 			 	height: (Aurora.canvas.height * 0.43),
@@ -236,10 +236,10 @@ function addNextTrees() {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawImage({
-					posX: Aurora.placeEntityX(0.89),
+					posX: Aurora.placeEntityX(1.95),
 					posY: Aurora.placeEntityY(0.28, (Aurora.entitySize * -35)),
-					width: (Aurora.canvas.height * 0.63),
-					height: (Aurora.canvas.height * 0.63),
+					width: (Aurora.canvas.height * 0.43),
+					height: (Aurora.canvas.height * 0.43),
 					images: [treeImg],
 					selectedImage: 0,
 					animTicks: 0,
@@ -258,7 +258,7 @@ function addNextTrees() {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawImage({
-					posX: Aurora.placeEntityX(0.99),
+					posX: Aurora.placeEntityX(1.25),
 					posY: Aurora.placeEntityY(0.38, (Aurora.entitySize * -35)),
 					width: (Aurora.canvas.height * 0.63),
 					height: (Aurora.canvas.height * 0.63),
@@ -287,7 +287,8 @@ function wildTree1Check(id) {
 					Aurora.deleteEntity(entity.methodId);
 					if (id === 'wild-tree-1') {
 						addWildTree1 = true;
-					} else if (id === 'wild-tree-2') {
+					} 
+					if (id === 'wild-tree-2') {
 						addwildTree2 = true;
 					}
 				}
