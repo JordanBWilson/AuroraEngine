@@ -1,15 +1,15 @@
-let stopMovement = false;
-let blackFilterValue = 0.3; // 0.87
-let addWildTree1 = false;
-let addwildTree2 = false;
-let addwildTree3 = false;
-let addwildTree4 = false;
-let sceneScrollSpeed = 0.055;
-
 const cutSceneIntroduction = {
 	description: 'The first scene in Mason',
 	loadPage: function() {
 		function cutSceneIntro() {
+			let stopMovement = false;
+			let blackFilterValue = 0.3; // 0.87
+			let addWildTree1 = false;
+			let addwildTree2 = false;
+			let addwildTree3 = false;
+			let addwildTree4 = false;
+			let sceneScrollSpeed = 0.055;
+			let isLostCityMoving = false;
 			Aurora.keepPreviousSize = true;
 			Aurora.clearStage();
 			drawIntroBackground();
@@ -17,16 +17,18 @@ const cutSceneIntroduction = {
 			// make sure the black filter is above the tree layers
 			// start adding the dialog...
 			
-			//Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('grass-background-pattern', true, sceneScrollSpeed); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-4', true, sceneScrollSpeed); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-3', true, sceneScrollSpeed); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-2', true, sceneScrollSpeed); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-1', true, sceneScrollSpeed); }};
-			//Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('grass-background-pattern', true, sceneScrollSpeed, undefined); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-4', true, sceneScrollSpeed, undefined); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-3', true, sceneScrollSpeed, undefined); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-2', true, sceneScrollSpeed, undefined); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-1', true, sceneScrollSpeed, undefined); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveLostCity('lost-city', true, sceneScrollSpeed); }};
+			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { wildTreeCheck('wild-tree-4'); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { wildTreeCheck('wild-tree-3'); }};
@@ -112,7 +114,7 @@ const cutSceneIntroduction = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-						posX: Aurora.placeEntityX(0.45),
+						posX: Aurora.placeEntityX(1.00), // 0.45
 						posY: Aurora.placeEntityY(0.001),
 						width: (Aurora.canvas.height * 0.20),
 						height: (Aurora.canvas.height * 0.20),
@@ -274,7 +276,7 @@ const cutSceneIntroduction = {
 				method: function(id) {
 					drawImage({
 						posX: Aurora.placeEntityX(0.87),
-						posY: Aurora.placeEntityY(0.15, (Aurora.entitySize * -35)),
+						posY: Aurora.placeEntityY(0.10, (Aurora.entitySize * -35)),
 						width: (Aurora.canvas.height * 0.23),
 						height: (Aurora.canvas.height * 0.23),
 						images: [treeImg],
@@ -293,7 +295,7 @@ const cutSceneIntroduction = {
 				method: function(id) {
 					drawImage({
 						posX: Aurora.placeEntityX(0.45),
-						posY: Aurora.placeEntityY(0.15, (Aurora.entitySize * -35)),
+						posY: Aurora.placeEntityY(0.10, (Aurora.entitySize * -35)),
 						width: (Aurora.canvas.height * 0.23),
 						height: (Aurora.canvas.height * 0.23),
 						images: [treeImg],
@@ -312,7 +314,7 @@ const cutSceneIntroduction = {
 				method: function(id) {
 					drawImage({
 						posX: Aurora.placeEntityX(0.02),
-						posY: Aurora.placeEntityY(0.15, (Aurora.entitySize * -35)),
+						posY: Aurora.placeEntityY(0.10, (Aurora.entitySize * -35)),
 						width: (Aurora.canvas.height * 0.23),
 						height: (Aurora.canvas.height * 0.23),
 						images: [treeImg],
@@ -395,9 +397,9 @@ const cutSceneIntroduction = {
 					method: function(id) {
 						drawImage({
 							posX: Aurora.placeEntityX(1.85),
-							posY: Aurora.placeEntityY(0.15, (Aurora.entitySize * -35)),
-							width: (Aurora.canvas.height * 0.23),
-							height: (Aurora.canvas.height * 0.23),
+							posY: Aurora.placeEntityY(0.02, (Aurora.entitySize * -35)),
+							width: (Aurora.canvas.height * 0.13),
+							height: (Aurora.canvas.height * 0.13),
 							images: [treeImg],
 							selectedImage: 0,
 							animTicks: 0,
@@ -505,13 +507,27 @@ const cutSceneIntroduction = {
 				}
 			}
 		}
+		// future Jordan, make sure the lost city moves correctly
+		function moveLostCity(id, moveLeft, speed) {
+			if (isLostCityMoving) {
+				const item = Aurora.methodObjects.filter(x => x.id === id);
+				if (item[0].posX >= Aurora.placeEntityX(0.45) {
+					moveEntityLeftRight(id, moveLeft, speed, item);
+				}
+			}
+		}
 		cutSceneIntro();
 	}
 }
 // *** These methods are more for utility and not cut scene specific ***
-function moveEntityLeftRight(id, moveLeft, speed) {
+function moveEntityLeftRight(id, moveLeft, speed, entities) {
 	if (!stopMovement) {
-		const item = Aurora.methodObjects.filter(x => x.id === id);
+		let item = [];
+		if (!entities) {
+			item = Aurora.methodObjects.filter(x => x.id === id);
+		} else {
+			item = entities
+		}
 		if (item.length > 0) {
 			if (moveLeft) {
 				item.forEach(entity => {
