@@ -643,7 +643,7 @@ const mainPage = {
 		gameObject.canClick = true;
 		let robot = {};
 		if (gameObject.cutSceneStep === 0) {
-			cutSceneIntro();
+			cutSceneIntroduction.loadPage();
 		} else  {
 			playGame();
 		}

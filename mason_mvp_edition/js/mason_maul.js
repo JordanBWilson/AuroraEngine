@@ -19,8 +19,6 @@ const maulPage = {
 		Aurora.keepPreviousSize = true;
 		Aurora.clearStage();
 		let newWorldheadImages = [];
-		let prevCanvasWidth = JSON.parse(JSON.stringify(Aurora.canvas.width));
-		let prevCanvasHeight = JSON.parse(JSON.stringify(Aurora.canvas.height));
 		let selectBuildTowerIndex = 0;
 		let selectedSpellBtn = undefined;
 		const baseRobotAttack = 3;
