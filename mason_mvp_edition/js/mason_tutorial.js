@@ -11,7 +11,7 @@ function tutorialIntro() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -46,7 +46,7 @@ function tutorialIntro1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -81,7 +81,7 @@ function tutorialIntro2() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -116,7 +116,7 @@ function tutorialIntro3() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -151,7 +151,7 @@ function tutorialIntro4() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -186,7 +186,7 @@ function tutorialSellScrapIntro() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -221,7 +221,7 @@ function tutorialSellScrapIntro1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -256,7 +256,7 @@ function tutorialSellScrapHome() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -291,7 +291,7 @@ function tutorialSellScrapHome1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -326,7 +326,7 @@ function tutorialSellScrapHome2() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -362,7 +362,7 @@ function tutorialSellScrapSellBtn() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -398,7 +398,7 @@ function tutorialSellAllScrap() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -434,7 +434,7 @@ function tutorialSellScrapSold() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -470,7 +470,7 @@ function tutorialSellScrapSold1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -506,7 +506,7 @@ function tutorialCreateFactory() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -542,7 +542,7 @@ function tutorialBuildFactory() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -578,7 +578,7 @@ function tutorialBuildArena() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -614,7 +614,7 @@ function tutorialBuildArena1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -650,7 +650,7 @@ function tutorialBuildRobotParts() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -686,7 +686,7 @@ function tutorialBuildRobotParts1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -722,7 +722,7 @@ function tutorialBuildRobotParts2() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -758,7 +758,7 @@ function tutorialBuildRobotParts3() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -794,7 +794,7 @@ function tutorialBuildRobotParts4() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -830,7 +830,7 @@ function tutorialBuildRobotParts5() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -866,7 +866,7 @@ function tutorialBuildRobotParts6() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -902,7 +902,7 @@ function tutorialFactoryMenu() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -937,7 +937,7 @@ function tutorialFactoryMenu1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -972,7 +972,7 @@ function tutorialFactoryParts() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1010,7 +1010,7 @@ function tutorialFactoryParts1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1048,7 +1048,7 @@ function tutorialFactoryParts2() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1084,7 +1084,7 @@ function tutorialFactoryRobots() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1119,7 +1119,7 @@ function tutorialFactoryRobots1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1154,7 +1154,7 @@ function tutorialFactoryRobots2() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1189,8 +1189,8 @@ function tutorialFactoryRobots3() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
-				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),			// if (gameObject.tutorialStep !== 11) {
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
+				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
 				lineWidth: 1,
@@ -1224,7 +1224,7 @@ function tutorialFactoryRobots4() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1259,7 +1259,7 @@ function tutorialFactoryRobots5() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1294,7 +1294,7 @@ function tutorialFactoryRobots6() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1330,7 +1330,7 @@ function tutorialArena() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1364,8 +1364,8 @@ function tutorialArena1() {
 	Aurora.methodSetup = {
 		layer: 1,
 		method: function(id) {
-			drawDialogueModal({			// if (gameObject.tutorialStep !== 11) {
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+			drawDialogueModal({
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1400,7 +1400,7 @@ function tutorialArena2() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1435,7 +1435,7 @@ function tutorialArena3() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1471,7 +1471,7 @@ function tutorialMaul() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1506,7 +1506,7 @@ function tutorialMaul1() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1541,7 +1541,7 @@ function tutorialMaul2() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1576,7 +1576,7 @@ function tutorialMaul3() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1611,7 +1611,7 @@ function tutorialMaul4() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1646,7 +1646,7 @@ function tutorialMaul5() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1681,7 +1681,7 @@ function tutorialMaul6() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1716,7 +1716,7 @@ function tutorialMaul7() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1751,7 +1751,7 @@ function tutorialMaul8() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1786,7 +1786,7 @@ function tutorialMaul9() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1821,7 +1821,7 @@ function tutorialMaul10() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1856,7 +1856,7 @@ function tutorialMaul11() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),
@@ -1891,7 +1891,7 @@ function tutorialMaul12() {
 		layer: 1,
 		method: function(id) {
 			drawDialogueModal({
-				posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 40)),
+				posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
 				posY: Aurora.placeEntityY(0.50, (Aurora.entitySize * 30)),
 				width: (Aurora.entitySize * 45),
 				height: (Aurora.entitySize * 28),

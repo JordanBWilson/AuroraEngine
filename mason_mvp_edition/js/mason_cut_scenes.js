@@ -1,16 +1,21 @@
+let blackFilterValue = 1; // 0.87
+let stopMovement = false;
+
+
 const cutSceneIntroduction = {
 	description: 'The first scene in Mason',
 	loadPage: function() {
+		let addWildTree1 = false;
+		let addwildTree2 = false;
+		let addwildTree3 = false;
+		let addwildTree4 = false;
+		let sceneScrollSpeed = 0.055;
+		let isLostCityMoving = false;
+		let whiteTextTransition = 0;
+		
 		function cutSceneIntro() {
-			let stopMovement = false;
-			let blackFilterValue = 0.3; // 0.87
-			let addWildTree1 = false;
-			let addwildTree2 = false;
-			let addwildTree3 = false;
-			let addwildTree4 = false;
-			let sceneScrollSpeed = 0.055;
-			let isLostCityMoving = false;
 			Aurora.keepPreviousSize = true;
+			stopMovement = true;
 			Aurora.clearStage();
 			drawIntroBackground();
 			// future Jordan, test out the final layer of trees. See how it looks.
@@ -40,9 +45,14 @@ const cutSceneIntroduction = {
 			Aurora.methodSetup = { method: function(id) { addNextTrees(); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			// future Jordan, this will fade the black filter
+			//setTimeout(function() {
+				//fadeBlackFilterComplete();
+			//}, 5000);
+			// future Jordan, continue with the transitions
 			setTimeout(function() {
-				fadeBlackFilter();
-			}, 5000);
+				dialog1();
+			}, 1500);
+			
 			
 			// future Jordan, this will stop the grass from moving
 			//setTimeout(function() {
@@ -142,7 +152,7 @@ const cutSceneIntroduction = {
 						width: Aurora.canvas.width,
 						height: Aurora.canvas.height,
 						lineWidth: 1,
-						color: 'rgba(0, 0, 0,' + blackFilterValue +')', // transparant
+						color: 'rgba(0, 0, 0,' + blackFilterValue +')',
 						isFilled: true,
 						isBackground: true,
 						id: 'black-filter',
@@ -511,10 +521,132 @@ const cutSceneIntroduction = {
 		function moveLostCity(id, moveLeft, speed) {
 			if (isLostCityMoving) {
 				const item = Aurora.methodObjects.filter(x => x.id === id);
-				if (item[0].posX >= Aurora.placeEntityX(0.45) {
+				if (item[0].posX >= Aurora.placeEntityX(0.45)) {
 					moveEntityLeftRight(id, moveLeft, speed, item);
 				}
 			}
+		}
+		function creatorTextTransition() {
+			let fadeIn = true;
+			const whiteTransitions = setInterval(function() {
+				const title = Aurora.methodObjects.find(x => x.id === 'creator-title');
+				if (whiteTextTransition <= 1 && fadeIn) {
+					whiteTextTransition += 0.05;
+					if (title) {
+						Aurora.deleteEntity(title.methodId);
+						displayCreator();
+					}
+				} else if (whiteTextTransition >= 1 && fadeIn) {
+					setTimeout(function() {
+						fadeIn = false;
+					}, 2500);
+				} else if (!fadeIn) {
+					whiteTextTransition -= 0.05;
+					if (title) {
+						Aurora.deleteEntity(title.methodId);
+						displayCreator();
+					}
+					if (whiteTextTransition <= 0) {
+						clearInterval(whiteTransitions);
+						setTimeout(function() {
+							dialog2();
+						}, 500);
+						
+					}
+				}
+			}, 100);
+			displayCreator();
+		}
+		function displayCreator() {
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: '2.1em serif',
+						msg: 'JDubs Presents...',
+						posX: Aurora.placeEntityX(0.525),
+						posY: Aurora.placeEntityY(0.45),
+						color: 'rgba(255, 255, 255,' + whiteTextTransition +')',
+						align: 'center',
+						props: {},
+						id: 'creator-title',
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+		}
+		function dialog1() {
+			let msgs = ["I don't know how we didn't see", 'this coming.', '- Tap here to continue -'];
+			Aurora.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawDialogueModal({
+						posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.80, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 18),
+						lineWidth: 1,
+						modalColor: 'grey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: msgs,
+						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
+						msgDistance: (Aurora.entitySize * 5),
+						bgColor: '',
+						isModalFilled: true,
+						id: Aurora.modalId,
+						layer: 1,
+						action: {
+							method: function(id) {
+								// consider making this method part of the api
+								removeModal(); // this method comes from the tutorial
+								setTimeout(function() {
+									creatorTextTransition();
+								}, 500);
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+		}
+		function dialog2() {
+			let msgs = ['We ignored the warnings.', 'We let history repeat itself.', '- Tap here to continue -'];
+			Aurora.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawDialogueModal({
+						posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.80, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 18),
+						lineWidth: 1,
+						modalColor: 'grey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: msgs,
+						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
+						msgDistance: (Aurora.entitySize * 5),
+						bgColor: '',
+						isModalFilled: true,
+						id: Aurora.modalId,
+						layer: 1,
+						action: {
+							method: function(id) {
+								// consider making this method part of the api
+								removeModal(); // this method comes from the tutorial
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		cutSceneIntro();
 	}
@@ -541,7 +673,7 @@ function moveEntityLeftRight(id, moveLeft, speed, entities) {
 		}
 	}
 }
-function fadeBlackFilter() {
+function fadeBlackFilterComplete() {
 	const fade = setInterval(function() {
 		blackFilterValue -= 0.05;
 		if (blackFilterValue <= 0) {
@@ -549,3 +681,17 @@ function fadeBlackFilter() {
 		}
 	}, 100);
 }
+function fadeBlackFilterToValue(value) {
+	const fade = setInterval(function() {
+		blackFilterValue -= 0.05;
+		if (blackFilterValue <= value) {
+			clearInterval(fade);
+		}
+	}, 100);
+}
+//function removeModal() {
+	//const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
+	//if (modal) {
+		//Aurora.deleteEntity(modal.methodId);
+	//}
+//}
