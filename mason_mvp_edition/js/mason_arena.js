@@ -297,7 +297,7 @@ const arenaPage = {
 										maulPage.loadPage();
 									}
 								} else {
-									let msgs = ['Select At Least', 'One Robot and Tower', 'Tap here to continue'];
+									let msgs = ['Select At Least', 'One Robot and Tower', '- Tap here to continue -'];
 									Aurora.methodSetup = {
 										method: function(id) {
 											drawDialogueModal({
@@ -726,7 +726,7 @@ const arenaPage = {
 			return robotsBuilt;
 		}
 		function noRobotDesignModal() {
-			const msg = ['In the Factory, Design', 'a Robot and Build it!', 'Tap here to continue'];
+			const msg = ['In the Factory, Design', 'a Robot and Build it!', '- Tap here to continue -'];
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawDialogueModal({

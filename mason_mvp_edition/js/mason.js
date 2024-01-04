@@ -1613,7 +1613,7 @@ const mainPage = {
 									msg: 'Not Enough Scrap Space',
 									footerColor: 'white',
 									footerFont: '1em serif',
-									footerMsg: 'Tap here to continue',
+									footerMsg: '- Tap here to continue -',
 									bgColor: '',
 									isModalFilled: true,
 									id: Aurora.modalId,

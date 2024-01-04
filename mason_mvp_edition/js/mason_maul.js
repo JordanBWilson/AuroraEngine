@@ -4539,10 +4539,10 @@ const maulPage = {
 			closeUpdateTowerModal();
 			let msgs = [];
 			if (winningTeam === 'red') {
-				msgs = ['Red Team Wins!', '', '', '', 'Tap here to continue'];
+				msgs = ['Red Team Wins!', '', '', '', '- Tap here to continue -'];
 				gameObject.gamesLost += 1;
 			} else if (winningTeam === 'draw') {
-				msgs = ['Draw!', '', '', '', 'Tap here to continue'];
+				msgs = ['Draw!', '', '', '', '- Tap here to continue -'];
 			} else if (winningTeam === 'blue') {
 				const newPart = Math.floor((Math.random() * 4) + 1);
 				let unlockPart = '';
@@ -4567,7 +4567,7 @@ const maulPage = {
 				const highValueDisplay = displayPool.highValue.type !== '' ? displayPool.highValue.type + ': +' + displayPool.highValue.value : '';
 				const lowValueDisplay = displayPool.lowValue.type !== '' ? displayPool.lowValue.type + ': +' + displayPool.lowValue.value : '';
 				
-				msgs = ['Blue Team Wins!', highValueDisplay, lowValueDisplay, unlockPart, 'Tap here to continue'];
+				msgs = ['Blue Team Wins!', highValueDisplay, lowValueDisplay, unlockPart, '- Tap here to continue -'];
 				gameObject.gamesWon += 1;
 			}
 			Aurora.methodSetup = {

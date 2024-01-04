@@ -399,7 +399,6 @@ const cutSceneIntroduction = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 		}
-		// future Jordan, get the layers looking good
 		function addNextTrees() {
 			// higher layers goes on top
 			if (addwildTree4) {
@@ -523,8 +522,22 @@ const cutSceneIntroduction = {
 				const item = Aurora.methodObjects.filter(x => x.id === id);
 				if (item[0].posX >= Aurora.placeEntityX(0.45)) {
 					moveEntityLeftRight(id, moveLeft, speed, item);
+				} else {
+					stopMovement = true;
+					isLostCityMoving = true;
+					dialog3();
+					// future Jordan, display "MASON"
 				}
 			}
+		}
+		function forestTransition() {
+			setTimeout(function() {
+				fadeBlackFilterComplete();
+			}, 1000);
+			setTimeout(function() {
+				stopMovement = false;
+				isLostCityMoving = true;
+			}, 3000);
 		}
 		function creatorTextTransition() {
 			let fadeIn = true;
@@ -615,6 +628,42 @@ const cutSceneIntroduction = {
 		}
 		function dialog2() {
 			let msgs = ['We ignored the warnings.', 'We let history repeat itself.', '- Tap here to continue -'];
+			Aurora.methodSetup = {
+				layer: 1,
+				method: function(id) {
+					drawDialogueModal({
+						posX: Aurora.placeEntityX(0.465, (Aurora.entitySize * 40)),
+						posY: Aurora.placeEntityY(0.80, (Aurora.entitySize * 30)),
+						width: (Aurora.entitySize * 45),
+						height: (Aurora.entitySize * 18),
+						lineWidth: 1,
+						modalColor: 'grey',
+						msgColor: 'white',
+						msgFont: '1em serif',
+						msgs: msgs,
+						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
+						msgDistance: (Aurora.entitySize * 5),
+						bgColor: '',
+						isModalFilled: true,
+						id: Aurora.modalId,
+						layer: 1,
+						action: {
+							method: function(id) {
+								// consider making this method part of the api
+								removeModal(); // this method comes from the tutorial
+								forestTransition();
+							}
+						},
+						isModalBtn: true,
+						props: {},
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+		}
+		function dialog3() {
+			let msgs = ["I don't know how but this planet", 'is alive. I know it for sure now.', '- Tap here to continue -'];
 			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
