@@ -1046,9 +1046,6 @@ const mainPage = {
 		function mineScrap() {
 			if (gameObject.canClick) {
 				gameObject.canClick = false;
-				if (gameObject.gameSounds) {
-					scrappingSound.cloneNode(true).play();
-				}
 				let scrapFoundText = '';
 				let scrapFoundCount = 0;
 				let totalScrap = 

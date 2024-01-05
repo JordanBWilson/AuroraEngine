@@ -306,7 +306,7 @@ const robotHeads = [
 		name: 'New World Head',
 		img: 'orange',
 		imgs: [],
-		count: 20, // how many parts have been made
+		count: 0, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 2,
@@ -424,7 +424,7 @@ const robotChassis = [
 		name: 'New World Chassis',
 		img: 'orange',
 		imgs: [],
-		count: 20,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 4,
@@ -543,7 +543,7 @@ const robotLegs = [
 		name: 'New World Leg',
 		img: 'orange',
 		imgs: [],
-		count: 20,
+		count: 0,
 		stats: {
 			att: 0,
 			def: 2,
@@ -665,7 +665,7 @@ const robotArms = [
 		name: 'New World Arm',
 		img: 'orange',
 		imgs: [],
-		count: 20,
+		count: 0,
 		stats: {
 			att: 1,
 			def: 2,
