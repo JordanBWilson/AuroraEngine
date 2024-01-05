@@ -1,7 +1,19 @@
-let blackFilterValue = 1; // 0.87
+// Copyright (C) 2024  Jordan Wilson
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, version 2.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+let blackFilterValue = 1;
 let stopMovement = false;
-
-
 const cutSceneIntroduction = {
 	description: 'The first scene in Mason',
 	loadPage: function() {
@@ -18,10 +30,6 @@ const cutSceneIntroduction = {
 			stopMovement = true;
 			Aurora.clearStage();
 			drawIntroBackground();
-			// future Jordan, test out the final layer of trees. See how it looks.
-			// make sure the black filter is above the tree layers
-			// start adding the dialog...
-			
 			Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('grass-background-pattern', true, sceneScrollSpeed, undefined); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveEntityLeftRight('wild-tree-4', true, sceneScrollSpeed, undefined); }};
@@ -44,24 +52,9 @@ const cutSceneIntroduction = {
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { addNextTrees(); }};
 			Aurora.addMethod(Aurora.methodSetup);
-			// future Jordan, this will fade the black filter
-			//setTimeout(function() {
-				//fadeBlackFilterComplete();
-			//}, 5000);
-			// future Jordan, continue with the transitions
 			setTimeout(function() {
 				dialog1();
 			}, 1500);
-			
-			
-			// future Jordan, this will stop the grass from moving
-			//setTimeout(function() {
-				//stopMovement = true;
-			//},5000);
-			
-			// future Jordan, when the cut scene ends, do the thing below
-			// gameObject.cutSceneStep++;
-			// mainPage.loadPage();
 		}
 		function drawIntroBackground() {
 			Aurora.methodSetup = {
@@ -124,7 +117,7 @@ const cutSceneIntroduction = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
-						posX: Aurora.placeEntityX(1.00), // 0.45
+						posX: Aurora.placeEntityX(1.00),
 						posY: Aurora.placeEntityY(0.001),
 						width: (Aurora.canvas.height * 0.20),
 						height: (Aurora.canvas.height * 0.20),
@@ -400,7 +393,6 @@ const cutSceneIntroduction = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function addNextTrees() {
-			// higher layers goes on top
 			if (addwildTree4) {
 				Aurora.methodSetup = {
 					method: function(id) {
@@ -496,7 +488,6 @@ const cutSceneIntroduction = {
 				if (item.length > 0) {
 					item.forEach(entity => {
 						if (entity.posX <= (entity.width * -1)) {
-							console.log('removed');
 							Aurora.deleteEntity(entity.methodId);
 							if (id === 'wild-tree-1') {
 								addWildTree1 = true;
@@ -512,11 +503,9 @@ const cutSceneIntroduction = {
 							}
 						}
 					});
-					
 				}
 			}
 		}
-		// future Jordan, make sure the lost city moves correctly
 		function moveLostCity(id, moveLeft, speed) {
 			if (isLostCityMoving) {
 				const item = Aurora.methodObjects.filter(x => x.id === id);
@@ -524,9 +513,33 @@ const cutSceneIntroduction = {
 					moveEntityLeftRight(id, moveLeft, speed, item);
 				} else {
 					stopMovement = true;
-					isLostCityMoving = true;
-					dialog3();
-					// future Jordan, display "MASON"
+					isLostCityMoving = false;
+					const filter = Aurora.methodObjects.find(x => x.id === 'black-filter');
+					if (filter) {
+						Aurora.deleteEntity(filter.methodId);
+					}
+					Aurora.methodSetup = {
+						method: function(id) {
+							drawRect({
+								posX: Aurora.placeEntityX(0),
+								posY: Aurora.placeEntityY(0),
+								width: Aurora.canvas.width,
+								height: Aurora.canvas.height,
+								lineWidth: 1,
+								color: 'rgba(0, 0, 0,' + blackFilterValue +')',
+								isFilled: true,
+								isBackground: true,
+								id: 'black-filter',
+								props: {},
+								methodId: id
+							});
+						}
+					}
+					Aurora.addMethod(Aurora.methodSetup);
+					setTimeout(function() {
+						whiteTextTransition = 1;
+						displayGameTitle();
+					}, 1000);
 				}
 			}
 		}
@@ -536,7 +549,9 @@ const cutSceneIntroduction = {
 			}, 1000);
 			setTimeout(function() {
 				stopMovement = false;
-				isLostCityMoving = true;
+				setTimeout(function() {
+					dialog3();
+				}, 1000);
 			}, 3000);
 		}
 		function creatorTextTransition() {
@@ -564,7 +579,6 @@ const cutSceneIntroduction = {
 						setTimeout(function() {
 							dialog2();
 						}, 500);
-						
 					}
 				}
 			}, 100);
@@ -576,7 +590,7 @@ const cutSceneIntroduction = {
 					drawText({
 						font: '2.1em serif',
 						msg: 'JDubs Presents...',
-						posX: Aurora.placeEntityX(0.525),
+						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.45),
 						color: 'rgba(255, 255, 255,' + whiteTextTransition +')',
 						align: 'center',
@@ -587,6 +601,61 @@ const cutSceneIntroduction = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+		}
+		function displayGameTitle() {
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawText({
+						font: 'bold 3.1em serif',
+						msg: 'MASON',
+						posX: Aurora.placeEntityX(0.50),
+						posY: Aurora.placeEntityY(0.45),
+						color: 'rgba(255, 255, 255,' + whiteTextTransition +')',
+						align: 'center',
+						props: {},
+						id: 'mason-title',
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
+			setTimeout(function() {
+				setTimeout(function() {
+					fadeBlackFilterToValue(1, true);
+				}, 500);
+				setTimeout(function() {
+					const whiteTransitions = setInterval(function() {
+						const title = Aurora.methodObjects.find(x => x.id === 'mason-title');
+						whiteTextTransition -= 0.05;
+						if (title) {
+							Aurora.deleteEntity(title.methodId);
+							Aurora.methodSetup = {
+								method: function(id) {
+									drawText({
+										font: 'bold 3.1em serif',
+										msg: 'MASON',
+										posX: Aurora.placeEntityX(0.50),
+										posY: Aurora.placeEntityY(0.45),
+										color: 'rgba(255, 255, 255,' + whiteTextTransition +')',
+										align: 'center',
+										props: {},
+										id: 'mason-title',
+										methodId: id
+									});
+								}
+							};
+							Aurora.addMethod(Aurora.methodSetup);
+						}
+						if (whiteTextTransition <= 0) {
+							clearInterval(whiteTransitions);
+							setTimeout(function() {
+								gameObject.cutSceneStep++;
+								mainPage.loadPage();
+							}, 500);
+						}
+					}, 100);
+				}, 5000);
+			}, 3000);
 		}
 		function dialog1() {
 			let msgs = ["I don't know how we didn't see", 'this coming.', '- Tap here to continue -'];
@@ -611,7 +680,7 @@ const cutSceneIntroduction = {
 						layer: 1,
 						action: {
 							method: function(id) {
-								// consider making this method part of the api
+								// future Jordan consider making this method part of the api
 								removeModal(); // this method comes from the tutorial
 								setTimeout(function() {
 									creatorTextTransition();
@@ -649,7 +718,7 @@ const cutSceneIntroduction = {
 						layer: 1,
 						action: {
 							method: function(id) {
-								// consider making this method part of the api
+								// future Jordan consider making this method part of the api
 								removeModal(); // this method comes from the tutorial
 								forestTransition();
 							}
@@ -685,8 +754,9 @@ const cutSceneIntroduction = {
 						layer: 1,
 						action: {
 							method: function(id) {
-								// consider making this method part of the api
+								// future Jordan consider making this method part of the api
 								removeModal(); // this method comes from the tutorial
+								isLostCityMoving = true;
 							}
 						},
 						isModalBtn: true,
@@ -730,17 +800,18 @@ function fadeBlackFilterComplete() {
 		}
 	}, 100);
 }
-function fadeBlackFilterToValue(value) {
+function fadeBlackFilterToValue(value, fadeToBlack) {
 	const fade = setInterval(function() {
-		blackFilterValue -= 0.05;
-		if (blackFilterValue <= value) {
-			clearInterval(fade);
+		if (!fadeToBlack) {
+			blackFilterValue -= 0.05;
+			if (blackFilterValue <= value) {
+				clearInterval(fade);
+			}
+		} else {
+			blackFilterValue += 0.05;
+			if (blackFilterValue >= value) {
+				clearInterval(fade);
+			}
 		}
 	}, 100);
 }
-//function removeModal() {
-	//const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
-	//if (modal) {
-		//Aurora.deleteEntity(modal.methodId);
-	//}
-//}

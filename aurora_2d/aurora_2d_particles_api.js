@@ -1,6 +1,6 @@
 // These are the methods to create particals to the page.
 
-// Copyright (C) 2023  Jordan Wilson
+// Copyright (C) 2024  Jordan Wilson
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
