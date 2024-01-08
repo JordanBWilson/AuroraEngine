@@ -15,7 +15,7 @@
 // this will keep track of the game
 let gameObject = {
 	// ---types of scrap matirials---
-	commonScrap: 0,
+	commonScrap: 9,
 	unCommonScrap: 0,
 	uniqueScrap: 0, // rare
 	intriguingScrap: 0, // epic
@@ -306,7 +306,7 @@ const robotHeads = [
 		name: 'New World Head',
 		img: 'orange',
 		imgs: [],
-		count: 1, // how many parts have been made
+		count: 31, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 2,

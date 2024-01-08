@@ -18,7 +18,6 @@ const maulPage = {
 		gameObject.selectedRobot = [];
 		Aurora.keepPreviousSize = true;
 		Aurora.clearStage();
-		let newWorldheadImages = [];
 		let selectBuildTowerIndex = 0;
 		let selectedSpellBtn = undefined;
 		const baseRobotAttack = 3;
@@ -50,7 +49,7 @@ const maulPage = {
 		} else if (gameObject.gamesWon === 1) {
 			redAIThinkTimer = 1300;
 		}
-		const tutorialAuroras = 2;
+		const tutorialGames = 2;
 		let aiThinking = true;
 		let gameTimer;
 		Particle.init();
@@ -78,7 +77,10 @@ const maulPage = {
 			drawRedRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
-			readySetGoGame();
+			// readySetGoGame();
+			setTimeout(function() {
+				startGameRounds();
+			}, 150);
 			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
@@ -101,7 +103,7 @@ const maulPage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
-			if (gameObject.gamesWon > tutorialAuroras) { // give the player a few 'easy' games
+			if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
 				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
 			} else {
 				gameObject.redMaxTowerLevel = 1;
@@ -1801,7 +1803,7 @@ const maulPage = {
 				let rightArmIndex = 0;
 				let leftLegIndex = 0;
 				let rightLegIndex = 0;
-				if (gameObject.gamesWon > tutorialAuroras) { // give the player a few 'easy' games
+				if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
 					headIndex = Math.floor((Math.random() * robotHeads.length));
 					chassisIndex = Math.floor((Math.random() * robotChassis.length));
 					leftArmIndex = Math.floor((Math.random() * robotArms.length));
@@ -4117,12 +4119,12 @@ const maulPage = {
 				Aurora.deleteEntity(gameStartTitle.methodId);
 				// start the game round timer and round numbers
 				if (!gameObject.arenaGameStarted) {
-					startAuroraRounds();
+					startGameRounds();
 				}
 			}, 5500);
 			
 		}
-		function startAuroraRounds() {
+		function startGameRounds() {
 			gameObject.arenaGameStarted = true;
 			const roundTimer = Aurora.methodObjects.find(bg => bg.id === 'player-round-time-title');
 			const roundBackground = Aurora.methodObjects.find(bg => bg.id === 'round-bar-background');
