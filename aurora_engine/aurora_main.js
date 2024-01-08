@@ -48,7 +48,8 @@ function mainLoop() {
 		//Aurora.methodObjects.sort(function(a, b) {
 			//return a?.layer - b?.layer;
 		//});
-		// items.sort((a, b) => a.value - b.value);
+		Main.methodsToRun.sort((a, b) => a.layer - b.layer);
+		Aurora.methodObjects.sort((a, b) => a.layer - b.layer);
       if (Main.methodsToRun.length > 0) {
         // run the game
         for (let i = 0; i < Main.methodsToRun.length; i++) {
