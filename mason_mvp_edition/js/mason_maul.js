@@ -78,6 +78,7 @@ const maulPage = {
 			drawPlayerMoney();
 			drawRoundTime();
 			// readySetGoGame();
+			gameObject.arenaGameStarted = true;
 			setTimeout(function() {
 				startGameRounds();
 			}, 150);
