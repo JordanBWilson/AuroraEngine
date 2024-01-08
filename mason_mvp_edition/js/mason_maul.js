@@ -2563,7 +2563,6 @@ const maulPage = {
 		function selectTower(methodId, towerIndex) {
 			let tower = Aurora.methodObjects.find(bg => bg.methodId === methodId);
 			const range = Aurora.methodObjects.find(bg => bg.id === tower.props.arcId);
-			 alert(tower.props.towerId);
 			if (tower.props.towerId === 0) { // no tower built here
 				selectBuildTowerMenu(tower, towerIndex);
 			} else if (tower.props.towerId !== 0 && !tower.props.selected) { // tower is built but not yet selected
