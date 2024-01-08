@@ -67,7 +67,7 @@ const maulPage = {
 			generateRedArenaRobots();
 			generateRedArenaTowers();
 			drawGrassBackGround();
-			drawRobotSelection();
+			drawRobotSelection(); // testing here
 			drawBlueRoads();
 			drawRedRoads();
 			drawBasesAndSends();
@@ -78,8 +78,7 @@ const maulPage = {
 			drawPlayerMoney();
 			drawRoundTime();
 			// readySetGoGame();
-			gameObject.arenaGameStarted = true;
-			setTimeout(function() {
+			setTimeout(function() { // testing here
 				startGameRounds();
 			}, 150);
 			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
@@ -1115,7 +1114,7 @@ const maulPage = {
 							}
 						};
 						Aurora.addMethod(Aurora.methodSetup);
-					}, 2000);
+					}, 0); // 2000
 				}
 			}
 			Aurora.methodSetup = {
