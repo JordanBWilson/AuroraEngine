@@ -1114,7 +1114,7 @@ const maulPage = {
 							}
 						};
 						Aurora.addMethod(Aurora.methodSetup);
-					}, 0); // 2000
+					}, 2000);
 				}
 			}
 			Aurora.methodSetup = {
@@ -2648,6 +2648,7 @@ const maulPage = {
 							methodId: id,
 							method: function(id) {
 								if (gameObject.arenaGameStarted) {
+									alert(this.methodId);
 									selectTower(this.methodId, 1);
 								}
 							}
