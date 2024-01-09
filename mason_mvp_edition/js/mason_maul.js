@@ -2010,7 +2010,7 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			drawRobotSelectParts(blueRobot.id); // test here
+			// drawRobotSelectParts(blueRobot.id); // test here
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
