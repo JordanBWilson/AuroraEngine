@@ -1551,8 +1551,8 @@ const maulPage = {
 											//methodId: undefined,
 										//}
 										//Aurora.addCollision(Aurora.collisionSetup);
-										//const robotStats = totalSelectedRobotStats();
-										//const blueRobotId = 'arena-blue-att-robot-right-';
+										const robotStats = totalSelectedRobotStats();
+										const blueRobotId = 'arena-blue-att-robot-right-';
 										const blueRobot = createRobot(1, 0.265, blueRobotId, gameObject.arenaBlueSendCount, robotStats, gameObject.selectedRobot, 'rt', robotDirective);
 										sendBlueRobot(blueRobot, robotDirective);
 										//setRedRightTowerRangeCollisions(blueRobot.id);
@@ -2010,7 +2010,7 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			drawRobotSelectParts(blueRobot.id);
+			drawRobotSelectParts(blueRobot.id); // test here
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
