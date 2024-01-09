@@ -64,8 +64,9 @@ const maulPage = {
 		}
 		// future Jordan, it's time to work on the tutorial
 		function setupGame() {
-			generateRedArenaRobots();
-			generateRedArenaTowers();
+			gameObject.arenaGameStarted = true; // testing here
+			//generateRedArenaRobots(); // testing here
+			//generateRedArenaTowers(); // testing here
 			drawGrassBackGround();
 			drawRobotSelection(); // testing here
 			drawBlueRoads();
@@ -1116,7 +1117,7 @@ const maulPage = {
 							}
 						};
 						Aurora.addMethod(Aurora.methodSetup);
-					}, 0); // 2000
+					}, 2000);
 				}
 			}
 			Aurora.methodSetup = {
