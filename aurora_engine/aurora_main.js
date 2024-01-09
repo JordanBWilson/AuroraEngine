@@ -50,8 +50,8 @@ function mainLoop() {
 		//});
       if (Main.methodsToRun.length > 0) {
         // run the game
-        Main.methodsToRun.sort((a, b) => b.layer - a.layer);
-		Aurora.methodObjects.sort((a, b) => b.layer - a.layer);
+        Main.methodsToRun.sort((a, b) => a.layer - b.layer);
+		Aurora.methodObjects.sort((a, b) => a.layer - b.layer);
         for (let i = 0; i < Main.methodsToRun.length; i++) {
           if (Main.clearStage === true) {
             Main.clearStage = false;
