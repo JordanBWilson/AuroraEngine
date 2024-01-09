@@ -48,8 +48,6 @@ function mainLoop() {
 		//Aurora.methodObjects.sort(function(a, b) {
 			//return a?.layer - b?.layer;
 		//});
-		Main.methodsToRun.sort((a, b) => a.layer - b.layer);
-		Aurora.methodObjects.sort((a, b) => a.layer - b.layer);
       if (Main.methodsToRun.length > 0) {
         // run the game
         for (let i = 0; i < Main.methodsToRun.length; i++) {
@@ -58,15 +56,18 @@ function mainLoop() {
             break;
           }
           // original
-          //if (Main.methodsToRun[i].layer !== 0) {
-			  //// layer the methods
+          if (Main.methodsToRun[i].layer !== 0) {
+			  // layer the methods
+			Main.methodsToRun.sort((a, b) => a.layer - b.layer);
+			Aurora.methodObjects.sort((a, b) => a.layer - b.layer);
+			
 			  //Main.methodsToRun.sort(function(a, b) {
 				//return a?.layer - b?.layer;
 			  //});
 			  //Aurora.methodObjects.sort(function(a, b) {
 				//return a?.layer - b?.layer;
 			  //});
-		  //}
+		  }
           if (Main.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
             Main.globalId = createGUID();
             Main.methodsToRun[i].methodId = Main.globalId;

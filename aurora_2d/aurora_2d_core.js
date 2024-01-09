@@ -85,7 +85,7 @@ function drawTextMethod(incomingText) {
       isAnim: false,
       props: incomingText.props,
       id: incomingText.id,
-      layer: incomingText.layer === undefined ? 0 : incomingText.layer,
+      layer: !incomingText.layer ? 0 : incomingText.layer,
       methodId: incomingText.methodId,
     }
     Aurora.methodObjects.push(text);
@@ -102,7 +102,7 @@ function drawTextMethod(incomingText) {
     Aurora.methodObjects[index].align = incomingText.align;
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].props = incomingText.props;
-    Aurora.methodObjects[index].layer = incomingText.layer;
+    Aurora.methodObjects[index].layer = !incomingText.layer ? 0 : incomingText.layer;
     Main.methodObjectShadows[index].font = incomingText.font;
     Main.methodObjectShadows[index].msg = incomingText.msg;
     Main.methodObjectShadows[index].posX = incomingText.posX;
@@ -112,7 +112,7 @@ function drawTextMethod(incomingText) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingText.props;
     Main.methodObjectShadows[index].id = incomingText.id;
-    Main.methodObjectShadows[index].layer = incomingText.layer;
+    Main.methodObjectShadows[index].layer = !incomingText.layer ? 0 : incomingText.layer;
     redrawText(incomingText);
   }
   // checking for animations
@@ -168,7 +168,7 @@ function drawRectMethod(incomingRect) {
       color: incomingRect.color,
       isFilled: incomingRect.isFilled,
       id: incomingRect.id,
-      layer: incomingRect.layer === undefined ? 0 : incomingRect.layer,
+      layer: !incomingRect.layer ? 0 : incomingRect.layer,
       isAnim: false,
       isBackground: incomingRect.isBackground,
       props: incomingRect.props,
@@ -190,7 +190,7 @@ function drawRectMethod(incomingRect) {
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].isBackground = incomingRect.isBackground;
     Aurora.methodObjects[index].props = incomingRect.props;
-    Aurora.methodObjects[index].layer = incomingRect.layer;
+    Aurora.methodObjects[index].layer = !incomingRect.layer ? 0 : incomingRect.layer;
     Main.methodObjectShadows[index].posX = incomingRect.posX;
     Main.methodObjectShadows[index].posY = incomingRect.posY;
     Main.methodObjectShadows[index].width = incomingRect.width;
@@ -201,7 +201,7 @@ function drawRectMethod(incomingRect) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingRect.isBackground;
     Main.methodObjectShadows[index].props = incomingRect.props;
-    Main.methodObjectShadows[index].layer = incomingRect.layer;
+    Main.methodObjectShadows[index].layer = !incomingRect.layer ? 0 : incomingRect.layer;
     redrawRect(incomingRect);
   }
   if (doesExist && Aurora.methodObjects[index].isAnim && Aurora.methodObjects[index].isBackground) {
@@ -274,7 +274,7 @@ function drawArcMethod(incomingArc) {
       color: incomingArc.color,
       isFilled: incomingArc.isFilled,
       id: incomingArc.id,
-      layer: incomingArc.layer === undefined ? 0 : incomingArc.layer,
+      layer: !incomingArc.layer ? 0 : incomingArc.layer,
       isAnim: false,
       props: incomingArc.props,
       methodId: incomingArc.methodId,
@@ -295,7 +295,7 @@ function drawArcMethod(incomingArc) {
     Aurora.methodObjects[index].isFilled = incomingArc.isFilled;
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].props = incomingArc.props;
-    Aurora.methodObjects[index].layer = incomingArc.layer;
+    Aurora.methodObjects[index].layer = !incomingArc.layer ? 0 : incomingArc.layer;
     Main.methodObjectShadows[index].posX = incomingArc.posX;
     Main.methodObjectShadows[index].posY = incomingArc.posY;
     Main.methodObjectShadows[index].width = incomingArc.width;
@@ -306,7 +306,7 @@ function drawArcMethod(incomingArc) {
     Main.methodObjectShadows[index].isFilled = incomingArc.isFilled;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingArc.props;
-    Main.methodObjectShadows[index].layer = incomingArc.layer;
+    Main.methodObjectShadows[index].layer = !incomingArc.layer ? 0 : incomingArc.layer;
     redrawArc(incomingArc);
   }
   // checking for animation
@@ -376,7 +376,7 @@ function drawButtonMethod(incomingButton) {
       msg: incomingButton.msg,
       isFilled: incomingButton.isFilled,
       id: incomingButton.id,
-      layer: incomingButton.layer === undefined ? 0 : incomingButton.layer,
+      layer: !incomingButton.layer ? 0 : incomingButton.layer,
       action: incomingButton.action,
       isModalBtn: incomingButton.isModalBtn,
       isBtn: true,
@@ -403,7 +403,7 @@ function drawButtonMethod(incomingButton) {
     Aurora.methodObjects[index].action = incomingButton.action;
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].props = incomingButton.props;
-    Aurora.methodObjects[index].layer = incomingButton.layer;
+    Aurora.methodObjects[index].layer = !incomingButton.layer ? 0 : incomingButton.layer;
     Main.methodObjectShadows[index].posX = incomingButton.posX;
     Main.methodObjectShadows[index].posY = incomingButton.posY;
     Main.methodObjectShadows[index].width = incomingButton.width;
@@ -417,7 +417,7 @@ function drawButtonMethod(incomingButton) {
     Main.methodObjectShadows[index].action = incomingButton.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButton.props;
-    Main.methodObjectShadows[index].layer = incomingButton.layer;
+    Main.methodObjectShadows[index].layer = !incomingButton.layer ? 0 : incomingButton.layer;
     redrawButton(incomingButton);
   }
   // checking for animations
@@ -497,7 +497,7 @@ function drawImageMethod(incomingImg) {
       animTicks: incomingImg.animTicks,
       ticks: incomingImg.ticks,
       id: incomingImg.id,
-      layer: incomingImg.layer === undefined ? 0 : incomingImg.layer,
+      layer: !incomingImg.layer ? 0 : incomingImg.layer,
       isAnim: false,
       isBackground: incomingImg.isBackground,
       props: incomingImg.props,
@@ -520,7 +520,7 @@ function drawImageMethod(incomingImg) {
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].isBackground = incomingImg.isBackground;
     Aurora.methodObjects[index].props = incomingImg.props;
-    Aurora.methodObjects[index].layer = incomingImg.layer;
+    Aurora.methodObjects[index].layer =  !incomingImg.layer ? 0 : incomingImg.layer;
     Main.methodObjectShadows[index].posX = incomingImg.posX;
     Main.methodObjectShadows[index].posY = incomingImg.posY;
     Main.methodObjectShadows[index].width = incomingImg.width;
@@ -532,7 +532,7 @@ function drawImageMethod(incomingImg) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImg.isBackground;
     Main.methodObjectShadows[index].props = incomingImg.props;
-    Main.methodObjectShadows[index].layer = incomingImg.layer;
+    Main.methodObjectShadows[index].layer = !incomingImg.layer ? 0 : incomingImg.layer;
     redrawImage(incomingImg);
   }
   if (doesExist && Aurora.methodObjects[index].isAnim && Aurora.methodObjects[index].isBackground) {
@@ -603,7 +603,7 @@ function drawImagePatternMethod(incomingImgPat) {
       animTicks: incomingImgPat.animTicks,
       ticks: incomingImgPat.ticks,
       id: incomingImgPat.id,
-      layer: incomingImgPat.layer === undefined ? 0 : incomingImgPat.layer,
+      layer: !incomingImgPat.layer ? 0 : incomingImgPat.layer,
       isAnim: false,
       isBackground: incomingImgPat.isBackground,
       props: incomingImgPat.props,
@@ -628,7 +628,7 @@ function drawImagePatternMethod(incomingImgPat) {
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].isBackground = incomingImgPat.isBackground;
     Aurora.methodObjects[index].props = incomingImgPat.props;
-    Aurora.methodObjects[index].layer = incomingImgPat.layer;
+    Aurora.methodObjects[index].layer = !incomingImgPat.layer ? 0 : incomingImgPat.layer;
     Main.methodObjectShadows[index].posX = incomingImgPat.posX;
     Main.methodObjectShadows[index].posY = incomingImgPat.posY;
     Main.methodObjectShadows[index].width = incomingImgPat.width;
@@ -642,7 +642,7 @@ function drawImagePatternMethod(incomingImgPat) {
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].isBackground = incomingImgPat.isBackground;
     Main.methodObjectShadows[index].props = incomingImgPat.props;
-    Main.methodObjectShadows[index].layer = incomingImgPat.layer;
+    Main.methodObjectShadows[index].layer = !incomingImgPat.layer ? 0 : incomingImgPat.layer;
     redrawImagePattern(incomingImgPat);
   }
   if (doesExist && Aurora.methodObjects[index].isAnim && Aurora.methodObjects[index].isBackground) {
@@ -720,7 +720,7 @@ function drawButtonImageMethod(incomingButtonImage) {
       animTicks: incomingButtonImage.animTicks,
       ticks: incomingButtonImage.ticks,
       id: incomingButtonImage.id,
-      layer: incomingButtonImage.layer === undefined ? 0 : incomingButtonImage.layer,
+      layer: !incomingButtonImage.layer ? 0 : incomingButtonImage.layer,
       action: incomingButtonImage.action,
       isModalBtn: incomingButtonImage.isModalBtn,
       isBtn: true,
@@ -748,7 +748,7 @@ function drawButtonImageMethod(incomingButtonImage) {
     Aurora.methodObjects[index].action = incomingButtonImage.action;
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].props = incomingButtonImage.props;
-    Aurora.methodObjects[index].layer = incomingButtonImage.layer;
+    Aurora.methodObjects[index].layer = !incomingButtonImage.layer ? 0 : incomingButtonImage.layer;
     Main.methodObjectShadows[index].posX = incomingButtonImage.posX;
     Main.methodObjectShadows[index].posY = incomingButtonImage.posY;
     Main.methodObjectShadows[index].width = incomingButtonImage.width;
@@ -763,7 +763,7 @@ function drawButtonImageMethod(incomingButtonImage) {
     Main.methodObjectShadows[index].action = incomingButtonImage.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingButtonImage.props;
-    Main.methodObjectShadows[index].layer = incomingButtonImage.layer;
+    Main.methodObjectShadows[index].layer = !incomingButtonImage.layer ? 0 : incomingButtonImage.layer;
     redrawButtonImage(incomingButtonImage);
   }
   // checking for animations
@@ -834,7 +834,7 @@ function drawSimpleModalMethod(incomingModal) {
       bgColor: incomingModal.bgColor,
       isModalFilled: incomingModal.isModalFilled,
       id: incomingModal.id,
-      layer: incomingModal.layer === undefined ? 0 : incomingModal.layer,
+      layer: !incomingModal.layer ? 0 : incomingModal.layer,
       action: incomingModal.action,
       isBtn: true,
       isModalBtn: true,
@@ -865,7 +865,7 @@ function drawSimpleModalMethod(incomingModal) {
     Aurora.methodObjects[index].action = incomingModal.action;
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].props = incomingModal.props;
-    Aurora.methodObjects[index].layer = incomingModal.layer;
+    Aurora.methodObjects[index].layer = !incomingModal.layer ? 0 : incomingModal.layer;
     Main.methodObjectShadows[index].posX = incomingModal.posX;
     Main.methodObjectShadows[index].posY = incomingModal.posY;
     Main.methodObjectShadows[index].width = incomingModal.width;
@@ -883,7 +883,7 @@ function drawSimpleModalMethod(incomingModal) {
     Main.methodObjectShadows[index].action = incomingModal.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModal.props;
-    Main.methodObjectShadows[index].layer = incomingModal.layer;
+    Main.methodObjectShadows[index].layer = !incomingModal.layer ? 0 : incomingModal.layer;
     redrawSimpleModal(incomingModal);
   }
   // checking for animations
@@ -982,7 +982,7 @@ function drawModalImageMethod(incomingModalImage) {
       animTicks: incomingModalImage.animTicks,
       ticks: incomingModalImage.ticks,
       id: incomingModalImage.id,
-      layer: incomingModalImage.layer === undefined ? 0 : incomingModalImage.layer,
+      layer: !incomingModalImage.layer ? 0 : incomingModalImage.layer,
       action: incomingModalImage.action,
       isBtn: true,
       isModalBtn: incomingModalImage.incomingModalImage,
@@ -1012,7 +1012,7 @@ function drawModalImageMethod(incomingModalImage) {
     Aurora.methodObjects[index].action = incomingModalImage.action;
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].props = incomingModalImage.props;
-    Aurora.methodObjects[index].layer = incomingModalImage.layer;
+    Aurora.methodObjects[index].layer = !incomingModalImage.layer ? 0 : incomingModalImage.layer;
     Main.methodObjectShadows[index].posX = incomingModalImage.posX;
     Main.methodObjectShadows[index].posY = incomingModalImage.posY;
     Main.methodObjectShadows[index].width = incomingModalImage.width;
@@ -1024,7 +1024,7 @@ function drawModalImageMethod(incomingModalImage) {
     Main.methodObjectShadows[index].action = incomingModalImage.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModalImage.props;
-    Main.methodObjectShadows[index].layer = incomingModalImage.layer;
+    Main.methodObjectShadows[index].layer = !incomingModalImage.layer ? 0 : incomingModalImage.layer;
     redrawModalImage(incomingModalImage);
   }
   // checking for animations
@@ -1100,7 +1100,7 @@ function drawDialogueModalMethod(incomingModal) {
       bgColor: incomingModal.bgColor,
       isModalFilled: incomingModal.isModalFilled,
       id: incomingModal.id,
-      layer: incomingModal.layer === undefined ? 0 : incomingModal.layer,
+      layer: !incomingModal.layer ? 0 : incomingModal.layer,
       action: incomingModal.action,
       isBtn: true,
       isModalBtn: incomingModal.isModalBtn,
@@ -1130,7 +1130,7 @@ function drawDialogueModalMethod(incomingModal) {
     Aurora.methodObjects[index].action = incomingModal.action;
     Aurora.methodObjects[index].isAnim = false;
     Aurora.methodObjects[index].props = incomingModal.props;
-    Aurora.methodObjects[index].layer = incomingModal.layer;
+    Aurora.methodObjects[index].layer = !incomingModal.layer ? 0 : incomingModal.layer;
     Main.methodObjectShadows[index].posX = incomingModal.posX;
     Main.methodObjectShadows[index].posY = incomingModal.posY;
     Main.methodObjectShadows[index].width = incomingModal.width;
@@ -1147,7 +1147,7 @@ function drawDialogueModalMethod(incomingModal) {
     Main.methodObjectShadows[index].action = incomingModal.action;
     Main.methodObjectShadows[index].isAnim = false;
     Main.methodObjectShadows[index].props = incomingModal.props;
-    Main.methodObjectShadows[index].layer = incomingModal.layer;
+    Main.methodObjectShadows[index].layer = !incomingModal.layer ? 0 : incomingModal.layer;
     redrawDialogueModal(incomingModal);
   }
   // checking for animations
