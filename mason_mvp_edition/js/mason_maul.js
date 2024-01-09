@@ -1870,7 +1870,7 @@ const maulPage = {
 						posY: robot.posY,
 						width: robot.width,
 						height: robot.height,
-						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, false), // testing here
+						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true),
 						selectedImage: 0,
 						animTicks: 15,
 						ticks: 15,
@@ -1904,7 +1904,7 @@ const maulPage = {
 								 			posY: parent.posY - (Aurora.entitySize * 1.25),
 								 			width: (Aurora.entitySize * 1.25),
 											height: (Aurora.entitySize * 1.25),
-								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, false), // testing here
+								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 3,
 								 			ticks: 3,
@@ -1925,7 +1925,7 @@ const maulPage = {
 											posY: parent.posY,
 											width: (Aurora.entitySize * 2),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, false), // testing here
+								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 5,
 								 			ticks: 5,
@@ -1946,7 +1946,7 @@ const maulPage = {
 											posY: parent.posY,
 											width: (Aurora.entitySize * 2),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, false), // testing here
+								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 5,
 								 			ticks: 5,
@@ -1967,7 +1967,7 @@ const maulPage = {
 											posY: parent.posY + (Aurora.entitySize * 1.09),
 											width: (Aurora.entitySize * 0.975),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, false), // testing here
+								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 3,
 								 			ticks: 3,
@@ -1988,7 +1988,7 @@ const maulPage = {
 											posY: parent.posY + (Aurora.entitySize * 1.09),
 											width: (Aurora.entitySize * 0.975),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, false), // testing here
+								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 3,
 								 			ticks: 3,
@@ -2009,7 +2009,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			sendRobot(blueRobot); // testing here
+			// sendRobot(blueRobot); // testing here
 			drawRobotSelectParts(blueRobot.id); // testing here
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
