@@ -1553,8 +1553,8 @@ const maulPage = {
 										//Aurora.addCollision(Aurora.collisionSetup);
 										//const robotStats = totalSelectedRobotStats();
 										//const blueRobotId = 'arena-blue-att-robot-right-';
-										//const blueRobot = createRobot(1, 0.265, blueRobotId, gameObject.arenaBlueSendCount, robotStats, gameObject.selectedRobot, 'rt', robotDirective);
-										//sendBlueRobot(blueRobot, robotDirective);
+										const blueRobot = createRobot(1, 0.265, blueRobotId, gameObject.arenaBlueSendCount, robotStats, gameObject.selectedRobot, 'rt', robotDirective);
+										sendBlueRobot(blueRobot, robotDirective);
 										//setRedRightTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											gameObject.canClick = true;
