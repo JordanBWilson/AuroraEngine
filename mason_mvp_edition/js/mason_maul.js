@@ -2009,7 +2009,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			sendRobot(blueRobot);
+			// sendRobot(blueRobot);
 			// drawRobotSelectParts(blueRobot.id); // test here
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
