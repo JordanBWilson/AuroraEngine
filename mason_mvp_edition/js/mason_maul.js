@@ -1475,87 +1475,87 @@ const maulPage = {
 									if (gameObject.canClick) {
 										gameObject.canClick = false;
 										blueRobotSendMoneyUpdate(robotCost);
-										setBlueRightRoadNavCollisions();
-										Aurora.collisionSetup = {
-											primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-											target: 'red-tower-bullet',
-											method: function(id) {
-												robotBulletCollision(id, robotDirective, 'red', false);
-											},
-											methodId: undefined,
-										}
-										Aurora.addCollision(Aurora.collisionSetup);
-										const allBluesRight = gameObject.arenaBlueAttackers.filter(x => x.id.includes('arena-blue-att-robot-right-'));
-										allBluesRight.forEach(robot => {
-											Aurora.collisionSetup = {
-												primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-												target: robot.id,
-												method: function(targetMethodId, primaryId) {
-													const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
-													if (blueBot) {
-														blueBot.halted = true;
-													}
-												},
-												methodId: undefined,
-											}
-											Aurora.addCollision(Aurora.collisionSetup);
-										});
-										Aurora.collisionSetup = {
-											primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-											target: 'red-spell-wall',
-											method: function(targetMethodId, primaryId) {
-												const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
-												if (blueBot) {
-													const findId = spellWallCollisions.teamBlueIds.find(team => team.countId === blueBot.robotCount);
-													if (findId === undefined) {
-														const teamBlue = {
-															countId: blueBot.robotCount,
-															direction: blueBot.direction,
-														}
-														spellWallCollisions.teamBlueIds.push(teamBlue);
-													}
-													blueBot.halted = true;
-												}
-											},
-											methodId: undefined,
-										}
-										Aurora.addCollision(Aurora.collisionSetup);
-										Aurora.collisionSetup = {
-											primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
-											target: 'red-spell-emp',
-											method: function(targetMethodId, primaryId) {
-												const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
-												let moneyGained = 0;
-												if (blueBot.directive === 4) {
-													moneyGained = robotMoneyGained.leeRoy;
-												} else if (blueBot.directive === 1) {
-													moneyGained = robotMoneyGained.tank;
-												}
-												const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === primaryId);
-												deleteRobotMethodObject(robotHitMethodObject, 1);
-												Particle.drawSpark({
-													posX: blueBot.posX,
-													posY: blueBot.posY,
-													shape: Particle.enumShapes.arc,
-													color: 'blue',
-													ticks: 11,
-													count: 8,
-													size: (Aurora.entitySize * 1),
-													speed: 1.3,
-												});
-												gameObject.arenaRedGameMoney += moneyGained;
-												if (gameObject.gameSounds) {
-													robotHitSound.cloneNode(true).play();
-												}
-											},
-											methodId: undefined,
-										}
-										Aurora.addCollision(Aurora.collisionSetup);
-										const robotStats = totalSelectedRobotStats();
-										const blueRobotId = 'arena-blue-att-robot-right-';
-										const blueRobot = createRobot(1, 0.265, blueRobotId, gameObject.arenaBlueSendCount, robotStats, gameObject.selectedRobot, 'rt', robotDirective);
-										sendBlueRobot(blueRobot, robotDirective);
-										setRedRightTowerRangeCollisions(blueRobot.id);
+										//setBlueRightRoadNavCollisions();
+										//Aurora.collisionSetup = {
+											//primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+											//target: 'red-tower-bullet',
+											//method: function(id) {
+												//robotBulletCollision(id, robotDirective, 'red', false);
+											//},
+											//methodId: undefined,
+										//}
+										//Aurora.addCollision(Aurora.collisionSetup);
+										//const allBluesRight = gameObject.arenaBlueAttackers.filter(x => x.id.includes('arena-blue-att-robot-right-'));
+										//allBluesRight.forEach(robot => {
+											//Aurora.collisionSetup = {
+												//primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+												//target: robot.id,
+												//method: function(targetMethodId, primaryId) {
+													//const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
+													//if (blueBot) {
+														//blueBot.halted = true;
+													//}
+												//},
+												//methodId: undefined,
+											//}
+											//Aurora.addCollision(Aurora.collisionSetup);
+										//});
+										//Aurora.collisionSetup = {
+											//primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+											//target: 'red-spell-wall',
+											//method: function(targetMethodId, primaryId) {
+												//const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
+												//if (blueBot) {
+													//const findId = spellWallCollisions.teamBlueIds.find(team => team.countId === blueBot.robotCount);
+													//if (findId === undefined) {
+														//const teamBlue = {
+															//countId: blueBot.robotCount,
+															//direction: blueBot.direction,
+														//}
+														//spellWallCollisions.teamBlueIds.push(teamBlue);
+													//}
+													//blueBot.halted = true;
+												//}
+											//},
+											//methodId: undefined,
+										//}
+										//Aurora.addCollision(Aurora.collisionSetup);
+										//Aurora.collisionSetup = {
+											//primary: 'arena-blue-att-robot-right-' + gameObject.arenaBlueSendCount,
+											//target: 'red-spell-emp',
+											//method: function(targetMethodId, primaryId) {
+												//const blueBot = gameObject.arenaBlueAttackers.find(x => x.id === primaryId);
+												//let moneyGained = 0;
+												//if (blueBot.directive === 4) {
+													//moneyGained = robotMoneyGained.leeRoy;
+												//} else if (blueBot.directive === 1) {
+													//moneyGained = robotMoneyGained.tank;
+												//}
+												//const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === primaryId);
+												//deleteRobotMethodObject(robotHitMethodObject, 1);
+												//Particle.drawSpark({
+													//posX: blueBot.posX,
+													//posY: blueBot.posY,
+													//shape: Particle.enumShapes.arc,
+													//color: 'blue',
+													//ticks: 11,
+													//count: 8,
+													//size: (Aurora.entitySize * 1),
+													//speed: 1.3,
+												//});
+												//gameObject.arenaRedGameMoney += moneyGained;
+												//if (gameObject.gameSounds) {
+													//robotHitSound.cloneNode(true).play();
+												//}
+											//},
+											//methodId: undefined,
+										//}
+										//Aurora.addCollision(Aurora.collisionSetup);
+										//const robotStats = totalSelectedRobotStats();
+										//const blueRobotId = 'arena-blue-att-robot-right-';
+										//const blueRobot = createRobot(1, 0.265, blueRobotId, gameObject.arenaBlueSendCount, robotStats, gameObject.selectedRobot, 'rt', robotDirective);
+										//sendBlueRobot(blueRobot, robotDirective);
+										//setRedRightTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											gameObject.canClick = true;
 										}, 800);
