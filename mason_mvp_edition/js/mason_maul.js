@@ -53,7 +53,7 @@ const maulPage = {
 		let aiThinking = true;
 		let gameTimer;
 		Particle.init();
-		setupAurora();
+		setupGame();
 		Aurora.pageResized = {
 			section: 'arena-game',
 			method: function() {
@@ -63,7 +63,7 @@ const maulPage = {
 			}
 		}
 		// future Jordan, it's time to work on the tutorial
-		function setupAurora() {
+		function setupGame() {
 			generateRedArenaRobots();
 			generateRedArenaTowers();
 			drawGrassBackGround();
@@ -78,31 +78,33 @@ const maulPage = {
 			drawPlayerMoney();
 			drawRoundTime();
 			// readySetGoGame();
-			setTimeout(function() { // testing here
-				startGameRounds();
-			}, 150);
-			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
-			Aurora.addMethod(Aurora.methodSetup);
-			Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
-			Aurora.addMethod(Aurora.methodSetup);
-			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
-			Aurora.addMethod(Aurora.methodSetup);
-			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
-			Aurora.addMethod(Aurora.methodSetup);
-			Aurora.methodSetup = {
-				method: function(id) {
-					if (aiThinking === true) {
-						redAiMind(); 
-					}
-					if (aiThinking === false) {
-						aiThinking = undefined;
-						setTimeout(function() { // this is how fast the ai makes it's moves
-							aiThinking = true;
-						}, redAIThinkTimer); // 1300
-					}
-				}
-			};
-			Aurora.addMethod(Aurora.methodSetup);
+			//setTimeout(function() { // testing here
+				//startGameRounds();
+			//}, 150);
+			
+			// testing here as well
+			//Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
+			//Aurora.addMethod(Aurora.methodSetup);
+			//Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
+			//Aurora.addMethod(Aurora.methodSetup);
+			//Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
+			//Aurora.addMethod(Aurora.methodSetup);
+			//Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
+			//Aurora.addMethod(Aurora.methodSetup);
+			//Aurora.methodSetup = {
+				//method: function(id) {
+					//if (aiThinking === true) {
+						//redAiMind(); 
+					//}
+					//if (aiThinking === false) {
+						//aiThinking = undefined;
+						//setTimeout(function() { // this is how fast the ai makes it's moves
+							//aiThinking = true;
+						//}, redAIThinkTimer); // 1300
+					//}
+				//}
+			//};
+			//Aurora.addMethod(Aurora.methodSetup);
 			if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
 				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
 			} else {
@@ -1114,7 +1116,7 @@ const maulPage = {
 							}
 						};
 						Aurora.addMethod(Aurora.methodSetup);
-					}, 2000);
+					}, 0); // 2000
 				}
 			}
 			Aurora.methodSetup = {
