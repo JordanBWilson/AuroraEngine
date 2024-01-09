@@ -2009,8 +2009,8 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			// sendRobot(blueRobot); // test here
-			// drawRobotSelectParts(blueRobot.id); // test here
+			sendRobot(blueRobot); // test here
+			drawRobotSelectParts(blueRobot.id); // test here
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
