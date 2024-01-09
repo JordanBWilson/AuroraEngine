@@ -1877,25 +1877,25 @@ const maulPage = {
 						id: robot.id,
 						isBackground: false,
 						props: {
-							animate: (function(parent) {
-								if (gameObject.arenaGameStarted) {
-									const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
-									animateRobot.forEach(part => {
-										if (!robot.halted) { // the robot is moving
-											if (part.animTicks <= 1) {
-												if (part.selectedImage >= (part.images.length - 1)) {
-													part.selectedImage = 0;
-												} else {
-													part.selectedImage += 1;
-												}
-											}
-											part = Aurora.nextTick(part);
-										} else { // the robot is holding still
-											part.selectedImage = 0;
-										}
-									});
-								}
-							})(),
+							//animate: (function(parent) { // test here
+								//if (gameObject.arenaGameStarted) {
+									//const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
+									//animateRobot.forEach(part => {
+										//if (!robot.halted) { // the robot is moving
+											//if (part.animTicks <= 1) {
+												//if (part.selectedImage >= (part.images.length - 1)) {
+													//part.selectedImage = 0;
+												//} else {
+													//part.selectedImage += 1;
+												//}
+											//}
+											//part = Aurora.nextTick(part);
+										//} else { // the robot is holding still
+											//part.selectedImage = 0;
+										//}
+									//});
+								//}
+							//})(),
 							drawHead: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
@@ -2009,7 +2009,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			// sendRobot(blueRobot);
+			// sendRobot(blueRobot); // test here
 			// drawRobotSelectParts(blueRobot.id); // test here
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
