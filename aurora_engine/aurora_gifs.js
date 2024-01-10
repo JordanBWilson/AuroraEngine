@@ -81,13 +81,14 @@ function newGifImg(imageSrc, banana, id) { // this is the main function
         }
         let count = 0;
         const gifImages = [];
+        alert(gifImages.length);
 
         return count;
 
         function completedCallback() {
             count++;
             const image = new Image();
-            image.src = canvas.toDataURL('image/png')
+            image.src = canvas.toDataURL('image/png');
             gifImages.push(image);
             if (count >= gif.frameCount) {
               if (id) { // if the current id is defined...
