@@ -16,40 +16,47 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 (function() {
-  if (!Aurora.canvas) {
-    console.log('No game stage detected.');
-  } else {
-    // get this party train moving
-    Main.stage = Aurora.canvas.getContext('2d');
-    window.addEventListener('resize', resizeStage, false);
-    Aurora.canvas.addEventListener('click', function(event) {
-      screenTapped(event);
-    }, false);
-    resizeStage();
-    // this takes out the old animationId when the page is refreshed
-    cancelAnimationFrame(Main.intervalAnimateId);
-    window.addEventListener('beforeunload', function(e) { cancelAnimationFrame(Main.intervalAnimateId); });
-    Main.intervalAnimateId = requestAnimationFrame(function() {
-		if (typeof mainLoop !== 'undefined') {
-			mainLoop();
-		}
-	});
-  }
+	if (!Aurora.canvas) {
+		console.log('No game stage detected.');
+	} else {
+		// get this party train moving
+		Main.stage = Aurora.canvas.getContext('2d');
+		window.addEventListener('resize', resizeStage, false);
+		Aurora.canvas.addEventListener('click', function(event) {
+			event.preventDefault();	
+			screenTapped(event);
+		}, false);
+		Aurora.canvas.addEventListener('touchstart', function(event) {
+			event.preventDefault();	
+		}, false);
+		Aurora.canvas.addEventListener('touchend', function(event) {
+			event.preventDefault();	
+		}, false);
+		Aurora.canvas.addEventListener('touchmove', function(event) {
+			event.preventDefault();	
+		}, false);
+		Aurora.canvas.addEventListener('touchcancel', function(event) {
+			event.preventDefault();	
+		}, false);
+		resizeStage();
+		// this takes out the old animationId when the page is refreshed
+		cancelAnimationFrame(Main.intervalAnimateId);
+		window.addEventListener('beforeunload', function(e) { cancelAnimationFrame(Main.intervalAnimateId); });
+		Main.intervalAnimateId = requestAnimationFrame(function() {
+			if (typeof mainLoop !== 'undefined') {
+				mainLoop();
+			}
+		});
+	}
 })();
 
 function mainLoop() {
 
   Main.interval = setInterval(function() {
     if (Aurora.isLoaded) {
-		// layer the methods
-		//Main.methodsToRun.sort(function(a, b) {
-			//return a?.layer - b?.layer;
-		//});
-		//Aurora.methodObjects.sort(function(a, b) {
-			//return a?.layer - b?.layer;
-		//});
       if (Main.methodsToRun.length > 0) {
         // run the game
+        // layer the methods
         Main.methodsToRun.sort((a, b) => a.layer - b.layer);
 		Aurora.methodObjects.sort((a, b) => a.layer - b.layer);
         for (let i = 0; i < Main.methodsToRun.length; i++) {
@@ -57,19 +64,6 @@ function mainLoop() {
             Main.clearStage = false;
             break;
           }
-          // original
-          // if (Main.methodsToRun[i].layer !== 0) {
-			  // layer the methods
-			//Main.methodsToRun.sort((a, b) => a.layer - b.layer);
-			//Aurora.methodObjects.sort((a, b) => a.layer - b.layer);
-			
-			  //Main.methodsToRun.sort(function(a, b) {
-				//return a?.layer - b?.layer;
-			  //});
-			  //Aurora.methodObjects.sort(function(a, b) {
-				//return a?.layer - b?.layer;
-			  //});
-		  // }
           if (Main.methodsToRun[i].methodId === undefined) { // if there isn't a methodId, add one
             Main.globalId = createGUID();
             Main.methodsToRun[i].methodId = Main.globalId;
