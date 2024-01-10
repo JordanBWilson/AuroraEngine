@@ -20,11 +20,6 @@ let gifWorker;
 const gifWorkerCallbacks = {};
 
 function createImagesFromGif(imageSrc, id) { // call this when you want to convert a gif to base64 pngs
-	//let sendImage = true;
-	//newGifImg(imageSrc, sendImage, id);
-	//sendImage = false;
-	//Aurora.isLoaded = false;
-	
 	const img = new Image();
 	img.src = imageSrc;
 	let sendImage = true;

@@ -62,11 +62,10 @@ const maulPage = {
 				}
 			}
 		}
-		// future Jordan, it's time to work on the tutorial
 		function setupGame() {
-			gameObject.arenaGameStarted = true; // testing here
-			//generateRedArenaRobots(); // testing here
-			//generateRedArenaTowers(); // testing here
+			// gameObject.arenaGameStarted = true; // testing here
+			generateRedArenaRobots(); // testing here
+			generateRedArenaTowers(); // testing here
 			drawGrassBackGround();
 			drawRobotSelection(); // testing here
 			drawBlueRoads();
@@ -78,34 +77,34 @@ const maulPage = {
 			drawRedRobotRoadNavigation();
 			drawPlayerMoney();
 			drawRoundTime();
-			// readySetGoGame();
+			readySetGoGame();
 			//setTimeout(function() { // testing here
 				//startGameRounds();
 			//}, 150);
 			
 			// testing here as well
-			//Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
-			//Aurora.addMethod(Aurora.methodSetup);
-			//Aurora.methodSetup = {
-				//method: function(id) {
-					//if (aiThinking === true) {
-						//redAiMind(); 
-					//}
-					//if (aiThinking === false) {
-						//aiThinking = undefined;
-						//setTimeout(function() { // this is how fast the ai makes it's moves
-							//aiThinking = true;
-						//}, redAIThinkTimer); // 1300
-					//}
-				//}
-			//};
-			//Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('blue'); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { towerBulletFindRobot('red'); }};
+			Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+				method: function(id) {
+					if (aiThinking === true) {
+						redAiMind(); 
+					}
+					if (aiThinking === false) {
+						aiThinking = undefined;
+						setTimeout(function() { // this is how fast the ai makes it's moves
+							aiThinking = true;
+						}, redAIThinkTimer); // 1300
+					}
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
 			if (gameObject.gamesWon > tutorialGames) { // give the player a few 'easy' games
 				gameObject.redMaxTowerLevel = Math.floor((Math.random() * 5) + 1);
 			} else {
@@ -1863,152 +1862,150 @@ const maulPage = {
 		}
 		
 		function sendRobot(robot) {
-			// const chassis = drawRobotSelectPreviewParts('chassis', robot.robotParts, true);
-			alert('All images: ' + Aurora.gifImageList.length);
-			//Aurora.methodSetup = {
-				//method: function(id) {
-					//drawImage({
-						//posX: robot.posX,
-						//posY: robot.posY,
-						//width: robot.width,
-						//height: robot.height, // future Jordan, checkout this method here. Make sure it's returning an array with one item in it
-						//images: chassis, // testing here
-						//selectedImage: 0,
-						//animTicks: 15,
-						//ticks: 15,
-						//id: robot.id,
-						//isBackground: false,
-						//props: {
-							////animate: (function(parent) { // testing here
-								////if (gameObject.arenaGameStarted) {
-									////const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
-									////animateRobot.forEach(part => {
-										////if (!robot.halted) { // the robot is moving
-											////if (part.animTicks <= 1) {
-												////if (part.selectedImage >= (part.images.length - 1)) {
-													////part.selectedImage = 0;
-												////} else {
-													////part.selectedImage += 1;
-												////}
-											////}
-											////part = Aurora.nextTick(part);
-										////} else { // the robot is holding still
-											////part.selectedImage = 0;
-										////}
-									////});
-								////}
-							////})(),
-							//drawHead: function(parent) {
-								//Aurora.methodSetup = {
-									//method: function(id) {
-								 		//drawImage({
-								 			//posX: parent.posX + (Aurora.entitySize * 0.15),
-								 			//posY: parent.posY - (Aurora.entitySize * 1.25),
-								 			//width: (Aurora.entitySize * 1.25),
-											//height: (Aurora.entitySize * 1.25),
-								 			//images: [], // drawRobotSelectPreviewParts('head', robot?.robotParts, true), // testing here
-								 			//selectedImage: 0,
-								 			//animTicks: 3,
-								 			//ticks: 3,
-								 			//id: parent.id,
-								 			//isBackground: false,
-								 			//props: {},
-								 			//methodId: id
-								 		//});
-									//}
-								//};
-								//Aurora.addMethod(Aurora.methodSetup);
-							//},
-							//drawLeftArm: function(parent) {
-								//Aurora.methodSetup = {
-									//method: function(id) {
-										//drawImage({
-								 			//posX: parent.posX - (Aurora.entitySize * 1),
-											//posY: parent.posY,
-											//width: (Aurora.entitySize * 2),
-											//height: (Aurora.entitySize * 1.5),
-								 			//images: [], // drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true), // testing here
-								 			//selectedImage: 0,
-								 			//animTicks: 5,
-								 			//ticks: 5,
-								 			//id: parent.id,
-								 			//isBackground: false,
-								 			//props: {},
-								 			//methodId: id
-								 		//});
-									//}
-								//};
-								//Aurora.addMethod(Aurora.methodSetup);
-							//},
-							//drawRightArm: function(parent) {
-								//Aurora.methodSetup = {
-									//method: function(id) {
-										//drawImage({
-								 			//posX: parent.posX + (Aurora.entitySize * 0.5),
-											//posY: parent.posY,
-											//width: (Aurora.entitySize * 2),
-											//height: (Aurora.entitySize * 1.5),
-								 			//images: [], // drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true), // testing here
-								 			//selectedImage: 0,
-								 			//animTicks: 5,
-								 			//ticks: 5,
-								 			//id: parent.id,
-								 			//isBackground: false,
-								 			//props: {},
-								 			//methodId: id
-								 		//});
-									//}
-								//};
-								//Aurora.addMethod(Aurora.methodSetup);
-							//},
-							//drawLeftLeg: function(parent) {
-								//Aurora.methodSetup = {
-									//method: function(id) {
-										//drawImage({
-								 			//posX: parent.posX - (Aurora.entitySize * 0.3),
-											//posY: parent.posY + (Aurora.entitySize * 1.09),
-											//width: (Aurora.entitySize * 0.975),
-											//height: (Aurora.entitySize * 1.5),
-								 			//images: [], // drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true), // testing here
-								 			//selectedImage: 0,
-								 			//animTicks: 3,
-								 			//ticks: 3,
-								 			//id: parent.id,
-								 			//isBackground: false,
-								 			//props: {},
-								 			//methodId: id
-								 		//});
-									//}
-								//};
-								//Aurora.addMethod(Aurora.methodSetup);
-							//},
-							//drawRightLeg: function(parent) {
-								//Aurora.methodSetup = {
-									//method: function(id) {
-										//drawImage({
-								 			//posX: parent.posX + (Aurora.entitySize * 0.85),
-											//posY: parent.posY + (Aurora.entitySize * 1.09),
-											//width: (Aurora.entitySize * 0.975),
-											//height: (Aurora.entitySize * 1.5),
-								 			//images: [], // drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true), // testing here
-								 			//selectedImage: 0,
-								 			//animTicks: 3,
-								 			//ticks: 3,
-								 			//id: parent.id,
-								 			//isBackground: false,
-								 			//props: {},
-								 			//methodId: id
-								 		//});
-									//}
-								//};
-								//Aurora.addMethod(Aurora.methodSetup);
-							//},
-						//},
-						//methodId: id
-					//});
-				//}
-			//};
-			//Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = {
+				method: function(id) {
+					drawImage({
+						posX: robot.posX,
+						posY: robot.posY,
+						width: robot.width,
+						height: robot.height,
+						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true), // testing here
+						selectedImage: 0,
+						animTicks: 15,
+						ticks: 15,
+						id: robot.id,
+						isBackground: false,
+						props: {
+							animate: (function(parent) { // testing here
+								if (gameObject.arenaGameStarted) {
+									const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
+									animateRobot.forEach(part => {
+										if (!robot.halted) { // the robot is moving
+											if (part.animTicks <= 1) {
+												if (part.selectedImage >= (part.images.length - 1)) {
+													part.selectedImage = 0;
+												} else {
+													part.selectedImage += 1;
+												}
+											}
+											part = Aurora.nextTick(part);
+										} else { // the robot is holding still
+											part.selectedImage = 0;
+										}
+									});
+								}
+							})(),
+							drawHead: function(parent) {
+								Aurora.methodSetup = {
+									method: function(id) {
+								 		drawImage({
+								 			posX: parent.posX + (Aurora.entitySize * 0.15),
+								 			posY: parent.posY - (Aurora.entitySize * 1.25),
+								 			width: (Aurora.entitySize * 1.25),
+											height: (Aurora.entitySize * 1.25),
+								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true), // testing here
+								 			selectedImage: 0,
+								 			animTicks: 3,
+								 			ticks: 3,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
+									}
+								};
+								Aurora.addMethod(Aurora.methodSetup);
+							},
+							drawLeftArm: function(parent) {
+								Aurora.methodSetup = {
+									method: function(id) {
+										drawImage({
+								 			posX: parent.posX - (Aurora.entitySize * 1),
+											posY: parent.posY,
+											width: (Aurora.entitySize * 2),
+											height: (Aurora.entitySize * 1.5),
+								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true), // testing here
+								 			selectedImage: 0,
+								 			animTicks: 5,
+								 			ticks: 5,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
+									}
+								};
+								Aurora.addMethod(Aurora.methodSetup);
+							},
+							drawRightArm: function(parent) {
+								Aurora.methodSetup = {
+									method: function(id) {
+										drawImage({
+								 			posX: parent.posX + (Aurora.entitySize * 0.5),
+											posY: parent.posY,
+											width: (Aurora.entitySize * 2),
+											height: (Aurora.entitySize * 1.5),
+								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true), // testing here
+								 			selectedImage: 0,
+								 			animTicks: 5,
+								 			ticks: 5,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
+									}
+								};
+								Aurora.addMethod(Aurora.methodSetup);
+							},
+							drawLeftLeg: function(parent) {
+								Aurora.methodSetup = {
+									method: function(id) {
+										drawImage({
+								 			posX: parent.posX - (Aurora.entitySize * 0.3),
+											posY: parent.posY + (Aurora.entitySize * 1.09),
+											width: (Aurora.entitySize * 0.975),
+											height: (Aurora.entitySize * 1.5),
+								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true), // testing here
+								 			selectedImage: 0,
+								 			animTicks: 3,
+								 			ticks: 3,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
+									}
+								};
+								Aurora.addMethod(Aurora.methodSetup);
+							},
+							drawRightLeg: function(parent) {
+								Aurora.methodSetup = {
+									method: function(id) {
+										drawImage({
+								 			posX: parent.posX + (Aurora.entitySize * 0.85),
+											posY: parent.posY + (Aurora.entitySize * 1.09),
+											width: (Aurora.entitySize * 0.975),
+											height: (Aurora.entitySize * 1.5),
+								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true), // testing here
+								 			selectedImage: 0,
+								 			animTicks: 3,
+								 			ticks: 3,
+								 			id: parent.id,
+								 			isBackground: false,
+								 			props: {},
+								 			methodId: id
+								 		});
+									}
+								};
+								Aurora.addMethod(Aurora.methodSetup);
+							},
+						},
+						methodId: id
+					});
+				}
+			};
+			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot); // testing here
