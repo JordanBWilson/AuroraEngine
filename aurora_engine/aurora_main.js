@@ -23,7 +23,6 @@
 		Main.stage = Aurora.canvas.getContext('2d');
 		window.addEventListener('resize', resizeStage, false);
 		Aurora.canvas.addEventListener('click', function(event) {
-			event.preventDefault();	
 			screenTapped(event);
 		}, false);
 		Aurora.canvas.addEventListener('touchstart', function(event) {
