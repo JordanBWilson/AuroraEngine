@@ -1863,6 +1863,8 @@ const maulPage = {
 		}
 		
 		function sendRobot(robot) {
+			const chassis = drawRobotSelectPreviewParts('chassis', robot?.robotParts, true);
+			alert(chassis.length);
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
@@ -1870,7 +1872,7 @@ const maulPage = {
 						posY: robot.posY,
 						width: robot.width,
 						height: robot.height, // future Jordan, checkout this method here. Make sure it's returning an array with one item in it
-						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true), // testing here
+						images: chassis, // testing here
 						selectedImage: 0,
 						animTicks: 15,
 						ticks: 15,
