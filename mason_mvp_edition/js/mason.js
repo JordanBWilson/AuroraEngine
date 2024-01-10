@@ -630,6 +630,7 @@ const titlePage = {
 				if (Aurora.isLoaded) {
 					clearInterval(loadCheck);
 					titlePage.loadPage();
+					alert(Aurora.gifImageList.length);
 				}
 			}, 300);
 		}
