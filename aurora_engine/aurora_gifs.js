@@ -81,7 +81,6 @@ function newGifImg(imageSrc, banana, id) { // this is the main function
         }
         let count = 0;
         const gifImages = [];
-        alert(gifImages.length);
 
         return count;
 

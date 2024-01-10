@@ -374,7 +374,7 @@ function createImagesFromGif(imageSrc, methodId) { // call this when you want to
 }
 // this method should exist in arurora_2d_core to find the object that gets the image
 function assignImages(pngs, methodId) {
-
+  alert(pngs.length);
   console.log(pngs, methodId);
 }
 
