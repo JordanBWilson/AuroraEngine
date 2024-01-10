@@ -20,9 +20,18 @@ let gifWorker;
 const gifWorkerCallbacks = {};
 
 function createImagesFromGif(imageSrc, id) { // call this when you want to convert a gif to base64 pngs
+	//let sendImage = true;
+	//newGifImg(imageSrc, sendImage, id);
+	//sendImage = false;
+	//Aurora.isLoaded = false;
+	
+	const img = new Image();
+	img.src = imageSrc;
 	let sendImage = true;
-	newGifImg(imageSrc, sendImage, id);
-	sendImage = false;
+	img.onload = function() {
+		newGifImg(img, sendImage, methodId);
+		sendImage = false;
+	}
 	Aurora.isLoaded = false;
 } // completedCallback() is the method that returns the base64 pngs
 
@@ -48,8 +57,8 @@ function handleFiles(e) {
   }
   reader.readAsDataURL(e.target.files[0]);
 }
-function newGifImg(imageSrc, banana, id) { // this is the main function
-    const gif = createGif(imageSrc);
+function newGifImg(img, banana, id) { // this is the main function
+    const gif = createGif(img.src);
     gif.addEventListener('load', function readGif(e) {
         const width = gif.naturalWidth, height = gif.naturalHeight;
         const cols = calculateBestSize(width, gif.naturalHeight, gif.frameCount);
