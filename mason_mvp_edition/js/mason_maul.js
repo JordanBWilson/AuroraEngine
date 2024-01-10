@@ -1863,8 +1863,8 @@ const maulPage = {
 		}
 		
 		function sendRobot(robot) {
-			const chassis = drawRobotSelectPreviewParts('chassis', robot.robotParts, true);
-			alert(chassis.length);
+			// const chassis = drawRobotSelectPreviewParts('chassis', robot.robotParts, true);
+			alert(robotChassis.imgs.length);
 			//Aurora.methodSetup = {
 				//method: function(id) {
 					//drawImage({
