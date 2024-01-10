@@ -29,7 +29,7 @@ function createImagesFromGif(imageSrc, id) { // call this when you want to conve
 	img.src = imageSrc;
 	let sendImage = true;
 	img.onload = function() {
-		newGifImg(img, sendImage, methodId);
+		newGifImg(img, sendImage, id);
 		sendImage = false;
 	}
 	Aurora.isLoaded = false;
