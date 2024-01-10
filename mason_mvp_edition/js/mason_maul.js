@@ -1876,6 +1876,7 @@ const maulPage = {
 						id: robot.id,
 						isBackground: false,
 						props: {
+							// future Jordan, work on fixing animations for iOS
 							//animate: (function(parent) { // testing here
 								//if (gameObject.arenaGameStarted) {
 									//const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
