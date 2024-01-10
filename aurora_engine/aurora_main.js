@@ -24,20 +24,22 @@
 		window.addEventListener('resize', resizeStage, false);
 		Aurora.canvas.addEventListener('click', function(event) {
 			screenTapped(event);
-		}, false);
-		Aurora.canvas.addEventListener('touchstart', function(event) {
-			screenTapped(event);
 			event.preventDefault();	
 		}, false);
-		Aurora.canvas.addEventListener('touchend', function(event) {
-			event.preventDefault();	
-		}, false);
-		Aurora.canvas.addEventListener('touchmove', function(event) {
-			event.preventDefault();	
-		}, false);
-		Aurora.canvas.addEventListener('touchcancel', function(event) {
-			event.preventDefault();	
-		}, false);
+		// attempting to disable tap and hold selection on iOS
+		//Aurora.canvas.addEventListener('touchstart', function(event) {
+			//screenTapped(event);
+			//event.preventDefault();	
+		//}, false);
+		//Aurora.canvas.addEventListener('touchend', function(event) {
+			//event.preventDefault();	
+		//}, false);
+		//Aurora.canvas.addEventListener('touchmove', function(event) {
+			//event.preventDefault();	
+		//}, false);
+		//Aurora.canvas.addEventListener('touchcancel', function(event) {
+			//event.preventDefault();	
+		//}, false);
 		resizeStage();
 		// this takes out the old animationId when the page is refreshed
 		cancelAnimationFrame(Main.intervalAnimateId);
