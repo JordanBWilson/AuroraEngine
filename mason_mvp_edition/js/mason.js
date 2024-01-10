@@ -642,11 +642,12 @@ const mainPage = {
 	loadPage: function() {
 		gameObject.canClick = true;
 		let robot = {};
-		if (gameObject.cutSceneStep === 0) {
-			cutSceneIntroduction.loadPage();
-		} else  {
-			playGame();
-		}
+		//if (gameObject.cutSceneStep === 0) { // testing here
+			//cutSceneIntroduction.loadPage();
+		//} else  {
+			//playGame();
+		//}
+		playGame();
 		function playGame() {
 			robot = {};
 			if (gameObject.discoveredChassis.length === 0) {

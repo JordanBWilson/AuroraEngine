@@ -1870,7 +1870,7 @@ const maulPage = {
 						posY: robot.posY,
 						width: robot.width,
 						height: robot.height, // future Jordan, checkout this method here. Make sure it's returning an array with one item in it
-						images: [],// drawRobotSelectPreviewParts('chassis', robot?.robotParts, true), // testing here
+						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true), // testing here
 						selectedImage: 0,
 						animTicks: 15,
 						ticks: 15,
