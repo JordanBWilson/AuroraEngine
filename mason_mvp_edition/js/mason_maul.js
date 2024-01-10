@@ -63,11 +63,10 @@ const maulPage = {
 			}
 		}
 		function setupGame() {
-			// gameObject.arenaGameStarted = true; // testing here
-			generateRedArenaRobots(); // testing here
-			generateRedArenaTowers(); // testing here
+			generateRedArenaRobots();
+			generateRedArenaTowers();
 			drawGrassBackGround();
-			drawRobotSelection(); // testing here
+			drawRobotSelection();
 			drawBlueRoads();
 			drawRedRoads();
 			drawBasesAndSends();
@@ -78,11 +77,6 @@ const maulPage = {
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
-			//setTimeout(function() { // testing here
-				//startGameRounds();
-			//}, 150);
-			
-			// testing here as well
 			Aurora.methodSetup = { method: function(id) { animateRobots(); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
@@ -1865,20 +1859,22 @@ const maulPage = {
 		function robotAnimationTicks(robot) {
 			if (gameObject.arenaGameStarted) {
 				const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
-				animateRobot.forEach(part => {
-					if (!robot.halted) { // the robot is moving
-						if (part.animTicks <= 1) {
-							if (part.selectedImage >= (part.images.length - 1)) {
-								part.selectedImage = 0;
-							} else {
-								part.selectedImage += 1;
+				if (animateRobot.length === 6) {
+					animateRobot.forEach(part => {
+						if (!robot.halted) { // the robot is moving
+							if (part.animTicks <= 1) {
+								if (part.selectedImage >= (part.images.length - 1)) {
+									part.selectedImage = 0;
+								} else {
+									part.selectedImage += 1;
+								}
 							}
+							part = Aurora.nextTick(part);
+						} else { // the robot is holding still
+							part.selectedImage = 0;
 						}
-						part = Aurora.nextTick(part);
-					} else { // the robot is holding still
-						part.selectedImage = 0;
-					}
-				});
+					});
+				}
 			}
 		}
 		function animateRobots() {
@@ -1897,33 +1893,13 @@ const maulPage = {
 						posY: robot.posY,
 						width: robot.width,
 						height: robot.height,
-						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true), // testing here
+						images: drawRobotSelectPreviewParts('chassis', robot?.robotParts, true),
 						selectedImage: 0,
 						animTicks: 15,
 						ticks: 15,
 						id: robot.id,
 						isBackground: false,
 						props: {
-							// future Jordan, work on fixing animations for iOS
-							//animate: (function(parent) { // testing here
-								//if (gameObject.arenaGameStarted) {
-									//const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
-									//animateRobot.forEach(part => {
-										//if (!robot.halted) { // the robot is moving
-											//if (part.animTicks <= 1) {
-												//if (part.selectedImage >= (part.images.length - 1)) {
-													//part.selectedImage = 0;
-												//} else {
-													//part.selectedImage += 1;
-												//}
-											//}
-											//part = Aurora.nextTick(part);
-										//} else { // the robot is holding still
-											//part.selectedImage = 0;
-										//}
-									//});
-								//}
-							//})(),
 							drawHead: function(parent) {
 								Aurora.methodSetup = {
 									method: function(id) {
@@ -1932,7 +1908,7 @@ const maulPage = {
 								 			posY: parent.posY - (Aurora.entitySize * 1.25),
 								 			width: (Aurora.entitySize * 1.25),
 											height: (Aurora.entitySize * 1.25),
-								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true), // testing here
+								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 3,
 								 			ticks: 3,
@@ -1953,7 +1929,7 @@ const maulPage = {
 											posY: parent.posY,
 											width: (Aurora.entitySize * 2),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true), // testing here
+								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 5,
 								 			ticks: 5,
@@ -1974,7 +1950,7 @@ const maulPage = {
 											posY: parent.posY,
 											width: (Aurora.entitySize * 2),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true), // testing here
+								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 5,
 								 			ticks: 5,
@@ -1995,7 +1971,7 @@ const maulPage = {
 											posY: parent.posY + (Aurora.entitySize * 1.09),
 											width: (Aurora.entitySize * 0.975),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true), // testing here
+								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 3,
 								 			ticks: 3,
@@ -2016,7 +1992,7 @@ const maulPage = {
 											posY: parent.posY + (Aurora.entitySize * 1.09),
 											width: (Aurora.entitySize * 0.975),
 											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true), // testing here
+								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true),
 								 			selectedImage: 0,
 								 			animTicks: 3,
 								 			ticks: 3,
@@ -2037,8 +2013,8 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			sendRobot(blueRobot); // testing here
-			drawRobotSelectParts(blueRobot.id); // testing here
+			sendRobot(blueRobot);
+			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
