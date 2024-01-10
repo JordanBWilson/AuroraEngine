@@ -26,6 +26,7 @@
 			screenTapped(event);
 		}, false);
 		Aurora.canvas.addEventListener('touchstart', function(event) {
+			screenTapped(event);
 			event.preventDefault();	
 		}, false);
 		Aurora.canvas.addEventListener('touchend', function(event) {
