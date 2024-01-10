@@ -83,6 +83,8 @@ const maulPage = {
 			//}, 150);
 			
 			// testing here as well
+			Aurora.methodSetup = { method: function(id) { animateRobots(); }};
+			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
@@ -100,7 +102,7 @@ const maulPage = {
 						aiThinking = undefined;
 						setTimeout(function() { // this is how fast the ai makes it's moves
 							aiThinking = true;
-						}, redAIThinkTimer); // 1300
+						}, redAIThinkTimer);
 					}
 				}
 			};
@@ -1860,7 +1862,32 @@ const maulPage = {
 				gameObject.redTowerArenaDesigns.push(towerDesign);
 			}
 		}
-		
+		function robotAnimationTicks(robot) {
+			if (gameObject.arenaGameStarted) {
+				const animateRobot = Aurora.methodObjects.filter(bg => bg.id === robot.id);
+				animateRobot.forEach(part => {
+					if (!robot.halted) { // the robot is moving
+						if (part.animTicks <= 1) {
+							if (part.selectedImage >= (part.images.length - 1)) {
+								part.selectedImage = 0;
+							} else {
+								part.selectedImage += 1;
+							}
+						}
+					} else { // the robot is holding still
+						part.selectedImage = 0;
+					}
+				});
+			}
+		}
+		function animateRobots() {
+			gameObject.arenaBlueAttackers.forEach(robot => {
+				robotAnimationTicks(robot);
+			});
+			gameObject.arenaRedAttackers.forEach(robot => {
+				robotAnimationTicks(robot);
+			});
+		}
 		function sendRobot(robot) {
 			Aurora.methodSetup = {
 				method: function(id) {
