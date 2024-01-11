@@ -1171,7 +1171,7 @@ const homeSellScrap = {
 									const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 									if (!gameObject.buildButtonDisabled) {
 										if (gameObject.gameSounds) {
-											sellSound.cloneNode(true).play();
+											Aurora.playAudioFile('sell-sound');
 										}
 										
 										if (gameObject.scrapToSell === 'common' && gameObject.commonScrap > 0 && !gameObject.buildButtonDisabled) {
@@ -1994,7 +1994,7 @@ const homeSellParts = {
 											// add the funds and subtract the part
 											if (part.count > 0) {
 												if (gameObject.gameSounds) {
-													sellSound.cloneNode(true).play();
+													Aurora.playAudioFile('sell-sound');
 												}
 												const formatPartCost = calculatePartPrice(scrapCosts);
 												const addPartCost = formatPartsCostToFunds(formatPartCost);
@@ -3234,7 +3234,7 @@ const homeSellRobots = {
 									gameObject.canClick = false;
 									if (gameObject.robotTeams.length > 0) {
 										if (gameObject.gameSounds) {
-											sellSound.cloneNode(true).play();
+											Aurora.playAudioFile('sell-sound');
 										}
 										if (gameObject.selectedRobotDesign + 1 <= gameObject.robotTeams.length) {
 											// remove the robot and add to the players funds
@@ -3711,7 +3711,7 @@ const homePlayerUpgrades = {
 														if (checkFunds && upgrading) {
 															upgrading = false;
 															if (gameObject.gameSounds) {
-																selectSound.cloneNode(true).play();
+																Aurora.playAudioFile('select-sound');
 															}
 															if (upgradeIndex === 0) {
 																gameObject.factoryLevel++;

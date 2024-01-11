@@ -381,7 +381,7 @@ const maulPage = {
 						robotPasser.towerHitCount++;
 						if (robotPasser.towerHitCount === 1) {
 							if (gameObject.gameSounds) {
-								towerExplosionSound.cloneNode(true).play();
+								Aurora.playAudioFile('tower-explosion-sound');
 							}
 							Aurora.removeCollision(robotPasser.id, target);
 							robotPasser.attackTower = false;
@@ -470,7 +470,7 @@ const maulPage = {
 					tower.props.targetId = '';
 					if (towerStats.props.towerId > 0) {
 						if (gameObject.gameSounds) {
-							towerShootSound.cloneNode(true).play();
+							Aurora.playAudioFile('tower-shoot-sound');
 						}
 						if (teamColor === 'blue') {
 							robotTankAttackTower(primary, target, robotPasser, towerStats, teamColor);
@@ -1216,7 +1216,7 @@ const maulPage = {
 				Aurora.deleteEntity(bullet.methodId);
 				if (robotHitStats?.hp <= 0) {
 					if (gameObject.gameSounds) {
-						robotHitSound.cloneNode(true).play();
+						Aurora.playAudioFile('robot-hit-sound');
 					}
 					const robotHitMethodObject = Aurora.methodObjects.filter(bg => bg.id === bullet.props.target);
 					let moneyGained = 0;
@@ -1420,7 +1420,7 @@ const maulPage = {
 												});
 												gameObject.arenaRedGameMoney += moneyGained;
 												if (gameObject.gameSounds) {
-													robotHitSound.cloneNode(true).play();
+													Aurora.playAudioFile('robot-hit-sound');
 												}
 											},
 											methodId: undefined,
@@ -1540,7 +1540,7 @@ const maulPage = {
 												});
 												gameObject.arenaRedGameMoney += moneyGained;
 												if (gameObject.gameSounds) {
-													robotHitSound.cloneNode(true).play();
+													Aurora.playAudioFile('robot-hit-sound');
 												}
 											},
 											methodId: undefined,
@@ -1654,7 +1654,7 @@ const maulPage = {
 					});
 					gameObject.arenaBlueGameMoney += moneyGained;
 					if (gameObject.gameSounds) {
-						robotHitSound.cloneNode(true).play();
+						Aurora.playAudioFile('robot-hit-sound');
 					}
 				},
 				methodId: undefined,
@@ -1751,7 +1751,7 @@ const maulPage = {
 					});
 					gameObject.arenaBlueGameMoney += moneyGained;
 					if (gameObject.gameSounds) {
-						robotHitSound.cloneNode(true).play();
+						Aurora.playAudioFile('robot-hit-sound');
 					}
 				},
 				methodId: undefined,
@@ -2418,7 +2418,7 @@ const maulPage = {
 					speed: 1.3,
 				});
 				if (gameObject.gameSounds) {
-					wallDropSound.cloneNode(true).play();
+					Aurora.playAudioFile('wall-drop-sound');
 				}
 			} else if (spellType === 'emp') {
 				Aurora.methodSetup = {
@@ -2462,7 +2462,7 @@ const maulPage = {
 				}
 				Aurora.addMethod(Aurora.methodSetup);
 				if (gameObject.gameSounds) {
-					empExplosionSound.cloneNode(true).play();
+					Aurora.playAudioFile('emp-explosion-sound');
 				}
 				Particle.drawSpark({
 					posX: Aurora.placeEntityX(spellX, (Aurora.entitySize * 9)) + (spellWidth / 2),
@@ -4067,7 +4067,7 @@ const maulPage = {
 		}
 		function readySetGoGame() {
 			if (gameObject.gameSounds) {
-				arenaReadySound.play();
+				Aurora.playAudioFile('arena-ready-sound');
 			}
 			Aurora.methodSetup = {
 				method: function(id) {
@@ -4251,7 +4251,7 @@ const maulPage = {
 		function robotAttackBase(base, robot, i, color) {
 			if (base) {
 				if (gameObject.gameSounds) {
-					towerExplosionSound.cloneNode(true).play();
+					Aurora.playAudioFile('tower-explosion-sound');
 				}
 				base.props.hp--;
 				base.msg = 'HP: ' + base.props.hp;
@@ -4808,7 +4808,7 @@ const maulPage = {
 									if (tower.props.towerId > 0) {
 										if (gameObject.arenaBlueGameMoney >= towerCost * (towerLevel)) {
 											if (gameObject.gameSounds) {
-												selectSound.play();
+												Aurora.playAudioFile('select-sound');
 											}
 											gameObject.arenaBlueGameMoney -= towerCost * (towerLevel);
 											updateMoneyBackground();
@@ -5094,7 +5094,7 @@ const maulPage = {
 								if (selectedTowerDesign.arenaTower.towerId) {
 									if (gameObject.arenaBlueGameMoney >= towerCost) {
 										if (gameObject.gameSounds) {
-											buildTowerSound.play();
+											Aurora.playAudioFile('build-tower-sound');
 										}
 										gameObject.arenaBlueGameMoney -= towerCost;
 										updateMoneyBackground();

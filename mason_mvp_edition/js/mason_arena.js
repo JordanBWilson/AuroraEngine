@@ -289,7 +289,7 @@ const arenaPage = {
 								
 								if (selectedRobots >= 1 && selectedTower >= 1) {
 									if (gameObject.gameSounds) {
-										selectSound.cloneNode(true).play();
+										Aurora.playAudioFile('select-sound');
 									}
 									if (gameObject.arenaBuild && gameObject.tutorialStep === 14) {
 										tutorialMaul();
@@ -932,7 +932,7 @@ const arenaPage = {
 													action: { 
 														method: function(id) {
 															if (gameObject.gameSounds) {
-																selectSound.cloneNode(true).play();
+																Aurora.playAudioFile('select-sound');
 															}
 															gameObject.robotArenaDesigns[gameObject.selectedRobotDesign].directive = i + 1;
 															const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
@@ -1160,7 +1160,7 @@ const arenaPage = {
 						action: { 
 							method: function(id) {
 								if (gameObject.gameSounds) {
-									selectSound.cloneNode(true).play();
+									Aurora.playAudioFile('select-sound');
 								}
 								gameObject.partPageIndex = 0;
 								if (arenaTowerIndex === -1 || arenaTowerIndex === undefined) {
@@ -1479,7 +1479,7 @@ const arenaPage = {
 						action: { 
 							method: function(id) {
 								if (gameObject.gameSounds) {
-									selectSound.cloneNode(true).play();
+									Aurora.playAudioFile('select-sound');
 								}
 								gameObject.partPageIndex = 0;
 								if (selectedTower.type !== 'bunker') {
@@ -1614,7 +1614,7 @@ const arenaPage = {
 														action: { 
 															method: function(id) {
 																if (gameObject.gameSounds) {
-																	selectSound.cloneNode(true).play();
+																	Aurora.playAudioFile('select-sound');
 																}
 																gameObject.towerArenaDesigns[arenaTowerIndex].directive = i + 1;
 																// apply the stat changes

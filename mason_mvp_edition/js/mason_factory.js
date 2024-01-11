@@ -974,7 +974,7 @@ const factoryPage = {
 								} else {
 									if (part.requires !== undefined && part.requires.roboticSkill <= gameObject.roboticSkill) {
 										if (gameObject.gameSounds) {
-											selectSound.cloneNode(true).play();
+											Aurora.playAudioFile('select-sound');
 										}
 										equipPart(part);
 									} else {

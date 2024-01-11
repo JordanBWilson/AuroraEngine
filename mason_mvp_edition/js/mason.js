@@ -26,20 +26,6 @@ const cityImg = new Image();
 const cityPath = './assets/images/Lost_City.png';
 cityImg.src = cityPath;
 
-// load the game sounds
-// const selectSound = new Audio('./assets/sounds/select.wav');
-const addScrapSound = new Audio('./assets/sounds/add_scrap.wav');
-const arenaReadySound = new Audio('./assets/sounds/arena_ready.wav');
-const buildTowerSound = new Audio('./assets/sounds/build_tower.wav');
-const robotHitSound = new Audio('./assets/sounds/robot_hit.wav');
-const scrappingSound = new Audio('./assets/sounds/scrapping.wav');
-const sellSound = new Audio('./assets/sounds/sell.wav');
-const towerExplosionSound = new Audio('./assets/sounds/tower_explosion.wav');
-const towerShootSound = new Audio('./assets/sounds/tower_shoot.wav');
-const empExplosionSound = new Audio('./assets/sounds/emp_explosion.wav');
-const wallDropSound = new Audio('./assets/sounds/wall_drop.wav');
-
-
 (function() {
 	Aurora.canvas = document.getElementById('Stage');
 	seedRobotDesigns();
@@ -317,15 +303,26 @@ function loadRobotRightLegGifs() {
 		}
 	}, 300);
 }
-
+function loadGameSounds() {
+	// load the game sounds
+	Aurora.createAudioList([
+		{ name: 'select-sound', url: './assets/sounds/select.wav' }, 
+		{ name: 'add-scrap-sound', url: './assets/sounds/add_scrap.wav' },
+		{ name: 'arena-ready-sound', url: './assets/sounds/arena_ready.wav' },
+		{ name: 'build-tower-sound', url: './assets/sounds/build_tower.wav' },
+		{ name: 'robot-hit-sound', url: './assets/sounds/robot_hit.wav' },
+		{ name: 'scrapping-sound', url: './assets/sounds/scrapping.wav' },
+		{ name: 'sell-sound', url: './assets/sounds/sell.wav' },
+		{ name: 'tower-explosion-sound', url: './assets/sounds/tower_explosion.wav' },
+		{ name: 'tower-shoot-sound', url: './assets/sounds/tower_shoot.wav' },
+		{ name: 'emp-explosion-sound', url: './assets/sounds/emp_explosion.wav' },
+		{ name: 'wall-drop-sound', url: './assets/sounds/wall_drop.wav' },
+	]);
+}
 const titlePage = {
 	description: 'The main title page of Mason',
 	loadPage: function() {
 		Aurora.clearStage();
-		Aurora.createAudioList([
-			{name: 'select-sound', url: './assets/sounds/select.wav'}, 
-			{name: 'add-scrap-sound', url: './assets/sounds/add_scrap.wav'}
-		]);
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawRect({
@@ -597,9 +594,6 @@ const titlePage = {
 							soundBtn.msg = !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On';
 							if (gameObject.gameSounds) {
 								// selectSound.cloneNode(true).play();
-								// playAudio(selectSound);
-								
-								// future Jordan update the audio files in all the places
 								Aurora.playAudioFile('select-sound');
 							}
 						}
@@ -628,6 +622,7 @@ const titlePage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+			loadGameSounds();
 			loadRobotHeadGifs();
 			loadRobotChassisGifs();
 			loadRobotLeftArmGifs();
@@ -1078,6 +1073,10 @@ const mainPage = {
 						size: (Aurora.entitySize * 1),
 						speed: 1.3,
 					});
+					if (gameObject.gameSounds) {
+						Aurora.playAudioFile('scrapping-sound');
+					}
+					
 					const scrapRoll =  Math.round(Math.random() * (gameObject.scrapperSkill + 40));
 					
 					// future Jordan, consider reversing the scrap order. later levels makes common scrap look rare
@@ -1588,7 +1587,7 @@ const mainPage = {
 					}
 					if (scrapFoundCount > 0) {
 						if (gameObject.gameSounds) {
-							addScrapSound.cloneNode(true).play();
+							Aurora.playAudioFile('add-scrap-sound');
 						}
 					}
 					Particle.floatingText({
