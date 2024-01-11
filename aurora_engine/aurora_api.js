@@ -16,9 +16,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 const Aurora = { // the user will want to use this object
-  frameRate: 1000 / 60, // how fast the game is running
-  methodObjects: [], // this holds all the current param values
-  canvas: undefined, // the game stage
+	frameRate: 1000 / 60, // how fast the game is running
+    methodObjects: [], // this holds all the current param values
+    canvas: undefined, // the game stage
   stageWidthPrct: 1, // how much of the screen width will it take up. use a percent
   stageHeightPrct: 1, // how much of the screen height will it take up. use a percent
   entitySize: (window.innerHeight * this.stageHeightPrct) * 0.01,
@@ -230,6 +230,38 @@ const Aurora = { // the user will want to use this object
     }
   },
   gifImageList: [],
+  createAudioList: function(audioFiles) {
+	audioFiles.forEach(obj => {
+	  // var URL = ;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const context = new AudioContext(); // Make it crossbrowser
+      const gainNode = context.createGain();
+      gainNode.gain.value = 1; // set volume to 100%
+      let yodelBuffer = void 0;
+
+      // The Promise-based syntax for BaseAudioContext.decodeAudioData() is not supported in Safari(Webkit).
+      window.fetch(obj.url)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => context.decodeAudioData(arrayBuffer,
+           audioBuffer => {
+              yodelBuffer = audioBuffer;
+              Main.audioList.push({name: obj.name, url: obj.url, buffer: yodelBuffer});
+            },
+            error =>
+              console.error(error)
+          ))
+	});
+  },
+  playAudioFile: function(name) {
+	  const context = new AudioContext(); // Make it crossbrowser
+	  const findFile = Main.audioList.find(x => x.name === name);
+	  if (findFile) {
+		const source = context.createBufferSource();
+        source.buffer = findFile.buffer;
+        source.connect(context.destination);
+        source.start();
+	  }
+  },
   nextTick: function(entity) {
     // this will animate an entity based on the frame rate
     if (this.selectedSetting === this.enumSettings.high) {
@@ -272,4 +304,5 @@ const Main = { // global variables to keep the game running nicely
   collisions: [], // all the collisions in the game to look for
   methodsToRun: [], // all the methods to make the game run
   isModalVisible: false,
+  audioList: [],
 };

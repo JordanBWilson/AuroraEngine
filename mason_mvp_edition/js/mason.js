@@ -27,7 +27,7 @@ const cityPath = './assets/images/Lost_City.png';
 cityImg.src = cityPath;
 
 // load the game sounds
-const selectSound = new Audio('./assets/sounds/select.wav');
+// const selectSound = new Audio('./assets/sounds/select.wav');
 const addScrapSound = new Audio('./assets/sounds/add_scrap.wav');
 const arenaReadySound = new Audio('./assets/sounds/arena_ready.wav');
 const buildTowerSound = new Audio('./assets/sounds/build_tower.wav');
@@ -322,6 +322,10 @@ const titlePage = {
 	description: 'The main title page of Mason',
 	loadPage: function() {
 		Aurora.clearStage();
+		Aurora.createAudioList([
+			{name: 'select-sound', url: './assets/sounds/select.wav'}, 
+			{name: 'add-scrap-sound', url: './assets/sounds/add_scrap.wav'}
+		]);
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawRect({
@@ -592,7 +596,11 @@ const titlePage = {
 							const soundBtn = Aurora.methodObjects.find(btn => btn.id === 'play-game-sounds');
 							soundBtn.msg = !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On';
 							if (gameObject.gameSounds) {
-								selectSound.cloneNode(true).play();
+								// selectSound.cloneNode(true).play();
+								// playAudio(selectSound);
+								
+								// future Jordan update the audio files in all the places
+								Aurora.playAudioFile('select-sound');
 							}
 						}
 					},
