@@ -2281,9 +2281,7 @@ const factoryParts = {
 									part.requires.factoryLevel <= gameObject.factoryLevel && 
 									part.requires.engineeringSkill <= gameObject.engineeringSkill) {
 										if (!gameObject.buildButtonDisabled) {
-											if (gameObject.gameSounds) {
-												Aurora.playAudioFile('add-scrap-sound');
-											}
+											
 											const scrapCosts = [];
 											for (const scrap in part.scrapToBuild) {
 												if (part.scrapToBuild[scrap] > 0) {
@@ -2421,6 +2419,9 @@ const factoryParts = {
 															}
 														}
 													});
+													if (gameObject.gameSounds) {
+														Aurora.playAudioFile('add-scrap-sound');
+													}
 													part.count++;
 													Particle.floatingText({
 														font: '2rem serif',
