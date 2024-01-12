@@ -2015,30 +2015,26 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			setTimeout(function() {
-				sendRobot(blueRobot);
-				drawRobotSelectParts(blueRobot.id);
-				gameObject.arenaBlueAttackers.push(blueRobot);
-				gameObject.arenaBlueSendCount++;
-				if (robotDirective === 4) { // lee-roy
-					gameObject.arenaBlueSendLeeRoyCount++;
-				} else if (robotDirective === 1) { // tank
-					gameObject.arenaBlueSendTankCount++;
-				}
-			}, 0);
+			sendRobot(blueRobot);
+			drawRobotSelectParts(blueRobot.id);
+			gameObject.arenaBlueAttackers.push(blueRobot);
+			gameObject.arenaBlueSendCount++;
+			if (robotDirective === 4) { // lee-roy
+				gameObject.arenaBlueSendLeeRoyCount++;
+			} else if (robotDirective === 1) { // tank
+				gameObject.arenaBlueSendTankCount++;
+			}
 		}
 		function sendRedRobot(redRobot, robotDirective) {
-			setTimeout(function() {
-				sendRobot(redRobot);
-				drawRobotSelectParts(redRobot.id);
-				gameObject.arenaRedAttackers.push(redRobot);
-				gameObject.arenaRedSendCount++;
-				if (robotDirective === 4) { // lee-roy
-					gameObject.arenaRedSendLeeRoyCount++;
-				} else if (robotDirective === 1) { // tank
-					gameObject.arenaRedSendTankCount++;
-				}
-			}, 0);
+			sendRobot(redRobot);
+			drawRobotSelectParts(redRobot.id);
+			gameObject.arenaRedAttackers.push(redRobot);
+			gameObject.arenaRedSendCount++;
+			if (robotDirective === 4) { // lee-roy
+				gameObject.arenaRedSendLeeRoyCount++;
+			} else if (robotDirective === 1) { // tank
+				gameObject.arenaRedSendTankCount++;
+			}
 		}
 		function drawBlueRoads() {
 			Aurora.methodSetup = {

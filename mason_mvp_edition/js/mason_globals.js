@@ -15,7 +15,7 @@
 // this will keep track of the game
 let gameObject = {
 	// ---types of scrap matirials---
-	commonScrap: 0,
+	commonScrap: 9,
 	unCommonScrap: 0,
 	uniqueScrap: 0, // rare
 	intriguingScrap: 0, // epic
@@ -306,7 +306,7 @@ const robotHeads = [
 		name: 'New World Head',
 		img: 'orange',
 		imgs: [],
-		count: 0, // how many parts have been made
+		count: 30, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 2,
@@ -424,7 +424,7 @@ const robotChassis = [
 		name: 'New World Chassis',
 		img: 'orange',
 		imgs: [],
-		count: 0,
+		count: 1,
 		stats: {
 			att: 0,
 			def: 4,
@@ -543,7 +543,7 @@ const robotLegs = [
 		name: 'New World Leg',
 		img: 'orange',
 		imgs: [],
-		count: 0,
+		count: 2,
 		stats: {
 			att: 0,
 			def: 2,
@@ -665,7 +665,7 @@ const robotArms = [
 		name: 'New World Arm',
 		img: 'orange',
 		imgs: [],
-		count: 0,
+		count: 2,
 		stats: {
 			att: 1,
 			def: 2,
@@ -2313,7 +2313,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 			});
 			clearInterval(findPreviews);
 		}
-	}, Aurora.frameRate);
+	}, 100); // Aurora.frameRate
 }
 function drawRobotPreviewParts(partType) {
 	if (partType === 'chassis') {
