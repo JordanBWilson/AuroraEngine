@@ -593,7 +593,6 @@ const titlePage = {
 							const soundBtn = Aurora.methodObjects.find(btn => btn.id === 'play-game-sounds');
 							soundBtn.msg = !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On';
 							if (gameObject.gameSounds) {
-								// selectSound.cloneNode(true).play();
 								Aurora.playAudioFile('select-sound');
 							}
 						}

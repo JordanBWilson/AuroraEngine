@@ -968,7 +968,7 @@ const factoryPage = {
 							action: { method: function(id) {
 								if (confirmed && gameObject.selectedRobot.length === 6) {
 									if (gameObject.gameSounds) {
-										addScrapSound.cloneNode(true).play();
+										Aurora.playAudioFile('add-scrap-sound');
 									}
 									buildRobot();
 								} else {
@@ -2282,7 +2282,7 @@ const factoryParts = {
 									part.requires.engineeringSkill <= gameObject.engineeringSkill) {
 										if (!gameObject.buildButtonDisabled) {
 											if (gameObject.gameSounds) {
-												addScrapSound.cloneNode(true).play();
+												Aurora.playAudioFile('add-scrap-sound');
 											}
 											const scrapCosts = [];
 											for (const scrap in part.scrapToBuild) {
