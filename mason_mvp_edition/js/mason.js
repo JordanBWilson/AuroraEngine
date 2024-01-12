@@ -323,7 +323,6 @@ const titlePage = {
 	description: 'The main title page of Mason',
 	loadPage: function() {
 		Aurora.clearStage();
-		alert(Aurora.gifImageList.length);
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawRect({
@@ -633,6 +632,7 @@ const titlePage = {
 				if (Aurora.isLoaded) {
 					clearInterval(loadCheck);
 					titlePage.loadPage();
+					alert(Aurora.gifImageList.length);
 				}
 			}, 300);
 		}
