@@ -2023,9 +2023,9 @@ function formatPartCost(partCost) {
 
 function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 	if (partType === 'chassis') {
-		if (robotDesign.length === 0) {
+		if (robotDesign.length === 0 && !loadImgs) {
 			return 'lightslategrey';
-		} else {
+		} else if (robotDesign.length > 0){
 			const part = robotDesign.find(partPos => partPos.type === 'chassis');
 			if (part) {
 				if (!loadImgs) {
@@ -2035,14 +2035,19 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.imgs[0].pngs;
 				}
 			} else {
-				return 'lightslategrey';
+				if (!loadImgs) {
+					return 'lightslategrey';
+				} else {
+					return [];
+				}
+				
 			}
 		}
 	}
 	if (partType === 'head') {
-		if (robotDesign.length === 0) {
+		if (robotDesign.length === 0 && !loadImgs) {
 			return 'lightslategrey';
-		} else {
+		} else if (robotDesign.length > 0){
 			const part = robotDesign.find(partPos => partPos.type === 'head');
 			if (part) {
 				if (!loadImgs) {
@@ -2052,14 +2057,18 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.imgs[0].pngs;
 				}
 			} else {
-				return 'lightslategrey';
+				if (!loadImgs) {
+					return 'lightslategrey';
+				} else {
+					return [];
+				}
 			}
 		}
 	}
 	if (partType === 'left-leg') {
-		if (robotDesign.length === 0) {
+		if (robotDesign.length === 0 && !loadImgs) {
 			return 'lightslategrey';
-		} else {
+		} else if (robotDesign.length > 0){
 			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'left');
 			if (part) {
 				if (!loadImgs) {
@@ -2068,14 +2077,18 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
-				return 'lightslategrey';
+				if (!loadImgs) {
+					return 'lightslategrey';
+				} else {
+					return [];
+				}
 			}
 		}
 	}
 	if (partType === 'right-leg') {
-		if (robotDesign.length === 0) {
+		if (robotDesign.length === 0 && !loadImgs) {
 			return 'lightslategrey';
-		} else {
+		} else if (robotDesign.length > 0){
 			const part = robotDesign.find(partPos => partPos.type === 'leg' && partPos.legPos === 'right');
 			if (part) {
 				if (!loadImgs) {
@@ -2084,14 +2097,18 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
-				return 'lightslategrey';
+				if (!loadImgs) {
+					return 'lightslategrey';
+				} else {
+					return [];
+				}
 			}
 		}
 	}
 	if (partType === 'left-arm') {
-		if (robotDesign.length === 0) {
+		if (robotDesign.length === 0 && !loadImgs) {
 			return 'lightslategrey';
-		} else {
+		} else if (robotDesign.length > 0){
 			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'left');
 			if (part) {
 				if (!loadImgs) {
@@ -2100,14 +2117,18 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
-				return 'lightslategrey';
+				if (!loadImgs) {
+					return 'lightslategrey';
+				} else {
+					return [];
+				}
 			}
 		}
 	}
 	if (partType === 'right-arm') {
-		if (robotDesign.length === 0) {
+		if (robotDesign.length === 0 && !loadImgs) {
 			return 'lightslategrey';
-		} else {
+		} else if (robotDesign.length > 0){
 			const part = robotDesign.find(partPos => partPos.type === 'arm' && partPos.armPos === 'right');
 			if (part) {
 				if (!loadImgs) {
@@ -2116,7 +2137,11 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
-				return 'lightslategrey';
+				if (!loadImgs) {
+					return 'lightslategrey';
+				} else {
+					return [];
+				}
 			}
 		}
 	}
@@ -2313,7 +2338,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 			});
 			clearInterval(findPreviews);
 		}
-	}, 100); // Aurora.frameRate
+	}, Aurora.frameRate);
 }
 function drawRobotPreviewParts(partType) {
 	if (partType === 'chassis') {
