@@ -12,7 +12,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-let newAurora = false;
+let newGame = false;
 let highscoreList; // this is an array
 let highscoreItem = { name: '', score: 0 };
 (function() {
@@ -67,12 +67,12 @@ function sortHighScoreList() {
   }
 }
 
-function playAurora() { // draw the game
-  if (newAurora) {
+function playGame() { // draw the game
+  if (newGame) {
     gamePoints = 0;
     gameLevel = 0;
     gameLives = 3;
-    newAurora = false;
+    newGame = false;
   }
   isPoweredUp = false;
   isDoublePoints = false;
@@ -87,10 +87,10 @@ function playAurora() { // draw the game
   gameStart = false;
   scoreBoard = undefined;
 
-  nextAuroraLevel();
+  nextGameLevel();
 }
 
-function findAuroraObjects() {
+function findGameObjects() {
   // when the game starts up, look for the ball, paddle and bricks
   if (!ball?.methodId) {
     ball = Aurora.methodObjects.find(x => x.id === 'ball');
@@ -306,7 +306,7 @@ function brickCollision(ball, bricks, methodId) {
   setTimeout(function() {
     ball.props.collision = false;
     if (Aurora.methodObjects.filter(x => x.id === 'brick').length === 0) {
-      playAurora();
+      playGame();
     }
   }, 0);
 }
@@ -420,7 +420,7 @@ function stopPaddle(event) {
     paddle.props.direction = 'non';
   }
 }
-function nextAuroraLevel() { // draw the game
+function nextGameLevel() { // draw the game
   gameStart = false;
   ball = undefined;
   paddle = undefined;
@@ -432,7 +432,7 @@ function nextAuroraLevel() { // draw the game
     scoreBoard = undefined;
   }
   Aurora.clearStage();
-  Aurora.methodSetup = { method: function(id) { findAuroraObjects(); }};
+  Aurora.methodSetup = { method: function(id) { findGameObjects(); }};
   Aurora.addMethod(Aurora.methodSetup);
   Aurora.methodSetup = { method: function(id) { moveAuroraBall(); }};
   Aurora.addMethod(Aurora.methodSetup);
@@ -538,12 +538,12 @@ function nextAuroraLevel() { // draw the game
   Aurora.pageResized = {
 		section: 'resize-bustoot',
 		method: function() {
-			if (!newAurora) {
+			if (!newGame) {
 				setTimeout(function() {
 				  Aurora.clearStage();
 				  gameLevel = 0;
 				  gamePoints = 0;
-				  playAurora();
+				  playGame();
 				}, 0);
 			 }
 		}
@@ -601,7 +601,7 @@ function drawAuroraBricks() {
 }
 function drawLoseMenu() {
   Aurora.clearStage();
-  newAurora = true;
+  newGame = true;
   Aurora.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Aurora.canvas.width, height: Aurora.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isBackground: false, props: {}, methodId: id });} };
   Aurora.addMethod(Aurora.methodSetup);
   Aurora.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Lose!', posX: (Aurora.canvas.width * 0.5), posY: (Aurora.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'loseText', methodId: id });} };
@@ -622,7 +622,7 @@ function drawLoseMenu() {
         msg: 'Restart',
         isFilled: true,
         id: 'restart',
-        action: { method: function(id) { playAurora(); }},
+        action: { method: function(id) { playGame(); }},
         isModalBtn: false,
         props: {},
         methodId: id
@@ -655,7 +655,7 @@ function drawLoseMenu() {
 }
 function drawWinMenu() {
   Aurora.clearStage();
-  newAurora = true;
+  newGame = true;
   Aurora.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Aurora.canvas.width, height: Aurora.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'background', isBackground: false, props: {}, methodId: id });} };
   Aurora.addMethod(Aurora.methodSetup);
   Aurora.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'You Win!', posX: (Aurora.canvas.width * 0.5), posY: (Aurora.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'winText', methodId: id });} };
@@ -690,7 +690,7 @@ function drawMainMenu() { // draw the main menu
   if (!Aurora.selectedSetting) {
     Aurora.setSettingsHigh();
   }
-  newAurora = true;
+  newGame = true;
   Aurora.methodSetup = { method: function(id) {drawRect({ posX: 0, posY: 0, width: Aurora.canvas.width, height: Aurora.canvas.height, lineWidth: 1, color: 'black', isFilled: true, id: 'menu-background', isBackground: false, props: {}, methodId: id });} };
   Aurora.addMethod(Aurora.methodSetup);
   Aurora.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Bustoot', posX: (Aurora.canvas.width * 0.5), posY: (Aurora.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
@@ -745,7 +745,7 @@ function drawMainMenu() { // draw the main menu
         msg: 'Playyy',
         isFilled: true,
         id: 'play',
-        action: { method: function(id) { playAurora(); }},
+        action: { method: function(id) { playGame(); }},
         isModalBtn: false,
         props: {},
         methodId: id
@@ -808,7 +808,7 @@ function settingsMenu() {
   Aurora.addMethod(Aurora.methodSetup);
   Aurora.methodSetup = { method: function(id) {drawText({ font: '3em serif', msg: 'Settings', posX: (Aurora.canvas.width * 0.5), posY: (Aurora.canvas.height * 0.1), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
   Aurora.addMethod(Aurora.methodSetup);
-  Aurora.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: 'Aurora Quality', posX: (Aurora.canvas.width * 0.5), posY: (Aurora.canvas.height * 0.2), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
+  Aurora.methodSetup = { method: function(id) {drawText({ font: '2em serif', msg: 'Game Quality', posX: (Aurora.canvas.width * 0.5), posY: (Aurora.canvas.height * 0.2), color: 'green', align: 'center', props: {}, id: 'title', methodId: id });} };
   Aurora.addMethod(Aurora.methodSetup);
   Aurora.methodSetup = {
     method: function(id) {

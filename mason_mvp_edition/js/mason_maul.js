@@ -1655,6 +1655,7 @@ const maulPage = {
 						speed: 0.1,
 					});
 					gameObject.arenaBlueGameMoney += moneyGained;
+					updateMoneyBackground();
 					if (gameObject.gameSounds) {
 						Aurora.playAudioFile('robot-hit-sound');
 					}
@@ -1752,6 +1753,7 @@ const maulPage = {
 						speed: 0.1,
 					});
 					gameObject.arenaBlueGameMoney += moneyGained;
+					updateMoneyBackground();
 					if (gameObject.gameSounds) {
 						Aurora.playAudioFile('robot-hit-sound');
 					}
@@ -4198,12 +4200,12 @@ const maulPage = {
 		function moveRobotSpellWallCheck(br, teamColor) {
 			// if there's a wall, see if the robot is behind the wall of in front of it
 			if (teamColor === 'blue' && br.halted && spellWallCollisions.teamBlueIds.length > 0) {
-				const lessThan = !!spellWallCollisions.teamBlueIds.filter(team => team.countId > br.robotCount && team.direction === br.direction).length;
+				const lessThan = !!spellWallCollisions.teamBlueIds.filter(team => team.countId < br.robotCount && team.direction === br.direction).length;
 				if (lessThan) {
 					br.halted = false;
 				}
 			} else if (teamColor === 'red' && br.halted && spellWallCollisions.teamRedIds.length > 0) {
-				const lessThan = !!spellWallCollisions.teamRedIds.filter(team => team.countId > br.robotCount && team.direction === br.direction).length;
+				const lessThan = !!spellWallCollisions.teamRedIds.filter(team => team.countId < br.robotCount && team.direction === br.direction).length;
 				if (lessThan) {
 					br.halted = false;
 				}
@@ -4387,7 +4389,7 @@ const maulPage = {
 		}
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
-				let whatToDo = Math.floor((Math.random() * 3) + 1);
+				let whatToDo = 2; // Math.floor((Math.random() * 3) + 1);
 				// select a robot to send
 				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
 				const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
@@ -4555,9 +4557,9 @@ const maulPage = {
 			} else if (winningTeam === 'draw') {
 				msgs = ['Draw!', '', '', '', '- Tap here to continue -'];
 			} else if (winningTeam === 'blue') {
-				const newPart = Math.floor((Math.random() * 4) + 1);
+				const newPart = Math.floor((Math.random() * 2) + 1);
 				let unlockPart = '';
-				if (newPart === 4) { // 1 and 4 chance to unlock a part
+				if (newPart === 2) { // 1 and 2 chance to unlock a part
 					unlockPart = unlockRobotPart();
 				}
 				const prizeMoney = gameObject.arenaLevel * 25;
