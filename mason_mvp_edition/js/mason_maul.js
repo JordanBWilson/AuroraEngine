@@ -4389,7 +4389,7 @@ const maulPage = {
 		}
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
-				let whatToDo = 2; // Math.floor((Math.random() * 3) + 1);
+				let whatToDo = Math.floor((Math.random() * 3) + 1);
 				// select a robot to send
 				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
 				const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
