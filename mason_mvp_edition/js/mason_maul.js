@@ -18,6 +18,8 @@ const maulPage = {
 		gameObject.selectedRobot = [];
 		Aurora.keepPreviousSize = true;
 		Aurora.clearStage();
+		let canSendLeft = true;
+		let canSendRight = true;
 		let selectBuildTowerIndex = 0;
 		let selectedSpellBtn = undefined;
 		const baseRobotAttack = 3;
@@ -1347,8 +1349,8 @@ const maulPage = {
 								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
 								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6) {
-									if (gameObject.canClick) {
-										gameObject.canClick = false;
+									if (canSendLeft) {
+										canSendLeft = false;
 										blueRobotSendMoneyUpdate(robotCost);
 										setBlueLeftRoadNavCollisions();
 										Aurora.collisionSetup = {
@@ -1432,7 +1434,7 @@ const maulPage = {
 										sendBlueRobot(blueRobot, robotDirective);
 										setRedLeftTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
-											gameObject.canClick = true;
+											canSendLeft = true;
 										}, 800);
 									}
 								} else {
@@ -1467,8 +1469,8 @@ const maulPage = {
 								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
 								const robotCost = findRobotDirectiveCost(robotDirective);
 								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6 ) {
-									if (gameObject.canClick) {
-										gameObject.canClick = false;
+									if (canSendRight) {
+										canSendRight = false;
 										blueRobotSendMoneyUpdate(robotCost);
 										setBlueRightRoadNavCollisions();
 										Aurora.collisionSetup = {
@@ -1552,7 +1554,7 @@ const maulPage = {
 										sendBlueRobot(blueRobot, robotDirective);
 										setRedRightTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
-											gameObject.canClick = true;
+											canSendRight = true;
 										}, 800);
 									}
 								} else {

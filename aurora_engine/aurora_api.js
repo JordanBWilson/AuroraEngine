@@ -229,16 +229,14 @@ const Aurora = { // the user will want to use this object
 	gifImageList: [],
 	createAudioList: function(audioFiles) {
 		audioFiles.forEach(obj => {
-			const AudioContext = window.AudioContext || window.webkitAudioContext;
-			const context = new AudioContext(); // Make it crossbrowser
-			const gainNode = context.createGain();
+			const gainNode = Main.audioContext.createGain();
 			gainNode.gain.value = 1; // set volume to 100%
 			let audioBuffer = void 0;
 
 			// The Promise-based syntax for BaseAudioContext.decodeAudioData() is not supported in Safari(Webkit).
 			window.fetch(obj.url)
 				.then(response => response.arrayBuffer())
-				.then(arrayBuffer => context.decodeAudioData(arrayBuffer,
+				.then(arrayBuffer => Main.audioContext.decodeAudioData(arrayBuffer,
 					audioBuffer => {
 						audioBuffer = audioBuffer;
 						Main.audioList.push({name: obj.name, url: obj.url, buffer: audioBuffer});
@@ -249,12 +247,11 @@ const Aurora = { // the user will want to use this object
 		});
 	},
 	playAudioFile: function(name) {
-		const context = new AudioContext(); // Make it crossbrowser
 		const findFile = Main.audioList.find(x => x.name === name);
 		if (findFile) {
-			const source = context.createBufferSource();
+			const source = Main.audioContext.createBufferSource();
 			source.buffer = findFile.buffer;
-			source.connect(context.destination);
+			source.connect(Main.audioContext.destination);
 			source.start();
 		}
 	},
@@ -301,4 +298,5 @@ const Main = { // global variables to keep the game running nicely
 	methodsToRun: [], // all the methods to make the game run
 	isModalVisible: false,
 	audioList: [],
+	audioContext: new AudioContext(),
 };
