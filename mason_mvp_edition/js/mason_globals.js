@@ -15,7 +15,7 @@
 // this will keep track of the game
 let gameObject = {
 	// ---types of scrap matirials---
-	commonScrap: 0,
+	commonScrap: 1000,
 	unCommonScrap: 0,
 	uniqueScrap: 0, // rare
 	intriguingScrap: 0, // epic
