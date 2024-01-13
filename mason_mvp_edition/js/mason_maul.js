@@ -2017,7 +2017,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			alert('parts ' + blueRobot.robotParts.length + ' position ' + blueRobot.posX + ' ' + blueRobot.posY + ' total stats ' blueRobot.totalStats);
+			alert('parts ' + blueRobot.robotParts.length + ' position ' + blueRobot.posX + ' ' + blueRobot.posY + ' total stats ' + blueRobot.totalStats.spd);
 			// sendRobot(blueRobot);
 			// drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
