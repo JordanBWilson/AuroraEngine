@@ -1890,8 +1890,6 @@ const maulPage = {
 			});
 		}
 		function sendRobot(robot) {
-			const test = drawRobotSelectPreviewParts('chassis', robot?.robotParts, true);
-			alert(test.length);
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawImage({
@@ -2019,7 +2017,8 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			sendRobot(blueRobot);
+			alert('parts ' + blueRobot.robotParts.length + ' position ' + blueRobot.posX + ' ' + blueRobot.posY);
+			// sendRobot(blueRobot);
 			// drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
