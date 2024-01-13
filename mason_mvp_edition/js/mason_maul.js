@@ -1873,7 +1873,7 @@ const maulPage = {
 									part.selectedImage += 1;
 								}
 							}
-							// part = Aurora.nextTick(part);
+							part = Aurora.nextTick(part);
 						} else { // the robot is holding still
 							part.selectedImage = 0;
 						}
@@ -2017,9 +2017,8 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			alert('parts ' + blueRobot.robotParts.length + ' position ' + blueRobot.posX + ' ' + blueRobot.posY + ' total stats ' + blueRobot.totalStats.spd);
-			// sendRobot(blueRobot);
-			// drawRobotSelectParts(blueRobot.id);
+			sendRobot(blueRobot);
+			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
@@ -2030,7 +2029,7 @@ const maulPage = {
 		}
 		function sendRedRobot(redRobot, robotDirective) {
 			sendRobot(redRobot);
-			// drawRobotSelectParts(redRobot.id);
+			drawRobotSelectParts(redRobot.id);
 			gameObject.arenaRedAttackers.push(redRobot);
 			gameObject.arenaRedSendCount++;
 			if (robotDirective === 4) { // lee-roy
@@ -4390,7 +4389,7 @@ const maulPage = {
 		}
 		function redAiMind() {
 			if (gameObject.arenaGameStarted) {
-				let whatToDo = Math.floor((Math.random() * 3) + 1);
+				let whatToDo = 2; // Math.floor((Math.random() * 3) + 1);
 				// select a robot to send
 				const redBotIndex = Math.floor((Math.random() * gameObject.redRobotArenaDesigns.length));
 				const redBot = Object.assign({}, gameObject.redRobotArenaDesigns[redBotIndex]);
