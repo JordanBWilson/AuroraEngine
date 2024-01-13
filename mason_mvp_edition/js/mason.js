@@ -72,6 +72,10 @@ function loadGame() {
 	const gameLoaded = localStorage.getItem('mason-game');
 	if (gameLoaded) {
 		gameObject = JSON.parse(gameLoaded);
+		gameObject.discoveredPartsList = [];
+		gameObject.selectedRobot = [];
+		// future Jordan, towerArenaDesigns will need to reload images when they have them
+		console.log(gameObject);
 	}
 }
 // future Jordan, make sure this works and apply it to the other parts
@@ -128,6 +132,7 @@ function loadRobotChassisGifs() {
 	const searchForImages = setInterval(function() {
 		const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
 		if (findNewWorldChassis && robotChassis[0].imgs.length === 0) {
+			console.log(findNewWorldChassis);
 			robotChassis[0].imgs.push(findNewWorldChassis);
 			imageCount++;
 		}
@@ -147,6 +152,14 @@ function loadRobotChassisGifs() {
 			imageCount++;
 		}
 		if (imageCount === robotChassis.length) {
+			// future Jordan, go through all the discovered parts, robot arena designs, robot designs and robot teams
+			// and make sure that the images are all loaded properly. right now when loading a game, the images are getting lost
+			for (let i = 0; i < gameObject.discoveredChassis.length; i++) {
+				const findNewWorld = gameObject.discoveredChassis[i].imgs.find(x => x.id === newWorldChassisImgId);
+				if (findNewWorld) {
+					gameObject.discoveredChassis[i].imgs = robotChassis[0].imgs;
+				}
+			}
 			clearInterval(searchForImages);
 		}
 	}, 300);
