@@ -1873,7 +1873,7 @@ const maulPage = {
 									part.selectedImage += 1;
 								}
 							}
-							part = Aurora.nextTick(part);
+							// part = Aurora.nextTick(part);
 						} else { // the robot is holding still
 							part.selectedImage = 0;
 						}
@@ -2018,7 +2018,7 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			drawRobotSelectParts(blueRobot.id);
+			// drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
