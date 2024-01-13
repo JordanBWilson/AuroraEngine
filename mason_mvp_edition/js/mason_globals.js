@@ -2338,7 +2338,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 			});
 			clearInterval(findPreviews);
 		}
-	}, 50); // Aurora.frameRate
+	}, Aurora.frameRate);
 }
 function drawRobotPreviewParts(partType) {
 	if (partType === 'chassis') {
