@@ -1904,111 +1904,111 @@ const maulPage = {
 						id: robot.id,
 						isBackground: false,
 						props: {
-							drawHead: function(parent) {
-								Aurora.methodSetup = {
-									method: function(id) {
-								 		drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 0.15),
-								 			posY: parent.posY - (Aurora.entitySize * 1.25),
-								 			width: (Aurora.entitySize * 1.25),
-											height: (Aurora.entitySize * 1.25),
-								 			images: drawRobotSelectPreviewParts('head', robot?.robotParts, true),
-								 			selectedImage: 0,
-								 			animTicks: 3,
-								 			ticks: 3,
-								 			id: parent.id,
-								 			isBackground: false,
-								 			props: {},
-								 			methodId: id
-								 		});
-									}
-								};
-								Aurora.addMethod(Aurora.methodSetup);
-							},
-							drawLeftArm: function(parent) {
-								Aurora.methodSetup = {
-									method: function(id) {
-										drawImage({
-								 			posX: parent.posX - (Aurora.entitySize * 1),
-											posY: parent.posY,
-											width: (Aurora.entitySize * 2),
-											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true),
-								 			selectedImage: 0,
-								 			animTicks: 5,
-								 			ticks: 5,
-								 			id: parent.id,
-								 			isBackground: false,
-								 			props: {},
-								 			methodId: id
-								 		});
-									}
-								};
-								Aurora.addMethod(Aurora.methodSetup);
-							},
-							drawRightArm: function(parent) {
-								Aurora.methodSetup = {
-									method: function(id) {
-										drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 0.5),
-											posY: parent.posY,
-											width: (Aurora.entitySize * 2),
-											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true),
-								 			selectedImage: 0,
-								 			animTicks: 5,
-								 			ticks: 5,
-								 			id: parent.id,
-								 			isBackground: false,
-								 			props: {},
-								 			methodId: id
-								 		});
-									}
-								};
-								Aurora.addMethod(Aurora.methodSetup);
-							},
-							drawLeftLeg: function(parent) {
-								Aurora.methodSetup = {
-									method: function(id) {
-										drawImage({
-								 			posX: parent.posX - (Aurora.entitySize * 0.3),
-											posY: parent.posY + (Aurora.entitySize * 1.09),
-											width: (Aurora.entitySize * 0.975),
-											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true),
-								 			selectedImage: 0,
-								 			animTicks: 3,
-								 			ticks: 3,
-								 			id: parent.id,
-								 			isBackground: false,
-								 			props: {},
-								 			methodId: id
-								 		});
-									}
-								};
-								Aurora.addMethod(Aurora.methodSetup);
-							},
-							drawRightLeg: function(parent) {
-								Aurora.methodSetup = {
-									method: function(id) {
-										drawImage({
-								 			posX: parent.posX + (Aurora.entitySize * 0.85),
-											posY: parent.posY + (Aurora.entitySize * 1.09),
-											width: (Aurora.entitySize * 0.975),
-											height: (Aurora.entitySize * 1.5),
-								 			images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true),
-								 			selectedImage: 0,
-								 			animTicks: 3,
-								 			ticks: 3,
-								 			id: parent.id,
-								 			isBackground: false,
-								 			props: {},
-								 			methodId: id
-								 		});
-									}
-								};
-								Aurora.addMethod(Aurora.methodSetup);
-							},
+							//drawHead: function(parent) {
+								//Aurora.methodSetup = {
+									//method: function(id) {
+								 		//drawImage({
+								 			//posX: parent.posX + (Aurora.entitySize * 0.15),
+								 			//posY: parent.posY - (Aurora.entitySize * 1.25),
+								 			//width: (Aurora.entitySize * 1.25),
+											//height: (Aurora.entitySize * 1.25),
+								 			//images: drawRobotSelectPreviewParts('head', robot?.robotParts, true),
+								 			//selectedImage: 0,
+								 			//animTicks: 3,
+								 			//ticks: 3,
+								 			//id: parent.id,
+								 			//isBackground: false,
+								 			//props: {},
+								 			//methodId: id
+								 		//});
+									//}
+								//};
+								//Aurora.addMethod(Aurora.methodSetup);
+							//},
+							//drawLeftArm: function(parent) {
+								//Aurora.methodSetup = {
+									//method: function(id) {
+										//drawImage({
+								 			//posX: parent.posX - (Aurora.entitySize * 1),
+											//posY: parent.posY,
+											//width: (Aurora.entitySize * 2),
+											//height: (Aurora.entitySize * 1.5),
+								 			//images: drawRobotSelectPreviewParts('left-arm', robot?.robotParts, true),
+								 			//selectedImage: 0,
+								 			//animTicks: 5,
+								 			//ticks: 5,
+								 			//id: parent.id,
+								 			//isBackground: false,
+								 			//props: {},
+								 			//methodId: id
+								 		//});
+									//}
+								//};
+								//Aurora.addMethod(Aurora.methodSetup);
+							//},
+							//drawRightArm: function(parent) {
+								//Aurora.methodSetup = {
+									//method: function(id) {
+										//drawImage({
+								 			//posX: parent.posX + (Aurora.entitySize * 0.5),
+											//posY: parent.posY,
+											//width: (Aurora.entitySize * 2),
+											//height: (Aurora.entitySize * 1.5),
+								 			//images: drawRobotSelectPreviewParts('right-arm', robot?.robotParts, true),
+								 			//selectedImage: 0,
+								 			//animTicks: 5,
+								 			//ticks: 5,
+								 			//id: parent.id,
+								 			//isBackground: false,
+								 			//props: {},
+								 			//methodId: id
+								 		//});
+									//}
+								//};
+								//Aurora.addMethod(Aurora.methodSetup);
+							//},
+							//drawLeftLeg: function(parent) {
+								//Aurora.methodSetup = {
+									//method: function(id) {
+										//drawImage({
+								 			//posX: parent.posX - (Aurora.entitySize * 0.3),
+											//posY: parent.posY + (Aurora.entitySize * 1.09),
+											//width: (Aurora.entitySize * 0.975),
+											//height: (Aurora.entitySize * 1.5),
+								 			//images: drawRobotSelectPreviewParts('left-leg', robot?.robotParts, true),
+								 			//selectedImage: 0,
+								 			//animTicks: 3,
+								 			//ticks: 3,
+								 			//id: parent.id,
+								 			//isBackground: false,
+								 			//props: {},
+								 			//methodId: id
+								 		//});
+									//}
+								//};
+								//Aurora.addMethod(Aurora.methodSetup);
+							//},
+							//drawRightLeg: function(parent) {
+								//Aurora.methodSetup = {
+									//method: function(id) {
+										//drawImage({
+								 			//posX: parent.posX + (Aurora.entitySize * 0.85),
+											//posY: parent.posY + (Aurora.entitySize * 1.09),
+											//width: (Aurora.entitySize * 0.975),
+											//height: (Aurora.entitySize * 1.5),
+								 			//images: drawRobotSelectPreviewParts('right-leg', robot?.robotParts, true),
+								 			//selectedImage: 0,
+								 			//animTicks: 3,
+								 			//ticks: 3,
+								 			//id: parent.id,
+								 			//isBackground: false,
+								 			//props: {},
+								 			//methodId: id
+								 		//});
+									//}
+								//};
+								//Aurora.addMethod(Aurora.methodSetup);
+							//},
 						},
 						methodId: id
 					});
@@ -2017,7 +2017,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			// sendRobot(blueRobot);
+			sendRobot(blueRobot);
 			// drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
