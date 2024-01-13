@@ -159,6 +159,23 @@ function loadRobotChassisGifs() {
 				if (findNewWorld) {
 					gameObject.discoveredChassis[i].imgs = robotChassis[0].imgs;
 				}
+				const findNWScrapper = gameObject.discoveredChassis[i].imgs.find(x => x.id === nwScrapperChassisImgId);
+				if (findNWScrapper) {
+					gameObject.discoveredChassis[i].imgs = robotChassis[1].imgs;
+				}
+				const findNWScout = gameObject.discoveredChassis[i].imgs.find(x => x.id === nwScoutChassisImgId);
+				if (findNWScout) {
+					gameObject.discoveredChassis[i].imgs = robotChassis[2].imgs;
+				}
+				const findNWHarvester = gameObject.discoveredChassis[i].imgs.find(x => x.id === nwHarvesterChassisImgId);
+				if (findNWHarvester) {
+					gameObject.discoveredChassis[i].imgs = robotChassis[3].imgs;
+				}
+			}
+			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
+				gameObject.robotArenaDesigns[i].robotParts.forEach(x => {
+					// future Jordan, continue here
+				});
 			}
 			clearInterval(searchForImages);
 		}
