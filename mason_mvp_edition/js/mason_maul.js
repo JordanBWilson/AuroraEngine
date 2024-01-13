@@ -1347,7 +1347,6 @@ const maulPage = {
 						action: { 
 							method: function(id) {
 								const robotDirective = gameObject.robotArenaDesigns[gameObject.selectedRobotDesign]?.directive;
-								alert('directive ' + robotDirective + ' selected robot ' + gameObject.selectedRobot.length);
 								const robotCost = findRobotDirectiveCost(robotDirective);
 								if (gameObject.arenaGameStarted && gameObject.arenaBlueGameMoney >= robotCost && gameObject.selectedRobot.length === 6) {
 									if (canSendLeft) {
@@ -2018,7 +2017,7 @@ const maulPage = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
-			sendRobot(blueRobot);
+			// sendRobot(blueRobot);
 			// drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
