@@ -2317,21 +2317,28 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function drawRobotSelectParts(search = 'preview-robot') {
-	const findPreviews = setInterval(function() {
+	let count = 0;
+	const findPreviews = setTimeout(function() {
 		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
-		alert(chassisSearch.length);
+		console.log(chassisSearch.length);
+		// alert(chassisSearch.length);
 		if (chassisSearch && chassisSearch?.length > 0) {
+			// console.log(chassisSearch[0].props);
 			for (let i = 0; i < chassisSearch.length; i++) {
+				//if (typeof chassisSearch[i].props.drawHead !== 'undefined') {
+					//chassisSearch[i].props.drawHead(chassisSearch[i]);
+				//}
 				chassisSearch[i].props.drawHead(chassisSearch[i]);
 				chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
 				chassisSearch[i].props.drawRightArm(chassisSearch[i]);
 				chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
 				chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
-				if ((chassisSearch.length - 1) === i) {
-					clearInterval(findPreviews);
-				}
+				count++;
 			}
 		}
+		//if ((chassisSearch.length - 1) === count) {
+			//// clearInterval(findPreviews);
+		//}
 	}, Aurora.frameRate);
 	
 }
