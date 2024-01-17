@@ -2319,6 +2319,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 function drawRobotSelectParts(search = 'preview-robot') {
 	const findPreviews = setInterval(function() {
 		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
+		alert(chassisSearch.length);
 		if (chassisSearch && chassisSearch?.length > 0) {
 			for (let i = 0; i < chassisSearch.length; i++) {
 				chassisSearch[i].props.drawHead(chassisSearch[i]);
