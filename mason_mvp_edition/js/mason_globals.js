@@ -2317,40 +2317,22 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function drawRobotSelectParts(search = 'preview-robot') {
-	let partsLoaded = 0;
 	const findPreviews = setInterval(function() {
-		const partSearch = Aurora.methodObjects.filter(x => x.id === search);
-		if (partSearch.length > 0) {
-			partSearch.forEach(robot => {
-				if (typeof robot.props.drawHead !== 'undefined') {
-					robot.props.drawHead(robot);
-					partsLoaded++;
+		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
+		if (chassisSearch.length > 0) {
+			for (let i = 0; i < chassisSearch.length; i++) {
+				chassisSearch[i].props.drawHead(chassisSearch[i]);
+				chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
+				chassisSearch[i].props.drawRightArm(chassisSearch[i]);
+				chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
+				chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
+				if ((chassisSearch.length - 1) === i) {
+					clearInterval(findPreviews);
 				}
-				if (typeof robot.props.drawLeftArm !== 'undefined') {
-					robot.props.drawLeftArm(robot);
-					partsLoaded++;
-				}
-				if (typeof robot.props.drawRightArm !== 'undefined') {
-					robot.props.drawRightArm(robot);
-					partsLoaded++;
-				}
-				if (typeof robot.props.drawLeftLeg !== 'undefined') {
-					robot.props.drawLeftLeg(robot);
-					partsLoaded++;
-				}
-				if (typeof robot.props.drawRightLeg !== 'undefined') {
-					robot.props.drawRightLeg(robot);
-					partsLoaded++;
-				}
-			});
-			if (search === 'preview-robot') {
-				clearInterval(findPreviews);
-			} else if (partsLoaded === 5) {
-				clearInterval(findPreviews);
 			}
-			
 		}
 	}, Aurora.frameRate);
+	
 }
 function drawRobotPreviewParts(partType) {
 	if (partType === 'chassis') {
