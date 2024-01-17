@@ -1435,7 +1435,7 @@ const maulPage = {
 										setRedLeftTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											canSendLeft = true;
-										}, 800);
+										}, 500);
 									}
 								} else {
 									const sendRobotsLeft = Aurora.methodObjects.find(bs => bs.id === 'send-robots-left');
@@ -1555,7 +1555,7 @@ const maulPage = {
 										setRedRightTowerRangeCollisions(blueRobot.id);
 										setTimeout(function() {
 											canSendRight = true;
-										}, 800);
+										}, 500);
 									}
 								} else {
 									const sendRobotsRight = Aurora.methodObjects.find(bs => bs.id === 'send-robots-right');

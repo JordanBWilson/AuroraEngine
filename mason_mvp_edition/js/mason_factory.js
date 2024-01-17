@@ -619,6 +619,19 @@ const factoryPage = {
 			// display all the parts on each page
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
+				let robotPart;
+				if (discoveredPart.type === 'chassis') {
+					robotPart = robotChassis.find(x => x.chassisId === discoveredPart.chassisId);
+				}
+				if (discoveredPart.type === 'head') {
+					robotPart = robotHeads.find(x => x.headId === discoveredPart.headId);
+				}
+				if (discoveredPart.type === 'arm') {
+					robotPart = robotArms.find(x => x.armId === discoveredPart.armId);
+				}
+				if (discoveredPart.type === 'leg') {
+					robotPart = robotLegs.find(x => x.legId === discoveredPart.legId);
+				}
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
@@ -627,19 +640,19 @@ const factoryPage = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart, true),
+							btnColor: drawActiveParts(robotPart, true),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: discoveredPart.count,
+							msg: robotPart.count,
 							isFilled: true,
 							id: 'part-count',
 							action: { 
 								method: function(id) {
-									const newPart = Object.assign({}, discoveredPart);
-									if (discoveredPart.type === 'leg') {
+									const newPart = Object.assign({}, robotPart);
+									if (robotPart.type === 'leg') {
 										newPart.legPos = limbPos;
 									}
-									if (discoveredPart.type === 'arm') {
+									if (robotPart.type === 'arm') {
 										newPart.armPos = limbPos;
 									}
 									gameObject.buildButtonDisabled = false;
@@ -661,19 +674,19 @@ const factoryPage = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart, true),
+							btnColor: drawActiveParts(robotPart, true),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: discoveredPart.name,
+							msg: robotPart.name,
 							isFilled: true,
-							id: 'robot-' + displayLimb + discoveredPart.type + '-part',
+							id: 'robot-' + displayLimb + robotPart.type + '-part',
 							action: { 
 								method: function(id) {
-									const newPart = Object.assign({}, discoveredPart);
-									if (discoveredPart.type === 'leg') {
+									const newPart = Object.assign({}, robotPart);
+									if (robotPart.type === 'leg') {
 										newPart.legPos = limbPos;
 									}
-									if (discoveredPart.type === 'arm') {
+									if (robotPart.type === 'arm') {
 										newPart.armPos = limbPos;
 									}
 									gameObject.buildButtonDisabled = false;
@@ -2132,6 +2145,19 @@ const factoryParts = {
 			// display all the parts on each page
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
+				let robotPart;
+				if (discoveredPart.type === 'chassis') {
+					robotPart = robotChassis.find(x => x.chassisId === discoveredPart.chassisId);
+				}
+				if (discoveredPart.type === 'head') {
+					robotPart = robotHeads.find(x => x.headId === discoveredPart.headId);
+				}
+				if (discoveredPart.type === 'arm') {
+					robotPart = robotArms.find(x => x.armId === discoveredPart.armId);
+				}
+				if (discoveredPart.type === 'leg') {
+					robotPart = robotLegs.find(x => x.legId === discoveredPart.legId);
+				}
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
@@ -2140,16 +2166,16 @@ const factoryParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart, false),
+							btnColor: drawActiveParts(robotPart, false),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: discoveredPart.count,
+							msg: robotPart.count,
 							isFilled: true,
 							id: 'part-count',
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectPartParts(discoveredPart);
+									displaySelectPartParts(robotPart);
 								}
 							},
 							isModalBtn: false,
@@ -2167,16 +2193,16 @@ const factoryParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(discoveredPart, false),
+							btnColor: drawActiveParts(robotPart, false),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: discoveredPart.name,
+							msg: robotPart.name,
 							isFilled: true,
-							id: 'robot-' + discoveredPart.type + '-part',
+							id: 'robot-' + robotPart.type + '-part',
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectPartParts(discoveredPart);
+									displaySelectPartParts(robotPart);
 								}
 							},
 							isModalBtn: false,

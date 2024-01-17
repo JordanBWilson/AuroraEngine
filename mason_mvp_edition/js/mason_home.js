@@ -1842,6 +1842,19 @@ const homeSellParts = {
 			// display all the parts on each page
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
+				let robotPart;
+				if (discoveredPart.type === 'chassis') {
+					robotPart = robotChassis.find(x => x.chassisId === discoveredPart.chassisId);
+				}
+				if (discoveredPart.type === 'head') {
+					robotPart = robotHeads.find(x => x.headId === discoveredPart.headId);
+				}
+				if (discoveredPart.type === 'arm') {
+					robotPart = robotArms.find(x => x.armId === discoveredPart.armId);
+				}
+				if (discoveredPart.type === 'leg') {
+					robotPart = robotLegs.find(x => x.legId === discoveredPart.legId);
+				}
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawButton({
@@ -1850,16 +1863,16 @@ const homeSellParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveSellParts(discoveredPart.img, discoveredPart.count),
+							btnColor: drawActiveSellParts(robotPart.img, robotPart.count),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: discoveredPart.count,
+							msg: robotPart.count,
 							isFilled: true,
 							id: 'part-count',
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectSellPartParts(discoveredPart);
+									displaySelectSellPartParts(robotPart);
 								}
 							},
 							isModalBtn: false,
@@ -1877,16 +1890,16 @@ const homeSellParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveSellParts(discoveredPart.img, discoveredPart.count),
+							btnColor: drawActiveSellParts(robotPart.img, robotPart.count),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: discoveredPart.name,
+							msg: robotPart.name,
 							isFilled: true,
-							id: 'robot-' + discoveredPart.type + '-part',
+							id: 'robot-' + robotPart.type + '-part',
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectSellPartParts(discoveredPart);
+									displaySelectSellPartParts(robotPart);
 								}
 							},
 							isModalBtn: false,
