@@ -2331,7 +2331,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 				}
 			}
 		}
-	}, 50); // Aurora.frameRate
+	}, Aurora.frameRate);
 	
 }
 function drawRobotPreviewParts(partType) {
