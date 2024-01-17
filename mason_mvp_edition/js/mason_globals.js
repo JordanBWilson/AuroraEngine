@@ -2322,6 +2322,8 @@ function drawRobotSelectParts(search = 'preview-robot') {
 		// alert(chassisSearch.length);
 		if (chassisSearch.length > 0) {
 			// console.log(chassisSearch[0].props);
+			// future Jordan, try this... typeof(chassisSearch[i].props.drawHead) === typeof(function)
+			// or typeof chassisSearch[i].props.drawHead === 'function'
 			for (let i = 0; i < chassisSearch.length; i++) {
 				if (typeof chassisSearch[i].props.drawHead !== 'undefined') {
 					chassisSearch[i].props.drawHead(chassisSearch[i]);
