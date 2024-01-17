@@ -2317,28 +2317,34 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function drawRobotSelectParts(search = 'preview-robot') {
-	let count = 0;
 	const findPreviews = setTimeout(function() {
 		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
-		console.log(chassisSearch.length);
 		// alert(chassisSearch.length);
-		if (chassisSearch && chassisSearch?.length > 0) {
+		if (chassisSearch.length > 0) {
 			// console.log(chassisSearch[0].props);
 			for (let i = 0; i < chassisSearch.length; i++) {
-				//if (typeof chassisSearch[i].props.drawHead !== 'undefined') {
-					//chassisSearch[i].props.drawHead(chassisSearch[i]);
-				//}
-				chassisSearch[i].props.drawHead(chassisSearch[i]);
-				chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
-				chassisSearch[i].props.drawRightArm(chassisSearch[i]);
-				chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
-				chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
-				count++;
+				if (typeof chassisSearch[i].props.drawHead !== 'undefined') {
+					chassisSearch[i].props.drawHead(chassisSearch[i]);
+				}
+				if (typeof chassisSearch[i].props.drawLeftArm !== 'undefined') {
+					chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
+				}
+				if (typeof chassisSearch[i].props.drawRightArm !== 'undefined') {
+					chassisSearch[i].props.drawRightArm(chassisSearch[i]);
+				}
+				if (typeof chassisSearch[i].props.drawLeftLeg !== 'undefined') {
+					chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
+				}
+				if (typeof chassisSearch[i].props.drawRightLeg !== 'undefined') {
+					chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
+				}
+				//chassisSearch[i].props.drawHead(chassisSearch[i]);
+				//chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
+				//chassisSearch[i].props.drawRightArm(chassisSearch[i]);
+				//chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
+				//chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
 			}
 		}
-		//if ((chassisSearch.length - 1) === count) {
-			//// clearInterval(findPreviews);
-		//}
 	}, Aurora.frameRate);
 	
 }
