@@ -2018,7 +2018,7 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			// drawRobotSelectParts(blueRobot.id);
+			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
@@ -2029,7 +2029,7 @@ const maulPage = {
 		}
 		function sendRedRobot(redRobot, robotDirective) {
 			sendRobot(redRobot);
-			// drawRobotSelectParts(redRobot.id);
+			drawRobotSelectParts(redRobot.id);
 			gameObject.arenaRedAttackers.push(redRobot);
 			gameObject.arenaRedSendCount++;
 			if (robotDirective === 4) { // lee-roy
