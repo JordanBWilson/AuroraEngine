@@ -2018,9 +2018,7 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			// future Jordan, figure out how to make sure all the different parts are loaded properly
-			// on iOS sometimes it works and sometimes it doesn't
-			// drawRobotSelectParts(blueRobot.id);
+			drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
@@ -2031,7 +2029,7 @@ const maulPage = {
 		}
 		function sendRedRobot(redRobot, robotDirective) {
 			sendRobot(redRobot);
-			// drawRobotSelectParts(redRobot.id);
+			drawRobotSelectParts(redRobot.id);
 			gameObject.arenaRedAttackers.push(redRobot);
 			gameObject.arenaRedSendCount++;
 			if (robotDirective === 4) { // lee-roy

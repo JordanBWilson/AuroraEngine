@@ -2317,26 +2317,38 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function drawRobotSelectParts(search = 'preview-robot') {
+	let partsLoaded = 0;
 	const findPreviews = setInterval(function() {
-		if (Aurora.methodObjects.filter(x => x.id === search).length > 0) {
-			Aurora.methodObjects.filter(x => x.id === search).forEach(robot => {
+		const partSearch = Aurora.methodObjects.filter(x => x.id === search);
+		if (partSearch.length > 0) {
+			partSearch.forEach(robot => {
 				if (typeof robot.props.drawHead !== 'undefined') {
 					robot.props.drawHead(robot);
+					partsLoaded++;
 				}
 				if (typeof robot.props.drawLeftArm !== 'undefined') {
 					robot.props.drawLeftArm(robot);
+					partsLoaded++;
 				}
 				if (typeof robot.props.drawRightArm !== 'undefined') {
 					robot.props.drawRightArm(robot);
+					partsLoaded++;
 				}
 				if (typeof robot.props.drawLeftLeg !== 'undefined') {
 					robot.props.drawLeftLeg(robot);
+					partsLoaded++;
 				}
 				if (typeof robot.props.drawRightLeg !== 'undefined') {
 					robot.props.drawRightLeg(robot);
+					partsLoaded++;
 				}
 			});
-			clearInterval(findPreviews);
+			if (search === 'preview-robot') {
+				clearInterval(findPreviews);
+			} else if (partsLoaded === 5) {
+				clearInterval(findPreviews);
+			}
+			
 		}
 	}, Aurora.frameRate);
 }

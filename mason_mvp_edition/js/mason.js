@@ -75,34 +75,27 @@ function loadGame() {
 		gameObject.discoveredPartsList = [];
 		gameObject.selectedRobot = [];
 		// future Jordan, towerArenaDesigns will need to reload images when they have them
-		console.log(gameObject);
 	}
 }
-function assignImgsToRobotParts(robotList, type, id, i, partIndex) {
-	// for (let i = 0; i < robotList.length; i++) {
-		const findParts = robotList[i].robotParts.filter(x => x.type === type);
-		for (let j = 0; j < findParts.length; j++) {
-			const findNewWorld = findParts[j].imgs.find(x => x.id === id);
-			if (findNewWorld) {
-				// future Jordan, check the type and assign the images based on the type
+function assignImgsToRobotParts(robotList, type, id, i, partIndex, findParts) {
+	for (let j = 0; j < findParts.length; j++) {
+		const findRobotParts = findParts[j].imgs.find(x => x.id === id);
+		if (findRobotParts) {
+			if (type === 'chassis') {
 				findParts[j].imgs = robotChassis[partIndex].imgs;
 			}
-			//const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
-			//if (findNWScrapper) {
-				//findParts[j].imgs = robotChassis[1].imgs;
-			//}
-			//const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
-			//if (findNWScout) {
-				//findParts[j].imgs = robotChassis[2].imgs;
-			//}
-			//const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
-			//if (findNWHarvester) {
-				//findParts[j].imgs = robotChassis[3].imgs;
-			//}
+			if (type === 'head') {
+				findParts[j].imgs = robotHeads[partIndex].imgs;
+			}
+			if (type === 'arm') {
+				findParts[j].imgs = robotArms[partIndex].imgs;
+			}
+			if (type === 'leg') {
+				findParts[j].imgs = robotLegs[partIndex].imgs;
+			}
 		}
-	// }
+	}
 }
-// future Jordan, make sure this works and apply it to the other parts
 function loadRobotHeadGifs() {
 	// load the images
 	const newWorldHeadImgId = 'new-world-head';
@@ -137,6 +130,46 @@ function loadRobotHeadGifs() {
 			imageCount++;
 		}
 		if (imageCount === robotHeads.length) {
+			// assign images to the already made robots
+			for (let i = 0; i < gameObject.discoveredHeads.length; i++) {
+				const findNewWorld = gameObject.discoveredHeads[i].imgs.find(x => x.id === newWorldHeadImgId);
+				if (findNewWorld) {
+					gameObject.discoveredHeads[i].imgs = robotHeads[0].imgs;
+				}
+				const findNWScrapper = gameObject.discoveredHeads[i].imgs.find(x => x.id === nwScrapperHeadImgId);
+				if (findNWScrapper) {
+					gameObject.discoveredHeads[i].imgs = robotHeads[1].imgs;
+				}
+				const findNWScout = gameObject.discoveredHeads[i].imgs.find(x => x.id === nwScoutHeadImgId);
+				if (findNWScout) {
+					gameObject.discoveredHeads[i].imgs = robotHeads[2].imgs;
+				}
+				const findNWHarvester = gameObject.discoveredHeads[i].imgs.find(x => x.id === nwHarvesterHeadImgId);
+				if (findNWHarvester) {
+					gameObject.discoveredHeads[i].imgs = robotHeads[3].imgs;
+				}
+			}
+			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
+				const findParts = gameObject.robotArenaDesigns[i].robotParts.filter(x => x.type === 'head');
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'head', newWorldHeadImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'head', nwScrapperHeadImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'head', nwScoutHeadImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'head', nwHarvesterHeadImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotDesigns.length; i++) {
+				const findParts = gameObject.robotDesigns[i].robotParts.filter(x => x.type === 'head');
+				assignImgsToRobotParts(gameObject.robotDesigns, 'head', newWorldHeadImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'head', nwScrapperHeadImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'head', nwScoutHeadImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'head', nwHarvesterHeadImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+				const findParts = gameObject.robotTeams[i].robotParts.filter(x => x.type === 'head');
+				assignImgsToRobotParts(gameObject.robotTeams, 'head', newWorldHeadImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'head', nwScrapperHeadImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'head', nwScoutHeadImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'head', nwHarvesterHeadImgId, i, 3, findParts);
+			}
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -156,7 +189,6 @@ function loadRobotChassisGifs() {
 	const searchForImages = setInterval(function() {
 		const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
 		if (findNewWorldChassis && robotChassis[0].imgs.length === 0) {
-			console.log(findNewWorldChassis);
 			robotChassis[0].imgs.push(findNewWorldChassis);
 			imageCount++;
 		}
@@ -176,8 +208,7 @@ function loadRobotChassisGifs() {
 			imageCount++;
 		}
 		if (imageCount === robotChassis.length) {
-			// future Jordan, go through all the discovered parts, robot arena designs, robot designs and robot teams
-			// and make sure that the images are all loaded properly. right now when loading a game, the images are getting lost
+			// assign images to the already made robots
 			for (let i = 0; i < gameObject.discoveredChassis.length; i++) {
 				const findNewWorld = gameObject.discoveredChassis[i].imgs.find(x => x.id === newWorldChassisImgId);
 				if (findNewWorld) {
@@ -198,66 +229,24 @@ function loadRobotChassisGifs() {
 			}
 			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
 				const findParts = gameObject.robotArenaDesigns[i].robotParts.filter(x => x.type === 'chassis');
-				for (let j = 0; j < findParts.length; j++) {
-					const findNewWorld = findParts[j].imgs.find(x => x.id === newWorldChassisImgId);
-					if (findNewWorld) {
-						findParts[j].imgs = robotChassis[0].imgs;
-					}
-					const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
-					if (findNWScrapper) {
-						findParts[j].imgs = robotChassis[1].imgs;
-					}
-					const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
-					if (findNWScout) {
-						findParts[j].imgs = robotChassis[2].imgs;
-					}
-					const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
-					if (findNWHarvester) {
-						findParts[j].imgs = robotChassis[3].imgs;
-					}
-				}
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'chassis', newWorldChassisImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'chassis', nwScrapperChassisImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'chassis', nwScoutChassisImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'chassis', nwHarvesterChassisImgId, i, 3, findParts);
 			}
 			for (let i = 0; i < gameObject.robotDesigns.length; i++) {
 				const findParts = gameObject.robotDesigns[i].robotParts.filter(x => x.type === 'chassis');
-				for (let j = 0; j < findParts.length; j++) {
-					const findNewWorld = findParts[j].imgs.find(x => x.id === newWorldChassisImgId);
-					if (findNewWorld) {
-						findParts[j].imgs = robotChassis[0].imgs;
-					}
-					const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
-					if (findNWScrapper) {
-						findParts[j].imgs = robotChassis[1].imgs;
-					}
-					const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
-					if (findNWScout) {
-						findParts[j].imgs = robotChassis[2].imgs;
-					}
-					const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
-					if (findNWHarvester) {
-						findParts[j].imgs = robotChassis[3].imgs;
-					}
-				}
+				assignImgsToRobotParts(gameObject.robotDesigns, 'chassis', newWorldChassisImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'chassis', nwScrapperChassisImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'chassis', nwScoutChassisImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'chassis', nwHarvesterChassisImgId, i, 3, findParts);
 			}
 			for (let i = 0; i < gameObject.robotTeams.length; i++) {
 				const findParts = gameObject.robotTeams[i].robotParts.filter(x => x.type === 'chassis');
-				for (let j = 0; j < findParts.length; j++) {
-					const findNewWorld = findParts[j].imgs.find(x => x.id === newWorldChassisImgId);
-					if (findNewWorld) {
-						findParts[j].imgs = robotChassis[0].imgs;
-					}
-					const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
-					if (findNWScrapper) {
-						findParts[j].imgs = robotChassis[1].imgs;
-					}
-					const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
-					if (findNWScout) {
-						findParts[j].imgs = robotChassis[2].imgs;
-					}
-					const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
-					if (findNWHarvester) {
-						findParts[j].imgs = robotChassis[3].imgs;
-					}
-				}
+				assignImgsToRobotParts(gameObject.robotTeams, 'chassis', newWorldChassisImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'chassis', nwScrapperChassisImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'chassis', nwScoutChassisImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'chassis', nwHarvesterChassisImgId, i, 3, findParts);
 			}
 			clearInterval(searchForImages);
 		}
@@ -297,6 +286,46 @@ function loadRobotLeftArmGifs() {
 			imageCount++;
 		}
 		if (imageCount === robotArms.length) {
+			// assign images to the already made robots
+			for (let i = 0; i < gameObject.discoveredArms.length; i++) {
+				const findNewWorld = gameObject.discoveredArms[i].imgs.find(x => x.id === newWorldLeftArmImgId);
+				if (findNewWorld) {
+					gameObject.discoveredArms[i].imgs = robotArms[0].imgs;
+				}
+				const findNWScrapper = gameObject.discoveredArms[i].imgs.find(x => x.id === nwScrapperLeftArmImgId);
+				if (findNWScrapper) {
+					gameObject.discoveredArms[i].imgs = robotArms[1].imgs;
+				}
+				const findNWScout = gameObject.discoveredArms[i].imgs.find(x => x.id === nwScoutLeftArmImgId);
+				if (findNWScout) {
+					gameObject.discoveredArms[i].imgs = robotArms[2].imgs;
+				}
+				const findNWHarvester = gameObject.discoveredArms[i].imgs.find(x => x.id === nwHarvesterLeftArmImgId);
+				if (findNWHarvester) {
+					gameObject.discoveredArms[i].imgs = robotArms[3].imgs;
+				}
+			}
+			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
+				const findParts = gameObject.robotArenaDesigns[i].robotParts.filter(x => x.type === 'arm');
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', newWorldLeftArmImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', nwScrapperLeftArmImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', nwScoutLeftArmImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', nwHarvesterLeftArmImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotDesigns.length; i++) {
+				const findParts = gameObject.robotDesigns[i].robotParts.filter(x => x.type === 'arm');
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', newWorldLeftArmImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', nwScrapperLeftArmImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', nwScoutLeftArmImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', nwHarvesterLeftArmImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+				const findParts = gameObject.robotTeams[i].robotParts.filter(x => x.type === 'arm');
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', newWorldLeftArmImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', nwScrapperLeftArmImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', nwScoutLeftArmImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', nwHarvesterLeftArmImgId, i, 3, findParts);
+			}
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -335,6 +364,46 @@ function loadRobotRightArmGifs() {
 			imageCount++;
 		}
 		if (imageCount === robotArms.length) {
+			// assign images to the already made robots
+			for (let i = 0; i < gameObject.discoveredArms.length; i++) {
+				const findNewWorld = gameObject.discoveredArms[i].imgs.find(x => x.id === newWorldRightArmImgId);
+				if (findNewWorld) {
+					gameObject.discoveredArms[i].imgs = robotArms[0].imgs;
+				}
+				const findNWScrapper = gameObject.discoveredArms[i].imgs.find(x => x.id === nwScrapperRightArmImgId);
+				if (findNWScrapper) {
+					gameObject.discoveredArms[i].imgs = robotArms[1].imgs;
+				}
+				const findNWScout = gameObject.discoveredArms[i].imgs.find(x => x.id === nwScoutRightArmImgId);
+				if (findNWScout) {
+					gameObject.discoveredArms[i].imgs = robotArms[2].imgs;
+				}
+				const findNWHarvester = gameObject.discoveredArms[i].imgs.find(x => x.id === nwHarvesterRightArmImgId);
+				if (findNWHarvester) {
+					gameObject.discoveredArms[i].imgs = robotArms[3].imgs;
+				}
+			}
+			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
+				const findParts = gameObject.robotArenaDesigns[i].robotParts.filter(x => x.type === 'arm');
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', newWorldRightArmImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', nwScrapperRightArmImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', nwScoutRightArmImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'arm', nwHarvesterRightArmImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotDesigns.length; i++) {
+				const findParts = gameObject.robotDesigns[i].robotParts.filter(x => x.type === 'arm');
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', newWorldRightArmImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', nwScrapperRightArmImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', nwScoutRightArmImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'arm', nwHarvesterRightArmImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+				const findParts = gameObject.robotTeams[i].robotParts.filter(x => x.type === 'arm');
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', newWorldRightArmImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', nwScrapperRightArmImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', nwScoutRightArmImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'arm', nwHarvesterRightArmImgId, i, 3, findParts);
+			}
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -373,6 +442,46 @@ function loadRobotLeftLegGifs() {
 			imageCount++;
 		}
 		if (imageCount === robotLegs.length) {
+			// assign images to the already made robots
+			for (let i = 0; i < gameObject.discoveredLegs.length; i++) {
+				const findNewWorld = gameObject.discoveredLegs[i].imgs.find(x => x.id === newWorldLeftLegImgId);
+				if (findNewWorld) {
+					gameObject.discoveredLegs[i].imgs = robotArms[0].imgs;
+				}
+				const findNWScrapper = gameObject.discoveredLegs[i].imgs.find(x => x.id === nwScrapperLeftLegImgId);
+				if (findNWScrapper) {
+					gameObject.discoveredLegs[i].imgs = robotArms[1].imgs;
+				}
+				const findNWScout = gameObject.discoveredLegs[i].imgs.find(x => x.id === nwScoutLeftLegImgId);
+				if (findNWScout) {
+					gameObject.discoveredLegs[i].imgs = robotArms[2].imgs;
+				}
+				const findNWHarvester = gameObject.discoveredLegs[i].imgs.find(x => x.id === nwHarvesterLeftLegImgId);
+				if (findNWHarvester) {
+					gameObject.discoveredLegs[i].imgs = robotArms[3].imgs;
+				}
+			}
+			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
+				const findParts = gameObject.robotArenaDesigns[i].robotParts.filter(x => x.type === 'leg');
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', newWorldLeftLegImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', nwScrapperLeftLegImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', nwScoutLeftLegImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', nwHarvesterLeftLegImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotDesigns.length; i++) {
+				const findParts = gameObject.robotDesigns[i].robotParts.filter(x => x.type === 'leg');
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', newWorldLeftLegImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', nwScrapperLeftLegImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', nwScoutLeftLegImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', nwHarvesterLeftLegImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+				const findParts = gameObject.robotTeams[i].robotParts.filter(x => x.type === 'leg');
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', newWorldLeftLegImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', nwScrapperLeftLegImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', nwScoutLeftLegImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', nwHarvesterLeftLegImgId, i, 3, findParts);
+			}
 			clearInterval(searchForImages);
 		}
 	}, 300);
@@ -411,6 +520,46 @@ function loadRobotRightLegGifs() {
 			imageCount++;
 		}
 		if (imageCount === robotLegs.length) {
+			// assign images to the already made robots
+			for (let i = 0; i < gameObject.discoveredLegs.length; i++) {
+				const findNewWorld = gameObject.discoveredLegs[i].imgs.find(x => x.id === newWorldRightLegImgId);
+				if (findNewWorld) {
+					gameObject.discoveredLegs[i].imgs = robotArms[0].imgs;
+				}
+				const findNWScrapper = gameObject.discoveredLegs[i].imgs.find(x => x.id === nwScrapperRightLegImgId);
+				if (findNWScrapper) {
+					gameObject.discoveredLegs[i].imgs = robotArms[1].imgs;
+				}
+				const findNWScout = gameObject.discoveredLegs[i].imgs.find(x => x.id === nwScoutRightLegImgId);
+				if (findNWScout) {
+					gameObject.discoveredLegs[i].imgs = robotArms[2].imgs;
+				}
+				const findNWHarvester = gameObject.discoveredLegs[i].imgs.find(x => x.id === nwHarvesterRightLegImgId);
+				if (findNWHarvester) {
+					gameObject.discoveredLegs[i].imgs = robotArms[3].imgs;
+				}
+			}
+			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
+				const findParts = gameObject.robotArenaDesigns[i].robotParts.filter(x => x.type === 'leg');
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', newWorldRightLegImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', nwScrapperRightLegImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', nwScoutRightLegImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotArenaDesigns, 'leg', nwHarvesterRightLegImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotDesigns.length; i++) {
+				const findParts = gameObject.robotDesigns[i].robotParts.filter(x => x.type === 'leg');
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', newWorldRightLegImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', nwScrapperRightLegImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', nwScoutRightLegImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotDesigns, 'leg', nwHarvesterRightLegImgId, i, 3, findParts);
+			}
+			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+				const findParts = gameObject.robotTeams[i].robotParts.filter(x => x.type === 'leg');
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', newWorldRightLegImgId, i, 0, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', nwScrapperRightLegImgId, i, 1, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', nwScoutRightLegImgId, i, 2, findParts);
+				assignImgsToRobotParts(gameObject.robotTeams, 'leg', nwHarvesterRightLegImgId, i, 3, findParts);
+			}
 			clearInterval(searchForImages);
 		}
 	}, 300);
