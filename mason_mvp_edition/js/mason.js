@@ -78,6 +78,30 @@ function loadGame() {
 		console.log(gameObject);
 	}
 }
+function assignImgsToRobotParts(robotList, type, id, i, partIndex) {
+	// for (let i = 0; i < robotList.length; i++) {
+		const findParts = robotList[i].robotParts.filter(x => x.type === type);
+		for (let j = 0; j < findParts.length; j++) {
+			const findNewWorld = findParts[j].imgs.find(x => x.id === id);
+			if (findNewWorld) {
+				// future Jordan, check the type and assign the images based on the type
+				findParts[j].imgs = robotChassis[partIndex].imgs;
+			}
+			//const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
+			//if (findNWScrapper) {
+				//findParts[j].imgs = robotChassis[1].imgs;
+			//}
+			//const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
+			//if (findNWScout) {
+				//findParts[j].imgs = robotChassis[2].imgs;
+			//}
+			//const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
+			//if (findNWHarvester) {
+				//findParts[j].imgs = robotChassis[3].imgs;
+			//}
+		}
+	// }
+}
 // future Jordan, make sure this works and apply it to the other parts
 function loadRobotHeadGifs() {
 	// load the images
@@ -173,9 +197,67 @@ function loadRobotChassisGifs() {
 				}
 			}
 			for (let i = 0; i < gameObject.robotArenaDesigns.length; i++) {
-				gameObject.robotArenaDesigns[i].robotParts.forEach(x => {
-					// future Jordan, continue here
-				});
+				const findParts = gameObject.robotArenaDesigns[i].robotParts.filter(x => x.type === 'chassis');
+				for (let j = 0; j < findParts.length; j++) {
+					const findNewWorld = findParts[j].imgs.find(x => x.id === newWorldChassisImgId);
+					if (findNewWorld) {
+						findParts[j].imgs = robotChassis[0].imgs;
+					}
+					const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
+					if (findNWScrapper) {
+						findParts[j].imgs = robotChassis[1].imgs;
+					}
+					const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
+					if (findNWScout) {
+						findParts[j].imgs = robotChassis[2].imgs;
+					}
+					const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
+					if (findNWHarvester) {
+						findParts[j].imgs = robotChassis[3].imgs;
+					}
+				}
+			}
+			for (let i = 0; i < gameObject.robotDesigns.length; i++) {
+				const findParts = gameObject.robotDesigns[i].robotParts.filter(x => x.type === 'chassis');
+				for (let j = 0; j < findParts.length; j++) {
+					const findNewWorld = findParts[j].imgs.find(x => x.id === newWorldChassisImgId);
+					if (findNewWorld) {
+						findParts[j].imgs = robotChassis[0].imgs;
+					}
+					const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
+					if (findNWScrapper) {
+						findParts[j].imgs = robotChassis[1].imgs;
+					}
+					const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
+					if (findNWScout) {
+						findParts[j].imgs = robotChassis[2].imgs;
+					}
+					const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
+					if (findNWHarvester) {
+						findParts[j].imgs = robotChassis[3].imgs;
+					}
+				}
+			}
+			for (let i = 0; i < gameObject.robotTeams.length; i++) {
+				const findParts = gameObject.robotTeams[i].robotParts.filter(x => x.type === 'chassis');
+				for (let j = 0; j < findParts.length; j++) {
+					const findNewWorld = findParts[j].imgs.find(x => x.id === newWorldChassisImgId);
+					if (findNewWorld) {
+						findParts[j].imgs = robotChassis[0].imgs;
+					}
+					const findNWScrapper = findParts[j].imgs.find(x => x.id === nwScrapperChassisImgId);
+					if (findNWScrapper) {
+						findParts[j].imgs = robotChassis[1].imgs;
+					}
+					const findNWScout = findParts[j].imgs.find(x => x.id === nwScoutChassisImgId);
+					if (findNWScout) {
+						findParts[j].imgs = robotChassis[2].imgs;
+					}
+					const findNWHarvester = findParts[j].imgs.find(x => x.id === nwHarvesterChassisImgId);
+					if (findNWHarvester) {
+						findParts[j].imgs = robotChassis[3].imgs;
+					}
+				}
 			}
 			clearInterval(searchForImages);
 		}
