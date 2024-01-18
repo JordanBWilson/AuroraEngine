@@ -2320,7 +2320,6 @@ function drawRobotSelectParts(search = 'preview-robot') {
 	let partsLoaded = 0;
 	const findPreviews = setInterval(function() {
 		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
-		// alert(chassisSearch.length);
 		if (chassisSearch.length > 0) {
 			// console.log(chassisSearch[0].props);
 			// future Jordan, try this... typeof(chassisSearch[i].props.drawHead) === typeof(function)
@@ -2353,10 +2352,8 @@ function drawRobotSelectParts(search = 'preview-robot') {
 				//chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
 			}
 			if (search === 'preview-robot') {
-				// console.log('done', partsLoaded);
 				clearInterval(findPreviews);
 			} else if (search !== 'preview-robot' && partsLoaded === 5) {
-				// console.log('done', partsLoaded);
 				clearInterval(findPreviews);
 			}
 		}

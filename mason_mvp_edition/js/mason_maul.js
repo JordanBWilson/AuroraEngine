@@ -2020,8 +2020,7 @@ const maulPage = {
 			sendRobot(blueRobot);
 			setTimeout(function() {
 				drawRobotSelectParts(blueRobot.id);
-			}, 0);
-			
+			}, Aurora.frameRate);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
@@ -2034,8 +2033,7 @@ const maulPage = {
 			sendRobot(redRobot);
 			setTimeout(function() {
 				drawRobotSelectParts(redRobot.id);
-			}, 0);
-			
+			}, Aurora.frameRate);
 			gameObject.arenaRedAttackers.push(redRobot);
 			gameObject.arenaRedSendCount++;
 			if (robotDirective === 4) { // lee-roy
