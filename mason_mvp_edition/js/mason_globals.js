@@ -2323,27 +2323,28 @@ function drawRobotSelectParts(search = 'preview-robot') {
 		if (chassisSearch.length > 0) {
 			// future Jordan, try this... typeof(chassisSearch[i].props.drawHead) === typeof(function)
 			// or typeof chassisSearch[i].props.drawHead === 'function'
+			alert(typeof(chassisSearch[i].props.drawHead) === typeof(function));
 			for (let i = 0; i < chassisSearch.length; i++) {
-				if (typeof chassisSearch[i].props.drawHead === 'function') {
-					chassisSearch[i].props.drawHead(chassisSearch[i]);
-					partsLoaded++;
-				}
-				if (typeof chassisSearch[i].props.drawLeftArm === 'function') {
-					chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
-					partsLoaded++;
-				}
-				if (typeof chassisSearch[i].props.drawRightArm === 'function') {
-					chassisSearch[i].props.drawRightArm(chassisSearch[i]);
-					partsLoaded++;
-				}
-				if (typeof chassisSearch[i].props.drawLeftLeg === 'function') {
-					chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
-					partsLoaded++;
-				}
-				if (typeof chassisSearch[i].props.drawRightLeg === 'function') {
-					chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
-					partsLoaded++;
-				}
+				//if (typeof chassisSearch[i].props.drawHead === 'function') {
+					//chassisSearch[i].props.drawHead(chassisSearch[i]);
+					//partsLoaded++;
+				//}
+				//if (typeof chassisSearch[i].props.drawLeftArm === 'function') {
+					//chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
+					//partsLoaded++;
+				//}
+				//if (typeof chassisSearch[i].props.drawRightArm === 'function') {
+					//chassisSearch[i].props.drawRightArm(chassisSearch[i]);
+					//partsLoaded++;
+				//}
+				//if (typeof chassisSearch[i].props.drawLeftLeg === 'function') {
+					//chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
+					//partsLoaded++;
+				//}
+				//if (typeof chassisSearch[i].props.drawRightLeg === 'function') {
+					//chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
+					//partsLoaded++;
+				//}
 				//chassisSearch[i].props.drawHead(chassisSearch[i]);
 				//chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
 				//chassisSearch[i].props.drawRightArm(chassisSearch[i]);
@@ -2353,7 +2354,6 @@ function drawRobotSelectParts(search = 'preview-robot') {
 			if (search === 'preview-robot') {
 				clearInterval(findPreviews);
 			} else if (search !== 'preview-robot' && partsLoaded === 5) {
-				alert(typeof chassisSearch[0].props.drawHead === 'function' + ' ' + typeof chassisSearch[0].props.drawLeftArm === 'function' + ' ' + typeof chassisSearch[0].props.drawRightArm === 'function' + ' ' + typeof chassisSearch[0].props.drawLeftLeg === 'function' + ' ' + typeof chassisSearch[0].props.drawRightLeg === 'function');
 				clearInterval(findPreviews);
 			}
 		}
