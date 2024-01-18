@@ -2318,7 +2318,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 }
 function drawRobotSelectParts(search = 'preview-robot') {
 	let partsLoaded = 0;
-	const findPreviews = setTimeout(function() {
+	const findPreviews = setInterval(function() {
 		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
 		// alert(chassisSearch.length);
 		if (chassisSearch.length > 0) {
