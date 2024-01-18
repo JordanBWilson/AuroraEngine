@@ -2353,10 +2353,10 @@ function drawRobotSelectParts(search = 'preview-robot') {
 				//chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
 			}
 			if (search === 'preview-robot') {
-				console.log('done', partsLoaded);
+				// console.log('done', partsLoaded);
 				clearInterval(findPreviews);
-			} else if (partsLoaded === 5) {
-				console.log('done', partsLoaded);
+			} else if (search !== 'preview-robot' && partsLoaded === 5) {
+				// console.log('done', partsLoaded);
 				clearInterval(findPreviews);
 			}
 		}
