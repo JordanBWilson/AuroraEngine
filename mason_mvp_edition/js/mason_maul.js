@@ -2015,7 +2015,7 @@ const maulPage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
-			setTmeout(function() {
+			setTimeout(function() {
 				drawRobotSelectParts(robot.id);
 			}, 100);
 		}
