@@ -2015,12 +2015,13 @@ const maulPage = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
+			setTmeout(function() {
+				drawRobotSelectParts(robot.id);
+			}, 100);
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			setTimeout(function() {
-				drawRobotSelectParts(blueRobot.id);
-			}, Aurora.frameRate);
+			// drawRobotSelectParts(blueRobot.id);
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
@@ -2031,9 +2032,7 @@ const maulPage = {
 		}
 		function sendRedRobot(redRobot, robotDirective) {
 			sendRobot(redRobot);
-			setTimeout(function() {
-				drawRobotSelectParts(redRobot.id);
-			}, Aurora.frameRate);
+			// drawRobotSelectParts(redRobot.id);
 			gameObject.arenaRedAttackers.push(redRobot);
 			gameObject.arenaRedSendCount++;
 			if (robotDirective === 4) { // lee-roy
