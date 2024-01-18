@@ -2323,7 +2323,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 		if (chassisSearch.length > 0) {
 			// future Jordan, try this... typeof(chassisSearch[i].props.drawHead) === typeof(function)
 			// or typeof chassisSearch[i].props.drawHead === 'function'
-			alert(typeof(chassisSearch[i].props.drawHead) === typeof(function));
+			alert('head ' + typeof chassisSearch[i].props.drawHead);
 			for (let i = 0; i < chassisSearch.length; i++) {
 				//if (typeof chassisSearch[i].props.drawHead === 'function') {
 					//chassisSearch[i].props.drawHead(chassisSearch[i]);
