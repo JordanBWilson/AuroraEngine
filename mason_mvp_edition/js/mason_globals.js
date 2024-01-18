@@ -2032,6 +2032,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.img;
 				} else {
 					// there should be only one of these
+					alert('chassis ' + part.imgs[0].pngs.length);
 					return part.imgs[0].pngs;
 				}
 			} else {
@@ -2054,6 +2055,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.img;
 				} else {
 					// there should be only one of these
+					alert('head ' + part.imgs[0].pngs.length);
 					return part.imgs[0].pngs;
 				}
 			} else {
@@ -2074,6 +2076,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
+					alert('left leg ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
@@ -2094,6 +2097,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
+					alert('right leg ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
@@ -2114,6 +2118,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
+					alert('left arm ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
@@ -2134,6 +2139,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
+					alert('right arm ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
@@ -2323,28 +2329,27 @@ function drawRobotSelectParts(search = 'preview-robot') {
 		if (chassisSearch.length > 0) {
 			// future Jordan, try this... typeof(chassisSearch[i].props.drawHead) === typeof(function)
 			// or typeof chassisSearch[i].props.drawHead === 'function'
-			alert('head ' + typeof chassisSearch[i].props.drawHead);
 			for (let i = 0; i < chassisSearch.length; i++) {
-				//if (typeof chassisSearch[i].props.drawHead === 'function') {
-					//chassisSearch[i].props.drawHead(chassisSearch[i]);
-					//partsLoaded++;
-				//}
-				//if (typeof chassisSearch[i].props.drawLeftArm === 'function') {
-					//chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
-					//partsLoaded++;
-				//}
-				//if (typeof chassisSearch[i].props.drawRightArm === 'function') {
-					//chassisSearch[i].props.drawRightArm(chassisSearch[i]);
-					//partsLoaded++;
-				//}
-				//if (typeof chassisSearch[i].props.drawLeftLeg === 'function') {
-					//chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
-					//partsLoaded++;
-				//}
-				//if (typeof chassisSearch[i].props.drawRightLeg === 'function') {
-					//chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
-					//partsLoaded++;
-				//}
+				if (typeof chassisSearch[i].props.drawHead === 'function') {
+					chassisSearch[i].props.drawHead(chassisSearch[i]);
+					partsLoaded++;
+				}
+				if (typeof chassisSearch[i].props.drawLeftArm === 'function') {
+					chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
+					partsLoaded++;
+				}
+				if (typeof chassisSearch[i].props.drawRightArm === 'function') {
+					chassisSearch[i].props.drawRightArm(chassisSearch[i]);
+					partsLoaded++;
+				}
+				if (typeof chassisSearch[i].props.drawLeftLeg === 'function') {
+					chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
+					partsLoaded++;
+				}
+				if (typeof chassisSearch[i].props.drawRightLeg === 'function') {
+					chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
+					partsLoaded++;
+				}
 				//chassisSearch[i].props.drawHead(chassisSearch[i]);
 				//chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
 				//chassisSearch[i].props.drawRightArm(chassisSearch[i]);
