@@ -2317,6 +2317,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 	Aurora.addMethod(Aurora.methodSetup);
 }
 function drawRobotSelectParts(search = 'preview-robot') {
+	let partsLoaded = 0;
 	const findPreviews = setTimeout(function() {
 		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
 		// alert(chassisSearch.length);
@@ -2325,26 +2326,36 @@ function drawRobotSelectParts(search = 'preview-robot') {
 			// future Jordan, try this... typeof(chassisSearch[i].props.drawHead) === typeof(function)
 			// or typeof chassisSearch[i].props.drawHead === 'function'
 			for (let i = 0; i < chassisSearch.length; i++) {
-				if (typeof chassisSearch[i].props.drawHead !== 'undefined') {
+				if (typeof chassisSearch[i].props.drawHead === 'function') {
 					chassisSearch[i].props.drawHead(chassisSearch[i]);
+					partsLoaded++;
 				}
-				if (typeof chassisSearch[i].props.drawLeftArm !== 'undefined') {
+				if (typeof chassisSearch[i].props.drawLeftArm === 'function') {
 					chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
+					partsLoaded++;
 				}
-				if (typeof chassisSearch[i].props.drawRightArm !== 'undefined') {
+				if (typeof chassisSearch[i].props.drawRightArm === 'function') {
 					chassisSearch[i].props.drawRightArm(chassisSearch[i]);
+					partsLoaded++;
 				}
-				if (typeof chassisSearch[i].props.drawLeftLeg !== 'undefined') {
+				if (typeof chassisSearch[i].props.drawLeftLeg === 'function') {
 					chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
+					partsLoaded++;
 				}
-				if (typeof chassisSearch[i].props.drawRightLeg !== 'undefined') {
+				if (typeof chassisSearch[i].props.drawRightLeg === 'function') {
 					chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
+					partsLoaded++;
 				}
 				//chassisSearch[i].props.drawHead(chassisSearch[i]);
 				//chassisSearch[i].props.drawLeftArm(chassisSearch[i]);
 				//chassisSearch[i].props.drawRightArm(chassisSearch[i]);
 				//chassisSearch[i].props.drawLeftLeg(chassisSearch[i]);
 				//chassisSearch[i].props.drawRightLeg(chassisSearch[i]);
+			}
+			if (search === 'preview-robot') {
+				clearInterval(findPreviews);
+			} else if (partsLoaded === 5) {
+				clearInterval(findPreviews);
 			}
 		}
 	}, Aurora.frameRate);
