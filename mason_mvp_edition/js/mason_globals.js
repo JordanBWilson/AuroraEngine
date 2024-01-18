@@ -2032,7 +2032,6 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.img;
 				} else {
 					// there should be only one of these
-					alert('chassis ' + part.imgs[0].pngs.length);
 					return part.imgs[0].pngs;
 				}
 			} else {
@@ -2055,7 +2054,6 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.img;
 				} else {
 					// there should be only one of these
-					alert('head ' + part.imgs[0].pngs.length);
 					return part.imgs[0].pngs;
 				}
 			} else {
@@ -2076,7 +2074,6 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					alert('left leg ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
@@ -2097,7 +2094,6 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					alert('right leg ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
@@ -2118,7 +2114,6 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					alert('left arm ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
@@ -2139,7 +2134,6 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					alert('right arm ' + part.imgs.find(x => x.id.includes(partType)).pngs.length);
 					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
