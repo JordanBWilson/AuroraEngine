@@ -79,8 +79,8 @@ const maulPage = {
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
-			Aurora.methodSetup = { method: function(id) { animateRobots(); }};
-			Aurora.addMethod(Aurora.methodSetup);
+			//Aurora.methodSetup = { method: function(id) { animateRobots(); }};
+			//Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};

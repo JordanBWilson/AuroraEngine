@@ -2358,7 +2358,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 				clearInterval(findPreviews);
 			}
 		}
-	}, 100); // Aurora.frameRate
+	}, Aurora.frameRate);
 	
 }
 function drawRobotPreviewParts(partType) {
