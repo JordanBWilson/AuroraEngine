@@ -2353,6 +2353,7 @@ function drawRobotSelectParts(search = 'preview-robot') {
 			if (search === 'preview-robot') {
 				clearInterval(findPreviews);
 			} else if (search !== 'preview-robot' && partsLoaded === 5) {
+				alert(typeof chassisSearch[0].props.drawHead === 'function' + ' ' + typeof chassisSearch[0].props.drawLeftArm === 'function' + ' ' + typeof chassisSearch[0].props.drawRightArm === 'function' + ' ' + typeof chassisSearch[0].props.drawLeftLeg === 'function' + ' ' + typeof chassisSearch[0].props.drawRightLeg === 'function');
 				clearInterval(findPreviews);
 			}
 		}
