@@ -2321,7 +2321,6 @@ function drawRobotSelectParts(search = 'preview-robot') {
 	const findPreviews = setInterval(function() {
 		const chassisSearch = Aurora.methodObjects.filter(x => x.id === search);
 		if (chassisSearch.length > 0) {
-			// console.log(chassisSearch[0].props);
 			// future Jordan, try this... typeof(chassisSearch[i].props.drawHead) === typeof(function)
 			// or typeof chassisSearch[i].props.drawHead === 'function'
 			for (let i = 0; i < chassisSearch.length; i++) {
