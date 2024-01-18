@@ -79,8 +79,8 @@ const maulPage = {
 			drawPlayerMoney();
 			drawRoundTime();
 			readySetGoGame();
-			//Aurora.methodSetup = { method: function(id) { animateRobots(); }};
-			//Aurora.addMethod(Aurora.methodSetup);
+			Aurora.methodSetup = { method: function(id) { animateRobots(); }};
+			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveBlueRobots(); }};
 			Aurora.addMethod(Aurora.methodSetup);
 			Aurora.methodSetup = { method: function(id) { moveRedRobots(); }};
@@ -2018,7 +2018,10 @@ const maulPage = {
 		}
 		function sendBlueRobot(blueRobot, robotDirective) {
 			sendRobot(blueRobot);
-			drawRobotSelectParts(blueRobot.id);
+			setTimeout(function() {
+				drawRobotSelectParts(blueRobot.id);
+			}, 0);
+			
 			gameObject.arenaBlueAttackers.push(blueRobot);
 			gameObject.arenaBlueSendCount++;
 			if (robotDirective === 4) { // lee-roy
@@ -2029,7 +2032,10 @@ const maulPage = {
 		}
 		function sendRedRobot(redRobot, robotDirective) {
 			sendRobot(redRobot);
-			drawRobotSelectParts(redRobot.id);
+			setTimeout(function() {
+				drawRobotSelectParts(redRobot.id);
+			}, 0);
+			
 			gameObject.arenaRedAttackers.push(redRobot);
 			gameObject.arenaRedSendCount++;
 			if (robotDirective === 4) { // lee-roy
