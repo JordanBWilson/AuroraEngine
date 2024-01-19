@@ -2032,7 +2032,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.img;
 				} else {
 					// there should be only one of these
-					return part.imgs.length > 0 ? part.imgs[0].pngs : [];
+					return part.imgs[0].pngs;
 				}
 			} else {
 				if (!loadImgs) {
@@ -2054,7 +2054,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 					return part.img;
 				} else {
 					// there should be only one of these
-					return part.imgs.length > 0 ? part.imgs[0].pngs : [];
+					return part.imgs[0].pngs;
 				}
 			} else {
 				if (!loadImgs) {
@@ -2074,7 +2074,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					return part.imgs.length > 0 ? part.imgs.find(x => x.id.includes(partType)).pngs : [];
+					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
 				if (!loadImgs) {
@@ -2094,7 +2094,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					return part.imgs.length > 0 ? part.imgs.find(x => x.id.includes(partType)).pngs : [];
+					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
 				if (!loadImgs) {
@@ -2114,7 +2114,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					return part.imgs.length > 0 ? part.imgs.find(x => x.id.includes(partType)).pngs : [];
+					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
 				if (!loadImgs) {
@@ -2134,7 +2134,7 @@ function drawRobotSelectPreviewParts(partType, robotDesign, loadImgs = false) {
 				if (!loadImgs) {
 					return part.img;
 				} else {
-					return part.imgs.length > 0 ? part.imgs.find(x => x.id.includes(partType)).pngs : [];
+					return part.imgs.find(x => x.id.includes(partType)).pngs;
 				}
 			} else {
 				if (!loadImgs) {
