@@ -575,7 +575,7 @@ function drawImageMethod(incomingImg) {
    }
 }
 function redrawImage(incomingImg) {
-  if (incomingImg.images.length > 0 && incomingImg?.selectedImage >= 0 && incomingImg.images[incomingImg.selectedImage]?.outerHTML?.length > 0) {
+  if (incomingImg.images.length > 0 && incomingImg?.selectedImage >= 0 && incomingImg.images[incomingImg.selectedImage]?.complete) {
     Main.stage.drawImage(incomingImg.images[incomingImg.selectedImage], incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
   }
 
