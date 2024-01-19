@@ -689,7 +689,7 @@ function drawImagePatternMethod(incomingImgPat) {
    }
 }
 function redrawImagePattern(incomingImgPat) {
-  if (incomingImgPat.images.length > 0 && incomingImgPat.selectedImage >= 0) {
+  if (incomingImgPat?.images?.length > 0 && incomingImgPat?.selectedImage >= 0) {
     if (Aurora.entitySize > 0) { // when the game is ready...
       for (let x = incomingImgPat.posX; x < incomingImgPat.width; x += incomingImgPat.patternWidth) {
         for (let y = incomingImgPat.posY; y < incomingImgPat.height; y += incomingImgPat.patternHeight) {
@@ -698,7 +698,6 @@ function redrawImagePattern(incomingImgPat) {
       }
     }
   }
-
 }
 function drawButtonImageMethod(incomingButtonImage) {
   let doesExist = doesMethodParamExist(incomingButtonImage.methodId);
