@@ -575,7 +575,7 @@ function drawImageMethod(incomingImg) {
    }
 }
 function redrawImage(incomingImg) {
-  if (incomingImg.images.length > 0) {
+  if (incomingImg.images.length > 0 && incomingImg.selectedImage >= 0) {
     Main.stage.drawImage(incomingImg.images[incomingImg.selectedImage], incomingImg.posX, incomingImg.posY, incomingImg.width, incomingImg.height);
   }
 
@@ -689,7 +689,7 @@ function drawImagePatternMethod(incomingImgPat) {
    }
 }
 function redrawImagePattern(incomingImgPat) {
-  if (incomingImgPat.images.length > 0) {
+  if (incomingImgPat.images.length > 0 && incomingImgPat.selectedImage >= 0) {
     if (Aurora.entitySize > 0) { // when the game is ready...
       for (let x = incomingImgPat.posX; x < incomingImgPat.width; x += incomingImgPat.patternWidth) {
         for (let y = incomingImgPat.posY; y < incomingImgPat.height; y += incomingImgPat.patternHeight) {
