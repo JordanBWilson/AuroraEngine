@@ -1843,17 +1843,22 @@ const homeSellParts = {
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
 				let robotPart;
+				let robotPartCount = 0;
 				if (discoveredPart.type === 'chassis') {
 					robotPart = robotChassis.find(x => x.chassisId === discoveredPart.chassisId);
+					robotPartCount = gameObject.robotChassisCount.find(x => x.chassisId === discoveredPart.chassisId);
 				}
 				if (discoveredPart.type === 'head') {
 					robotPart = robotHeads.find(x => x.headId === discoveredPart.headId);
+					robotPartCount = gameObject.robotHeadCount.find(x => x.headId === discoveredPart.headId);
 				}
 				if (discoveredPart.type === 'arm') {
 					robotPart = robotArms.find(x => x.armId === discoveredPart.armId);
+					robotPartCount = gameObject.robotArmsCount.find(x => x.armId === discoveredPart.armId);
 				}
 				if (discoveredPart.type === 'leg') {
 					robotPart = robotLegs.find(x => x.legId === discoveredPart.legId);
+					robotPartCount = gameObject.robotLegsCount.find(x => x.legId === discoveredPart.legId);
 				}
 				Aurora.methodSetup = {
 					method: function(id) {
@@ -1863,16 +1868,16 @@ const homeSellParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveSellParts(robotPart.img, robotPart.count),
+							btnColor: drawActiveSellParts(robotPart.img, robotPartCount.count),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: robotPart.count,
+							msg: robotPartCount.count,
 							isFilled: true,
 							id: 'part-count',
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectSellPartParts(robotPart);
+									displaySelectSellPartParts(robotPart, robotPartCount);
 								}
 							},
 							isModalBtn: false,
@@ -1890,7 +1895,7 @@ const homeSellParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveSellParts(robotPart.img, robotPart.count),
+							btnColor: drawActiveSellParts(robotPart.img, robotPartCount.count),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: robotPart.name,
@@ -1899,7 +1904,7 @@ const homeSellParts = {
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectSellPartParts(robotPart);
+									displaySelectSellPartParts(robotPart, robotPartCount);
 								}
 							},
 							isModalBtn: false,
@@ -1980,7 +1985,7 @@ const homeSellParts = {
 			Aurora.addMethod(Aurora.methodSetup);
 		}
 
-		function displaySelectSellPartParts(part) {
+		function displaySelectSellPartParts(part, count) {
 			const partChanged = true;
 			setTimeout(function() {
 				Aurora.methodSetup = {
@@ -2005,14 +2010,14 @@ const homeSellParts = {
 											const scrapCosts = gatherScrapCostFromPart(part);
 											// calculate how much we can sell the part for
 											// add the funds and subtract the part
-											if (part.count > 0) {
+											if (count.count > 0) {
 												if (gameObject.gameSounds) {
 													Aurora.playAudioFile('sell-sound');
 												}
 												const formatPartCost = calculatePartPrice(scrapCosts);
 												const addPartCost = formatPartsCostToFunds(formatPartCost);
 												addFunds(addPartCost);
-												part.count--;
+												count.count--;
 												Particle.floatingText({
 													font: '2rem serif',
 													msg: '+          +',
@@ -2027,7 +2032,7 @@ const homeSellParts = {
 												clearSellRobotPartParts();
 												refreshSellPartsBackgrounds();
 												setTimeout(function() {
-													displaySelectSellPartParts(part);
+													displaySelectSellPartParts(part, count);
 												}, 0);
 											} else {
 												gameObject.buildButtonDisabled = true;
@@ -2054,7 +2059,7 @@ const homeSellParts = {
 																	method: function(id) {
 																		const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 																		Aurora.deleteEntity(modal.methodId);
-																		displaySelectSellPartParts(part);
+																		displaySelectSellPartParts(part, count);
 																	 }
 																},
 																props: {},
@@ -2082,7 +2087,7 @@ const homeSellParts = {
 									}, gameObject.clickSpeed);
 									Particle.animComplete = {
 										method: function() {
-											displaySelectSellPartParts(part);					
+											displaySelectSellPartParts(part, count);					
 										}
 									};
 										

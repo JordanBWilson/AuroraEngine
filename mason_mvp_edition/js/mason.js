@@ -97,35 +97,38 @@ function assignImgsToRobotParts(robotList, type, id, i, partIndex, findParts) {
 	}
 }
 function loadRobotHeadGifs() {
-	// load the images
+	// load the first image
 	const newWorldHeadImgId = 'new-world-head';
-	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldHeadImgId);
 	const nwScrapperHeadImgId = 'nw-scrapper-head';
-	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Head_Walk.gif', nwScrapperHeadImgId);
 	const nwScoutHeadImgId = 'nw-scout-head';
-	Aurora.createImageListFromGif('./assets/images/NW_Scout_Head_Walk.gif', nwScoutHeadImgId);
 	const nwHarvesterHeadImgId = 'nw-harvester-head';
-	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Head_Walk.gif', nwHarvesterHeadImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Head_Walk.gif', newWorldHeadImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldHead = Aurora.gifImageList.find(x => x.id === newWorldHeadImgId);
-		if (findNewWorldHead && robotHeads[0].imgs.length === 0) {
+		if (findNewWorldHead && imageCount === 0) {
 			robotHeads[0].imgs.push(findNewWorldHead);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Head_Walk.gif', nwScrapperHeadImgId);
 		}
 		const findNWScrapperHead = Aurora.gifImageList.find(x => x.id === nwScrapperHeadImgId);
-		if (findNWScrapperHead && robotHeads[1].imgs.length === 0) {
+		if (findNWScrapperHead && imageCount === 1) {
 			robotHeads[1].imgs.push(findNWScrapperHead);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scout_Head_Walk.gif', nwScoutHeadImgId);
 		}
 		const findNWScoutHead = Aurora.gifImageList.find(x => x.id === nwScoutHeadImgId);
-		if (findNWScoutHead && robotHeads[2].imgs.length === 0) {
+		if (findNWScoutHead && imageCount === 2) {
 			robotHeads[2].imgs.push(findNWScoutHead);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Harvester_Head_Walk.gif', nwHarvesterHeadImgId);
 		}
 		const findNWHarvesterHead = Aurora.gifImageList.find(x => x.id === nwHarvesterHeadImgId);
-		if (findNWHarvesterHead && robotHeads[3].imgs.length === 0) {
+		if (findNWHarvesterHead && imageCount === 3) {
 			robotHeads[3].imgs.push(findNWHarvesterHead);
 			imageCount++;
 		}
@@ -175,35 +178,38 @@ function loadRobotHeadGifs() {
 	}, 300);
 }
 function loadRobotChassisGifs() {
-	// load the images
+	// load the first image
 	const newWorldChassisImgId = 'new-world-chassis';
-	Aurora.createImageListFromGif('./assets/images/New_World_Chassis_Walk.gif', newWorldChassisImgId);
 	const nwScrapperChassisImgId = 'nw-scrapper-chassis';
-	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Chassis_Walk.gif', nwScrapperChassisImgId);
 	const nwScoutChassisImgId = 'nw-scout-chassis';
-	Aurora.createImageListFromGif('./assets/images/NW_Scout_Chassis_Walk.gif', nwScoutChassisImgId);
 	const nwHarvesterChassisImgId = 'nw-harvester-chassis';
-	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Chassis_Walk.gif', nwHarvesterChassisImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Chassis_Walk.gif', newWorldChassisImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldChassis = Aurora.gifImageList.find(x => x.id === newWorldChassisImgId);
-		if (findNewWorldChassis && robotChassis[0].imgs.length === 0) {
+		if (findNewWorldChassis && imageCount === 0) {
 			robotChassis[0].imgs.push(findNewWorldChassis);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Chassis_Walk.gif', nwScrapperChassisImgId);
 		}
 		const findNWScrapperChassis = Aurora.gifImageList.find(x => x.id === nwScrapperChassisImgId);
-		if (findNWScrapperChassis && robotChassis[1].imgs.length === 0) {
+		if (findNWScrapperChassis && imageCount === 1) {
 			robotChassis[1].imgs.push(findNWScrapperChassis);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scout_Chassis_Walk.gif', nwScoutChassisImgId);
 		}
 		const findNWScoutChassis = Aurora.gifImageList.find(x => x.id === nwScoutChassisImgId);
-		if (findNWScoutChassis && robotChassis[2].imgs.length === 0) {
+		if (findNWScoutChassis && imageCount === 2) {
 			robotChassis[2].imgs.push(findNWScoutChassis);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Harvester_Chassis_Walk.gif', nwHarvesterChassisImgId);
 		}
 		const findNWHarvesterChassis = Aurora.gifImageList.find(x => x.id === nwHarvesterChassisImgId);
-		if (findNWHarvesterChassis && robotChassis[3].imgs.length === 0) {
+		if (findNWHarvesterChassis && imageCount === 3) {
 			robotChassis[3].imgs.push(findNWHarvesterChassis);
 			imageCount++;
 		}
@@ -253,35 +259,38 @@ function loadRobotChassisGifs() {
 	}, 300);
 }
 function loadRobotLeftArmGifs() {
-	// load the images
+	// load the first image
 	const newWorldLeftArmImgId = 'new-world-left-arm';
-	Aurora.createImageListFromGif('./assets/images/New_World_Left_Arm_Walk.gif', newWorldLeftArmImgId);
 	const nwScrapperLeftArmImgId = 'nw-scrapper-left-arm';
-	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Left_Arm_Walk.gif', nwScrapperLeftArmImgId);
 	const nwScoutLeftArmImgId = 'nw-scout-left-arm';
-	Aurora.createImageListFromGif('./assets/images/NW_Scout_Left_Arm_Walk.gif', nwScoutLeftArmImgId);
 	const nwHarvesterLeftArmImgId = 'nw-harvester-left-arm';
-	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Arm_Walk.gif', nwHarvesterLeftArmImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Left_Arm_Walk.gif', newWorldLeftArmImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldLeftArm = Aurora.gifImageList.find(x => x.id === newWorldLeftArmImgId);
-		if (findNewWorldLeftArm && robotArms[0].imgs.length === 0) {
+		if (findNewWorldLeftArm && imageCount === 0) {
 			robotArms[0].imgs.push(findNewWorldLeftArm);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Left_Arm_Walk.gif', nwScrapperLeftArmImgId);
 		}
 		const findNWScrapperLeftArm = Aurora.gifImageList.find(x => x.id === nwScrapperLeftArmImgId);
-		if (findNWScrapperLeftArm && robotArms[1].imgs.length === 0) {
+		if (findNWScrapperLeftArm && imageCount === 1) {
 			robotArms[1].imgs.push(findNWScrapperLeftArm);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scout_Left_Arm_Walk.gif', nwScoutLeftArmImgId);
 		}
 		const findNWScoutLeftArm = Aurora.gifImageList.find(x => x.id === nwScoutLeftArmImgId);
-		if (findNWScoutLeftArm && robotArms[2].imgs.length === 0) {
+		if (findNWScoutLeftArm && imageCount === 2) {
 			robotArms[2].imgs.push(findNWScoutLeftArm);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Arm_Walk.gif', nwHarvesterLeftArmImgId);
 		}
 		const findNWHarvesterLeftArm = Aurora.gifImageList.find(x => x.id === nwHarvesterLeftArmImgId);
-		if (findNWHarvesterLeftArm && robotArms[3].imgs.length === 0) {
+		if (findNWHarvesterLeftArm && imageCount === 3) {
 			robotArms[3].imgs.push(findNWHarvesterLeftArm);
 			imageCount++;
 		}
@@ -331,35 +340,38 @@ function loadRobotLeftArmGifs() {
 	}, 300);
 }
 function loadRobotRightArmGifs() {
-	// load the images
+	// load the first image
 	const newWorldRightArmImgId = 'new-world-right-arm';
-	Aurora.createImageListFromGif('./assets/images/New_World_Right_Arm_Walk.gif', newWorldRightArmImgId);
 	const nwScrapperRightArmImgId = 'nw-scrapper-right-arm';
-	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Right_Arm_Walk.gif', nwScrapperRightArmImgId);
 	const nwScoutRightArmImgId = 'nw-scout-right-arm';
-	Aurora.createImageListFromGif('./assets/images/NW_Scout_Right_Arm_Walk.gif', nwScoutRightArmImgId);
 	const nwHarvesterRightArmImgId = 'nw-harvester-right-arm';
-	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Arm_Walk.gif', nwHarvesterRightArmImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Right_Arm_Walk.gif', newWorldRightArmImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldRightArm = Aurora.gifImageList.find(x => x.id === newWorldRightArmImgId);
-		if (findNewWorldRightArm && robotArms[0].imgs.length === 1) {
+		if (findNewWorldRightArm && imageCount === 0) {
 			robotArms[0].imgs.push(findNewWorldRightArm);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Right_Arm_Walk.gif', nwScrapperRightArmImgId);
 		}
 		const findNWScrapperRightArm = Aurora.gifImageList.find(x => x.id === nwScrapperRightArmImgId);
-		if (findNWScrapperRightArm && robotArms[1].imgs.length === 1) {
+		if (findNWScrapperRightArm && imageCount === 1) {
 			robotArms[1].imgs.push(findNWScrapperRightArm);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scout_Right_Arm_Walk.gif', nwScoutRightArmImgId);
 		}
 		const findNWScoutRightArm = Aurora.gifImageList.find(x => x.id === nwScoutRightArmImgId);
-		if (findNWScoutRightArm && robotArms[2].imgs.length === 1) {
+		if (findNWScoutRightArm && imageCount === 2) {
 			robotArms[2].imgs.push(findNWScoutRightArm);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Arm_Walk.gif', nwHarvesterRightArmImgId);
 		}
 		const findNWHarvesterRightArm = Aurora.gifImageList.find(x => x.id === nwHarvesterRightArmImgId);
-		if (findNWHarvesterRightArm && robotArms[3].imgs.length === 1) {
+		if (findNWHarvesterRightArm && imageCount === 3) {
 			robotArms[3].imgs.push(findNWHarvesterRightArm);
 			imageCount++;
 		}
@@ -409,35 +421,38 @@ function loadRobotRightArmGifs() {
 	}, 300);
 }
 function loadRobotLeftLegGifs() {
-	// load the images
+	// load the first image
 	const newWorldLeftLegImgId = 'new-world-left-leg';
-	Aurora.createImageListFromGif('./assets/images/New_World_Left_Leg_Walk.gif', newWorldLeftLegImgId);
 	const nwScrapperLeftLegImgId = 'nw-scrapper-left-leg';
-	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Left_Leg_Walk.gif', nwScrapperLeftLegImgId);
 	const nwScoutLeftLegImgId = 'nw-scout-left-leg';
-	Aurora.createImageListFromGif('./assets/images/NW_Scout_Left_Leg_Walk.gif', nwScoutLeftLegImgId);
 	const nwHarvesterLeftLegImgId = 'nw-harvester-left-leg';
-	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Leg_Walk.gif', nwHarvesterLeftLegImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Left_Leg_Walk.gif', newWorldLeftLegImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
 		const findNewWorldLeftLeg = Aurora.gifImageList.find(x => x.id === newWorldLeftLegImgId);
-		if (findNewWorldLeftLeg && robotLegs[0].imgs.length === 0) {
+		if (findNewWorldLeftLeg && imageCount === 0) {
 			robotLegs[0].imgs.push(findNewWorldLeftLeg);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Left_Leg_Walk.gif', nwScrapperLeftLegImgId);
 		}
 		const findNWScrapperLeftLeg = Aurora.gifImageList.find(x => x.id === nwScrapperLeftLegImgId);
-		if (findNWScrapperLeftLeg && robotLegs[1].imgs.length === 0) {
+		if (findNWScrapperLeftLeg && imageCount === 1) {
 			robotLegs[1].imgs.push(findNWScrapperLeftLeg);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scout_Left_Leg_Walk.gif', nwScoutLeftLegImgId);
 		}
 		const findNWScoutLeftLeg = Aurora.gifImageList.find(x => x.id === nwScoutLeftLegImgId);
-		if (findNWScoutLeftLeg && robotLegs[2].imgs.length === 0) {
+		if (findNWScoutLeftLeg && imageCount === 2) {
 			robotLegs[2].imgs.push(findNWScoutLeftLeg);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Harvester_Left_Leg_Walk.gif', nwHarvesterLeftLegImgId);
 		}
 		const findNWHarvesterLeftLeg = Aurora.gifImageList.find(x => x.id === nwHarvesterLeftLegImgId);
-		if (findNWHarvesterLeftLeg && robotLegs[3].imgs.length === 0) {
+		if (findNWHarvesterLeftLeg && imageCount === 3) {
 			robotLegs[3].imgs.push(findNWHarvesterLeftLeg);
 			imageCount++;
 		}
@@ -487,15 +502,12 @@ function loadRobotLeftLegGifs() {
 	}, 300);
 }
 function loadRobotRightLegGifs() {
-	// load the images
+	// load the first image
 	const newWorldRightLegImgId = 'new-world-right-leg';
-	Aurora.createImageListFromGif('./assets/images/New_World_Right_Leg_Walk.gif', newWorldRightLegImgId);
 	const nwScrapperRightLegImgId = 'nw-scrapper-right-leg';
-	Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Right_Leg_Walk.gif', nwScrapperRightLegImgId);
 	const nwScoutRightLegImgId = 'nw-scout-right-leg';
-	Aurora.createImageListFromGif('./assets/images/NW_Scout_Right_Leg_Walk.gif', nwScoutRightLegImgId);
 	const nwHarvesterRightLegImgId = 'nw-harvester-right-leg';
-	Aurora.createImageListFromGif('./assets/images/NW_Harvester_Right_Leg_Walk.gif', nwHarvesterRightLegImgId);
+	Aurora.createImageListFromGif('./assets/images/New_World_Right_Leg_Walk.gif', newWorldRightLegImgId);
 	// find the images
 	let imageCount = 0;
 	const searchForImages = setInterval(function() {
@@ -503,16 +515,22 @@ function loadRobotRightLegGifs() {
 		if (findNewWorldRightLeg && robotLegs[0].imgs.length === 1) {
 			robotLegs[0].imgs.push(findNewWorldRightLeg);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scrapper_Right_Leg_Walk.gif', nwScrapperRightLegImgId);
 		}
 		const findNWScrapperRightLeg = Aurora.gifImageList.find(x => x.id === nwScrapperRightLegImgId);
 		if (findNWScrapperRightLeg && robotLegs[1].imgs.length === 1) {
 			robotLegs[1].imgs.push(findNWScrapperRightLeg);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Scout_Right_Leg_Walk.gif', nwScoutRightLegImgId);
 		}
 		const findNWScoutRightLeg = Aurora.gifImageList.find(x => x.id === nwScoutRightLegImgId);
 		if (findNWScoutRightLeg && robotLegs[2].imgs.length === 1) {
 			robotLegs[2].imgs.push(findNWScoutRightLeg);
 			imageCount++;
+			// load next image
+			Aurora.createImageListFromGif('./assets/images/NW_Harvester_Right_Leg_Walk.gif', nwHarvesterRightLegImgId);
 		}
 		const findNWHarvesterRightLeg = Aurora.gifImageList.find(x => x.id === nwHarvesterRightLegImgId);
 		if (findNWHarvesterRightLeg && robotLegs[3].imgs.length === 1) {
@@ -890,6 +908,13 @@ const titlePage = {
 			loadRobotLeftLegGifs();
 			loadRobotRightLegGifs();
 			const loadCheck = setInterval(function() {
+				Aurora.isLoaded = false;
+				if ((gameObject.robotHeadCount.length +
+					gameObject.robotChassisCount.length +
+					(gameObject.robotArmsCount.length * 2) +
+					(gameObject.robotLegsCount.length * 2)) === Aurora.gifImageList.length) {
+						Aurora.isLoaded = true;
+				}
 				if (Aurora.isLoaded) {
 					clearInterval(loadCheck);
 					titlePage.loadPage();

@@ -620,17 +620,22 @@ const factoryPage = {
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
 				let robotPart;
+				let robotPartCount = 0;
 				if (discoveredPart.type === 'chassis') {
 					robotPart = robotChassis.find(x => x.chassisId === discoveredPart.chassisId);
+					robotPartCount = gameObject.robotChassisCount.find(x => x.chassisId === discoveredPart.chassisId);
 				}
 				if (discoveredPart.type === 'head') {
 					robotPart = robotHeads.find(x => x.headId === discoveredPart.headId);
+					robotPartCount = gameObject.robotHeadCount.find(x => x.headId === discoveredPart.headId);
 				}
 				if (discoveredPart.type === 'arm') {
 					robotPart = robotArms.find(x => x.armId === discoveredPart.armId);
+					robotPartCount = gameObject.robotArmsCount.find(x => x.armId === discoveredPart.armId);
 				}
 				if (discoveredPart.type === 'leg') {
 					robotPart = robotLegs.find(x => x.legId === discoveredPart.legId);
+					robotPartCount = gameObject.robotLegsCount.find(x => x.legId === discoveredPart.legId);
 				}
 				Aurora.methodSetup = {
 					method: function(id) {
@@ -640,10 +645,10 @@ const factoryPage = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(robotPart, true),
+							btnColor: drawActiveParts(robotPart, true, robotPartCount),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: robotPart.count,
+							msg: robotPartCount.count,
 							isFilled: true,
 							id: 'part-count',
 							action: { 
@@ -674,7 +679,7 @@ const factoryPage = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(robotPart, true),
+							btnColor: drawActiveParts(robotPart, true, robotPartCount),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: robotPart.name,
@@ -1192,40 +1197,52 @@ const factoryPage = {
 		function buildRobot() {
 			let problems = 0;
 			let head;
+			let headCount;
 			let chassis;
+			let chassisCount;
 			let leg1;
+			let leg1Count;
 			let leg2;
+			let leg2Count;
 			let arm1;
+			let arm1Count;
 			let arm2;
+			let arm2Count;
 			gameObject.selectedRobot.forEach(item => {
 				if (item.headId) {
-					head = robotHeads.find(part => part.headId === item.headId);	
+					head = robotHeads.find(part => part.headId === item.headId);
+					headCount = gameObject.robotHeadCount.find(part => part.headId === item.headId);
 				}
 				if (item.chassisId) {
 					chassis = robotChassis.find(part => part.chassisId === item.chassisId);
+					chassisCount = gameObject.robotChassisCount.find(part => part.chassisId === item.chassisId);
 				}
 				if (item.legId && !leg1) {
 					leg1 = robotLegs.find(part => part.legId === item.legId);
+					leg1Count = gameObject.robotLegsCount.find(part => part.legId === item.legId);
 				}
 				if (item.legId && leg1) {
 					leg2 = robotLegs.find(part => part.legId === item.legId);
+					leg2Count = gameObject.robotLegsCount.find(part => part.legId === item.legId);
 				}
 				if (item.armId && !arm1) {
 					arm1 = robotArms.find(part => part.armId === item.armId);
+					arm1Count = gameObject.robotArmsCount.find(part => part.armId === item.armId);
 				}
 				if (item.armId && arm1) {
 					arm2 = robotArms.find(part => part.armId === item.armId);
+					arm2Count = gameObject.robotArmsCount.find(part => part.armId === item.armId);
 				}
 			});
-			if (head.count >= 1 && chassis.count >= 1 && 
-				leg1.count >= 1 && leg2.count >= 1 && 
-				arm1.count >= 1 && arm2.count >= 1) {
-					head.count -= 1;
-					chassis.count -= 1;
-					leg1.count -= 1;
-					leg2.count -= 1;
-					arm1.count -= 1;
-					arm2.count -= 1;
+			if (headCount.count >= 1 && chassisCount.count >= 1 && 
+				leg1Count.count >= 1 && leg2Count.count >= 1 && 
+				arm1Count.count >= 1 && arm2Count.count >= 1) {
+					headCount.count -= 1;
+					chassisCount.count -= 1;
+					leg1Count.count -= 1;
+					leg2Count.count -= 1;
+					arm1Count.count -= 1;
+					arm2Count.count -= 1;
 			} else {
 				problems++;
 			}
@@ -1333,12 +1350,12 @@ const factoryPage = {
 					
 				} else {
 					// add the parts back when storage is full
-					head.count++;
-					chassis.count++;
-					leg1.count++;
-					leg2.count++;
-					arm1.count++;
-					arm2.count++;
+					headCount.count++;
+					chassisCount.count++;
+					leg1Count.count++;
+					leg2Count.count++;
+					arm1Count.count++;
+					arm2Count.count++;
 					setTimeout(function() {
 						Aurora.methodSetup = {
 							method: function(id) {
@@ -2146,17 +2163,22 @@ const factoryParts = {
 			for (let i = 0; i < gameObject.discoveredPartsList[gameObject.partPageIndex].length; i++) {
 				const discoveredPart = gameObject.discoveredPartsList[gameObject.partPageIndex][i];
 				let robotPart;
+				let robotPartCount = 0;
 				if (discoveredPart.type === 'chassis') {
 					robotPart = robotChassis.find(x => x.chassisId === discoveredPart.chassisId);
+					robotPartCount = gameObject.robotChassisCount.find(x => x.chassisId === discoveredPart.chassisId);
 				}
 				if (discoveredPart.type === 'head') {
 					robotPart = robotHeads.find(x => x.headId === discoveredPart.headId);
+					robotPartCount = gameObject.robotHeadCount.find(x => x.headId === discoveredPart.headId);
 				}
 				if (discoveredPart.type === 'arm') {
 					robotPart = robotArms.find(x => x.armId === discoveredPart.armId);
+					robotPartCount = gameObject.robotArmsCount.find(x => x.armId === discoveredPart.armId);
 				}
 				if (discoveredPart.type === 'leg') {
 					robotPart = robotLegs.find(x => x.legId === discoveredPart.legId);
+					robotPartCount = gameObject.robotLegsCount.find(x => x.legId === discoveredPart.legId);
 				}
 				Aurora.methodSetup = {
 					method: function(id) {
@@ -2166,16 +2188,16 @@ const factoryParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 3),
 							lineWidth: 1,
-							btnColor: drawActiveParts(robotPart, false),
+							btnColor: drawActiveParts(robotPart, false, robotPartCount),
 							txtColor: 'black',
 							font: '0.8em serif',
-							msg: robotPart.count,
+							msg: robotPartCount.count,
 							isFilled: true,
 							id: 'part-count',
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectPartParts(robotPart);
+									displaySelectPartParts(robotPart, robotPartCount);
 								}
 							},
 							isModalBtn: false,
@@ -2193,7 +2215,7 @@ const factoryParts = {
 							width: (Aurora.entitySize * 22),
 							height: (Aurora.entitySize * 9),
 							lineWidth: 1,
-							btnColor: drawActiveParts(robotPart, false),
+							btnColor: drawActiveParts(robotPart, false, robotPartCount),
 							txtColor: 'black',
 							font: '0.8em serif',
 							msg: robotPart.name,
@@ -2202,7 +2224,7 @@ const factoryParts = {
 							action: { 
 								method: function(id) {
 									gameObject.buildButtonDisabled = false;
-									displaySelectPartParts(robotPart);
+									displaySelectPartParts(robotPart, robotPartCount);
 								}
 							},
 							isModalBtn: false,
@@ -2284,7 +2306,7 @@ const factoryParts = {
 			Aurora.addMethod(Aurora.methodSetup);
 			
 		}
-		function displaySelectPartParts(part) {
+		function displaySelectPartParts(part, count) {
 			const partChanged = true;
 			setTimeout(function() {
 				Aurora.methodSetup = {
@@ -2412,7 +2434,7 @@ const factoryParts = {
 					
 											} else {
 												// see if there is enough storage for the part first
-												if (part.count < gameObject.partStorage) {
+												if (count.count < gameObject.partStorage) {
 													// if we have enough scrap, go over the list again and subtract the scrap
 													scrapCosts.forEach((scrap, i) => {
 														if (scrap.type === 'commonScrap') {
@@ -2448,7 +2470,7 @@ const factoryParts = {
 													if (gameObject.gameSounds) {
 														Aurora.playAudioFile('add-scrap-sound');
 													}
-													part.count++;
+													count.count++;
 													Particle.floatingText({
 														font: '2rem serif',
 														msg: '+          +',
@@ -2560,7 +2582,7 @@ const factoryParts = {
 													isFilled: true,
 													id: 'requires-parts',
 													action: { 
-														method: function(id) { 
+														method: function(id) {
 															const modal = Aurora.methodObjects.find(build => build.id === Aurora.modalId);
 															Aurora.deleteEntity(modal.methodId);
 															const btn = Aurora.methodObjects.find(build => build.id === 'requires-parts');
@@ -2588,7 +2610,7 @@ const factoryParts = {
 									
 								Particle.animComplete = {
 									method: function() {
-										displaySelectPartParts(part);					
+										displaySelectPartParts(part, count);					
 									}
 								};
 									
@@ -2620,16 +2642,16 @@ function refreshFactoryBackgrounds() {
 		Aurora.methodObjects.find(x => x.id === 'factory-background').isAnim = true;
 	}
 }
-function drawActiveParts(discoveredPart, isRobotPage) {
+function drawActiveParts(discoveredPart, isRobotPage, robotPartCount) {
 	if (isRobotPage) {
-		if (discoveredPart.count > 0 && 
+		if (robotPartCount.count > 0 && 
 		discoveredPart.requires.roboticSkill <= gameObject.roboticSkill) {
 			return discoveredPart.img;
 		} else {
 			return '#C0C0C0'
 		}
 	} else {
-		if (discoveredPart.count > 0 && 
+		if (robotPartCount.count > 0 && 
 		discoveredPart.requires.factoryLevel <= gameObject.factoryLevel &&
 		discoveredPart.requires.engineeringSkill <= gameObject.engineeringSkill) {
 			return discoveredPart.img;

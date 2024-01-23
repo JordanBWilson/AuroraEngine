@@ -297,6 +297,30 @@ let gameObject = {
 		tappedX: 0,
 		tappedY: 0,
 	},
+	robotHeadCount: [
+		{ headId: 1, count: 0, name: 'new world', },
+		{ headId: 2, count: 0, name: 'new world scrapper', },
+		{ headId: 3, count: 0,  name: 'new world scout', },
+		{ headId: 4, count: 0, name: 'new world harvester', },
+	],
+	robotChassisCount: [
+		{ chassisId: 1, count: 0, name: 'new world', },
+		{ chassisId: 2, count: 0, name: 'new world scrapper', },
+		{ chassisId: 3, count: 0,  name: 'new world scout', },
+		{ chassisId: 4, count: 0, name: 'new world harvester', },
+	],
+	robotLegsCount: [
+		{ legId: 1, count: 0, name: 'new world', },
+		{ legId: 2, count: 0, name: 'new world scrapper', },
+		{ legId: 3, count: 0,  name: 'new world scout', },
+		{ legId: 4, count: 0, name: 'new world harvester', },
+	],
+	robotArmsCount: [
+		{ armId: 1, count: 0, name: 'new world', },
+		{ armId: 2, count: 0, name: 'new world scrapper', },
+		{ armId: 3, count: 0,  name: 'new world scout', },
+		{ armId: 4, count: 0, name: 'new world harvester', },
+	],
 };
 // ** Robot Parts ***
 const robotHeads = [
@@ -306,7 +330,6 @@ const robotHeads = [
 		name: 'New World Head',
 		img: 'orange',
 		imgs: [],
-		count: 0, // how many parts have been made
 		stats: {
 			att: 0,
 			def: 2,
@@ -335,7 +358,6 @@ const robotHeads = [
 		name: 'NW Scrapper Head',
 		img: 'coral',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 4,
@@ -364,7 +386,6 @@ const robotHeads = [
 		name: 'NW Scout Head',
 		img: 'darkgoldenrod',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 4,
@@ -393,7 +414,6 @@ const robotHeads = [
 		name: 'NW Harvester Head',
 		img: 'cornflowerblue',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 1,
 			def: 6,
@@ -424,7 +444,6 @@ const robotChassis = [
 		name: 'New World Chassis',
 		img: 'orange',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 4,
@@ -453,7 +472,6 @@ const robotChassis = [
 		name: 'NW Scrapper Chassis',
 		img: 'coral',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 8,
@@ -482,7 +500,6 @@ const robotChassis = [
 		name: 'NW Scout Chassis',
 		img: 'darkgoldenrod',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 10,
@@ -511,7 +528,6 @@ const robotChassis = [
 		name: 'NW Harvester Chassis',
 		img: 'cornflowerblue',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 3,
 			def: 10,
@@ -543,7 +559,6 @@ const robotLegs = [
 		name: 'New World Leg',
 		img: 'orange',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 2,
@@ -573,7 +588,6 @@ const robotLegs = [
 		name: 'NW Scrapper Leg',
 		img: 'coral',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 3,
@@ -603,7 +617,6 @@ const robotLegs = [
 		name: 'NW Scout Leg',
 		img: 'darkgoldenrod',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 0,
 			def: 4,
@@ -633,7 +646,6 @@ const robotLegs = [
 		name: 'NW Harvester Leg',
 		img: 'cornflowerblue',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 2,
 			def: 5,
@@ -665,7 +677,6 @@ const robotArms = [
 		name: 'New World Arm',
 		img: 'orange',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 1,
 			def: 2,
@@ -695,7 +706,6 @@ const robotArms = [
 		name: 'NW Scrapper Arm',
 		img: 'coral',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 2,
 			def: 3,
@@ -725,7 +735,6 @@ const robotArms = [
 		name: 'NW Scout Arm',
 		img: 'darkgoldenrod',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 2,
 			def: 4,
@@ -755,7 +764,6 @@ const robotArms = [
 		name: 'NW Harvester Arm',
 		img: 'cornflowerblue',
 		imgs: [],
-		count: 0,
 		stats: {
 			att: 3,
 			def: 5,
