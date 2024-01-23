@@ -883,7 +883,7 @@ const titlePage = {
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
-		if (!Aurora.isImagesLoaded && Aurora.isLoaded) {
+		if (!Aurora.isImagesLoaded) {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
@@ -907,19 +907,22 @@ const titlePage = {
 			loadRobotRightArmGifs();
 			loadRobotLeftLegGifs();
 			loadRobotRightLegGifs();
-			const loadCheck = setInterval(function() {
-				const loadImages = Aurora.methodObjects.find(x => x.id === 'image-check');
-				if ((gameObject.robotHeadCount.length +
-					gameObject.robotChassisCount.length +
-					(gameObject.robotArmsCount.length * 2) +
-					(gameObject.robotLegsCount.length * 2)) === Aurora.gifImageList.length) {
-						Aurora.isImagesLoaded = true;
-				}
-				if (Aurora.isImagesLoaded && loadImages) {
-					clearInterval(loadCheck);
-					titlePage.loadPage();
-				}
-			}, 500);
+			setTimeout(function() {
+				const loadCheck = setInterval(function() {
+					const loadImages = Aurora.methodObjects.find(x => x.id === 'image-check');
+					if ((gameObject.robotHeadCount.length +
+						gameObject.robotChassisCount.length +
+						(gameObject.robotArmsCount.length * 2) +
+						(gameObject.robotLegsCount.length * 2)) === Aurora.gifImageList.length) {
+							Aurora.isImagesLoaded = true;
+					}
+					if (Aurora.isImagesLoaded && loadImages) {
+						clearInterval(loadCheck);
+						titlePage.loadPage();
+					}
+				}, 500);
+			}, 0);
+			
 		}
 		
 	}
