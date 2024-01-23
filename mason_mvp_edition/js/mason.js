@@ -883,7 +883,7 @@ const titlePage = {
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
-		if (!Aurora.isLoaded) {
+		if (!Aurora.isImagesLoaded) {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
@@ -894,7 +894,7 @@ const titlePage = {
 						color: 'indigo',
 						align: 'center',
 						props: {},
-						id: Aurora.loadingId,
+						id:  'image-check',
 						methodId: id
 					});
 				}
@@ -907,16 +907,14 @@ const titlePage = {
 			loadRobotRightArmGifs();
 			loadRobotLeftLegGifs();
 			loadRobotRightLegGifs();
-			Aurora.isLoaded = false;
 			const loadCheck = setInterval(function() {
-				Aurora.isLoaded = false;
 				if ((gameObject.robotHeadCount.length +
 					gameObject.robotChassisCount.length +
 					(gameObject.robotArmsCount.length * 2) +
 					(gameObject.robotLegsCount.length * 2)) === Aurora.gifImageList.length) {
-						Aurora.isLoaded = true;
+						Aurora.isImagesLoaded = true;
 				}
-				if (Aurora.isLoaded) {
+				if (Aurora.isImagesLoaded) {
 					clearInterval(loadCheck);
 					titlePage.loadPage();
 				}

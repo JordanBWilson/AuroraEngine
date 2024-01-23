@@ -274,6 +274,7 @@ const Aurora = { // the user will want to use this object
 	loadingId: 'loading-message',
 	modalId: 'modal-view',
 	isLoaded: false, // wait for assets to load before starting the game
+	isImagesLoaded: false, // a check to see if images are loaded
 	pageResized: { // this is used when the screen resizes
 		section: '', // this is the page you're on. Has to be filled out
 		method: function() {/*put the methods you want fired here*/}
