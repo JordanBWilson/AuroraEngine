@@ -913,6 +913,7 @@ const titlePage = {
 					gameObject.robotChassisCount.length +
 					(gameObject.robotArmsCount.length * 2) +
 					(gameObject.robotLegsCount.length * 2)) === Aurora.gifImageList.length) {
+						alert('loaded ' + Aurora.gifImageList.length);
 						Aurora.isImagesLoaded = true;
 				}
 				if (Aurora.isImagesLoaded && loadImages) {
