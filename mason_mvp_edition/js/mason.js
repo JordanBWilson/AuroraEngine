@@ -883,7 +883,7 @@ const titlePage = {
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
-		if (!Aurora.isImagesLoaded) {
+		if (!Aurora.isImagesLoaded && Aurora.isLoaded) {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
