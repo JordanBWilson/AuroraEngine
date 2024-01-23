@@ -908,17 +908,18 @@ const titlePage = {
 			loadRobotLeftLegGifs();
 			loadRobotRightLegGifs();
 			const loadCheck = setInterval(function() {
+				const loadImages = Aurora.methodObjects.find(x => x.id === 'image-check');
 				if ((gameObject.robotHeadCount.length +
 					gameObject.robotChassisCount.length +
 					(gameObject.robotArmsCount.length * 2) +
 					(gameObject.robotLegsCount.length * 2)) === Aurora.gifImageList.length) {
 						Aurora.isImagesLoaded = true;
 				}
-				if (Aurora.isImagesLoaded) {
+				if (Aurora.isImagesLoaded && loadImages) {
 					clearInterval(loadCheck);
 					titlePage.loadPage();
 				}
-			}, 300);
+			}, 500);
 		}
 		
 	}
