@@ -907,6 +907,7 @@ const titlePage = {
 			loadRobotRightArmGifs();
 			loadRobotLeftLegGifs();
 			loadRobotRightLegGifs();
+			Aurora.isLoaded = false;
 			const loadCheck = setInterval(function() {
 				Aurora.isLoaded = false;
 				if ((gameObject.robotHeadCount.length +
