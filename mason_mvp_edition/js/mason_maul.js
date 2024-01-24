@@ -51,7 +51,7 @@ const maulPage = {
 		} else if (gameObject.gamesWon === 1) {
 			redAIThinkTimer = 1300;
 		}
-		const tutorialGames = 2;
+		const tutorialGames = 10;
 		let aiThinking = true;
 		let gameTimer;
 		Particle.init();

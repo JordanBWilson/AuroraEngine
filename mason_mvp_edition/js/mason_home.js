@@ -2100,10 +2100,9 @@ const homeSellParts = {
 					}
 				};
 				Aurora.addMethod(Aurora.methodSetup);
-				createSellPartTitleScraps(part);
+				createSellPartTitleScraps(part, count);
 			}, 0);
 		}
-
 		function drawActiveSellParts(activeColor, count) {
 			if (count > 0) {
 				return activeColor;
@@ -2111,7 +2110,6 @@ const homeSellParts = {
 				return '#C0C0C0'
 			}
 		}
-
 		function clearSelectedSellPartScrapDetails() {
 			// clear the stats and the buttons
 			const selectPartBtn = Aurora.methodObjects.filter(x => x.id === 'confirm-part');
@@ -2304,8 +2302,7 @@ const homeSellParts = {
 			legRightHighlight.btnColor = 'lightslategrey';
 			legRightHighlight.txtColor = 'white';
 		}
-
-		function createSellPartTitleScraps(part) {
+		function createSellPartTitleScraps(part, count) {
 			if (part) {
 				const scrapCosts = gatherScrapCostFromPart(part);
 				Aurora.methodSetup = {
@@ -2328,7 +2325,7 @@ const homeSellParts = {
 					method: function(id) {
 						drawText({
 							font: '0.9em serif',
-							msg: 'Count: ' + part.count,
+							msg: 'Count: ' + count.count,
 							posX: Aurora.placeEntityX(0.255),
 							posY: Aurora.placeEntityY(0.655),
 							color: 'grey',

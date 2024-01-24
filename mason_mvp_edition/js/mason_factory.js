@@ -1914,7 +1914,7 @@ const factoryParts = {
 				createFactoryTitleScraps(undefined);
 			}, 0);
 		}
-		function createFactoryTitleScraps(part) {
+		function createFactoryTitleScraps(part, count) {
 			if (part) {
 				const scrapCosts = [];
 				for (const scrap in part.scrapToBuild) {
@@ -1947,7 +1947,7 @@ const factoryParts = {
 					method: function(id) {
 						drawText({
 							font: '0.9em serif',
-							msg: 'Count: ' + part.count,
+							msg: 'Count: ' + count.count,
 							posX: Aurora.placeEntityX(0.255),
 							posY: Aurora.placeEntityY(0.655),
 							color: 'grey',
@@ -2623,7 +2623,7 @@ const factoryParts = {
 				}
 			};
 			Aurora.addMethod(Aurora.methodSetup);
-			createFactoryTitleScraps(part);
+			createFactoryTitleScraps(part, count);
 				
 			}, 0);
 		}
