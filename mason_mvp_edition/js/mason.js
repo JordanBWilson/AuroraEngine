@@ -842,7 +842,9 @@ const titlePage = {
 					id: 'play-game',
 					action: { 
 						method: function(id) {
-							mainPage.loadPage();
+							if (Aurora.isImagesLoaded) {
+								mainPage.loadPage();
+							}
 						}
 					},
 					isModalBtn: false,
@@ -868,11 +870,13 @@ const titlePage = {
 					id: 'play-game-sounds',
 					action: { 
 						method: function(id) {
-							gameObject.gameSounds = !gameObject.gameSounds;
-							const soundBtn = Aurora.methodObjects.find(btn => btn.id === 'play-game-sounds');
-							soundBtn.msg = !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On';
-							if (gameObject.gameSounds) {
-								Aurora.playAudioFile('select-sound');
+							if (Aurora.isImagesLoaded) {
+								gameObject.gameSounds = !gameObject.gameSounds;
+								const soundBtn = Aurora.methodObjects.find(btn => btn.id === 'play-game-sounds');
+								soundBtn.msg = !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On';
+								if (gameObject.gameSounds) {
+									Aurora.playAudioFile('select-sound');
+								}
 							}
 						}
 					},
