@@ -51,7 +51,7 @@ const maulPage = {
 		} else if (gameObject.gamesWon === 1) {
 			redAIThinkTimer = 1300;
 		}
-		const tutorialGames = 10;
+		const tutorialGames = 20;
 		let aiThinking = true;
 		let gameTimer;
 		Particle.init();
@@ -4198,15 +4198,15 @@ const maulPage = {
 			}, 1000);
 		}
 		function moveRobotSpellWallCheck(br, teamColor) {
-			// if there's a wall, see if the robot is behind the wall of in front of it
+			// if there's a wall, see if the robot is behind the wall or in front of it
 			if (teamColor === 'blue' && br.halted && spellWallCollisions.teamBlueIds.length > 0) {
-				const lessThan = !!spellWallCollisions.teamBlueIds.filter(team => team.countId < br.robotCount && team.direction === br.direction).length;
-				if (lessThan) {
+				const robotCheck = !!spellWallCollisions.teamBlueIds.filter(team => team.countId < br.robotCount || team.countId > br.robotCount).length;
+				if (robotCheck) {
 					br.halted = false;
 				}
 			} else if (teamColor === 'red' && br.halted && spellWallCollisions.teamRedIds.length > 0) {
-				const lessThan = !!spellWallCollisions.teamRedIds.filter(team => team.countId < br.robotCount && team.direction === br.direction).length;
-				if (lessThan) {
+				const robotCheck = !!spellWallCollisions.teamRedIds.filter(team => team.countId < br.robotCount || team.countId > br.robotCount).length;
+				if (robotCheck) {
 					br.halted = false;
 				}
 			} else {
