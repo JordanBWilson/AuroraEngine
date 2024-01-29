@@ -620,7 +620,7 @@ const titlePage = {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '3.3em mono',
+					font: Aurora.entitySize * 8 + 'px mono', // '3.3em mono'
 					msg: 'Mason',
 					posX: Aurora.placeEntityX(0.50),
 					posY: Aurora.placeEntityY(0.075),
@@ -636,7 +636,7 @@ const titlePage = {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.5em mono',
+					font: Aurora.entitySize * 3.5 + 'px mono', // '1.5em mono'
 					msg: 'MVP Edition',
 					posX: Aurora.placeEntityX(0.50),
 					posY: Aurora.placeEntityY(0.13),
@@ -696,7 +696,7 @@ const titlePage = {
 					lineWidth: 1,
 					btnColor: 'darkgrey',
 					txtColor: 'white',
-					font: '1.5em mono',
+					font: Aurora.entitySize * 3.5 + 'px mono', // '1.5em mono',
 					msg: 'Play',
 					isFilled: true,
 					id: 'play-game',
@@ -724,7 +724,7 @@ const titlePage = {
 					lineWidth: 1,
 					btnColor: 'darkgrey',
 					txtColor: 'white',
-					font: '1.2em mono',
+					font: Aurora.entitySize * 3.2 + 'px mono',// '1.2em mono',
 					msg: !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On',
 					isFilled: true,
 					id: 'play-game-sounds',
