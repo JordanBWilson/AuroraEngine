@@ -54,7 +54,7 @@ let gameObject = {
 		{ money: 'silver', price: 0 },
 		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 0 },
-		{ money: 'copper', price: 250 }
+		{ money: 'copper', price: 150 }
 	],
 	intriguingScrapBase: [
 		{ money: 'mythryl', price: 0 },
@@ -64,7 +64,7 @@ let gameObject = {
 		{ money: 'silver', price: 0 },
 		{ money: 'nickel', price: 0 },
 		{ money: 'bronze', price: 0 },
-		{ money: 'copper', price: 600 }
+		{ money: 'copper', price: 700 }
 	],
 	facinatingScrapBase: [
 		{ money: 'mythryl', price: 0 },
@@ -73,7 +73,7 @@ let gameObject = {
 		{ money: 'gold', price: 0 },
 		{ money: 'silver', price: 0 },
 		{ money: 'nickel', price: 0 },
-		{ money: 'bronze', price: 5 },
+		{ money: 'bronze', price: 3 },
 		{ money: 'copper', price: 0 }
 	],
 	mythicScrapBase: [
@@ -366,8 +366,8 @@ const robotHeads = [
 			storage: 1,
 		},
 		scrapToBuild: {
-			commonScrap: 1,
-			unCommonScrap: 2,
+			commonScrap: 0,
+			unCommonScrap: 3,
 			uniqueScrap: 0,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
@@ -396,8 +396,8 @@ const robotHeads = [
 		scrapToBuild: {
 			commonScrap: 0,
 			unCommonScrap: 0,
-			uniqueScrap: 2,
-			intriguingScrap: 2,
+			uniqueScrap: 4,
+			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -425,8 +425,8 @@ const robotHeads = [
 			commonScrap: 0,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
-			intriguingScrap: 2,
-			facinatingScrap: 3,
+			intriguingScrap: 5,
+			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
@@ -481,8 +481,8 @@ const robotChassis = [
 		},
 		scrapToBuild: {
 			commonScrap: 0,
-			unCommonScrap: 5,
-			uniqueScrap: 2,
+			unCommonScrap: 7,
+			uniqueScrap: 0,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -510,8 +510,8 @@ const robotChassis = [
 		scrapToBuild: {
 			commonScrap: 0,
 			unCommonScrap: 0,
-			uniqueScrap: 5,
-			intriguingScrap: 3,
+			uniqueScrap: 8,
+			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -539,15 +539,15 @@ const robotChassis = [
 			commonScrap: 0,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
-			intriguingScrap: 3,
-			facinatingScrap: 7,
+			intriguingScrap: 10,
+			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 20,
-			roboticSkill: 20,
-			engineeringSkill: 20,
+			factoryLevel: 15,
+			roboticSkill: 15,
+			engineeringSkill: 15,
 		},
 	},
 ];
@@ -597,8 +597,8 @@ const robotLegs = [
 		},
 		scrapToBuild: {
 			commonScrap: 0,
-			unCommonScrap: 3,
-			uniqueScrap: 2,
+			unCommonScrap: 5,
+			uniqueScrap: 0,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -627,8 +627,8 @@ const robotLegs = [
 		scrapToBuild: {
 			commonScrap: 0,
 			unCommonScrap: 0,
-			uniqueScrap: 4,
-			intriguingScrap: 3,
+			uniqueScrap: 7,
+			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -657,15 +657,15 @@ const robotLegs = [
 			commonScrap: 0,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
-			intriguingScrap: 4,
-			facinatingScrap: 6,
+			intriguingScrap: 10,
+			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 15,
-			roboticSkill: 15,
-			engineeringSkill: 15,
+			factoryLevel: 12,
+			roboticSkill: 12,
+			engineeringSkill: 12,
 		},
 	},
 ];
@@ -715,8 +715,8 @@ const robotArms = [
 		},
 		scrapToBuild: {
 			commonScrap: 0,
-			unCommonScrap: 3,
-			uniqueScrap: 2,
+			unCommonScrap: 5,
+			uniqueScrap: 0,
 			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
@@ -745,8 +745,8 @@ const robotArms = [
 		scrapToBuild: {
 			commonScrap: 0,
 			unCommonScrap: 0,
-			uniqueScrap: 4,
-			intriguingScrap: 3,
+			uniqueScrap: 7,
+			intriguingScrap: 0,
 			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
@@ -775,15 +775,15 @@ const robotArms = [
 			commonScrap: 0,
 			unCommonScrap: 0,
 			uniqueScrap: 0,
-			intriguingScrap: 4,
-			facinatingScrap: 6,
+			intriguingScrap: 10,
+			facinatingScrap: 0,
 			mythicScrap: 0,
 			exoticScrap: 0,
 		},
 		requires: {
-			factoryLevel: 15,
-			roboticSkill: 15,
-			engineeringSkill: 15,
+			factoryLevel: 12,
+			roboticSkill: 12,
+			engineeringSkill: 12,
 		},
 	},
 ];

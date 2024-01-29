@@ -14,17 +14,29 @@
 
 // load the games images
 const grassImg = new Image();
-const grassPath = './assets/images/grass.png';
-grassImg.src = grassPath;
+grassImg.src = './assets/images/grass.png';
 const roadImg = new Image();
-const roadPath = './assets/images/brick.png';
-roadImg.src = roadPath;
+roadImg.src = './assets/images/brick.png';
 const treeImg = new Image();
-const treePath = './assets/images/Wild_Tree.png';
-treeImg.src = treePath;
+treeImg.src = './assets/images/Wild_Tree.png';
 const cityImg = new Image();
-const cityPath = './assets/images/Lost_City.png';
-cityImg.src = cityPath;
+cityImg.src = './assets/images/Lost_City.png';
+// title Images
+const robTitleBody = new Image();
+robTitleBody.src = './assets/images/New_World_Chassis_Walk.gif';
+const robTitleHead = new Image();
+robTitleHead.src = './assets/images/New_World_Head_Walk.gif';
+const robTitleLeftArm = new Image();
+robTitleLeftArm.src = './assets/images/New_World_Left_Arm_Walk.gif';
+const robTitleRightArm = new Image();
+robTitleRightArm.src = './assets/images/New_World_Right_Arm_Walk.gif';
+const robTitleLeftLeg = new Image();
+robTitleLeftLeg.src = './assets/images/New_World_Left_Leg_Walk.gif';
+const robTitleRightLeg = new Image();
+robTitleRightLeg.src = './assets/images/New_World_Right_Leg_Walk.gif';
+ // future Jordan, use the whole robot image here
+const robotTitle = new Image();
+robotTitle.src = './assets/images/New_World_Walk.gif';
 
 (function() {
 	Aurora.canvas = document.getElementById('Stage');
@@ -672,157 +684,115 @@ const titlePage = {
 		Aurora.addMethod(Aurora.methodSetup);
 		Aurora.methodSetup = {
 			method: function(id) {
-				drawButton({
-					posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 12)),
+				drawImage({
+			 		posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 12)),
 					posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
 					width: (Aurora.entitySize * 12),
 					height: (Aurora.entitySize * 12),
-					lineWidth: 1,
-					btnColor: 'orange',
-					txtColor: 'white',
-					font: '1.5em serif',
-					msg: '',
-					isFilled: true,
-					id: 'robot-body',
-					action: { 
-						method: function(id) {
-						
-						}
-					},
-					isModalBtn: false,
-					props: {},
-					methodId: id
-				});
+			 		images: [robTitleBody],
+			 		selectedImage: 0,
+			 		animTicks: 0,
+			 		ticks: 0,
+			 		id: 'robot-body',
+			 		isBackground: false,
+			 		props: {},
+			 		methodId: id
+			 	});
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
 		Aurora.methodSetup = {
 			method: function(id) {
-				drawButton({
-					posX: Aurora.placeEntityX(0.499, (Aurora.entitySize * 10)),
+				drawImage({
+			 		posX: Aurora.placeEntityX(0.499, (Aurora.entitySize * 10)),
 					posY: Aurora.placeEntityY(0.22, (Aurora.entitySize * 10)),
 					width: (Aurora.entitySize * 10),
 					height: (Aurora.entitySize * 10),
-					lineWidth: 1,
-					btnColor: 'orange',
-					txtColor: 'black',
-					font: '1.5em serif',
-					msg: '',
-					isFilled: true,
-					id: 'robot-head',
-					action: {
-						method: function(id) {
-							
-						}
-					},
-					isModalBtn: false,
-					props: {},
-					methodId: id
-				});
+			 		images: [robTitleHead],
+			 		selectedImage: 0,
+			 		animTicks: 0,
+			 		ticks: 0,
+			 		id: 'robot-head',
+			 		isBackground: false,
+			 		props: {},
+			 		methodId: id
+			 	});
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
 		Aurora.methodSetup = {
 			method: function(id) {
-				drawButton({
-					posX: Aurora.placeEntityX(0.45, (Aurora.entitySize * 15)),
+				drawImage({
+			 		posX: Aurora.placeEntityX(0.35, (Aurora.entitySize * 15)),
 					posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 3),
+					width: (Aurora.entitySize * 15),
 					height: (Aurora.entitySize * 12),
-					lineWidth: 1,
-					btnColor: 'orange',
-					txtColor: 'black',
-					font: '1em serif',
-					msg: '',
-					isFilled: true,
-					id: 'robot-left-arm',
-					action: { 
-						method: function(id) {
-							
-						}
-					},
-					isModalBtn: false,
-					props: {},
-					methodId: id
-				});
+			 		images: [robTitleLeftArm],
+			 		selectedImage: 0,
+			 		animTicks: 0,
+			 		ticks: 0,
+			 		id: 'robot-left-arm',
+			 		isBackground: false,
+			 		props: {},
+			 		methodId: id
+			 	});
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
 		Aurora.methodSetup = {
 			method: function(id) {
-				drawButton({
-					posX: Aurora.placeEntityX(0.56, (Aurora.entitySize * -8.3)),
+				drawImage({
+			 		posX: Aurora.placeEntityX(0.66, (Aurora.entitySize * 15)),
 					posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 3),
+					width: (Aurora.entitySize * 15),
 					height: (Aurora.entitySize * 12),
-					lineWidth: 1,
-					btnColor: 'orange',
-					txtColor: 'black',
-					font: '1em serif',
-					msg: '',
-					isFilled: true,
-					id: 'robot-right-arm',
-					action: { 
-						method: function(id) {
-							
-						}
-					},
-					isModalBtn: false,
-					props: {},
-					methodId: id
-				});
+			 		images: [robTitleRightArm],
+			 		selectedImage: 0,
+			 		animTicks: 0,
+			 		ticks: 0,
+			 		id: 'robot-right-arm',
+			 		isBackground: false,
+			 		props: {},
+			 		methodId: id
+			 	});
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
 		Aurora.methodSetup = {
 			method: function(id) {
-				drawButton({
-					posX: Aurora.placeEntityX(0.496, (Aurora.entitySize * 9)),
-					posY: Aurora.placeEntityY(0.49, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 3),
-					height: (Aurora.entitySize * 12),
-					lineWidth: 1,
-					btnColor: 'orange',
-					txtColor: 'black',
-					font: '1em serif',
-					msg: '',
-					isFilled: true,
-					id: 'robot-left-leg',
-					action: {
-						method: function(id) {
-							
-						}
-					},
-					isModalBtn: false,
-					props: {},
-					methodId: id
-				});
+				drawImage({
+			 		posX: Aurora.placeEntityX(0.486, (Aurora.entitySize * 13)),
+					posY: Aurora.placeEntityY(0.43, (Aurora.entitySize * 12)),
+					width: (Aurora.entitySize * 6),
+					height: (Aurora.entitySize * 18),
+			 		images: [robTitleLeftLeg],
+			 		selectedImage: 0,
+			 		animTicks: 0,
+			 		ticks: 0,
+			 		id: 'robot-left-leg',
+			 		isBackground: false,
+			 		props: {},
+			 		methodId: id
+			 	});
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
 		Aurora.methodSetup = {
 			method: function(id) {
-				drawButton({
-					posX: Aurora.placeEntityX(0.497, (Aurora.entitySize * -4.3)),
-					posY: Aurora.placeEntityY(0.49, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 3),
-					height: (Aurora.entitySize * 12),
-					lineWidth: 1,
-					btnColor: 'orange',
-					txtColor: 'black',
-					font: '1em serif',
-					msg: '',
-					isFilled: true,
-					id: 'robot-right-leg',
-					action: {
-						method: function(id) {
-							
-						}
-					},
-					isModalBtn: false,
-					props: {},
-					methodId: id
-				});
+				drawImage({
+			 		posX: Aurora.placeEntityX(0.507, (Aurora.entitySize * -4.3)),
+					posY: Aurora.placeEntityY(0.43, (Aurora.entitySize * 12)),
+					width: (Aurora.entitySize * 6),
+					height: (Aurora.entitySize * 18),
+			 		images: [robTitleRightLeg],
+			 		selectedImage: 0,
+			 		animTicks: 0,
+			 		ticks: 0,
+			 		id: 'robot-right-leg',
+			 		isBackground: false,
+			 		props: {},
+			 		methodId: id
+			 	});
 			}
 		};
 		Aurora.addMethod(Aurora.methodSetup);
