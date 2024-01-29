@@ -22,19 +22,6 @@ treeImg.src = './assets/images/Wild_Tree.png';
 const cityImg = new Image();
 cityImg.src = './assets/images/Lost_City.png';
 // title Images
-const robTitleBody = new Image();
-robTitleBody.src = './assets/images/New_World_Chassis_Walk.gif';
-const robTitleHead = new Image();
-robTitleHead.src = './assets/images/New_World_Head_Walk.gif';
-const robTitleLeftArm = new Image();
-robTitleLeftArm.src = './assets/images/New_World_Left_Arm_Walk.gif';
-const robTitleRightArm = new Image();
-robTitleRightArm.src = './assets/images/New_World_Right_Arm_Walk.gif';
-const robTitleLeftLeg = new Image();
-robTitleLeftLeg.src = './assets/images/New_World_Left_Leg_Walk.gif';
-const robTitleRightLeg = new Image();
-robTitleRightLeg.src = './assets/images/New_World_Right_Leg_Walk.gif';
- // future Jordan, use the whole robot image here
 const robotTitle = new Image();
 robotTitle.src = './assets/images/New_World_Walk.gif';
 
@@ -46,8 +33,6 @@ robotTitle.src = './assets/images/New_World_Walk.gif';
 	loadGame();
 	Aurora.setSettingsHigh();
 })();
-
-// future Jordan, add a small tutorial as well
 
 function seedRobotDesigns() {
 	for (let i = 0; i < gameObject.robotDesignCount; i++) {
@@ -635,7 +620,7 @@ const titlePage = {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '3.3em serif',
+					font: '3.3em mono',
 					msg: 'Mason',
 					posX: Aurora.placeEntityX(0.50),
 					posY: Aurora.placeEntityY(0.075),
@@ -651,7 +636,7 @@ const titlePage = {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: '1.5em serif',
+					font: '1.5em mono',
 					msg: 'MVP Edition',
 					posX: Aurora.placeEntityX(0.50),
 					posY: Aurora.placeEntityY(0.13),
@@ -684,111 +669,16 @@ const titlePage = {
 		Aurora.addMethod(Aurora.methodSetup);
 		Aurora.methodSetup = {
 			method: function(id) {
-				drawImage({
-			 		posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 12)),
-					posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 12),
-					height: (Aurora.entitySize * 12),
-			 		images: [robTitleBody],
+			 	drawImage({
+			 		posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 41)),
+					posY: Aurora.placeEntityY(0.32, (Aurora.entitySize * 41)),
+					width: (Aurora.entitySize * 42),
+					height: (Aurora.entitySize * 42),
+			 		images: [robotTitle],
 			 		selectedImage: 0,
 			 		animTicks: 0,
 			 		ticks: 0,
-			 		id: 'robot-body',
-			 		isBackground: false,
-			 		props: {},
-			 		methodId: id
-			 	});
-			}
-		};
-		Aurora.addMethod(Aurora.methodSetup);
-		Aurora.methodSetup = {
-			method: function(id) {
-				drawImage({
-			 		posX: Aurora.placeEntityX(0.499, (Aurora.entitySize * 10)),
-					posY: Aurora.placeEntityY(0.22, (Aurora.entitySize * 10)),
-					width: (Aurora.entitySize * 10),
-					height: (Aurora.entitySize * 10),
-			 		images: [robTitleHead],
-			 		selectedImage: 0,
-			 		animTicks: 0,
-			 		ticks: 0,
-			 		id: 'robot-head',
-			 		isBackground: false,
-			 		props: {},
-			 		methodId: id
-			 	});
-			}
-		};
-		Aurora.addMethod(Aurora.methodSetup);
-		Aurora.methodSetup = {
-			method: function(id) {
-				drawImage({
-			 		posX: Aurora.placeEntityX(0.35, (Aurora.entitySize * 15)),
-					posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 15),
-					height: (Aurora.entitySize * 12),
-			 		images: [robTitleLeftArm],
-			 		selectedImage: 0,
-			 		animTicks: 0,
-			 		ticks: 0,
-			 		id: 'robot-left-arm',
-			 		isBackground: false,
-			 		props: {},
-			 		methodId: id
-			 	});
-			}
-		};
-		Aurora.addMethod(Aurora.methodSetup);
-		Aurora.methodSetup = {
-			method: function(id) {
-				drawImage({
-			 		posX: Aurora.placeEntityX(0.66, (Aurora.entitySize * 15)),
-					posY: Aurora.placeEntityY(0.35, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 15),
-					height: (Aurora.entitySize * 12),
-			 		images: [robTitleRightArm],
-			 		selectedImage: 0,
-			 		animTicks: 0,
-			 		ticks: 0,
-			 		id: 'robot-right-arm',
-			 		isBackground: false,
-			 		props: {},
-			 		methodId: id
-			 	});
-			}
-		};
-		Aurora.addMethod(Aurora.methodSetup);
-		Aurora.methodSetup = {
-			method: function(id) {
-				drawImage({
-			 		posX: Aurora.placeEntityX(0.486, (Aurora.entitySize * 13)),
-					posY: Aurora.placeEntityY(0.43, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 6),
-					height: (Aurora.entitySize * 18),
-			 		images: [robTitleLeftLeg],
-			 		selectedImage: 0,
-			 		animTicks: 0,
-			 		ticks: 0,
-			 		id: 'robot-left-leg',
-			 		isBackground: false,
-			 		props: {},
-			 		methodId: id
-			 	});
-			}
-		};
-		Aurora.addMethod(Aurora.methodSetup);
-		Aurora.methodSetup = {
-			method: function(id) {
-				drawImage({
-			 		posX: Aurora.placeEntityX(0.507, (Aurora.entitySize * -4.3)),
-					posY: Aurora.placeEntityY(0.43, (Aurora.entitySize * 12)),
-					width: (Aurora.entitySize * 6),
-					height: (Aurora.entitySize * 18),
-			 		images: [robTitleRightLeg],
-			 		selectedImage: 0,
-			 		animTicks: 0,
-			 		ticks: 0,
-			 		id: 'robot-right-leg',
+			 		id: 'robot-title',
 			 		isBackground: false,
 			 		props: {},
 			 		methodId: id
@@ -806,7 +696,7 @@ const titlePage = {
 					lineWidth: 1,
 					btnColor: 'darkgrey',
 					txtColor: 'white',
-					font: '1.5em serif',
+					font: '1.5em mono',
 					msg: 'Play',
 					isFilled: true,
 					id: 'play-game',
@@ -834,7 +724,7 @@ const titlePage = {
 					lineWidth: 1,
 					btnColor: 'darkgrey',
 					txtColor: 'white',
-					font: '1.2em serif',
+					font: '1.2em mono',
 					msg: !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On',
 					isFilled: true,
 					id: 'play-game-sounds',
@@ -861,8 +751,8 @@ const titlePage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '3em serif',
-						msg: 'Loading...',
+						font: '3em mono',
+						msg: '...Loading...',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.63),
 						color: 'indigo',
@@ -939,7 +829,7 @@ const mainPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'black',
-						font: '1.5em serif',
+						font: 'bold 1.3em mono',
 						msg: 'Scrap',
 						isFilled: true,
 						id: 'scrap',
@@ -965,7 +855,7 @@ const mainPage = {
 						lineWidth: 1,
 						btnColor: 'green',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: 'bold 1.3em mono',
 						msg: 'Home',
 						isFilled: true,
 						id: 'home',
@@ -988,7 +878,7 @@ const mainPage = {
 							lineWidth: 1,
 							btnColor: 'grey',
 							txtColor: 'black',
-							font: '1.5em serif',
+							font: 'bold 1.3em mono',
 							msg: 'Factory',
 							isFilled: true,
 							id: 'factory',
@@ -1012,7 +902,7 @@ const mainPage = {
 							lineWidth: 1,
 							btnColor: 'brown',
 							txtColor: 'white',
-							font: '1.5em serif',
+							font: 'bold 1.3em mono',
 							msg: 'Arena',
 							isFilled: true,
 							id: 'arena',
@@ -1853,7 +1743,7 @@ const mainPage = {
 						}
 					}
 					Particle.floatingText({
-						font: '1.5rem serif',
+						font: '1.3rem mono',
 						msg: scrapFoundText,
 						align: 'center',
 						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 0.7)),
@@ -1875,10 +1765,10 @@ const mainPage = {
 									lineWidth: 1,
 									modalColor: 'darkgrey',
 									msgColor: 'white',
-									msgFont: '1.1em serif',
+									msgFont: '1.1em mono',
 									msg: 'Not Enough Scrap Space',
 									footerColor: 'white',
-									footerFont: '1em serif',
+									footerFont: '1em mono',
 									footerMsg: '- Tap here to continue -',
 									bgColor: '',
 									isModalFilled: true,

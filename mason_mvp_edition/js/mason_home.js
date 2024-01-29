@@ -46,7 +46,7 @@ const homePage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'home-back-game',
@@ -65,7 +65,7 @@ const homePage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2em mono',
 						msg: 'Home',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -106,7 +106,7 @@ const homePage = {
 						lineWidth: 1,
 						btnColor: 'brown',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Map',
 						isFilled: true,
 						id: 'home-select-map',
@@ -120,7 +120,7 @@ const homePage = {
 								} else { // everything else
 									isMobile = false;
 								}
-								const msgs = ['Are you ready to save your progress?'];
+								const msgs = ['Are you ready to save', 'your progress?'];
 								Aurora.methodSetup = {
 									layer: 1,
 									method: function(id) {
@@ -132,7 +132,7 @@ const homePage = {
 											lineWidth: 1,
 											modalColor: 'grey',
 											msgColor: 'white',
-											msgFont: '1em serif',
+											msgFont: '1em mono',
 											msgs: msgs,
 											msgStart: Aurora.placeEntityY(0.40, (Aurora.entitySize * 30)),
 											msgDistance: (Aurora.entitySize * 6),
@@ -163,7 +163,7 @@ const homePage = {
 											lineWidth: 1,
 											btnColor: 'darkgrey',
 											txtColor: 'white',
-											font: '1.3em serif',
+											font: '1.3em mono',
 											msg: 'Save',
 											isFilled: true,
 											id: 'save-game-btn',
@@ -183,10 +183,10 @@ const homePage = {
 																lineWidth: 1,
 																modalColor: 'grey',
 																msgColor: 'white',
-																msgFont: '1.3em serif',
+																msgFont: '1.3em mono',
 																msg: 'Game Saved',
 																footerColor: 'white',
-																footerFont: '1em serif',
+																footerFont: '1em mono',
 																footerMsg: '- Tap here to continue -',
 																bgColor: '',
 																isModalFilled: true,
@@ -224,7 +224,7 @@ const homePage = {
 											lineWidth: 1,
 											btnColor: 'darkgrey',
 											txtColor: 'white',
-											font: '1.3em serif',
+											font: '1.3em mono',
 											msg: 'Cancel',
 											isFilled: true,
 											id: 'cancel-save-game-btn',
@@ -260,7 +260,7 @@ const homePage = {
 						lineWidth: 1,
 						btnColor: 'burlywood',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Sell',
 						isFilled: true,
 						id: 'home-select-sell',
@@ -286,7 +286,7 @@ const homePage = {
 						lineWidth: 1,
 						btnColor: 'cadetblue',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Upgrade',
 						isFilled: true,
 						id: 'home-select-upgrade',
@@ -366,7 +366,7 @@ const homeSellMenus = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'sell-back-game',
@@ -385,7 +385,7 @@ const homeSellMenus = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2em mono',
 						msg: 'Sell',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -426,7 +426,7 @@ const homeSellMenus = {
 						lineWidth: 1,
 						btnColor: 'dodgerblue',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Scrap',
 						isFilled: true,
 						id: 'sell-select-scrap',
@@ -452,7 +452,7 @@ const homeSellMenus = {
 						lineWidth: 1,
 						btnColor: 'goldenrod',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Parts',
 						isFilled: true,
 						id: 'sell-select-parts',
@@ -478,7 +478,7 @@ const homeSellMenus = {
 						lineWidth: 1,
 						btnColor: 'indigo',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Robots',
 						isFilled: true,
 						id: 'sell-select-robots',
@@ -593,7 +593,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'scrap-back-game',
@@ -610,7 +610,7 @@ const homeSellScrap = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 			createSellScrapTitles();
-			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em serif', 'grey', 'center');
+			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em mono', 'grey', 'center');
 			Particle.init();
 			Aurora.pageResized = {
 				section: 'home-sell-scrap',
@@ -678,7 +678,7 @@ const homeSellScrap = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2em serif',
+						font: '1.5em mono',
 						msg: 'Sell Scrap',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -694,7 +694,7 @@ const homeSellScrap = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2em serif',
+						font: '2em mono',
 						msg: 'Total',
 						posX: Aurora.placeEntityX(0.715),
 						posY: Aurora.placeEntityY(0.565),
@@ -710,7 +710,7 @@ const homeSellScrap = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2em serif',
+						font: '2em mono',
 						msg: 'Funds',
 						posX: Aurora.placeEntityX(0.715),
 						posY: Aurora.placeEntityY(0.185),
@@ -726,7 +726,7 @@ const homeSellScrap = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2em serif',
+						font: '2em mono',
 						msg: 'Count',
 						posX: Aurora.placeEntityX(0.715),
 						posY: Aurora.placeEntityY(0.385),
@@ -752,7 +752,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: gameObject.commonScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1em mono',
 						msg: 'Common Scrap',
 						isFilled: true,
 						id: 'sell-common-scrap',
@@ -781,7 +781,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: gameObject.unCommonScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1em mono',
 						msg: 'UnCommon Scrap',
 						isFilled: true,
 						id: 'sell-uncommon-scrap',
@@ -809,7 +809,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: gameObject.uniqueScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1em mono',
 						msg: 'Unique Scrap',
 						isFilled: true,
 						id: 'sell-unique-scrap',
@@ -837,7 +837,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: gameObject.intriguingScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1em mono',
 						msg: 'Intriguing Scrap',
 						isFilled: true,
 						id: 'sell-intriguing-scrap',
@@ -865,7 +865,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: gameObject.facinatingScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1em mono',
 						msg: 'Facinating Scrap',
 						isFilled: true,
 						id: 'sell-facinating-scrap',
@@ -893,7 +893,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: gameObject.mythicScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1em mono',
 						msg: 'Mythic Scrap',
 						isFilled: true,
 						id: 'sell-mythic-scrap',
@@ -921,7 +921,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: gameObject.exoticScrap <= 0 ? '#C0C0C0' : 'lightslategrey',
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1em mono',
 						msg: 'Exotic Scrap',
 						isFilled: true,
 						id: 'sell-exotic-scrap',
@@ -1046,12 +1046,12 @@ const homeSellScrap = {
 			refreshSellScrapBackgrounds();
 			
 			createSellScrapTitles();
-			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em serif', 'grey', 'center');
+			displayCondensedFunds(0.715, 0.245, 0.715, 0.295, '1.2em mono', 'grey', 'center');
 			
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: displayScrapCount(scrapType),
 						posX: Aurora.placeEntityX(0.715),
 						posY: Aurora.placeEntityY(0.445),
@@ -1136,7 +1136,7 @@ const homeSellScrap = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1.2em serif',
+							font: '1.2em mono',
 							msg: scrap.money.charAt(0).toUpperCase() + scrap.money.slice(1) + ': ' + scrap.price,
 							posX: Aurora.placeEntityX(0.715),
 							posY: Aurora.placeEntityY(0.635 + (i * 0.045)),
@@ -1160,7 +1160,7 @@ const homeSellScrap = {
 						lineWidth: 1,
 						btnColor: sellScrapBtnActivity(),
 						txtColor: 'white',
-						font: '1.1em serif',
+						font: '1.1em mono',
 						msg: 'Sell',
 						isFilled: true,
 						id: 'sell-scrap-btn',
@@ -1231,8 +1231,8 @@ const homeSellScrap = {
 											}
 										}
 										Particle.floatingText({
-											font: '2rem serif',
-											msg: '+          +',
+											font: '2rem mono',
+											msg: '+      +',
 											align: 'center',
 											posX: Aurora.placeEntityX(0.719, (Aurora.entitySize * 0.7)),
 											posY: Aurora.placeEntityY(0.21, (Aurora.entitySize * 0.7)),
@@ -1458,10 +1458,10 @@ const homeSellScrap = {
 						lineWidth: 1,
 						modalColor: 'darkgrey',
 						msgColor: 'white',
-						msgFont: '1.3em serif',
+						msgFont: '1.3em mono',
 						msg: 'Not Enough Scrap',
 						footerColor: 'white',
-						footerFont: '1em serif',
+						footerFont: '1em mono',
 						footerMsg: '- Tap here to continue -',
 						bgColor: '',
 						isModalFilled: true,
@@ -1577,7 +1577,7 @@ const homeSellParts = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'sell-part-back-game',
@@ -1597,7 +1597,7 @@ const homeSellParts = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '1.5em mono',
 						msg: 'Sell Parts',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -1672,7 +1672,7 @@ const homeSellParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Chassis',
 						isFilled: true,
 						id: 'sell-body-parts',
@@ -1698,7 +1698,7 @@ const homeSellParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Heads',
 						isFilled: true,
 						id: 'sell-head-parts',
@@ -1724,7 +1724,7 @@ const homeSellParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Arms',
 						isFilled: true,
 						id: 'sell-arm-parts',
@@ -1750,7 +1750,7 @@ const homeSellParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Legs',
 						isFilled: true,
 						id: 'sell-leg-parts',
@@ -1870,7 +1870,7 @@ const homeSellParts = {
 							lineWidth: 1,
 							btnColor: drawActiveSellParts(robotPart.img, robotPartCount.count),
 							txtColor: 'black',
-							font: '0.8em serif',
+							font: '0.8em mono',
 							msg: robotPartCount.count,
 							isFilled: true,
 							id: 'part-count',
@@ -1897,7 +1897,7 @@ const homeSellParts = {
 							lineWidth: 1,
 							btnColor: drawActiveSellParts(robotPart.img, robotPartCount.count),
 							txtColor: 'black',
-							font: '0.8em serif',
+							font: '0.8em mono',
 							msg: robotPart.name,
 							isFilled: true,
 							id: 'robot-' + robotPart.type + '-part',
@@ -1929,7 +1929,7 @@ const homeSellParts = {
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Next',
 						isFilled: true,
 						id: 'next-part',
@@ -1959,7 +1959,7 @@ const homeSellParts = {
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Previous',
 						isFilled: true,
 						id: 'last-part',
@@ -1998,7 +1998,7 @@ const homeSellParts = {
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
-							font: '1.5em serif',
+							font: '1.5em mono',
 							msg: 'Sell',
 							isFilled: true,
 							id: 'confirm-part',
@@ -2019,8 +2019,8 @@ const homeSellParts = {
 												addFunds(addPartCost);
 												count.count--;
 												Particle.floatingText({
-													font: '2rem serif',
-													msg: '+          +',
+													font: '2rem mono',
+													msg: '+      +',
 													align: 'center',
 													posX: Aurora.placeEntityX(0.259, (Aurora.entitySize * 0.7)),
 													posY: Aurora.placeEntityY(0.72, (Aurora.entitySize * 0.7)),
@@ -2047,10 +2047,10 @@ const homeSellParts = {
 																lineWidth: 1,
 																modalColor: 'darkgrey',
 																msgColor: 'white',
-																msgFont: '1.3em serif',
+																msgFont: '1.3em mono',
 																msg: 'Not Enough Parts',
 																footerColor: 'white',
-																footerFont: '1em serif',
+																footerFont: '1em mono',
 																footerMsg: '- Tap here to continue -',
 																bgColor: '',
 																isModalFilled: true,
@@ -2225,7 +2225,7 @@ const homeSellParts = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '1.5em mono',
 						msg: 'Sell Parts',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -2308,7 +2308,7 @@ const homeSellParts = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '0.9em serif',
+							font: '0.9em mono',
 							msg: part.name,
 							posX: Aurora.placeEntityX(0.255),
 							posY: Aurora.placeEntityY(0.62),
@@ -2324,7 +2324,7 @@ const homeSellParts = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '0.9em serif',
+							font: '0.9em mono',
 							msg: 'Count: ' + count.count,
 							posX: Aurora.placeEntityX(0.255),
 							posY: Aurora.placeEntityY(0.655),
@@ -2340,7 +2340,7 @@ const homeSellParts = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1.3em serif',
+							font: '1.3em mono',
 							msg: 'Funds',
 							posX: Aurora.placeEntityX(0.25),
 							posY: Aurora.placeEntityY(0.69),
@@ -2353,12 +2353,12 @@ const homeSellParts = {
 					}
 				};
 				Aurora.addMethod(Aurora.methodSetup);
-				displayCondensedFunds(0.25, 0.72, 0.25, 0.755, '1em serif', 'grey', 'center');
+				displayCondensedFunds(0.25, 0.72, 0.25, 0.755, '1em mono', 'grey', 'center');
 				
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1.3em serif',
+							font: '1.3em mono',
 							msg: 'Sell Price',
 							posX: Aurora.placeEntityX(0.25),
 							posY: Aurora.placeEntityY(0.80),
@@ -2379,7 +2379,7 @@ const homeSellParts = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1em serif',
+							font: '1em mono',
 							msg: displayPartValue.highValue.type + ': ' + displayPartValue.highValue.value,
 							posX: Aurora.placeEntityX(0.25),
 							posY: Aurora.placeEntityY(0.83),
@@ -2396,7 +2396,7 @@ const homeSellParts = {
 					Aurora.methodSetup = {
 						method: function(id) {
 							drawText({
-								font: '1em serif',
+								font: '1em mono',
 								msg: displayPartValue.lowValue.type + ': ' + displayPartValue.lowValue.value,
 								posX: Aurora.placeEntityX(0.25),
 								posY: Aurora.placeEntityY(0.865),
@@ -2464,7 +2464,7 @@ const homeSellRobots = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'factory-back-game',
@@ -2487,9 +2487,9 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.1em serif',
+						font: '1.5em mono',
 						msg: 'Sell Robots',
-						posX: Aurora.placeEntityX(0.525),
+						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
@@ -2703,7 +2703,7 @@ const homeSellRobots = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'factory-back-game',
@@ -2725,9 +2725,9 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.1em serif',
+						font: '1.5em mono',
 						msg: 'Sell Details',
-						posX: Aurora.placeEntityX(0.525),
+						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
@@ -2741,7 +2741,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.3em mono',
 						msg: 'Barter Total',
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.65),
@@ -2793,7 +2793,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2.3em mono',
 						msg: 'Funds',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.20),
@@ -2807,12 +2807,12 @@ const homeSellRobots = {
 			};
 			Aurora.addMethod(Aurora.methodSetup);
 			
-			displayCondensedFunds(0.76, 0.245, 0.76, 0.28, '1.2em serif', 'grey', 'center');
+			displayCondensedFunds(0.76, 0.245, 0.76, 0.28, '1.2em mono', 'grey', 'center');
 			
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.6em mono',
 						msg: 'Head',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.33),
@@ -2835,7 +2835,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: displayHeadPartValue.highValue.type + ': ' + displayHeadPartValue.highValue.value,
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.36),
@@ -2852,7 +2852,7 @@ const homeSellRobots = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1em serif',
+							font: '1em mono',
 							msg: displayHeadPartValue.lowValue.type + ': ' + displayHeadPartValue.lowValue.value,
 							posX: Aurora.placeEntityX(0.76),
 							posY: Aurora.placeEntityY(0.39),
@@ -2870,7 +2870,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.6em mono',
 						msg: 'Chassis',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.435),
@@ -2893,7 +2893,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: displayChassisPartValue.highValue.type + ': ' + displayChassisPartValue.highValue.value,
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.465),
@@ -2910,7 +2910,7 @@ const homeSellRobots = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1em serif',
+							font: '1em mono',
 							msg: displayChassisPartValue.lowValue.type + ': ' + displayChassisPartValue.lowValue.value,
 							posX: Aurora.placeEntityX(0.76),
 							posY: Aurora.placeEntityY(0.495),
@@ -2928,7 +2928,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.6em mono',
 						msg: 'Left Arm',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.54),
@@ -2951,7 +2951,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: displayLeftArmPartValue.highValue.type + ': ' + displayLeftArmPartValue.highValue.value,
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.575),
@@ -2968,7 +2968,7 @@ const homeSellRobots = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1em serif',
+							font: '1em mono',
 							msg: displayLeftArmPartValue.lowValue.type + ': ' + displayLeftArmPartValue.lowValue.value,
 							posX: Aurora.placeEntityX(0.76),
 							posY: Aurora.placeEntityY(0.605),
@@ -2986,7 +2986,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.6em mono',
 						msg: 'Right Arm',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.65),
@@ -3009,7 +3009,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: displayRightArmPartValue.highValue.type + ': ' + displayRightArmPartValue.highValue.value,
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.685),
@@ -3026,7 +3026,7 @@ const homeSellRobots = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1em serif',
+							font: '1em mono',
 							msg: displayRightArmPartValue.lowValue.type + ': ' + displayRightArmPartValue.lowValue.value,
 							posX: Aurora.placeEntityX(0.76),
 							posY: Aurora.placeEntityY(0.715),
@@ -3044,7 +3044,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.6em mono',
 						msg: 'Left Leg',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.76),
@@ -3067,7 +3067,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: displayLeftLegPartValue.highValue.type + ': ' + displayLeftLegPartValue.highValue.value,
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.795),
@@ -3084,7 +3084,7 @@ const homeSellRobots = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1em serif',
+							font: '1em mono',
 							msg: displayLeftLegPartValue.lowValue.type + ': ' + displayLeftLegPartValue.lowValue.value,
 							posX: Aurora.placeEntityX(0.76),
 							posY: Aurora.placeEntityY(0.825),
@@ -3102,7 +3102,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.6em mono',
 						msg: 'Right Leg',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.87),
@@ -3125,7 +3125,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: displayRightLegPartValue.highValue.type + ': ' + displayRightLegPartValue.highValue.value,
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.905),
@@ -3142,7 +3142,7 @@ const homeSellRobots = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1em serif',
+							font: '1em mono',
 							msg: displayRightLegPartValue.lowValue.type + ': ' + displayRightLegPartValue.lowValue.value,
 							posX: Aurora.placeEntityX(0.76),
 							posY: Aurora.placeEntityY(0.935),
@@ -3159,7 +3159,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.6em serif',
+						font: '1.3em mono',
 						msg: 'Barter Total',
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.65),
@@ -3194,7 +3194,7 @@ const homeSellRobots = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.1em serif',
+						font: '1.1em mono',
 						msg: displayTotalPartValue.highValue.type + ': ' + displayTotalPartValue.highValue.value,
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.71),
@@ -3211,7 +3211,7 @@ const homeSellRobots = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '1.1em serif',
+							font: '1.1em mono',
 							msg: displayTotalPartValue.lowValue.type + ': ' + displayTotalPartValue.lowValue.value,
 							posX: Aurora.placeEntityX(0.247),
 							posY: Aurora.placeEntityY(0.76),
@@ -3240,7 +3240,7 @@ const homeSellRobots = {
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
-							font: '1.5em serif',
+							font: '1.5em mono',
 							msg: 'Sell',
 							isFilled: true,
 							id: 'confirm-part',
@@ -3277,8 +3277,8 @@ const homeSellRobots = {
 											if (gameObject.robotTeams.length === 0 && gameObject.selectedRobotDesign === -1) {
 												// no more robots to sell
 												Particle.floatingText({
-													font: '2rem serif',
-													msg: '+            +',
+													font: '2rem mono',
+													msg: '+      +',
 													align: 'center',
 													posX: Aurora.placeEntityX(0.763, (Aurora.entitySize * 0.7)),
 													posY: Aurora.placeEntityY(0.25, (Aurora.entitySize * 0.7)),
@@ -3300,10 +3300,10 @@ const homeSellRobots = {
 																	lineWidth: 1,
 																	modalColor: 'darkgrey',
 																	msgColor: 'white',
-																	msgFont: '1.3em serif',
+																	msgFont: '1.3em mono',
 																	msg: 'No Robots to Sell',
 																	footerColor: 'white',
-																	footerFont: '1em serif',
+																	footerFont: '1em mono',
 																	footerMsg: '- Tap here to continue -',
 																	bgColor: '',
 																	isModalFilled: true,
@@ -3328,8 +3328,8 @@ const homeSellRobots = {
 												// assign and load up the next robot to sell
 												gameObject.selectedRobot = gameObject.robotTeams[gameObject.selectedRobotDesign].robotParts;
 												Particle.floatingText({
-													font: '2rem serif',
-													msg: '+            +',
+													font: '2rem mono',
+													msg: '+      +',
 													align: 'center',
 													posX: Aurora.placeEntityX(0.763, (Aurora.entitySize * 0.7)),
 													posY: Aurora.placeEntityY(0.25, (Aurora.entitySize * 0.7)),
@@ -3416,7 +3416,7 @@ const homePlayerUpgrades = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'upgrade-back-game',
@@ -3435,9 +3435,9 @@ const homePlayerUpgrades = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.1em serif',
+						font: '2em mono',
 						msg: 'Upgrades',
-						posX: Aurora.placeEntityX(0.525),
+						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
 						color: 'darkgrey',
 						align: 'center',
@@ -3539,7 +3539,7 @@ const homePlayerUpgrades = {
 							lineWidth: 1,
 							btnColor: 'darkgrey',
 							txtColor: 'white',
-							font: '1em serif',
+							font: '0.9em mono',
 							msg: upgradeTitle,
 							isFilled: true,
 							id: 'upgrade-stat-' + upgradeIndex,
@@ -3630,7 +3630,7 @@ const homePlayerUpgrades = {
 												lineWidth: 1,
 												modalColor: 'darkgrey',
 												msgColor: 'white',
-												msgFont: '1em serif',
+												msgFont: '0.9em mono',
 												msgs: msgs,
 												msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 												msgDistance: (Aurora.entitySize * 5),
@@ -3651,7 +3651,7 @@ const homePlayerUpgrades = {
 									Aurora.methodSetup = {
 										method: function(id) {
 											drawText({
-												font: '2.1em serif',
+												font: '2.1em mono',
 												msg: 'Funds',
 												posX: Aurora.placeEntityX(0.466),
 												posY: Aurora.placeEntityY(0.14),
@@ -3665,7 +3665,7 @@ const homePlayerUpgrades = {
 									};
 									Aurora.addMethod(Aurora.methodSetup);
 									
-									displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em serif', 'white', 'center');
+									displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em mono', 'white', 'center');
 									
 									let upgradeMsg = 'Upgrade';
 									
@@ -3716,7 +3716,7 @@ const homePlayerUpgrades = {
 												lineWidth: 1,
 												btnColor: checkFunds ? 'grey' : '#C0C0C0',
 												txtColor: 'white',
-												font: '1.3em serif',
+												font: '1.3em mono',
 												msg: upgradeMsg,
 												isFilled: true,
 												id: 'upgrade-stat',
@@ -4121,7 +4121,7 @@ const homePlayerUpgrades = {
 															subtractFunds(formatUpgradeCost);
 
 															Particle.floatingText({
-																font: '2.3rem serif',
+																font: '2.3rem mono',
 																msg: '+',
 																align: 'center',
 																posX: Aurora.placeEntityX(0.472),
@@ -4163,7 +4163,7 @@ const homePlayerUpgrades = {
 																				lineWidth: 1,
 																				modalColor: 'darkgrey',
 																				msgColor: 'white',
-																				msgFont: '1em serif',
+																				msgFont: '1em mono',
 																				msgs: upgradeMsgs,
 																				msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 																				msgDistance: (Aurora.entitySize * 8),
@@ -4184,7 +4184,7 @@ const homePlayerUpgrades = {
 																	Aurora.methodSetup = {
 																		method: function(id) {
 																			drawText({
-																				font: '2.1em serif',
+																				font: '2.1em mono',
 																				msg: 'Funds',
 																				posX: Aurora.placeEntityX(0.466),
 																				posY: Aurora.placeEntityY(0.14),
@@ -4197,7 +4197,7 @@ const homePlayerUpgrades = {
 																		}
 																	};
 																	Aurora.addMethod(Aurora.methodSetup);
-																	displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em serif', 'white', 'center');
+																	displayCondensedFunds(0.465, 0.185, 0.465, 0.22, '1.2em mono', 'white', 'center');
 																	Aurora.methodSetup = {
 																		method: function(id) {
 																			drawButton({
@@ -4208,7 +4208,7 @@ const homePlayerUpgrades = {
 																				lineWidth: 1,
 																				btnColor: 'grey',
 																				txtColor: 'white',
-																				font: '1.3em serif',
+																				font: '1.3em mono',
 																				msg: 'Nice!',
 																				isFilled: true,
 																				id: 'upgraded',
@@ -4255,7 +4255,7 @@ const homePlayerUpgrades = {
 												lineWidth: 1,
 												btnColor: 'grey',
 												txtColor: 'white',
-												font: '1.3em serif',
+												font: '1.3em mono',
 												msg: 'Cancel',
 												isFilled: true,
 												id: 'cancel-upgrade',

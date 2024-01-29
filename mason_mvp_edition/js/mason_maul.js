@@ -401,11 +401,11 @@ const maulPage = {
 							});
 							const robotAttack = baseRobotAttack + robotPasser.totalStats.att;
 							towerStats.props.stats.hp -= robotAttack;
-							towerStats.msg = 'HP: ' + towerStats.props.stats.hp;
+							towerStats.msg = 'HP:' + towerStats.props.stats.hp;
 							const towerAttack = baseTowerAttack + towerStats.props.stats.att;
 							robotPasser.hp -= towerAttack;
 							if (towerStats.props.stats.hp <= 0) {
-								towerStats.font = '0.8em serif';
+								towerStats.font = '0.8em mono';
 								if (teamColor === 'blue') {
 									towerStats.btnColor = 'orange';
 									towerStats.msg = 'Build';
@@ -427,7 +427,7 @@ const maulPage = {
 								deleteRobotMethodObject(robotHitMethodObject, 1);
 								if (teamColor === 'blue') {
 									Particle.floatingText({
-										font: '1rem serif',
+										font: '1rem mono',
 										msg: '+' + robotMoneyGained.tank,
 										align: 'center',
 										posX: robotPasser.posX,
@@ -849,7 +849,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.2em serif',
+						font: '1.2em mono',
 						msg: 'Wall',
 						isFilled: true,
 						id: 'arena-spell-btn-1',
@@ -909,7 +909,7 @@ const maulPage = {
 							lineWidth: 1,
 							btnColor: 'darkgrey',
 							txtColor: 'white',
-							font: '1.5em serif',
+							font: '1.5em mono',
 							msg: '',
 							isFilled: true,
 							id: 'arena-robot-details-btn-' + i,
@@ -935,7 +935,7 @@ const maulPage = {
 							lineWidth: 1,
 							btnColor: drawRobotSelectPreviewParts('chassis', gameObject.robotArenaDesigns[i].robotParts),
 							txtColor: 'white',
-							font: '1.5em serif',
+							font: '1.5em mono',
 							msg: '',
 							isFilled: true,
 							id: 'arena-robot-' + i,
@@ -957,7 +957,7 @@ const maulPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('head', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
-												font: '1.5em serif',
+												font: '1.5em mono',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -985,7 +985,7 @@ const maulPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-arm', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
-												font: '1.5em serif',
+												font: '1.5em mono',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1013,7 +1013,7 @@ const maulPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-arm', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
-												font: '1.5em serif',
+												font: '1.5em mono',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1041,7 +1041,7 @@ const maulPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-leg', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
-												font: '1.5em serif',
+												font: '1.5em mono',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1069,7 +1069,7 @@ const maulPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-leg', gameObject.robotArenaDesigns[i].robotParts),
 												txtColor: 'white',
-												font: '1.5em serif',
+												font: '1.5em mono',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1100,7 +1100,7 @@ const maulPage = {
 							layer: 1,
 							method: function(id) {
 								drawText({
-									font: '1em serif',
+									font: '1em mono',
 									msg: '$' + robotCost,
 									posX: Aurora.placeEntityX(posX + (0.04), (Aurora.entitySize * (posXoffset + 2))),
 									posY: Aurora.placeEntityY(posY + (0.033), (Aurora.entitySize * posYoffset)),
@@ -1127,7 +1127,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.2em serif',
+						font: '1.2em mono',
 						msg: 'EMP',
 						isFilled: true,
 						id: 'arena-spell-btn-2',
@@ -1235,7 +1235,7 @@ const maulPage = {
 					}
 					if (displayMoneyWon) {
 						Particle.floatingText({
-							font: '1rem serif',
+							font: '1rem mono',
 							msg: '+' + moneyGained,
 							align: 'center',
 							posX: robotHitStats.posX,
@@ -1284,8 +1284,8 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkblue',
 						txtColor: 'white',
-						font: '1em serif',
-						msg: 'HP: 20',
+						font: '1em mono',
+						msg: 'HP:20',
 						isFilled: true,
 						id: 'blue-base',
 						action: { 
@@ -1312,8 +1312,8 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkred',
 						txtColor: 'white',
-						font: '1em serif',
-						msg: 'HP: 20',
+						font: '1em mono',
+						msg: 'HP:20',
 						isFilled: true,
 						id: 'red-base',
 						action: { 
@@ -1340,7 +1340,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Send',
 						isFilled: true,
 						id: 'send-robots-left',
@@ -1460,7 +1460,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Send',
 						isFilled: true,
 						id: 'send-robots-right',
@@ -1644,7 +1644,7 @@ const maulPage = {
 						speed: 1.3,
 					});
 					Particle.floatingText({
-						font: '1rem serif',
+						font: '1rem mono',
 						msg: '+' + moneyGained,
 						align: 'center',
 						posX: redBot.posX,
@@ -1742,7 +1742,7 @@ const maulPage = {
 						speed: 1.3,
 					});
 					Particle.floatingText({
-						font: '1rem serif',
+						font: '1rem mono',
 						msg: '+' + moneyGained,
 						align: 'center',
 						posX: redBot.posX,
@@ -2047,7 +2047,7 @@ const maulPage = {
 			 			width: (Aurora.canvas.width * 0.50),
 			 			height: (Aurora.entitySize * 7),
 			 			txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
@@ -2077,7 +2077,7 @@ const maulPage = {
 			 			width: (Aurora.canvas.width * 0.50),
 			 			height: (Aurora.entitySize * 7),
 			 			txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
@@ -2107,7 +2107,7 @@ const maulPage = {
 			 			width: (Aurora.entitySize * 20),
 			 			height: (Aurora.entitySize * 7),
 			 			txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
@@ -2137,7 +2137,7 @@ const maulPage = {
 			 			width: (Aurora.entitySize * 20),
 			 			height: (Aurora.entitySize * 7),
 			 			txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
@@ -2167,7 +2167,7 @@ const maulPage = {
 			 			width: (Aurora.entitySize * 7),
 			 			height: (Aurora.entitySize * 20),
 			 			txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
@@ -2197,7 +2197,7 @@ const maulPage = {
 			 			width: (Aurora.entitySize * 7),
 			 			height: (Aurora.entitySize * 20),
 			 			txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
@@ -2227,7 +2227,7 @@ const maulPage = {
 			 			width: (Aurora.entitySize * 7),
 			 			height: (Aurora.entitySize * 33),
 			 			txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 			 			images: [roadImg],
 			 			selectedImage: 0,
@@ -2585,7 +2585,7 @@ const maulPage = {
 				selectUpgradeTowerMenu(tower, towerIndex);
 				range.color = 'rgba(0, 0, 200, 0)';
 				tower.props.selected = false;
-				tower.msg = 'HP: ' + tower.props.stats.hp;
+				tower.msg = 'HP:' + tower.props.stats.hp;
 			}
 		}
 		function drawBlueTowerSpawns() {
@@ -2651,7 +2651,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-1',
@@ -2740,7 +2740,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-2',
@@ -2829,7 +2829,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-3',
@@ -2918,7 +2918,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-left-tower-spawn-4',
@@ -3007,7 +3007,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-5',
@@ -3096,7 +3096,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-6',
@@ -3185,7 +3185,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-7',
@@ -3274,7 +3274,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'orange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'blue-right-tower-spawn-8',
@@ -3356,7 +3356,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-1',
@@ -3413,7 +3413,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-2',
@@ -3470,7 +3470,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-3',
@@ -3527,7 +3527,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-left-tower-spawn-4',
@@ -3584,7 +3584,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-5',
@@ -3641,7 +3641,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-6',
@@ -3698,7 +3698,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-7',
@@ -3755,7 +3755,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkorange',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'red-right-tower-spawn-8',
@@ -3987,7 +3987,7 @@ const maulPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Funds',
 						posX: Aurora.placeEntityX(0.04),
 						posY: Aurora.placeEntityY(0.03),
@@ -4003,7 +4003,7 @@ const maulPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: '$' + gameObject.arenaBlueGameMoney,
 						posX: Aurora.placeEntityX(0.04),
 						posY: Aurora.placeEntityY(0.07),
@@ -4039,7 +4039,7 @@ const maulPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: gameObject.arenaRoundSeconds + 's',
 						posX: Aurora.placeEntityX(0.99, (Aurora.entitySize * 34)),
 						posY: Aurora.placeEntityY(0.04),
@@ -4055,7 +4055,7 @@ const maulPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds,
 						posX: Aurora.placeEntityX(0.99, (Aurora.entitySize * 34)),
 						posY: Aurora.placeEntityY(0.08),
@@ -4094,7 +4094,7 @@ const maulPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2em serif',
+						font: '1.5em mono',
 						msg: 'Battle Stations!',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.52),
@@ -4168,7 +4168,7 @@ const maulPage = {
 						roundCounter.msg = 'Turn: ' + gameObject.arenaGameRound + '/' + gameObject.arenaGameMaxRounds;
 						blueMoney.msg = '$' + gameObject.arenaBlueGameMoney;
 						Particle.floatingText({
-							font: '2rem serif',
+							font: '2rem mono',
 							msg: '+      +',
 							align: 'left',
 							posX: Aurora.placeEntityX(0.023),
@@ -4258,7 +4258,7 @@ const maulPage = {
 					Aurora.playAudioFile('tower-explosion-sound');
 				}
 				base.props.hp--;
-				base.msg = 'HP: ' + base.props.hp;
+				base.msg = 'HP:' + base.props.hp;
 				// remove the robot and all of its parts
 				deleteRobotMethodObject(robot, 1);
 				if (color === 'blue') {
@@ -4427,8 +4427,8 @@ const maulPage = {
 						selectedRedTower.props.type = redTower.arenaTower.type;
 						selectedRedTower.props.directive = redTower.directive;
 						selectedRedTower.props.requires = redTower.arenaTower.requires;
-						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
-						selectedRedTower.font = '0.7em serif';
+						selectedRedTower.msg = 'HP:' + redTower.arenaTower.stats.hp;
+						selectedRedTower.font = '0.7em mono';
 					} else if (availableRedRightTowers.length > 0 && whereToBuild === 2) {
 						// build right
 						const redBuildTowerIndex = Math.floor((Math.random() * availableRedRightTowers.length));
@@ -4441,8 +4441,8 @@ const maulPage = {
 						selectedRedTower.props.type = redTower.arenaTower.type;
 						selectedRedTower.props.directive = redTower.directive;
 						selectedRedTower.props.requires = redTower.arenaTower.requires;
-						selectedRedTower.msg = 'HP: ' + redTower.arenaTower.stats.hp;
-						selectedRedTower.font = '0.7em serif';
+						selectedRedTower.msg = 'HP:' + redTower.arenaTower.stats.hp;
+						selectedRedTower.font = '0.7em mono';
 					} else if (availableRedRightTowers.length === 0 && availableRedLeftTowers.length === 0) {
 						// upgrade a tower
 						let whereToUpgrade = Math.floor((Math.random() * 2) + 1);
@@ -4466,7 +4466,7 @@ const maulPage = {
 							selectedRedTower.props.stats.spd += upgradeTowerStats.spd;
 							selectedRedTower.props.stats.splash += upgradeTowerStats.splash;
 							selectedRedTower.props.stats.lvl += upgradeTowerStats.lvl;
-							selectedRedTower.msg = 'HP: ' + selectedRedTower.props.stats.hp;
+							selectedRedTower.msg = 'HP:' + selectedRedTower.props.stats.hp;
 						} else {
 							// send a robot
 							whatToDo = 2;
@@ -4594,7 +4594,7 @@ const maulPage = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '1em serif',
+						msgFont: '1em mono',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.55, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 5),
@@ -4770,7 +4770,7 @@ const maulPage = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '1em serif',
+						msgFont: '1em mono',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.30, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 6),
@@ -4802,7 +4802,7 @@ const maulPage = {
 							lineWidth: 1,
 							btnColor: 'darkgrey',
 							txtColor: 'white',
-							font: '1.3em serif',
+							font: '1.3em mono',
 							msg: 'Upgrade',
 							isFilled: true,
 							id: 'upgrade-tower',
@@ -4823,7 +4823,7 @@ const maulPage = {
 											tower.props.stats.splash += upgradeTowerStats.splash;
 											tower.props.stats.lvl += upgradeTowerStats.lvl;
 											tower.props.requires.arenaLvlToUpgrade += upgradeTowerStats.arenaLvlToUpgrade;
-											tower.msg = 'HP: ' + tower.props.stats.hp;
+											tower.msg = 'HP:' + tower.props.stats.hp;
 											closeUpdateTowerModal();
 										} else {
 											const upgradeButton = Aurora.methodObjects.find(bs => bs.id === 'upgrade-tower');
@@ -4853,7 +4853,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.3em serif',
+						font: '1.3em mono',
 						msg: 'Cancel',
 						isFilled: true,
 						id: 'cancel-upgrade-tower',
@@ -4901,7 +4901,7 @@ const maulPage = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '1em serif',
+						msgFont: '1em mono',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.58, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 7),
@@ -4952,7 +4952,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[0].arenaTower.img ? gameObject.towerArenaDesigns[0].arenaTower.img : 'lightslategrey',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'blue-tower-1',
@@ -5004,7 +5004,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[1].arenaTower.img ? gameObject.towerArenaDesigns[1].arenaTower.img : 'lightslategrey',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'blue-tower-2',
@@ -5056,7 +5056,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: gameObject.towerArenaDesigns[2].arenaTower.img ? gameObject.towerArenaDesigns[2].arenaTower.img : 'lightslategrey',
 						txtColor: 'white',
-						font: '0.8em serif',
+						font: '0.8em mono',
 						msg: '',
 						isFilled: true,
 						id: 'blue-tower-3',
@@ -5088,7 +5088,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.3em serif',
+						font: '1.3em mono',
 						msg: 'Build',
 						isFilled: true,
 						id: 'build-tower',
@@ -5110,8 +5110,8 @@ const maulPage = {
 										tower.props.towerId = selectedTowerDesign.arenaTower.towerId;
 										tower.props.type = selectedTowerDesign.arenaTower.type;
 										tower.props.directive = selectedTowerDesign.directive;
-										tower.msg = 'HP: ' + selectedTowerDesign.arenaTower.stats.hp;
-										tower.font = '0.7em serif';
+										tower.msg = 'HP:' + selectedTowerDesign.arenaTower.stats.hp;
+										tower.font = '0.7em mono';
 										closeBuildTowerModal();
 									} else {
 										const buildButton = Aurora.methodObjects.find(bs => bs.id === 'build-tower');
@@ -5138,7 +5138,7 @@ const maulPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.3em serif',
+						font: '1.3em mono',
 						msg: 'Cancel',
 						isFilled: true,
 						id: 'cancel-build-tower',

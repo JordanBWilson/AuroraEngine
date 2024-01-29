@@ -588,8 +588,8 @@ const cutSceneIntroduction = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.1em serif',
-						msg: 'JDubs Presents...',
+						font: '1.9em mono',
+						msg: 'JDubs Presents',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.45),
 						color: 'rgba(255, 255, 255,' + whiteTextTransition +')',
@@ -606,7 +606,7 @@ const cutSceneIntroduction = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: 'bold 3.1em serif',
+						font: 'bold 3.1em mono',
 						msg: 'MASON',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.45),
@@ -632,7 +632,7 @@ const cutSceneIntroduction = {
 							Aurora.methodSetup = {
 								method: function(id) {
 									drawText({
-										font: 'bold 3.1em serif',
+										font: 'bold 3.1em mono',
 										msg: 'MASON',
 										posX: Aurora.placeEntityX(0.50),
 										posY: Aurora.placeEntityY(0.45),
@@ -658,7 +658,7 @@ const cutSceneIntroduction = {
 			}, 3000);
 		}
 		function dialog1() {
-			let msgs = ["I don't know how we didn't see", 'this coming.', '- Tap here to continue -'];
+			let msgs = ["I don't know how we didn't", 'see this coming.', '- Tap here to continue -'];
 			Aurora.methodSetup = {
 				layer: 1,
 				method: function(id) {
@@ -670,7 +670,7 @@ const cutSceneIntroduction = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '1em serif',
+						msgFont: '0.9em mono',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 5),
@@ -708,7 +708,7 @@ const cutSceneIntroduction = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '1em serif',
+						msgFont: '0.9em mono',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 5),
@@ -744,7 +744,7 @@ const cutSceneIntroduction = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '1em serif',
+						msgFont: '0.9em mono',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 5),

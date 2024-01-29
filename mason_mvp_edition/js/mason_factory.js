@@ -45,7 +45,7 @@ const factoryPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'factory-back-game',
@@ -74,7 +74,7 @@ const factoryPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Parts',
 						isFilled: true,
 						id: 'part-view',
@@ -96,7 +96,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2em mono',
 						msg: 'Select',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -345,7 +345,7 @@ const factoryPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'factory-back-game',
@@ -369,7 +369,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2em mono',
 						msg: 'Details',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -385,7 +385,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2.3em mono',
 						msg: 'Stats',
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.65),
@@ -408,7 +408,7 @@ const factoryPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Parts',
 						isFilled: true,
 						id: 'factory-view',
@@ -647,7 +647,7 @@ const factoryPage = {
 							lineWidth: 1,
 							btnColor: drawActiveParts(robotPart, true, robotPartCount),
 							txtColor: 'black',
-							font: '0.8em serif',
+							font: '0.8em mono',
 							msg: robotPartCount.count,
 							isFilled: true,
 							id: 'part-count',
@@ -681,7 +681,7 @@ const factoryPage = {
 							lineWidth: 1,
 							btnColor: drawActiveParts(robotPart, true, robotPartCount),
 							txtColor: 'black',
-							font: '0.8em serif',
+							font: '0.8em mono',
 							msg: robotPart.name,
 							isFilled: true,
 							id: 'robot-' + displayLimb + robotPart.type + '-part',
@@ -721,7 +721,7 @@ const factoryPage = {
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Next',
 						isFilled: true,
 						id: 'next-part',
@@ -752,7 +752,7 @@ const factoryPage = {
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Previous',
 						isFilled: true,
 						id: 'last-part',
@@ -854,7 +854,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2.3em mono',
 						msg: 'Stats',
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.65),
@@ -870,7 +870,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2em mono',
 						msg: 'Details',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -886,7 +886,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Attack: ' + returnStatValue(selectedPart?.stats?.att, 'att', confirmed, partChanged, existingPart?.stats?.att),
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.69),
@@ -902,7 +902,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Defense: ' + returnStatValue(selectedPart?.stats?.def, 'def', confirmed, partChanged, existingPart?.stats?.def),
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.74),
@@ -918,7 +918,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Speed: ' + returnStatValue(selectedPart?.stats?.spd, 'spd', confirmed, partChanged, existingPart?.stats?.spd),
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.79),
@@ -934,7 +934,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'AI: ' + returnStatValue(selectedPart?.stats?.ai, 'ai', confirmed, partChanged, existingPart?.stats?.ai),
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.84),
@@ -950,7 +950,7 @@ const factoryPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em serif',
+						font: '1em mono',
 						msg: 'Storage: ' + returnStatValue(selectedPart?.stats?.storage, 'storage', confirmed, partChanged, existingPart?.stats?.storage),
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.88),
@@ -979,7 +979,7 @@ const factoryPage = {
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
-							font: '1.5em serif',
+							font: '1.5em mono',
 							msg: confirmed && gameObject.selectedRobot.length === 6 ? 'Build' : 'Confirm',
 							isFilled: true,
 							id: 'confirm-part',
@@ -1009,7 +1009,7 @@ const factoryPage = {
 														lineWidth: 1,
 														modalColor: 'darkgrey',
 														msgColor: 'white',
-														msgFont: '1em serif',
+														msgFont: '1em mono',
 														msgs: msgs,
 														msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 														msgDistance: (Aurora.entitySize * 10),
@@ -1036,7 +1036,7 @@ const factoryPage = {
 														lineWidth: 1,
 														btnColor: 'grey',
 														txtColor: 'white',
-														font: '1.3em serif',
+														font: '1.3em mono',
 														msg: 'Ok...',
 														isFilled: true,
 														id: 'requires-robot',
@@ -1278,7 +1278,7 @@ const factoryPage = {
 						Aurora.methodSetup = {
 							method: function(id) {
 								drawText({
-									font: '2.3em serif',
+									font: '2.3em mono',
 									msg: 'Robot Made',
 									posX: Aurora.placeEntityX(0.50),
 									posY: Aurora.placeEntityY(0.50),
@@ -1294,7 +1294,7 @@ const factoryPage = {
 						Aurora.methodSetup = {
 							method: function(id) {
 								drawText({
-									font: '1em serif',
+									font: '1em mono',
 									msg: 'Robot Storage: ' + gameObject.robotsMade + '/' + gameObject.robotStorage,
 									posX: Aurora.placeEntityX(0.50),
 									posY: Aurora.placeEntityY(0.55),
@@ -1367,10 +1367,10 @@ const factoryPage = {
 									lineWidth: 1,
 									modalColor: 'darkgrey',
 									msgColor: 'white',
-									msgFont: '1.3em serif',
+									msgFont: '1.3em mono',
 									msg: 'Robot Storage Full',
 									footerColor: 'white',
-									footerFont: '1em serif',
+									footerFont: '1em mono',
 									footerMsg: '- Tap here to continue -',
 									bgColor: '',
 									isModalFilled: true,
@@ -1408,10 +1408,10 @@ const factoryPage = {
 								lineWidth: 1,
 								modalColor: 'darkgrey',
 								msgColor: 'white',
-								msgFont: '1.3em serif',
+								msgFont: '1.3em mono',
 								msg: 'Missing Parts',
 								footerColor: 'white',
-								footerFont: '1em serif',
+								footerFont: '1em mono',
 								footerMsg: '- Tap here to continue -',
 								bgColor: '',
 								isModalFilled: true,
@@ -1565,7 +1565,7 @@ const factoryParts = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Back',
 						isFilled: true,
 						id: 'factory-back-game',
@@ -1586,7 +1586,7 @@ const factoryParts = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2em mono',
 						msg: 'Parts',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -1686,7 +1686,7 @@ const factoryParts = {
 											lineWidth: 1,
 											btnColor: 'grey',
 											txtColor: 'white',
-											font: '1.3em serif',
+											font: '1.3em mono',
 											msg: 'Ok...',
 											isFilled: true,
 											id: 'requires-parts',
@@ -1737,7 +1737,7 @@ const factoryParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Chassis',
 						isFilled: true,
 						id: 'robot-body-parts',
@@ -1759,7 +1759,7 @@ const factoryParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Heads',
 						isFilled: true,
 						id: 'robot-head-parts',
@@ -1781,7 +1781,7 @@ const factoryParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Arms',
 						isFilled: true,
 						id: 'robot-arm-parts',
@@ -1803,7 +1803,7 @@ const factoryParts = {
 						lineWidth: 1,
 						btnColor: 'lightslategrey',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Legs',
 						isFilled: true,
 						id: 'robot-leg-parts',
@@ -1930,7 +1930,7 @@ const factoryParts = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '0.9em serif',
+							font: '0.9em mono',
 							msg: part.name,
 							posX: Aurora.placeEntityX(0.255),
 							posY: Aurora.placeEntityY(0.62),
@@ -1946,7 +1946,7 @@ const factoryParts = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '0.9em serif',
+							font: '0.9em mono',
 							msg: 'Count: ' + count.count,
 							posX: Aurora.placeEntityX(0.255),
 							posY: Aurora.placeEntityY(0.655),
@@ -1962,7 +1962,7 @@ const factoryParts = {
 				Aurora.methodSetup = {
 					method: function(id) {
 						drawText({
-							font: '2em serif',
+							font: '2em mono',
 							msg: 'Scrap',
 							posX: Aurora.placeEntityX(0.25),
 							posY: Aurora.placeEntityY(0.705),
@@ -2008,7 +2008,7 @@ const factoryParts = {
 					Aurora.methodSetup = {
 						method: function(id) {
 							drawText({
-								font: '0.9em serif',
+								font: '0.9em mono',
 								msg: scrapType + ': ' + scrapCost + ' (' + totalScrap + ')',
 								posX: Aurora.placeEntityX(0.08),
 								posY: Aurora.placeEntityY(0.75 + (i * 0.055)),
@@ -2112,7 +2112,7 @@ const factoryParts = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em serif',
+						font: '2em mono',
 						msg: 'Parts',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -2190,7 +2190,7 @@ const factoryParts = {
 							lineWidth: 1,
 							btnColor: drawActiveParts(robotPart, false, robotPartCount),
 							txtColor: 'black',
-							font: '0.8em serif',
+							font: '0.8em mono',
 							msg: robotPartCount.count,
 							isFilled: true,
 							id: 'part-count',
@@ -2217,7 +2217,7 @@ const factoryParts = {
 							lineWidth: 1,
 							btnColor: drawActiveParts(robotPart, false, robotPartCount),
 							txtColor: 'black',
-							font: '0.8em serif',
+							font: '0.8em mono',
 							msg: robotPart.name,
 							isFilled: true,
 							id: 'robot-' + robotPart.type + '-part',
@@ -2250,7 +2250,7 @@ const factoryParts = {
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Next',
 						isFilled: true,
 						id: 'next-part',
@@ -2280,7 +2280,7 @@ const factoryParts = {
 						lineWidth: 1,
 						btnColor: partList.length < 5 ? '#C0C0C0' : '#808080',
 						txtColor: 'white',
-						font: '1.5em serif',
+						font: '1.5em mono',
 						msg: 'Previous',
 						isFilled: true,
 						id: 'last-part',
@@ -2319,7 +2319,7 @@ const factoryParts = {
 							lineWidth: 1,
 							btnColor: !gameObject.buildButtonDisabled ? 'grey' : '#C0C0C0',
 							txtColor: 'white',
-							font: '1.5em serif',
+							font: '1.5em mono',
 							msg: 'Build',
 							isFilled: true,
 							id: 'confirm-part',
@@ -2401,10 +2401,10 @@ const factoryParts = {
 																lineWidth: 1,
 																modalColor: 'darkgrey',
 																msgColor: 'white',
-																msgFont: '1.3em serif',
+																msgFont: '1.3em mono',
 																msg: 'Not Enough Scrap',
 																footerColor: 'white',
-																footerFont: '1em serif',
+																footerFont: '1em mono',
 																footerMsg: '- Tap here to continue -',
 																bgColor: '',
 																isModalFilled: true,
@@ -2472,8 +2472,8 @@ const factoryParts = {
 													}
 													count.count++;
 													Particle.floatingText({
-														font: '2rem serif',
-														msg: '+          +',
+														font: '2rem mono',
+														msg: '+      +',
 														align: 'center',
 														posX: Aurora.placeEntityX(0.259, (Aurora.entitySize * 0.7)),
 														posY: Aurora.placeEntityY(0.69, (Aurora.entitySize * 0.7)),
@@ -2495,10 +2495,10 @@ const factoryParts = {
 																	lineWidth: 1,
 																	modalColor: 'darkgrey',
 																	msgColor: 'white',
-																	msgFont: '1.3em serif',
+																	msgFont: '1.3em mono',
 																	msg: 'Not Enough Storage',
 																	footerColor: 'white',
-																	footerFont: '1em serif',
+																	footerFont: '1em mono',
 																	footerMsg: '- Tap here to continue -',
 																	bgColor: '',
 																	isModalFilled: true,
@@ -2550,7 +2550,7 @@ const factoryParts = {
 													lineWidth: 1,
 													modalColor: 'darkgrey',
 													msgColor: 'white',
-													msgFont: '1em serif',
+													msgFont: '1em mono',
 													msgs: msgs,
 													msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 													msgDistance: (Aurora.entitySize * 10),
@@ -2577,7 +2577,7 @@ const factoryParts = {
 													lineWidth: 1,
 													btnColor: 'grey',
 													txtColor: 'white',
-													font: '1.3em serif',
+													font: '1.3em mono',
 													msg: 'Ok...',
 													isFilled: true,
 													id: 'requires-parts',
