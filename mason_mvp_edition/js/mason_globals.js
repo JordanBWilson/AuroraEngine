@@ -1786,7 +1786,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += unCommonScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'iridium') {
+					if (unCommonScrap.money === 'iridium') {
 						partCost.iridium += unCommonScrap.price * scrap.cost;
 					}
 					if (unCommonScrap.money === 'platinum') {
@@ -1798,7 +1798,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					if (unCommonScrap.money === 'silver') {
 						partCost.silver += unCommonScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'nickel') {
+					if (unCommonScrap.money === 'nickel') {
 						partCost.nickel += unCommonScrap.price * scrap.cost;
 					}
 					if (unCommonScrap.money === 'bronze') {
@@ -1816,7 +1816,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += uniqueScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'iridium') {
+					if (uniqueScrap.money === 'iridium') {
 						partCost.iridium += uniqueScrap.price * scrap.cost;
 					}
 					if (uniqueScrap.money === 'platinum') {
@@ -1828,7 +1828,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					if (uniqueScrap.money === 'silver') {
 						partCost.silver += uniqueScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'nickel') {
+					if (uniqueScrap.money === 'nickel') {
 						partCost.nickel += uniqueScrap.price * scrap.cost;
 					}
 					if (uniqueScrap.money === 'bronze') {
@@ -1846,7 +1846,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += intriguingScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'iridium') {
+					if (intriguingScrap.money === 'iridium') {
 						partCost.iridium += intriguingScrap.price * scrap.cost;
 					}
 					if (intriguingScrap.money === 'platinum') {
@@ -1858,7 +1858,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					if (intriguingScrap.money === 'silver') {
 						partCost.silver += intriguingScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'nickel') {
+					if (intriguingScrap.money === 'nickel') {
 						partCost.nickel += intriguingScrap.price * scrap.cost;
 					}
 					if (intriguingScrap.money === 'bronze') {
@@ -1876,7 +1876,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += facinatingScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'iridium') {
+					if (facinatingScrap.money === 'iridium') {
 						partCost.iridium += facinatingScrap.price * scrap.cost;
 					}
 					if (facinatingScrap.money === 'platinum') {
@@ -1888,7 +1888,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					if (facinatingScrap.money === 'silver') {
 						partCost.silver += facinatingScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'nickel') {
+					if (facinatingScrap.money === 'nickel') {
 						partCost.nickel += facinatingScrap.price * scrap.cost;
 					}
 					if (facinatingScrap.money === 'bronze') {
@@ -1906,7 +1906,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += mythicScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'iridium') {
+					if (mythicScrap.money === 'iridium') {
 						partCost.iridium += mythicScrap.price * scrap.cost;
 					}
 					if (mythicScrap.money === 'platinum') {
@@ -1918,7 +1918,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					if (mythicScrap.money === 'silver') {
 						partCost.silver += mythicScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'nickel') {
+					if (mythicScrap.money === 'nickel') {
 						partCost.nickel += mythicScrap.price * scrap.cost;
 					}
 					if (mythicScrap.money === 'bronze') {
@@ -1936,7 +1936,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 						// how much scrap takes to make the part * the parts worth
 						partCost.mythryl += exoticScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'iridium') {
+					if (exoticScrap.money === 'iridium') {
 						partCost.iridium += exoticScrap.price * scrap.cost;
 					}
 					if (exoticScrap.money === 'platinum') {
@@ -1948,7 +1948,7 @@ function calculatePartPrice(scrapCosts) { // scrap cost is an array of scrap and
 					if (exoticScrap.money === 'silver') {
 						partCost.silver += exoticScrap.price * scrap.cost;
 					}
-					if (commonScrap.money === 'nickel') {
+					if (exoticScrap.money === 'nickel') {
 						partCost.nickel += exoticScrap.price * scrap.cost;
 					}
 					if (exoticScrap.money === 'bronze') {

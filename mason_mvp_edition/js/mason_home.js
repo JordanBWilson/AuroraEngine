@@ -4163,7 +4163,7 @@ const homePlayerUpgrades = {
 																				lineWidth: 1,
 																				modalColor: 'darkgrey',
 																				msgColor: 'white',
-																				msgFont: '1em mono',
+																				msgFont: '0.9em mono',
 																				msgs: upgradeMsgs,
 																				msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 																				msgDistance: (Aurora.entitySize * 8),
