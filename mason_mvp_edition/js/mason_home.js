@@ -2225,7 +2225,7 @@ const homeSellParts = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: Aurora.entitySize * 4.5 + 'px terminal',
+						font: Aurora.entitySize * 5.1 + 'px terminal',
 						msg: 'Sell Parts',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
