@@ -45,7 +45,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: 'Back',
 						isFilled: true,
 						id: 'arena-back-game',
@@ -64,7 +64,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Arena',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -167,7 +167,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Team',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.20),
@@ -244,7 +244,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Tower Defense',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.50),
@@ -268,7 +268,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: 'Play',
 						isFilled: true,
 						id: 'play-game',
@@ -308,7 +308,7 @@ const arenaPage = {
 												lineWidth: 1,
 												modalColor: 'grey',
 												msgColor: 'white',
-												msgFont: '1em mono',
+												msgFont: Aurora.entitySize * 3 + 'px terminal',
 												msgs: msgs,
 												msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 												msgDistance: (Aurora.entitySize * 8),
@@ -414,7 +414,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: 'Back',
 						isFilled: true,
 						id: 'arena-robot-select-back-game',
@@ -448,7 +448,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Select',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -585,7 +585,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: 'Back',
 						isFilled: true,
 						id: 'arena-tower-select-back-game',
@@ -604,7 +604,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Select',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -737,7 +737,7 @@ const arenaPage = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '1em mono',
+						msgFont: Aurora.entitySize * 3 + 'px terminal',
 						msgs: msg,
 						msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 8),
@@ -871,7 +871,7 @@ const arenaPage = {
 							lineWidth: 1,
 							btnColor: (arenaTowerIndex === -1 || arenaTowerIndex === undefined) && directiveReadyList[i] ? 'green' : '#C0C0C0',
 							txtColor: 'white',
-							font: '1em mono',
+							font: Aurora.entitySize * 3 + 'px terminal',
 							msg: directiveMsg,
 							isFilled: true,
 							id: 'directive-' + (i + 1),
@@ -880,13 +880,13 @@ const arenaPage = {
 									if ((arenaTowerIndex === -1 || arenaTowerIndex === undefined) && directiveReadyList[i]) {
 										let msgs = [];
 										if (i === 0) {
-											msgs = ['Tank', '- In Game Cost: $' + gameObject.robotDirectiveCost.d1 + ' -', 'Tanks will target towers', 'before getting to the enemy', 'base.'];
+											msgs = ['Tank', '- In Game Cost: $' + robotDirectiveCost.d1 + ' -', 'Tanks will target towers', 'before getting to the enemy', 'base.'];
 										} else if (i === 1) {
-											msgs = ['Warrior', '- In Game Cost: $' + gameObject.robotDirectiveCost.d2 + ' -', 'Warriors will target troops before', 'getting to the enemy base.'];
+											msgs = ['Warrior', '- In Game Cost: $' + robotDirectiveCost.d2 + ' -', 'Warriors will target troops before', 'getting to the enemy base.'];
 										} else if (i === 2) {
-											msgs = ['Support', '- In Game Cost: $' + gameObject.robotDirectiveCost.d3 + ' -', 'Supports will heal fellow robots', 'before getting to the', 'enemy base.'];
+											msgs = ['Support', '- In Game Cost: $' + robotDirectiveCost.d3 + ' -', 'Supports will heal fellow robots', 'before getting to the', 'enemy base.'];
 										} else if (i === 3) {
-											msgs = ['Lee-Roy', '- In Game Cost: $' + gameObject.robotDirectiveCost.d4 + ' -', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy base.'];
+											msgs = ['Lee-Roy', '- In Game Cost: $' + robotDirectiveCost.d4 + ' -', 'Lee-Roys will run past ', 'everything before getting to', 'the enemy base.'];
 										}
 										Aurora.methodSetup = {
 											method: function(id) {
@@ -898,7 +898,7 @@ const arenaPage = {
 													lineWidth: 1,
 													modalColor: 'darkgrey',
 													msgColor: 'white',
-													msgFont: '1em mono',
+													msgFont: Aurora.entitySize * 3 + 'px terminal',
 													msgs: msgs,
 													msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 													msgDistance: (Aurora.entitySize * 5),
@@ -925,7 +925,7 @@ const arenaPage = {
 													lineWidth: 1,
 													btnColor: 'grey',
 													txtColor: 'white',
-													font: '1.3em mono',
+													font: Aurora.entitySize * 3.9 + 'px terminal',
 													msg: 'Program',
 													isFilled: true,
 													id: 'Program-directive',
@@ -957,7 +957,7 @@ const arenaPage = {
 													lineWidth: 1,
 													btnColor: 'grey',
 													txtColor: 'white',
-													font: '1.3em mono',
+													font: Aurora.entitySize * 3.9 + 'px terminal',
 													msg: 'Cancel',
 													isFilled: true,
 													id: 'cancel-directive',
@@ -996,7 +996,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: 'Back',
 						isFilled: true,
 						id: 'robot-detail-back-game',
@@ -1033,7 +1033,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Details',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -1049,7 +1049,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Stats',
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.65),
@@ -1066,7 +1066,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Attack: ' + robotStats.stats.att,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.69),
@@ -1082,7 +1082,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Defense: ' + robotStats.stats.def,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.74),
@@ -1098,7 +1098,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Speed: ' + robotStats.stats.spd,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.79),
@@ -1114,7 +1114,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'AI: ' + robotStats.stats.ai,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.84),
@@ -1130,7 +1130,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Storage: ' + robotStats.stats.storage,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.88),
@@ -1153,7 +1153,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: 'grey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: !reselect ? 'Select' : 'Reselect',
 						isFilled: true,
 						id: 'select-robot',
@@ -1281,7 +1281,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.8em mono',
+						font: Aurora.entitySize * 5.4 + 'px terminal',
 						msg: 'Directive',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.20),
@@ -1312,7 +1312,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: 'Back',
 						isFilled: true,
 						id: 'tower-detail-back-game',
@@ -1337,7 +1337,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Details',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -1353,7 +1353,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.1em mono',
+						font: Aurora.entitySize * 3.3 + 'px terminal',
 						msg: selectedTower.name,
 						posX: Aurora.placeEntityX(0.25, (Aurora.entitySize * 0.5)),
 						posY: Aurora.placeEntityY(0.185),
@@ -1369,7 +1369,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Stats',
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.65),
@@ -1385,7 +1385,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Attack: ' + selectedTower.stats.att,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.69),
@@ -1401,7 +1401,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Defense: ' + selectedTower.stats.def,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.74),
@@ -1417,7 +1417,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Speed: ' + selectedTower.stats.spd,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.79),
@@ -1433,7 +1433,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'HP: ' + selectedTower.stats.hp,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.84),
@@ -1449,7 +1449,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1em mono',
+						font: Aurora.entitySize * 3 + 'px terminal',
 						msg: 'Splash: ' + selectedTower.stats.splash,
 						posX: Aurora.placeEntityX(0.09),
 						posY: Aurora.placeEntityY(0.88),
@@ -1472,7 +1472,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: selectedTower.type === 'bunker' && gameObject.towerArenaDesigns[arenaTowerIndex].robotParts.length !== 6 ? '#C0C0C0' : 'grey',
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: !reselect ? 'Select' : 'Reselect',
 						isFilled: true,
 						id: 'select-tower',
@@ -1532,7 +1532,7 @@ const arenaPage = {
 							lineWidth: 1,
 							btnColor: (selectedTower.type === 'bunker' && i === 0) || !directiveReadyList[i] ? '#C0C0C0' : 'green', // the color here should be grey or green
 							txtColor: 'white',
-							font: '1em mono',
+							font: Aurora.entitySize * 3 + 'px terminal',
 							msg: directiveMsg,
 							isFilled: true,
 							id: 'directive-' + (i + 1),
@@ -1545,25 +1545,25 @@ const arenaPage = {
 											if (selectedTower.type === 'bunker') {
 												selectRobot = true;
 											} else {
-												msgs = ['Standard', '- In Game Cost: $' + gameObject.towerDirectiveCost.d1 + ' -', 'Tower will attack at', 'a standard rate.'];
+												msgs = ['Standard', '- In Game Cost: $' + towerDirectiveCost.d1 + ' -', 'Tower will attack at', 'a standard rate.'];
 											}
 										} else if (i === 1) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Standard', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d1 + ' -', 'Bunker will create', ' 2 robots a turn.'];
+												msgs = ['Standard', '- In Game Cost: $' + bunkerDirectiveCost.d1 + ' -', 'Bunker will create', ' 2 robots a turn.'];
 											} else {
-												msgs = ['Splash-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d2 + ' -', 'Tower will gain splash', 'but will attack slower.'];
+												msgs = ['Splash-Shot', '- In Game Cost: $' + towerDirectiveCost.d2 + ' -', 'Tower will gain splash', 'but will attack slower.'];
 											}
 										} else if (i === 2) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Rapid', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP.'];
+												msgs = ['Rapid', '- In Game Cost: $' + bunkerDirectiveCost.d2 + ' -', 'Bunker will create 3', 'robots a turn but', 'will lose some HP.'];
 											} else {
-												msgs = ['Rapid-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d3 + ' -', 'Tower will attack faster but', 'will lose some attack and HP.'];
+												msgs = ['Rapid-Shot', '- In Game Cost: $' + towerDirectiveCost.d3 + ' -', 'Tower will attack faster but', 'will lose some attack and HP.'];
 											}
 										} else if (i === 3) {
 											if (selectedTower.type === 'bunker') {
-												msgs = ['Defense', '- In Game Cost: $' + gameObject.bunkerDirectiveCost.d3 + ' -', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash.'];
+												msgs = ['Defense', '- In Game Cost: $' + bunkerDirectiveCost.d3 + ' -', 'Bunker will create 1 robot', 'a turn but will gain', 'attack and splash.'];
 											} else {
-												msgs = ['Ram-Shot', '- In Game Cost: $' + gameObject.towerDirectiveCost.d4 + ' -', 'Tower will get added attack', 'and splash but lose some speed.'];
+												msgs = ['Ram-Shot', '- In Game Cost: $' + towerDirectiveCost.d4 + ' -', 'Tower will get added attack', 'and splash but lose some speed.'];
 											}
 										}
 										if (selectRobot) {
@@ -1580,7 +1580,7 @@ const arenaPage = {
 														lineWidth: 1,
 														modalColor: 'darkgrey',
 														msgColor: 'white',
-														msgFont: '1em mono',
+														msgFont: Aurora.entitySize * 3 + 'px terminal',
 														msgs: msgs,
 														msgStart: Aurora.placeEntityY(0.45, (Aurora.entitySize * 30)),
 														msgDistance: (Aurora.entitySize * 5),
@@ -1607,7 +1607,7 @@ const arenaPage = {
 														lineWidth: 1,
 														btnColor: 'grey',
 														txtColor: 'white',
-														font: '1.3em mono',
+														font: Aurora.entitySize * 3.9 + 'px terminal',
 														msg: 'Program',
 														isFilled: true,
 														id: 'Program-directive',
@@ -1681,7 +1681,7 @@ const arenaPage = {
 														lineWidth: 1,
 														btnColor: 'grey',
 														txtColor: 'white',
-														font: '1.3em mono',
+														font: Aurora.entitySize * 3.9 + 'px terminal',
 														msg: 'Cancel',
 														isFilled: true,
 														id: 'cancel-directive',
@@ -1776,7 +1776,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.8em mono',
+						font: Aurora.entitySize * 5.4 + 'px terminal',
 						msg: 'Directive',
 						posX: Aurora.placeEntityX(0.76),
 						posY: Aurora.placeEntityY(0.20),
@@ -1792,7 +1792,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Details',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.085),
@@ -1808,7 +1808,7 @@ const arenaPage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '2.3em mono',
+						font: Aurora.entitySize * 6.9 + 'px terminal',
 						msg: 'Stats',
 						posX: Aurora.placeEntityX(0.247),
 						posY: Aurora.placeEntityY(0.65),
@@ -1858,7 +1858,7 @@ const arenaPage = {
 							lineWidth: 1,
 							btnColor: drawRobotSelectPreviewParts('chassis', gameObject.towerArenaDesigns[index].robotParts),
 							txtColor: 'white',
-							font: '1.5em mono',
+							font: Aurora.entitySize * 4.5 + 'px terminal',
 							msg: '',
 							isFilled: true,
 							id: 'preview-robot',
@@ -1880,7 +1880,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('head', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1908,7 +1908,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-arm', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1936,7 +1936,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-arm', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1964,7 +1964,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-leg', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -1992,7 +1992,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-leg', gameObject.towerArenaDesigns[index].robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -2031,7 +2031,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: !showImg ? 'lightslategrey' : towerDesign.img,
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: '',
 						isFilled: true,
 						id: 'preview-tower',
@@ -2059,7 +2059,7 @@ const arenaPage = {
 						lineWidth: 1,
 						btnColor: selectedTower.img,
 						txtColor: 'white',
-						font: '1.5em mono',
+						font: Aurora.entitySize * 4.5 + 'px terminal',
 						msg: '',
 						isFilled: true,
 						id: 'tower-detail',
@@ -2086,7 +2086,7 @@ const arenaPage = {
 							lineWidth: 1,
 							btnColor: drawRobotSelectPreviewParts('chassis', selectedTower.robotParts),
 							txtColor: 'white',
-							font: '1.5em mono',
+							font: Aurora.entitySize * 4.5 + 'px terminal',
 							msg: '',
 							isFilled: true,
 							id: 'preview-robot',
@@ -2108,7 +2108,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('head', selectedTower.robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -2136,7 +2136,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-arm', selectedTower.robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -2164,7 +2164,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-arm', selectedTower.robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -2192,7 +2192,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('left-leg', selectedTower.robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,
@@ -2220,7 +2220,7 @@ const arenaPage = {
 												lineWidth: 1,
 												btnColor: drawRobotSelectPreviewParts('right-leg', selectedTower.robotParts),
 												txtColor: 'white',
-												font: '1.5em mono',
+												font: Aurora.entitySize * 4.5 + 'px terminal',
 												msg: '',
 												isFilled: true,
 												id: parent.id,

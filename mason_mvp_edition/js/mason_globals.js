@@ -26,6 +26,7 @@ let gameObject = {
 	clickSpeed: 150,
 	// ---scrap base prices--- these prices will determine how much parts and robots will cost
 	// when calcing the barter price upgrade, use these numbers
+	// future Jordan, move the scrap costs out of here
 	commonScrapBase: [
 		{ money: 'mythryl', price: 0 },
 		{ money: 'iridium', price: 0 },
@@ -97,7 +98,7 @@ let gameObject = {
 		{ money: 'copper', price: 0 }
 	],
 	scrapToSell: '', // this can be common, uncommon, unique, etc.
-	// --- upgrade costs
+	// --- upgrade costs future Jordan, move the upgrade costs out of here
 	factoryUpgradeCost: {
 		mythryl: 0,
 		iridium: 0,
@@ -264,23 +265,6 @@ let gameObject = {
 	// ---robot returning home---
 	scrapHeap: [], // when robots return from their adventures, return scrap here
 	newPartFound: false, // display a modal saying 'new part' when in the part menu in factory
-	robotDirectiveCost: { // how much a robot should cost based on its directive
-		d1: 25, // 30
-		d2: 20, // 20
-		d3: 35, // 40
-		d4: 15, // 10
-	},
-	towerDirectiveCost: { // how much a tower should cost based on its directive
-		d1: 10, // 20
-		d2: 30, // 40
-		d3: 20, // 30
-		d4: 40, // 50
-	},
-	bunkerDirectiveCost: { // how much a bunker should cost based on its directive
-		d1: 30,
-		d2: 40,
-		d3: 50,
-	},
 	gamesPlayed: 0, // how many arena games played
 	gamesWon: 0, // how many arena games won
 	gamesLost: 0, // how many arena games lost
@@ -321,6 +305,23 @@ let gameObject = {
 		{ armId: 3, count: 0,  name: 'new world scout', },
 		{ armId: 4, count: 0, name: 'new world harvester', },
 	],
+};
+const robotDirectiveCost = { // how much a robot should cost based on its directive
+	d1: 25, // 30
+	d2: 20, // 20
+	d3: 35, // 40
+	d4: 15, // 10
+};
+const towerDirectiveCost = { // how much a tower should cost based on its directive
+	d1: 10, // 20
+	d2: 30, // 40
+	d3: 15, // 30
+	d4: 40, // 50
+};
+const bunkerDirectiveCost = { // how much a bunker should cost based on its directive
+	d1: 30,
+	d2: 40,
+	d3: 50,
 };
 // ** Robot Parts ***
 const robotHeads = [
@@ -2166,7 +2167,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 				lineWidth: 1,
 				btnColor: drawRobotSelectPreviewParts('chassis', robotDesign),
 				txtColor: 'white',
-				font: '1.5em mono',
+				font: Aurora.entitySize * 4.5 + 'px terminal',
 				msg: '',
 				isFilled: true,
 				id: 'preview-robot',
@@ -2188,7 +2189,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('head', robotDesign),
 									txtColor: 'white',
-									font: '1.5em mono',
+									font: Aurora.entitySize * 4.5 + 'px terminal',
 									msg: '',
 									isFilled: true,
 									id: parent.id,
@@ -2216,7 +2217,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('left-arm', robotDesign),
 									txtColor: 'white',
-									font: '1.5em mono',
+									font: Aurora.entitySize * 4.5 + 'px terminal',
 									msg: '',
 									isFilled: true,
 									id: parent.id,
@@ -2244,7 +2245,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('right-arm', robotDesign),
 									txtColor: 'white',
-									font: '1.5em mono',
+									font: Aurora.entitySize * 4.5 + 'px terminal',
 									msg: '',
 									isFilled: true,
 									id: parent.id,
@@ -2272,7 +2273,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('left-leg', robotDesign),
 									txtColor: 'white',
-									font: '1.5em mono',
+									font: Aurora.entitySize * 4.5 + 'px terminal',
 									msg: '',
 									isFilled: true,
 									id: parent.id,
@@ -2300,7 +2301,7 @@ function drawRobotSelect(posX, posY, robotDesign, index, action) {
 									lineWidth: 1,
 									btnColor: drawRobotSelectPreviewParts('right-leg', robotDesign),
 									txtColor: 'white',
-									font: '1.5em mono',
+									font: Aurora.entitySize * 4.5 + 'px terminal',
 									msg: '',
 									isFilled: true,
 									id: parent.id,
@@ -2452,7 +2453,7 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('chassis'),
 				txtColor: 'white',
-				font: '1.5em mono',
+				font: Aurora.entitySize * 4.5 + 'px terminal',
 				msg: '',
 				isFilled: true,
 				id: 'robot-body',
@@ -2478,7 +2479,7 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('head'),
 				txtColor: 'black',
-				font: '1.5em mono',
+				font: Aurora.entitySize * 4.5 + 'px terminal',
 				msg: '',
 				isFilled: true,
 				id: 'robot-head',
@@ -2504,7 +2505,7 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('left-arm'),
 				txtColor: 'black',
-				font: '1em mono',
+				font: Aurora.entitySize * 4.5 + 'px terminal',
 				msg: '',
 				isFilled: true,
 				id: 'robot-left-arm',
@@ -2530,7 +2531,7 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('right-arm'),
 				txtColor: 'black',
-				font: '1em mono',
+				font: Aurora.entitySize * 3 + 'px terminal',
 				msg: '',
 				isFilled: true,
 				id: 'robot-right-arm',
@@ -2556,7 +2557,7 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('left-leg'),
 				txtColor: 'black',
-				font: '1em mono',
+				font: Aurora.entitySize * 3 + 'px terminal',
 				msg: '',
 				isFilled: true,
 				id: 'robot-left-leg',
@@ -2582,7 +2583,7 @@ function drawRobotPreview(chassisAction, headAction, lArmAction, rArmAction, lLe
 				lineWidth: 1,
 				btnColor: drawRobotPreviewParts('right-leg'),
 				txtColor: 'black',
-				font: '1em mono',
+				font: Aurora.entitySize * 3 + 'px terminal',
 				msg: '',
 				isFilled: true,
 				id: 'robot-right-leg',
@@ -2611,7 +2612,7 @@ function drawNextPrevRobotList(robotList, refreshMethod) {
 				lineWidth: 1,
 				btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
 				txtColor: 'white',
-				font: '1.5em mono',
+				font: Aurora.entitySize * 4.5 + 'px terminal',
 				msg: 'Next',
 				isFilled: true,
 				id: 'next-part',
@@ -2643,7 +2644,7 @@ function drawNextPrevRobotList(robotList, refreshMethod) {
 				lineWidth: 1,
 				btnColor: robotList.length <= 6 ? '#C0C0C0' : '#808080',
 				txtColor: 'white',
-				font: '1.5em mono',
+				font: Aurora.entitySize * 4.5 + 'px terminal',
 				msg: 'Previous',
 				isFilled: true,
 				id: 'last-part',

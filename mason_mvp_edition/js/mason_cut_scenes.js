@@ -588,7 +588,7 @@ const cutSceneIntroduction = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '1.9em mono',
+						font: Aurora.entitySize * 5.7 + 'px terminal',
 						msg: 'JDubs Presents',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.45),
@@ -606,7 +606,7 @@ const cutSceneIntroduction = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: 'bold 3.1em mono',
+						font: 'bold ' + Aurora.entitySize * 9.3 + 'px terminal',
 						msg: 'MASON',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.45),
@@ -632,7 +632,7 @@ const cutSceneIntroduction = {
 							Aurora.methodSetup = {
 								method: function(id) {
 									drawText({
-										font: 'bold 3.1em mono',
+										font: 'bold ' + Aurora.entitySize * 9.3 + 'px terminal',
 										msg: 'MASON',
 										posX: Aurora.placeEntityX(0.50),
 										posY: Aurora.placeEntityY(0.45),
@@ -650,6 +650,7 @@ const cutSceneIntroduction = {
 							clearInterval(whiteTransitions);
 							setTimeout(function() {
 								gameObject.cutSceneStep++;
+								Aurora.keepPreviousSize = false;
 								mainPage.loadPage();
 							}, 500);
 						}
@@ -670,7 +671,7 @@ const cutSceneIntroduction = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '0.9em mono',
+						msgFont: Aurora.entitySize * 2.9 + 'px terminal',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 5),
@@ -708,7 +709,7 @@ const cutSceneIntroduction = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '0.9em mono',
+						msgFont: Aurora.entitySize * 2.9 + 'px terminal',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 5),
@@ -744,7 +745,7 @@ const cutSceneIntroduction = {
 						lineWidth: 1,
 						modalColor: 'grey',
 						msgColor: 'white',
-						msgFont: '0.9em mono',
+						msgFont: Aurora.entitySize * 2.9 + 'px terminal',
 						msgs: msgs,
 						msgStart: Aurora.placeEntityY(0.85, (Aurora.entitySize * 30)),
 						msgDistance: (Aurora.entitySize * 5),

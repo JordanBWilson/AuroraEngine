@@ -24,6 +24,8 @@ cityImg.src = './assets/images/Lost_City.png';
 // title Images
 const robotTitle = new Image();
 robotTitle.src = './assets/images/New_World_Walk.gif';
+// load font
+let font = new FontFace('terminal', 'url(./assets/font/VT323-Regular.ttf)');
 
 (function() {
 	Aurora.canvas = document.getElementById('Stage');
@@ -620,7 +622,7 @@ const titlePage = {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: Aurora.entitySize * 8 + 'px mono', // '3.3em mono'
+					font: Aurora.entitySize * 9.9 + 'px terminal',
 					msg: 'Mason',
 					posX: Aurora.placeEntityX(0.50),
 					posY: Aurora.placeEntityY(0.075),
@@ -636,7 +638,7 @@ const titlePage = {
 		Aurora.methodSetup = {
 			method: function(id) {
 				drawText({
-					font: Aurora.entitySize * 3.5 + 'px mono', // '1.5em mono'
+					font: Aurora.entitySize * 4.5 + 'px terminal',
 					msg: 'MVP Edition',
 					posX: Aurora.placeEntityX(0.50),
 					posY: Aurora.placeEntityY(0.13),
@@ -696,7 +698,7 @@ const titlePage = {
 					lineWidth: 1,
 					btnColor: 'darkgrey',
 					txtColor: 'white',
-					font: Aurora.entitySize * 3.5 + 'px mono', // '1.5em mono',
+					font: Aurora.entitySize * 4.5 + 'px terminal',
 					msg: 'Play',
 					isFilled: true,
 					id: 'play-game',
@@ -724,7 +726,7 @@ const titlePage = {
 					lineWidth: 1,
 					btnColor: 'darkgrey',
 					txtColor: 'white',
-					font: Aurora.entitySize * 3.2 + 'px mono',// '1.2em mono',
+					font: Aurora.entitySize * 3.6 + 'px terminal',
 					msg: !gameObject.gameSounds ? 'Sounds: Off' : 'Sounds: On',
 					isFilled: true,
 					id: 'play-game-sounds',
@@ -751,7 +753,7 @@ const titlePage = {
 			Aurora.methodSetup = {
 				method: function(id) {
 					drawText({
-						font: '3em mono',
+						font: Aurora.entitySize * 9 + 'px terminal',
 						msg: '...Loading...',
 						posX: Aurora.placeEntityX(0.50),
 						posY: Aurora.placeEntityY(0.63),
@@ -829,7 +831,7 @@ const mainPage = {
 						lineWidth: 1,
 						btnColor: 'darkgrey',
 						txtColor: 'black',
-						font: 'bold 1.3em mono',
+						font: Aurora.entitySize * 3.6 + 'px terminal',
 						msg: 'Scrap',
 						isFilled: true,
 						id: 'scrap',
@@ -855,7 +857,7 @@ const mainPage = {
 						lineWidth: 1,
 						btnColor: 'green',
 						txtColor: 'white',
-						font: 'bold 1.3em mono',
+						font: Aurora.entitySize * 3.6 + 'px terminal',
 						msg: 'Home',
 						isFilled: true,
 						id: 'home',
@@ -878,7 +880,7 @@ const mainPage = {
 							lineWidth: 1,
 							btnColor: 'grey',
 							txtColor: 'black',
-							font: 'bold 1.3em mono',
+							font: Aurora.entitySize * 3.6 + 'px terminal',
 							msg: 'Factory',
 							isFilled: true,
 							id: 'factory',
@@ -902,7 +904,7 @@ const mainPage = {
 							lineWidth: 1,
 							btnColor: 'brown',
 							txtColor: 'white',
-							font: 'bold 1.3em mono',
+							font: Aurora.entitySize * 3.6 + 'px terminal',
 							msg: 'Arena',
 							isFilled: true,
 							id: 'arena',
@@ -1743,7 +1745,7 @@ const mainPage = {
 						}
 					}
 					Particle.floatingText({
-						font: '1.3rem mono',
+						font: Aurora.entitySize * 3.6 + 'px terminal',
 						msg: scrapFoundText,
 						align: 'center',
 						posX: Aurora.placeEntityX(0.50, (Aurora.entitySize * 0.7)),
@@ -1765,10 +1767,10 @@ const mainPage = {
 									lineWidth: 1,
 									modalColor: 'darkgrey',
 									msgColor: 'white',
-									msgFont: '1.1em mono',
+									msgFont: Aurora.entitySize * 3.3 + 'px terminal',
 									msg: 'Not Enough Scrap Space',
 									footerColor: 'white',
-									footerFont: '1em mono',
+									footerFont: Aurora.entitySize * 3 + 'px terminal',
 									footerMsg: '- Tap here to continue -',
 									bgColor: '',
 									isModalFilled: true,
@@ -1801,7 +1803,11 @@ const mainPage = {
 		}
 	}
 }
-titlePage.loadPage();
+font.load().then((f) => {
+	document.fonts.add(f);
+	titlePage.loadPage();
+});
+
 
 
 
