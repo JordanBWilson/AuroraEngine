@@ -34,6 +34,15 @@ let font = new FontFace('terminal', 'url(./assets/font/VT323-Regular.ttf)');
 	seedArenaTowers();
 	loadGame();
 	Aurora.setSettingsHigh();
+	if ('serviceWorker' in navigator) {
+		//window.addEventListener('load', function() {
+			//navigator.serviceWorker
+			//.register('../sw.js')
+			//.then(res => console.log('service worker registered'))
+			//.catch(err => console.log('service worker not registered', err))
+		//});
+		navigator.serviceWorker.register('../sw.js');
+	}
 })();
 
 function seedRobotDesigns() {

@@ -1,11 +1,11 @@
 {
-  "name": "Mason Single Player",
-  "short_name": "Mason SP",
+  "name": "Mason MVP Edition",
+  "short_name": "Mason MVP",
   "theme_color": "#606060",
   "background_color": "#606060",
   "display": "fullscreen",
-  "scope": "/mason_single_player/",
-  "start_url": "/mason_single_player/",
+  "scope": "/mason_mvp_edition/",
+  "start_url": "/mason_mvp_edition/",
   "orientation": "portrait",
   "icons": [
     {
